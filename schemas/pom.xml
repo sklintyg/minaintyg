@@ -36,75 +36,57 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <defaultOptions>
+                                <extraargs>
+                                    <extraarg>-validate</extraarg>
+                                    <extraarg>-verbose</extraarg>
+                                    <extraarg>-p</extraarg>
+                                    <extraarg>
+                                        urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
+                                    </extraarg>
+                                    <extraarg>-p</extraarg>
+                                    <extraarg>
+                                        urn:riv:insuranceprocess:healthreporting:2=se.inera.ifv.insuranceprocess.healthreporting.v2
+                                    </extraarg>
+                                    <extraarg>-p</extraarg>
+                                    <extraarg>
+                                        urn:iso:21090:dt:1=iso.v21090.dt.v1
+                                    </extraarg>
+                                    <extraarg>-p</extraarg>
+                                    <extraarg>
+                                        urn:riv:insuranceprocess:certificate:1=se.inera.ifv.insuranceprocess.certificate.v1
+                                    </extraarg>
+                                    <extraarg>-p</extraarg>
+                                    <extraarg>
+                                        http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
+                                    </extraarg>
+                                </extraargs>
+                            </defaultOptions>
                             <sourceRoot>${target.path}</sourceRoot>
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>${schema.path}/certificate/v1/interactions/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl</wsdl>
                                     <extraargs>
-                                        <extraarg>-validate</extraarg>
-                                        <extraarg>-verbose</extraarg>
                                         <extraarg>-p</extraarg>
                                         <extraarg>
                                             urn:riv:insuranceprocess:healthreporting:ListCertificates:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20
                                         </extraarg>
                                         <extraarg>-p</extraarg>
                                         <extraarg>
-                                            urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:riv:insuranceprocess:healthreporting:2=se.inera.ifv.insuranceprocess.healthreporting.v2
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:iso:21090:dt:1=iso.v21090.dt.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:riv:insuranceprocess:certificate:1=se.inera.ifv.insuranceprocess.certificate.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
                                             urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1=se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
                                         </extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <wsdlOption>
                                     <wsdl>${schema.path}/certificate/v1/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
                                     <extraargs>
-                                        <extraarg>-validate</extraarg>
-                                        <extraarg>-verbose</extraarg>
                                         <extraarg>-p</extraarg>
                                         <extraarg>
                                             urn:riv:insuranceprocess:healthreporting:GetCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20
                                         </extraarg>
                                         <extraarg>-p</extraarg>
                                         <extraarg>
-                                            urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:riv:insuranceprocess:healthreporting:2=se.inera.ifv.insuranceprocess.healthreporting.v2
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:iso:21090:dt:1=iso.v21090.dt.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            urn:riv:insuranceprocess:certificate:1=se.inera.ifv.insuranceprocess.certificate.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
                                             urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1
-                                        </extraarg>
-                                        <extraarg>-p</extraarg>
-                                        <extraarg>
-                                            http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
                                         </extraarg>
                                     </extraargs>
                                 </wsdlOption>
