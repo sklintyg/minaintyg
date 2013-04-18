@@ -1,0 +1,25 @@
+Inera Certificate
+Copyright (C) 2012 Inera AB (http://www.inera.se)
+
+This application includes the following software:
+
+MongoDB, Java Driver 2.7
+Licensed under Apache Software License 2.0
+http://www.mongodb.org/
+
+Apache Foundation, HttpClient, 
+Licensed under Apache Software License 2.0
+http://velocity.apache.org/
+
+FasterXML, Jackson Core, Mapper 1.9
+Licensed under LGPL 2.1
+http://jackson.codehaus.org/
+
+Springsource, Spring Framework 3.1
+Licensed under Apache Software License 2.0
+http://www.springsource.org/
+
+Simple Logging Facade for Java, slf4j 1.6
+Licensed under MIT license
+http://www.slf4j.org/
+
