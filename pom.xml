@@ -13,6 +13,7 @@
     <modules>
         <module>schemas</module>
         <module>model</module>
+        <module>specifications</module>
     </modules>
 
     <properties>

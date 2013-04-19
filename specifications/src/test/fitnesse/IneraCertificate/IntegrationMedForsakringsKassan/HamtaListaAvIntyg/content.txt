@@ -1,0 +1,11 @@
+!1 Integration med Försäkringskassan: Hämta lista av intyg.
+
+När Försäkringskassan frågar efter vilka intyg som finns, förväntar de sig följande svar:
+
+|personnr|från|till|svar|kommentar|
+|999999-9999|2013-04-01|2013-04-01|samtycke saknas|person-nr som inte finns|
+|010101-0101|2013-04-01|2013-04-01|samtycke saknas|inga intyg, samtycke saknas|
+|020202-0202|2013-04-01|2013-04-01|samtycke saknas|intyg finns, men samtycke saknas|
+|121212-1212|2013-03-01|2013-03-31|[]|Intyg saknas för det intervallet|
+|121212-1212|2013-04-01|2013-04-01|[intyg1]|Endast intyg av typ FK7263 returneras|
+|121212-1212|2013-04-02|2013-04-03|[intyg2,intyg-3a,intyg-3b]|Det kan finnas flera intyg för samma dag|
