@@ -20,8 +20,12 @@
         </dependency>
 
         <dependency>
-            <groupId>se.inera.certificate</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>schemas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>model</artifactId>
         </dependency>
 
     </dependencies>
