@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.model.CertificateMetaData;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
@@ -16,9 +17,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
  * @author andreaskaltenbach
@@ -31,6 +33,15 @@ public class ListCertificatesResponderImplTest {
 
     @InjectMocks
     private ListCertificatesResponderInterface responder = new ListCertificatesResponderImpl();
+
+    @Test
+    public void listAnyCertificatesForUnknownPersonGivesEmptyList() {
+        AttributedURIType logicalAddress = null;
+        ListCertificatesRequestType parameters = new ListCertificatesRequestType();
+        parameters.setNationalIdentityNumber("unknown-person");
+        ListCertificatesResponseType result = responder.listCertificates(logicalAddress, parameters);
+        assertTrue(result.getMeta().isEmpty());
+    }
 
     @Test
     public void listCertificatesWithNoCertificates() {
