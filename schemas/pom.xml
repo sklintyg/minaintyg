@@ -95,6 +95,19 @@
                                         </extraarg>
                                     </extraargs>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>${schema.path}/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>
+                                            urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20
+                                        </extraarg>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>
+                                            urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3=se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3
+                                        </extraarg>
+                                    </extraargs>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                     </execution>
