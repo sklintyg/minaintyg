@@ -20,6 +20,10 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -40,6 +44,7 @@
                                 <extraargs>
                                     <extraarg>-validate</extraarg>
                                     <extraarg>-verbose</extraarg>
+                                    <extraarg>-xjc-b,${basedir}/binding.xjb</extraarg>
                                     <extraarg>-p</extraarg>
                                     <extraarg>
                                         urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
