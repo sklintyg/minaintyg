@@ -24,19 +24,12 @@ public class MockMvkAuthenticationFilter extends
 	private static final Logger log = LoggerFactory
 			.getLogger(AuthenticationFilter.class);
 
-	@Value("${mvk.guidParamName}")
-	private String guidParameterName;
+	//@Value("${mvk.guidParamName}")
+	private String guidParameterName = "guid";
 
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
 		return "n/a";
-	}
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		log.info("doFilter!");
-		super.doFilter(request, response, chain);
 	}
 
 	@Override

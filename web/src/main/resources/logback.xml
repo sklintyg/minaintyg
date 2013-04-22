@@ -24,7 +24,7 @@
 
   <logger name="se.inera.certificate.web" level="DEBUG" />
 
-  <root level="WARN">
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
   </root>
 
