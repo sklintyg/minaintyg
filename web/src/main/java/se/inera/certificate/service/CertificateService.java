@@ -12,5 +12,5 @@ public interface CertificateService {
 
     List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> type);
 
-    Certificate getCertificate(String civicRegistrationNumber, String id);
+    Certificate getCertificate(String civicRegistrationNumber, String certificateId);
 }

@@ -33,8 +33,8 @@ public class ListCertificatesResponderImplTest {
     private ListCertificatesResponderInterface responder = new ListCertificatesResponderImpl();
 
     @Test
-    public void listCertificates() throws Exception {
-        String civicRegistrationNumber = "123456";
+    public void listCertificatesWithNoCertificates() {
+        String civicRegistrationNumber = "19350108-1234";
         List<String> certificateTypes = Arrays.asList("fk7263");
 
         List<CertificateMetaData> result = Collections.emptyList();
@@ -43,7 +43,6 @@ public class ListCertificatesResponderImplTest {
         ListCertificatesRequestType parameters = createListCertificatesRequest(civicRegistrationNumber);
 
         ListCertificatesResponseType response = responder.listCertificates(null, parameters);
-
 
         assertEquals(0, response.getMeta().size());
         assertEquals(OK, response.getResult().getResultCode());

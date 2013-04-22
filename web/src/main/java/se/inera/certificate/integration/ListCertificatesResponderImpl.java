@@ -8,11 +8,10 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 
-import javax.jws.WebParam;
 import java.util.List;
+
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
 /**
  * @author andreaskaltenbach
@@ -23,14 +22,14 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
     CertificateService certificateService;
 
     @Override
-    public ListCertificatesResponseType listCertificates(@WebParam(partName = "LogicalAddress", name = "To", targetNamespace = "http://www.w3.org/2005/08/addressing", header = true) AttributedURIType logicalAddress, @WebParam(partName = "parameters", name = "ListCertificatesRequest", targetNamespace = "urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1") ListCertificatesRequestType parameters) {
+    public ListCertificatesResponseType listCertificates(AttributedURIType logicalAddress, ListCertificatesRequestType parameters) {
 
         ListCertificatesResponseType response = new ListCertificatesResponseType();
 
         List<CertificateMetaData> certificates = certificateService.listCertificates(parameters.getNationalIdentityNumber(), parameters.getCertificateType());
 
         for (CertificateMetaData certificate : certificates) {
-            response.getMeta().add(ModelConverter.ws(certificate));
+            response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
         }
 
         response.setResult(okResult());
@@ -38,9 +37,5 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
         return response;
     }
 
-    private ResultOfCall okResult() {
-        ResultOfCall result = new ResultOfCall();
-        result.setResultCode(ResultCodeEnum.OK);
-        return result;
-    }
+
 }
