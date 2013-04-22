@@ -20,7 +20,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v
 public class ListCertificatesResponderImpl implements ListCertificatesResponderInterface {
 
     @Autowired
-    CertificateService certificateService;
+    private CertificateService certificateService;
 
     @Override
     public ListCertificatesResponseType listCertificates(@WebParam(partName = "LogicalAddress", name = "To", targetNamespace = "http://www.w3.org/2005/08/addressing", header = true) AttributedURIType logicalAddress, @WebParam(partName = "parameters", name = "ListCertificatesRequest", targetNamespace = "urn:riv:insuranceprocess:healthreporting:ListCertificatesResponder:1") ListCertificatesRequestType parameters) {
