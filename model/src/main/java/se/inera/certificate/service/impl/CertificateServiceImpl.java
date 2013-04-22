@@ -14,7 +14,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> type) {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     @Override
