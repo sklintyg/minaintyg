@@ -36,7 +36,7 @@
 	</beans>
 	
 	<beans>
-		<context:component-scan base-package="se.inera.certificate.web.service" />
+		<context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service" />
 
 		<bean id="messageSource"
 			class="org.springframework.context.support.ResourceBundleMessageSource">

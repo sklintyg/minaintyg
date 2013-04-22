@@ -6,7 +6,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/eintyg.inera.se-config.xml</param-value>
+		<param-value>classpath:/eintyg.inera.se-config.xml, /WEB-INF/web-security.xml</param-value>
 	</context-param>
 
 	<!-- Start spring context -->
@@ -24,4 +24,13 @@
 		<servlet-name>web</servlet-name>
 		<url-pattern>/web/*</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
