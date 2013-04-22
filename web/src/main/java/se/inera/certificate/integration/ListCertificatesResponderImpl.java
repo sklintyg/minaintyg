@@ -19,7 +19,7 @@ import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 public class ListCertificatesResponderImpl implements ListCertificatesResponderInterface {
 
     @Autowired
-    CertificateService certificateService;
+    private CertificateService certificateService;
 
     @Override
     public ListCertificatesResponseType listCertificates(AttributedURIType logicalAddress, ListCertificatesRequestType parameters) {
@@ -36,6 +36,4 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
 
         return response;
     }
-
-
 }
