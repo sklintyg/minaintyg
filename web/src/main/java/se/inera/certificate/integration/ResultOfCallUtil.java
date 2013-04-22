@@ -6,7 +6,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 /**
  * @author andreaskaltenbach
  */
-public class ResultOfCallUtil {
+public final class ResultOfCallUtil {
 
     private ResultOfCallUtil() {}
 
