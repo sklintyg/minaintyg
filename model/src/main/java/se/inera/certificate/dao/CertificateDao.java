@@ -10,6 +10,6 @@ public interface CertificateDao {
     List<CertificateMetaData> findCertificateMetaData(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate);
 
     CertificateMetaData getCertificate(String certificateId);
-    
+
     void store(CertificateMetaData certificateMetaData);
 }

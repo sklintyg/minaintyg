@@ -41,11 +41,11 @@ public class Certificate {
     String getId() {
         return id;
     }
-    
+
     public String getDocument() {
         return fromBytes(this.document);
     }
-    
+
     private byte [] toBytes(String data) {
         try {
             return data.getBytes("UTF-8");
@@ -53,7 +53,7 @@ public class Certificate {
             throw new ModelException("Failed to convert String to bytes!", e);
         }
     }
-    
+
     private String fromBytes(byte [] bytes) {
         try {
             return new String(bytes, "UTF-8");
