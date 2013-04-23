@@ -16,10 +16,6 @@ import javax.persistence.Table;
 /**
  * @author andreaskaltenbach
  */
-@NamedQueries({ 
-    @NamedQuery(name = "CertificateMetaData.findByCivicRegistrationNumberAndType", 
-                query = "select c from CertificateMetaData c where civicRegistrationNumber=:civicRegistrationNumber and type in (:types)")
-})
 @Entity
 @Table(name = "CERTIFICATE_META_DATA")
 public class CertificateMetaData {

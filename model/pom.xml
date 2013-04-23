@@ -37,6 +37,11 @@
       <artifactId>spring-orm</artifactId>
     </dependency>
 
+    <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+    </dependency>
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>com.h2database</groupId>

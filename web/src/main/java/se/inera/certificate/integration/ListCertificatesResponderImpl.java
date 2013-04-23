@@ -26,7 +26,8 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
 
         ListCertificatesResponseType response = new ListCertificatesResponseType();
 
-        List<CertificateMetaData> certificates = certificateService.listCertificates(parameters.getNationalIdentityNumber(), parameters.getCertificateType());
+        List<CertificateMetaData> certificates = certificateService.listCertificates(
+                parameters.getNationalIdentityNumber(), parameters.getCertificateType(), parameters.getFromDate(), parameters.getToDate());
 
         for (CertificateMetaData certificate : certificates) {
             response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
