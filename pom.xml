@@ -193,7 +193,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.10</version>
                 <configuration>
-                    <enableRulesSummary>false</enableRulesSummary>
+                    <suppressionsLocation>${project.parent.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
                 </configuration>
             </plugin>
         </plugins>
@@ -208,8 +208,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.10</version>
                 <configuration>
-                <suppressionsLocation>${project.parent.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
+                    <suppressionsLocation>${project.parent.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
                 </configuration>
             </plugin>
         </plugins>
