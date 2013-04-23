@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<%--
 
     Copyright (C) 2013 Inera AB (http://www.inera.se)
 
@@ -18,28 +17,21 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
--->
-<configuration>
+--%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-      </Pattern>
-    </layout>
-  </appender>
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <title>Mina intyg</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="<c:url value="/css/inera.css" />">
+        <script src="<c:url value="/js/inera.js" />"></script>
+    </head>
 
-  <logger name="org.apache.camel" level="WARN" />
-
-  <logger name="org.springframework" level="WARN" />
-  <logger name="org.springframework.security" level="DEBUG" />
-  <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="WARN" />
-  <logger name="org.springframework.web" level="DEBUG" />
-  <logger name="org.springframework.http" level="WARN" />
-
-  <logger name="se.inera.certificate.web" level="DEBUG" />
-
-  <root level="DEBUG">
-    <appender-ref ref="STDOUT" />
-  </root>
-
-</configuration>
+<body>
+<h1>Ge samtycke</h1>
+</body>
+</html>
