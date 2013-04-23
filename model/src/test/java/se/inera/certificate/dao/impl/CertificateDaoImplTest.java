@@ -1,25 +1,22 @@
 package se.inera.certificate.dao.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.model.CertificateMetaData;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-
-import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.model.CertificateMetaData;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContexts/certificateMetaDataTest.xml"})
-@TransactionConfiguration(transactionManager="transactionManager", defaultRollback = true)
-@Transactional
+@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
+@ActiveProfiles("dev")
 public class CertificateDaoImplTest {
 
     @Autowired
