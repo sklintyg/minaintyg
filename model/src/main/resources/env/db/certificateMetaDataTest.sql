@@ -15,9 +15,9 @@ create table CERTIFICATE_META_DATA (
     VALID_TO_DATE timestamp,
     primary key (ID)
 );
-alter table CERTIFICATE_META_DATA 
-    add constraint SAME_ID 
-    foreign key (ID) 
+alter table CERTIFICATE_META_DATA
+    add constraint SAME_ID
+    foreign key (ID)
     references CERTIFICATE;
 
 insert into CERTIFICATE (ID, DOCUMENT) values ('1', X'54686973206973206120646f63756d656e74');

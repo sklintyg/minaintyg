@@ -31,11 +31,11 @@ public class CertificateDaoImplTest {
     private static final String FK7263 = "fk7263";
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Autowired
-    CertificateDao certificateDao;
-    
+    private CertificateDao certificateDao;
+
     @Test
     public void testFindCertificateMetaDataWithoutUserId() {
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(null, null, null, null);
@@ -100,10 +100,10 @@ public class CertificateDaoImplTest {
     public void testGetDocument() throws Exception {
         CertificateMetaData metaData = certificateDao.getCertificate("1");
         String document = metaData.getDocument();
-        
+
         assertEquals("This is a document", document);
     }
-    
+
     @Test
     public void testStore() throws Exception {
         Certificate certificate = new Certificate("12345", "Ett dokument");
