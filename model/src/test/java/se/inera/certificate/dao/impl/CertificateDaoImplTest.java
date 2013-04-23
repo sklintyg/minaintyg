@@ -41,6 +41,15 @@ public class CertificateDaoImplTest {
     }
 
     @Test
+    @Transactional(propagation=Propagation.REQUIRED)
+    public void testGetDocument() throws Exception {
+        CertificateMetaData metaData = certificateDao.getCertificate("1");
+        String document = metaData.getDocument();
+        
+        assertEquals("This is a document", document);
+    }
+    
+    @Test
     @Transactional(propagation = Propagation.REQUIRED)
     public void testStore() throws Exception {
         Certificate certificate = new Certificate("12345", "Ett dokument");

@@ -28,8 +28,8 @@ public class CertificateDaoImpl implements CertificateDao {
     }
 
     @Override
-    public Certificate getCertificate(String certificateId) {
-        return entityManager.find(Certificate.class, certificateId);
+    public CertificateMetaData getCertificate(String certificateId) {
+        return entityManager.find(CertificateMetaData.class, certificateId);
     }
 
     @Override
