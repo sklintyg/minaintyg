@@ -18,16 +18,17 @@
  */
 package se.inera.certificate.web.security;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 /**
  * Implementation of the @see CitizenDetails interface.
  */
+@SuppressWarnings("serial")
 public class CitizenImpl implements Citizen {
 
     private Boolean consent;

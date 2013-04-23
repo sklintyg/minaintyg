@@ -18,9 +18,9 @@
  */
 package se.inera.certificate.web.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serializable;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * The details of a citizen.
@@ -35,6 +35,7 @@ public interface Citizen extends UserDetails, Serializable {
     Boolean hasConsent();
 
     /**
+     * Do we actually have a value for consent?
      * @return
      */
     boolean consentIsKnown();

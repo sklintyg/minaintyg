@@ -18,20 +18,12 @@
  */
 package se.inera.certificate.web.security;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
 import org.callistasoftware.netcare.mvk.authentication.service.api.impl.AuthenticationResultImpl;
-import org.callistasoftware.netcare.mvk.authentication.web.filter.AuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;

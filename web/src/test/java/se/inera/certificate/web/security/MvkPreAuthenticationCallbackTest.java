@@ -1,16 +1,14 @@
 package se.inera.certificate.web.security;
 
-import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
-import org.callistasoftware.netcare.mvk.authentication.service.api.impl.AuthenticationResultImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  */
