@@ -11,6 +11,10 @@
   <name>Inera Certificate Web Application</name>
   <packaging>war</packaging>
 
+  <properties>
+    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+  </properties>
+
   <dependencies>
 
     <dependency>

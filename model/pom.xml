@@ -10,6 +10,10 @@
   <artifactId>model</artifactId>
   <name>Inera Certificate Model</name>
 
+  <properties>
+    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+  </properties>
+  
   <description>Contains model for the certificate domain.</description>
 
   <dependencies>
