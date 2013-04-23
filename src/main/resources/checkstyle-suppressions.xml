@@ -12,4 +12,6 @@
   <suppress checks="JavadocVariable" files="."/>
   <suppress checks="LineLength" files="."/>
   <suppress checks="FinalParameters" files="."/>
+  <suppress checks="HiddenField" files="."/>
+  <suppress checks="DesignForExtension" files="."/>
 </suppressions>
