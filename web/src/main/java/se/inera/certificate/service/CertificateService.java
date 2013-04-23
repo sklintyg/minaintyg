@@ -1,6 +1,6 @@
 package se.inera.certificate.service;
 
-import se.inera.certificate.model.Certificate;
+import org.joda.time.LocalDate;
 import se.inera.certificate.model.CertificateMetaData;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CertificateService {
 
-    List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> type);
+    List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate);
 
-    Certificate getCertificate(String civicRegistrationNumber, String certificateId);
+    CertificateMetaData getCertificate(String civicRegistrationNumber, String certificateId);
 }
