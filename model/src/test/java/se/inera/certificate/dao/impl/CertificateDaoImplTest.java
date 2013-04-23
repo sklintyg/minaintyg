@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.Certificate;
@@ -98,7 +97,6 @@ public class CertificateDaoImplTest {
     }
 
     @Test
-    @Transactional(propagation=Propagation.REQUIRED)
     public void testGetDocument() throws Exception {
         CertificateMetaData metaData = certificateDao.getCertificate("1");
         String document = metaData.getDocument();
@@ -107,7 +105,6 @@ public class CertificateDaoImplTest {
     }
     
     @Test
-    @Transactional(propagation = Propagation.REQUIRED)
     public void testStore() throws Exception {
         Certificate certificate = new Certificate("12345", "Ett dokument");
         CertificateMetaData certificateMetaData = new CertificateMetaData(certificate);

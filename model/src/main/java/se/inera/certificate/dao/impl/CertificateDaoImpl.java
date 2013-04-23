@@ -54,7 +54,6 @@ public class CertificateDaoImpl implements CertificateDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
     public void store(CertificateMetaData certificateMetaData) {
         entityManager.persist(certificateMetaData);
     }
