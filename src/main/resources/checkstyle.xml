@@ -5,9 +5,8 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: MyStyle
-    Description: 
-Checkstyle configuration that checks the sun coding conventions.
+    Checkstyle-Configuration: Inera
+    Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
@@ -64,7 +63,10 @@ Checkstyle configuration that checks the sun coding conventions.
     <module name="AvoidInlineConditionals"/>
     <module name="EmptyStatement"/>
     <module name="EqualsHashCode"/>
-    <module name="HiddenField"/>
+    <module name="HiddenField">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
     <module name="MagicNumber"/>
