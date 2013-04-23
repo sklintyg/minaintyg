@@ -8,7 +8,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
  */
 public final class ResultOfCallUtil {
 
-    private ResultOfCallUtil() {}
+    private ResultOfCallUtil() { }
 
     public static ResultOfCall okResult() {
         ResultOfCall result = new ResultOfCall();

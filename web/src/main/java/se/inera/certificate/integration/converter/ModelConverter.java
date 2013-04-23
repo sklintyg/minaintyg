@@ -9,7 +9,7 @@ import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
  */
 public final class ModelConverter {
 
-    private ModelConverter(){}
+    private ModelConverter() { }
 
     public static CertificateMetaType toCertificateMetaType(CertificateMetaData source) {
         return new CertificateMetaType();
