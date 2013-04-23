@@ -14,9 +14,7 @@ import javax.persistence.Table;
  */
 @NamedQueries({
     @NamedQuery(name="CertificateMetaData.findByCivicRegistrationNumberAndType", 
-                query="select c from CertificateMetaData c where civicRegistrationNumber=:civicRegistrationNumber and type in (:types)"),
-    @NamedQuery(name="CertificateMetaData.findCertificateById",
-                query="select c.certificate from CertificateMetaData c where id=:id")            
+                query="select c from CertificateMetaData c where civicRegistrationNumber=:civicRegistrationNumber and type in (:types)")
 })
 @Entity
 @Table(name="CERTIFICATE_META_DATA")
@@ -24,37 +22,42 @@ public class CertificateMetaData {
 	
 	/** Identity of the certificate */
     @Id
+    @Column(name="ID")
 	private String id;
 	
 	/** Type of the certificate */
+    @Column(name="TYPE")
 	private String type;
 	
 	/** Name of the doctor that signed the certificate */
 	// TODO: naming? (PW)
+    @Column(name="SIGNING_DOCTOR_NAME")
 	private String signingDoctorName;
 	
 	/** Name of care unit */
+    @Column(name="CARE_UNIT_NAME")
 	private String careUnitName;
 	
 	/** Civic registration number for patient */
+    @Column(name="CIVIC_REGISTRATION_NUMBER")
 	private String civicRegistrationNumber;
 	
 	/** Time this certificate was signed */
+    @Column(name="SIGNED_DATE")
 	private Date signedDate;
 	
 	/** Time from which this certificate is valid */
+    @Column(name="VALID_FROM_DATE")
 	private Date validFromDate;
 	
 	/** Time to which this certificate is valid */
+    @Column(name="VALID_TO_DATE")
 	private Date validToDate;
 	
 	/** If this certificate is deleted or not */
-	@Column(nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name="DELETED", nullable = false, columnDefinition = "TINYINT(1)")
 	private Boolean deleted;
 	
-	/** The certificate in String representation */
-	private String certificate;
-
 	public String getId() {
 		return id;
 	}
@@ -96,27 +99,27 @@ public class CertificateMetaData {
 	}
 
 	public Date getSignedDate() {
-		return signedDate;
+		return new Date(signedDate.getTime());
 	}
 
 	public void setSignedDate(Date signedDate) {
-		this.signedDate = signedDate;
+		this.signedDate = new Date(signedDate.getTime());
 	}
 
 	public Date getValidFromDate() {
-		return validFromDate;
+		return new Date(validFromDate.getTime());
 	}
 
 	public void setValidFromDate(Date validFromDate) {
-		this.validFromDate = validFromDate;
+		this.validFromDate = new Date(validFromDate.getTime());
 	}
 
 	public Date getValidToDate() {
-		return validToDate;
+		return new Date(validToDate.getTime());
 	}
 
 	public void setValidToDate(Date validToDate) {
-		this.validToDate = validToDate;
+		this.validToDate = new Date(validToDate.getTime());
 	}
 
 	public Boolean getDeleted() {
@@ -125,13 +128,5 @@ public class CertificateMetaData {
 
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
-	}
-
-	public String getCertificate() {
-		return certificate;
-	}
-
-	public void setCertificate(String certificate) {
-		this.certificate = certificate;
 	}
 }
