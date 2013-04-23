@@ -2,131 +2,148 @@ package se.inera.certificate.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * @author andreaskaltenbach
  */
-@NamedQueries({
-    @NamedQuery(name="CertificateMetaData.findByCivicRegistrationNumberAndType", 
-                query="select c from CertificateMetaData c where civicRegistrationNumber=:civicRegistrationNumber and type in (:types)")
+@NamedQueries({ 
+    @NamedQuery(name = "CertificateMetaData.findByCivicRegistrationNumberAndType", 
+                query = "select c from CertificateMetaData c where civicRegistrationNumber=:civicRegistrationNumber and type in (:types)")
 })
 @Entity
-@Table(name="CERTIFICATE_META_DATA")
+@Table(name = "CERTIFICATE_META_DATA")
 public class CertificateMetaData {
-	
-	/** Identity of the certificate */
+
+    /** Identity of the certificate. */
     @Id
-    @Column(name="ID")
-	private String id;
-	
-	/** Type of the certificate */
-    @Column(name="TYPE")
-	private String type;
-	
-	/** Name of the doctor that signed the certificate */
-	// TODO: naming? (PW)
-    @Column(name="SIGNING_DOCTOR_NAME")
-	private String signingDoctorName;
-	
-	/** Name of care unit */
-    @Column(name="CARE_UNIT_NAME")
-	private String careUnitName;
-	
-	/** Civic registration number for patient */
-    @Column(name="CIVIC_REGISTRATION_NUMBER")
-	private String civicRegistrationNumber;
-	
-	/** Time this certificate was signed */
-    @Column(name="SIGNED_DATE")
-	private Date signedDate;
-	
-	/** Time from which this certificate is valid */
-    @Column(name="VALID_FROM_DATE")
-	private Date validFromDate;
-	
-	/** Time to which this certificate is valid */
-    @Column(name="VALID_TO_DATE")
-	private Date validToDate;
-	
-	/** If this certificate is deleted or not */
-	@Column(name="DELETED", nullable = false, columnDefinition = "TINYINT(1)")
-	private Boolean deleted;
-	
-	public String getId() {
-		return id;
-	}
+    @Column(name = "ID")
+    private String id;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    /** Type of the certificate. */
+    @Column(name = "TYPE")
+    private String type;
 
-	public String getType() {
-		return type;
-	}
+    /** Name of the doctor that signed the certificate. */
+    // TODO: naming? (PW)
+    @Column(name = "SIGNING_DOCTOR_NAME")
+    private String signingDoctorName;
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    /** Name of care unit. */
+    @Column(name = "CARE_UNIT_NAME")
+    private String careUnitName;
 
-	public String getSigningDoctorName() {
-		return signingDoctorName;
-	}
+    /** Civic registration number for patient. */
+    @Column(name = "CIVIC_REGISTRATION_NUMBER")
+    private String civicRegistrationNumber;
 
-	public void setSigningDoctorName(String signingDoctorName) {
-		this.signingDoctorName = signingDoctorName;
-	}
+    /** Time this certificate was signed. */
+    @Column(name = "SIGNED_DATE")
+    private Date signedDate;
 
-	public String getCareUnitName() {
-		return careUnitName;
-	}
+    /** Time from which this certificate is valid. */
+    @Column(name = "VALID_FROM_DATE")
+    private Date validFromDate;
 
-	public void setCareUnitName(String careUnitName) {
-		this.careUnitName = careUnitName;
-	}
+    /** Time to which this certificate is valid. */
+    @Column(name = "VALID_TO_DATE")
+    private Date validToDate;
 
-	public String getCivicRegistrationNumber() {
-		return civicRegistrationNumber;
-	}
+    /** If this certificate is deleted or not. */
+    @Column(name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean deleted = Boolean.FALSE;
 
-	public void setCivicRegistrationNumber(String civicRegistrationNumber) {
-		this.civicRegistrationNumber = civicRegistrationNumber;
-	}
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ID", insertable = false, updatable = false)
+    private Certificate certificate;
 
-	public Date getSignedDate() {
-		return new Date(signedDate.getTime());
-	}
+    public CertificateMetaData(Certificate certificate) {
+        this.certificate = certificate;
+        this.id = certificate.getId();
+    }
 
-	public void setSignedDate(Date signedDate) {
-		this.signedDate = new Date(signedDate.getTime());
-	}
+    public CertificateMetaData() {
+        // EMPTY
+    }
 
-	public Date getValidFromDate() {
-		return new Date(validFromDate.getTime());
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setValidFromDate(Date validFromDate) {
-		this.validFromDate = new Date(validFromDate.getTime());
-	}
+    public String getType() {
+        return type;
+    }
 
-	public Date getValidToDate() {
-		return new Date(validToDate.getTime());
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setValidToDate(Date validToDate) {
-		this.validToDate = new Date(validToDate.getTime());
-	}
+    public String getSigningDoctorName() {
+        return signingDoctorName;
+    }
 
-	public Boolean getDeleted() {
-		return deleted;
-	}
+    public void setSigningDoctorName(String signingDoctorName) {
+        this.signingDoctorName = signingDoctorName;
+    }
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
+    public String getCareUnitName() {
+        return careUnitName;
+    }
+
+    public void setCareUnitName(String careUnitName) {
+        this.careUnitName = careUnitName;
+    }
+
+    public String getCivicRegistrationNumber() {
+        return civicRegistrationNumber;
+    }
+
+    public void setCivicRegistrationNumber(String civicRegistrationNumber) {
+        this.civicRegistrationNumber = civicRegistrationNumber;
+    }
+
+    public Date getSignedDate() {
+        return new Date(signedDate.getTime());
+    }
+
+    public void setSignedDate(Date signedDate) {
+        this.signedDate = new Date(signedDate.getTime());
+    }
+
+    public Date getValidFromDate() {
+        return new Date(validFromDate.getTime());
+    }
+
+    public void setValidFromDate(Date validFromDate) {
+        this.validFromDate = new Date(validFromDate.getTime());
+    }
+
+    public Date getValidToDate() {
+        return new Date(validToDate.getTime());
+    }
+
+    public void setValidToDate(Date validToDate) {
+        this.validToDate = new Date(validToDate.getTime());
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getDocument() {
+        return certificate.getDocument();
+    }
 }

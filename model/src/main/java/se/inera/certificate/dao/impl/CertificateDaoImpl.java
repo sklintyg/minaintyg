@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.Certificate;
@@ -28,6 +30,12 @@ public class CertificateDaoImpl implements CertificateDao {
     @Override
     public Certificate getCertificate(String certificateId) {
         return entityManager.find(Certificate.class, certificateId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void store(CertificateMetaData certificateMetaData) {
+        entityManager.persist(certificateMetaData);
     }
 
 }

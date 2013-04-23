@@ -11,4 +11,5 @@ public interface CertificateDao {
 
     Certificate getCertificate(String certificateId);
     
+    void store(CertificateMetaData certificateMetaData);
 }
