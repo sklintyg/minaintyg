@@ -1,11 +1,8 @@
 package se.inera.certificate.dao.impl;
 
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.model.CertificateMetaData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,16 +10,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import org.joda.time.LocalDate;
+import org.springframework.stereotype.Repository;
+
+import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.model.CertificateMetaData;
 
 @Repository
 public class CertificateDaoImpl implements CertificateDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-    
+
     @Override
     public List<CertificateMetaData> findCertificateMetaData(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
 
