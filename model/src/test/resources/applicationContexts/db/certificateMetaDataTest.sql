@@ -1,15 +1,22 @@
 create table CERTIFICATE_META_DATA (
-	id varchar(255) not null, 
-	careUnitName varchar(255), 
-	certificate varchar(255),
-	civicRegistrationNumber varchar(255), 
-	deleted TINYINT(1) not null,
-    signedDate timestamp,
-    signingDoctorName varchar(255),
-    type varchar(255),
-    validFromDate timestamp,
-    validToDate timestamp,
-    primary key (id)
+    ID varchar(255) not null,
+    CARE_UNIT_NAME varchar(255),
+    CIVIC_REGISTRATION_NUMBER varchar(255),
+    DELETED TINYINT(1) not null,
+    SIGNED_DATE timestamp,
+    SIGNING_DOCTOR_NAME varchar(255),
+    TYPE varchar(255),
+    VALID_FROM_DATE timestamp,
+    VALID_TO_DATE timestamp,
+    primary key (ID)
 );
-insert into CERTIFICATE_META_DATA (id, civicRegistrationNumber, deleted, type) values ('1', '121212-1212', 0, 'INTYG');
+create table CERTIFICATE (
+    ID varchar(255) not null,
+    DOCUMENT blob,
+    primary key (ID)
+);
+
+insert into CERTIFICATE_META_DATA (ID, CIVIC_REGISTRATION_NUMBER, DELETED, TYPE) values ('1', '121212-1212', 0, 'INTYG');
+--insert into CERTIFICATE (ID, DOCUMENT) values ('1', '<certificate></certificate>');
+
 

@@ -4,5 +4,6 @@
   version="2.0">
   <persistence-unit name="jpaTest" transaction-type="RESOURCE_LOCAL">
     <class>se.inera.certificate.model.CertificateMetaData</class>
+    <class>se.inera.certificate.model.Certificate</class>
   </persistence-unit>
 </persistence>
