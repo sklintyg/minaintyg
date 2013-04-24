@@ -1,0 +1,54 @@
+package se.inera.certificate.model.builder;
+
+import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.CertificateMetaData;
+
+import java.util.Date;
+
+/**
+ * @author andreaskaltenbach
+ */
+public class CertificateMetaDataBuilder {
+
+    private CertificateMetaData metaData;
+
+    public CertificateMetaDataBuilder(String certificateId) {
+        Certificate certificate = new Certificate(certificateId, "");
+        metaData = new CertificateMetaData(certificate);
+    }
+
+    public CertificateMetaDataBuilder certificateType(String certificateType) {
+        metaData.setType(certificateType);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder validity(Date fromDate, Date toDate) {
+        metaData.setValidFromDate(fromDate);
+        metaData.setValidToDate(toDate);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder careUnitName(String careUnitName) {
+        metaData.setCareUnitName(careUnitName);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder signingDoctorName(String signingDoctorName) {
+        metaData.setSigningDoctorName(signingDoctorName);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder signedDate(Date signedDate) {
+        metaData.setSignedDate(signedDate);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder deleted(boolean deleted) {
+        metaData.setDeleted(deleted);
+        return this;
+    }
+
+    public CertificateMetaData build() {
+        return metaData;
+    }
+}
