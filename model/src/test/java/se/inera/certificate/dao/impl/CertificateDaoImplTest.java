@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -86,14 +87,31 @@ public class CertificateDaoImplTest {
         assertEquals(2, metaData.size());
     }
 
-    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType) {
+    @Test
+    public void testFindCertificateMetaDataWithValidityFilter() throws Exception {
+        int certificateId = Integer.parseInt(CERTIFICATE_ID);
+        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-04-13", "2013-05-13");
+        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-03-13", "2013-04-12");
+        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-05-13", "2013-06-13");
 
+        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(FK7263), new LocalDate("2013-04-01"), new LocalDate("2013-04-15"));
+
+        assertEquals(2, metaData.size());
+    }
+
+    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType) {
+        createMetaData(certificateId, civicRegistrationNumber, certificateType, null, null);
+    }
+
+    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType, String validFrom, String validTo) {
         Certificate certificate = new Certificate(certificateId, "abc");
 
         CertificateMetaData metaData = new CertificateMetaData(certificate);
         metaData.setCivicRegistrationNumber(civicRegistrationNumber);
         metaData.setType(certificateType);
         metaData.setDeleted(false);
+        metaData.setValidFromDate(new LocalDate(validFrom));
+        metaData.setValidToDate(new LocalDate(validTo));
         entityManager.persist(metaData);
     }
 
