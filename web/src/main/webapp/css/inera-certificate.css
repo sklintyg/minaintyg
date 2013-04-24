@@ -1,0 +1,342 @@
+/**
+ * Copyright (C) 2012 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
+ *
+ * Inera Certificate Web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@font-face {
+  font-family: 'Noticia Text';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noticia Text Bold'), local('NoticiaText-Bold'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/pEko-RqEtp45bE2P80AAKXl4twXkwp3_u9ZoePkT564.woff) format('woff');
+}
+@font-face {
+  font-family: 'Noticia Text';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Noticia Text Italic'), local('NoticiaText-Italic'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/dAuxVpkYE_Q_IwIm6elsKHpumDtkw9GHrrDfd7ZnWpU.woff) format('woff');
+}
+@font-face {
+  font-family: 'Sanchez';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Sanchez'), local('Sanchez-Regular'), url(http://themes.googleusercontent.com/static/fonts/sanchez/v1/mx466fsxfR1AA3OwUm3waQ.woff) format('woff');
+}
+@font-face {
+  font-family: 'Sanchez';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Sanchez Italic'), local('Sanchez-Italic'), url(http://themes.googleusercontent.com/static/fonts/sanchez/v1/HsmMg_Kwn-sTuZvQJORnlz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+
+body {
+	text-align: left;
+	background-image: url("../img/bg11.png");
+}
+
+h1 {
+	font-size: 24px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	font-family: 'Sanchez','Noticia Text', Arial, sans-serif;
+/*	font-style: italic;*/
+}
+
+h2 {
+	color: #555;
+	font-size: 16px;
+	line-height: 26px;
+}
+
+div.container {
+	background: none;
+}
+
+#welcome-image {
+	margin-top: 55px;
+}
+
+#tabs {
+	color: #008391;
+	font-size: 14px;
+	font-weight: bold;
+	float: left;
+	position: absolute;
+	list-style: none;
+	top: -45px;
+	margin: 0;
+	left: 33px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+	margin: -1px 0 0;
+}
+
+#tabs li {
+	padding: 15px 20px 10px 20px;
+	margin: 0 10px 0 0;
+}
+
+#tabs img {
+	vertical-align: -5px;
+}
+
+#backnav {
+	padding-bottom: 10px;
+}
+
+#backnav a {
+	font-style: italic;
+}
+
+.status-row {
+	padding-bottom: 5px;
+}
+
+div.statuslist {
+	display: none;
+}
+
+tbody tr.unhandled td {
+	font-weight: bold;
+}
+
+tbody tr.cancelled td {
+	background-color: #c9cac8;
+	text-decoration: line-through;	
+}
+
+.cert-header .tag {
+	text-align: left;
+	font-weight: bold;
+}
+
+.cert-body .body-row .title {
+	font-weight: bold;
+	display: block;
+	padding: 20px 0 5px 0;
+}
+
+.cert-body .body-row .unfilled {
+	color: #888;
+}
+
+.cert-body .body-row .text {
+	display: block;
+}
+
+section.certificate div.cert {
+	position: relative;
+}
+
+section.certificate div.cert div.cert-header {
+	padding: 20px 20px 10px 40px;
+	background-color: #e9eae8;
+	border: 1px 1px 0 1px solid #e9eae8;
+	-webkit-border-radius:8px 8px 0 0;
+	-moz-border-radius:8px 8px 0 0;
+	border-radius:8px 8px 0 0;	
+}
+
+section.certificate div.cert div.cert-body {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+}
+
+section.certificate {
+	padding-bottom: 10px;
+}
+
+section.certificate div.cert div.cert-body div.body-row {
+	padding: 5px 20px 20px 40px;
+	border-bottom: 1px solid #e9eae8;
+}
+
+section.certificate div.cert div.cert-footer {
+	padding: 20px;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+	background-color: #e9eae8;
+	-webkit-border-radius: 0 0 8px 8px;
+	-moz-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;	
+}
+
+/*
+section.certificate {
+	padding-bottom: 10px;	
+}*/
+
+section.certificate.small div.cert div.cert-body {
+	display: none;
+}
+/*
+
+section.certificate div.cert div.cert-header {
+	padding: 20px;
+	background-color: #e9eae8;
+	border: 1px 1px 0 1px solid #e9eae8;
+	-webkit-border-radius:8px 8px 0 0;
+	-moz-border-radius:8px 8px 0 0;
+	border-radius:8px 8px 0 0;	
+}
+
+section.certificate div.cert div.cert-body {
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+}
+
+section.certificate div.cert div.cert-body div.body-row {
+	padding: 10px 20px 20px 10px;
+	border-bottom: 1px solid #e9eae8;
+}
+
+section.certificate div.cert div.cert-footer {
+	padding: 5px;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+	background-color: #e9eae8;
+	-webkit-border-radius: 0 0 8px 8px;
+	-moz-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;	
+}
+*/
+section.certificate .btn {
+	float: right;	
+	background: rgb(101,101,101); /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iIzY1NjU2NSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzZjNmM2YiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  rgba(101,101,101,1) 1%, rgba(63,63,63,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(101,101,101,1)), color-stop(100%,rgba(63,63,63,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(101,101,101,1) 1%,rgba(63,63,63,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(101,101,101,1) 1%,rgba(63,63,63,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(101,101,101,1) 1%,rgba(63,63,63,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(101,101,101,1) 1%,rgba(63,63,63,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#656565', endColorstr='#3f3f3f',GradientType=0 ); /* IE6-8 */
+	text-shadow: none;
+	color: #fff;
+	padding: 20px 40px;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	-moz-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 4%;
+}
+
+section.certificate .btn.show,
+section.certificate.small .btn.hide {
+	display: none;
+	
+}
+
+section.certificate.small .btn.show,
+section.certificate .btn.hide {
+	display: inline;
+}
+
+section.modifiable-certificate {
+	padding: 10px;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+	background-color: #e9eae8;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	-moz-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;	
+}
+
+section.modifiable-certificate h4 {
+	color: #000;
+	margin-top: 20px;
+}
+
+section.modifiable-certificate div.content-box {
+	padding: 5px;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #e9eae8;
+	background-color: #fff;
+	-webkit-border-radius: 8px 8px 8px 8px;
+	-moz-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;	
+}
+
+td.link {
+	cursor: pointer;
+}
+
+/* Remove titles from popovers */
+h3.popover-title:empty {
+	display: none;
+}
+
+div.content {
+	padding: 40px 60px;
+}
+
+p.ingress {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: left;
+	color: #555;
+	margin: 0;
+}
+
+p {
+	line-height: 140%;
+	text-align: left;
+}
+
+p.btn-row {
+	padding-top: 20px;
+}
+
+p.btn-row a.btn-link {
+	padding-left: 20px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+ul.italic li {
+	font-style: italic;
+}
+
+/* bootstrap override */
+
+.btn {
+	padding: 10px 35px;
+	font-weight: bold;
+	border: none;
+}
+
+.btn-success {
+	background: none;
+	background-color: #2FAC66;
+}
+
+.btn-success:hover {
+	background-color: #31BA68;
+}
+
+.btn-link {
+	color: #31b2be;
+}

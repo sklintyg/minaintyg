@@ -33,6 +33,6 @@ public class ConsentServiceImpl implements ConsentService {
     @Override
     public boolean fetchConsent(String username) {
         log.debug("About to fetch consent.");
-        return true;
+        return false;
     }
 }
