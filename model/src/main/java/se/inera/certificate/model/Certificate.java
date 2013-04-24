@@ -34,7 +34,7 @@ public class Certificate {
         this.document = toBytes(document);
     }
 
-    public Certificate() {
+    Certificate() {
         // Empty
     }
 

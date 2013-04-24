@@ -12,8 +12,10 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
@@ -27,7 +29,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
     private CertificateService certificateService;
 
     @Autowired
-    private List<CertificateSupport> supportedCertificates;
+    List<CertificateSupport> supportedCertificates = new ArrayList<>();
 
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType parameters) {
@@ -38,23 +40,32 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
 
         if (metaData != null) {
             response.setMeta(ModelConverter.toCertificateMetaType(metaData));
-
-            CertificateSupport certificateSupport = retrieveCertificateSupport(metaData.getType());
-
-            CertificateType certificateType = new CertificateType();
-            certificateType.getAny().add(certificateSupport.deserializeCertificate(metaData.getCertificate().getDocument()));
-            response.setCertificate(certificateType);
-
-            response.setResult(okResult());
+            attachCertificateDocument(metaData, response);
         }
         else {
-            response.setResult(failResult("Unknown certificate ID"));
+            response.setResult(failResult(String.format("Unknown certificate ID: %s", parameters.getCertificateId())));
         }
 
         return response;
     }
 
-    private CertificateSupport retrieveCertificateSupport(String certificateType) {
+    private void attachCertificateDocument(CertificateMetaData metaData, GetCertificateResponseType response) {
+        CertificateType certificateType = new CertificateType();
+
+        CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(metaData.getType());
+        if (certificateSupport == null) {
+            // given certificate type is not supported
+            response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", metaData.getType())));
+        }
+        else {
+            // certificate type is supported and we use a CertificateSupport implementation to get the JAXB element from the certificate string
+            certificateType.getAny().add(certificateSupport.deserializeCertificate(metaData.getCertificate().getDocument()));
+            response.setCertificate(certificateType);
+            response.setResult(okResult());
+        }
+    }
+
+    private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
         for (CertificateSupport certificateSupport : supportedCertificates) {
             if (certificateSupport.certificateType().equals(certificateType)) {
                 return certificateSupport;

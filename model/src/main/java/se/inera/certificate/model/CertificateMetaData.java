@@ -1,7 +1,5 @@
 package se.inera.certificate.model;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 
 /**
  * @author andreaskaltenbach
@@ -42,15 +43,18 @@ public class CertificateMetaData {
 
     /** Time this certificate was signed. */
     @Column(name = "SIGNED_DATE")
-    private Date signedDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate signedDate;
 
     /** Time from which this certificate is valid. */
     @Column(name = "VALID_FROM_DATE")
-    private Date validFromDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate validFromDate;
 
     /** Time to which this certificate is valid. */
     @Column(name = "VALID_TO_DATE")
-    private Date validToDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate validToDate;
 
     /** If this certificate is deleted or not. */
     @Column(name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)")
@@ -105,28 +109,28 @@ public class CertificateMetaData {
         this.civicRegistrationNumber = civicRegistrationNumber;
     }
 
-    public Date getSignedDate() {
-        return new Date(signedDate.getTime());
+    public LocalDate getSignedDate() {
+        return signedDate;
     }
 
-    public void setSignedDate(Date signedDate) {
-        this.signedDate = new Date(signedDate.getTime());
+    public void setSignedDate(LocalDate signedDate) {
+        this.signedDate = signedDate;
     }
 
-    public Date getValidFromDate() {
-        return new Date(validFromDate.getTime());
+    public LocalDate getValidFromDate() {
+        return validFromDate;
     }
 
-    public void setValidFromDate(Date validFromDate) {
-        this.validFromDate = new Date(validFromDate.getTime());
+    public void setValidFromDate(LocalDate validFromDate) {
+        this.validFromDate = validFromDate;
     }
 
-    public Date getValidToDate() {
-        return new Date(validToDate.getTime());
+    public LocalDate getValidToDate() {
+        return validToDate;
     }
 
-    public void setValidToDate(Date validToDate) {
-        this.validToDate = new Date(validToDate.getTime());
+    public void setValidToDate(LocalDate validToDate) {
+        this.validToDate = validToDate;
     }
 
     public Boolean getDeleted() {

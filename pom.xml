@@ -24,6 +24,7 @@
     <hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
     <h2database.version>1.3.171</h2database.version>
     <joda.version>2.2</joda.version>
+    <jadira.usertype.version>3.1.0.CR2</jadira.usertype.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
 
@@ -106,6 +107,12 @@
         <artifactId>joda-time</artifactId>
         <version>${joda.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.jadira.usertype</groupId>
+        <artifactId>usertype.core</artifactId>
+        <version>${jadira.usertype.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
@@ -182,6 +189,33 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <versionRange>
+                      [0.6.2,)
+                    </versionRange>
+                    <goals>
+                      <goal>prepare-agent</goal>
+                      <goal>report</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -199,8 +233,28 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.10</version>
         <configuration>
-          <suppressionsLocation>${project.parent.basedir}/src/main/resources/checkstyle-suppressions.xml</suppressionsLocation>
+          <configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.6.2.201302030002</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

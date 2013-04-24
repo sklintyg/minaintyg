@@ -18,9 +18,17 @@ public final class ResultOfCallUtil {
     }
 
     public static ResultOfCall failResult(String errorText) {
+        return failResult(ErrorIdEnum.VALIDATION_ERROR, errorText);
+    }
+
+    public static ResultOfCall applicationErrorResult(String errorText) {
+        return failResult(ErrorIdEnum.APPLICATION_ERROR, errorText);
+    }
+
+    private static ResultOfCall failResult(ErrorIdEnum errorType, String errorText) {
         ResultOfCall result = new ResultOfCall();
         result.setResultCode(ResultCodeEnum.ERROR);
-        result.setErrorId(ErrorIdEnum.VALIDATION_ERROR);
+        result.setErrorId(errorType);
         result.setErrorText(errorText);
         return result;
     }

@@ -17,12 +17,20 @@ import org.springframework.stereotype.Repository;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.CertificateMetaData;
 
+/**
+ * Implementation of {@link CertificateDao}.
+ */
 @Repository
 public class CertificateDaoImpl implements CertificateDao {
 
+    /** Injected EntityManager object. */
     @PersistenceContext
     private EntityManager entityManager;
 
+    /*
+     * (non-Javadoc)
+     * @see se.inera.certificate.dao.CertificateDao#findCertificateMetaData(java.lang.String, java.util.List, org.joda.time.LocalDate, org.joda.time.LocalDate)
+     */
     @Override
     public List<CertificateMetaData> findCertificateMetaData(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
 
@@ -45,14 +53,25 @@ public class CertificateDaoImpl implements CertificateDao {
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));
-        return entityManager.createQuery(query).getResultList();
+        List<CertificateMetaData> result = entityManager.createQuery(query).getResultList();
+
+        // expect a small number, so lets filter in memory
+        return new DateFilter(result).filter(fromDate, toDate);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see se.inera.certificate.dao.CertificateDao#getCertificate(java.lang.String)
+     */
     @Override
     public CertificateMetaData getCertificate(String certificateId) {
         return entityManager.find(CertificateMetaData.class, certificateId);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see se.inera.certificate.dao.CertificateDao#store(se.inera.certificate.model.CertificateMetaData)
+     */
     @Override
     public void store(CertificateMetaData certificateMetaData) {
         entityManager.persist(certificateMetaData);
