@@ -1,9 +1,8 @@
 package se.inera.certificate.model.builder;
 
+import org.joda.time.LocalDate;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateMetaData;
-
-import java.util.Date;
 
 /**
  * @author andreaskaltenbach
@@ -22,7 +21,7 @@ public class CertificateMetaDataBuilder {
         return this;
     }
 
-    public CertificateMetaDataBuilder validity(Date fromDate, Date toDate) {
+    public CertificateMetaDataBuilder validity(LocalDate fromDate, LocalDate toDate) {
         metaData.setValidFromDate(fromDate);
         metaData.setValidToDate(toDate);
         return this;
@@ -38,7 +37,7 @@ public class CertificateMetaDataBuilder {
         return this;
     }
 
-    public CertificateMetaDataBuilder signedDate(Date signedDate) {
+    public CertificateMetaDataBuilder signedDate(LocalDate signedDate) {
         metaData.setSignedDate(signedDate);
         return this;
     }

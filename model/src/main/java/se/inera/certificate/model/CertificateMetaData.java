@@ -144,4 +144,8 @@ public class CertificateMetaData {
     public String getDocument() {
         return certificate.getDocument();
     }
+
+    public Certificate getCertificate() {
+        return certificate;
+    }
 }

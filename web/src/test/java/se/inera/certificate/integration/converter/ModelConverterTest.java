@@ -47,9 +47,9 @@ public class ModelConverterTest {
     private CertificateMetaData createCertificateMetaData() {
          return new CertificateMetaDataBuilder("112233")
                      .certificateType("fk7263")
-                     .validity(new LocalDate(2000, 1, 1).toDate(), new LocalDate(2020, 1, 1).toDate())
+                     .validity(new LocalDate(2000, 1, 1), new LocalDate(2020, 1, 1))
                      .signingDoctorName("Doctor Who")
-                     .signedDate(new LocalDate(1999, 12, 31).toDate())
+                     .signedDate(new LocalDate(1999, 12, 31))
                      .careUnitName("London Bridge Hospital")
                      .deleted(false)
                      .build();
