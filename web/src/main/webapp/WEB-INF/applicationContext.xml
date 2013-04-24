@@ -15,8 +15,16 @@
   <context:annotation-config />
   <context:component-scan base-package="se.inera.certificate" />
 
+  <bean id="certificatesContextClassCollector" class="se.inera.certificate.integration.certificates.config.AdditionalContextClassCollector"/>
+
   <!-- ws endpoints -->
   <jaxws:endpoint address="/list-certificates" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
-  <jaxws:endpoint address="/get-certificate" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" />
+  <jaxws:endpoint address="/get-certificate" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" >
+    <jaxws:properties>
+          <entry key="jaxb.additionalContextClasses" value="#{certificatesContextClassCollector.certificateContextClasses}" />
+        </jaxws:properties>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/register-certificate" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
 
 </beans>
