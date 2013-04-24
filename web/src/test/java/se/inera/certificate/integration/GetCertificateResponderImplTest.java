@@ -24,9 +24,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.certificate.model.Certificate;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
+import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
@@ -37,7 +36,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
  * @author andreaskaltenbach
