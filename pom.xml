@@ -33,7 +33,7 @@
 	</modules>
 
 	<properties>
-		<system.mode>local</system.mode>
+		<system.mode>dev</system.mode>
 		<project.version>1.0-SNAPSHOT</project.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.2.RELEASE</spring.version>
