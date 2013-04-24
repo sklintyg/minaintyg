@@ -2,6 +2,7 @@ package se.inera.certificate.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
@@ -45,7 +47,8 @@ public class CertificateDaoImpl implements CertificateDao {
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));
-        return entityManager.createQuery(query).getResultList();
+        List<CertificateMetaData> result = entityManager.createQuery(query).getResultList();
+        return new DateFilter(result).filter(fromDate, toDate);
     }
 
     @Override

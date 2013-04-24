@@ -1,5 +1,6 @@
 package se.inera.certificate.dao.impl;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +100,12 @@ public class CertificateDaoImplTest {
     @Test
     public void testGetDocument() throws Exception {
         CertificateMetaData metaData = certificateDao.getCertificate("1");
-        String document = metaData.getDocument();
 
+        assertEquals(new LocalDate("2013-04-24"), metaData.getSignedDate());
+        assertEquals(new LocalDate("2013-04-25"), metaData.getValidFromDate());
+        assertEquals(new LocalDate("2013-05-25"), metaData.getValidToDate());
+
+        String document = metaData.getDocument();
         assertEquals("This is a document", document);
     }
 
