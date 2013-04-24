@@ -1,5 +1,16 @@
 package se.inera.certificate.dao.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,10 +64,9 @@ public class CertificateDaoImplTest {
     public void testFindCertificateMetaDataWithEmptyTypeForUserWithOneCertificate() {
         createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String>emptyList(), null, null);
+        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String> emptyList(), null, null);
         assertEquals(1, metaData.size());
     }
-
 
     @Test
     public void testFindCertificateMetaDataWithCertificateTypeFilter() {
@@ -77,12 +87,14 @@ public class CertificateDaoImplTest {
         assertEquals(FK7263, metaData.get(0).getType());
 
         // filter by other type -> only return other certificate
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(otherCertificateType), null, null);
+        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+                singletonList(otherCertificateType), null, null);
         assertEquals(1, metaData.size());
         assertEquals(otherCertificateType, metaData.get(0).getType());
 
         // filter by both types -> both certificates are returned
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, asList(FK7263, otherCertificateType), null, null);
+        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+                asList(FK7263, otherCertificateType), null, null);
         assertEquals(2, metaData.size());
     }
 
@@ -93,7 +105,8 @@ public class CertificateDaoImplTest {
         createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-03-13", "2013-04-12");
         createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-05-13", "2013-06-13");
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(FK7263), new LocalDate("2013-04-01"), new LocalDate("2013-04-15"));
+        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+                singletonList(FK7263), new LocalDate("2013-04-01"), new LocalDate("2013-04-15"));
 
         assertEquals(2, metaData.size());
     }
@@ -102,7 +115,8 @@ public class CertificateDaoImplTest {
         createMetaData(certificateId, civicRegistrationNumber, certificateType, null, null);
     }
 
-    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType, String validFrom, String validTo) {
+    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType,
+            String validFrom, String validTo) {
         Certificate certificate = new Certificate(certificateId, "abc");
 
         CertificateMetaData metaData = new CertificateMetaData(certificate);
