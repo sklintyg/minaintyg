@@ -1,16 +1,5 @@
 package se.inera.certificate.dao.impl;
 
-import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,17 +72,17 @@ public class CertificateDaoImplTest {
         assertEquals(2, metaData.size());
 
         // filter by FK7263 -> only return FK7263
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.singletonList(FK7263), null, null);
+        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(FK7263), null, null);
         assertEquals(1, metaData.size());
         assertEquals(FK7263, metaData.get(0).getType());
 
         // filter by other type -> only return other certificate
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.singletonList(otherCertificateType), null, null);
+        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(otherCertificateType), null, null);
         assertEquals(1, metaData.size());
         assertEquals(otherCertificateType, metaData.get(0).getType());
 
         // filter by both types -> both certificates are returned
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Arrays.asList(FK7263, otherCertificateType), null, null);
+        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, asList(FK7263, otherCertificateType), null, null);
         assertEquals(2, metaData.size());
     }
 

@@ -17,9 +17,13 @@ import org.springframework.stereotype.Repository;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.CertificateMetaData;
 
+/**
+ * Implementation of {@link CertificateDao}.
+ */
 @Repository
 public class CertificateDaoImpl implements CertificateDao {
 
+    /** Injected EntityManager object. */
     @PersistenceContext
     private EntityManager entityManager;
 
