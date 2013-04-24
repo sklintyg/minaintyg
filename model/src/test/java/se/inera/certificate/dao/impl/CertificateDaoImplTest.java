@@ -45,19 +45,27 @@ public class CertificateDaoImplTest {
     }
 
     @Test
-    public void testFindCertificateMetaDataWithoutNoCertificatesForUser() {
+    public void testFindCertificateMetaDataForUserWithoutCertificates() {
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
         assertTrue(metaData.isEmpty());
     }
 
     @Test
-    public void testFindCertificateMetaDataWithoutOneCertificateForUser() {
-
+    public void testFindCertificateMetaDataWithoutTypeForUserWithOneCertificate() {
         createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
 
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
         assertEquals(1, metaData.size());
     }
+
+    @Test
+    public void testFindCertificateMetaDataWithEmptyTypeForUserWithOneCertificate() {
+        createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
+
+        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String>emptyList(), null, null);
+        assertEquals(1, metaData.size());
+    }
+
 
     @Test
     public void testFindCertificateMetaDataWithCertificateTypeFilter() {
