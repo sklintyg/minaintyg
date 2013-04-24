@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import se.inera.certificate.web.service.CitizenService;
 
 /**
  */
@@ -35,13 +37,16 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
     private boolean jsonResponse;
 
+    @Autowired
+    private CitizenService citizenService;
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
         log.debug("Verifying consent");
 
-        Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Citizen citizen = citizenService.getCitizen();
 
         if (!citizen.hasConsent()) {
             if(jsonResponse) {
