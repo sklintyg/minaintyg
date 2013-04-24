@@ -13,6 +13,9 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 /**
+ * This class represents the meta data around a certificate. The certificate document can be retrieved
+ * from this class using the {@link CertificateMetaData#getDocument()} method.
+ *
  * @author andreaskaltenbach
  */
 @Entity
@@ -64,12 +67,20 @@ public class CertificateMetaData {
     @JoinColumn(name = "ID", insertable = false, updatable = false)
     private Certificate certificate;
 
+    /**
+     * Constructor.
+     *
+     * @param certificate a {@link Certificate}
+     */
     public CertificateMetaData(Certificate certificate) {
         this.certificate = certificate;
         this.id = certificate.getId();
     }
 
-    public CertificateMetaData() {
+    /**
+     * Constructor used by JPA.
+     */
+    CertificateMetaData() {
         // EMPTY
     }
 

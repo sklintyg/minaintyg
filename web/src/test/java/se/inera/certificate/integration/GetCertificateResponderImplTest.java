@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateMetaData;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface;
@@ -34,7 +36,9 @@ public class GetCertificateResponderImplTest {
         String civicRegistrationNumber = "19350108-1234";
         String certificateId = "123456";
 
-        when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(new CertificateMetaData());
+        Certificate certificate = new Certificate(certificateId, "Some Data");
+
+        when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(new CertificateMetaData(certificate));
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 

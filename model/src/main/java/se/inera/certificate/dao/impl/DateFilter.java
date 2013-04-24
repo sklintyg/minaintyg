@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.criteria.From;
-
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.CertificateMetaData;

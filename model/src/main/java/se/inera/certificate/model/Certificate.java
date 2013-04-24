@@ -12,6 +12,9 @@ import javax.persistence.Table;
 
 
 /**
+ * This class represents the document part of a certificate. The document is stored as a binary large object
+ * in the database. The encoding is UTF-8.
+ *
  * @author andreaskaltenbach
  */
 @Entity
@@ -29,19 +32,34 @@ public class Certificate {
     @Column(name = "DOCUMENT")
     private byte [] document;
 
+    /**
+     * Constructor that takes an id and a document.
+     *
+     * @param id the id
+     * @param document the document
+     */
     public Certificate(String id, String document) {
         this.id = id;
         this.document = toBytes(document);
     }
 
+    /**
+     * Constructor for JPA.
+     */
     Certificate() {
         // Empty
     }
 
+    /**
+     * @return id
+     */
     String getId() {
         return id;
     }
 
+    /**
+     * @return document
+     */
     public String getDocument() {
         return fromBytes(this.document);
     }
