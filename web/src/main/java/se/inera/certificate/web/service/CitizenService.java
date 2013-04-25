@@ -8,8 +8,8 @@ import se.inera.certificate.web.security.Citizen;
 @Service
 public class CitizenService {
 
-	public Citizen getCitizen() {
-		return (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	}
+    public Citizen getCitizen() {
+        return (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
 }

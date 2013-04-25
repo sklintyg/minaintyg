@@ -28,11 +28,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
-public class MockMvkAuthenticationFilter extends
-        AbstractPreAuthenticatedProcessingFilter {
+public class MockMvkAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
-    private static final Logger log = LoggerFactory
-            .getLogger(MockMvkAuthenticationFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(MockMvkAuthenticationFilter.class);
 
     private static final String guidParameterName = "guid";
 
@@ -44,17 +42,13 @@ public class MockMvkAuthenticationFilter extends
     @Override
     protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
         log.info("Getting preauthenticated principal");
-        final Authentication auth = SecurityContextHolder.getContext()
-                .getAuthentication();
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             log.debug("Authentication was null, check for guid parameter");
             final String guid = request.getParameter(MockMvkAuthenticationFilter.guidParameterName);
             if (guid != null) {
-                log.debug(
-                        "Guid parameter found. Mocking validation against MVK as {}...",
-                        guid);
-                AuthenticationResult mockedResult = AuthenticationResultImpl
-                        .newPatient(guid);
+                log.debug("Guid parameter found. Mocking validation against MVK as {}...", guid);
+                AuthenticationResult mockedResult = AuthenticationResultImpl.newPatient(guid);
                 return mockedResult;
 
             }

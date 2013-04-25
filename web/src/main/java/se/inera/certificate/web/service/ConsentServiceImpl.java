@@ -27,8 +27,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConsentServiceImpl implements ConsentService {
 
-    private static final Logger log = LoggerFactory
-            .getLogger(ConsentServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsentServiceImpl.class);
 
     @Override
     public boolean fetchConsent(String username) {

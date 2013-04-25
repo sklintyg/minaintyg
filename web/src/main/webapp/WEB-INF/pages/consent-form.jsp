@@ -24,7 +24,6 @@
 
 $(document).ready(function() {
   $("#noconsentBtn").on("click", function (e) {
-      //$("#content-body").html($("#noConsentMessage").html());
       $("#content-body").hide(1000, function() {
         $("#content-body").html($("#noConsentMessage").html()).show(1000);
       });
@@ -122,7 +121,9 @@ $(document).ready(function() {
     </div>
   </div>
   <div id="noConsentMessage" class="offset1 span8 hide">
-    <h1>Du har valt att <strong>ej</strong> ge samtycke för användning</h1>
+    <h1>
+      Du har valt att <strong>ej</strong> ge samtycke för användning
+    </h1>
     <p>Detta innebär att...</p>
     <input id="noconsent" type="button" value="Stäng sidan?" class="btn btn-info" />
   </div>

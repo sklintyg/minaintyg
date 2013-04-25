@@ -90,4 +90,3 @@ public class CitizenImpl implements Citizen {
         return true;
     }
 }
-

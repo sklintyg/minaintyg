@@ -31,7 +31,9 @@
 
 	<artifactId>web</artifactId>
 	<name>Inera Certificate Web Application</name>
-
+    <properties>
+        <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+    </properties>
 	<packaging>war</packaging>
 
 	<dependencies>

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.ConsentService;
 
@@ -33,8 +34,7 @@ import se.inera.certificate.web.service.ConsentService;
 @RequestMapping(value = "")
 public class PageController {
 
-    private static final Logger log = LoggerFactory
-            .getLogger(PageController.class);
+    private static final Logger log = LoggerFactory.getLogger(PageController.class);
 
     @Autowired
     private ConsentService consentService;

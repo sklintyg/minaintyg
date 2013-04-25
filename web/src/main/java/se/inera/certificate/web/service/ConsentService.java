@@ -23,9 +23,8 @@ package se.inera.certificate.web.service;
 public interface ConsentService {
 
     /**
-     *
      * @param username
      * @return
      */
-    public boolean fetchConsent(String username);
+    boolean fetchConsent(String username);
 }

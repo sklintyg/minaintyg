@@ -31,9 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
 
-    private static final Logger log = LoggerFactory
-            .getLogger(MvkPreAuthenticationCallback.class);
-
+    private static final Logger log = LoggerFactory.getLogger(MvkPreAuthenticationCallback.class);
 
     @Override
     public UserDetails createMissingUser(AuthenticationResult preAuthenticated) {

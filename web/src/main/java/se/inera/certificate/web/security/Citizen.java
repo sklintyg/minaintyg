@@ -36,6 +36,7 @@ public interface Citizen extends UserDetails, Serializable {
 
     /**
      * Do we actually have a value for consent?
+     *
      * @return
      */
     boolean consentIsKnown();
