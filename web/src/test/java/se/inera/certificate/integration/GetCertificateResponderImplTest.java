@@ -18,18 +18,22 @@
  */
 package se.inera.certificate.integration;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
+
+import java.io.IOException;
 
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
@@ -57,12 +61,14 @@ public class GetCertificateResponderImplTest {
     }
 
     @Test
-    public void getCertificate() {
+    public void getCertificate() throws IOException {
         String civicRegistrationNumber = "19350108-1234";
         String certificateId = "123456";
 
+        String document = FileUtils.readFileToString(new ClassPathResource("fk7263/fk7263.xml").getFile());
+
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(
-                new CertificateMetaDataBuilder("123456").certificateType("fk7263").build());
+                new CertificateMetaDataBuilder("123456", document).certificateType("fk7263").build());
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 

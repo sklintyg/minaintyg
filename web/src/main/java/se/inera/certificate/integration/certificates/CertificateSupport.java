@@ -1,6 +1,5 @@
 package se.inera.certificate.integration.certificates;
 
-import javax.xml.bind.JAXBElement;
 import java.util.List;
 
 /**
@@ -19,18 +18,4 @@ public interface CertificateSupport {
      * Returns a list of additional JAXB classes which are required to represent the supported certificate type.
      */
     List<Class<?>> additionalContextClasses();
-
-    /**
-     * Returns the serialized representation of the certificate
-     * @param certificate the certificate as JAXB element
-     */
-    String serializeCertificate(JAXBElement certificate);
-
-    /**
-     * Deserializes the certificate JAXB element from the given certificate data.
-     *
-     * @param data serialized certificate information
-     * @return the deserialized certificate
-     */
-    JAXBElement deserializeCertificate(String data);
 }

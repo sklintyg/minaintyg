@@ -30,12 +30,14 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.*;
 
 /**
  * @author andreaskaltenbach
@@ -76,11 +78,21 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", metaData.getType())));
         }
         else {
-            // certificate type is supported and we use a CertificateSupport implementation to get the JAXB element from the certificate string
-            certificateType.getAny().add(certificateSupport.deserializeCertificate(metaData.getCertificate().getDocument()));
-            response.setCertificate(certificateType);
-            response.setResult(okResult());
+            // certificate type is supported and we unmarshall the certificate information to a JAXB element
+            try {
+                certificateType.getAny().add(buildJaxbElement(metaData.getCertificate().getDocument()));
+                response.setCertificate(certificateType);
+                response.setResult(okResult());
+            } catch (JAXBException e) {
+                response.setResult(applicationErrorResult(String.format("Invalid XML document for certificate #%s", metaData.getId())));
+            }
         }
+    }
+
+    private Object buildJaxbElement(String document) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(GetCertificateResponseType.class);
+                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                return unmarshaller.unmarshal(new StringReader(document));
     }
 
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
