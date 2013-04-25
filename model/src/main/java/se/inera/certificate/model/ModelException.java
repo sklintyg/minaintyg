@@ -18,24 +18,14 @@
  */
 package se.inera.certificate.model;
 
-public class Id {
+public class ModelException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
 
-    private String extension;
-    private String root;
-
-    public String getExtension() {
-        return extension;
+    public ModelException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public String getRoot() {
-        return root;
-    }
-
-    public void setRoot(String root) {
-        this.root = root;
+    public ModelException(String message) {
+        super(message);
     }
 }

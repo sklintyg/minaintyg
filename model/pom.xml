@@ -2,18 +2,68 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-      <artifactId>certificate</artifactId>
-      <groupId>se.inera.certificate</groupId>
-      <version>1.0-SNAPSHOT</version>
+    <artifactId>certificate</artifactId>
+    <groupId>se.inera.certificate</groupId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>model</artifactId>
   <name>Inera Certificate Model</name>
 
+  <properties>
+    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+  </properties>
+  
   <description>Contains model for the certificate domain.</description>
 
   <dependencies>
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.0-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.jadira.usertype</groupId>
+        <artifactId>usertype.core</artifactId>
+    </dependency>
+            
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+
 
   </dependencies>
-
 </project>

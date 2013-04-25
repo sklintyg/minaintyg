@@ -16,26 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.model;
+package se.inera.certificate.service;
 
-public class Id {
+import org.joda.time.LocalDate;
+import se.inera.certificate.model.CertificateMetaData;
 
-    private String extension;
-    private String root;
+import java.util.List;
 
-    public String getExtension() {
-        return extension;
-    }
+/**
+ * @author andreaskaltenbach
+ */
+public interface CertificateService {
 
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
+    List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate);
 
-    public String getRoot() {
-        return root;
-    }
-
-    public void setRoot(String root) {
-        this.root = root;
-    }
+    CertificateMetaData getCertificate(String civicRegistrationNumber, String certificateId);
 }
