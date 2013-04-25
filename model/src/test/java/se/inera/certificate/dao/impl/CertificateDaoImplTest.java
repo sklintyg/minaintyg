@@ -18,17 +18,6 @@
  */
 package se.inera.certificate.dao.impl;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collections;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,13 +26,23 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:persistence-config.xml" })
+@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
 @ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
@@ -72,17 +71,27 @@ public class CertificateDaoImplTest {
 
     @Test
     public void testFindCertificateMetaDataWithoutTypeForUserWithOneCertificate() {
-        createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
+
+        persistCertificateMetaData(
+                new CertificateMetaDataBuilder(CERTIFICATE_ID)
+                        .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                        .certificateType(FK7263));
 
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
         assertEquals(1, metaData.size());
     }
 
+    private void persistCertificateMetaData(CertificateMetaDataBuilder builder) {
+        entityManager.persist(builder.build());
+    }
+
     @Test
     public void testFindCertificateMetaDataWithEmptyTypeForUserWithOneCertificate() {
-        createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
+        persistCertificateMetaData(new CertificateMetaDataBuilder(CERTIFICATE_ID)
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(FK7263));
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String> emptyList(), null, null);
+        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String>emptyList(), null, null);
         assertEquals(1, metaData.size());
     }
 
@@ -92,8 +101,12 @@ public class CertificateDaoImplTest {
         String otherCertificateType = "other";
 
         // create an FK7263 and another certificate
-        createMetaData(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, FK7263);
-        createMetaData("otherCertificateId", CIVIC_REGISTRATION_NUMBER, otherCertificateType);
+        persistCertificateMetaData(new CertificateMetaDataBuilder(CERTIFICATE_ID)
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(FK7263));
+        persistCertificateMetaData(new CertificateMetaDataBuilder("otherCertificateId")
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(otherCertificateType));
 
         // no certificate type -> no filtering by certificate type
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
@@ -119,31 +132,25 @@ public class CertificateDaoImplTest {
     @Test
     public void testFindCertificateMetaDataWithValidityFilter() throws Exception {
         int certificateId = Integer.parseInt(CERTIFICATE_ID);
-        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-04-13", "2013-05-13");
-        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-03-13", "2013-04-12");
-        createMetaData(String.valueOf(certificateId++), CIVIC_REGISTRATION_NUMBER, FK7263, "2013-05-13", "2013-06-13");
+
+        persistCertificateMetaData(new CertificateMetaDataBuilder(String.valueOf(certificateId++))
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(FK7263)
+                .validity("2013-04-13", "2013-05-13"));
+        persistCertificateMetaData(new CertificateMetaDataBuilder(String.valueOf(certificateId++))
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(FK7263)
+                .validity("2013-03-13", "2013-04-12"));
+        persistCertificateMetaData(new CertificateMetaDataBuilder(String.valueOf(certificateId++))
+                .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
+                .certificateType(FK7263)
+                .validity("2013-05-13", "2013-06-13"));
+
 
         List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
                 singletonList(FK7263), new LocalDate("2013-04-01"), new LocalDate("2013-04-15"));
 
         assertEquals(2, metaData.size());
-    }
-
-    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType) {
-        createMetaData(certificateId, civicRegistrationNumber, certificateType, null, null);
-    }
-
-    private void createMetaData(String certificateId, String civicRegistrationNumber, String certificateType,
-            String validFrom, String validTo) {
-        Certificate certificate = new Certificate(certificateId, "abc");
-
-        CertificateMetaData metaData = new CertificateMetaData(certificate);
-        metaData.setCivicRegistrationNumber(civicRegistrationNumber);
-        metaData.setType(certificateType);
-        metaData.setDeleted(false);
-        metaData.setValidFromDate(new LocalDate(validFrom));
-        metaData.setValidToDate(new LocalDate(validTo));
-        entityManager.persist(metaData);
     }
 
     @Test

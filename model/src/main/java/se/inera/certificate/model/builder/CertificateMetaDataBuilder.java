@@ -12,7 +12,11 @@ public class CertificateMetaDataBuilder {
     private CertificateMetaData metaData;
 
     public CertificateMetaDataBuilder(String certificateId) {
-        Certificate certificate = new Certificate(certificateId, "");
+        this(certificateId, "");
+    }
+
+    public CertificateMetaDataBuilder(String certificateId, String document) {
+        Certificate certificate = new Certificate(certificateId, document);
         metaData = new CertificateMetaData(certificate);
     }
 
@@ -21,10 +25,19 @@ public class CertificateMetaDataBuilder {
         return this;
     }
 
+    public CertificateMetaDataBuilder civicRegistrationNumber(String civicRegistrationNumber) {
+        metaData.setCivicRegistrationNumber(civicRegistrationNumber);
+        return this;
+    }
+
     public CertificateMetaDataBuilder validity(LocalDate fromDate, LocalDate toDate) {
         metaData.setValidFromDate(fromDate);
         metaData.setValidToDate(toDate);
         return this;
+    }
+
+    public CertificateMetaDataBuilder validity(String fromDate, String toDate) {
+        return validity(new LocalDate(fromDate), new LocalDate(toDate));
     }
 
     public CertificateMetaDataBuilder careUnitName(String careUnitName) {
