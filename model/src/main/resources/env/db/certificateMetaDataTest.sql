@@ -39,5 +39,6 @@ alter table CERTIFICATE_META_DATA
     foreign key (ID)
     references CERTIFICATE;
 
-insert into CERTIFICATE (ID, DOCUMENT) values ('1', X'54686973206973206120646f63756d656e74');
+insert into CERTIFICATE (ID, DOCUMENT) values ('1', STRINGTOUTF8('<RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>'));
+
 insert into CERTIFICATE_META_DATA (ID, CIVIC_REGISTRATION_NUMBER, DELETED, SIGNED_DATE, TYPE, VALID_FROM_DATE, VALID_TO_DATE) values ('1', '121212-1212', 0, '2013-04-24','fk7263', '2013-04-25', '2013-05-25');
