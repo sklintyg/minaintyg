@@ -1,4 +1,4 @@
-<!--
+<%--
 
     Copyright (C) 2013 Inera AB (http://www.inera.se)
 
@@ -17,7 +17,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
--->
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -44,8 +44,6 @@
 </head>
 
 
-
-<!--BODY -->
 <body>
   <div class="container">
     <div id="page-header-container">
@@ -59,17 +57,15 @@
       <div class="content">
         <div class="row-fluid">
           <div id="content-body" class="span12">
-
+            <h1><spring:message code="error.noauth.title" /></h1>
             <div id="noCerts" class="alert alert-error">
-              <spring:message code="error.noauth" />
+              <spring:message code="error.noauth.text" />
             </div>
 
           </div>
         </div>
       </div>
-      <!--        <div class="footer">
-                <spring:message code="certificates.footer" />
-            </div> -->
+
     </div>
   </div>
 </body>

@@ -1,4 +1,4 @@
-<!--
+<%--
 
     Copyright (C) 2013 Inera AB (http://www.inera.se)
 
@@ -17,7 +17,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
--->
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -40,13 +40,8 @@
 
 <script type="text/javascript" src="<c:url value="/js/jquery-1.9.1.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/bootstrap.js"/>"></script>
-
-
 </head>
 
-
-
-<!--BODY -->
 <body>
   <div class="container">
     <div id="page-header-container">
@@ -66,35 +61,30 @@
     </div>
     <div id="content-container">
       <div class="content">
-       
+
         <div class="row-fluid">
           <div id="content-body" class="span12">
 
-            <!--CONTENT  -->
-            <div class="span8">
-              <ul id="tabs">
-                <li class="" onclick="javascript:window.location.replace('<c:url value="/web/start" />');"><img src="<c:url value="/img/inkorg_icon.png" />" /> <spring:message code="label.inbox" /></li>
-                <li class="disabled"><img src="<c:url value="/img/borttagna_icon.png" />" /> <spring:message code="label.removed" /></li>
-              </ul>
+            <ul id="tabs">
+              <li class="" onclick="javascript:window.location.replace('<c:url value="/web/start" />');"><img src="<c:url value="/img/inkorg_icon.png" />" /> <spring:message code="label.inbox" /></li>
+              <li class="disabled"><img src="<c:url value="/img/borttagna_icon.png" />" /> <spring:message code="label.removed" /></li>
+            </ul>
 
-              <h1>
-                <spring:message code="certificates.header" />
-              </h1>
+            <h1>
+              <spring:message code="certificates.header" />
+            </h1>
 
-              <div class="row-fluid">
-                <div class="span9">
-                  <p>
-                    <spring:message code="certificates.desc" />
-                  </p>
-                </div>
+            <div class="row-fluid">
+              <div class="span7">
+                <p>
+                  <spring:message code="certificates.desc" />
+                </p>
               </div>
-              <div id="noCerts" class="alert alert-error" style="display: block;">
-                <spring:message code="certificates.none" />
-              </div>
-
             </div>
-            <!--/ CONTENT -->
-
+            <div id="noCerts" class="alert alert-error" style="display: block;">
+            
+              <spring:message code="certificates.none" />
+            </div>
           </div>
         </div>
       </div>
