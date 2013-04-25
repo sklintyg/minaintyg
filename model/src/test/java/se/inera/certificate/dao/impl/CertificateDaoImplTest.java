@@ -162,7 +162,7 @@ public class CertificateDaoImplTest {
         assertEquals(new LocalDate("2013-05-25"), metaData.getValidToDate());
 
         String document = metaData.getDocument();
-        assertEquals("This is a document", document);
+        assertEquals("<RegisterMedicalCertificate xmlns=\"urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3\"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>", document);
     }
 
     @Test
