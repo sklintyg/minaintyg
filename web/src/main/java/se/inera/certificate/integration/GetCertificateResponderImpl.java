@@ -80,7 +80,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         else {
             // certificate type is supported and we unmarshall the certificate information to a JAXB element
             try {
-                certificateType.getAny().add(buildJaxbElement(metaData.getCertificate().getDocument()));
+                certificateType.getAny().add(buildJaxbElement(metaData.getDocument(), certificateSupport.additionalContextClasses()));
                 response.setCertificate(certificateType);
                 response.setResult(okResult());
             } catch (JAXBException e) {
@@ -89,10 +89,10 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         }
     }
 
-    private Object buildJaxbElement(String document) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(GetCertificateResponseType.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-                return unmarshaller.unmarshal(new StringReader(document));
+    private Object buildJaxbElement(String document, List<Class<?>> classesToBeBound) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(classesToBeBound.toArray(new Class<?>[classesToBeBound.size()]));
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        return unmarshaller.unmarshal(new StringReader(document));
     }
 
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
