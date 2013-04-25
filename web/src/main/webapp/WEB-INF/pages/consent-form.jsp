@@ -1,3 +1,23 @@
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
+
+    Inera Certificate Web is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Web is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -24,9 +44,8 @@
 
 $(document).ready(function() {
   $("#noconsentBtn").on("click", function (e) {
-      $("#content-body").hide(1000, function() {
-        $("#content-body").html($("#noConsentMessage").html()).show(1000);
-      });
+      $("#consentTerms").hide(1);
+      $("#refuseConsentMessage").fadeIn(400);
       e.preventDefault();
   });
 });
@@ -60,9 +79,14 @@ $(document).ready(function() {
         <!-- (tabs) -->
         <div class="row-fluid">
           <div id="content-body" class="span12">
-
+            <div id="refuseConsentMessage" class="hide span8">
+              <h1>Du har valt att ej ge samtycke för användning</h1>
+              <p>Kanske en text som förklarar innebörden av detta beslut - hur man gör om man i framtiden ångrar sitt beslut etc...</p>
+              <p>Vilka navigeringsmöjligheter skall presenteras? Stäng tjänst eller länk till MVK?</p>
+              <input id="noconsent" type="button" value="Stäng sidan?" class="btn btn-info" />
+            </div>
             <!--CONTENT  -->
-            <div class="offset1 span8">
+            <div id="consentTerms" class="offset1 span8">
               <h1>Samtycke för användning</h1>
 
               <h2>Personuppgifter från patientjournalen</h2>
@@ -104,7 +128,7 @@ $(document).ready(function() {
               <p>Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
               <br />
               <p>Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg (krävs för att använda webbtjänsten).</p>
-              <form action='<c:url value="/web/giveconsent"></c:url>' method="post">
+              <form action='<c:url value="/web/ge-samtycke"/>' method="post">
                 <p class="btn-row">
                   <input id="giveconsent" type="submit" value="Jag lämnar mitt samtycke" class="btn btn-success" /> <a id="noconsentBtn" href="#" class="btn-link">Jag vill inte använda Mina intyg</a>
                 </p>
@@ -119,13 +143,6 @@ $(document).ready(function() {
                 <spring:message code="certificates.footer" />
             </div> -->
     </div>
-  </div>
-  <div id="noConsentMessage" class="offset1 span8 hide">
-    <h1>
-      Du har valt att <strong>ej</strong> ge samtycke för användning
-    </h1>
-    <p>Detta innebär att...</p>
-    <input id="noconsent" type="button" value="Stäng sidan?" class="btn btn-info" />
   </div>
 </body>
 </html>

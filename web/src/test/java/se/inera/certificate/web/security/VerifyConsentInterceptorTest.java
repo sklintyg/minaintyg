@@ -25,7 +25,7 @@ public class VerifyConsentInterceptorTest {
 	private CitizenService service = mock(CitizenService.class);
 	
 	@InjectMocks
-	VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
+	private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
 	
 	@Test
 	public void testPrehandleNoConsentJson() throws Exception {

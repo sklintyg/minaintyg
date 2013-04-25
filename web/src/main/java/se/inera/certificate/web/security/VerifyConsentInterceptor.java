@@ -44,7 +44,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
-        log.debug("Verifying consent");
+        log.debug("Verifying consent...");
 
         Citizen citizen = citizenService.getCitizen();
 

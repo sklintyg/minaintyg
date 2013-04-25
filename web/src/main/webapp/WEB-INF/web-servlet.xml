@@ -26,7 +26,7 @@
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/sso" />
 			<mvc:exclude-mapping path="/visa-ge-samtycke" />
-			<mvc:exclude-mapping path="/inget-samtycke" />
+			<mvc:exclude-mapping path="/ge-samtycke" />
 			<bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
 				<property name="jsonResponse" value="false" />
 			</bean>
@@ -45,15 +45,7 @@
 			<property name="suffix" value=".jsp" />
 		</bean>
 		
-		 <bean id="messageSource"
-              class="org.springframework.context.support.ResourceBundleMessageSource">
-            <property name="basenames">
-                <list>
-                    <value>ui</value>
-                    <value>system</value>
-                </list>
-            </property>
-        </bean>
+		 
 	</beans>
 
 </beans>
