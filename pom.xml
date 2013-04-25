@@ -25,11 +25,18 @@
     <h2database.version>1.3.171</h2database.version>
     <joda.version>2.2</joda.version>
     <jadira.usertype.version>3.1.0.CR2</jadira.usertype.version>
+    <commons.ui.version>2.4</commons.ui.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons.ui.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>${project.groupId}</groupId>
@@ -117,6 +124,7 @@
   </dependencyManagement>
 
   <dependencies>
+
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>

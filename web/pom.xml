@@ -49,6 +49,11 @@
       <artifactId>h2</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>inera-certificate</finalName>
