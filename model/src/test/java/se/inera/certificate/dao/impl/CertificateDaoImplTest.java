@@ -45,7 +45,7 @@ import static org.junit.Assert.*;
 import static se.inera.certificate.model.CertificateState.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
+@ContextConfiguration(locations = {"classpath:persistence-config.xml" })
 @ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
