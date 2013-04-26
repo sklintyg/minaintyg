@@ -9,9 +9,8 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
 
-import static se.inera.certificate.integration.converter.ModelConverter.toCertificateState;
-
 import static se.inera.certificate.integration.ResultOfCallUtil.*;
+import static se.inera.certificate.integration.converter.ModelConverter.toCertificateState;
 
 /**
  * @author andreaskaltenbach

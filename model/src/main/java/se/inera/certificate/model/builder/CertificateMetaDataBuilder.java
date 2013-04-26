@@ -1,8 +1,11 @@
 package se.inera.certificate.model.builder;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
 
 /**
  * @author andreaskaltenbach
@@ -57,6 +60,15 @@ public class CertificateMetaDataBuilder {
 
     public CertificateMetaDataBuilder deleted(boolean deleted) {
         metaData.setDeleted(deleted);
+        return this;
+    }
+
+    public CertificateMetaDataBuilder state(CertificateState state, String target) {
+        return state(state, target, null);
+    }
+
+    public CertificateMetaDataBuilder state(CertificateState state, String target, LocalDateTime timestamp) {
+        metaData.getStates().add(new CertificateStateHistoryEntry(target, state, timestamp));
         return this;
     }
 

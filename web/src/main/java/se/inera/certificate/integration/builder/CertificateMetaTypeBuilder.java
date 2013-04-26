@@ -1,7 +1,10 @@
 package se.inera.certificate.integration.builder;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
+import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 /**
  * @author andreaskaltenbach
@@ -51,6 +54,15 @@ public class CertificateMetaTypeBuilder {
 
     public CertificateMetaTypeBuilder available(String available) {
         metaType.setAvailable(available);
+        return this;
+    }
+
+    public CertificateMetaTypeBuilder status(StatusType status, String target, LocalDateTime timestamp) {
+        CertificateStatusType certificateStatusType = new CertificateStatusType();
+        certificateStatusType.setTarget(target);
+        certificateStatusType.setTimestamp(timestamp);
+        certificateStatusType.setType(status);
+        metaType.getStatus().add(certificateStatusType);
         return this;
     }
 }
