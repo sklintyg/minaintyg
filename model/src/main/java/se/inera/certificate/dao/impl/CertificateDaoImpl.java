@@ -18,9 +18,14 @@
  */
 package se.inera.certificate.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.springframework.stereotype.Repository;
+import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.exception.InvalidCertificateIdentifierException;
+import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,12 +33,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.joda.time.LocalDate;
-import org.springframework.stereotype.Repository;
-
-import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.model.CertificateMetaData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Implementation of {@link CertificateDao}.
@@ -93,6 +95,20 @@ public class CertificateDaoImpl implements CertificateDao {
     @Override
     public void store(CertificateMetaData certificateMetaData) {
         entityManager.persist(certificateMetaData);
+    }
+
+    @Override
+    public void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp) {
+
+        CertificateMetaData metaData = entityManager.find(CertificateMetaData.class, id);
+
+        if (metaData == null || !metaData.getCivicRegistrationNumber().equals(civicRegistrationNumber)) {
+            throw new InvalidCertificateIdentifierException(id, civicRegistrationNumber);
+        }
+
+        CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry(target, state, timestamp);
+
+        metaData.getStates().add(historyEntry);
     }
 
 }

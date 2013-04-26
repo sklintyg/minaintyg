@@ -18,11 +18,12 @@
  */
 package se.inera.certificate.dao;
 
-import java.util.List;
-
 import org.joda.time.LocalDate;
-
+import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
+
+import java.util.List;
 
 /**
  * Data Access Object for handling {@link Certificate} and {@link CertificateMetaData}.
@@ -58,4 +59,6 @@ public interface CertificateDao {
      * @param certificateMetaData
      */
     void store(CertificateMetaData certificateMetaData);
+
+    void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
 }

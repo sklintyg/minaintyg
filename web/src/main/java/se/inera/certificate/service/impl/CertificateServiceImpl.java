@@ -19,11 +19,13 @@
 package se.inera.certificate.service.impl;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
 
 import java.util.List;
@@ -51,5 +53,10 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public void storeCertificate(CertificateMetaData certificate) {
         certificateDao.store(certificate);
+    }
+
+    @Override
+    public void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp) {
+        certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
 }

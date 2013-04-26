@@ -27,8 +27,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.exception.InvalidCertificateIdentifierException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
 
 import javax.persistence.EntityManager;
@@ -38,11 +40,12 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
+import static se.inera.certificate.model.CertificateState.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
+@ContextConfiguration(locations = {"classpath:persistence-config.xml" })
 @ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
@@ -171,5 +174,44 @@ public class CertificateDaoImplTest {
         CertificateMetaData certificateMetaData = new CertificateMetaData(certificate);
         certificateDao.store(certificateMetaData);
         entityManager.flush();
+    }
+
+    @Test( expected = InvalidCertificateIdentifierException.class)
+    public void testSetCertificateStatusForNonExistingCertificate() {
+
+        certificateDao.updateStatus("12345", "asd", CertificateState.IN_PROGRESS, "fk", null);
+    }
+
+    @Test
+    public void testSetCertificateStatusForDifferentPatients() {
+
+        // store a certificate for patient 19101112-1314
+        entityManager.persist(new CertificateMetaDataBuilder("no1", "<diagnosis>")
+                .civicRegistrationNumber("19101112-1314").build());
+
+        try {
+            certificateDao.updateStatus("no1", "another patient", RECEIVED, "fk", null);
+            fail("Exception expected.");
+        } catch (InvalidCertificateIdentifierException e) {
+        }
+
+        certificateDao.updateStatus("no1", "19101112-1314", RECEIVED, "fk", null);
+    }
+
+    public void testSetCertificateStatus() {
+
+        // store a certificate for patient 19101112-1314
+        CertificateMetaData metaData = new CertificateMetaDataBuilder("no1", "<diagnosis>")
+                .civicRegistrationNumber("19101112-1314").build();
+        entityManager.persist(metaData);
+
+        assertEquals(0, metaData.getStates().size());
+
+        certificateDao.updateStatus("no1", "19101112-1314", DELETED, "fk", null);
+
+        assertEquals(1, metaData.getStates().size());
+        assertEquals(DELETED, metaData.getStates().get(0).getState());
+        assertEquals("fk", metaData.getStates().get(0).getTarget());
+        assertNull(metaData.getStates().get(0).getTimestamp());
     }
 }

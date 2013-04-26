@@ -18,22 +18,10 @@
  */
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
+import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.CertificateMetaData;
@@ -43,10 +31,20 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.integration.ResultOfCallUtil.*;
+
 /**
  * @author andreaskaltenbach
  */
 @Transactional
+@SchemaValidation
 public class GetCertificateResponderImpl implements GetCertificateResponderInterface {
 
     @Autowired

@@ -1,5 +1,6 @@
 package se.inera.certificate.integration;
 
+import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.model.Certificate;
@@ -22,6 +23,7 @@ import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 /**
  * @author andreaskaltenbach
  */
+@SchemaValidation
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
     @Autowired
