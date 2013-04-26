@@ -18,7 +18,7 @@ public class CertificateStateHistoryEntry {
     private String target;
 
     @Column(name = "STATE")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private CertificateState state;
 
     @Column(name = "TIMESTAMP")
