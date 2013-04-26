@@ -22,7 +22,7 @@ public class CertificateStateHistoryEntry {
     private CertificateState state;
 
     @Column(name = "TIMESTAMP")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime timestamp;
 
     public CertificateStateHistoryEntry() {
