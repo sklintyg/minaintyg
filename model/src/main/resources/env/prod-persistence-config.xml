@@ -35,7 +35,7 @@
   <context:component-scan base-package="se.inera.certificate" />
 
   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-       <property name="jndiName" value="java:comp/env/jdbc/intyg-prod" />
+       <property name="jndiName" value="java:comp/env/jdbc/intyg" />
   </bean>
 
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
