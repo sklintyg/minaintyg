@@ -26,6 +26,10 @@ import org.springframework.stereotype.Service;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.setconsent.v1.rivtabp20.SetConsentResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.setconsentresponder.v1.SetConsentRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.setconsentresponder.v1.SetConsentResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 /**
  */
@@ -37,15 +41,31 @@ public class ConsentServiceImpl implements ConsentService {
     @Autowired
     private GetConsentResponderInterface getConsent;
 
+    @Autowired
+    private SetConsentResponderInterface setConsent;
+
     @Override
     public boolean fetchConsent(String username) {
         log.debug("About to fetch consent...");
         GetConsentRequestType parameters = new GetConsentRequestType();
         parameters.setPersonnummer(username);
 
-        GetConsentResponseType consent = getConsent.getConsent(null, parameters); 
+        GetConsentResponseType consent = getConsent.getConsent(null, parameters);
         boolean consentResult = consent.isConsentGiven();
         log.debug("Consent result is {}", consentResult);
         return consentResult;
+    }
+
+    @Override
+    public boolean setConsent(String username, boolean consent) {
+        log.debug("About to set consent...");
+        SetConsentRequestType parameters = new SetConsentRequestType();
+        parameters.setPersonnummer(username);
+        parameters.setConsentGiven(consent);
+        SetConsentResponseType consentResponse = setConsent.setConsent(null, parameters);
+        ResultCodeEnum result = consentResponse.getResult().getResultCode();
+        log.debug("resultcode is {}", result);
+        return !consentResponse.getResult().getResultCode().equals(ResultCodeEnum.ERROR);
+
     }
 }

@@ -27,5 +27,11 @@ public interface ConsentService {
      * @return
      */
     boolean fetchConsent(String username);
+    
+    /**
+     * @param username
+     * @param consent
+     */
+    boolean setConsent(String username, boolean consent);
 
 }

@@ -34,7 +34,7 @@
       <security:http security="none" pattern="/ws/**"/>
 
       <import resource="classpath*:/netcare-mvk-integration-config.xml"/>
-        <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
+      <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
 
         <security:authentication-manager>
             <security:authentication-provider ref="preAuthAuthProvider"/>

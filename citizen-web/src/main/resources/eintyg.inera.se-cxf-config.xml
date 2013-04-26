@@ -37,7 +37,10 @@
 	<jaxws:client id="getConsentClient"
 		serviceClass="se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface"
 		address="${consent.get.url}" />
-
+		
+    <jaxws:client id="setConsentClient"
+        serviceClass="se.inera.ifv.insuranceprocess.healthreporting.setconsent.v1.rivtabp20.SetConsentResponderInterface"
+        address="${consent.set.url}" />
 	<cxf:bus>
 		<cxf:features>
 			<cxf:logging/>

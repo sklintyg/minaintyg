@@ -21,13 +21,13 @@ package se.inera.certificate.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 
 @Controller
@@ -39,11 +39,14 @@ public class PageController {
     @Autowired
     private ConsentService consentService;
 
+    @Autowired
+    private CitizenService citizenService;
+
     @RequestMapping(value = "/sso", method = RequestMethod.GET)
     public String sso() {
         log.debug("sso");
-        Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // Get and set consent status
+        Citizen citizen = citizenService.getCitizen();
+        // fetch and set consent status
         citizen.setConsent(consentService.fetchConsent(citizen.getUsername()));
         return "redirect:/web/start";
     }
@@ -63,10 +66,11 @@ public class PageController {
     @RequestMapping(value = "/ge-samtycke", method = RequestMethod.POST)
     public ModelAndView setConsent() {
         log.debug("setConsent");
-        //TODO: actually call consentService.setConsent
         // update consent in security consent
-        Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        citizen.setConsent(true);
+        Citizen citizen = citizenService.getCitizen();
+        // Set and set consent status
+        citizen.setConsent(consentService.setConsent(citizen.getUsername(), true));
+        log.debug("consent after setConsent {}", citizen.hasConsent());
         return new ModelAndView("start");
     }
 
