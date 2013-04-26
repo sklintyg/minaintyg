@@ -47,4 +47,9 @@ public class CertificateServiceImpl implements CertificateService {
     public CertificateMetaData getCertificate(String civicRegistrationNumber, String id) {
         return certificateDao.getCertificate(id);
     }
+
+    @Override
+    public void storeCertificate(CertificateMetaData certificate) {
+        certificateDao.store(certificate);
+    }
 }

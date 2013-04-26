@@ -47,6 +47,17 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 
+import java.io.IOException;
+
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
 /**
  * @author andreaskaltenbach
  */
@@ -80,6 +91,8 @@ public class GetCertificateResponderImplTest {
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
         GetCertificateResponseType response = responder.getCertificate(null, parameters);
+
+        verify(certificateService).getCertificate(civicRegistrationNumber, certificateId);
 
         assertNotNull(response.getMeta());
         assertEquals(OK, response.getResult().getResultCode());

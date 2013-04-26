@@ -31,4 +31,6 @@ public interface CertificateService {
     List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate);
 
     CertificateMetaData getCertificate(String civicRegistrationNumber, String certificateId);
+
+    void storeCertificate(CertificateMetaData certificate);
 }
