@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-    Copyright (C) 2013 Inera AB (http://www.inera.se)
-
-    This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
-
-    Inera Certificate Web is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    Inera Certificate Web is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
+	of Inera Certificate Web (http://code.google.com/p/inera-certificate-web). 
+	Inera Certificate Web is free software: you can redistribute it and/or modify 
+	it under the terms of the GNU Affero General Public License as published 
+	by the Free Software Foundation, either version 3 of the License, or (at 
+	your option) any later version. Inera Certificate Web is distributed in the 
+	hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
+	warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+	GNU Affero General Public License for more details. You should have received 
+	a copy of the GNU Affero General Public License along with this program. 
+	If not, see <http://www.gnu.org/licenses/>. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -61,18 +52,22 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					  <artifactId>maven-site-plugin</artifactId>
-					  <version>3.0</version>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.0</version>
 				</plugin>
 				<plugin>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.0.1.v20130408</version>
-                    <configuration>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.0.1.v20130408</version>
+					<configuration>
 						<systemProperties>
 							<systemProperty>
 								<name>spring.profiles.active</name>
 								<value>${system.mode}</value>
+							</systemProperty>
+							<systemProperty>
+								<name>jetty.port</name>
+								<value>8088</value>
 							</systemProperty>
 						</systemProperties>
 					</configuration>
@@ -116,28 +111,28 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-		<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.10</version>
-        <configuration>
-          <configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
-        </configuration>
-      </plugin>
-	  </plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+					<configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-<reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.10</version>
-        <configuration>
-          <configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+					<configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -231,14 +226,14 @@
 						<groupId>org.springframework</groupId>
 						<artifactId>spring-expression</artifactId>
 					</exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-jdbc</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-tx</artifactId>
-                    </exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-jdbc</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-tx</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -251,16 +246,16 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
