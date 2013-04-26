@@ -15,9 +15,10 @@ public class GetConsentResponderImpl implements GetConsentResponderInterface {
 
     @Override
     public GetConsentResponseType getConsent(AttributedURIType logicalAddress, GetConsentRequestType parameters) {
-        GetConsentResponseType result = new GetConsentResponseType();
-        result.setConsentGiven(consentService.isConsent(parameters.getPersonnummer()));
-        return result;
+        GetConsentResponseType response = new GetConsentResponseType();
+        response.setConsentGiven(consentService.isConsent(parameters.getPersonnummer()));
+        response.setResult(ResultOfCallUtil.okResult());
+        return response;
     }
 
 }

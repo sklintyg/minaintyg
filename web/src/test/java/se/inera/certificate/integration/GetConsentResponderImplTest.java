@@ -1,5 +1,6 @@
 package se.inera.certificate.integration;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -16,6 +17,7 @@ import se.inera.certificate.service.ConsentService;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetConsentResponderImplTest {
@@ -33,10 +35,11 @@ public class GetConsentResponderImplTest {
     }
 
     @Test
-    public void consentServiceRetunsNoConsent() {
+    public void consentServiceReturnsNoConsent() {
         when(consentService.isConsent("12345678-1234")).thenReturn(false);
         GetConsentResponseType consent = responder.getConsent(null, createRequest("12345678-1234"));
         assertFalse(consent.isConsentGiven());
+        assertEquals(ResultCodeEnum.OK, consent.getResult().getResultCode());
     }
 
     @Test
@@ -44,6 +47,7 @@ public class GetConsentResponderImplTest {
         when(consentService.isConsent("12345678-1235")).thenReturn(true);
         GetConsentResponseType consent = responder.getConsent(null, createRequest("12345678-1235"));
         assertTrue(consent.isConsentGiven());
+        assertEquals(ResultCodeEnum.OK, consent.getResult().getResultCode());
     }
 
     private GetConsentRequestType createRequest(String id) {
