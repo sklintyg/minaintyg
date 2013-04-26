@@ -57,5 +57,21 @@
   </dependencies>
   <build>
     <finalName>inera-certificate</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.0.1.v20130408</version>
+        <configuration>
+          <contextXml>${basedir}/src/main/webapp/WEB-INF/jetty-context.xml</contextXml>        
+          <systemProperties>
+            <systemProperty>
+              <name>spring.profiles.active</name>
+              <value>dev</value>
+            </systemProperty>
+          </systemProperties>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
