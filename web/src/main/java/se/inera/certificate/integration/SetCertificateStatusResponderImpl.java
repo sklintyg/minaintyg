@@ -2,6 +2,7 @@ package se.inera.certificate.integration;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import riv.insuranceprocess.healthreporting.setcertificatestatus._1.rivtabp20.SetCertificateStatusResponderInterface;
 import se.inera.certificate.exception.InvalidCertificateIdentifierException;
@@ -15,6 +16,7 @@ import static se.inera.certificate.integration.converter.ModelConverter.toCertif
 /**
  * @author andreaskaltenbach
  */
+@Transactional
 @SchemaValidation
 public class SetCertificateStatusResponderImpl implements SetCertificateStatusResponderInterface {
 

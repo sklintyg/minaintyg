@@ -20,6 +20,7 @@ package se.inera.certificate.integration;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.CertificateMetaData;
@@ -35,6 +36,7 @@ import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 /**
  * @author andreaskaltenbach
  */
+@Transactional
 @SchemaValidation
 public class ListCertificatesResponderImpl implements ListCertificatesResponderInterface {
 
