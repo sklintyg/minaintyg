@@ -57,11 +57,28 @@
       <div class="content">
         <div class="row-fluid">
           <div id="content-body" class="span12">
-            <h1><spring:message code="error.noauth.title" /></h1>
-            <div id="noCerts" class="alert alert-error">
-              <spring:message code="error.noauth.text" />
-            </div>
 
+
+
+            <c:choose>
+              <c:when test="${param.reason eq \"logout\"}">
+                <h1>
+                  <spring:message code="info.loggedout.title" />
+                </h1>
+                <div class="alert alert-info">
+                  <spring:message code="info.loggedout.text" />
+                </div>
+              </c:when>
+
+              <c:otherwise>
+                <h1>
+                  <spring:message code="error.noauth.title" />
+                </h1>
+                <div id="noAuth" class="alert alert-error">
+                  <spring:message code="error.noauth.text" />
+                </div>
+              </c:otherwise>
+            </c:choose>
           </div>
         </div>
       </div>

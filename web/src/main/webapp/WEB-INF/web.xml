@@ -26,7 +26,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/eintyg.inera.se-config.xml, /WEB-INF/web-security.xml</param-value>
+        <param-value>classpath:/eintyg.inera.se-config.xml, classpath:/eintyg.inera.se-cxf-config.xml, /WEB-INF/web-security.xml</param-value>
     </context-param>
 
     <!-- Start spring context -->

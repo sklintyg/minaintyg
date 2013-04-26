@@ -27,36 +27,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import se.inera.certificate.web.service.CitizenService;
+import se.inera.certificate.web.service.ConsentService;
 
 /**
  */
 public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger log = LoggerFactory
-            .getLogger(VerifyConsentInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
 
     private boolean jsonResponse;
+
+    @Autowired
+    private ConsentService consentService;
 
     @Autowired
     private CitizenService citizenService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        log.debug("Verifying consent...");
+        log.debug("Verifying citizen consent...");
 
+        // Get Citizen instance from context
         Citizen citizen = citizenService.getCitizen();
+        if (!citizen.consentIsKnown()) {
+            log.debug("State of consent not known - fetching consent status...");
+            boolean consentResult = consentService.fetchConsent(citizen.getUsername());
+            log.debug("Consent result is {}", consentResult);
+            //set the consent result so that we don't have to fetch it next time around
+            citizen.setConsent(consentResult);
+        }
 
+        // Check consent state of citizen
         if (!citizen.hasConsent()) {
-            if(jsonResponse) {
+            // depending on how this interceptor is configured, we should reply as json or browser-page redirect
+            if (jsonResponse) {
                 response.getOutputStream().print("Inget samtycke.json");
             } else {
                 response.sendRedirect("/web/visa-ge-samtycke");
             }
+            // return false to indicate that the request/filter chain should stop here.
+            // We have already taken care of a respone to the client.
             return false;
         }
-
+        // We have a consent, let the request continue processing
         return true;
     }
 

@@ -20,7 +20,12 @@ package se.inera.certificate.web.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentResponseType;
 
 /**
  */
@@ -29,9 +34,18 @@ public class ConsentServiceImpl implements ConsentService {
 
     private static final Logger log = LoggerFactory.getLogger(ConsentServiceImpl.class);
 
+    @Autowired
+    private GetConsentResponderInterface getConsent;
+
     @Override
     public boolean fetchConsent(String username) {
-        log.debug("About to fetch consent.");
-        return false;
+        log.debug("About to fetch consent...");
+        GetConsentRequestType parameters = new GetConsentRequestType();
+        parameters.setPersonnummer(username);
+
+        GetConsentResponseType consent = getConsent.getConsent(null, parameters); 
+        boolean consentResult = consent.isConsentGiven();
+        log.debug("Consent result is {}", consentResult);
+        return consentResult;
     }
 }

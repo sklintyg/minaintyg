@@ -21,8 +21,6 @@ package se.inera.certificate.web.security;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.security.CitizenImpl;
 
 /**
  */

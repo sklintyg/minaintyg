@@ -43,6 +43,7 @@ public class PageController {
     public String sso() {
         log.debug("sso");
         Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Get and set consent status
         citizen.setConsent(consentService.fetchConsent(citizen.getUsername()));
         return "redirect:/web/start";
     }
@@ -58,11 +59,12 @@ public class PageController {
         log.debug("displayConsentForm");
         return new ModelAndView("consent-form");
     }
-    
+
     @RequestMapping(value = "/ge-samtycke", method = RequestMethod.POST)
     public ModelAndView setConsent() {
         log.debug("setConsent");
-        //update consent in security consent
+        //TODO: actually call consentService.setConsent
+        // update consent in security consent
         Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         citizen.setConsent(true);
         return new ModelAndView("start");
