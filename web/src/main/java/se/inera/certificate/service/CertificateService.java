@@ -19,7 +19,9 @@
 package se.inera.certificate.service;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.CertificateState;
 
 import java.util.List;
 
@@ -33,4 +35,6 @@ public interface CertificateService {
     CertificateMetaData getCertificate(String civicRegistrationNumber, String certificateId);
 
     void storeCertificate(CertificateMetaData certificate);
+
+    void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 }
