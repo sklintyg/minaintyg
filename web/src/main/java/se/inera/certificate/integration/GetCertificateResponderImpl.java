@@ -78,7 +78,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", metaData.getType())));
         }
         else {
-            // certificate type is supported and we unmarshall the certificate information to a JAXB element
+            // certificate type is supported and we unmarshal the certificate information to a JAXB element
             try {
                 certificateType.getAny().add(buildJaxbElement(metaData.getDocument(), certificateSupport.additionalContextClasses()));
                 response.setCertificate(certificateType);
