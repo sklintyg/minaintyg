@@ -21,7 +21,7 @@ public class CertificateStateHistoryEntry {
     @Enumerated(EnumType.ORDINAL)
     private CertificateState state;
 
-    @Column(name = "SIGNED_DATE")
+    @Column(name = "TIMESTAMP")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDateTime timestamp;
 

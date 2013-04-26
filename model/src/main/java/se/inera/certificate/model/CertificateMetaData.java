@@ -43,12 +43,12 @@ public class CertificateMetaData {
     private String id;
 
     /** Type of the certificate. */
-    @Column(name = "TYPE")
+    @Column(name = "TYPE", nullable = false)
     private String type;
 
     /** Name of the doctor that signed the certificate. */
     // TODO: naming? (PW)
-    @Column(name = "SIGNING_DOCTOR_NAME")
+    @Column(name = "SIGNING_DOCTOR_NAME", nullable = false)
     private String signingDoctorName;
 
     /** Name of care unit. */
@@ -56,21 +56,21 @@ public class CertificateMetaData {
     private String careUnitName;
 
     /** Civic registration number for patient. */
-    @Column(name = "CIVIC_REGISTRATION_NUMBER")
+    @Column(name = "CIVIC_REGISTRATION_NUMBER", nullable = false)
     private String civicRegistrationNumber;
 
     /** Time this certificate was signed. */
-    @Column(name = "SIGNED_DATE")
+    @Column(name = "SIGNED_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate signedDate;
 
     /** Time from which this certificate is valid. */
-    @Column(name = "VALID_FROM_DATE")
+    @Column(name = "VALID_FROM_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate validFromDate;
 
     /** Time to which this certificate is valid. */
-    @Column(name = "VALID_TO_DATE")
+    @Column(name = "VALID_TO_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate validToDate;
 
