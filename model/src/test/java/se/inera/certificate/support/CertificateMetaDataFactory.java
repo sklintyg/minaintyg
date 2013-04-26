@@ -23,6 +23,8 @@ public class CertificateMetaDataFactory {
     public static final LocalDate SIGNED_DATE = new LocalDate(1999, 12, 31);
     public static final String SIGNING_DOCTOR = "Dr. Oetker";
 
+    public static final String CARE_UNIT_NAME = "London Bridge Hospital";
+
     public static CertificateMetaData buildCertificateMetaData() {
         return buildCertificateMetaData(CERTIFICATE_ID);
     }
@@ -50,6 +52,7 @@ public class CertificateMetaDataFactory {
                 .validity(validFrom, validTo)
                 .signedDate(SIGNED_DATE)
                 .signingDoctorName(SIGNING_DOCTOR)
+                .careUnitName(CARE_UNIT_NAME)
                 .build();
     }
 }

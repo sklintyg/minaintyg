@@ -52,7 +52,7 @@ public class CertificateMetaData {
     private String signingDoctorName;
 
     /** Name of care unit. */
-    @Column(name = "CARE_UNIT_NAME")
+    @Column(name = "CARE_UNIT_NAME", nullable = false)
     private String careUnitName;
 
     /** Civic registration number for patient. */

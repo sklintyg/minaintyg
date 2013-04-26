@@ -48,8 +48,8 @@ create table CERTIFICATE_STATE (
 
 insert into CERTIFICATE (ID, DOCUMENT) values ('1', STRINGTOUTF8('<RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>'));
 
-insert into CERTIFICATE_META_DATA (ID, CIVIC_REGISTRATION_NUMBER, DELETED, SIGNED_DATE, SIGNING_DOCTOR_NAME, TYPE, VALID_FROM_DATE, VALID_TO_DATE)
-values ('1', '121212-1212', 0, '2013-04-24', 'Dr. Oetker', 'fk7263', '2013-04-25', '2013-05-25');
+insert into CERTIFICATE_META_DATA (ID, CIVIC_REGISTRATION_NUMBER, DELETED, SIGNED_DATE, SIGNING_DOCTOR_NAME, CARE_UNIT_NAME, TYPE, VALID_FROM_DATE, VALID_TO_DATE)
+values ('1', '121212-1212', 0, '2013-04-24', 'Dr. Oetker', 'London Bridge Hospital', 'fk7263', '2013-04-25', '2013-05-25');
 
 insert into CERTIFICATE_STATE(CERTIFICATE_ID, TARGET, STATE, TIMESTAMP)
   values ('1', 'fk', 'SENT', '2013-04-25 11:01:04');
