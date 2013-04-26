@@ -98,7 +98,7 @@ public class CertificateMetaData {
     /**
      * Constructor used by JPA.
      */
-    CertificateMetaData() {
+    public CertificateMetaData() {
         // EMPTY
     }
 

@@ -2,7 +2,7 @@ package se.inera.certificate.integration;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,9 +21,8 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
@@ -46,20 +45,13 @@ public class RegisterMedicalCertificateResponderImplTest {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         JAXBElement<RegisterMedicalCertificateType> request =  unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/fk7263.xml").getInputStream()), RegisterMedicalCertificateType.class);
 
-
-        doNothing().when(certificateService).storeCertificate(argThat(new ArgumentMatcher<CertificateMetaData>() {
-            @Override
-            public boolean matches(Object o) {
-                CertificateMetaData metaData = (CertificateMetaData) o;
-                assertEquals("6ea04fd0-5fef-4809-823b-efeddf8a4d55", metaData.getId());
-                return true;
-            }
-        }));
-
+        ArgumentCaptor<CertificateMetaData> argument = ArgumentCaptor.forClass(CertificateMetaData.class);
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request.getValue());
 
-        verify(certificateService).storeCertificate(any(CertificateMetaData.class));
+        verify(certificateService).storeCertificate(argument.capture());
+
+        assertEquals("6ea04fd0-5fef-4809-823b-efeddf8a4d55", argument.getValue().getId());
 
         assertEquals(OK, response.getResult().getResultCode());
     }
