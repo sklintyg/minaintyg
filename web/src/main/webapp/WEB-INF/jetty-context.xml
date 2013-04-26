@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
 
-<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+<Configure id="wac" class="org.eclipse.jetty.webapp.WebAppContext">
   <Call name="setAttribute">
     <Arg>org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern</Arg>
     <Arg>.*/.*jsp-api-[^/]\.jar$|./.*jsp-[^/]\.jar$|./.*taglibs[^/]*\.jar$</Arg>
   </Call>
+  <New id="DataSource" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg><Ref refid="wac"/></Arg>
+    <Arg>jdbc/intyg</Arg>
+    <Arg>
+      <New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+        <Set name="Url">jdbc:mysql://localhost:3306/intyg</Set>
+        <Set name="User">intyg</Set>
+        <Set name="Password">intyg</Set>
+      </New>
+    </Arg>
+  </New>  
 </Configure>

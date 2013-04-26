@@ -73,7 +73,6 @@
                   </extraarg>
                 </extraargs>
               </defaultOptions>
-              <sourceRoot>${target.path}</sourceRoot>
               <wsdlOptions>
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl</wsdl>

@@ -48,4 +48,7 @@
   <jaxws:endpoint address="/register-certificate" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
   <jaxws:endpoint address="/set-certificate-status" implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl" />
 
+  <jaxws:endpoint address="/get-consent-v1" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
+  <jaxws:endpoint address="/set-consent-v1" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
+
 </beans>
