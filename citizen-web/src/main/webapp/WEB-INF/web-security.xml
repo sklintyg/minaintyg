@@ -53,7 +53,7 @@
     </beans>
 
     <!-- I andra miljöer används mvk-integration-modulens 'mvkPreAuthFilter' -->
-    <beans profile="dev,test">
+    <beans profile="dev">
         <bean id="mvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
             <property name="authenticationManager" ref="mvkAuthenticationManager"/>
         </bean>

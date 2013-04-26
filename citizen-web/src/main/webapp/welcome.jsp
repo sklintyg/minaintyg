@@ -60,19 +60,19 @@
             <h1>Testinloggningar</h1>
 
             <p>
-              <a href="/web/sso?guid=19121212-1212">19121212-1212</a> samtycke ej givet
+              <a href="/web/sso?guid=19121212-1212">19121212-1212</a>
             </p>
             <p>
-              <a href="/web/sso?guid=19121212-0000">19121212-0000</a> samtycke ej givet - 2 intyg
+              <a href="/web/sso?guid=19121212-0000">19121212-0000</a>
             </p>
             <p>
-              <a href="/web/sso?guid=19121212-0001">19121212-0001</a> samtycke givet - inga intyg
+              <a href="/web/sso?guid=19121212-0001">19121212-0001</a>
             </p>
             <p>
-              <a href="/web/sso?guid=19121212-0002">19121212-0002</a> samtycke givet - 1 intyg
+              <a href="/web/sso?guid=19121212-0002">19121212-0002</a>
             </p>
             <p>
-              <a href="/web/sso?guid=19121212-0003">19121212-0003</a> samtycke givet - 50 intyg
+              <a href="/web/sso?guid=19121212-0003">19121212-0003</a>
             </p>
             <h2>Logga in med annat guid</h2>
             <form id="customguidform" class="navbar-form pull-left">
