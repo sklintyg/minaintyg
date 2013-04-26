@@ -18,9 +18,22 @@
  */
 package se.inera.certificate.integration;
 
+import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.CertificateMetaData;
@@ -29,15 +42,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.integration.ResultOfCallUtil.*;
 
 /**
  * @author andreaskaltenbach
@@ -49,7 +53,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
     private CertificateService certificateService;
 
     @Autowired
-    List<CertificateSupport> supportedCertificates = new ArrayList<>();
+    private List<CertificateSupport> supportedCertificates = new ArrayList<>();
 
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType parameters) {
@@ -61,8 +65,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         if (metaData != null) {
             response.setMeta(ModelConverter.toCertificateMetaType(metaData));
             attachCertificateDocument(metaData, response);
-        }
-        else {
+        } else {
             response.setResult(failResult(String.format("Unknown certificate ID: %s", parameters.getCertificateId())));
         }
 
@@ -76,8 +79,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         if (certificateSupport == null) {
             // given certificate type is not supported
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", metaData.getType())));
-        }
-        else {
+        } else {
             // certificate type is supported and we unmarshall the certificate information to a JAXB element
             try {
                 certificateType.getAny().add(buildJaxbElement(metaData.getDocument(), certificateSupport.additionalContextClasses()));
@@ -103,6 +105,4 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         }
         return null;
     }
-
-
 }

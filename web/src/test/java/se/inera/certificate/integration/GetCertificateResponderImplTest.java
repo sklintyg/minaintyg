@@ -18,6 +18,18 @@
  */
 package se.inera.certificate.integration;
 
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,22 +38,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
+import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
-
-import java.io.IOException;
-
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
  * @author andreaskaltenbach
@@ -52,12 +56,15 @@ public class GetCertificateResponderImplTest {
     @Mock
     private CertificateService certificateService = mock(CertificateService.class);
 
+    @Mock
+    private List<CertificateSupport> supported;
+
     @InjectMocks
     private GetCertificateResponderImpl responder = new GetCertificateResponderImpl();
 
     @Before
-    public void initializeCertificateSupport() {
-        responder.supportedCertificates.add(new Fk7263Support());
+    public void before() {
+        when(supported.iterator()).thenReturn(Collections.<CertificateSupport>singletonList(new Fk7263Support()).iterator());
     }
 
     @Test
