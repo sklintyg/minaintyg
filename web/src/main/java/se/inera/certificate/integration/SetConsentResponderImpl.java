@@ -16,7 +16,9 @@ public class SetConsentResponderImpl implements SetConsentResponderInterface {
     @Override
     public SetConsentResponseType setConsent(AttributedURIType logicalAddress, SetConsentRequestType parameters) {
         consentService.setConsent(parameters.getPersonnummer(), parameters.isConsentGiven());
-        return new SetConsentResponseType();
+        SetConsentResponseType response = new SetConsentResponseType();
+        response.setResult(ResultOfCallUtil.okResult());
+        return response;
     }
 
 }
