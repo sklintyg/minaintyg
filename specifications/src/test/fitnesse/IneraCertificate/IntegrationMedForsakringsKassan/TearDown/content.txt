@@ -1,0 +1,20 @@
+|Import|
+|se.inera.certificate.spec|
+
+!3 Rensa bort test-intyg
+
+|ta bort Intyg|
+|id|
+|intyg-1|
+|intyg-annan-typ|
+|intyg-2|
+|intyg-3a|
+|intyg-3b|
+|intyg-4|
+|intyg-5|
+
+!3 Återta samtycken:
+
+|Samtycke|
+|personnr|samtycke|
+|121212-1212|nej|

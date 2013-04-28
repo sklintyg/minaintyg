@@ -78,11 +78,11 @@ public class CertificateMetaData {
     @Column(name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean deleted = Boolean.FALSE;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ID", insertable = false, updatable = false)
     private Certificate certificate;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
       @CollectionTable(
             name="CERTIFICATE_STATE",
             joinColumns=@JoinColumn(name="CERTIFICATE_ID")

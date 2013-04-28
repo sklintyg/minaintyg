@@ -36,7 +36,15 @@
     <jdbc:script location="classpath:env/db/dev-setup-database.sql" />
   </jdbc:embedded-database>
 
-  <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+<bean id="org.h2.tools.Server" 
+   class="org.h2.tools.Server" 
+   factory-method="createTcpServer" 
+   init-method="start" 
+   destroy-method="stop" lazy-init="false"> 
+      <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort, 
+9092" /> 
+   </bean>
+ <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
     <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
   </bean>
 
