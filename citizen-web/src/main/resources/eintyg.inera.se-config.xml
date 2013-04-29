@@ -28,8 +28,9 @@
 	</beans>
 
 	<beans profile="test">
+        <context:property-placeholder ignore-resource-not-found="true" ignore-unresolvable="true" location="file:${user.home}/.minaintyg.se/eintyg.properties"/>
 		<context:property-placeholder
-			location="classpath*:/saml.properties, classpath*:/services.properties" />
+			location="classpath*:/saml.properties, classpath*:/services.properties" ignore-resource-not-found="false"/>
 	</beans>
 
 	<beans profile="qa">
