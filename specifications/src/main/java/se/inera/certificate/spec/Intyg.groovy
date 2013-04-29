@@ -1,15 +1,12 @@
-package se.inera.certificate.spec;
-
-import groovy.sql.Sql
+package se.inera.certificate.spec
 
 import org.joda.time.LocalDate
-
 import se.inera.certificate.spec.util.DatabaseFixture
 
 public class Intyg extends DatabaseFixture {
 
 	private def insert_cert = "INSERT INTO CERTIFICATE (ID) values (?)"
-	private def insert_meta_data = "INSERT INTO CERTIFICATE_META_DATA (ID, TYPE, SIGNING_DOCTOR_NAME, CIVIC_REGISTRATION_NUMBER, SIGNED_DATE, VALID_FROM_DATE, VALID_TO_DATE, DELETED) values (?,?,'Doctor Ruth',?,?,?,?,false)"
+	private def insert_meta_data = "INSERT INTO CERTIFICATE_META_DATA (ID, TYPE, CARE_UNIT_NAME, SIGNING_DOCTOR_NAME, CIVIC_REGISTRATION_NUMBER, SIGNED_DATE, VALID_FROM_DATE, VALID_TO_DATE, DELETED) values (?,?,'Betty Ford Center', 'Doctor Ruth',?,?,?,?,false)"
 	
 	String personnr
 	LocalDate datum
