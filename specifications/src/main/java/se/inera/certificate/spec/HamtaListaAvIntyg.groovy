@@ -1,9 +1,5 @@
-package se.inera.certificate.spec;
-
-
+package se.inera.certificate.spec
 import org.joda.time.LocalDate
-import org.w3.wsaddressing10.AttributedURIType
-
 import se.inera.certificate.spec.util.WsClientFixture
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType
 import se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface
@@ -53,15 +49,14 @@ public class HamtaListaAvIntyg extends WsClientFixture {
 		parameters.nationalIdentityNumber = personnr
 		parameters.fromDate = från
 		parameters.toDate = till
+        parameters.certificateType = ["FK7263"]
 		ListCertificatesResponseType response = listCertificatesResponder.listCertificates(logicalAddress, parameters)
 		ResultOfCall result = response.result
 		if (result.resultCode == ResultCodeEnum.OK) {
 			def fk_intyg = []
 			List allaIntyg = response.meta
 			allaIntyg.each {CertificateMetaType metaType ->
-				if (metaType.certificateType.equals("")) {
-					fk_intyg << metaType.certificateId
-				}
+				fk_intyg << metaType.certificateId
 			}
 			return fk_intyg.toString()	
 		} else {

@@ -8,5 +8,5 @@ När Försäkringskassan frågar efter vilka intyg som finns, förväntar de sig
 |010101-0101|2013-04-01|2013-04-01|samtycke saknas|inga intyg, samtycke saknas|
 |020202-0202|2013-04-01|2013-04-01|samtycke saknas|intyg finns, men samtycke saknas|
 |121212-1212|2013-03-01|2013-03-31|[]|Intyg saknas för det intervallet|
-|121212-1212|2013-04-01|2013-04-01|[intyg1]|Endast intyg av typ FK7263 returneras|
-|121212-1212|2013-04-02|2013-04-03|[intyg2,intyg-3a,intyg-3b]|Det kan finnas flera intyg för samma dag|
+|121212-1212|2013-04-01|2013-04-01|[intyg-1]|Endast intyg av typ FK7263 returneras|
+|121212-1212|2013-04-02|2013-04-04|[intyg-2, intyg-3, intyg-4]|Det kan finnas flera intyg, signerade på olika dagar|

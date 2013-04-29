@@ -8,10 +8,10 @@
 |intyg-1|
 |intyg-annan-typ|
 |intyg-2|
-|intyg-3a|
-|intyg-3b|
+|intyg-3|
 |intyg-4|
 |intyg-5|
+|intyg-6|
 
 !3 Återta samtycken:
 
