@@ -21,7 +21,9 @@
 
 	<modules>
 		<module>citizen-web</module>
+		<!--
 		<module>specifications</module>
+		-->
 	</modules>
 
 	<properties>
