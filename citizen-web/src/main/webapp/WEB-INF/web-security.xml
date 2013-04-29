@@ -35,6 +35,7 @@
 
       <import resource="classpath*:/netcare-mvk-integration-config.xml"/>
       <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
+      <import resource="classpath*:/mvk-validatetoken-cxf-config.xml"/>
 
         <security:authentication-manager>
             <security:authentication-provider ref="preAuthAuthProvider"/>
