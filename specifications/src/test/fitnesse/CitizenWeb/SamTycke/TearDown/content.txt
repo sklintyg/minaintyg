@@ -1,0 +1,5 @@
+!3 Återta samtycken:
+
+|Samtycke|
+|personnr|samtycke|
+|660409-5031|nej|

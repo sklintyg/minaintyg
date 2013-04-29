@@ -1,0 +1,11 @@
+!3 Givet ett redan registrerat samtycke:
+
+|Samtycke|
+|personnr|samtycke|
+|660409-5031|ja|
+
+!3 Samtyckes-sida visas nu ej
+
+|script|!-GeSamtycke-!|
+|logga på som|660409-5031|
+|start sidan visas|

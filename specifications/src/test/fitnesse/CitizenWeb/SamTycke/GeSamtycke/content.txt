@@ -1,0 +1,7 @@
+|script|!-GeSamtycke-!|
+|logga på som|660409-5031|
+|ge samtycke sidan visas|
+|ge samtycke|
+|start sidan visas|
+|logga på som|660409-5031|
+|start sidan visas|
