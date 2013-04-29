@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2013 Inera AB (http://www.inera.se)
+  Copyright (C) 2013 Inera AB (http://www.inera.se)
 
-    This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
+  This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
 
-    Inera Certificate Web is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+  Inera Certificate Web is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
 
-    Inera Certificate Web is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+  Inera Certificate Web is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU Affero General Public License
+  along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <beans>
-      <security:http security="none" pattern="/welcome.jsp"/>
-      <security:http security="none" pattern="/"/>
-      <security:http security="none" pattern="/favicon.ico"/>
-      <security:http security="none" pattern="/web/resources/**"/>
-      <security:http security="none" pattern="/ws/**"/>
+  <beans>
+    <security:http security="none" pattern="/welcome.jsp" />
+    <security:http security="none" pattern="/" />
+    <security:http security="none" pattern="/favicon.ico" />
+    <security:http security="none" pattern="/web/resources/**" />
+    <security:http security="none" pattern="/ws/**" />
 
-      <import resource="classpath*:/netcare-mvk-integration-config.xml"/>
-      <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
-      <import resource="classpath*:/mvk-validatetoken-cxf-config.xml"/>
+    <import resource="classpath*:/netcare-mvk-integration-config.xml" />
+    <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
+    <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
 
-        <security:authentication-manager>
-            <security:authentication-provider ref="preAuthAuthProvider"/>
-        </security:authentication-manager>
+    <security:authentication-manager>
+      <security:authentication-provider ref="preAuthAuthProvider" />
+    </security:authentication-manager>
 
-        <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
-            <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter"/>
-        </security:http>
+    <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
+    </security:http>
 
-        <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
-            <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')"/>
-            <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')"/>
-            <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout"/>
-        </security:http>
+    <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
+      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
+    </security:http>
 
-    </beans>
+  </beans>
 
-    <!-- I andra miljöer används mvk-integration-modulens 'mvkPreAuthFilter' -->
-    <beans profile="dev">
-        <bean id="mvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
-            <property name="authenticationManager" ref="mvkAuthenticationManager"/>
-        </bean>
-    </beans>
+  <!-- I andra miljöer används mvk-integration-modulens 'mvkPreAuthFilter' -->
+  <beans profile="dev">
+    <bean id="mvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
+      <property name="authenticationManager" ref="mvkAuthenticationManager" />
+    </bean>
+  </beans>
 </beans>
