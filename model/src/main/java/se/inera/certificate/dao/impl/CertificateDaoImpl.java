@@ -73,6 +73,10 @@ public class CertificateDaoImpl implements CertificateDao {
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));
+
+        // order by signed date
+        query.orderBy(criteriaBuilder.asc(root.get("signedDate")));
+
         List<CertificateMetaData> result = entityManager.createQuery(query).getResultList();
 
         // expect a small number, so lets filter in memory
