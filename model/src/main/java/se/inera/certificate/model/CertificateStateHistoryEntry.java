@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
 @Embeddable
 public class CertificateStateHistoryEntry {
 
-    @Column(name="TARGET", nullable = false)
+    @Column(name = "TARGET", nullable = false)
     private String target;
 
     @Column(name = "STATE")

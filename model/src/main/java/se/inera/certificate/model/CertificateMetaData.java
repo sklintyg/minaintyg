@@ -18,14 +18,22 @@
  */
 package se.inera.certificate.model;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class represents the meta data around a certificate. The certificate document can be retrieved
@@ -84,8 +92,8 @@ public class CertificateMetaData {
 
     @ElementCollection(fetch = FetchType.EAGER)
       @CollectionTable(
-            name="CERTIFICATE_STATE",
-            joinColumns=@JoinColumn(name="CERTIFICATE_ID")
+            name = "CERTIFICATE_STATE",
+            joinColumns = @JoinColumn(name = "CERTIFICATE_ID")
       )
     private List<CertificateStateHistoryEntry> states = new ArrayList<>();
 
