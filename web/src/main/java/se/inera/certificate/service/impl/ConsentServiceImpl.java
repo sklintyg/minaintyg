@@ -37,7 +37,7 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Override
     public boolean isConsent(String personnummer) {
-        return Boolean.TRUE == consents.get(personnummer);
+        return Boolean.TRUE.equals(consents.get(personnummer));
     }
 
     @Override
