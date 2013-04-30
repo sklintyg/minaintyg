@@ -38,8 +38,7 @@ public final class ModelConverter {
     private static final BiMap<CertificateState, StatusType> CERTIFICATE_STATE_MAP;
 
     static {
-
-        CERTIFICATE_STATE_MAP = HashBiMap.create(new HashMap<CertificateState, StatusType>() {{
+        CERTIFICATE_STATE_MAP = HashBiMap.create(new HashMap<CertificateState, StatusType>() { {
             put(CertificateState.PROCESSED, StatusType.PROCESSED);
             put(CertificateState.DELETED, StatusType.DELETED);
             put(CertificateState.RESTORED, StatusType.RESTORED);
@@ -48,7 +47,7 @@ public final class ModelConverter {
             put(CertificateState.RECEIVED, StatusType.RECEIVED);
             put(CertificateState.IN_PROGRESS, StatusType.IN_PROGRESS);
             put(CertificateState.UNHANDLED, StatusType.UNHANDLED);
-        }} );
+        } });
     }
 
     private ModelConverter() {
