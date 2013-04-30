@@ -76,11 +76,12 @@ public class DateFilterTest {
                 createCertificateMetaData("3", "2013-03-01", "2013-03-27"),
                 createCertificateMetaData("7", "2013-04-01", "2013-05-03")
              });
-        List<CertificateMetaData> result1 = new DateFilter(data).filter(null, null);
+        DateFilter dateFilter = new DateFilter(data);
+        List<CertificateMetaData> result1 = dateFilter.filter(null, null);
         assertEquals(data.size(), result1.size());
-        List<CertificateMetaData> result2 = new DateFilter(data).filter(new LocalDate("2013-03-28"), null);
+        List<CertificateMetaData> result2 = dateFilter.filter(new LocalDate("2013-03-28"), null);
         assertEquals(data.size(), result2.size());
-        List<CertificateMetaData> result3 = new DateFilter(data).filter(null, new LocalDate("2013-04-28"));
+        List<CertificateMetaData> result3 = dateFilter.filter(null, new LocalDate("2013-04-28"));
         assertEquals(data.size(), result3.size());
     }
 

@@ -19,6 +19,7 @@
 package se.inera.certificate.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,19 +57,17 @@ class DateFilter {
      * @return filtered collection where validity interval in the {@link CertificateMetaData} is within the validity interval.
      */
     List<CertificateMetaData> filter(LocalDate fromDate, LocalDate toDate) {
-        List<CertificateMetaData> data = new ArrayList<CertificateMetaData>(this.data);
         if (fromDate == null || toDate == null) {
-            return data;
+            return Collections.unmodifiableList(data);
         }
 
-        Iterator<CertificateMetaData> iter = data.iterator();
-        while (iter.hasNext()) {
-            CertificateMetaData meta = iter.next();
-            if (not(isWithin(meta.getValidFromDate(), fromDate, toDate) || isWithin(meta.getValidToDate(), fromDate, toDate))) {
-                iter.remove();
+        List<CertificateMetaData> filteredData = new ArrayList<CertificateMetaData>(this.data.size());
+        for (CertificateMetaData meta: data) {
+            if (isWithin(meta.getValidFromDate(), fromDate, toDate) || isWithin(meta.getValidToDate(), fromDate, toDate)) {
+                filteredData.add(meta);
             }
         }
-        return data;
+        return filteredData;
     }
 
     /**
@@ -82,9 +81,5 @@ class DateFilter {
      */
     private boolean isWithin(LocalDate date, LocalDate from, LocalDate to) {
         return date.compareTo(from) >= 0 && date.compareTo(to) <= 0;
-    }
-
-    private boolean not(boolean cond) {
-        return !cond;
     }
 }
