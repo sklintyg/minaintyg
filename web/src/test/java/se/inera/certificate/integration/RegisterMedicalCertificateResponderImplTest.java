@@ -1,5 +1,6 @@
 package se.inera.certificate.integration;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -52,6 +53,11 @@ public class RegisterMedicalCertificateResponderImplTest {
         verify(certificateService).storeCertificate(argument.capture());
 
         assertEquals("6ea04fd0-5fef-4809-823b-efeddf8a4d55", argument.getValue().getId());
+        assertEquals("Landstinget Norrland", argument.getValue().getCareUnitName());
+        assertEquals("19940701-0066", argument.getValue().getCivicRegistrationNumber());
+        assertEquals(new LocalDate("2013-03-17"), argument.getValue().getSignedDate());
+        assertEquals(new LocalDate("2013-03-17"), argument.getValue().getValidFromDate());
+        assertEquals(new LocalDate("2013-05-01"), argument.getValue().getValidToDate());
 
         assertEquals(OK, response.getResult().getResultCode());
     }
