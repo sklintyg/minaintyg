@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
 
@@ -41,17 +41,17 @@ public class CertificateServiceImpl implements CertificateService {
     private CertificateDao certificateDao;
 
     @Override
-    public List<CertificateMetaData> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
-        return certificateDao.findCertificateMetaData(civicRegistrationNumber, certificateTypes, fromDate, toDate);
+    public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
+        return certificateDao.findCertificate(civicRegistrationNumber, certificateTypes, fromDate, toDate);
     }
 
     @Override
-    public CertificateMetaData getCertificate(String civicRegistrationNumber, String id) {
+    public Certificate getCertificate(String civicRegistrationNumber, String id) {
         return certificateDao.getCertificate(id);
     }
 
     @Override
-    public void storeCertificate(CertificateMetaData certificate) {
+    public void storeCertificate(Certificate certificate) {
         certificateDao.store(certificate);
     }
 

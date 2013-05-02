@@ -18,17 +18,15 @@
  */
 package se.inera.certificate.dao.impl;
 
+import org.joda.time.LocalDate;
+import se.inera.certificate.model.Certificate;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-import org.joda.time.LocalDate;
-
-import se.inera.certificate.model.CertificateMetaData;
-
 /**
- * Class that filter a collection of {@link CertificateMetaData} that has validity dated within a
+ * Class that filter a collection of {@link Certificate} that has validity dated within a
  * specific date interval.
  *
  * @author parwenaker
@@ -37,15 +35,15 @@ import se.inera.certificate.model.CertificateMetaData;
 class DateFilter {
 
     /** The collection to filter. */
-    private final List<CertificateMetaData> data;
+    private final List<Certificate> data;
 
     /**
      * Constructor.
      *
-     * @param data initial collection of {@link CertificateMetaData} to filter.
+     * @param data initial collection of {@link Certificate} to filter.
      */
-    public DateFilter(List<CertificateMetaData> data) {
-        this.data = new ArrayList<CertificateMetaData>(data);
+    public DateFilter(List<Certificate> data) {
+        this.data = new ArrayList<Certificate>(data);
     }
 
     /**
@@ -54,15 +52,15 @@ class DateFilter {
      * @param fromDate first date in validity interval
      * @param toDate last date in validity interval
      *
-     * @return filtered collection where validity interval in the {@link CertificateMetaData} is within the validity interval.
+     * @return filtered collection where validity interval in the {@link Certificate} is within the validity interval.
      */
-    List<CertificateMetaData> filter(LocalDate fromDate, LocalDate toDate) {
+    List<Certificate> filter(LocalDate fromDate, LocalDate toDate) {
         if (fromDate == null || toDate == null) {
             return Collections.unmodifiableList(data);
         }
 
-        List<CertificateMetaData> filteredData = new ArrayList<CertificateMetaData>(this.data.size());
-        for (CertificateMetaData meta: data) {
+        List<Certificate> filteredData = new ArrayList<Certificate>(this.data.size());
+        for (Certificate meta: data) {
             if (isWithin(meta.getValidFromDate(), fromDate, toDate) || isWithin(meta.getValidToDate(), fromDate, toDate)) {
                 filteredData.add(meta);
             }

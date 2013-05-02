@@ -20,13 +20,13 @@ package se.inera.certificate.dao;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 
 import java.util.List;
 
 /**
- * Data Access Object for handling {@link Certificate} and {@link CertificateMetaData}.
+ * Data Access Object for handling {@link Certificate}.
  *
  * @author parwenaker
  *
@@ -34,7 +34,7 @@ import java.util.List;
 public interface CertificateDao {
 
     /**
-     * Retreives a list of {@link CertificateMetaData} filtered by parameters.
+     * Retrieves a list of {@link Certificate} filtered by parameters.
      *
      * @param civicRegistrationNumber Civic registration number
      * @param types Type of certificate
@@ -42,23 +42,23 @@ public interface CertificateDao {
      * @param toDate To data when the certificate is valid
      * @return
      */
-    List<CertificateMetaData> findCertificateMetaData(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate);
+    List<Certificate> findCertificate(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate);
 
     /**
-     * Gets one {@link CertificateMetaData}.
+     * Gets one {@link Certificate}.
      *
      * @param certificateId Id of the Certificate
      *
-     * @return {@link CertificateMetaData}
+     * @return {@link Certificate}
      */
-    CertificateMetaData getCertificate(String certificateId);
+    Certificate getCertificate(String certificateId);
 
     /**
-     * Stores a {@link CertificateMetaData}.
+     * Stores a {@link Certificate}.
      *
-     * @param certificateMetaData
+     * @param certificate
      */
-    void store(CertificateMetaData certificateMetaData);
+    void store(Certificate certificate);
 
     void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
 }

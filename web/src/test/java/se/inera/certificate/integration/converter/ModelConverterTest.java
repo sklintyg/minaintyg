@@ -3,13 +3,13 @@ package se.inera.certificate.integration.converter;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
-import se.inera.certificate.model.CertificateMetaData;
-import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
+import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static se.inera.certificate.model.CertificateState.*;
 
 /**
@@ -23,9 +23,9 @@ public class ModelConverterTest {
     @Test
     public void testToCertificateMetaTypeConversion() {
 
-        CertificateMetaData metaData = createCertificateMetaData();
+        Certificate certificate = createCertificate();
 
-        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(metaData);
+        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(certificate);
 
         assertEquals("112233", metaType.getCertificateId());
         assertEquals("fk7263", metaType.getCertificateType());
@@ -43,10 +43,10 @@ public class ModelConverterTest {
     @Test
     public void testDeletedCertificateConversion() {
 
-        CertificateMetaData metaData = createCertificateMetaData();
-        metaData.setDeleted(true);
+        Certificate certificate = createCertificate();
+        certificate.setDeleted(true);
 
-        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(metaData);
+        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(certificate);
 
         assertEquals("borttaget", metaType.getAvailable());
     }
@@ -54,9 +54,9 @@ public class ModelConverterTest {
     @Test
     public void testCertificateStateConversion() {
 
-        CertificateMetaData metaData = createCertificateMetaData();
+        Certificate certificate = createCertificate();
 
-        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(metaData);
+        CertificateMetaType metaType = ModelConverter.toCertificateMetaType(certificate);
 
         assertEquals(3, metaType.getStatus().size());
 
@@ -73,8 +73,8 @@ public class ModelConverterTest {
         assertEquals(APRIL_FIRST, metaType.getStatus().get(2).getTimestamp());
     }
 
-    private CertificateMetaData createCertificateMetaData() {
-        return new CertificateMetaDataBuilder("112233")
+    private Certificate createCertificate() {
+        return new CertificateBuilder("112233")
                 .certificateType("fk7263")
                 .validity(new LocalDate(2000, 1, 1), new LocalDate(2020, 1, 1))
                 .signingDoctorName("Doctor Who")

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.integration.converter.ModelConverter;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
@@ -48,10 +48,10 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
 
         ListCertificatesResponseType response = new ListCertificatesResponseType();
 
-        List<CertificateMetaData> certificates = certificateService.listCertificates(
+        List<Certificate> certificates = certificateService.listCertificates(
                 parameters.getNationalIdentityNumber(), parameters.getCertificateType(), parameters.getFromDate(), parameters.getToDate());
 
-        for (CertificateMetaData certificate : certificates) {
+        for (Certificate certificate : certificates) {
             response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
         }
 

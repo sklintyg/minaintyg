@@ -23,7 +23,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.InvalidCertificateIdentifierException;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
 
@@ -47,16 +47,12 @@ public class CertificateDaoImpl implements CertificateDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    /*
-     * (non-Javadoc)
-     * @see se.inera.certificate.dao.CertificateDao#findCertificateMetaData(java.lang.String, java.util.List, org.joda.time.LocalDate, org.joda.time.LocalDate)
-     */
     @Override
-    public List<CertificateMetaData> findCertificateMetaData(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
+    public List<Certificate> findCertificate(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<CertificateMetaData> query = criteriaBuilder.createQuery(CertificateMetaData.class);
-        Root<CertificateMetaData> root = query.from(CertificateMetaData.class);
+        CriteriaQuery<Certificate> query = criteriaBuilder.createQuery(Certificate.class);
+        Root<Certificate> root = query.from(Certificate.class);
 
         if (civicRegistrationNumber == null) {
             return Collections.emptyList();
@@ -77,42 +73,34 @@ public class CertificateDaoImpl implements CertificateDao {
         // order by signed date
         query.orderBy(criteriaBuilder.asc(root.get("signedDate")));
 
-        List<CertificateMetaData> result = entityManager.createQuery(query).getResultList();
+        List<Certificate> result = entityManager.createQuery(query).getResultList();
 
         // expect a small number, so lets filter in memory
         return new DateFilter(result).filter(fromDate, toDate);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see se.inera.certificate.dao.CertificateDao#getCertificate(java.lang.String)
-     */
     @Override
-    public CertificateMetaData getCertificate(String certificateId) {
-        return entityManager.find(CertificateMetaData.class, certificateId);
+    public Certificate getCertificate(String certificateId) {
+        return entityManager.find(Certificate.class, certificateId);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see se.inera.certificate.dao.CertificateDao#store(se.inera.certificate.model.CertificateMetaData)
-     */
     @Override
-    public void store(CertificateMetaData certificateMetaData) {
-        entityManager.persist(certificateMetaData);
+    public void store(Certificate certificate) {
+        entityManager.persist(certificate);
     }
 
     @Override
     public void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp) {
 
-        CertificateMetaData metaData = entityManager.find(CertificateMetaData.class, id);
+        Certificate certificate = entityManager.find(Certificate.class, id);
 
-        if (metaData == null || !metaData.getCivicRegistrationNumber().equals(civicRegistrationNumber)) {
+        if (certificate == null || !certificate.getCivicRegistrationNumber().equals(civicRegistrationNumber)) {
             throw new InvalidCertificateIdentifierException(id, civicRegistrationNumber);
         }
 
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry(target, state, timestamp);
 
-        metaData.getStates().add(historyEntry);
+        certificate.getStates().add(historyEntry);
     }
 
 }

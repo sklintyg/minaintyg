@@ -28,9 +28,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.InvalidCertificateIdentifierException;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.builder.CertificateMetaDataBuilder;
+import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.support.CertificateFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,7 +43,7 @@ import static java.util.Collections.singletonList;
 import static org.junit.Assert.*;
 import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.RECEIVED;
-import static se.inera.certificate.support.CertificateMetaDataFactory.*;
+import static se.inera.certificate.support.CertificateFactory.*;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( locations = {"classpath:persistence-config.xml"} )
@@ -57,97 +58,102 @@ public class CertificateDaoImplTest {
     private CertificateDao certificateDao;
 
     @Test
-    public void testFindCertificateMetaDataWithoutUserId() {
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(null, null, null, null);
-        assertTrue(metaData.isEmpty());
+    public void testFindCertificateWithoutUserId() {
+        List<Certificate> certificate = certificateDao.findCertificate(null, null, null, null);
+        assertTrue(certificate.isEmpty());
     }
 
     @Test
-    public void testFindCertificateMetaDataForUserWithoutCertificates() {
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
-        assertTrue(metaData.isEmpty());
+    public void testFindCertificateForUserWithoutCertificates() {
+        List<Certificate> certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER, null, null, null);
+        assertTrue(certificate.isEmpty());
     }
 
     @Test
-    public void testFindCertificateMetaDataWithoutTypeForUserWithOneCertificate() {
+    public void testFindCertificateWithoutTypeForUserWithOneCertificate() {
 
-        entityManager.persist(buildCertificateMetaData());
+        entityManager.persist(buildCertificate());
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
-        assertEquals(1, metaData.size());
+        List<Certificate> certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER, null, null, null);
+        assertEquals(1, certificate.size());
     }
 
     @Test
-    public void testFindCertificateMetaDataWithEmptyTypeForUserWithOneCertificate() {
-        entityManager.persist(buildCertificateMetaData());
+    public void testFindCertificateWithEmptyTypeForUserWithOneCertificate() {
+        entityManager.persist(buildCertificate());
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, Collections.<String>emptyList(), null, null);
-        assertEquals(1, metaData.size());
+        List<Certificate> certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER, Collections.<String>emptyList(), null, null);
+        assertEquals(1, certificate.size());
     }
 
     @Test
-    public void testFindCertificateMetaDataWithCertificateTypeFilter() {
+    public void testFindCertificateWithCertificateTypeFilter() {
 
         String otherCertificateType = "other";
 
         // create an FK7263 and another certificate
-        entityManager.persist(buildCertificateMetaData());
-        entityManager.persist(buildCertificateMetaData("otherCertificateId", otherCertificateType));
+        entityManager.persist(buildCertificate());
+        entityManager.persist(buildCertificate("otherCertificateId", otherCertificateType));
 
         // no certificate type -> no filtering by certificate type
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, null, null, null);
-        assertEquals(2, metaData.size());
+        List<Certificate> certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER, null, null, null);
+        assertEquals(2, certificate.size());
 
         // filter by FK7263 -> only return FK7263
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER, singletonList(FK7263), null, null);
-        assertEquals(1, metaData.size());
-        assertEquals(FK7263, metaData.get(0).getType());
+        certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER, singletonList(FK7263), null, null);
+        assertEquals(1, certificate.size());
+        assertEquals(FK7263, certificate.get(0).getType());
 
         // filter by other type -> only return other certificate
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+        certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER,
                 singletonList(otherCertificateType), null, null);
-        assertEquals(1, metaData.size());
-        assertEquals(otherCertificateType, metaData.get(0).getType());
+        assertEquals(1, certificate.size());
+        assertEquals(otherCertificateType, certificate.get(0).getType());
 
         // filter by both types -> both certificates are returned
-        metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+        certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER,
                 asList(FK7263, otherCertificateType), null, null);
-        assertEquals(2, metaData.size());
+        assertEquals(2, certificate.size());
     }
 
     @Test
-    public void testFindCertificateMetaDataWithValidityFilter() throws Exception {
+    public void testFindCertificateWithValidityFilter() throws Exception {
         int certificateId = Integer.parseInt(CERTIFICATE_ID);
 
-        entityManager.persist(buildCertificateMetaData(String.valueOf(certificateId++), "2013-04-13", "2013-05-13"));
-        entityManager.persist(buildCertificateMetaData(String.valueOf(certificateId++), "2013-03-13", "2013-04-12"));
-        entityManager.persist(buildCertificateMetaData(String.valueOf(certificateId++), "2013-05-13", "2013-06-13"));
+        entityManager.persist(buildCertificate(String.valueOf(certificateId++), "2013-04-13", "2013-05-13"));
+        entityManager.persist(buildCertificate(String.valueOf(certificateId++), "2013-03-13", "2013-04-12"));
+        entityManager.persist(buildCertificate(String.valueOf(certificateId++), "2013-05-13", "2013-06-13"));
 
-        List<CertificateMetaData> metaData = certificateDao.findCertificateMetaData(CIVIC_REGISTRATION_NUMBER,
+        List<Certificate> certificate = certificateDao.findCertificate(CIVIC_REGISTRATION_NUMBER,
                 singletonList(FK7263), new LocalDate("2013-04-01"), new LocalDate("2013-04-15"));
 
-        assertEquals(2, metaData.size());
+        assertEquals(2, certificate.size());
     }
 
     @Test
-    public void testGetDocument() throws Exception {
-        CertificateMetaData metaData = certificateDao.getCertificate("1");
+    public void testGetDocument() {
 
-        assertEquals(new LocalDate("2013-04-24"), metaData.getSignedDate());
-        assertEquals(new LocalDate("2013-04-25"), metaData.getValidFromDate());
-        assertEquals(new LocalDate("2013-05-25"), metaData.getValidToDate());
+        Certificate certificate = CertificateFactory.buildCertificate("1", new LocalDate("2013-04-25"), new LocalDate("2013-05-25"));
+        certificate.setSignedDate(new LocalDate("2013-04-24"));
+        certificateDao.store(certificate);
 
-        String document = metaData.getDocument();
+        Certificate storedCertificate = certificateDao.getCertificate("1");
+
+        assertEquals(new LocalDate("2013-04-24"), storedCertificate.getSignedDate());
+        assertEquals(new LocalDate("2013-04-25"), storedCertificate.getValidFromDate());
+        assertEquals(new LocalDate("2013-05-25"), storedCertificate.getValidToDate());
+
+        String document = storedCertificate.getDocument();
         assertEquals("<RegisterMedicalCertificate xmlns=\"urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3\"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>", document);
     }
 
     @Test
-    public void testStore() throws Exception {
+    public void testStore() {
 
         assertNull(certificateDao.getCertificate(CERTIFICATE_ID));
 
-        CertificateMetaData certificateMetaData = buildCertificateMetaData();
-        certificateDao.store(certificateMetaData);
+        Certificate certificate = buildCertificate();
+        certificateDao.store(certificate);
 
         assertNotNull(certificateDao.getCertificate(CERTIFICATE_ID));
     }
@@ -162,10 +168,10 @@ public class CertificateDaoImplTest {
     public void testSetCertificateStatusForDifferentPatients() {
 
         // store a certificate for reference patient
-        CertificateMetaData certificateMetaData = buildCertificateMetaData();
-        entityManager.persist(certificateMetaData);
+        Certificate certificate = buildCertificate();
+        entityManager.persist(certificate);
 
-        assertEquals(0, certificateMetaData.getStates().size());
+        assertEquals(0, certificate.getStates().size());
 
         try {
             certificateDao.updateStatus(CERTIFICATE_ID, "another patient", RECEIVED, "fk", null);
@@ -173,25 +179,25 @@ public class CertificateDaoImplTest {
         } catch (InvalidCertificateIdentifierException e) {
         }
 
-        assertEquals(0, certificateMetaData.getStates().size());
+        assertEquals(0, certificate.getStates().size());
         certificateDao.updateStatus(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, RECEIVED, "fk", null);
-        assertEquals(1, certificateMetaData.getStates().size());
+        assertEquals(1, certificate.getStates().size());
     }
 
     public void testSetCertificateStatus() {
 
         // store a certificate for patient 19101112-1314
-        CertificateMetaData metaData = new CertificateMetaDataBuilder("no1", "<diagnosis>")
+        Certificate certificate = new CertificateBuilder("no1", "<diagnosis>")
                 .civicRegistrationNumber("19101112-1314").build();
-        entityManager.persist(metaData);
+        entityManager.persist(certificate);
 
-        assertEquals(0, metaData.getStates().size());
+        assertEquals(0, certificate.getStates().size());
 
         certificateDao.updateStatus("no1", "19101112-1314", DELETED, "fk", null);
 
-        assertEquals(1, metaData.getStates().size());
-        assertEquals(DELETED, metaData.getStates().get(0).getState());
-        assertEquals("fk", metaData.getStates().get(0).getTarget());
-        assertNull(metaData.getStates().get(0).getTimestamp());
+        assertEquals(1, certificate.getStates().size());
+        assertEquals(DELETED, certificate.getStates().get(0).getState());
+        assertEquals("fk", certificate.getStates().get(0).getTarget());
+        assertNull(certificate.getStates().get(0).getTimestamp());
     }
 }

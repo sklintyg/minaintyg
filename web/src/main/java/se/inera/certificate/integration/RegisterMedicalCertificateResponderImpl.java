@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.model.Certificate;
-import se.inera.certificate.model.CertificateMetaData;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
@@ -57,16 +56,15 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         LocalDate validToDate = extractValidToDate(request.getLakarutlatande());
 
         Certificate certificate = new Certificate(certificateId, document);
-        CertificateMetaData metaData = new CertificateMetaData(certificate);
-        metaData.setCareUnitName(careUnitName);
-        metaData.setCivicRegistrationNumber(civicRegistrationNumber);
-        metaData.setSignedDate(signedDate);
-        metaData.setValidFromDate(validFromDate);
-        metaData.setValidToDate(validToDate);
+        certificate.setCareUnitName(careUnitName);
+        certificate.setCivicRegistrationNumber(civicRegistrationNumber);
+        certificate.setSignedDate(signedDate);
+        certificate.setValidFromDate(validFromDate);
+        certificate.setValidToDate(validToDate);
 
         // TODO - extract additional meta data from the certificate
 
-        certificateService.storeCertificate(metaData);
+        certificateService.storeCertificate(certificate);
         response.setResult(okResult());
         return response;
     }

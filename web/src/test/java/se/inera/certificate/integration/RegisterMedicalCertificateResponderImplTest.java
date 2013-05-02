@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
@@ -46,7 +46,7 @@ public class RegisterMedicalCertificateResponderImplTest {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         JAXBElement<RegisterMedicalCertificateType> request =  unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/fk7263.xml").getInputStream()), RegisterMedicalCertificateType.class);
 
-        ArgumentCaptor<CertificateMetaData> argument = ArgumentCaptor.forClass(CertificateMetaData.class);
+        ArgumentCaptor<Certificate> argument = ArgumentCaptor.forClass(Certificate.class);
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request.getValue());
 

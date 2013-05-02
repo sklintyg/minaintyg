@@ -22,7 +22,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.joda.time.LocalDate;
 import se.inera.certificate.integration.builder.CertificateMetaTypeBuilder;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
@@ -57,7 +57,7 @@ public final class ModelConverter {
          return CERTIFICATE_STATE_MAP.inverse().get(statusType);
     }
 
-    public static CertificateMetaType toCertificateMetaType(CertificateMetaData source) {
+    public static CertificateMetaType toCertificateMetaType(Certificate source) {
 
         CertificateMetaTypeBuilder builder = new CertificateMetaTypeBuilder()
                 .certificateId(source.getId())

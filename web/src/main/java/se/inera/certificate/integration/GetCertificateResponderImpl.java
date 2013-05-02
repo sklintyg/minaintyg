@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.ModelConverter;
-import se.inera.certificate.model.CertificateMetaData;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
@@ -56,13 +56,13 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType parameters) {
 
-        CertificateMetaData metaData = certificateService.getCertificate(parameters.getNationalIdentityNumber(), parameters.getCertificateId());
+        Certificate certificate = certificateService.getCertificate(parameters.getNationalIdentityNumber(), parameters.getCertificateId());
 
         GetCertificateResponseType response = new GetCertificateResponseType();
 
-        if (metaData != null) {
-            response.setMeta(ModelConverter.toCertificateMetaType(metaData));
-            attachCertificateDocument(metaData, response);
+        if (certificate != null) {
+            response.setMeta(ModelConverter.toCertificateMetaType(certificate));
+            attachCertificateDocument(certificate, response);
         } else {
             response.setResult(failResult(String.format("Unknown certificate ID: %s", parameters.getCertificateId())));
         }
@@ -70,21 +70,21 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
         return response;
     }
 
-    private void attachCertificateDocument(CertificateMetaData metaData, GetCertificateResponseType response) {
+    private void attachCertificateDocument(Certificate certificate, GetCertificateResponseType response) {
         CertificateType certificateType = new CertificateType();
 
-        CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(metaData.getType());
+        CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(certificate.getType());
         if (certificateSupport == null) {
             // given certificate type is not supported
-            response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", metaData.getType())));
+            response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", certificate.getType())));
         } else {
             // certificate type is supported and we unmarshall the certificate information to a JAXB element
             try {
-                certificateType.getAny().add(buildJaxbElement(metaData.getDocument(), certificateSupport.additionalContextClasses()));
+                certificateType.getAny().add(buildJaxbElement(certificate.getDocument(), certificateSupport.additionalContextClasses()));
                 response.setCertificate(certificateType);
                 response.setResult(okResult());
             } catch (JAXBException e) {
-                response.setResult(applicationErrorResult(String.format("Invalid XML document for certificate #%s", metaData.getId())));
+                response.setResult(applicationErrorResult(String.format("Invalid XML document for certificate #%s", certificate.getId())));
             }
         }
     }

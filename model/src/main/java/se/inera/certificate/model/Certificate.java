@@ -18,15 +18,15 @@
  */
 package se.inera.certificate.model;
 
-import java.io.UnsupportedEncodingException;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
 
 
 /**
@@ -36,24 +36,87 @@ import javax.persistence.Table;
  * @author andreaskaltenbach
  */
 @Entity
-@Table(name = "CERTIFICATE")
+@Table( name = "CERTIFICATE" )
 public class Certificate {
 
-    /** Id of the certificate. */
+    /**
+     * Id of the certificate.
+     */
     @Id
-    @Column(name = "ID")
+    @Column( name = "ID" )
     private String id;
 
-    /** Certificate document. */
+    /**
+     * Certificate document.
+     */
     @Lob
-    @Basic(fetch = FetchType.EAGER)
-    @Column(name = "DOCUMENT")
-    private byte [] document;
+    @Basic( fetch = FetchType.LAZY )
+    @Column( name = "DOCUMENT" )
+    private byte[] document;
+
+    /**
+     * Type of the certificate.
+     */
+    @Column( name = "TYPE", nullable = false )
+    private String type;
+
+    /**
+     * Name of the doctor that signed the certificate.
+     */
+    // TODO: naming? (PW)
+    @Column( name = "SIGNING_DOCTOR_NAME", nullable = false )
+    private String signingDoctorName;
+
+    /**
+     * Name of care unit.
+     */
+    @Column( name = "CARE_UNIT_NAME", nullable = false )
+    private String careUnitName;
+
+    /**
+     * Civic registration number for patient.
+     */
+    @Column( name = "CIVIC_REGISTRATION_NUMBER", nullable = false )
+    private String civicRegistrationNumber;
+
+    /**
+     * Time this certificate was signed.
+     */
+    @Column( name = "SIGNED_DATE", nullable = false )
+    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    private LocalDate signedDate;
+
+    /**
+     * Time from which this certificate is valid.
+     */
+    @Column( name = "VALID_FROM_DATE", nullable = false )
+    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    private LocalDate validFromDate;
+
+    /**
+     * Time to which this certificate is valid.
+     */
+    @Column( name = "VALID_TO_DATE", nullable = false )
+    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    private LocalDate validToDate;
+
+    /**
+     * If this certificate is deleted or not.
+     */
+    @Column( name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)" )
+    private Boolean deleted = Boolean.FALSE;
+
+    @ElementCollection( fetch = FetchType.EAGER )
+    @CollectionTable(
+            name = "CERTIFICATE_STATE",
+            joinColumns = @JoinColumn( name = "CERTIFICATE_ID" )
+    )
+    private List<CertificateStateHistoryEntry> states = new ArrayList<>();
 
     /**
      * Constructor that takes an id and a document.
      *
-     * @param id the id
+     * @param id       the id
      * @param document the document
      */
     public Certificate(String id, String document) {
@@ -71,7 +134,7 @@ public class Certificate {
     /**
      * @return id
      */
-    String getId() {
+    public String getId() {
         return id;
     }
 
@@ -82,7 +145,79 @@ public class Certificate {
         return fromBytes(this.document);
     }
 
-    private byte [] toBytes(String data) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSigningDoctorName() {
+        return signingDoctorName;
+    }
+
+    public void setSigningDoctorName(String signingDoctorName) {
+        this.signingDoctorName = signingDoctorName;
+    }
+
+    public String getCareUnitName() {
+        return careUnitName;
+    }
+
+    public void setCareUnitName(String careUnitName) {
+        this.careUnitName = careUnitName;
+    }
+
+    public String getCivicRegistrationNumber() {
+        return civicRegistrationNumber;
+    }
+
+    public void setCivicRegistrationNumber(String civicRegistrationNumber) {
+        this.civicRegistrationNumber = civicRegistrationNumber;
+    }
+
+    public LocalDate getSignedDate() {
+        return signedDate;
+    }
+
+    public void setSignedDate(LocalDate signedDate) {
+        this.signedDate = signedDate;
+    }
+
+    public LocalDate getValidFromDate() {
+        return validFromDate;
+    }
+
+    public void setValidFromDate(LocalDate validFromDate) {
+        this.validFromDate = validFromDate;
+    }
+
+    public LocalDate getValidToDate() {
+        return validToDate;
+    }
+
+    public void setValidToDate(LocalDate validToDate) {
+        this.validToDate = validToDate;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<CertificateStateHistoryEntry> getStates() {
+        return states;
+    }
+
+    public void setStates(List<CertificateStateHistoryEntry> states) {
+        this.states = states;
+    }
+
+    private byte[] toBytes(String data) {
         try {
             return data.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -90,7 +225,7 @@ public class Certificate {
         }
     }
 
-    private String fromBytes(byte [] bytes) {
+    private String fromBytes(byte[] bytes) {
         try {
             return new String(bytes, "UTF-8");
         } catch (UnsupportedEncodingException e) {
