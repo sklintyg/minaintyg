@@ -18,8 +18,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
+import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -56,8 +58,15 @@ public class RegisterMedicalCertificateResponderImplTest {
         assertEquals("Landstinget Norrland", argument.getValue().getCareUnitName());
         assertEquals("19940701-0066", argument.getValue().getCivicRegistrationNumber());
         assertEquals(new LocalDate("2013-03-17"), argument.getValue().getSignedDate());
+        assertEquals("En Läkare", argument.getValue().getSigningDoctorName());
         assertEquals(new LocalDate("2013-03-17"), argument.getValue().getValidFromDate());
         assertEquals(new LocalDate("2013-05-01"), argument.getValue().getValidToDate());
+        assertEquals("fk7263", argument.getValue().getType());
+
+        Source source = new StreamSource(new StringReader(argument.getValue().getDocument()));
+        JAXBElement<RegisterMedicalCertificateType> document = unmarshaller.unmarshal(source, RegisterMedicalCertificateType.class);
+
+        assertEquals(request.getValue(), document.getValue());
 
         assertEquals(OK, response.getResult().getResultCode());
     }

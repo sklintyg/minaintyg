@@ -31,6 +31,7 @@ import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 @SchemaValidation
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
+    public static final String FK_7263 = "fk7263";
     @Autowired
     private CertificateService certificateService;
 
@@ -51,7 +52,10 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         String certificateId = request.getLakarutlatande().getLakarutlatandeId();
         String careUnitName = request.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getVardgivare().getVardgivarnamn();
         String civicRegistrationNumber = request.getLakarutlatande().getPatient().getPersonId().getExtension();
+
         LocalDate signedDate = request.getLakarutlatande().getSigneringsdatum().toLocalDate();
+        String signedDoctorName = request.getLakarutlatande().getSkapadAvHosPersonal().getFullstandigtNamn();
+
         LocalDate validFromDate = extractValidFromDate(request.getLakarutlatande());
         LocalDate validToDate = extractValidToDate(request.getLakarutlatande());
 
@@ -59,10 +63,10 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         certificate.setCareUnitName(careUnitName);
         certificate.setCivicRegistrationNumber(civicRegistrationNumber);
         certificate.setSignedDate(signedDate);
+        certificate.setSigningDoctorName(signedDoctorName);
         certificate.setValidFromDate(validFromDate);
         certificate.setValidToDate(validToDate);
-
-        // TODO - extract additional meta data from the certificate
+        certificate.setType(FK_7263);
 
         certificateService.storeCertificate(certificate);
         response.setResult(okResult());

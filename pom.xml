@@ -29,6 +29,8 @@
     <jadira.usertype.version>3.1.0.CR2</jadira.usertype.version>
     <commons.ui.version>2.4</commons.ui.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
+    <liquibase.version>2.0.5</liquibase.version>
+    <jaxb.commons.version>0.6.4</jaxb.commons.version>
   </properties>
 
   <dependencyManagement>
@@ -125,9 +127,14 @@
       <dependency>
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-core</artifactId>
-        <version>2.0.5</version>
+        <version>${liquibase.version}</version>
       </dependency>
 
+      <dependency>
+         <groupId>org.jvnet.jaxb2_commons</groupId>
+         <artifactId>jaxb2-basics-runtime</artifactId>
+         <version>${jaxb.commons.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

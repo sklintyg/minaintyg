@@ -30,6 +30,10 @@
       <artifactId>jackson-xc</artifactId>
       <version>1.9.12</version>
     </dependency>
+    <dependency>
+       <groupId>org.jvnet.jaxb2_commons</groupId>
+       <artifactId>jaxb2-basics-runtime</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -51,6 +55,9 @@
                   <extraarg>-validate</extraarg>
                   <extraarg>-verbose</extraarg>
                   <extraarg>-xjc-b,${basedir}/binding.xjb</extraarg>
+                  <extraarg>-xjc-XhashCode</extraarg>
+                  <extraarg>-xjc-Xequals</extraarg>
+                  <extraarg>-xjc-XtoString</extraarg>
                   <extraarg>-p</extraarg>
                   <extraarg>
                     urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
@@ -152,6 +159,13 @@
             </configuration>
           </execution>
         </executions>
+        <dependencies>
+        		<dependency>
+        			<groupId>org.jvnet.jaxb2_commons</groupId>
+        			<artifactId>jaxb2-basics</artifactId>
+        			<version>0.6.4</version>
+        		</dependency>
+        	</dependencies>
       </plugin>
     </plugins>
   </build>
