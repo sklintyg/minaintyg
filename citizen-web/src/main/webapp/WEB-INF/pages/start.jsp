@@ -38,11 +38,20 @@
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 
-<script type="text/javascript" src="<c:url value="/js/jquery-1.9.1.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/bootstrap.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/lib/jquery-1.9.1.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/lib/bootstrap.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/lib/angular/angular.js"/>"></script>
+
+
+<script type="text/javascript" src="<c:url value="/js/listcert/app.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/listcert/controllers.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/listcert/directives.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/listcert/filters.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/listcert/services.js"/>"></script>
+
 </head>
 
-<body>
+<body ng-app="ListCertApp">
   <div class="container">
     <div id="page-header-container">
       <div id="page-header">
@@ -65,26 +74,9 @@
         <div class="row-fluid">
           <div id="content-body" class="span12">
 
-            <ul id="tabs">
-              <li class="" onclick="javascript:window.location.replace('<c:url value="/web/start" />');"><img src="<c:url value="/img/inkorg_icon.png" />" /> <spring:message code="label.inbox" /></li>
-              <li class="disabled"><img src="<c:url value="/img/borttagna_icon.png" />" /> <spring:message code="label.removed" /></li>
-            </ul>
 
-            <h1>
-              <spring:message code="certificates.header" />
-            </h1>
-
-            <div class="row-fluid">
-              <div class="span7">
-                <p>
-                  <spring:message code="certificates.desc" />
-                </p>
-              </div>
-            </div>
-            <div id="noCerts" class="alert alert-error" style="display: block;">
-            
-              <spring:message code="certificates.none" />
-            </div>
+                
+                <div ng-view></div>
           </div>
         </div>
       </div>

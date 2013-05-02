@@ -1,0 +1,39 @@
+<ul id="tabs">
+  <li class="" onclick="javascript:window.location.replace('/web/start');">
+  <img src="/img/inkorg_icon.png"/>
+  label.inbox
+  </li>
+  <li class="disabled" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png"/> label.removed</li>
+</ul>
+
+<h1>arkiverade</h1>
+
+<div class="row-fluid">
+  <div class="span7">
+    <p>
+      certificates.desc
+    </p>
+    <table id="certTable" class="table expandable" data-collapsed-size="10">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Utfärdat</th>
+          <th>Typ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="cert in certificates">
+          <td></td>
+          <td>{{cert.date}}</td>
+          <td>{{cert.period}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+<div id="noCerts" class="alert alert-error" style="display: block;">
+
+ certificates.none
+</div>

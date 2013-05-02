@@ -38,8 +38,8 @@
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 
-<script type="text/javascript" src="<c:url value="/js/jquery-1.9.1.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/bootstrap.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/lib/jquery-1.9.1.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/lib/bootstrap.js"/>"></script>
 
 </head>
 
