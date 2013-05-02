@@ -59,23 +59,6 @@
 					<version>3.0</version>
 				</plugin>
 				<plugin>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version>9.0.1.v20130408</version>
-					<configuration>
-						<systemProperties>
-							<systemProperty>
-								<name>spring.profiles.active</name>
-								<value>${system.mode}</value>
-							</systemProperty>
-							<systemProperty>
-								<name>jetty.port</name>
-								<value>8088</value>
-							</systemProperty>
-						</systemProperties>
-					</configuration>
-				</plugin>
-				<plugin>
 					<groupId>com.mycila.maven-license-plugin</groupId>
 					<artifactId>maven-license-plugin</artifactId>
 					<configuration>
