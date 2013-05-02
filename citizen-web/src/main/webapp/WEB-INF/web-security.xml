@@ -20,42 +20,49 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-  xsi:schemaLocation="
+       xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
   <beans>
-    <security:http security="none" pattern="/welcome.jsp" />
-    <security:http security="none" pattern="/" />
-    <security:http security="none" pattern="/favicon.ico" />
-    <security:http security="none" pattern="/web/resources/**" />
-    <security:http security="none" pattern="/ws/**" />
+    <security:http security="none" pattern="/welcome.jsp"/>
+    <security:http security="none" pattern="/"/>
+    <security:http security="none" pattern="/favicon.ico"/>
+    <security:http security="none" pattern="/web/resources/**"/>
+    <security:http security="none" pattern="/ws/**"/>
 
-    <import resource="classpath*:/netcare-mvk-integration-config.xml" />
-    <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
-    <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
+    <import resource="classpath*:/netcare-mvk-integration-config.xml"/>
+    <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
+    <import resource="classpath*:/mvk-validatetoken-cxf-config.xml"/>
 
     <security:authentication-manager>
-      <security:authentication-provider ref="preAuthAuthProvider" />
+      <security:authentication-provider ref="preAuthAuthProvider"/>
     </security:authentication-manager>
 
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
-      <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
+      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter"/>
     </security:http>
 
     <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
-      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
-      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
-      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
+      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')"/>
+      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')"/>
+      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout"/>
     </security:http>
+
+    <bean id="clearSecurityContextFilter" class="se.inera.certificate.web.security.ClearSecurityContextFilter">
+      <property name="handler" ref="securityContextLogoutHandler"/>
+    </bean>
+
+    <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
 
   </beans>
 
   <!-- I andra miljöer används mvk-integration-modulens 'mvkPreAuthFilter' -->
   <beans profile="dev">
     <bean id="mvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
-      <property name="authenticationManager" ref="mvkAuthenticationManager" />
+      <property name="authenticationManager" ref="mvkAuthenticationManager"/>
     </bean>
   </beans>
 </beans>
