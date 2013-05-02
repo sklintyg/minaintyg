@@ -57,7 +57,7 @@ public class Certificate {
     /**
      * Type of the certificate.
      */
-    @Column( name = "TYPE", nullable = false )
+    @Column( name = "CERTIFICATE_TYPE", nullable = false )
     private String type;
 
     /**

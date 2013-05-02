@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet id="1" author="me">
+    <createTable tableName="CERTIFICATE">
+      <column name="ID" type="varchar(255)">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="CERTIFICATE_TYPE" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CIVIC_REGISTRATION_NUMBER" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CARE_UNIT_NAME" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="SIGNING_DOCTOR_NAME" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="SIGNED_DATE" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="VALID_FROM_DATE" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="VALID_TO_DATE" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="DELETED" type="boolean"/>
+      <column name="DOCUMENT" type="blob">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="CERTIFICATE_STATE">
+      <column name="CERTIFICATE_ID" type="varchar(255)">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="TARGET" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="STATE" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TIMESTAMP" type="datetime"/>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

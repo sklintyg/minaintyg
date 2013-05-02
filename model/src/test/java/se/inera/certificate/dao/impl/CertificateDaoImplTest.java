@@ -137,6 +137,9 @@ public class CertificateDaoImplTest {
         certificate.setSignedDate(new LocalDate("2013-04-24"));
         certificateDao.store(certificate);
 
+        entityManager.flush();
+        entityManager.clear();
+
         Certificate storedCertificate = certificateDao.getCertificate("1");
 
         assertEquals(new LocalDate("2013-04-24"), storedCertificate.getSignedDate());
