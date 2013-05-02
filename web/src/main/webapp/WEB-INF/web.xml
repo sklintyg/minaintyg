@@ -6,6 +6,11 @@
 
   <display-name>Inera Certificate</display-name>
 
+  <context-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/application-context.xml</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>cxf</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>

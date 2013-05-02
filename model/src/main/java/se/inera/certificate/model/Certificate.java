@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -37,6 +38,7 @@ import javax.persistence.Id;
  */
 @Entity
 @Table( name = "CERTIFICATE" )
+@XmlRootElement
 public class Certificate {
 
     /**

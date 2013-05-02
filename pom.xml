@@ -31,6 +31,7 @@
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
     <liquibase.version>2.0.5</liquibase.version>
     <jaxb.commons.version>0.6.4</jaxb.commons.version>
+    <jackson.version>1.9.2</jackson.version>
   </properties>
 
   <dependencyManagement>
@@ -60,9 +61,15 @@
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http</artifactId>
         <version>${cxf.version}</version>
       </dependency>
+
 
       <dependency>
         <groupId>org.springframework</groupId>
@@ -131,15 +138,21 @@
       </dependency>
 
       <dependency>
-         <groupId>org.jvnet.jaxb2_commons</groupId>
-         <artifactId>jaxb2-basics-runtime</artifactId>
-         <version>${jaxb.commons.version}</version>
+        <groupId>org.jvnet.jaxb2_commons</groupId>
+        <artifactId>jaxb2-basics-runtime</artifactId>
+        <version>${jaxb.commons.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-jaxrs</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
