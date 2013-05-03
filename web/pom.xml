@@ -77,6 +77,10 @@
               <name>spring.profiles.active</name>
               <value>dev</value>
             </systemProperty>
+            <systemProperty>
+              <name>catalina.home</name>
+              <value>target</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
         <dependencies>
