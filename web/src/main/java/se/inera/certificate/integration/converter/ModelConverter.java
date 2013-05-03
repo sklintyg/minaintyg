@@ -38,7 +38,9 @@ public final class ModelConverter {
     private static final BiMap<CertificateState, StatusType> CERTIFICATE_STATE_MAP;
 
     static {
-        CERTIFICATE_STATE_MAP = HashBiMap.create(new HashMap<CertificateState, StatusType>() { {
+        CERTIFICATE_STATE_MAP = HashBiMap.create(new HashMap<CertificateState, StatusType>() {
+            private static final long serialVersionUID = 1L;
+        {
             put(CertificateState.PROCESSED, StatusType.PROCESSED);
             put(CertificateState.DELETED, StatusType.DELETED);
             put(CertificateState.RESTORED, StatusType.RESTORED);

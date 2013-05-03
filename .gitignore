@@ -6,6 +6,7 @@
 .idea
 *.iml
 
+*.log
 rebel.xml
 
 .DS_Store

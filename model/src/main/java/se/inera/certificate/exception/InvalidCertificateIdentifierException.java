@@ -7,6 +7,8 @@ import se.inera.certificate.model.Certificate;
  */
 public class InvalidCertificateIdentifierException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     public InvalidCertificateIdentifierException(String certificateId, String civicRegistrationNumber) {
         super(String.format("No certificate with ID %s available for patient %s", certificateId, civicRegistrationNumber));
     }

@@ -7,7 +7,7 @@ import se.inera.certificate.model.builder.CertificateBuilder;
 /**
  * @author andreaskaltenbach
  */
-public class CertificateFactory {
+public final class CertificateFactory {
 
     private CertificateFactory() {
     }

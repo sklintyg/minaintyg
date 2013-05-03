@@ -38,5 +38,5 @@ public interface CertificateService {
 
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 
-	void remove(String id);
+    void remove(String id);
 }

@@ -18,15 +18,18 @@
  */
 package se.inera.certificate.dao.impl;
 
-import org.joda.time.LocalDate;
-import org.junit.Test;
-import se.inera.certificate.model.Certificate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.joda.time.LocalDate;
+import org.junit.Test;
+
+import se.inera.certificate.model.Certificate;
 
 public class DateFilterTest {
 

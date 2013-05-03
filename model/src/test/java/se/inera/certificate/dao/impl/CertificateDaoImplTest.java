@@ -45,9 +45,9 @@ import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.RECEIVED;
 import static se.inera.certificate.support.CertificateFactory.*;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( locations = {"classpath:persistence-config.xml"} )
-@ActiveProfiles( "dev" )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
+@ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
 
@@ -161,7 +161,7 @@ public class CertificateDaoImplTest {
         assertNotNull(certificateDao.getCertificate(CERTIFICATE_ID));
     }
 
-    @Test( expected = InvalidCertificateIdentifierException.class )
+    @Test(expected = InvalidCertificateIdentifierException.class)
     public void testSetCertificateStatusForNonExistingCertificate() {
 
         certificateDao.updateStatus("12345", "asd", CertificateState.IN_PROGRESS, "fk", null);
@@ -180,6 +180,7 @@ public class CertificateDaoImplTest {
             certificateDao.updateStatus(CERTIFICATE_ID, "another patient", RECEIVED, "fk", null);
             fail("Exception expected.");
         } catch (InvalidCertificateIdentifierException e) {
+            // Empty
         }
 
         assertEquals(0, certificate.getStates().size());

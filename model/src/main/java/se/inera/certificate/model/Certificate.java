@@ -48,7 +48,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author andreaskaltenbach
  */
 @Entity
-@Table( name = "CERTIFICATE" )
+@Table(name = "CERTIFICATE")
 @XmlRootElement
 public class Certificate {
 
@@ -56,79 +56,79 @@ public class Certificate {
      * Id of the certificate.
      */
     @Id
-    @Column( name = "ID" )
+    @Column(name = "ID")
     private String id;
 
     /**
      * Certificate document.
      */
     @Lob
-    @Basic( fetch = FetchType.LAZY )
-    @Column( name = "DOCUMENT" )
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "DOCUMENT")
     private byte[] document;
 
     /**
      * Type of the certificate.
      */
-    @Column( name = "CERTIFICATE_TYPE", nullable = false )
+    @Column(name = "CERTIFICATE_TYPE", nullable = false)
     private String type;
 
     /**
      * Name of the doctor that signed the certificate.
      */
     // TODO: naming? (PW)
-    @Column( name = "SIGNING_DOCTOR_NAME", nullable = false )
+    @Column(name = "SIGNING_DOCTOR_NAME", nullable = false)
     private String signingDoctorName;
 
     /**
      * Name of care unit.
      */
-    @Column( name = "CARE_UNIT_NAME", nullable = false )
+    @Column(name = "CARE_UNIT_NAME", nullable = false)
     private String careUnitName;
 
     /**
      * Civic registration number for patient.
      */
-    @Column( name = "CIVIC_REGISTRATION_NUMBER", nullable = false )
+    @Column(name = "CIVIC_REGISTRATION_NUMBER", nullable = false)
     private String civicRegistrationNumber;
 
     /**
      * Time this certificate was signed.
      */
-    @Column( name = "SIGNED_DATE", nullable = false )
-    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
-    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
+    @Column(name = "SIGNED_DATE", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate signedDate;
 
     /**
      * Time from which this certificate is valid.
      */
-    @Column( name = "VALID_FROM_DATE", nullable = false )
-    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
-    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
+    @Column(name = "VALID_FROM_DATE", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validFromDate;
 
     /**
      * Time to which this certificate is valid.
      */
-    @Column( name = "VALID_TO_DATE", nullable = false )
-    @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
-    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
+    @Column(name = "VALID_TO_DATE", nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validToDate;
 
     /**
      * If this certificate is deleted or not.
      */
-    @Column( name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)" )
+    @Column(name = "DELETED", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean deleted = Boolean.FALSE;
 
-    @ElementCollection( fetch = FetchType.EAGER )
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "CERTIFICATE_STATE",
-            joinColumns = @JoinColumn( name = "CERTIFICATE_ID" )
+            joinColumns = @JoinColumn(name = "CERTIFICATE_ID")
     )
     private List<CertificateStateHistoryEntry> states = new ArrayList<>();
 
@@ -166,13 +166,13 @@ public class Certificate {
 
     /**
      * Sets the document data.
-     * 
+     *
      * @param document
      */
     protected void setDocument(String document) {
         this.document = toBytes(document);
     }
-    
+
     public String getType() {
         return type;
     }

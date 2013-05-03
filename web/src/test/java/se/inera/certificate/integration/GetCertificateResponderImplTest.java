@@ -22,6 +22,7 @@ import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
@@ -46,12 +47,6 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
-
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * @author andreaskaltenbach
