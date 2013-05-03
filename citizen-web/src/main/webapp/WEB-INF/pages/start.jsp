@@ -38,17 +38,6 @@
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 
-<script type="text/javascript" src="<c:url value="/lib/jquery-1.9.1.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/lib/bootstrap.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/lib/angular/angular.js"/>"></script>
-
-
-<script type="text/javascript" src="<c:url value="/js/listcert/app.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/listcert/controllers.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/listcert/directives.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/listcert/filters.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/listcert/services.js"/>"></script>
-
 </head>
 
 <body ng-app="ListCertApp">
@@ -82,6 +71,17 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
+
+  <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
+
 
 </body>
 </html>
