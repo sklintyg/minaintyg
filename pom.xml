@@ -35,6 +35,8 @@
 		<cxf.version>2.7.4</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<logback.version>1.0.0</logback.version>
+    <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
+    <inera.certificate.schemas.version>1.0-SNAPSHOT</inera.certificate.schemas.version>
 		<checkstyle.basedir>${project.basedir}</checkstyle.basedir>
 	</properties>
 
@@ -121,6 +123,16 @@
 	</reporting>
 	<dependencyManagement>
 		<dependencies>
+      <dependency>
+        <groupId>org.callistasoftware.netcare.commons</groupId>
+        <artifactId>mvk-integration</artifactId>
+        <version>${mvkintegration.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.certificate</groupId>
+        <artifactId>schemas</artifactId>
+        <version>${inera.certificate.schemas.version}</version>
+      </dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
