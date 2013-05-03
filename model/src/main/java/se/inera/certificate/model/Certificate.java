@@ -18,16 +18,27 @@
  */
 package se.inera.certificate.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 /**
@@ -86,6 +97,8 @@ public class Certificate {
      */
     @Column( name = "SIGNED_DATE", nullable = false )
     @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate signedDate;
 
     /**
@@ -93,6 +106,8 @@ public class Certificate {
      */
     @Column( name = "VALID_FROM_DATE", nullable = false )
     @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validFromDate;
 
     /**
@@ -100,6 +115,8 @@ public class Certificate {
      */
     @Column( name = "VALID_TO_DATE", nullable = false )
     @Type( type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
+    @JsonSerialize(using=com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
+    @JsonDeserialize(using=com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validToDate;
 
     /**
@@ -123,7 +140,7 @@ public class Certificate {
      */
     public Certificate(String id, String document) {
         this.id = id;
-        this.document = toBytes(document);
+        setDocument(document);
     }
 
     /**
@@ -147,6 +164,15 @@ public class Certificate {
         return fromBytes(this.document);
     }
 
+    /**
+     * Sets the document data.
+     * 
+     * @param document
+     */
+    protected void setDocument(String document) {
+        this.document = toBytes(document);
+    }
+    
     public String getType() {
         return type;
     }

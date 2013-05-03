@@ -28,13 +28,18 @@
 	http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
 	" profile="dev,test">
 
+  <bean id="jacksonJsonProvider" class="se.inera.certificate.integration.CustomJacksonJaxbJsonProvider"/>
+
   <jaxrs:server id="certificateService" address="/resources">
     <jaxrs:serviceBeans>
       <ref bean="certificateBean"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
-      <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+      <ref bean="jacksonJsonProvider"/>  
     </jaxrs:providers>
+    <jaxrs:extensionMappings>  
+       <entry key="json" value="application/json"/>  
+     </jaxrs:extensionMappings>  
   </jaxrs:server>
 
   <bean id="certificateBean" class="se.inera.certificate.integration.CertificateResource"/>

@@ -42,14 +42,26 @@
     </dependency>
 
     <dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
     </dependency>
 
     <dependency>
-        <groupId>org.jadira.usertype</groupId>
-        <artifactId>usertype.core</artifactId>
+      <groupId>org.jadira.usertype</groupId>
+      <artifactId>usertype.core</artifactId>
     </dependency>
+    
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-annotations</artifactId>
+	  <version>2.1.1</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>com.fasterxml.jackson.datatype</groupId>
+	  <artifactId>jackson-datatype-joda</artifactId>
+	  <version>2.1.1</version>
+	</dependency>
 
     <dependency>
       <groupId>org.liquibase</groupId>

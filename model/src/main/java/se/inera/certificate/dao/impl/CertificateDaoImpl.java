@@ -103,4 +103,10 @@ public class CertificateDaoImpl implements CertificateDao {
         certificate.getStates().add(historyEntry);
     }
 
+    @Override
+    public void remove(String certificateId) {
+        Certificate certificate = entityManager.find(Certificate.class, certificateId);
+        entityManager.remove(certificate);
+    }
+
 }

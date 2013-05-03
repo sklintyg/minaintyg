@@ -32,6 +32,8 @@
 	
 	<logger name="org.apache.cxf.services" level="info"/>
 	
+	<logger name="org.apache.cxf" level="debug"/>
+	
 	<logger name="se.inera.certificate" level="debug" />
 	
 	<root>

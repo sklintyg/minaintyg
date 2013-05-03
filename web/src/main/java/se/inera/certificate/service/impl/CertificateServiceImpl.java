@@ -59,4 +59,9 @@ public class CertificateServiceImpl implements CertificateService {
     public void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp) {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
+
+	@Override
+	public void remove(String certificateId) {
+		certificateDao.remove(certificateId);
+	}
 }

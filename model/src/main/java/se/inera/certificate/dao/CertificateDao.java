@@ -61,4 +61,6 @@ public interface CertificateDao {
     void store(Certificate certificate);
 
     void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
+
+    void remove(String certificateId);
 }
