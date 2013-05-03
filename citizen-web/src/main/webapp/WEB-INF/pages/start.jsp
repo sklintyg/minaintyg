@@ -81,6 +81,7 @@
   <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
 
 
 </body>
