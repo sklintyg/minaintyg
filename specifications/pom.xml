@@ -59,7 +59,7 @@
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
 			<version>${selenium.version}</version>
-			<classifier>standalone</classifier>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -182,7 +182,7 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.2.1</version>
 					<configuration>
-						<executable>java</executable>
+            <classpathScope>test</classpathScope>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -250,12 +250,8 @@
 							<groupId>org.codehaus.mojo</groupId>
 							<artifactId>exec-maven-plugin</artifactId>
 							<configuration>
+							  <mainClass>org.openqa.grid.selenium.GridLauncher</mainClass>
 								<arguments>
-									<argument>-cp</argument>
-									<classpath>
-										<dependency>org.seleniumhq.selenium:selenium-server</dependency>
-									</classpath>
-									<argument>org.openqa.grid.selenium.GridLauncher</argument>
 									<argument>-timeout</argument>
 									<argument>600</argument>
 								</arguments>
