@@ -20,8 +20,9 @@
         </tr>
       </thead>
       <tbody>
+        <!-- <tr ng-repeat="cert in (filteredCertificates = (certificates | filter:{ status:'2'}))" ng-hide="$index > currentDisplaySize"> -->
         <tr ng-repeat="cert in certificates" ng-hide="$index > currentDisplaySize">
-          <td>{{$index}}</td>
+          <td>{{$index}} status:{{cert.status}}</td>
           <td>{{cert.date}}</td>
           <td>{{cert.period}}</td>
         </tr>

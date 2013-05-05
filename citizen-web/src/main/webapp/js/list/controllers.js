@@ -1,14 +1,16 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', 'listCertService', function ListCertCtrl($scope, listCertService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter','listCertService', function ListCertCtrl($scope, $filter, listCertService) {
     $scope.certificates = [];
 
     $scope.initialDisplaySize = 10;
     $scope.currentDisplaySize = 10;
 
     listCertService.getCertificates(function(list) {
-        $scope.certificates = list;
+        //$scope.certificates = list;
+        //filter and just keep those with right status
+        $scope.certificates = $filter('bycertstatus') (list , {'1':true, '2':false, '3':true});
     });
 } ]);
 

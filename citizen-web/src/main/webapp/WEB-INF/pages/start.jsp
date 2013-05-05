@@ -77,9 +77,10 @@
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
 
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
+ 
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
 
