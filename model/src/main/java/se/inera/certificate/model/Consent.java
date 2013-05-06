@@ -13,6 +13,9 @@ public class Consent {
     @Column( name = "CIVIC_REGISTRATION_NUMBER" )
     private String civicRegistrationNumber;
 
+    public Consent() {
+    }
+
     public Consent(String civicRegistrationNumber) {
         this.civicRegistrationNumber = civicRegistrationNumber;
     }
