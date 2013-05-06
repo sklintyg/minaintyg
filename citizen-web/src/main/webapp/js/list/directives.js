@@ -1,22 +1,36 @@
 'use strict';
 
 /* Directives */
-listCertApp.directive("message", function () {
+listCertApp.directive("message", ['$rootScope', function ($rootScope) {
     return {
         restrict: "E",
         scope: {},
         replace: true,
         template: "<span>{{resultValue}}</span>",
-        compile:function (element, attr, transclusionFunc) {
+        compile: function (element, attr, transclusionFunc) {
             return function ($scope, element, attr) {
-                var lang = "sv";
-                var value = messages[lang][attr.key];
-                if(typeof value === "undefined") {
-                    value = "Saknat värde '" + attr.key + "' i ordlistan '" + lang +"'.";
+                var lang = $rootScope.lang;
+                var value = getProperty(messages[lang], attr.key);
+                if (value == null) {
+                    var ordlista = "";
+                    if (typeof attr.noFallback === "undefined") {
+                        value = getProperty(messages[$rootScope.DEFAULT_LANG], attr.key);
+                    } else {
+                        ordlista = " '" + lang + "'."
+                    }
+                    if (value == null) {
+                        value = getProperty(messages[$rootScope.DEFAULT_LANG], "error.missingvalue") + " '" + attr.key + "' " + getProperty(messages[$rootScope.DEFAULT_LANG], "error.indictionary") + ordlista;
+                        element.addClass("text-error");
+                    }
                 }
                 $scope.resultValue = value;
-                //element.addClass("text-error");
+            };
+
+            function getProperty(resources, propertyKey) {
+                var splitKey = propertyKey.split(".");
+                while (splitKey.length && (resources = resources[splitKey.shift()]));
+                return resources;
             };
         }
     }
-});
+}]);

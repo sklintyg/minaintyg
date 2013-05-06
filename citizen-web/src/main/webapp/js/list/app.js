@@ -13,3 +13,8 @@ var listCertApp = angular.module('ListCertApp', []).config([ '$routeProvider', f
             redirectTo: '/lista'
         });
 } ]);
+
+listCertApp.run(['$rootScope', function ($rootScope) {
+    $rootScope.lang = 'sv';
+    $rootScope.DEFAULT_LANG = 'sv';
+}]);
