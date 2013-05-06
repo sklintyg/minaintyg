@@ -18,19 +18,6 @@
  */
 package se.inera.certificate.integration;
 
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.model.builder.CertificateBuilder;
@@ -47,6 +34,17 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
  * @author andreaskaltenbach
@@ -124,6 +122,23 @@ public class GetCertificateResponderImplTest {
         assertEquals(ERROR, response.getResult().getResultCode());
         assertEquals(ErrorIdEnum.APPLICATION_ERROR, response.getResult().getErrorId());
         assertEquals("Unsupported certificate type: unsupportedCertificateType", response.getResult().getErrorText());
+    }
+
+    @Test
+    public void getCertificateWithoutConsent() {
+        String civicRegistrationNumber = "19350108-1234";
+        String certificateId = "123456";
+
+        when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenThrow(MissingConsentException.class);
+
+        GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
+
+        GetCertificateResponseType response = responder.getCertificate(null, parameters);
+
+        assertNull(response.getMeta());
+        assertNull(response.getCertificate());
+        assertEquals(ERROR, response.getResult().getResultCode());
+        assertEquals(ErrorIdEnum.VALIDATION_ERROR, response.getResult().getErrorId());
     }
 
     private GetCertificateRequestType createGetCertificateRequest(String civicRegistrationNumber, String certificateId) {

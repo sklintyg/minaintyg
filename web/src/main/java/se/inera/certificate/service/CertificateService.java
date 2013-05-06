@@ -20,6 +20,7 @@ package se.inera.certificate.service;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 
@@ -30,13 +31,29 @@ import java.util.List;
  */
 public interface CertificateService {
 
-    List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate);
+    /**
+     * Returns the list of certificates for the patient and filter criteria
+     *
+     * @param civicRegistrationNumber the patient's civic registration number
+     * @param certificateTypes optional certificate type filter. If empty or null, all certificate types will be returned
+     * @param fromDate optional from date filter
+     * @param toDate optional to date filter
+     * @return list of matching certificates or empty list if no such certificates can be found
+     * @throws MissingConsentException if the patient has not given consent for accessing her certificates
+     */
+    List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) throws MissingConsentException;
 
-    Certificate getCertificate(String civicRegistrationNumber, String certificateId);
+    /**
+     * Returns the certificate for the given patient and certificate ID.
+     *
+     * @param civicRegistrationNumber the patient's civic registration number
+     * @param certificateId the certificate ID
+     * @return the certificate information or null if the requested certificate does not exist
+     * @throws MissingConsentException if the patient has not given consent for accessing her certificates
+     */
+    Certificate getCertificate(String civicRegistrationNumber, String certificateId) throws MissingConsentException;
 
     void storeCertificate(Certificate certificate);
 
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
-
-    void remove(String id);
 }

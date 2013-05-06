@@ -24,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
+import se.inera.certificate.service.ConsentService;
 
 import java.util.List;
 
@@ -40,13 +42,26 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private CertificateDao certificateDao;
 
+    @Autowired
+    private ConsentService consentService;
+
     @Override
     public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
+
+        if (!consentService.isConsent(civicRegistrationNumber)) {
+            throw new MissingConsentException(civicRegistrationNumber);
+        }
+
         return certificateDao.findCertificate(civicRegistrationNumber, certificateTypes, fromDate, toDate);
     }
 
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
+
+        if (!consentService.isConsent(civicRegistrationNumber)) {
+            throw new MissingConsentException(civicRegistrationNumber);
+        }
+
         return certificateDao.getCertificate(id);
     }
 
@@ -59,9 +74,4 @@ public class CertificateServiceImpl implements CertificateService {
     public void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp) {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
-
-	@Override
-	public void remove(String certificateId) {
-		certificateDao.remove(certificateId);
-	}
 }

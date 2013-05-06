@@ -24,17 +24,20 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
@@ -70,9 +73,25 @@ public class ListCertificatesResponderImplTest {
         assertEquals(OK, response.getResult().getResultCode());
     }
 
+    @Test
+    public void listCertificatesWithoutConsent() {
+
+        when(certificateService.listCertificates(anyString(), anyList(), any(LocalDate.class), any(LocalDate.class))).thenThrow(MissingConsentException.class);
+
+        List<String> types = Collections.emptyList();
+        ListCertificatesRequestType parameters = createListCertificatesRequest("12-3", types, null, null);
+
+        ListCertificatesResponseType response = responder.listCertificates(null, parameters);
+
+        assertEquals(0, response.getMeta().size());
+        assertEquals(ERROR, response.getResult().getResultCode());
+        assertEquals(ErrorIdEnum.VALIDATION_ERROR, response.getResult().getErrorId());
+    }
+
     private ListCertificatesRequestType createListCertificatesRequest(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
         ListCertificatesRequestType parameters = new ListCertificatesRequestType();
         parameters.setNationalIdentityNumber(civicRegistrationNumber);
+
         for (String type: types) {
             parameters.getCertificateType().add(type);
         }

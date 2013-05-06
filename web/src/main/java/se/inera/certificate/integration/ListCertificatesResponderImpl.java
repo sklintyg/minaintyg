@@ -22,6 +22,7 @@ import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
@@ -32,6 +33,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v
 import java.util.List;
 
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 
 /**
  * @author andreaskaltenbach
@@ -48,14 +50,17 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
 
         ListCertificatesResponseType response = new ListCertificatesResponseType();
 
-        List<Certificate> certificates = certificateService.listCertificates(
-                parameters.getNationalIdentityNumber(), parameters.getCertificateType(), parameters.getFromDate(), parameters.getToDate());
+        try {
+            List<Certificate> certificates = certificateService.listCertificates(
+                    parameters.getNationalIdentityNumber(), parameters.getCertificateType(), parameters.getFromDate(), parameters.getToDate());
+            for (Certificate certificate : certificates) {
+                response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
+            }
+            response.setResult(okResult());
 
-        for (Certificate certificate : certificates) {
-            response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
+        } catch (MissingConsentException ex) {
+            response.setResult(failResult(String.format("Missing consent for patient %s", parameters.getNationalIdentityNumber())));
         }
-
-        response.setResult(okResult());
 
         return response;
     }
