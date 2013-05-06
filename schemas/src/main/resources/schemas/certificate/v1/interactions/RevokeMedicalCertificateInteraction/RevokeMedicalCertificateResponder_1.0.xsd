@@ -8,7 +8,7 @@
 	xmlns:cert="urn:riv:insuranceprocess:certificate:1">
 
 	<import 
-		schemaLocation="../../core_components/Insuranceprocess_healthreporting_2.0.xsd" 
+		schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd" 
 		namespace="urn:riv:insuranceprocess:healthreporting:2" />
 	
 	<import
