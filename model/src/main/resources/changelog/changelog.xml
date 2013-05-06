@@ -49,4 +49,11 @@
       <column name="TIMESTAMP" type="datetime"/>
     </createTable>
   </changeSet>
+  <changeSet id="2" author="me">
+    <createTable tableName="CONSENT">
+      <column name="CIVIC_REGISTRATION_NUMBER" type="varchar(255)">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>

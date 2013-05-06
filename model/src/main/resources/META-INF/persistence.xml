@@ -24,5 +24,6 @@
   version="2.0">
   <persistence-unit name="IneraCertificate" transaction-type="RESOURCE_LOCAL">
     <class>se.inera.certificate.model.Certificate</class>
+    <class>se.inera.certificate.model.Consent</class>
   </persistence-unit>
 </persistence>

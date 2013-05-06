@@ -18,12 +18,10 @@
  */
 package se.inera.certificate.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import se.inera.certificate.dao.ConsentDao;
 import se.inera.certificate.service.ConsentService;
 
 /**
@@ -33,19 +31,20 @@ import se.inera.certificate.service.ConsentService;
 @Transactional
 public class ConsentServiceImpl implements ConsentService {
 
-    private Map<String, Boolean> consents = new HashMap<>();
+    @Autowired
+    private ConsentDao consentDao;
 
     @Override
-    public boolean isConsent(String personnummer) {
-        return Boolean.TRUE.equals(consents.get(personnummer));
+    public boolean isConsent(String civicRegistrationNumber) {
+        return consentDao.hasConsent(civicRegistrationNumber);
     }
 
     @Override
-    public void setConsent(String personnummer, boolean consentGiven) {
+    public void setConsent(String civicRegistrationNumber, boolean consentGiven) {
         if (consentGiven) {
-            consents.put(personnummer, Boolean.TRUE);
+            consentDao.setConsent(civicRegistrationNumber);
         } else {
-            consents.remove(personnummer);
+            consentDao.revokeConsent(civicRegistrationNumber);
         }
     }
 
