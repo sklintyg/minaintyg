@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<wsdl:definitions name='RevokeMedicalCertificateInteraction' 
+  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' 
+  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:wsa='http://www.w3.org/2005/08/addressing' 
+  xmlns:tjsr='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1' 
+  xmlns:tns='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificate:1:rivtabp20' 
+  targetNamespace='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificate:1:rivtabp20' 
+  xmlns:itr='urn:riv:itintegration:registry:1'>
+  
+  <xs:annotation>
+    <xs:documentation>
+      Tjänsteinteraktionens namn: RevokeMedicalCertificateInteraction
+      Beskrivning: 
+      Rättelse av intyg
+      Revisioner: 
+      2013-02-12: Initial version (Mats Ekhammar, Callista Enterprise AB)
+      Tjänstedomän: insuranceprocess:healthreporting
+      Tjänsteinteraktionstyp: Fråga-Svar
+      WS-profil: RIVTABP20
+      Förvaltas av: Sveriges Kommuner och Landsting
+    </xs:documentation>
+  </xs:annotation>
+  
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificate:1:rivtabp20'>
+      <xs:import schemaLocation='RevokeMedicalCertificateResponder_1.0.xsd' namespace='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1' />
+      <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing'/>
+    </xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name='RevokeMedicalCertificateRequest'>
+    <xs:annotation>
+      <xs:documentation>
+        LogicalAddress is the organization id for Inera AB.
+      </xs:documentation>
+    </xs:annotation>
+    <wsdl:part name="LogicalAddress" element="wsa:To" />
+    <wsdl:part name='parameters' element='tjsr:RevokeMedicalCertificateRequest' />
+  </wsdl:message>
+  
+  <wsdl:message name='RevokeMedicalCertificateResponse'>
+    <wsdl:part name='parameters' element='tjsr:RevokeMedicalCertificateResponse' />
+  </wsdl:message>
+  
+  <wsdl:portType name='RevokeMedicalCertificateResponderInterface'>
+    <wsdl:operation name='RevokeMedicalCertificate'>
+      <wsdl:input message='tns:RevokeMedicalCertificateRequest' />
+      <wsdl:output message='tns:RevokeMedicalCertificateResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name='RevokeMedicalCertificateResponderBinding' type='tns:RevokeMedicalCertificateResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='RevokeMedicalCertificate'>
+      <soap:operation soapAction='urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1:RevokeMedicalCertificate' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:RevokeMedicalCertificateRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name='RevokeMedicalCertificateResponderService'>
+    <wsdl:port name='RevokeMedicalCertificateResponderPort' binding='tns:RevokeMedicalCertificateResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

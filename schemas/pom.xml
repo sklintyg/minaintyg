@@ -151,10 +151,40 @@
                   <extraargs>
                     <extraarg>-p</extraarg>
                     <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:SetCertificateStatus:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
                       urn:riv:insuranceprocess:healthreporting:SetCertificateStatusResponder:1=se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+                <wsdlOption>
+                  <wsdl>${schema.path}/certificate/v1/interactions/SendMedicalCertificateInteraction/SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1
+                    </extraarg>
+                  </extraargs>
+                </wsdlOption>
+                <wsdlOption>
+                  <wsdl>${schema.path}/certificate/v1/interactions/RevokeMedicalCertificateInteraction/RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.v1.rivtabp20
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1
+                    </extraarg>
+                  </extraargs>
+                </wsdlOption>                
               </wsdlOptions>
             </configuration>
           </execution>

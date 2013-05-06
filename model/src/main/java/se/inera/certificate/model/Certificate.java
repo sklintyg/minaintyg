@@ -140,7 +140,7 @@ public class Certificate {
      */
     public Certificate(String id, String document) {
         this.id = id;
-        setDocument(document);
+        doSetDocument(document);
     }
 
     /**
@@ -150,6 +150,10 @@ public class Certificate {
         // Empty
     }
 
+    private void doSetDocument(String document){
+        this.document = toBytes(document);
+    }
+    
     /**
      * @return id
      */
@@ -169,8 +173,8 @@ public class Certificate {
      *
      * @param document
      */
-    protected void setDocument(String document) {
-        this.document = toBytes(document);
+    public void setDocument(String document) {
+        doSetDocument(document);
     }
 
     public String getType() {
