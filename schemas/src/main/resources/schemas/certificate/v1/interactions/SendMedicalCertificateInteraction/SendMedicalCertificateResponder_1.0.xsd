@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1"
+	xmlns:tns="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1"
+	elementFormDefault="qualified"
+	xmlns:qa="urn:riv:insuranceprocess:healthreporting:medcertqa:1" 
+	xmlns:pref2="urn:riv:insuranceprocess:healthreporting:2"
+	xmlns:cert="urn:riv:insuranceprocess:certificate:1">
+
+	<import 
+		schemaLocation="../../core_components/Insuranceprocess_healthreporting_2.0.xsd" 
+		namespace="urn:riv:insuranceprocess:healthreporting:2" />
+	
+	<import
+		namespace="urn:riv:insuranceprocess:healthreporting:medcertqa:1" 
+		schemaLocation="../../core_components/MedicalCertificateQuestionsAnswers_1.0.xsd"/>
+	
+	<element name="SendMedicalCertificateResponse" type="tns:SendMedicalCertificateResponseType" />
+	<element name="SendMedicalCertificateRequest" type="tns:SendMedicalCertificateRequestType"></element>
+	
+	<complexType name="SendMedicalCertificateRequestType">
+		<sequence>
+			<element name="send" type="tns:SendType"/>
+			<any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>			
+		</sequence>
+	</complexType>
+	
+	<complexType name="SendMedicalCertificateResponseType">
+		<sequence>
+			<element name="result" type="pref2:ResultOfCall" />
+			<any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="SendType">
+		<sequence>
+			<element name="vardReferens-id" type="string"/>
+			<element name="avsantTidpunkt" type="dateTime"/>
+			<element name="adressVard" type="qa:vardAdresseringsType"/>
+			<element name="lakarutlatande" type="qa:lakarutlatandeEnkelType"/>
+			<any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>			
+		</sequence>
+	</complexType>
+	
+</schema>
