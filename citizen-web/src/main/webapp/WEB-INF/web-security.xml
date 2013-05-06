@@ -25,6 +25,16 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+  <beans profile="test">
+    <security:http pattern="/web/fakesso**" entry-point-ref="mvkEntryPoint">
+      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeMvkPreAuthFilter"/>
+    </security:http>
+    <bean id="fakeMvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
+      <property name="authenticationManager" ref="mvkAuthenticationManager"/>
+    </bean>
+  </beans>
+
   <beans>
     <security:http security="none" pattern="/welcome.jsp"/>
     <security:http security="none" pattern="/"/>
