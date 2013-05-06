@@ -1,7 +1,5 @@
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

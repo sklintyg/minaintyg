@@ -28,8 +28,7 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
 		
 		Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
 		// TODO: Implementera revoke genom att skicka fraga med typ 'Makulera'
-		
-		
+				
 		response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
 		
 		return response;
