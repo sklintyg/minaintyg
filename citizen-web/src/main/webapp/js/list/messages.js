@@ -1,9 +1,10 @@
 'use strict';
 var messages = {
     "sv": {
-        "labelInbox": "Inbox",
+        "labelInbox": "INKORGEN",
         "labelArchived": "Arkiverade" ,
-        "certificatesDescription": "Beskrivning av sidan kommer här."
+        "certificatesHeader": "Inkorgen",
+        "certificatesDescription": "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Klicka på ett intyg för att titta på intyget, skriva ut det eller spara det till din dator"
     },
     "en": {
         "labelInbox": "Inbox",

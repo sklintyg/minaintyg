@@ -15,7 +15,7 @@ listCertApp.directive("message", function () {
                     value = "Saknat värde '" + attr.key + "' i ordlistan '" + lang +"'.";
                 }
                 $scope.resultValue = value;
-                element.addClass("text-error");
+                //element.addClass("text-error");
             };
         }
     }
