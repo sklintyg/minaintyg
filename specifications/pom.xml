@@ -13,6 +13,7 @@
 
   <properties>
     <groovy.version>2.1.1</groovy.version>
+    <groovy.httpBuilder.version>0.6</groovy.httpBuilder.version>
     <!-- These next 3 are the default values anyway -->
     <fitnesse.port>9123</fitnesse.port>
     <fitnesse.working>${project.build.directory}/fitnesse</fitnesse.working>
@@ -51,6 +52,12 @@
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
       <version>${groovy.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy.modules.http-builder</groupId>
+      <artifactId>http-builder</artifactId>
+      <version>${groovy.httpBuilder.version}</version>
     </dependency>
   </dependencies>
 

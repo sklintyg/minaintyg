@@ -13,7 +13,7 @@
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
-  
+
   <description>Contains model for the certificate domain.</description>
 
   <dependencies>
@@ -50,12 +50,12 @@
       <groupId>org.jadira.usertype</groupId>
       <artifactId>usertype.core</artifactId>
     </dependency>
-    
+
 	<dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-annotations</artifactId>
 	</dependency>
-	
+
 	<dependency>
 	  <groupId>com.fasterxml.jackson.datatype</groupId>
 	  <artifactId>jackson-datatype-joda</artifactId>
@@ -65,7 +65,7 @@
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
     </dependency>
-            
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>com.h2database</groupId>

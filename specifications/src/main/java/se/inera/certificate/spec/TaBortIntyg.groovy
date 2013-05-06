@@ -1,17 +1,19 @@
-package se.inera.certificate.spec;
+package se.inera.certificate.spec
 
-import se.inera.certificate.spec.util.DatabaseFixture;
-import groovy.sql.Sql
+import groovyx.net.http.RESTClient
+import se.inera.certificate.spec.util.RestClientFixture
+import static groovyx.net.http.ContentType.JSON
 
+public class TaBortIntyg extends RestClientFixture {
 
-public class TaBortIntyg extends DatabaseFixture {
+    String id
 
-	private def delete_cert = "DELETE FROM CERTIFICATE WHERE ID = ?"
-	
-	String id
-	
-	public void execute() {
-		sql.execute delete_cert, [id]
-	}
+    public void execute() {
+        def restClient = new RESTClient(baseUrl)
+        restClient.delete(
+                path: 'certificate/' + id,
+                requestContentType: JSON
+        )
+    }
 
 }
