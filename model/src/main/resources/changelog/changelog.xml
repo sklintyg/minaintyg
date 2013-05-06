@@ -43,7 +43,7 @@
       <column name="TARGET" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="STATE" type="datetime">
+      <column name="STATE" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="TIMESTAMP" type="datetime"/>
