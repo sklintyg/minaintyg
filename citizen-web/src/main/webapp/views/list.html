@@ -1,6 +1,6 @@
 
 <ul id="tabs">
-  <li class="" onclick="javascript:window.location.replace('/web/start');"><img src="/img/inkorg_icon.png" /> label.inbox</li>
+  <li class="" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> label.inbox</li>
   <li class="disabled" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> label.removed</li>
 </ul>
 
@@ -29,8 +29,8 @@
       </tbody>
 
     </table>
-    <div class="table-bottom" ng-show="certificates.length > initialDisplaySize">
-      <div id="overflow-selector" class="row" style="">
+    <div class="table-bottom">
+      <div id="overflow-selector" class="row" ng-show="certificates.length > initialDisplaySize">
         <div class="expand-selector span2 offset5" ng-show="certificates.length > currentDisplaySize" ng-click="currentDisplaySize = 999">Visa alla</div>
         <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= certificates.length" ng-click="currentDisplaySize = initialDisplaySize">Visa färre</div>
       </div>
