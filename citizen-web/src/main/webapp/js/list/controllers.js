@@ -10,7 +10,8 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter','listCertService', func
     listCertService.getCertificates(function(list) {
         //$scope.certificates = list;
         //filter and just keep those with right status
-        $scope.certificates = $filter('bycertstatus') (list , {'1':true, '2':false, '3':true});
+        $scope.certificates = $filter('bycertstatus')(list, {
+            'UNHANDLED':true, 'DELETED':false});
     });
 } ]);
 

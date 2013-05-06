@@ -19,10 +19,10 @@ listCertApp.factory('listCertService', [ '$http', function($http) {
         }
         $http.get('/api/certificates').success(function(data) {
             console.log("populating cache");
-            cachedList = data.certificateList;
+            cachedList = data;
             callback(cachedList);
         }).error(function(data, status, headers, config) {
-            console.log("error");
+            console.log("error " + status);
         });
     }
     // Return public API for our service
