@@ -75,6 +75,7 @@
   <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
 
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>

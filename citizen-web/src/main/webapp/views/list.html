@@ -22,7 +22,7 @@
     </p>
   </div>
 
-  <table id="certTable" class="table expandable" ng-show="certificates.length>0">
+  <table id="certTable" class="table expandable" ng-show="(certificates | inboxfilter).length>0">
     <thead>
       <tr>
         <th>&nbsp;</th>
@@ -34,28 +34,28 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="cert in certificates" ng-hide="$index > currentDisplaySize">
+      <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize">
         <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
         <td>{{cert.sentDate}}</td>
         <td>{{cert.type}}</td>
-        <td>{{cert.fromDate}}-{{cert.tomDate}}</td>
+        <td>{{cert.fromDate | date:'longDate'}} - {{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
         <td>{{cert.statusStyled}}</td>
       </tr>
     </tbody>
   </table>
-  <div class="table-bottom" ng-hide="certificates.length<1">
-    <div id="overflow-selector" class="row" ng-show="certificates.length > initialDisplaySize">
-      <div class="expand-selector span2 offset5" ng-show="certificates.length > currentDisplaySize" ng-click="currentDisplaySize = 999">
+  <div class="table-bottom" ng-hide="(certificates | inboxfilter).length<1">
+    <div id="overflow-selector" class="row" ng-show="(certificates | inboxfilter).length > initialDisplaySize">
+      <div class="expand-selector span2 offset5" ng-show="(certificates | inboxfilter).length > currentDisplaySize" ng-click="currentDisplaySize = 999">
         <message key="label.showall" />
       </div>
-      <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= certificates.length" ng-click="currentDisplaySize = initialDisplaySize">
+      <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= (certificates | inboxfilter).length" ng-click="currentDisplaySize = initialDisplaySize">
         <message key="label.showfewer" />
       </div>
     </div>
   </div>
 
-  <div id="noCerts" ng-hide="certificates.length>=0" style="display: none" class="alert alert-error">
+  <div id="noCerts" ng-show="(certificates | inboxfilter).length<1" style="display: none;" class="alert alert-error">
     <message key="error.nocerts" />
   </div>
 </div>
