@@ -1,7 +1,5 @@
-package se.inera.certificate.web.service;
-
 /**
- * Copyright (C) 2012 Inera AB (http://www.inera.se)
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
  * This file is part of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
  *
@@ -18,20 +16,25 @@ package se.inera.certificate.web.service;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package se.inera.certificate.web.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
@@ -39,8 +42,12 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
-    
+
     private static final Logger log = LoggerFactory.getLogger(CertificateServiceImpl.class);
+
+    @Autowired
+    private MessageSource messageSource;
+
     @Autowired
     private ListCertificatesResponderInterface listService;
 
@@ -72,15 +79,38 @@ public class CertificateServiceImpl implements CertificateService {
         dto.setFromDate(meta.getValidFrom().toString());
         dto.setTomDate(meta.getValidTo().toString());
         dto.setSentDate(meta.getSignDate().toString());
+        dto.setType(meta.getCertificateType());
 
         final List<CertificateStatusType> stats = meta.getStatus();
         log.debug("Status length {}", stats.size());
-        Collections.sort(stats, STATUS_COMPARATOR);
-        // TODO: Handling of status history, for now just take the latest status string
-        dto.setStatus(stats.get(0).getType().toString());
 
-        dto.setType(meta.getCertificateType());
+        if (stats.size() < 1) {
+            // Temporary handling of the case when no status exists at all - under investigation if at least 1 status will be mandatory
+            dto.setStatus(StatusType.UNHANDLED.toString());
+            dto.setStatusStyled("Inget");
+        } else {
+            Collections.sort(stats, STATUS_COMPARATOR);
+            // TODO: Need for status history under discussion - for now we just take the latest status
+            CertificateStatusType certificateStatusType = stats.get(0);
+            dto.setStatus(certificateStatusType.getType().toString());
+            dto.setStatusStyled(getStyledStatusDescription(certificateStatusType));
+
+        }
+
         return dto;
+    }
+
+    private String getStyledStatusDescription(CertificateStatusType statusType) {
+        String statusTranslation = getMessage(statusType.getType().toString(), null);
+        String desc = getMessage("certificate.status.desc", new Object[] { statusTranslation, statusType.getTarget(), statusType.getTimestamp().toString() });
+        return desc;
+
+    }
+
+    private String getMessage(String code, Object[] args) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage(code, args, locale);
+
     }
 
     /**

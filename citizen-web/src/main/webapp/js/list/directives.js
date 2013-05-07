@@ -6,6 +6,7 @@ listCertApp.directive("message", ['$rootScope', function ($rootScope) {
         restrict: "E",
         scope: {},
         replace: true,
+        //template: '<span ng-bind-html-unsafe="resultValue"></span>',
         template: "<span>{{resultValue}}</span>",
         compile: function (element, attr, transclusionFunc) {
             return function ($scope, element, attr) {

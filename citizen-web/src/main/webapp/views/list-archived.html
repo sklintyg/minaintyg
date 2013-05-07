@@ -1,36 +1,62 @@
 <ul id="tabs">
-  <li class="disabled" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> label.inbox</li>
-  <li class="" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> label.removed</li>
+  <li class="disabled" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> <message key="label.inbox" /></li>
+  <li class="" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> <message key="label.archived" /></li>
 </ul>
 
-<h1>arkiverade</h1>
+<h1>
+  <message key="label.archived" />
+</h1>
 
 <div class="row-fluid">
-  <div class="span7">
-    <p>
-      certificates.desc
+  <div class="span12">
+    <p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att:
+    <ul>
+      <li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg till mappen "borttagna intyg".</li>
+      <li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, och i vissa fall livet ut.</li>
+      <li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då ändra uppgiften i journalen.</li>
+    </ul>
     </p>
-    <table id="certTable" class="table expandable" data-collapsed-size="10">
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th>Utfärdat</th>
-          <th>Typ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="cert in certificates">
-          <td></td>
-          <td>{{cert.date}}</td>
-          <td>{{cert.period}}</td>
-        </tr>
-      </tbody>
+    <p>
+      <a href="http://www.datainspektionen.se/lagar-och-regler/patientdatalagen" target="_blank">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.
+    </p>
+    <p>För att återställa ett borttaget intyg välj Återställ.</p>
+  </div>
 
-    </table>
+  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+      <strong><message key="label.certificatesloading" /></strong>
+    </p>
+  </div>
+
+  <table id="certTable" class="table expandable" ng-show="certificates.length>0">
+    <thead>
+      <tr>
+        <th><message key="listtable.headers.issued" /></th>
+        <th><message key="listtable.headers.type" /></th>
+        <th><message key="listtable.headers.certperiod" /></th>
+        <th><message key="listtable.headers.issuedby" /></th>
+        <th><message key="listtable.headers.latestEvent" /></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="cert in certificates">
+        <td>{{cert.sentDate}}</td>
+        <td>{{cert.type}}</td>
+        <td>{{cert.fromDate}}-{{cert.tomDate}}</td>
+        <td>{{cert.careunitName}}</td>
+        <td>{{cert.statusStyled}}</td>
+        <td><a ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
+      </tr>
+    </tbody>
+
+  </table>
+  <div class="table-bottom" ng-hide="certificates.length<1"></div>
+
+  <div id="noCerts" class="alert alert-error" ng-hide="certificates.length>=0" style="display: none">
+    <message key="error.noarchivedcerts" />
   </div>
 </div>
 
-<div id="noCerts" class="alert alert-error" style="display: block;">
 
- certificates.none
-</div>

@@ -1,8 +1,7 @@
 
 <ul id="tabs">
-  <li class="" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" />
-  <message key="label.inbox" /></li>
-  <li class="disabled" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> label.removed</li>
+  <li class="" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> <message key="label.inbox" /></li>
+  <li class="disabled" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> <message key="label.archived" /></li>
 </ul>
 
 <h1>
@@ -10,42 +9,53 @@
 </h1>
 
 <div class="row-fluid">
-  <div class="span7">
+  <div>
     <p>
       <message key="certificates.description" />
     </p>
   </div>
+
+  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+      <strong><message key="label.certificatesloading" /></strong>
+    </p>
+  </div>
+
   <table id="certTable" class="table expandable" ng-show="certificates.length>0">
     <thead>
       <tr>
         <th>&nbsp;</th>
-        <th>Utfärdat</th>
-        <th>Typ</th>
-        <th>Intygsperiod</th>
-        <th>Utfärdat av</th>
-        <th>Händelser</th>
+        <th><message key="listtable.headers.issued" /></th>
+        <th><message key="listtable.headers.type" /></th>
+        <th><message key="listtable.headers.certperiod" /></th>
+        <th><message key="listtable.headers.issuedby" /></th>
+        <th><message key="listtable.headers.latestEvent" /></th>
       </tr>
     </thead>
     <tbody>
-      <!-- <tr ng-repeat="cert in (filteredCertificates = (certificates | filter:{ status:'2'}))" ng-hide="$index > currentDisplaySize"> -->
       <tr ng-repeat="cert in certificates" ng-hide="$index > currentDisplaySize">
         <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
         <td>{{cert.sentDate}}</td>
         <td>{{cert.type}}</td>
         <td>{{cert.fromDate}}-{{cert.tomDate}}</td>
         <td>{{cert.careunitName}}</td>
-        <td>{{cert.status}}</td>
+        <td>{{cert.statusStyled}}</td>
       </tr>
     </tbody>
-
   </table>
   <div class="table-bottom" ng-hide="certificates.length<1">
     <div id="overflow-selector" class="row" ng-show="certificates.length > initialDisplaySize">
-      <div class="expand-selector span2 offset5" ng-show="certificates.length > currentDisplaySize" ng-click="currentDisplaySize = 999">Visa alla</div>
-      <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= certificates.length" ng-click="currentDisplaySize = initialDisplaySize">Visa färre</div>
+      <div class="expand-selector span2 offset5" ng-show="certificates.length > currentDisplaySize" ng-click="currentDisplaySize = 999">
+        <message key="label.showall" />
+      </div>
+      <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= certificates.length" ng-click="currentDisplaySize = initialDisplaySize">
+        <message key="label.showfewer" />
+      </div>
     </div>
   </div>
+
+  <div id="noCerts" ng-hide="certificates.length>=0" style="display: none" class="alert alert-error">
+    <message key="error.nocerts" />
+  </div>
 </div>
-
-
-<div id="noCerts" class="alert alert-error" ng-hide="certificates.length>0">certificates.none</div>

@@ -12,6 +12,7 @@ public class CertificateMeta implements Serializable {
     private String careunitName;
     private String sentDate;
     private String status;
+    private String statusStyled;
     private Boolean deleted;
     private String fromDate;
     private String tomDate;
@@ -94,6 +95,14 @@ public class CertificateMeta implements Serializable {
 
     public void setSelected(Boolean selected) {
         this.selected = selected;
+    }
+
+    public String getStatusStyled() {
+        return statusStyled;
+    }
+
+    public void setStatusStyled(String statusStyled) {
+        this.statusStyled = statusStyled;
     }
 
 }
