@@ -38,7 +38,7 @@
 
     <createTable tableName="CERTIFICATE_STATE">
       <column name="CERTIFICATE_ID" type="varchar(255)">
-        <constraints primaryKey="true" nullable="false"/>
+        <constraints nullable="false"/>
       </column>
       <column name="TARGET" type="varchar(255)">
         <constraints nullable="false"/>
@@ -48,6 +48,11 @@
       </column>
       <column name="TIMESTAMP" type="datetime"/>
     </createTable>
+    <addForeignKeyConstraint baseColumnNames="CERTIFICATE_ID"
+                                    baseTableName="CERTIFICATE_STATE"
+                                    constraintName="CERT_STATE_FK"
+                                    referencedColumnNames="ID"
+                                    referencedTableName="CERTIFICATE"/>
   </changeSet>
   <changeSet id="2" author="me">
     <createTable tableName="CONSENT">
