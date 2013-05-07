@@ -46,8 +46,10 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
         if (certificate.getType().equals("fk7263")) {
             CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(certificate.getType());
             registerMedicalCertificateResponder.registerMedicalCertificate(logicalAddress, getJaxbObject(certificateSupport, certificate));
+            response.setResult(ResultOfCallUtil.okResult());
+        } else {
+            response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
         }
-        response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
 
         return response;
     }

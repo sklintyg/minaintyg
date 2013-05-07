@@ -186,7 +186,20 @@
                       urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1
                     </extraarg>
                   </extraargs>
-                </wsdlOption>                
+                </wsdlOption>
+                <wsdlOption>
+                  <wsdl>${schema.path}/certificate/v1/interactions/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateQuestion:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateQuestionResponder:1=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1
+                    </extraarg>
+                  </extraargs>
+                </wsdlOption>
               </wsdlOptions>
             </configuration>
           </execution>
