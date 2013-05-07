@@ -1,13 +1,24 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', 'listCertService', function ListCertCtrl($scope, listCertService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', 'listCertService', function ListCertCtrl($scope, $filter, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
 
     $scope.initialDisplaySize = 10;
     $scope.currentDisplaySize = 10;
 
+    $scope.sendSelected = function() {
+        var items =  $filter('filter')($scope.certificates, { selected : true });
+        console.log("send " + items.length);
+        
+    }
+    
+    $scope.archiveSelected = function() {
+        var items =  $filter('filter')($scope.certificates, { selected : true });
+        console.log("archive " +  items.length);
+        
+    }
     listCertService.getCertificates(function(list) {
         $scope.certificates = list;
         // filtering is done i view
