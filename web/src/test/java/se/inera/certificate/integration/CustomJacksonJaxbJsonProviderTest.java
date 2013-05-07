@@ -13,11 +13,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CustomJacksonJaxbJsonProviderTest {
 
     @Test

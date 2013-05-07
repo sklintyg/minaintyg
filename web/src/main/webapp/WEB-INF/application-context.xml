@@ -66,4 +66,7 @@
   <jaxws:endpoint address="/get-consent-v1" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
   <jaxws:endpoint address="/set-consent-v1" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
 
+  <jaxws:endpoint address="/send-certificate" implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl" />
+  <jaxws:endpoint address="/revoke-certificate" implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl" />
+
 </beans>
