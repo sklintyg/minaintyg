@@ -20,7 +20,6 @@ package se.inera.certificate.web.security;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
 import org.callistasoftware.netcare.mvk.authentication.service.api.impl.AuthenticationResultImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,9 +47,7 @@ public class MockMvkAuthenticationFilter extends AbstractPreAuthenticatedProcess
             final String guid = request.getParameter(MockMvkAuthenticationFilter.guidParameterName);
             if (guid != null) {
                 log.debug("Guid parameter found. Mocking validation against MVK as {}...", guid);
-                AuthenticationResult mockedResult = AuthenticationResultImpl.newPatient(guid);
-                return mockedResult;
-
+                return AuthenticationResultImpl.newPatient(guid);
             }
         } else {
             log.debug("Authentication found. Proceed...");

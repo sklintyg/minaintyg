@@ -21,13 +21,13 @@ public class ClearSecurityContextFilter extends GenericFilterBean {
 
     private static final Logger log = LoggerFactory.getLogger(ClearSecurityContextFilter.class);
 
-    LogoutHandler handler;
+    private LogoutHandler handler;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
         log.debug("Clearing security context");
-        handler.logout((HttpServletRequest)request, (HttpServletResponse)response, null);
+        handler.logout((HttpServletRequest) request, (HttpServletResponse) response, null);
         filterChain.doFilter(request, response);
 
     }

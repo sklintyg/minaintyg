@@ -46,7 +46,6 @@ public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
     @Override
     public UserDetails lookupPrincipal(AuthenticationResult auth) throws UsernameNotFoundException {
         log.info("Citizen authenticated.");
-        Citizen citizen = new CitizenImpl(auth.getUsername());
-        return citizen;
+        return new CitizenImpl(auth.getUsername());
     }
 }

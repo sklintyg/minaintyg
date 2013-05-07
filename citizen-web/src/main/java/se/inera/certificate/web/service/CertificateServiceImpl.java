@@ -102,9 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     private String getStyledStatusDescription(CertificateStatusType statusType) {
         String statusTranslation = getMessage(statusType.getType().toString(), null);
-        String desc = getMessage("certificate.status.desc", new Object[] { statusTranslation, statusType.getTarget(), statusType.getTimestamp().toString() });
-        return desc;
-
+        return getMessage("certificate.status.desc", new Object[] { statusTranslation, statusType.getTarget(), statusType.getTimestamp().toString() });
     }
 
     private String getMessage(String code, Object[] args) {

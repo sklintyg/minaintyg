@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.web.security;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +46,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
     private CitizenService citizenService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
         log.debug("Verifying citizen consent...");
 
@@ -54,7 +56,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
             log.debug("State of consent not known - fetching consent status...");
             boolean consentResult = consentService.fetchConsent(citizen.getUsername());
             log.debug("Consent result is {}", consentResult);
-            //set the consent result so that we don't have to fetch it next time around
+            // set the consent result so that we don't have to fetch it next time around
             citizen.setConsent(consentResult);
         }
 
