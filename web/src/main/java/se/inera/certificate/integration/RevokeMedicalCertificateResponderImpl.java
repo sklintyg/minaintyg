@@ -15,22 +15,22 @@ import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateres
 @SchemaValidation
 public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCertificateResponderInterface {
 
-	@Autowired
-	private CertificateService certificateService;
-	
-	@Override
-	public RevokeMedicalCertificateResponseType revokeMedicalCertificate(AttributedURIType logicalAddress, RevokeMedicalCertificateRequestType parameters) {
-		
-		RevokeMedicalCertificateResponseType response = new RevokeMedicalCertificateResponseType();
-		
-		String certificateId = parameters.getRevoke().getLakarutlatande().getLakarutlatandeId();
-		String civicRegistrationNumber = parameters.getRevoke().getLakarutlatande().getPatient().getPersonId().getExtension();
-		
-		Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
-		// TODO: Implementera revoke genom att skicka fraga med typ 'Makulera'
-				
-		response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
-		
-		return response;
-	}
+    @Autowired
+    private CertificateService certificateService;
+
+    @Override
+    public RevokeMedicalCertificateResponseType revokeMedicalCertificate(AttributedURIType logicalAddress, RevokeMedicalCertificateRequestType parameters) {
+
+        RevokeMedicalCertificateResponseType response = new RevokeMedicalCertificateResponseType();
+
+        String certificateId = parameters.getRevoke().getLakarutlatande().getLakarutlatandeId();
+        String civicRegistrationNumber = parameters.getRevoke().getLakarutlatande().getPatient().getPersonId().getExtension();
+
+        Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
+        // TODO: Implementera revoke genom att skicka fraga med typ 'Makulera'
+
+        response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
+
+        return response;
+    }
 }

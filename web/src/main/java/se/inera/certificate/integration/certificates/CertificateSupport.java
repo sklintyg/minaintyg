@@ -2,6 +2,8 @@ package se.inera.certificate.integration.certificates;
 
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+
 /**
  * Implements support for one particular certificate type.
  *
@@ -15,7 +17,13 @@ public interface CertificateSupport {
     String certificateType();
 
     /**
-     * Returns a list of additional JAXB classes which are required to represent the supported certificate type.
+     * Returns a list of additional JAXB classes which are required to represent
+     * the supported certificate type.
      */
     List<Class<?>> additionalContextClasses();
+
+    /**
+     * Return a JAXBContext for this Certificate.
+     */
+    JAXBContext getJaxbContext();
 }

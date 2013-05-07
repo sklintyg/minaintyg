@@ -118,6 +118,8 @@
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3=se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3
                     </extraarg>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl</extraarg>
                   </extraargs>
                 </wsdlOption>
                 <wsdlOption>

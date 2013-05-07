@@ -34,11 +34,16 @@
 	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
 	
 	">
+  <context:property-placeholder 
+    location="classpath:default.${spring.profiles.active}.properties, classpath:override.${spring.profiles.active}.properties" 
+    ignore-resource-not-found="true"/>
 
   <import resource="classpath:META-INF/cxf/cxf.xml" />
 
   <import resource="classpath:persistence-config.xml"/>
 
+  <import resource="application-context-ws.xml"/>
+  
   <import resource="jaxrs-context.xml"/>
 
   <context:annotation-config />
@@ -46,27 +51,5 @@
 
   <bean id="certificatesContextClassCollector" class="se.inera.certificate.integration.certificates.config.AdditionalContextClassCollector"/>
 
-  <cxf:bus>
-  	<cxf:features>
-  		<cxf:logging/>
-  	</cxf:features>
-  </cxf:bus>	
-
-  <!-- ws endpoints -->
-  <jaxws:endpoint address="/list-certificates" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
-  <jaxws:endpoint address="/get-certificate" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" >
-    <jaxws:properties>
-          <entry key="jaxb.additionalContextClasses" value="#{certificatesContextClassCollector.certificateContextClasses}" />
-        </jaxws:properties>
-  </jaxws:endpoint>
-
-  <jaxws:endpoint address="/register-certificate" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/set-certificate-status" implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl" />
-
-  <jaxws:endpoint address="/get-consent-v1" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
-  <jaxws:endpoint address="/set-consent-v1" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
-
-  <jaxws:endpoint address="/send-certificate" implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/revoke-certificate" implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl" />
 
 </beans>

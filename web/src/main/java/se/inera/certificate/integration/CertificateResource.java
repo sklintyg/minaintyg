@@ -1,13 +1,20 @@
 package se.inera.certificate.integration;
 
-import org.springframework.transaction.annotation.Transactional;
-import se.inera.certificate.model.Certificate;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import se.inera.certificate.model.Certificate;
 
 /**
  * @author andreaskaltenbach
@@ -18,7 +25,7 @@ public class CertificateResource {
 
     @PersistenceContext
     private EntityManager entityManager;
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
