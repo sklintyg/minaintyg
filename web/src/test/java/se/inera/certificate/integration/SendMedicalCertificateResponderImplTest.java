@@ -40,48 +40,48 @@ public class SendMedicalCertificateResponderImplTest {
 
     @Mock
     private Certificate certificate = mock(Certificate.class);
-    
+
     @Mock
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateResponderInterface = mock(RegisterMedicalCertificateResponderInterface.class);
 
     @Mock
     private List<CertificateSupport> supportedCertificates;
-    
+
     @InjectMocks
     private SendMedicalCertificateResponderInterface responder = new SendMedicalCertificateResponderImpl();
 
     @Before
     public void before() {
-        when(supportedCertificates.iterator()).thenReturn(Collections.<CertificateSupport>singletonList(new Fk7263Support()).iterator());
+        when(supportedCertificates.iterator()).thenReturn(Collections.<CertificateSupport> singletonList(new Fk7263Support()).iterator());
     }
-    
+
     @Test
     public void testGet() throws Exception {
-    	SendMedicalCertificateRequestType parameters = new SendMedicalCertificateRequestType();
-    	parameters.setSend(new SendType());
-    	parameters.getSend().setLakarutlatande(new LakarutlatandeEnkelType());
-    	parameters.getSend().getLakarutlatande().setLakarutlatandeId("Intygs-id-1234567890");
-    	parameters.getSend().getLakarutlatande().setPatient(new PatientType());
-    	parameters.getSend().getLakarutlatande().getPatient().setPersonId(new II());
-    	parameters.getSend().getLakarutlatande().getPatient().getPersonId().setExtension("19121212-1212");
-    	
-    	when(certificateService.getCertificate("19121212-1212", "Intygs-id-1234567890")).thenReturn(certificate);
-    	when(certificate.getType()).thenReturn("fk7263");
-    	
-    	String document = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("fk7263/fk7263.xml"));   	
-    	when(certificate.getDocument()).thenReturn(document);
-    	
-    	AttributedURIType address = new AttributedURIType();
-    	address.setValue("EnAdress");
-		responder.sendMedicalCertificate(address, parameters);
-		
-		ArgumentCaptor<AttributedURIType> logicalAddress = ArgumentCaptor.forClass(AttributedURIType.class);
-		ArgumentCaptor<RegisterMedicalCertificateType> type = ArgumentCaptor.forClass(RegisterMedicalCertificateType.class);  
-		
-		verify(registerMedicalCertificateResponderInterface).registerMedicalCertificate(logicalAddress.capture(), type.capture());
-		
-		assertEquals("EnAdress",logicalAddress.getValue().getValue());
-		assertNotNull(type.getValue());
-	}
+        SendMedicalCertificateRequestType parameters = new SendMedicalCertificateRequestType();
+        parameters.setSend(new SendType());
+        parameters.getSend().setLakarutlatande(new LakarutlatandeEnkelType());
+        parameters.getSend().getLakarutlatande().setLakarutlatandeId("Intygs-id-1234567890");
+        parameters.getSend().getLakarutlatande().setPatient(new PatientType());
+        parameters.getSend().getLakarutlatande().getPatient().setPersonId(new II());
+        parameters.getSend().getLakarutlatande().getPatient().getPersonId().setExtension("19121212-1212");
+
+        when(certificateService.getCertificate("19121212-1212", "Intygs-id-1234567890")).thenReturn(certificate);
+        when(certificate.getType()).thenReturn("fk7263");
+
+        String document = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("fk7263/fk7263.xml"));
+        when(certificate.getDocument()).thenReturn(document);
+
+        AttributedURIType address = new AttributedURIType();
+        address.setValue("EnAdress");
+        responder.sendMedicalCertificate(address, parameters);
+
+        ArgumentCaptor<AttributedURIType> logicalAddress = ArgumentCaptor.forClass(AttributedURIType.class);
+        ArgumentCaptor<RegisterMedicalCertificateType> type = ArgumentCaptor.forClass(RegisterMedicalCertificateType.class);
+
+        verify(registerMedicalCertificateResponderInterface).registerMedicalCertificate(logicalAddress.capture(), type.capture());
+
+        assertEquals("EnAdress", logicalAddress.getValue().getValue());
+        assertNotNull(type.getValue());
+    }
 
 }

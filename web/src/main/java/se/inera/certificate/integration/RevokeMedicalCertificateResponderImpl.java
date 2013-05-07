@@ -47,7 +47,7 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
         LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();
         VardAdresseringsType vardAddress = request.getRevoke().getAdressVard();
 
-        certificateService.setCertificateState(civicRegistrationNumber, certificateId, "unknown", CertificateState.CANCELLED, new LocalDateTime());
+        certificateService.setCertificateState(civicRegistrationNumber, certificateId, "FK", CertificateState.CANCELLED, new LocalDateTime());
 
         SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
         QuestionToFkType question = new QuestionToFkType();
