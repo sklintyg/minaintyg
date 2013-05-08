@@ -26,9 +26,12 @@ import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -36,6 +39,14 @@ import java.util.List;
  */
 @Service
 public class CertificateServiceImpl implements CertificateService {
+
+    private static final Comparator<CertificateStateHistoryEntry> SORTER = new Comparator<CertificateStateHistoryEntry>() {
+
+        @Override
+        public int compare(CertificateStateHistoryEntry e1, CertificateStateHistoryEntry e2) {
+            return e2.getTimestamp().compareTo(e1.getTimestamp());
+        }
+    };
 
     @Autowired
     private CertificateDao certificateDao;
@@ -46,15 +57,13 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
         assertConsent(civicRegistrationNumber);
-
-        return certificateDao.findCertificate(civicRegistrationNumber, certificateTypes, fromDate, toDate);
+        return fixDeletedStatus(certificateDao.findCertificate(civicRegistrationNumber, certificateTypes, fromDate, toDate));
     }
 
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
         assertConsent(civicRegistrationNumber);
-
-        return certificateDao.getCertificate(id);
+        return fixDeletedStatus(certificateDao.getCertificate(id));
     }
 
     @Override
@@ -71,5 +80,30 @@ public class CertificateServiceImpl implements CertificateService {
         if (!consentService.isConsent(civicRegistrationNumber)) {
             throw new MissingConsentException(civicRegistrationNumber);
         }
+    }
+
+    private List<Certificate> fixDeletedStatus(List<Certificate> certificates) {
+        for (Certificate certificate: certificates) {
+            fixDeletedStatus(certificate);
+        }
+        return certificates;
+    }
+
+    private Certificate fixDeletedStatus(Certificate certificate) {
+        List<CertificateStateHistoryEntry> states = certificate.getStates();
+        Collections.sort(states, SORTER);
+        certificate.setDeleted(isDeleted(states));
+        return certificate;
+    }
+
+    private Boolean isDeleted(List<CertificateStateHistoryEntry> entries) {
+        for (CertificateStateHistoryEntry entry: entries) {
+            switch (entry.getState()) {
+            case DELETED: return true;
+            case RESTORED: return false;
+            default:
+            }
+        }
+        return false;
     }
 }
