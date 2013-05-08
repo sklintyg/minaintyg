@@ -10,6 +10,11 @@ var messages = {
             "certificatesloading" : "Dina intyg laddas. Vänligen vänta...",
             "certificatesloadingarchived" : "Arkiverade intyg laddas. Vänligen vänta... "
         },
+        "status" : {
+            
+            "CANCELLED" : "Cancelled",
+            "SENT" : "Skickad"
+        },
         "button" : {
             "sendtofk" : "Skicka till försäkringskassan",
             "archive" : "Arkivera"

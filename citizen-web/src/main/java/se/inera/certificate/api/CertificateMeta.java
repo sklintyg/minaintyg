@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class CertificateMeta implements Serializable {
-    
+
     private String id;
     private Boolean selected;
     private String type;
@@ -12,81 +12,81 @@ public class CertificateMeta implements Serializable {
     private String careunitName;
     private String sentDate;
     private String status;
-    private String statusStyled;
-    private Boolean deleted;
+    private String target;
+    private Boolean archived;
     private String fromDate;
     private String tomDate;
-    
+
     public String getId() {
-            return id;
+        return id;
     }
-    
+
     public void setId(String id) {
-            this.id = id;
+        this.id = id;
     }
-    
+
     public String getType() {
-            return type;
+        return type;
     }
-    
+
     public void setType(String type) {
-            this.type = type;
+        this.type = type;
     }
-    
+
     public String getCaregiverName() {
-            return caregiverName;
+        return caregiverName;
     }
-    
+
     public void setCaregiverName(String caregiverName) {
-            this.caregiverName = caregiverName;
+        this.caregiverName = caregiverName;
     }
-    
+
     public String getCareunitName() {
-            return careunitName;
+        return careunitName;
     }
-    
+
     public void setCareunitName(String careunitName) {
-            this.careunitName = careunitName;
+        this.careunitName = careunitName;
     }
-    
+
     public String getSentDate() {
-            return sentDate;
+        return sentDate;
     }
-    
+
     public void setSentDate(String sentDate) {
-            this.sentDate = sentDate;
+        this.sentDate = sentDate;
     }
-    
+
     public String getStatus() {
-            return status;
+        return status;
     }
-    
+
     public void setStatus(String status) {
-            this.status = status;
+        this.status = status;
     }
-    
-    public Boolean getDeleted() {
-            return deleted;
+
+    public Boolean getArchived() {
+        return archived;
     }
-    
-    public void setDeleted(Boolean deleted) {
-            this.deleted = deleted;
-    }               
-    
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
+    }
+
     public void setFromDate(String fromDate) {
-            this.fromDate = fromDate;
+        this.fromDate = fromDate;
     }
-    
+
     public String getFromDate() {
-            return fromDate;
+        return fromDate;
     }
-    
+
     public void setTomDate(String tomDate) {
-            this.tomDate = tomDate;
+        this.tomDate = tomDate;
     }
 
     public String getTomDate() {
-            return tomDate;
+        return tomDate;
     }
 
     public Boolean getSelected() {
@@ -97,12 +97,12 @@ public class CertificateMeta implements Serializable {
         this.selected = selected;
     }
 
-    public String getStatusStyled() {
-        return statusStyled;
+    public String getTarget() {
+        return target;
     }
 
-    public void setStatusStyled(String statusStyled) {
-        this.statusStyled = statusStyled;
+    public void setTarget(String target) {
+        this.target = target;
     }
 
 }

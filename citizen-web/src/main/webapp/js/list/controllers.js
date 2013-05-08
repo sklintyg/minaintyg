@@ -24,12 +24,12 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
         });
 
         console.log("archive " + items[0]);
-        listCertService.archiveCertificate(items[0], function(fromServer, item) {
+        listCertService.archiveCertificate(items[0], function(fromServer, oldItem) {
             console.log("statusUpdate callback:" + fromServer);
             // Better way to update the object?
-            item.status = fromServer.status;
-            item.statusStyled = fromServer.statusStyled;
-            item.selected = false;
+            oldItem.archived = fromServer.archived;
+            oldItem.status = fromServer.status;
+            oldItem.selected = false;
 
         });
     }
@@ -53,12 +53,12 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
         for ( var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
 
-                listCertService.restoreCertificate($scope.certificates[i], function(fromServer, item) {
+                listCertService.restoreCertificate($scope.certificates[i], function(fromServer, oldItem) {
                     console.log("(restore) statusUpdate callback:" + fromServer);
                     // Better way to update the object?
-                    item.status = fromServer.status;
-                    item.statusStyled = fromServer.statusStyled;
-                    item.selected = false;
+                    oldItem.archived = fromServer.archived;
+                    oldItem.status = fromServer.status;
+                    oldItem.selected = false;
 
                 });
 

@@ -22,14 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.api.CertificateMeta;
@@ -54,12 +52,13 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private ListCertificatesResponderInterface listService;
-    
+
     @Autowired
     private SetCertificateStatusResponderInterface statusService;
 
     @Override
     public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
+        CertificateMeta result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
         req.setNationalIdentityNumber(civicRegistrationNumber);
@@ -70,15 +69,16 @@ public class CertificateServiceImpl implements CertificateService {
 
         final SetCertificateStatusResponseType response = statusService.setCertificateStatus(null, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
-            CertificateMeta responseMeta = new CertificateMeta();
-            responseMeta.setId(id);
-            responseMeta.setStatus(type.toString());
-            responseMeta.setStatusStyled(getMessage(type.toString(), null));
-            return responseMeta;
+            List<CertificateMeta> updatedList = this.getCertificates(civicRegistrationNumber);
+            for (CertificateMeta meta : updatedList) {
+                if (meta.getId().equals(id)) {
+                    result = meta;
+                    break;
+                }
+            }
 
-        } else {
-            return null;
         }
+        return result;
     }
 
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {
@@ -110,35 +110,20 @@ public class CertificateServiceImpl implements CertificateService {
         dto.setTomDate(meta.getValidTo().toString());
         dto.setSentDate(meta.getSignDate().toString());
         dto.setType(meta.getCertificateType());
+        dto.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
+        log.debug("{} is archived: {}", dto.getId(), dto.getArchived());
 
         final List<CertificateStatusType> stats = meta.getStatus();
         log.debug("Status length {}", stats.size());
-
-        if (stats.size() < 1) {
-            // Temporary handling of the case when no status exists at all - under investigation if at least 1 status will be mandatory
-            dto.setStatus(StatusType.UNHANDLED.toString());
-            dto.setStatusStyled("Inget");
-        } else {
-            Collections.sort(stats, STATUS_COMPARATOR);
-            // TODO: Need for status history under discussion - for now we just take the latest status
-            CertificateStatusType certificateStatusType = stats.get(0);
-            dto.setStatus(certificateStatusType.getType().toString());
-            dto.setStatusStyled(getStyledStatusDescription(certificateStatusType));
-
+        Collections.sort(stats, STATUS_COMPARATOR);
+        for (CertificateStatusType stat : stats) {
+            if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
+                dto.setStatus(stat.getType().toString());
+                dto.setTarget(stat.getTarget());
+            }
         }
 
         return dto;
-    }
-
-    private String getStyledStatusDescription(CertificateStatusType statusType) {
-        String statusTranslation = getMessage(statusType.getType().toString(), null);
-        return getMessage("certificate.status.desc", new Object[] { statusTranslation, statusType.getTarget(), statusType.getTimestamp().toString() });
-    }
-
-    private String getMessage(String code, Object[] args) {
-        Locale locale = LocaleContextHolder.getLocale();
-        return messageSource.getMessage(code, args, locale);
-
     }
 
     /**
