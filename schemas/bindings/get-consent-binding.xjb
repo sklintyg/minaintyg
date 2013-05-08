@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1"
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               jaxb:extensionBindingPrefixes="inheritance">
+  <jaxb:bindings schemaLocation="../src/main/resources/schemas/certificate/v1/interactions/GetConsentInteraction/GetConsentResponder_1.0.xsd" node="/xsd:schema">
+  		<jaxb:bindings node="xsd:complexType[@name='GetConsentResponseType']">
+  			<inheritance:implements>se.inera.certificate.response.WebServiceResponse</inheritance:implements>
+  		</jaxb:bindings>
+  	</jaxb:bindings>
+</jaxb:bindings>

@@ -54,10 +54,11 @@
                 <extraargs>
                   <extraarg>-validate</extraarg>
                   <extraarg>-verbose</extraarg>
-                  <extraarg>-xjc-b,${basedir}/binding.xjb</extraarg>
+                  <extraarg>-xjc-b,${basedir}/bindings/general-binding.xjb</extraarg>
                   <extraarg>-xjc-XhashCode</extraarg>
                   <extraarg>-xjc-Xequals</extraarg>
                   <extraarg>-xjc-XtoString</extraarg>
+                  <extraarg>-xjc-Xinheritance</extraarg>
                   <extraarg>-p</extraarg>
                   <extraarg>
                     urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
@@ -84,6 +85,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/list-certificates-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:ListCertificates:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20
@@ -97,6 +99,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/get-certificate-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:GetCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20
@@ -110,6 +113,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/register-medical-certificate-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20
@@ -123,6 +127,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/GetConsentInteraction/GetConsentInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/get-consent-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:GetConsent:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20
@@ -136,6 +141,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/SetConsentInteraction/SetConsentInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/set-consent-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:SetConsent:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.setconsent.v1.rivtabp20
@@ -149,6 +155,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/SetCertificateStatusInteraction/SetCertificateStatusInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/set-certificate-status-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:SetCertificateStatus:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20
@@ -162,6 +169,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/SendMedicalCertificateInteraction/SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/send-medical-certificate-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:SendMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20
@@ -175,6 +183,7 @@
                 <wsdlOption>
                   <wsdl>${schema.path}/certificate/v1/interactions/RevokeMedicalCertificateInteraction/RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl</wsdl>
                   <extraargs>
+                    <extraarg>-xjc-b,${basedir}/bindings/revoke-medical-certificate-binding.xjb</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>
                       urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.v1.rivtabp20
@@ -184,7 +193,7 @@
                       urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1
                     </extraarg>
                   </extraargs>
-                </wsdlOption>                
+                </wsdlOption>
               </wsdlOptions>
             </configuration>
           </execution>

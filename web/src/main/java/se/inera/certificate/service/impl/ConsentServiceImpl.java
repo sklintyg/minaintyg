@@ -20,7 +20,6 @@ package se.inera.certificate.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import se.inera.certificate.dao.ConsentDao;
 import se.inera.certificate.service.ConsentService;
 
@@ -28,7 +27,6 @@ import se.inera.certificate.service.ConsentService;
  * @author andreaskaltenbach
  */
 @Service
-@Transactional
 public class ConsentServiceImpl implements ConsentService {
 
     @Autowired
