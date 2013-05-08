@@ -46,7 +46,9 @@
       <column name="STATE" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="TIMESTAMP" type="datetime"/>
+      <column name="TIMESTAMP" type="datetime">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
     <addForeignKeyConstraint baseColumnNames="CERTIFICATE_ID"
                                     baseTableName="CERTIFICATE_STATE"

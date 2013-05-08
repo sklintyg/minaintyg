@@ -26,6 +26,7 @@ import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
@@ -37,6 +38,7 @@ import java.util.List;
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
+    public static final String MI = "MI";
     @Autowired
     private CertificateDao certificateDao;
 
@@ -65,6 +67,11 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public void storeCertificate(Certificate certificate) {
+
+        // add initial RECEIVED state using current time as receiving timestamp
+        CertificateStateHistoryEntry state = new CertificateStateHistoryEntry(MI, CertificateState.RECEIVED, new LocalDateTime());
+        certificate.getStates().add(state);
+
         certificateDao.store(certificate);
     }
 
