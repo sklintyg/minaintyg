@@ -68,7 +68,7 @@ public final class ModelConverter {
                 .issuerName(source.getSigningDoctorName())
                 .facilityName(source.getCareUnitName())
                 .signDate(new LocalDate(source.getSignedDate()))
-                .available(source.getDeleted() ? "borttaget" : "ja"); // TODO - Makulerat?
+                .available(source.getDeleted() ? "false" : "true");
 
         for (CertificateStateHistoryEntry state : source.getStates()) {
             StatusType statusType = CERTIFICATE_STATE_MAP.get(state.getState());
