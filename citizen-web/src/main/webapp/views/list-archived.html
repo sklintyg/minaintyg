@@ -42,9 +42,9 @@
       <tr ng-repeat="cert in certificates | archivedfilter">
         <td>{{cert.sentDate}}</td>
         <td>{{cert.type}}</td>
-        <td>{{cert.fromDate | date:'longDate'}} - {{cert.tomDate| date:'longDate'}}</td>
+        <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
-        <td>{{cert.statusStyled}}</td>
+        <td>{{cert.status}}</td>
         <td><a ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
       </tr>
     </tbody>

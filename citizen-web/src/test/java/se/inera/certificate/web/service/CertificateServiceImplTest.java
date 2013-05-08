@@ -53,9 +53,11 @@ public class CertificateServiceImplTest {
     private LocalDate validToDate = new LocalDate();
     private LocalDateTime firstTimeStamp = new LocalDateTime(2013, 1, 2, 20, 0);
     private LocalDateTime laterTimeStamp = new LocalDateTime(2013, 1, 3, 20, 0);
+    
     private CertificateStatusType unhandledStatus;
     
     private CertificateStatusType deletedStatus;
+    private CertificateStatusType sentStatus;
     
     @Before 
     public void setup() {
@@ -68,6 +70,11 @@ public class CertificateServiceImplTest {
         deletedStatus.setType(StatusType.DELETED);
         deletedStatus.setTarget("FK");
         deletedStatus.setTimestamp(laterTimeStamp);
+        
+        sentStatus = new CertificateStatusType();
+        sentStatus.setType(StatusType.SENT);
+        sentStatus.setTarget("FK");
+        sentStatus.setTimestamp(firstTimeStamp);
         
     }
     
@@ -84,6 +91,7 @@ public class CertificateServiceImplTest {
         meta.setValidTo(validToDate);
         meta.getStatus().add(unhandledStatus);
         meta.getStatus().add(deletedStatus);
+        meta.getStatus().add(sentStatus);
         
         List<CertificateMetaType> responseList  = new ArrayList<CertificateMetaType>();
         responseList.add(meta);
@@ -97,38 +105,13 @@ public class CertificateServiceImplTest {
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getCaregiverName().equals(ISSUER_NAME));
         assertTrue(certificates.get(0).getCareunitName() .equals(FACILITY_NAME));
-        assertTrue(certificates.get(0).getStatus().equals(StatusType.DELETED.toString()));
+        assertTrue(certificates.get(0).getStatus().equals(StatusType.SENT.toString()));
     }
 
-    @Test
-    public void testNoStatusGivesUnhandledStatus() {
-        CertificateMetaType meta = new CertificateMetaType();
-        meta.setAvailable(AVAILABLE);
-        meta.setCertificateId(CERTIFIED_ID);
-        meta.setCertificateType(TYPE);
-        meta.setFacilityName(FACILITY_NAME);
-        meta.setIssuerName(ISSUER_NAME);
-        meta.setSignDate(signDate);
-        meta.setValidFrom(validFromDate);
-        meta.setValidTo(validToDate);
-        meta.getStatus().clear();
-        
-        
-        List<CertificateMetaType> responseList  = new ArrayList<CertificateMetaType>();
-        responseList.add(meta);
-        
-        ListCertificatesResponseType responseMock = mock(ListCertificatesResponseType.class);
-        when(responseMock.getMeta()).thenReturn(responseList);
-        
-        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
-        List<CertificateMeta> certificates = service.getCertificates("123456789");
-        assertTrue(certificates.size() == 1);
-
-        assertTrue(certificates.get(0).getStatus().equals(StatusType.UNHANDLED.toString()));
-    }
+   
     
     @Test
-    public void testLastestStatusIsResturned() {
+    public void testLastestRResurnedStatusIsSENT() {
         CertificateMetaType meta = new CertificateMetaType();
         meta.setAvailable(AVAILABLE);
         meta.setCertificateId(CERTIFIED_ID);
