@@ -1,1 +1,8 @@
-Att göra.
+!contents -R2 -g -p -f -h
+
+!1 Integration med Försäkringskassan: Markera intyg som hämtat.
+
+När Försäkringskassan sätter status på ett intyg, förväntar de sig följande svar:
+|Markera intyg som hamtat|
+|personnr|intyg|svar?|kommentar|
+|121212-1212|intyg-1|ok|markering av ett befintligt intyg|
