@@ -47,20 +47,14 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
-
-        if (!consentService.isConsent(civicRegistrationNumber)) {
-            throw new MissingConsentException(civicRegistrationNumber);
-        }
+        assertConsent(civicRegistrationNumber);
 
         return certificateDao.findCertificate(civicRegistrationNumber, certificateTypes, fromDate, toDate);
     }
 
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
-
-        if (!consentService.isConsent(civicRegistrationNumber)) {
-            throw new MissingConsentException(civicRegistrationNumber);
-        }
+        assertConsent(civicRegistrationNumber);
 
         return certificateDao.getCertificate(id);
     }
@@ -73,5 +67,11 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp) {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
+    }
+
+    private void assertConsent(String civicRegistrationNumber) {
+        if (!consentService.isConsent(civicRegistrationNumber)) {
+            throw new MissingConsentException(civicRegistrationNumber);
+        }
     }
 }
