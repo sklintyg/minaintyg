@@ -2,7 +2,7 @@
 
 /* Filters */
 
-//Filter items that should be listed in inbox
+// Filter items that should be listed in inbox
 listCertApp.filter('inboxfilter', function() {
     return function(certificates) {
         var items = {
@@ -28,7 +28,7 @@ listCertApp.filter('inboxfilter', function() {
     };
 });
 
-//Filter items that should be listed in inbox-archived
+// Filter items that should be listed in inbox-archived
 listCertApp.filter('archivedfilter', function() {
     return function(certificates) {
         var items = {

@@ -22,14 +22,14 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
         var items = $filter('filter')($scope.certificates, {
             selected : true
         });
-        listCertService.selectedCertificate = items[0];
-        console.log("archive " + listCertService.selectedCertificate.id);
-        listCertService.archiveCertificate(listCertService.selectedCertificate, function(updatedItem) {
-            console.log("statusUpdate callback:" + updatedItem);
+
+        console.log("archive " + items[0]);
+        listCertService.archiveCertificate(items[0], function(fromServer, item) {
+            console.log("statusUpdate callback:" + fromServer);
             // Better way to update the object?
-            listCertService.selectedCertificate.status = updatedItem.status;
-            listCertService.selectedCertificate.statusStyled = updatedItem.statusStyled;
-            listCertService.selectedCertificate.selected = false;
+            item.status = fromServer.status;
+            item.statusStyled = fromServer.statusStyled;
+            item.selected = false;
 
         });
     }
@@ -52,13 +52,13 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
         console.log("Restore requested for cert:" + certId);
         for ( var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
-                listCertService.selectedCertificate = $scope.certificates[i];
-                listCertService.restoreCertificate(listCertService.selectedCertificate, function(updatedItem) {
-                    console.log("(restore) statusUpdate callback:" + updatedItem);
+
+                listCertService.restoreCertificate($scope.certificates[i], function(fromServer, item) {
+                    console.log("(restore) statusUpdate callback:" + fromServer);
                     // Better way to update the object?
-                    listCertService.selectedCertificate.status = updatedItem.status;
-                    listCertService.selectedCertificate.statusStyled = updatedItem.statusStyled;
-                    listCertService.selectedCertificate.selected = false;
+                    item.status = fromServer.status;
+                    item.statusStyled = fromServer.statusStyled;
+                    item.selected = false;
 
                 });
 
@@ -79,5 +79,7 @@ listCertApp.controller('SendCertCtrl', [ '$scope', '$filter', 'listCertService',
     $scope.certificates = [];
 
     $scope.certToSend = listCertService.selectedCertificate;
+    // changes to certToSend is propagated to other controllers via the service
+    // scope
 
 } ]);

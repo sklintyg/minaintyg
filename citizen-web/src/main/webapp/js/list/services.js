@@ -28,26 +28,26 @@ listCertApp.factory('listCertService', [ '$http', function($http) {
         });
     }
 
-    function _archiveCertificate(items, callback) {
-        console.log("Archiving " + items.id);
-        $http.put('/api/certificates/' + items.id + "/archive").success(function(data) {
-            callback(data);
+    function _archiveCertificate(item, callback) {
+        console.log("Archiving " + item.id);
+        $http.put('/api/certificates/' + item.id + "/archive").success(function(data) {
+            callback(data, item);
         }).error(function(data, status, headers, config) {
             console.log("error " + status);
         });
 
     }
-    
+
     function _restoreCertificate(item, callback) {
         console.log("restoring " + item.id);
         $http.put('/api/certificates/' + item.id + "/restore").success(function(data) {
-            callback(data);
+            callback(data, item);
         }).error(function(data, status, headers, config) {
             console.log("error " + status);
         });
 
     }
-    
+
     // Return public API for our service
     return {
         getCertificates : _getCertificates,

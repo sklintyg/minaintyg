@@ -44,7 +44,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="table-bottom" ng-hide="(certificates | inboxfilter).length<1">
+  <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0">
     <div id="overflow-selector" class="row" ng-show="(certificates | inboxfilter).length > initialDisplaySize">
       <div class="expand-selector span2 offset5" ng-show="(certificates | inboxfilter).length > currentDisplaySize" ng-click="currentDisplaySize = 999">
         <message key="label.showall" />
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div id="noCerts" ng-show="(certificates | inboxfilter).length<1" style="display: none;" class="alert alert-error">
+  <div id="noCerts" ng-show="doneLoading && (certificates | inboxfilter).length<1" class="alert alert-error">
     <message key="error.nocerts" />
   </div>
   

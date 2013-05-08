@@ -53,7 +53,7 @@
   
     <div class="table-bottom" ng-hide="(certificates | archivedfilter).length<1"></div>
 
-    <div id="noCerts" class="alert alert-error" ng-show="(certificates | archivedfilter).length<1" style="display: none">
+    <div id="noCerts" class="alert alert-error" ng-show="doneLoading && (certificates | archivedfilter).length<1">
       <message key="error.noarchivedcerts" />
     </div>
   
