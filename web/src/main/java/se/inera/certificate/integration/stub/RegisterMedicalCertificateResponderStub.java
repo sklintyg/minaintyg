@@ -27,17 +27,15 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 @SchemaValidation
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
-    Logger logger = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
+    private Logger logger = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
 
     @Override
     public RegisterMedicalCertificateResponseType registerMedicalCertificate(AttributedURIType logicalAddress, RegisterMedicalCertificateType request) {
 
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
 
-        // unmarshal the certificate document
-        String document;
         try {
-            document = marshalCertificate(request);
+            marshalCertificate(request);
             logger.info("STUB Received request");
         } catch (JAXBException e) {
             response.setResult(failResult("Unable to marshal certificate information"));

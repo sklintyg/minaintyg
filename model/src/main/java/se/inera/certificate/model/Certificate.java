@@ -150,10 +150,10 @@ public class Certificate {
         // Empty
     }
 
-    private void doSetDocument(String document){
+    private void doSetDocument(String document) {
         this.document = toBytes(document);
     }
-    
+
     /**
      * @return id
      */

@@ -21,9 +21,9 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author andreaskaltenbach
  */
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( locations = {"classpath:persistence-config.xml"} )
-@ActiveProfiles( "dev" )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:persistence-config.xml" })
+@ActiveProfiles("dev")
 @Transactional
 public class ConsentDaoImplTest {
 
@@ -91,6 +91,6 @@ public class ConsentDaoImplTest {
     }
 
     private List<Consent> allConsents() {
-        return entityManager.createQuery("SELECT c FROM Consent c").getResultList();
+        return entityManager.createQuery("SELECT c FROM Consent c", Consent.class).getResultList();
     }
 }

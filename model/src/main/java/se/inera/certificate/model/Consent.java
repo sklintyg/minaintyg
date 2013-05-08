@@ -1,6 +1,8 @@
 package se.inera.certificate.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author andreaskaltenbach
@@ -10,7 +12,7 @@ import javax.persistence.*;
 public class Consent {
 
     @javax.persistence.Id
-    @Column( name = "CIVIC_REGISTRATION_NUMBER" )
+    @Column(name = "CIVIC_REGISTRATION_NUMBER")
     private String civicRegistrationNumber;
 
     public Consent() {
