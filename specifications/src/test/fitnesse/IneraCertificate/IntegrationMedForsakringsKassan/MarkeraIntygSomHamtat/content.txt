@@ -5,4 +5,7 @@
 När Försäkringskassan sätter status på ett intyg, förväntar de sig följande svar:
 |Markera intyg som hamtat|
 |personnr|intyg|svar?|kommentar|
+|121212-1212|intyg-6|Det finns inget intyg 'intyg-6' för invånare '121212-1212'.|försök att markera fel intyg för en invånare|
+|121212-1212|intyg-999|Det finns inget intyg 'intyg-999' för invånare '121212-1212'.|försök att markera ett okänt intyg för en invånare|
+|999999-9999|intyg-6|Det finns inget intyg 'intyg-6' för invånare '999999-9999'.|försök att markera ett intyg för en okänd invånare|
 |121212-1212|intyg-1|ok|markering av ett befintligt intyg|

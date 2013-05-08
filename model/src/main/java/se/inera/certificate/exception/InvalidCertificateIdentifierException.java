@@ -10,7 +10,7 @@ public class InvalidCertificateIdentifierException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public InvalidCertificateIdentifierException(String certificateId, String civicRegistrationNumber) {
-        super(String.format("No certificate with ID %s available for patient %s", certificateId, civicRegistrationNumber));
+        super(String.format("Det finns inget intyg '%s' för invånare '%s'.", certificateId, civicRegistrationNumber));
     }
 
     public InvalidCertificateIdentifierException(Certificate certificate) {
