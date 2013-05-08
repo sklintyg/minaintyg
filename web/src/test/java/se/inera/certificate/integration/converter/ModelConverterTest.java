@@ -37,7 +37,7 @@ public class ModelConverterTest {
         assertEquals("Doctor Who", metaType.getIssuerName());
         assertEquals(new LocalDate(1999, 12, 31), metaType.getSignDate());
 
-        assertEquals("ja", metaType.getAvailable());
+        assertEquals("true", metaType.getAvailable());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ModelConverterTest {
 
         CertificateMetaType metaType = ModelConverter.toCertificateMetaType(certificate);
 
-        assertEquals("borttaget", metaType.getAvailable());
+        assertEquals("false", metaType.getAvailable());
     }
 
     @Test
