@@ -24,21 +24,21 @@
   </cxf:bus>  
 
   <!-- ws endpoints -->
-  <jaxws:endpoint address="/list-certificates" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
-  <jaxws:endpoint address="/get-certificate" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" >
+  <jaxws:endpoint address="/list-certificates/v1.0" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
+  <jaxws:endpoint address="/get-certificate/v1.0" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" >
     <jaxws:properties>
       <entry key="jaxb.additionalContextClasses" value="#{certificatesContextClassCollector.certificateContextClasses}" />
     </jaxws:properties>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/register-certificate" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/set-certificate-status" implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl" />
+  <jaxws:endpoint address="/register-certificate/v3.0" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
+  <jaxws:endpoint address="/set-certificate-status/v1.0" implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl" />
 
-  <jaxws:endpoint address="/get-consent-v1" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
-  <jaxws:endpoint address="/set-consent-v1" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
+  <jaxws:endpoint address="/get-consent/v1.0" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
+  <jaxws:endpoint address="/set-consent/v1.0" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
 
-  <jaxws:endpoint address="/send-certificate" implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/revoke-certificate" implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl" />
+  <jaxws:endpoint address="/send-certificate/v1.0" implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl" />
+  <jaxws:endpoint address="/revoke-certificate/v1.0" implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl" />
 
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificatesClient"

@@ -138,6 +138,14 @@
                   </extraarg>
                   <extraarg>-p</extraarg>
                   <extraarg>
+                    urn:riv:insuranceprocess:healthreporting:SendMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20
+                  </extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>
+                    urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1
+                  </extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>
                     urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateQuestion:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20
                   </extraarg>
                   <extraarg>-p</extraarg>
@@ -169,10 +177,6 @@
                   </wsdl>
                   <extraargs>
                     <extraarg>-xjc-b,${basedir}/bindings/register-medical-certificate-binding.xjb</extraarg>
-                    <extraarg>-wsdlLocation</extraarg>
-                    <extraarg>
-                      classpath:schemas/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl
-                    </extraarg>
                   </extraargs>
                 </wsdlOption>
                 <wsdlOption>
@@ -205,14 +209,6 @@
                   </wsdl>
                   <extraargs>
                     <extraarg>-xjc-b,${basedir}/bindings/send-medical-certificate-binding.xjb</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificate:1:rivtabp20=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20
-                    </extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1
-                    </extraarg>
                   </extraargs>
                 </wsdlOption>
                 <wsdlOption>
