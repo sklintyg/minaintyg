@@ -9,6 +9,9 @@ var listCertApp = angular.module('ListCertApp', []).config([ '$routeProvider', f
     }).when('/arkiverade', {
             templateUrl: '/views/list-archived.html',
             controller: 'ListArchivedCtrl'
+        }).when('/skicka-intyg', {
+            templateUrl: '/views/send-cert-confirm.html',
+            controller: 'SendCertCtrl'
         }).otherwise({
             redirectTo: '/lista'
         });

@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', 'listCertService', function ListCertCtrl($scope, $filter, listCertService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCertService', function ListCertCtrl($scope, $filter, $location, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
 
@@ -9,16 +9,32 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', 'listCertService', fun
     $scope.currentDisplaySize = 10;
 
     $scope.sendSelected = function() {
-        var items =  $filter('filter')($scope.certificates, { selected : true });
+        var items = $filter('filter')($scope.certificates, {
+            selected : true
+        });
         console.log("send " + items.length);
-        
+        listCertService.selectedCertificate = items[0];
+        $location.path("/skicka-intyg");
+
     }
-    
+
     $scope.archiveSelected = function() {
-        var items =  $filter('filter')($scope.certificates, { selected : true });
-        console.log("archive " +  items.length);
-        
+        var items = $filter('filter')($scope.certificates, {
+            selected : true
+        });
+        listCertService.selectedCertificate = items[0];
+        console.log("archive " + listCertService.selectedCertificate.id);
+        listCertService.archiveCertificate(listCertService.selectedCertificate, function(updatedItem) {
+            console.log("statusUpdate callback:" + updatedItem);
+            // Better way to update the object?
+            listCertService.selectedCertificate.status = updatedItem.status;
+            listCertService.selectedCertificate.statusStyled = updatedItem.statusStyled;
+            listCertService.selectedCertificate.selected = false;
+
+        });
     }
+
+    // fetch list of certs initially
     listCertService.getCertificates(function(list) {
         $scope.certificates = list;
         // filtering is done i view
@@ -26,7 +42,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', 'listCertService', fun
     });
 } ]);
 
-listCertApp.controller('ListArchivedCtrl', [ '$scope', 'listCertService', function ListCertCtrl($scope, listCertService) {
+listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertService', function ListCertCtrl($scope, $location, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
     $scope.initialDisplaySize = 10;
@@ -34,12 +50,18 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', 'listCertService', functi
 
     $scope.restoreCert = function(certId) {
         console.log("Restore requested for cert:" + certId);
-        for (var i = 0; i < $scope.certificates.length; i++) {
+        for ( var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
-                // TODO: do this in callback after successful status update in
-                // backend
-                $scope.certificates[i].status = "RESTORED";
-                console.log("Restoring " + $scope.certificates[i]);
+                listCertService.selectedCertificate = $scope.certificates[i];
+                listCertService.restoreCertificate(listCertService.selectedCertificate, function(updatedItem) {
+                    console.log("(restore) statusUpdate callback:" + updatedItem);
+                    // Better way to update the object?
+                    listCertService.selectedCertificate.status = updatedItem.status;
+                    listCertService.selectedCertificate.statusStyled = updatedItem.statusStyled;
+                    listCertService.selectedCertificate.selected = false;
+
+                });
+
             }
 
         }
@@ -50,4 +72,12 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', 'listCertService', functi
         $scope.certificates = list;
         $scope.doneLoading = true;
     });
+} ]);
+
+// Send Certification Controller
+listCertApp.controller('SendCertCtrl', [ '$scope', '$filter', 'listCertService', function ListCertCtrl($scope, $filter, listCertService) {
+    $scope.certificates = [];
+
+    $scope.certToSend = listCertService.selectedCertificate;
+
 } ]);

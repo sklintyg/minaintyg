@@ -11,6 +11,8 @@ listCertApp.factory('listCertService', [ '$http', function($http) {
     // cached certificates response
     var cachedList = null;
 
+    var _selectedCertificate = null;
+
     function _getCertificates(callback) {
         if (cachedList != null) {
             console.log("returning cached response");
@@ -25,8 +27,32 @@ listCertApp.factory('listCertService', [ '$http', function($http) {
             console.log("error " + status);
         });
     }
+
+    function _archiveCertificate(items, callback) {
+        console.log("Archiving " + items.id);
+        $http.put('/api/certificates/' + items.id + "/archive").success(function(data) {
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            console.log("error " + status);
+        });
+
+    }
+    
+    function _restoreCertificate(item, callback) {
+        console.log("restoring " + item.id);
+        $http.put('/api/certificates/' + item.id + "/restore").success(function(data) {
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            console.log("error " + status);
+        });
+
+    }
+    
     // Return public API for our service
     return {
-        getCertificates : _getCertificates
+        getCertificates : _getCertificates,
+        archiveCertificate : _archiveCertificate,
+        restoreCertificate : _restoreCertificate,
+        selectedCertificate : _selectedCertificate
     }
 } ]);

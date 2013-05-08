@@ -20,7 +20,10 @@ package se.inera.certificate.web.service;
 
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
+
 import se.inera.certificate.api.CertificateMeta;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public interface CertificateService {
     /**
@@ -30,4 +33,15 @@ public interface CertificateService {
      * @return
      */
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber);
+
+    /**
+     * Sets a new status for the certificate
+     * 
+     * @param id
+     * @param target
+     * @param type
+     * @return Partially populated CertificateMeta object with id and new status and status description
+     */
+
+    public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
 }

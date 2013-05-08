@@ -1,0 +1,40 @@
+
+<h1>
+  <message key="certificates.send.header" />
+</h1>
+
+<div class="row-fluid">
+  <div>
+    <p>
+      <message key="certificates.send.description" />
+    </p>
+  </div>
+
+  <table id="certTable" class="table expandable"">
+    <thead>
+      <tr>
+        <th><message key="listtable.headers.issued" /></th>
+        <th><message key="listtable.headers.type" /></th>
+        <th><message key="listtable.headers.certperiod" /></th>
+        <th><message key="listtable.headers.issuedby" /></th>
+        <th><message key="listtable.headers.latestEvent" /></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{certToSend.sentDate}}</td>
+        <td>{{certToSend.type}}</td>
+        <td>{{certToSend.fromDate | date:'longDate'}} - {{certToSend.tomDate| date:'longDate'}}</td>
+        <td>{{certToSend.careunitName}}</td>
+        <td>{{certToSend.statusStyled}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+
+  
+  <div class="row-fluid">
+            <button id="send-to-fk-confirmed"  ng-click="sendConfirmed()" type="submit" class="btn popover-trigger" data-content="Skicka valda intyg till Försäkringskassan">Skicka till Försäkringskassan</button>   
+            <button id="remove" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()" type="submit"  class="btn popover-trigger" data-content="Flytta valda intyg till Borttagna intyg">Ta bort</button>   
+        </div>
+</div>

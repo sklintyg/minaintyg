@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,10 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -50,6 +54,32 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private ListCertificatesResponderInterface listService;
+    
+    @Autowired
+    private SetCertificateStatusResponderInterface statusService;
+
+    @Override
+    public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
+        SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
+        req.setCertificateId(id);
+        req.setNationalIdentityNumber(civicRegistrationNumber);
+        req.setStatus(type);
+        req.setTarget(target);
+
+        req.setTimestamp(new LocalDateTime(timestamp));
+
+        final SetCertificateStatusResponseType response = statusService.setCertificateStatus(null, req);
+        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+            CertificateMeta responseMeta = new CertificateMeta();
+            responseMeta.setId(id);
+            responseMeta.setStatus(type.toString());
+            responseMeta.setStatusStyled(getMessage(type.toString(), null));
+            return responseMeta;
+
+        } else {
+            return null;
+        }
+    }
 
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {
         final ListCertificatesRequestType params = new ListCertificatesRequestType();
@@ -121,9 +151,5 @@ public class CertificateServiceImpl implements CertificateService {
             return o2.getTimestamp().compareTo(o1.getTimestamp());
         }
     };
-
-    public static Class<?>[] getSupportedCertificates() {
-        return new Class<?>[] { RegisterMedicalCertificateType.class };
-    }
 
 }
