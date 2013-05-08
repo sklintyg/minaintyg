@@ -12,7 +12,7 @@ public class Samtycke extends WsClientFixture {
 	private SetConsentResponderInterface setConsentResponder = setConsentService.setConsentResponderPort
 
 	public Samtycke() {
-		setEndpoint(setConsentResponder, "set-consent-v1")
+		setEndpoint(setConsentResponder, "set-consent/v1.0")
 	}
 
 	String personnr
