@@ -19,15 +19,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans" 
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jaxws="http://cxf.apache.org/jaxws" 
-       xmlns:http="http://cxf.apache.org/transports/http/configuration" 
-       xmlns:cxf="http://cxf.apache.org/core" 
-  
-  xsi:schemaLocation="
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:cxf="http://cxf.apache.org/core" xmlns:aop="http://www.springframework.org/schema/aop"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 	http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
@@ -38,7 +37,7 @@
     location="classpath:default.${spring.profiles.active}.properties, classpath:override.${spring.profiles.active}.properties" 
     ignore-resource-not-found="true"/>
 
-  <import resource="classpath:META-INF/cxf/cxf.xml" />
+  <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
   <import resource="classpath:persistence-config.xml"/>
 
@@ -46,10 +45,11 @@
   
   <import resource="jaxrs-context.xml"/>
 
-  <context:annotation-config />
-  <context:component-scan base-package="se.inera.certificate" />
+  <context:annotation-config/>
+  <context:component-scan base-package="se.inera.certificate"/>
 
-  <bean id="certificatesContextClassCollector" class="se.inera.certificate.integration.certificates.config.AdditionalContextClassCollector"/>
+  <bean id="certificatesContextClassCollector"
+        class="se.inera.certificate.integration.certificates.config.AdditionalContextClassCollector"/>
 
 
 </beans>
