@@ -40,13 +40,21 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.RECEIVED;
-import static se.inera.certificate.support.CertificateFactory.*;
+import static se.inera.certificate.support.CertificateFactory.CIVIC_REGISTRATION_NUMBER;
+import static se.inera.certificate.support.CertificateFactory.CERTIFICATE_ID;
+import static se.inera.certificate.support.CertificateFactory.FK7263;
+import static se.inera.certificate.support.CertificateFactory.buildCertificate;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
+@ContextConfiguration(locations = {"classpath:persistence-config.xml" })
 @ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
