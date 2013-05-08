@@ -10,6 +10,10 @@ var messages = {
             "certificatesloading" : "Dina intyg laddas. Vänligen vänta...",
             "certificatesloadingarchived" : "Arkiverade intyg laddas. Vänligen vänta... "
         },
+        "button" : {
+            "sendtofk" : "Skicka till försäkringskassan",
+            "archive" : "Arkivera"
+        },
         "certificates" : {
             "header" : "Inkorgen",
             "description" : "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Klicka på ett intyg för att titta på intyget, skriva ut det eller spara det till din dator",
@@ -18,8 +22,7 @@ var messages = {
                 "header" : "Skicka till Försäkringskassan",
                 "description" : "Har skickar du till försäkringskassan"
             }
-            
-            
+
         },
         "error" : {
             "missingvalue" : "Saknat värde",

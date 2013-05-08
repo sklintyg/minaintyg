@@ -60,7 +60,7 @@
   </div>
   
   <div class="row-fluid">
-            <button id="send-to-fk" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="sendSelected()" type="submit" class="btn popover-trigger" data-content="Skicka valda intyg till Försäkringskassan">Skicka till Försäkringskassan</button>   
-            <button id="remove" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()" type="submit"  class="btn popover-trigger" data-content="Flytta valda intyg till Borttagna intyg">Ta bort</button>   
+            <button id="send-to-fk" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="sendSelected()" type="submit" class="btn popover-trigger"><message key="button.sendtofk" /></button>   
+            <button id="remove" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()" type="submit"  class="btn popover-trigger"><message key="button.archive" /></button>   
         </div>
 </div>
