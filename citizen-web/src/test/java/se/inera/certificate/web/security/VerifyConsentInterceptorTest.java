@@ -21,62 +21,61 @@ import se.inera.certificate.web.service.CitizenService;
 @RunWith(MockitoJUnitRunner.class)
 public class VerifyConsentInterceptorTest {
 
-	@Mock
-	private CitizenService service = mock(CitizenService.class);
-	
-	@InjectMocks
-	private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
-	
-	@Test
-	public void testPrehandleNoConsentJson() throws Exception {
-		interceptor.setJsonResponse(true);
-		Citizen citizen = new CitizenImpl("123456789");
-		citizen.setConsent(false);
-		when(service.getCitizen()).thenReturn(citizen);
-		
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
-		when(response.getOutputStream()).thenReturn(servletOutputStream);
-		
-		boolean preHandle = interceptor.preHandle(null,  response,  null);
-		assertFalse(preHandle);
-		verify(servletOutputStream).print("Inget samtycke.json");
-		
-	}
-	
-	@Test
-	public void testPrehandleNoConsentNoJson() throws Exception {
-		interceptor.setJsonResponse(false);
-		Citizen citizen = new CitizenImpl("123456789");
-		citizen.setConsent(false);
-		when(service.getCitizen()).thenReturn(citizen);
-		
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
-		when(response.getOutputStream()).thenReturn(servletOutputStream);
-		
-		boolean preHandle = interceptor.preHandle(null,  response,  null);
-		assertFalse(preHandle);
-		verify(response).sendRedirect(Mockito.anyString());
-		
-		
-		
-	}
-	@Test
-	public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-		interceptor.setJsonResponse(true);
-		Citizen citizen = new CitizenImpl("123456789");
-		citizen.setConsent(true);
-		when(service.getCitizen()).thenReturn(citizen);
-		
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
-		when(response.getOutputStream()).thenReturn(servletOutputStream);
-		
-		boolean preHandle = interceptor.preHandle(null,  response,  null);
-		assertTrue(preHandle);
-		Mockito.verifyZeroInteractions(response);
-		
-	}
+    @Mock
+    private CitizenService service = mock(CitizenService.class);
+
+    @InjectMocks
+    private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
+
+    @Test
+    public void testPrehandleNoConsentJson() throws Exception {
+        interceptor.setJsonResponse(true);
+        Citizen citizen = new CitizenImpl("123456789");
+        citizen.setConsent(false);
+        when(service.getCitizen()).thenReturn(citizen);
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
+        when(response.getOutputStream()).thenReturn(servletOutputStream);
+
+        boolean preHandle = interceptor.preHandle(null, response, null);
+        assertFalse(preHandle);
+        verify(servletOutputStream).print("Inget samtycke.json");
+
+    }
+
+    @Test
+    public void testPrehandleNoConsentNoJson() throws Exception {
+        interceptor.setJsonResponse(false);
+        Citizen citizen = new CitizenImpl("123456789");
+        citizen.setConsent(false);
+        when(service.getCitizen()).thenReturn(citizen);
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
+        when(response.getOutputStream()).thenReturn(servletOutputStream);
+
+        boolean preHandle = interceptor.preHandle(null, response, null);
+        assertFalse(preHandle);
+        verify(response).sendRedirect(Mockito.anyString());
+
+    }
+
+    @Test
+    public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
+        interceptor.setJsonResponse(true);
+        Citizen citizen = new CitizenImpl("123456789");
+        citizen.setConsent(true);
+        when(service.getCitizen()).thenReturn(citizen);
+
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
+        when(response.getOutputStream()).thenReturn(servletOutputStream);
+
+        boolean preHandle = interceptor.preHandle(null, response, null);
+        assertTrue(preHandle);
+        Mockito.verifyZeroInteractions(response);
+
+    }
 
 }
