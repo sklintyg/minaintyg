@@ -21,8 +21,8 @@ public class HamtaListaAvIntyg extends WsClientFixture {
 	private GetConsentResponderInterface getConsentResponder = getConsentService.getConsentResponderPort
 
 	public HamtaListaAvIntyg() {
-		setEndpoint(listCertificatesResponder, "list-certificates")
-		setEndpoint(getConsentResponder, "get-consent-v1")
+		setEndpoint(listCertificatesResponder, "list-certificates/v1.0")
+		setEndpoint(getConsentResponder, "get-consent/v1.0")
 	}
 	
 	String personnr
