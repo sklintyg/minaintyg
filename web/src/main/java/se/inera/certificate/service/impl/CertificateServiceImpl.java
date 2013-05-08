@@ -48,6 +48,8 @@ public class CertificateServiceImpl implements CertificateService {
         }
     };
 
+    public static final String MI = "MI";
+
     @Autowired
     private CertificateDao certificateDao;
 
@@ -68,6 +70,11 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public void storeCertificate(Certificate certificate) {
+
+        // add initial RECEIVED state using current time as receiving timestamp
+        CertificateStateHistoryEntry state = new CertificateStateHistoryEntry(MI, CertificateState.RECEIVED, new LocalDateTime());
+        certificate.getStates().add(state);
+
         certificateDao.store(certificate);
     }
 

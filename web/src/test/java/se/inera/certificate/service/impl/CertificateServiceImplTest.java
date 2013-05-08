@@ -1,9 +1,11 @@
 package se.inera.certificate.service.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.joda.time.LocalDateTime;
@@ -20,7 +22,10 @@ import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
-@RunWith(MockitoJUnitRunner.class)
+/**
+ * @author andreaskaltenbach
+ */
+@RunWith( MockitoJUnitRunner.class )
 public class CertificateServiceImplTest {
 
     @Mock
@@ -67,4 +72,21 @@ public class CertificateServiceImplTest {
         assertTrue(found.getDeleted());
     }
 
+    @Test
+    public void newCertificateGetsStatusReceived() {
+
+        Certificate certificate = new Certificate("certId", "<cert/>");
+        certificateService.storeCertificate(certificate);
+
+        assertEquals(1, certificate.getStates().size());
+        assertEquals(CertificateState.RECEIVED, certificate.getStates().get(0).getState());
+        assertEquals("MI", certificate.getStates().get(0).getTarget());
+
+        LocalDateTime aMinuteAgo = new LocalDateTime().minusMinutes(1);
+        LocalDateTime inAMinute = new LocalDateTime().plusMinutes(1);
+        assertTrue(certificate.getStates().get(0).getTimestamp().isAfter(aMinuteAgo));
+        assertTrue(certificate.getStates().get(0).getTimestamp().isBefore(inAMinute));
+
+        verify(certificateDao).store(certificate);
+    }
 }
