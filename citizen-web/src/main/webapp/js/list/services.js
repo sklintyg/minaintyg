@@ -47,12 +47,23 @@ listCertApp.factory('listCertService', [ '$http', function($http) {
         });
 
     }
+    
+    function _sendCertificate(item, callback) {
+        console.log("service: sending " + item.id);
+        $http.put('/api/certificates/' + item.id + "/send").success(function(data) {
+            callback(data, item);
+        }).error(function(data, status, headers, config) {
+            console.log("error " + status);
+        });
+
+    }
 
     // Return public API for our service
     return {
         getCertificates : _getCertificates,
         archiveCertificate : _archiveCertificate,
         restoreCertificate : _restoreCertificate,
+        sendCertificate : _sendCertificate,
         selectedCertificate : _selectedCertificate
     }
 } ]);

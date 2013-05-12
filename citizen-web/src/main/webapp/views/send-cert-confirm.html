@@ -1,4 +1,7 @@
 
+<div id="backnav" class="row-fluid">
+  <a class="" href="#start">Tillbaka</a>
+</div>
 <h1>
   <message key="certificates.send.header" />
 </h1>
@@ -9,32 +12,79 @@
       <message key="certificates.send.description" />
     </p>
   </div>
-<div onclick="javascript:window.location.hash='#lista'">tillbaka</div>
-  <table id="certTable" class="table expandable"">
-    <thead>
-      <tr>
-        <th><message key="listtable.headers.issued" /></th>
-        <th><message key="listtable.headers.type" /></th>
-        <th><message key="listtable.headers.certperiod" /></th>
-        <th><message key="listtable.headers.issuedby" /></th>
-        <th><message key="listtable.headers.latestEvent" /></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{certToSend.sentDate}}</td>
-        <td>{{certToSend.type}}</td>
-        <td>{{certToSend.fromDate | date:'longDate'}} - {{certToSend.tomDate| date:'longDate'}}</td>
-        <td>{{certToSend.careunitName}}</td>
-        <td>{{certToSend.statusStyled}}</td>
-      </tr>
-    </tbody>
-  </table>
-  
 
-  
-  <div class="row-fluid">
-            <button id="send-to-fk-confirmed"  ng-click="sendConfirmed()" type="submit" class="btn popover-trigger" data-content="Skicka valda intyg till Försäkringskassan">Skicka till Försäkringskassan</button>   
-            <button id="remove" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()" type="submit"  class="btn popover-trigger" data-content="Flytta valda intyg till Borttagna intyg">Ta bort</button>   
+
+  <p>Om du är sjuk i mer än 14 dagar kan du ansöka om sjukpenning från Försäkringskassan.</p>
+  <p>För att Försäkringskassan ska kunna bedöma ditt ärende behövs följande:
+  <ul>
+    <li>Din arbetsgivare anmäler till Försäkringskassan att du är sjuk</li>
+    <li>Du ansöker om sjukpenning hos Försäkringskassan</li>
+    <li>Du skickar in ett läkarintyg som styrker din sjukdom</li>
+  </ul>
+  <p>
+    <a
+      href="http://www.forsakringskassan.se/privatpers/sjuk/sjukanmala_och_anskoa_om_sjukpenning/!ut/p/b1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOItjAx8nZwMHQ0sgg0sDDwtPSxd3SyN3B2djIAKIoEKDHAARwM0_Y5mhgaehh4hhoF-TkEu3qZQ_XgUELA_XD8KrASfCwi5wc8jPzdVvyA3NMIgy0QRAC-UVx0!/dl4/d5/L2dJQSEvUUt3QS80SmtFL1o2XzgyME1CQjFBMDhTMDgwSTlIOUVGOTJHRU8y/"
+      target="_blank">Läs mer om sjukpenning och gör din ansökan direkt på Försäkringskassans webbplats</a>.
+  <p>När du skickar intyg till Försäkringskassan ska alla uppgifter i intyget finnas med.</p>
+
+  <h3>
+    <message key="certificates.send.includedcert" />
+  </h3>
+  <section class="certificate small">
+    <div class="cert span12">
+      <div class="cert-header">
+
+        <div class="row-fluid">
+
+          <div class="span6">
+
+            <span class="tag"><message key="certificates.send.label.patientname" /></span> <span>NN</span>
+          </div>
+
+          <div class="span4">
+
+            <span class="tag"><message key="certificates.send.label.issued" /></span> <span>{{certToSend.sentDate | date:'longDate'}}</span>
+          </div>
+
         </div>
+
+        <div class="row-fluid">
+
+          <div class="span6">
+
+            <span class="tag"><message key="certificates.send.label.civicnumber" /></span> <span>XX</span>
+          </div>
+
+          <div class="span4">
+
+            <span class="tag"><message key="certificates.send.label.issuer" /></span> <span id="caregiver">{{certToSend.caregiverName}}</span>
+          </div>
+
+        </div>
+
+        <div class="row-fluid">
+
+          <div class="span6">
+
+            <span class="tag"><message key="certificates.send.label.period" /></span> <span>{{certToSend.fromDate | date:'longDate'}}&ndash;{{certToSend.tomDate| date:'longDate'}}</span>
+          </div>
+
+          <div class="span4">
+
+            <span class="tag"><message key="certificates.send.label.unit" /></span> <span>{{certToSend.careunitName}}</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="row-fluid">
+    <p class="btn-row">
+      <button id="send-to-fk-confirmed" ng-click="sendConfirmed()" type="submit" class="btn btn-success">Skicka</button>
+      <a href="#start" id="go-back" class="btn-link" style="display: inline;">Avbryt</a>
+  </div>
+  </p>
 </div>

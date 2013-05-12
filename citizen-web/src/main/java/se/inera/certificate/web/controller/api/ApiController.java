@@ -47,16 +47,25 @@ public class ApiController {
     @ResponseBody
     public CertificateMeta archive(@PathVariable(value = "id") String id) {
         Citizen citizen = citizenService.getCitizen();
-        log.debug("Requesting archival for certificate {0}", id);
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI",  StatusType.DELETED);
+        log.debug("Requesting 'archive' for certificate {0}", id);
+        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.DELETED);
     }
-    
+
     @RequestMapping(value = "/{id}/restore", method = RequestMethod.PUT)
     @ResponseBody
     public CertificateMeta restore(@PathVariable(value = "id") String id) {
         Citizen citizen = citizenService.getCitizen();
-        log.debug("Requesting restore for certificate {0}", id);
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI",  StatusType.RESTORED);
+        log.debug("Requesting 'restore' for certificate {0}", id);
+        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.RESTORED);
+    }
+
+    @RequestMapping(value = "/{id}/send", method = RequestMethod.PUT)
+    @ResponseBody
+    public CertificateMeta send(@PathVariable(value = "id") String id) {
+        Citizen citizen = citizenService.getCitizen();
+        log.debug("Requesting 'send' for certificate {0}", id);
+        //TODO: no hardcoding of targets
+        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "FK", StatusType.SENT);
     }
 
 }

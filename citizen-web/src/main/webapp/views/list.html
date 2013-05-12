@@ -21,46 +21,54 @@
       <strong><message key="label.certificatesloading" /></strong>
     </p>
   </div>
-
-  <table id="certTable" class="table expandable" ng-show="(certificates | inboxfilter).length>0">
-    <thead>
-      <tr>
-        <th>&nbsp;</th>
-        <th><message key="listtable.headers.issued" /></th>
-        <th><message key="listtable.headers.type" /></th>
-        <th><message key="listtable.headers.certperiod" /></th>
-        <th><message key="listtable.headers.issuedby" /></th>
-        <th><message key="listtable.headers.latestEvent" /></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize">
-        <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
-        <td>{{cert.sentDate}}</td>
-        <td>{{cert.type}}</td>
-        <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
-        <td>{{cert.careunitName}}</td>
-        <td>{{cert.status}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0">
-    <div id="overflow-selector" class="row" ng-show="(certificates | inboxfilter).length > initialDisplaySize">
-      <div class="expand-selector span2 offset5" ng-show="(certificates | inboxfilter).length > currentDisplaySize" ng-click="currentDisplaySize = 999">
-        <message key="label.showall" />
-      </div>
-      <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= (certificates | inboxfilter).length" ng-click="currentDisplaySize = initialDisplaySize">
-        <message key="label.showfewer" />
+  <div ng-show="doneLoading && (certificates | inboxfilter).length>0">
+    <table id="certTable" class="table expandable">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><message key="listtable.headers.issued" /></th>
+          <th><message key="listtable.headers.type" /></th>
+          <th><message key="listtable.headers.certperiod" /></th>
+          <th><message key="listtable.headers.issuedby" /></th>
+          <th><message key="listtable.headers.latestEvent" /></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
+          <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
+          <td>{{cert.sentDate}}</td>
+          <td>{{cert.type}}</td>
+          <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
+          <td>{{cert.careunitName}}</td>
+          <td>{{cert.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0">
+      <div id="overflow-selector" class="row" ng-show="(certificates | inboxfilter).length > initialDisplaySize">
+        <div class="expand-selector span2 offset5" ng-show="(certificates | inboxfilter).length > currentDisplaySize" ng-click="currentDisplaySize = 999">
+          <message key="label.showall" />
+        </div>
+        <div style="" class="collapse-selector span2 offset5" ng-show="currentDisplaySize >= (certificates | inboxfilter).length" ng-click="currentDisplaySize = initialDisplaySize">
+          <message key="label.showfewer" />
+        </div>
       </div>
     </div>
-  </div>
 
+    <div class="row-fluid">
+      <button id="send-to-fk" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="sendSelected()"
+        type="submit" class="btn popover-trigger">
+        <message key="button.sendtofk" />
+      </button>
+      <button id="remove" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()"
+        type="submit" class="btn popover-trigger">
+        <message key="button.archive" />
+      </button>
+    </div>
+  </div>
   <div id="noCerts" ng-show="doneLoading && (certificates | inboxfilter).length<1" class="alert alert-error">
     <message key="error.nocerts" />
   </div>
-  
-  <div class="row-fluid">
-            <button id="send-to-fk" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="sendSelected()" type="submit" class="btn popover-trigger"><message key="button.sendtofk" /></button>   
-            <button id="remove" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()" type="submit"  class="btn popover-trigger"><message key="button.archive" /></button>   
-        </div>
+
+
 </div>

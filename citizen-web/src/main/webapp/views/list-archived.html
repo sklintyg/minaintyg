@@ -23,7 +23,7 @@
   <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
     <img src="/img/ajax-loader.gif" style="text-align: center;" />
     <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong><message key="label.certificatesloading" /></strong>
+      <strong><message key="label.archivedcertificatesloading" /></strong>
     </p>
   </div>
 
@@ -45,7 +45,7 @@
         <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
         <td>{{cert.status}}</td>
-        <td><a ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
+        <td><a href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
       </tr>
     </tbody>
 

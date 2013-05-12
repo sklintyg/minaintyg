@@ -8,7 +8,7 @@ var messages = {
             "showfewer" : "Visa färre",
             "restore" : "Återställ",
             "certificatesloading" : "Dina intyg laddas. Vänligen vänta...",
-            "certificatesloadingarchived" : "Arkiverade intyg laddas. Vänligen vänta... "
+            "archivedcertificatesloading" : "Arkiverade intyg laddas. Vänligen vänta... "
         },
         "status" : {
             
@@ -24,8 +24,17 @@ var messages = {
             "description" : "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Klicka på ett intyg för att titta på intyget, skriva ut det eller spara det till din dator",
             "arhiveddescription" : "<p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att: <ul><li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg till mappen \"borttagna intyg\".</li><li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, och i vissa fall livet ut.</li><li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då ändra uppgiften i journalen.</li></ul></p><p><a href=\"http://www.datainspektionen.se/lagar-och-regler/patientdatalagen\" target=\"_blank\">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p>    <p>För att återställa ett borttaget intyg välj Återställ.</p>",
             "send" : {
-                "header" : "Skicka till Försäkringskassan",
-                "description" : "Har skickar du till försäkringskassan"
+                "header" : "Skicka intyg till Försäkringskassan",
+                "description" : "Har skickar du till försäkringskassan",
+                "includedcert" : "Bifogade intyg",
+                "label" : {
+                    "patientname" : "Patientens namn:",
+                    "issued" : "Utfärdat:",
+                    "civicnumber" : "Personnr:",
+                    "issuer" : "Utfärdare",
+                    "period" : "Period:",
+                    "unit": "Enhet:"
+                }
             }
 
         },
