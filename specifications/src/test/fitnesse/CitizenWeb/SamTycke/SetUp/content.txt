@@ -1,8 +1,1 @@
-|Import|
-|se.inera.certificate.spec|
-|se.inera.certificate.web.spec|
 
-!|Config|
-|property|value|
-|geb.build.baseUrl|${certificate.web.baseUrl}|
-|certificate.baseUrl|${certificate.baseUrl}|

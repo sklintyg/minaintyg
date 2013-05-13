@@ -1,0 +1,4 @@
+|script|!-ListaIntyg-!|
+|logga på som|19121212-9999|
+|inkorg sidan visas|
+|finns inga intyg |

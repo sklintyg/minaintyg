@@ -2,7 +2,7 @@ package se.inera.certificate.web.spec;
 
 import geb.Browser
 
-import se.inera.certificate.web.pages.StartPage
+import se.inera.certificate.web.pages.InboxPage
 import se.inera.certificate.web.pages.ConsentPage
 import se.inera.certificate.web.pages.ConsentDeniedPage
 
@@ -28,9 +28,9 @@ public class GeSamtycke {
 		}
 	}
 	
-	public boolean startSidanVisas() {
+	public boolean inkorgSidanVisas() {
 		Browser.drive {
-			at(StartPage)
+			at(InboxPage)
 		}
 	}
 	
