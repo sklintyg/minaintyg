@@ -10,7 +10,7 @@ public class GeSamtycke {
 
 	public void loggaPåSom(String pnr) {
 		Browser.drive {
-			go "/web/sso?guid=${pnr}"
+			go "sso?guid=${pnr}"
 		}
 	}
 	

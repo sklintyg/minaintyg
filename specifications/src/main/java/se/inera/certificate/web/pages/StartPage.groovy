@@ -4,7 +4,7 @@ import geb.Page
 
 class StartPage extends Page {
 
-	static url = "/web/start"
+	static url = "start"
  
 	static at = { title == "Mina Intyg" }
  

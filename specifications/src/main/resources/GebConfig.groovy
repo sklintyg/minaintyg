@@ -6,7 +6,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 driver = { new FirefoxDriver() } // use firefox by default
 //driver = { new ChromeDriver() }
 //driver = { new HtmlUnitDriver() }
-baseUrl = "http://localhost:8088"
+//baseUrl = "http://localhost:8088"
 waiting {
 	timeout = 2 // default wait is two seconds
 }
