@@ -37,10 +37,10 @@
         <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
           <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
           <td>{{cert.sentDate}}</td>
-          <td>{{cert.type}}</td>
+          <td>{{cert.typeTranslated}}</td>
           <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
           <td>{{cert.careunitName}}</td>
-          <td>{{cert.status}}</td>
+          <td>{{cert.statusTranslated}}</td>
         </tr>
       </tbody>
     </table>
