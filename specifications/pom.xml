@@ -21,6 +21,7 @@
     <!-- This example has no unit tests, just integration tests -->
     <skipTests>true</skipTests>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+    <certificate.baseUrl>http://localhost:8080/inera-certificate/</certificate.baseUrl>
   </properties>
 
   <dependencies>
@@ -144,6 +145,12 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>test-server</id>
+        <properties>
+          <certificate.baseUrl>https://test.minaintyg.se/services/</certificate.baseUrl>
+        </properties>
+    </profile>
     <profile>
       <id>wiki</id>
       <!--

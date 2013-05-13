@@ -1,6 +1,3 @@
-|Import|
-|se.inera.certificate.spec|
-
 !3 Givet följande samtycken:
 
 |Samtycke|
