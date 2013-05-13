@@ -5,8 +5,8 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
     $scope.certificates = [];
     $scope.doneLoading = false;
 
-    $scope.initialDisplaySize = 10;
-    $scope.currentDisplaySize = 10;
+    $scope.initialDisplaySize = 9;
+    $scope.currentDisplaySize = 9;
 
     $scope.sendSelected = function() {
         var items = $filter('filter')($scope.certificates, {
@@ -29,6 +29,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
             // Better way to update the object?
             oldItem.archived = fromServer.archived;
             oldItem.status = fromServer.status;
+            oldItem.statusTranslated = fromServer.statusTranslated;
             oldItem.selected = false;
 
         });
@@ -45,8 +46,8 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
 listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertService', function ListCertCtrl($scope, $location, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
-    $scope.initialDisplaySize = 10;
-    $scope.currentDisplaySize = 10;
+    $scope.initialDisplaySize = 9;
+    $scope.currentDisplaySize = 9;
 
     $scope.restoreCert = function(certId) {
         console.log("Restore requested for cert:" + certId);
@@ -88,6 +89,7 @@ listCertApp.controller('SendCertCtrl', [ '$scope', '$location', '$filter', 'list
             console.log("(send) statusUpdate callback:" + fromServer);
             // Better way to update the object?
             oldItem.status = fromServer.status;
+            oldItem.statusTranslated = fromServer.statusTranslated;
             oldItem.selected = false;
             $location.path("/lista");
 

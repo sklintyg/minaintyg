@@ -8,10 +8,12 @@ public class CertificateMeta implements Serializable {
     private String id;
     private Boolean selected;
     private String type;
+    private String typeTranslated;
     private String caregiverName;
     private String careunitName;
     private String sentDate;
     private String status;
+    private String statusTranslated;
     private String target;
     private Boolean archived;
     private String fromDate;
@@ -103,6 +105,22 @@ public class CertificateMeta implements Serializable {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getTypeTranslated() {
+        return typeTranslated;
+    }
+
+    public void setTypeTranslated(String typeTranslated) {
+        this.typeTranslated = typeTranslated;
+    }
+
+    public String getStatusTranslated() {
+        return statusTranslated;
+    }
+
+    public void setStatusTranslated(String statusTranslated) {
+        this.statusTranslated = statusTranslated;
     }
 
 }

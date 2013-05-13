@@ -11,13 +11,16 @@ var messages = {
             "archivedcertificatesloading" : "Arkiverade intyg laddas. Vänligen vänta... "
         },
         "status" : {
-            
+
             "CANCELLED" : "Cancelled",
             "SENT" : "Skickad"
         },
         "button" : {
             "sendtofk" : "Skicka till försäkringskassan",
-            "archive" : "Arkivera"
+            "archive" : "Arkivera",
+            "send" : "Skicka",
+            "cancel" : "Avbryt",
+            "goback" : "Tillbaka"
         },
         "certificates" : {
             "header" : "Inkorgen",
@@ -33,7 +36,7 @@ var messages = {
                     "civicnumber" : "Personnr:",
                     "issuer" : "Utfärdare",
                     "period" : "Period:",
-                    "unit": "Enhet:"
+                    "unit" : "Enhet:"
                 }
             }
 

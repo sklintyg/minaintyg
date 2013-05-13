@@ -340,3 +340,9 @@ ul.italic li {
 .btn-link {
 	color: #31b2be;
 }
+tbody tr td {
+    font-weight: bold;
+}
+tbody tr.SENT td {
+    font-weight: normal;
+}
