@@ -113,7 +113,7 @@ public class CertificateServiceImpl implements CertificateService {
         dto.setTomDate(meta.getValidTo().toString());
         dto.setSentDate(meta.getSignDate().toString());
         dto.setType(meta.getCertificateType());
-        dto.setTypeTranslated(getMessage("certificate.type." + meta.getCertificateType(), null));
+        dto.setTypeTranslated(getMessage("certificate.type." + meta.getCertificateType().toLowerCase(), null));
         dto.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
         log.debug("{} is archived: {}", dto.getId(), dto.getArchived());
 

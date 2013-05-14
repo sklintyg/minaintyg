@@ -32,5 +32,19 @@ public class ListaIntyg {
             assert page.noCertificates.isDisplayed()
 		}
 	}
-	
+
+    public void arkiveraIntyg(String id) {
+        Browser.drive {
+            at(InboxPage);
+            page.archiveCertificate(id);
+        }
+    }
+
+    public boolean intygFinnsEjIListan(String id) {
+        Browser.drive {
+            at(InboxPage);
+            !page.certificateExists(id);
+        }
+    }
+
 }

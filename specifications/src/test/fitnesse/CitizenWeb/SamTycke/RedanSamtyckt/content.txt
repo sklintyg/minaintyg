@@ -8,4 +8,4 @@
 
 |script|!-GeSamtycke-!|
 |logga på som|660409-5031|
-|start sidan visas|
+|inkorg sidan visas|

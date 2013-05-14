@@ -5,7 +5,7 @@
 </ul>
 
 <h1>
-  <message key="certificates.header" />
+  <span id="inboxHeader"><message key="certificates.header" /></span>
 </h1>
 
 <div class="row-fluid">
@@ -35,7 +35,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
-          <td><input type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
+          <td><input id="certificate-{{cert.id}}" type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
           <td>{{cert.sentDate}}</td>
           <td>{{cert.typeTranslated}}</td>
           <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
