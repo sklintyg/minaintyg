@@ -12,6 +12,6 @@ class WsClientFixture {
 	
 	def setEndpoint(def responder, String serviceName) {
 	Client client = ClientProxy.getClient(responder);
-		client.getRequestContext().put(Message.ENDPOINT_ADDRESS, baseUrl + "/" +serviceName) ;
+		client.getRequestContext().put(Message.ENDPOINT_ADDRESS, baseUrl + serviceName) ;
 	}
 }
