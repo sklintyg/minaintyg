@@ -1,21 +1,10 @@
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
 import org.apache.cxf.annotations.SchemaValidation;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -25,6 +14,15 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
+
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
 /**
  * @author andreaskaltenbach

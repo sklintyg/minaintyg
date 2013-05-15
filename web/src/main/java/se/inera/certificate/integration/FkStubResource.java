@@ -1,20 +1,17 @@
 package se.inera.certificate.integration;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import com.google.common.collect.Maps;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import se.inera.certificate.integration.stub.FkMedicalCertificatesStore;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
-import se.inera.certificate.integration.stub.FkMedicalCertificatesStore;
-
-import com.google.common.collect.Maps;
+import java.util.Map;
+import java.util.Map.Entry;
 
 @Path("/fk")
 @Transactional

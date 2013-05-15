@@ -1,12 +1,11 @@
 package se.inera.certificate.integration.stub;
 
+import com.google.common.collect.Maps;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.stereotype.Component;
-
-import com.google.common.collect.Maps;
 
 @Component
 public class FkMedicalCertificatesStore {
