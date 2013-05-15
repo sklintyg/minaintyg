@@ -7,7 +7,7 @@ import org.w3.wsaddressing10.AttributedURIType
 
 class WsClientFixture {
 
-	static String baseUrl = "http://localhost:8080/inera-certificate"
+	static String baseUrl = System.getProperty("certificate.baseUrl")
 	AttributedURIType logicalAddress = new AttributedURIType()
 	
 	def setEndpoint(def responder, String serviceName) {
