@@ -4,6 +4,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import se.inera.certificate.integration.ResultOfCallUtil;
 import se.inera.certificate.response.WebServiceResponse;
 
@@ -17,6 +18,7 @@ import se.inera.certificate.response.WebServiceResponse;
  * @author andreaskaltenbach
  */
 @Aspect
+@Order(1)
 public class ExceptionTransformingAroundAdvice {
 
     @Around("execution(public se.inera.certificate.response.WebServiceResponse+ se.inera.certificate.integration.*.*(..))")
