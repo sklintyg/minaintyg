@@ -13,7 +13,7 @@
 
   <properties>
     <groovy.version>2.1.1</groovy.version>
-    <selenium.version>2.29.0</selenium.version>
+    <selenium.version>2.32.0</selenium.version>
     <!-- These next 3 are the default values anyway -->
     <fitnesse.port>9124</fitnesse.port>
     <fitnesse.working>${project.build.directory}/fitnesse</fitnesse.working>
