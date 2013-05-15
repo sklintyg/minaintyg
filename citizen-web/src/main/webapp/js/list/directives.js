@@ -1,37 +1,45 @@
 'use strict';
 
 /* Directives */
-listCertApp.directive("message", ['$rootScope', function ($rootScope) {
-    return {
-        restrict: "E",
-        scope: {},
-        replace: true,
-        //template: '<span ng-bind-html-unsafe="resultValue"></span>',
-        template: "<span>{{resultValue}}</span>",
-        compile: function (element, attr, transclusionFunc) {
-            return function ($scope, element, attr) {
-                var lang = $rootScope.lang;
-                var value = getProperty(messages[lang], attr.key);
-                if (value == null) {
-                    var ordlista = "";
-                    if (typeof attr.noFallback === "undefined") {
-                        value = getProperty(messages[$rootScope.DEFAULT_LANG], attr.key);
-                    } else {
-                        ordlista = " '" + lang + "'."
-                    }
-                    if (value == null) {
-                        value = getProperty(messages[$rootScope.DEFAULT_LANG], "error.missingvalue") + " '" + attr.key + "' " + getProperty(messages[$rootScope.DEFAULT_LANG], "error.indictionary") + ordlista;
-                        element.addClass("text-error");
-                    }
-                }
-                $scope.resultValue = value;
-            };
 
+/**
+ * message directive for externalizing text resources.
+ *  
+ * All resourcekeys are expected to be defined in lowercase
+ * Also supports dynamic key values such as key="status.{{scopedvalue}}"
+ * 
+ * Usage: <message key="some.resource.key"
+ * [fallback="defaulttextifnokeyfound"]/>
+ */
+listCertApp.directive("message", [ '$rootScope', function($rootScope) {
+    return {
+        restrict : "E",
+        scope : true,
+        replace : true,
+        template : "<span>{{resultValue}}</span>",
+        link : function($scope, element, attr) {
+            var lang = $rootScope.lang;
+            // drilldown through all my.message.key structure
             function getProperty(resources, propertyKey) {
                 var splitKey = propertyKey.split(".");
-                while (splitKey.length && (resources = resources[splitKey.shift()]));
+                while (splitKey.length && (resources = resources[splitKey.shift()]))
+                    ;
                 return resources;
-            };
+            }
+
+            // observe changes to interpolated attribute
+            attr.$observe('key', function(interpolatedKey) {
+                var normalizedKey = angular.lowercase(interpolatedKey);
+                var value = getProperty(messages[$rootScope.lang], normalizedKey);
+                if (typeof value === "undefined") {
+                    // use fallback attr value if defined
+                    value = (typeof attr.fallback === "undefined") ? "[Missing '" + normalizedKey + "']" : attr.fallback;
+                }
+                // now we have some value to display..
+                $scope.resultValue = value;
+
+            });
         }
+
     }
-}]);
+} ]);

@@ -37,13 +37,15 @@
         <tr ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
           <td><input id="certificate-{{cert.id}}" type="checkbox" ng:model="cert.selected" value="{{cert.id}}"></td>
           <td>{{cert.sentDate}}</td>
-          <td>{{cert.typeTranslated}}</td>
+          <td><message key="certificates.types.{{cert.type}}"/></td>
           <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
           <td>{{cert.careunitName}}</td>
-          <td>{{cert.statusTranslated}}</td>
+          <td><message key="certificates.status.{{cert.status}}" fallback=""/></td>
         </tr>
       </tbody>
     </table>
+	
+	
     <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0">
       <div id="overflow-selector" class="row" ng-show="(certificates | inboxfilter).length > initialDisplaySize">
         <div class="expand-selector span2 offset5" ng-show="(certificates | inboxfilter).length > currentDisplaySize" ng-click="currentDisplaySize = 999">

@@ -29,7 +29,6 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
             // Better way to update the object?
             oldItem.archived = fromServer.archived;
             oldItem.status = fromServer.status;
-            oldItem.statusTranslated = fromServer.statusTranslated;
             oldItem.selected = false;
 
         });
@@ -89,7 +88,6 @@ listCertApp.controller('SendCertCtrl', [ '$scope', '$location', '$filter', 'list
             console.log("(send) statusUpdate callback:" + fromServer);
             // Better way to update the object?
             oldItem.status = fromServer.status;
-            oldItem.statusTranslated = fromServer.statusTranslated;
             oldItem.selected = false;
             $location.path("/lista");
 

@@ -22,15 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.api.CertificateMeta;
@@ -113,7 +110,6 @@ public class CertificateServiceImpl implements CertificateService {
         dto.setTomDate(meta.getValidTo().toString());
         dto.setSentDate(meta.getSignDate().toString());
         dto.setType(meta.getCertificateType());
-        dto.setTypeTranslated(getMessage("certificate.type." + meta.getCertificateType().toLowerCase(), null));
         dto.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
         log.debug("{} is archived: {}", dto.getId(), dto.getArchived());
 
@@ -123,25 +119,13 @@ public class CertificateServiceImpl implements CertificateService {
         for (CertificateStatusType stat : stats) {
             if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
                 dto.setStatus(stat.getType().toString());
-                dto.setStatusTranslated(getMessage(stat.getType().toString(), null));
                 dto.setTarget(stat.getTarget());
-                
             }
         }
 
         return dto;
     }
 
-    private String getMessage(String code, Object[] args) {
-        Locale locale = LocaleContextHolder.getLocale();
-        try {
-            return messageSource.getMessage(code, args, locale);
-        } catch (NoSuchMessageException e) {
-           return "No message for key '" + code + "'";
-        }
-
-    }
-    
     /**
      * Compare status newest first
      * 
