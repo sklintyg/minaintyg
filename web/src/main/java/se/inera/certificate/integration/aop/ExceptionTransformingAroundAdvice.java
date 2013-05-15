@@ -5,6 +5,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.integration.ResultOfCallUtil;
 import se.inera.certificate.response.WebServiceResponse;
 
@@ -21,11 +24,14 @@ import se.inera.certificate.response.WebServiceResponse;
 @Order(1)
 public class ExceptionTransformingAroundAdvice {
 
+    private Logger log = LoggerFactory.getLogger(ExceptionTransformingAroundAdvice.class);
+
     @Around("execution(public se.inera.certificate.response.WebServiceResponse+ se.inera.certificate.integration.*.*(..))")
     public Object doRecoveryActions(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             return joinPoint.proceed();
         } catch (Throwable throwable) {
+            log.error("Webservice error: ", throwable);
             if (joinPoint.getSignature() instanceof MethodSignature) {
                 Class<WebServiceResponse> returnType = ((MethodSignature) joinPoint.getSignature()).getReturnType();
                 WebServiceResponse webServiceResponse = returnType.newInstance();
