@@ -41,10 +41,10 @@
     <tbody>
       <tr ng-repeat="cert in certificates | archivedfilter" class="{{cert.status}}">
         <td>{{cert.sentDate}}</td>
-        <td>{{cert.typeTranslated}}</td>
+        <td><message key="certificates.types.{{cert.type}}"/></td>
         <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
-        <td>{{cert.statusTranslated}}</td>
+        <td><message key="certificates.status.{{cert.status}}" fallback=""/></td>
         <td><a href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
       </tr>
     </tbody>
