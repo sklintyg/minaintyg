@@ -35,7 +35,7 @@ import se.inera.certificate.web.service.ConsentService;
  */
 public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger log = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
 
     private boolean jsonResponse;
 
@@ -48,14 +48,14 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
-        log.debug("Verifying citizen consent...");
+        LOG.debug("Verifying citizen consent...");
 
         // Get Citizen instance from context
         Citizen citizen = citizenService.getCitizen();
         if (!citizen.consentIsKnown()) {
-            log.debug("State of consent not known - fetching consent status...");
+            LOG.debug("State of consent not known - fetching consent status...");
             boolean consentResult = consentService.fetchConsent(citizen.getUsername());
-            log.debug("Consent result is {}", consentResult);
+            LOG.debug("Consent result is {}", consentResult);
             // set the consent result so that we don't have to fetch it next time around
             citizen.setConsent(consentResult);
         }

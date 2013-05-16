@@ -22,7 +22,7 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 @RequestMapping(value = "/certificates", produces = "application/json")
 public class ApiController {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
 
     @Autowired
     private CertificateService certificateService;
@@ -32,7 +32,7 @@ public class ApiController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
-        log.debug("api.test");
+        LOG.debug("api.test");
         return "test";
     }
 
@@ -47,7 +47,7 @@ public class ApiController {
     @ResponseBody
     public CertificateMeta archive(@PathVariable(value = "id") String id) {
         Citizen citizen = citizenService.getCitizen();
-        log.debug("Requesting 'archive' for certificate {0}", id);
+        LOG.debug("Requesting 'archive' for certificate {0}", id);
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.DELETED);
     }
 
@@ -55,7 +55,7 @@ public class ApiController {
     @ResponseBody
     public CertificateMeta restore(@PathVariable(value = "id") String id) {
         Citizen citizen = citizenService.getCitizen();
-        log.debug("Requesting 'restore' for certificate {0}", id);
+        LOG.debug("Requesting 'restore' for certificate {0}", id);
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.RESTORED);
     }
 
@@ -63,7 +63,7 @@ public class ApiController {
     @ResponseBody
     public CertificateMeta send(@PathVariable(value = "id") String id) {
         Citizen citizen = citizenService.getCitizen();
-        log.debug("Requesting 'send' for certificate {0}", id);
+        LOG.debug("Requesting 'send' for certificate {0}", id);
         //TODO: no hardcoding of targets
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "FK", StatusType.SENT);
     }

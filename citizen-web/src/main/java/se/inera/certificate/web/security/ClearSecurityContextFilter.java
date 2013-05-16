@@ -19,14 +19,14 @@ import org.springframework.web.filter.GenericFilterBean;
  */
 public class ClearSecurityContextFilter extends GenericFilterBean {
 
-    private static final Logger log = LoggerFactory.getLogger(ClearSecurityContextFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ClearSecurityContextFilter.class);
 
     private LogoutHandler handler;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        log.debug("Clearing security context");
+        LOG.debug("Clearing security context");
         handler.logout((HttpServletRequest) request, (HttpServletResponse) response, null);
         filterChain.doFilter(request, response);
 

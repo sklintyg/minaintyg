@@ -34,7 +34,7 @@ import se.inera.certificate.web.service.ConsentService;
 @RequestMapping(value = "")
 public class PageController {
 
-    private static final Logger log = LoggerFactory.getLogger(PageController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
 
     @Autowired
     private ConsentService consentService;
@@ -44,7 +44,7 @@ public class PageController {
 
     @RequestMapping(value = { "/sso", "/fakesso" }, method = RequestMethod.GET)
     public String sso() {
-        log.debug("sso");
+        LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
         // fetch and set consent status
         citizen.setConsent(consentService.fetchConsent(citizen.getUsername()));
@@ -53,24 +53,24 @@ public class PageController {
 
     @RequestMapping(value = "/start", method = RequestMethod.GET)
     public ModelAndView displayStart() {
-        log.debug("displayStart");
+        LOG.debug("displayStart");
         return new ModelAndView("start");
     }
 
     @RequestMapping(value = "/visa-ge-samtycke", method = RequestMethod.GET)
     public ModelAndView displayConsentForm() {
-        log.debug("displayConsentForm");
+        LOG.debug("displayConsentForm");
         return new ModelAndView("consent-form");
     }
 
     @RequestMapping(value = "/ge-samtycke", method = RequestMethod.POST)
     public ModelAndView setConsent() {
-        log.debug("setConsent");
+        LOG.debug("setConsent");
         // update consent in security consent
         Citizen citizen = citizenService.getCitizen();
         // Set and set consent status
         citizen.setConsent(consentService.setConsent(citizen.getUsername(), true));
-        log.debug("consent after setConsent {}", citizen.hasConsent());
+        LOG.debug("consent after setConsent {}", citizen.hasConsent());
         return new ModelAndView("start");
     }
 

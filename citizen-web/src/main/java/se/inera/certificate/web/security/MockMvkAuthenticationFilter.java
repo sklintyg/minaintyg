@@ -29,9 +29,9 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 public class MockMvkAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
-    private static final Logger log = LoggerFactory.getLogger(MockMvkAuthenticationFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MockMvkAuthenticationFilter.class);
 
-    private static final String guidParameterName = "guid";
+    private static final String MVK_TOKEN_PARAMETER_NAME = "guid";
 
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
@@ -40,21 +40,21 @@ public class MockMvkAuthenticationFilter extends AbstractPreAuthenticatedProcess
 
     @Override
     protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-        log.info("Getting preauthenticated principal");
+        LOG.info("Getting preauthenticated principal");
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
-            log.debug("Authentication was null, check for guid parameter");
-            final String guid = request.getParameter(MockMvkAuthenticationFilter.guidParameterName);
+            LOG.debug("Authentication was null, check for guid parameter");
+            final String guid = request.getParameter(MockMvkAuthenticationFilter.MVK_TOKEN_PARAMETER_NAME);
             if (guid != null) {
-                log.debug("Guid parameter found. Mocking validation against MVK as {}...", guid);
+                LOG.debug("Guid parameter found. Mocking validation against MVK as {}...", guid);
                 return AuthenticationResultImpl.newPatient(guid);
             }
         } else {
-            log.debug("Authentication found. Proceed...");
+            LOG.debug("Authentication found. Proceed...");
             return auth.getPrincipal();
         }
 
-        log.warn("Reached end of processing and still no authentication. Return null...");
+        LOG.warn("Reached end of processing and still no authentication. Return null...");
         return null;
     }
 

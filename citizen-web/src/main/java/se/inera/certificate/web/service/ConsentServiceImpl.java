@@ -36,7 +36,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 @Service
 public class ConsentServiceImpl implements ConsentService {
 
-    private static final Logger log = LoggerFactory.getLogger(ConsentServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConsentServiceImpl.class);
 
     @Autowired
     private GetConsentResponderInterface getConsent;
@@ -46,25 +46,25 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Override
     public boolean fetchConsent(String username) {
-        log.debug("About to fetch consent...");
+        LOG.debug("About to fetch consent...");
         GetConsentRequestType parameters = new GetConsentRequestType();
         parameters.setPersonnummer(username);
 
         GetConsentResponseType consent = getConsent.getConsent(null, parameters);
         boolean consentResult = consent.isConsentGiven();
-        log.debug("Consent result is {}", consentResult);
+        LOG.debug("Consent result is {}", consentResult);
         return consentResult;
     }
 
     @Override
     public boolean setConsent(String username, boolean consent) {
-        log.debug("About to set consent...");
+        LOG.debug("About to set consent...");
         SetConsentRequestType parameters = new SetConsentRequestType();
         parameters.setPersonnummer(username);
         parameters.setConsentGiven(consent);
         SetConsentResponseType consentResponse = setConsent.setConsent(null, parameters);
         ResultCodeEnum result = consentResponse.getResult().getResultCode();
-        log.debug("resultcode is {}", result);
+        LOG.debug("resultcode is {}", result);
         return !consentResponse.getResult().getResultCode().equals(ResultCodeEnum.ERROR);
 
     }

@@ -23,7 +23,6 @@ import org.callistasoftware.netcare.mvk.authentication.service.api.PreAuthentica
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
 
-    private static final Logger log = LoggerFactory.getLogger(MvkPreAuthenticationCallback.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MvkPreAuthenticationCallback.class);
 
     @Override
     public UserDetails createMissingUser(AuthenticationResult preAuthenticated) {
@@ -44,8 +43,8 @@ public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
     }
 
     @Override
-    public UserDetails lookupPrincipal(AuthenticationResult auth) throws UsernameNotFoundException {
-        log.info("Citizen authenticated.");
+    public UserDetails lookupPrincipal(AuthenticationResult auth) {
+        LOG.info("Citizen authenticated.");
         return new CitizenImpl(auth.getUsername());
     }
 }

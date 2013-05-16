@@ -32,7 +32,7 @@ public interface CertificateService {
      * @param civicRegistrationNumber
      * @return
      */
-    public List<CertificateMeta> getCertificates(String civicRegistrationNumber);
+    List<CertificateMeta> getCertificates(String civicRegistrationNumber);
 
     /**
      * Sets a new status for the certificate
@@ -43,5 +43,5 @@ public interface CertificateService {
      * @return Partially populated CertificateMeta object with id and new status and status description
      */
 
-    public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
+    CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
 }

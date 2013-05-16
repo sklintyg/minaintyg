@@ -27,7 +27,6 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.api.CertificateMeta;
@@ -46,9 +45,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger log = LoggerFactory.getLogger(CertificateServiceImpl.class);
-
-    @Autowired
-    private MessageSource messageSource;
 
     @Autowired
     private ListCertificatesResponderInterface listService;
