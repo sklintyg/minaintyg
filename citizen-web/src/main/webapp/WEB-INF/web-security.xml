@@ -19,60 +19,63 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-  <beans profile="test">
-    <security:http pattern="/web/fakesso**" entry-point-ref="mvkEntryPoint">
-      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter"/>
-      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeMvkPreAuthFilter"/>
-    </security:http>
-    <bean id="fakeMvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
-      <property name="authenticationManager" ref="mvkAuthenticationManager"/>
+  <aop:aspectj-autoproxy />
+  <beans profile="dev, test">
+    <!-- Note:  In dev and test profile there is an AOP Advice that shortcuts the 
+        org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate call if the 
+        guid parameter value matches the <fakeMatcherRegExp>. 
+        If it matches the advice will return a successful Auth Result with the guid as id - if no match, the service will try the mvk 
+        auth ws call as normal. So, use something like .../sso?guid=19900101-2122 to fake a login and otherwise a full mvk auth will 
+        be executed -->
+    <bean class="se.inera.certificate.web.security.MvkValidationServiceAdvice">
+      <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-[0-9]{4}" />
     </bean>
   </beans>
 
   <beans>
-    <security:http security="none" pattern="/welcome.jsp"/>
-    <security:http security="none" pattern="/"/>
-    <security:http security="none" pattern="/favicon.ico"/>
-    <security:http security="none" pattern="/web/resources/**"/>
-    <security:http security="none" pattern="/ws/**"/>
+    <security:http security="none" pattern="/welcome.jsp" />
+    <security:http security="none" pattern="/" />
+    <security:http security="none" pattern="/favicon.ico" />
+    <security:http security="none" pattern="/web/resources/**" />
+    <security:http security="none" pattern="/ws/**" />
 
-    <import resource="classpath*:/netcare-mvk-integration-config.xml"/>
-    <import resource="classpath*:/netcare-mvk-integration-security-config.xml"/>
-    <import resource="classpath*:/mvk-validatetoken-cxf-config.xml"/>
+    <import resource="classpath*:/netcare-mvk-integration-config.xml" />
+    <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
+    <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
 
     <security:authentication-manager>
-      <security:authentication-provider ref="preAuthAuthProvider"/>
+      <security:authentication-provider ref="preAuthAuthProvider" />
     </security:authentication-manager>
 
+    <!-- Enable the MVK Auth filter for our mvk entry point url -->
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
-      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter"/>
-      <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter"/>
+        <!-- We always clear the context before logging in -->
+      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
     </security:http>
 
+    <!-- set up protection of the needed url's in the app-->
     <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
-      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')"/>
-      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')"/>
-      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout"/>
+      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
     </security:http>
 
+    <!-- Filter that resets the security context -->
     <bean id="clearSecurityContextFilter" class="se.inera.certificate.web.security.ClearSecurityContextFilter">
-      <property name="handler" ref="securityContextLogoutHandler"/>
+      <property name="handler" ref="securityContextLogoutHandler" />
     </bean>
-
-    <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+    
+    <!--  Reuse of springs "logout" handler that clear the context -->
+    <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
 
   </beans>
 
-  <!-- I andra miljöer används mvk-integration-modulens 'mvkPreAuthFilter' -->
-  <beans profile="dev">
-    <bean id="mvkPreAuthFilter" class="se.inera.certificate.web.security.MockMvkAuthenticationFilter">
-      <property name="authenticationManager" ref="mvkAuthenticationManager"/>
-    </bean>
-  </beans>
+
 </beans>
