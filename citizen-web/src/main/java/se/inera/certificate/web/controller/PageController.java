@@ -42,7 +42,7 @@ public class PageController {
     @Autowired
     private CitizenService citizenService;
 
-    @RequestMapping(value = { "/sso", "/fakesso" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
