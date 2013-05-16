@@ -33,7 +33,7 @@ public class FkStubResource {
     @Path("/certificates")
     @Produces(MediaType.TEXT_HTML)
     public String certificates() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE html><html><head>");
         sb.append("<link href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css' rel='stylesheet'>");
         sb.append("</head><body><div class='container'>");
@@ -69,7 +69,7 @@ public class FkStubResource {
     @Produces(MediaType.TEXT_HTML)
     public String clear() {
         fkMedicalCertificatesStore.clear();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<html><head>");
         sb.append("<meta http-equiv='refresh' content='0;url=certificates'>");
         sb.append("</head></html>");
