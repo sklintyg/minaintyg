@@ -1,9 +1,8 @@
-package se.inera.certificate.integration;
+package se.inera.certificate.integration.stub;
 
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import se.inera.certificate.integration.stub.FkMedicalCertificatesStore;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
