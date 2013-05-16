@@ -1,0 +1,2 @@
+!include .CitizenWeb.SuiteSetUp
+!include .CitizenWeb.AllTests.SamtyckeIntygSetUp
