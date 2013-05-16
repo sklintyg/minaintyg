@@ -59,13 +59,17 @@
     </div>
     <div id="content-container">
       <div class="content">
-
         <div class="row-fluid">
           <div id="content-body" class="span12">
-
-
-                
-                <div ng-view></div>
+            <noscript>
+              <h1>
+                <span><spring:message code="error.noscript.title" /></span>
+              </h1>
+              <div class="alert alert-error">
+                <spring:message code="error.noscript.text" />
+              </div>
+            </noscript>
+            <div ng-view></div>
           </div>
         </div>
       </div>
@@ -81,7 +85,7 @@
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
- 
+
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
 
