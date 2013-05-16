@@ -1,4 +1,5 @@
 package se.inera.certificate.web.service;
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -28,7 +29,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
-    
+
     private static final String ISSUER_NAME = "issuerName";
 
     private static final String FACILITY_NAME = "facilityName";
@@ -40,10 +41,10 @@ public class CertificateServiceImplTest {
     private static final String AVAILABLE = "available";
 
     @Mock
-    MessageSource messageSource = mock(MessageSource.class);
-    
+    private MessageSource messageSource = mock(MessageSource.class);
+
     @Mock
-    ListCertificatesResponderInterface listServiceMock = mock(ListCertificatesResponderInterface.class);
+    private ListCertificatesResponderInterface listServiceMock = mock(ListCertificatesResponderInterface.class);
 
     @InjectMocks
     private CertificateService service = new CertificateServiceImpl();
@@ -53,31 +54,31 @@ public class CertificateServiceImplTest {
     private LocalDate validToDate = new LocalDate();
     private LocalDateTime firstTimeStamp = new LocalDateTime(2013, 1, 2, 20, 0);
     private LocalDateTime laterTimeStamp = new LocalDateTime(2013, 1, 3, 20, 0);
-    
+
     private CertificateStatusType unhandledStatus;
-    
+
     private CertificateStatusType deletedStatus;
     private CertificateStatusType sentStatus;
-    
-    @Before 
+
+    @Before
     public void setup() {
         unhandledStatus = new CertificateStatusType();
         unhandledStatus.setType(StatusType.UNHANDLED);
         unhandledStatus.setTarget("FK");
         unhandledStatus.setTimestamp(firstTimeStamp);
-        
+
         deletedStatus = new CertificateStatusType();
         deletedStatus.setType(StatusType.DELETED);
         deletedStatus.setTarget("FK");
         deletedStatus.setTimestamp(laterTimeStamp);
-        
+
         sentStatus = new CertificateStatusType();
         sentStatus.setType(StatusType.SENT);
         sentStatus.setTarget("FK");
         sentStatus.setTimestamp(firstTimeStamp);
-        
+
     }
-    
+
     @Test
     public void testConversion() {
         CertificateMetaType meta = new CertificateMetaType();
@@ -92,24 +93,22 @@ public class CertificateServiceImplTest {
         meta.getStatus().add(unhandledStatus);
         meta.getStatus().add(deletedStatus);
         meta.getStatus().add(sentStatus);
-        
-        List<CertificateMetaType> responseList  = new ArrayList<CertificateMetaType>();
+
+        List<CertificateMetaType> responseList = new ArrayList<CertificateMetaType>();
         responseList.add(meta);
-        
+
         ListCertificatesResponseType responseMock = mock(ListCertificatesResponseType.class);
         when(responseMock.getMeta()).thenReturn(responseList);
-        
+
         when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
         List<CertificateMeta> certificates = service.getCertificates("123456789");
-        
+
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getCaregiverName().equals(ISSUER_NAME));
-        assertTrue(certificates.get(0).getCareunitName() .equals(FACILITY_NAME));
+        assertTrue(certificates.get(0).getCareunitName().equals(FACILITY_NAME));
         assertTrue(certificates.get(0).getStatus().equals(StatusType.SENT.toString()));
     }
 
-   
-    
     @Test
     public void testLastestRResurnedStatusIsSENT() {
         CertificateMetaType meta = new CertificateMetaType();
@@ -123,24 +122,23 @@ public class CertificateServiceImplTest {
         meta.setValidTo(validToDate);
         CertificateStatusType cancelledStatus = new CertificateStatusType();
         cancelledStatus.setType(StatusType.CANCELLED);
-        cancelledStatus.setTimestamp(new LocalDateTime(2015,1,1,12,0));
+        cancelledStatus.setTimestamp(new LocalDateTime(2015, 1, 1, 12, 0));
         meta.getStatus().add(unhandledStatus);
         meta.getStatus().add(deletedStatus);
-        meta.getStatus().add(cancelledStatus); //the one
+        meta.getStatus().add(cancelledStatus); // the one
         meta.getStatus().add(unhandledStatus);
         meta.getStatus().add(deletedStatus);
-        
-        List<CertificateMetaType> responseList  = new ArrayList<CertificateMetaType>();
+
+        List<CertificateMetaType> responseList = new ArrayList<CertificateMetaType>();
         responseList.add(meta);
-        
+
         ListCertificatesResponseType responseMock = mock(ListCertificatesResponseType.class);
         when(responseMock.getMeta()).thenReturn(responseList);
-        
+
         when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
         List<CertificateMeta> certificates = service.getCertificates("123456789");
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getStatus().equals(StatusType.CANCELLED.toString()));
     }
-
 
 }

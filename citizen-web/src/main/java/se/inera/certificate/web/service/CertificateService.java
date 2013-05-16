@@ -27,20 +27,21 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public interface CertificateService {
     /**
-     * Retrives a list of certificates for the given civicRegistrationNumber
-     * 
+     * Retrives a list of certificates for the given civicRegistrationNumber.
+     *
      * @param civicRegistrationNumber
      * @return
      */
     List<CertificateMeta> getCertificates(String civicRegistrationNumber);
 
     /**
-     * Sets a new status for the certificate
-     * 
+     * Sets a new status for the certificate.
+     *
      * @param id
      * @param target
      * @param type
-     * @return Partially populated CertificateMeta object with id and new status and status description
+     * @return Partially populated CertificateMeta object with id and new status
+     *         and status description
      */
 
     CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);

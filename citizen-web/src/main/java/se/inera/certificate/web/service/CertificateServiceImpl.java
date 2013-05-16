@@ -123,8 +123,8 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     /**
-     * Compare status newest first
-     * 
+     * Compare status newest first.
+     *
      */
     private static final Comparator<CertificateStatusType> STATUS_COMPARATOR = new Comparator<CertificateStatusType>() {
         @Override

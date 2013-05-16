@@ -26,10 +26,10 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 public class ConsentServiceImplTest {
 
     @Mock
-    GetConsentResponderInterface getConsent = mock(GetConsentResponderInterface.class);
+    private GetConsentResponderInterface getConsent = mock(GetConsentResponderInterface.class);
 
     @Mock
-    SetConsentResponderInterface setConsent = mock(SetConsentResponderInterface.class);
+    private SetConsentResponderInterface setConsent = mock(SetConsentResponderInterface.class);
 
     @InjectMocks
     private ConsentService service = new ConsentServiceImpl();
