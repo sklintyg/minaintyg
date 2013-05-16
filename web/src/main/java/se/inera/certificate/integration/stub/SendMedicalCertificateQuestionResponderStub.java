@@ -35,15 +35,15 @@ public class SendMedicalCertificateQuestionResponderStub implements SendMedicalC
     public SendMedicalCertificateQuestionResponderStub() throws JAXBException {
         jaxbContext = JAXBContext.newInstance(SendMedicalCertificateQuestionType.class);
     }
-    
+
     @Override
     public SendMedicalCertificateQuestionResponseType sendMedicalCertificateQuestion(AttributedURIType logicalAddress, SendMedicalCertificateQuestionType request) {
-        
+
         SendMedicalCertificateQuestionResponseType response = new SendMedicalCertificateQuestionResponseType();
-        
+
         try {
             String id = request.getQuestion().getLakarutlatande().getLakarutlatandeId();
-            
+
             marshalCertificate(request);
             logger.info("STUB Received request");
             fkMedicalCertificatesStore.makulera(id);
@@ -53,7 +53,7 @@ public class SendMedicalCertificateQuestionResponderStub implements SendMedicalC
         }
         return response;
     }
-    
+
     private String marshalCertificate(SendMedicalCertificateQuestionType request) throws JAXBException {
 
         StringWriter stringWriter = new StringWriter();
@@ -64,5 +64,5 @@ public class SendMedicalCertificateQuestionResponderStub implements SendMedicalC
 
         return stringWriter.toString();
     }
-    
+
 }

@@ -1,16 +1,19 @@
 package se.inera.certificate.integration.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static se.inera.certificate.model.CertificateState.DELETED;
+import static se.inera.certificate.model.CertificateState.PROCESSED;
+import static se.inera.certificate.model.CertificateState.RESTORED;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
+
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static se.inera.certificate.model.CertificateState.*;
 
 /**
  * @author andreaskaltenbach

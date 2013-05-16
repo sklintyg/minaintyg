@@ -25,39 +25,40 @@ public class CustomJacksonJaxbJsonProviderTest {
 
     @Test
     public void testWrite() throws Exception {
-        MessageBodyWriter<Object> p = new CustomJacksonJaxbJsonProvider();        
+        MessageBodyWriter<Object> p = new CustomJacksonJaxbJsonProvider();
         Object obj = new Tester();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        
+
         p.writeTo(obj, Tester.class, null, new Annotation[0], new MediaType(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON), null, os);
-        
+
         assertEquals("{\"d\":\"2013-05-03\"}", os.toString());
     }
-    
+
     @Test
     public void testRead() throws Exception {
-        MessageBodyReader<Object> p = new CustomJacksonJaxbJsonProvider();        
+        MessageBodyReader<Object> p = new CustomJacksonJaxbJsonProvider();
         ByteArrayInputStream is = new ByteArrayInputStream("{ \"d\" : \"2013-05-04\" }".getBytes("UTF-8"));
-                
-        Tester o = (Tester)p.readFrom(Object.class, Tester.class, new Annotation[0], new MediaType(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON), null, is);        
-        
+
+        Tester o = (Tester) p.readFrom(Object.class, Tester.class, new Annotation[0], new MediaType(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON), null, is);
+
         assertEquals(new LocalDate("2013-05-04"), o.getD());
     }
-    
+
     @XmlRootElement
     public static class Tester {
-        
+
         @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
         @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
         private LocalDate d;
-        
+
         public Tester() {
             d = new LocalDate("2013-05-03");
         }
-        
+
         public LocalDate getD() {
             return d;
         }
+
         @JsonSetter
         public void setD(LocalDate d) {
             this.d = d;

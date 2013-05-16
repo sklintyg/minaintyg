@@ -41,7 +41,7 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
         String civicRegistrationNumber = request.getRevoke().getLakarutlatande().getPatient().getPersonId().getExtension();
         String vardref = request.getRevoke().getVardReferensId();
         String meddelande = request.getRevoke().getMeddelande();
-        
+
         // TODO: Vi behöver signeringstidpunkt för både fråga och intyg... /PW
         LocalDateTime signTs = request.getRevoke().getLakarutlatande().getSigneringsTidpunkt();
         LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();

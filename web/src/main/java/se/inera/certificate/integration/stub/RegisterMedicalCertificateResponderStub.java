@@ -49,10 +49,10 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
         try {
             String id = request.getLakarutlatande().getLakarutlatandeId();
 
-            Map<String,String> props = Maps.newHashMap();
+            Map<String, String> props = Maps.newHashMap();
             props.put("Personnummer", request.getLakarutlatande().getPatient().getPersonId().getExtension());
             props.put("Makulerad", "NEJ");
-            
+
             marshalCertificate(request);
             logger.info("STUB Received request");
             fkMedicalCertificatesStore.addCertificate(id, props);
