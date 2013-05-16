@@ -33,6 +33,7 @@
   <jaxrs:server id="certificateService" address="/resources">
     <jaxrs:serviceBeans>
       <ref bean="certificateBean"/>
+      <ref bean="fkBean"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>  
@@ -43,5 +44,6 @@
   </jaxrs:server>
 
   <bean id="certificateBean" class="se.inera.certificate.integration.CertificateResource"/>
+  <bean id="fkBean" class="se.inera.certificate.integration.stub.FkStubResource"/>
 
 </beans>

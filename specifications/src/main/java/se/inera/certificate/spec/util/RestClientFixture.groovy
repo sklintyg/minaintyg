@@ -5,5 +5,5 @@ package se.inera.certificate.spec.util
  */
 class RestClientFixture {
 
-    static String baseUrl = "http://localhost:8080/inera-certificate/resources/"
+    static String baseUrl = System.getProperty("certificate.baseUrl") + "resources/"
 }

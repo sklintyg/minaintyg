@@ -50,7 +50,7 @@ public class Intyg extends RestClientFixture {
 
     private fk7263Document() {
         // slurping the FK7263 template
-        def registerMedicalCertificate = new XmlSlurper().parse(new ClassPathResource("fk7263_template.xml").getFile())
+        def registerMedicalCertificate = new XmlSlurper().parse(new ClassPathResource("fk7263_template.xml").getInputStream())
 
         // setting the certificate ID
         registerMedicalCertificate.lakarutlatande.'lakarutlatande-id' = id
