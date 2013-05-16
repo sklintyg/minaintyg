@@ -17,7 +17,7 @@ public class FkMedicalCertificatesStore {
     }
 
     public int getCount() {
-        return this.certificates.size();
+        return certificates.size();
     }
     
     public Map<String,Map<String,String>> getAll() {
