@@ -16,7 +16,14 @@
     <cxf:features>
       <cxf:logging/>
     </cxf:features>
+    <cxf:outFaultInterceptors>
+      <ref bean="xsltInterceptor"/>
+   </cxf:outFaultInterceptors>
   </cxf:bus>
+
+  <bean id="xsltInterceptor" class="org.apache.cxf.feature.transform.XSLTOutInterceptor">
+    <constructor-arg value="transform.xslt" />
+  </bean>
 
   <!-- ws endpoints -->
   <jaxws:endpoint address="/list-certificates/v1.0" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
@@ -47,8 +54,4 @@
   </jaxws:client>
 
   <import resource="application-context-ws-stub.xml"/>
-
-  <aop:aspectj-autoproxy/>
-  <bean class="se.inera.certificate.integration.aop.ExceptionTransformingAroundAdvice"/>
-
 </beans>
