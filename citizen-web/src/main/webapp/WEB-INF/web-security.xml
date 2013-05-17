@@ -71,11 +71,9 @@
     <bean id="clearSecurityContextFilter" class="se.inera.certificate.web.security.ClearSecurityContextFilter">
       <property name="handler" ref="securityContextLogoutHandler" />
     </bean>
-    
+
     <!--  Reuse of springs "logout" handler that clear the context -->
     <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
 
   </beans>
-
-
 </beans>
