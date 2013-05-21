@@ -68,6 +68,10 @@
     <location>/error.jsp?reason=denied</location>
   </error-page>
   <error-page>
+    <error-code>404</error-code>
+    <location>/error.jsp?reason=notfound</location>
+  </error-page>
+  <error-page>
     <error-code>500</error-code>
     <location>/error.jsp?reason=error</location>
   </error-page>

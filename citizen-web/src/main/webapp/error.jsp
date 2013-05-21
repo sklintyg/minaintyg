@@ -61,7 +61,7 @@
                 <h1>
                   <spring:message code="info.loggedout.title" />
                 </h1>
-                <div class="alert alert-info">
+                <div id="loggedOut" class="alert alert-info">
                   <spring:message code="info.loggedout.text" />
                 </div>
               </c:when>
@@ -75,11 +75,20 @@
                 </div>
               </c:when>
 
+              <c:when test="${param.reason eq \"notfound\"}">
+                <h1>
+                  <spring:message code="error.notfound.title" />
+                </h1>
+                <div id="notFound" class="alert alert-error">
+                  <spring:message code="error.notfound.text" />
+                </div>
+              </c:when>
+
               <c:otherwise>
                 <h1>
                   <spring:message code="error.generictechproblem.title" />
                 </h1>
-                <div id="noAuth" class="alert alert-error">
+                <div id="genericTechProblem" class="alert alert-error">
                   <spring:message code="error.generictechproblem.text" />
                 </div>
               </c:otherwise>
