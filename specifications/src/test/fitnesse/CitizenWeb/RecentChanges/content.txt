@@ -1,6 +1,0 @@
-|ManuallyRemoveCertificates||08:30:34 ti, maj 14, 2013|
-|ArkiveraSamtAterstallIntyg.SuiteTearDown||07:52:33 ti, maj 14, 2013|
-|ArkiveraSamtAterstallIntyg.SuiteSetUp||06:23:04 ti, maj 14, 2013|
-|ListaIntyg.SuiteTearDown||16:07:51 må, maj 13, 2013|
-|ListaIntyg.SuiteSetUp||16:06:38 må, maj 13, 2013|
-|SuiteSetUp||15:43:21 må, maj 13, 2013|
