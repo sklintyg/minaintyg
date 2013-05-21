@@ -88,7 +88,7 @@
                 <h1>
                   <spring:message code="error.generictechproblem.title" />
                 </h1>
-                <div id="noAuth" class="alert alert-error">
+                <div id="genericTechProblem" class="alert alert-error">
                   <spring:message code="error.generictechproblem.text" />
                 </div>
               </c:otherwise>
