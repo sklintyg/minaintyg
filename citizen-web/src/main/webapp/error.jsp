@@ -61,7 +61,7 @@
                 <h1>
                   <spring:message code="info.loggedout.title" />
                 </h1>
-                <div class="alert alert-info">
+                <div id="loggedOut" class="alert alert-info">
                   <spring:message code="info.loggedout.text" />
                 </div>
               </c:when>
