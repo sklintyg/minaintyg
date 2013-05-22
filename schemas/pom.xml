@@ -163,46 +163,82 @@
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/v3/interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/GetConsentInteraction/GetConsentInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/GetConsentInteraction/GetConsentInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/SetConsentInteraction/SetConsentInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/SetConsentInteraction/SetConsentInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/SetCertificateStatusInteraction/SetCertificateStatusInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/SetCertificateStatusInteraction/SetCertificateStatusInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/SendMedicalCertificateInteraction/SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/SendMedicalCertificateInteraction/SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/RevokeMedicalCertificateInteraction/RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/RevokeMedicalCertificateInteraction/RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>classpath:schemas/certificate/v1/interactions/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl</extraarg>
+                  </extraargs>
                 </wsdlOption>
                 <wsdlOption>
                   <wsdl>
