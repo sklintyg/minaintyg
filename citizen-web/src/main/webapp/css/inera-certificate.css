@@ -184,8 +184,7 @@ tbody tr.cancelled td {
 }
 
 .issue {
-    padding: 14px 0 10px 0;
-	
+    padding: 12px 0 10px 0;
 }
 
 .cert-titlebar-value { font-weight: bold; }
