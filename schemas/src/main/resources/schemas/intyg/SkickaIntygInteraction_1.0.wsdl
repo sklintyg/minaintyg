@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+	name="SkickaIntygInteraction"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:i="urn:intyg:1"
+	xmlns:tns="urn:intyg:SkickaIntyg:1"
+	targetNamespace="urn:intyg:SkickaIntyg:1">
+
+	<wsdl:types>
+	  <xs:schema>
+      <xs:import schemaLocation="Intyg.xsd" namespace="urn:intyg:1"/>
+    </xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="SkickaIntygRequest">
+		<wsdl:part name="intyg" element="i:intyg" />
+	</wsdl:message>
+
+	<wsdl:message name="SkickaIntygResponse">
+		<wsdl:part name="intyg" element="i:intyg"/>
+	</wsdl:message>
+
+	<wsdl:portType name="SkickaIntygResponderInterface">
+	
+		<wsdl:operation name="SkickaIntyg">
+			<wsdl:input message="tns:SkickaIntygRequest"/>
+			<wsdl:output message="tns:SkickaIntygResponse"/>
+		</wsdl:operation>
+		
+	</wsdl:portType>
+	
+	<wsdl:binding name="SkickaIntygResponderBinding" type="tns:SkickaIntygResponderInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="SkickaIntyg">
+			<soap:operation soapAction="urn:intyg:SkickaIntygResponder:1"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="intyg"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="intyg"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+	</wsdl:binding>
+
+	<wsdl:service name="SkickaIntygResponderService">
+		<wsdl:port name="SkickaIntygResponderPort" binding="tns:SkickaIntygResponderBinding">
+			<soap:address location="http://tempuri.org"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

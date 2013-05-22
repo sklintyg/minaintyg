@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:intyg:1"
+           targetNamespace="urn:intyg:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+  <xs:element name="intyg" type="intygType">
+  </xs:element>
+
+  <xs:complexType name="intygType">
+    <xs:sequence>
+      <xs:element name="lakarutlatande" type="lakarutlatandeType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lakarutlatandeType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="typ" type="xs:string"/>
+      <xs:element name="kommentar" type="xs:string" minOccurs="0"/>
+      <xs:element name="signeringsdatum" type="xs:dateTime"/>
+      <xs:element name="patient" type="patientType"/>
+      <xs:element name="skapadAv" type="hosPersonalType"/>
+      <xs:element name="vardenhet" type="vardenhetType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="patientType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="fornamn" type="xs:string"/>
+      <xs:element name="mellannamn" type="xs:string" minOccurs="0"/>
+      <xs:element name="efternamn" type="xs:string"/>
+      <xs:element name="tilltalsnamn" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hosPersonalType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="namn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="vardenhetType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="namn" type="xs:string"/>
+      <xs:element name="vardgivare" type="vardgivareType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="vardgivareType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="namn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

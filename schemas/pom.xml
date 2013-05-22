@@ -62,6 +62,10 @@
                   <extraarg>-xjc-Xinheritance</extraarg>
                   <extraarg>-p</extraarg>
                   <extraarg>
+                    urn:intyg:1=se.inera.certificate.integration.v1
+                  </extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>
                     urn:riv:insuranceprocess:healthreporting:mu7263:3=se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3
                   </extraarg>
                   <extraarg>-p</extraarg>
@@ -198,6 +202,11 @@
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/certificate/v1/interactions/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+                  </wsdl>
+                </wsdlOption>
+                <wsdlOption>
+                  <wsdl>
+                    ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
                   </wsdl>
                 </wsdlOption>
               </wsdlOptions>

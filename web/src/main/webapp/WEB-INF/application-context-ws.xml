@@ -97,6 +97,13 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
+  <jaxws:endpoint address="/skicka-intyg/v1.0"
+                    implementor="se.inera.certificate.integration.SkickaIntygResponder">
+
+    </jaxws:endpoint>
+
+
+
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificatesClient"
                 serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface"
