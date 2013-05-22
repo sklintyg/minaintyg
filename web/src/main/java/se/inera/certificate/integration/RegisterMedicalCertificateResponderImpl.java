@@ -14,6 +14,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -50,7 +51,10 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         }
 
         String certificateId = request.getLakarutlatande().getLakarutlatandeId();
-        String careUnitName = request.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getVardgivare().getVardgivarnamn();
+
+        VardgivareType vardgivare = request.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getVardgivare();
+        String careUnitName = (vardgivare != null) ? vardgivare.getVardgivarnamn() : null;
+
         String civicRegistrationNumber = request.getLakarutlatande().getPatient().getPersonId().getExtension();
 
         LocalDate signedDate = request.getLakarutlatande().getSigneringsdatum().toLocalDate();

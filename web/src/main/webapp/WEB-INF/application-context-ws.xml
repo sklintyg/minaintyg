@@ -19,36 +19,94 @@
   </cxf:bus>
 
   <!-- ws endpoints -->
-  <jaxws:endpoint address="/list-certificates/v1.0" implementor="se.inera.certificate.integration.ListCertificatesResponderImpl" />
-  <jaxws:endpoint address="/get-certificate/v1.0" implementor="se.inera.certificate.integration.GetCertificateResponderImpl" >
-    <jaxws:properties>
-      <entry key="jaxb.additionalContextClasses" value="#{certificatesContextClassCollector.certificateContextClasses}" />
-    </jaxws:properties>
+  <jaxws:endpoint address="/list-certificates/v1.0"
+                  implementor="se.inera.certificate.integration.ListCertificatesResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/list-certificates-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/register-certificate/v3.0" implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/set-certificate-status/v1.0" implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl" />
+  <jaxws:endpoint address="/get-certificate/v1.0"
+                  implementor="se.inera.certificate.integration.GetCertificateResponderImpl">
+    <jaxws:properties>
+      <entry key="jaxb.additionalContextClasses"
+             value="#{certificatesContextClassCollector.certificateContextClasses}"/>
+    </jaxws:properties>
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/get-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
 
-  <jaxws:endpoint address="/get-consent/v1.0" implementor="se.inera.certificate.integration.GetConsentResponderImpl" />
-  <jaxws:endpoint address="/set-consent/v1.0" implementor="se.inera.certificate.integration.SetConsentResponderImpl" />
+  </jaxws:endpoint>
 
-  <jaxws:endpoint address="/send-certificate/v1.0" implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl" />
-  <jaxws:endpoint address="/revoke-certificate/v1.0" implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl" />
+  <jaxws:endpoint address="/register-certificate/v3.0"
+                  implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl">
+    <jaxws:inInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.LakarutlatandeValidatingInterceptor"/>
+    </jaxws:inInterceptors>
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/set-certificate-status/v1.0"
+                  implementor="se.inera.certificate.integration.SetCertificateStatusResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/set-certificate-status-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/get-consent/v1.0" implementor="se.inera.certificate.integration.GetConsentResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/get-consent-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/set-consent/v1.0" implementor="se.inera.certificate.integration.SetConsentResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/set-consent-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/send-certificate/v1.0"
+                  implementor="se.inera.certificate.integration.SendMedicalCertificateResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/send-medical-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint address="/revoke-certificate/v1.0"
+                  implementor="se.inera.certificate.integration.RevokeMedicalCertificateResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/revoke-medical-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
 
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificatesClient"
-    serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface"
-    address="${registermedicalcertificatev3.endpoint.url}">
+                serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface"
+                address="${registermedicalcertificatev3.endpoint.url}">
   </jaxws:client>
 
   <jaxws:client id="sendMedicalCertificateQuestionClient"
-    serviceClass="se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface"
-    address="${sendmedicalcertificatequestionv1.endpoint.url}">
+                serviceClass="se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface"
+                address="${sendmedicalcertificatequestionv1.endpoint.url}">
   </jaxws:client>
 
   <import resource="application-context-ws-stub.xml"/>
-
-  <aop:aspectj-autoproxy/>
-  <bean class="se.inera.certificate.integration.aop.ExceptionTransformingAroundAdvice"/>
-
 </beans>
