@@ -1,0 +1,131 @@
+      <RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3"
+                            xmlns:ns4="urn:riv:insuranceprocess:healthreporting:2"
+                            xmlns:ns3="urn:riv:insuranceprocess:healthreporting:mu7263:3">
+  <lakarutlatande>
+            <ns3:lakarutlatande-id>b2f6d5bc-2f50-4623-9ce9-bf1ee5404347</ns3:lakarutlatande-id>
+            <ns3:typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</ns3:typAvUtlatande>
+            <ns3:kommentar>Har haft mailkontakt med patienten
+Prognosen att återgå till arbete är svår att bedömma förrän utredningen är genomförd.</ns3:kommentar>
+            <ns3:signeringsdatum>2011-01-26T00:00:00.000+01:00</ns3:signeringsdatum>
+            <ns3:skickatDatum>2011-03-23T09:29:15.193+01:00</ns3:skickatDatum>
+            <ns3:patient>
+               <ns4:person-id root="1.2.752.129.2.1.3.1" extension="19750719-4033"/>
+               <ns4:fullstandigtNamn>Test Testorsson</ns4:fullstandigtNamn>
+            </ns3:patient>
+            <ns3:skapadAvHosPersonal>
+               <ns4:personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
+               <ns4:fullstandigtNamn>En Läkare</ns4:fullstandigtNamn>
+               <ns4:forskrivarkod>1234567</ns4:forskrivarkod>
+               <ns4:enhet>
+                  <ns4:enhets-id root="1.2.752.129.2.1.4.1" extension="VardenhetY"/>
+                  <ns4:arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
+                  <ns4:enhetsnamn>Kir mott</ns4:enhetsnamn>
+                  <ns4:postadress>Lasarettsvägen 13</ns4:postadress>
+                  <ns4:postnummer>85150</ns4:postnummer>
+                  <ns4:postort>Sundsvall</ns4:postort>
+                  <ns4:telefonnummer>060-1818000</ns4:telefonnummer>
+                  <ns4:vardgivare>
+                     <ns4:vardgivare-id root="1.2.752.129.2.1.4.1" extension="VardgivarId"/>
+                     <ns4:vardgivarnamn>Landstinget Norrland</ns4:vardgivarnamn>
+                  </ns4:vardgivare>
+               </ns4:enhet>
+            </ns3:skapadAvHosPersonal>
+            <ns3:vardkontakt>
+               <ns3:vardkontakttyp>Min_undersokning_av_patienten</ns3:vardkontakttyp>
+               <ns3:vardkontaktstid>2011-01-26+01:00</ns3:vardkontaktstid>
+            </ns3:vardkontakt>
+            <ns3:vardkontakt>
+               <ns3:vardkontakttyp>Min_telefonkontakt_med_patienten</ns3:vardkontakttyp>
+               <ns3:vardkontaktstid>2011-01-12+01:00</ns3:vardkontaktstid>
+            </ns3:vardkontakt>
+            <ns3:referens>
+               <ns3:referenstyp>Journaluppgifter</ns3:referenstyp>
+               <ns3:datum>2010-01-14+01:00</ns3:datum>
+            </ns3:referens>
+            <ns3:referens>
+               <ns3:referenstyp>Annat</ns3:referenstyp>
+               <ns3:datum>2010-01-24+01:00</ns3:datum>
+            </ns3:referens>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</ns3:aktivitetskod>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</ns3:aktivitetskod>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Ovrigt</ns3:aktivitetskod>
+               <ns3:beskrivning>När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik</ns3:beskrivning>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</ns3:aktivitetskod>
+               <ns3:beskrivning>Utreds om operation är nödvändig</ns3:beskrivning>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Planerad_eller_pagaende_annan_atgard</ns3:aktivitetskod>
+               <ns3:beskrivning>Patienten ansvarar för att armen hålls i stillhet</ns3:beskrivning>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell</ns3:aktivitetskod>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</ns3:aktivitetskod>
+            </ns3:aktivitet>
+            <ns3:aktivitet>
+               <ns3:aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</ns3:aktivitetskod>
+            </ns3:aktivitet>
+            <ns3:bedomtTillstand>
+               <ns3:beskrivning>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</ns3:beskrivning>
+            </ns3:bedomtTillstand>
+            <ns3:medicinsktTillstand>
+               <ns3:beskrivning>Klämskada på överarm</ns3:beskrivning>
+               <ns3:tillstandskod code="S47" codeSystemName="ICD-10"/>
+            </ns3:medicinsktTillstand>
+            <ns3:funktionstillstand>
+               <ns3:beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.</ns3:beskrivning>
+               <ns3:typAvFunktionstillstand>Kroppsfunktion</ns3:typAvFunktionstillstand>
+            </ns3:funktionstillstand>
+            <ns3:funktionstillstand>
+               <ns3:beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</ns3:beskrivning>
+               <ns3:typAvFunktionstillstand>Aktivitet</ns3:typAvFunktionstillstand>
+               <ns3:arbetsformaga>
+                  <ns3:motivering>Skadan har förvärrats vid varje tillfälle patienten använt armen.
+Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg.
+Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</ns3:motivering>
+                  <ns3:prognosangivelse>Det_gar_inte_att_bedomma</ns3:prognosangivelse>
+                  <ns3:arbetsuppgift>
+                     <ns3:typAvArbetsuppgift>Dirigent.
+Dirigerar en större orkester på deltid</ns3:typAvArbetsuppgift>
+                  </ns3:arbetsuppgift>
+                  <ns3:arbetsformagaNedsattning>
+                     <ns3:varaktighetFrom>2011-04-01+02:00</ns3:varaktighetFrom>
+                     <ns3:varaktighetTom>2011-05-31+02:00</ns3:varaktighetTom>
+                     <ns3:nedsattningsgrad>Nedsatt_med_1/4</ns3:nedsattningsgrad>
+                  </ns3:arbetsformagaNedsattning>
+                  <ns3:arbetsformagaNedsattning>
+                     <ns3:varaktighetFrom>2011-03-07+01:00</ns3:varaktighetFrom>
+                     <ns3:varaktighetTom>2011-03-31+02:00</ns3:varaktighetTom>
+                     <ns3:nedsattningsgrad>Nedsatt_med_1/2</ns3:nedsattningsgrad>
+                  </ns3:arbetsformagaNedsattning>
+                  <ns3:arbetsformagaNedsattning>
+                     <ns3:varaktighetFrom>2011-02-14+01:00</ns3:varaktighetFrom>
+                     <ns3:varaktighetTom>2011-03-06+01:00</ns3:varaktighetTom>
+                     <ns3:nedsattningsgrad>Nedsatt_med_3/4</ns3:nedsattningsgrad>
+                  </ns3:arbetsformagaNedsattning>
+                  <ns3:arbetsformagaNedsattning>
+                     <ns3:varaktighetFrom>2011-01-26+01:00</ns3:varaktighetFrom>
+                     <ns3:varaktighetTom>2011-02-13+01:00</ns3:varaktighetTom>
+                     <ns3:nedsattningsgrad>Helt_nedsatt</ns3:nedsattningsgrad>
+                  </ns3:arbetsformagaNedsattning>
+                  <ns3:sysselsattning>
+                     <ns3:typAvSysselsattning>Nuvarande_arbete</ns3:typAvSysselsattning>
+                  </ns3:sysselsattning>
+                  <ns3:sysselsattning>
+                     <ns3:typAvSysselsattning>Arbetsloshet</ns3:typAvSysselsattning>
+                  </ns3:sysselsattning>
+                  <ns3:sysselsattning>
+                     <ns3:typAvSysselsattning>Foraldraledighet</ns3:typAvSysselsattning>
+                  </ns3:sysselsattning>
+               </ns3:arbetsformaga>
+            </ns3:funktionstillstand>
+         </lakarutlatande>
+</RegisterMedicalCertificate>
