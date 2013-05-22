@@ -76,26 +76,19 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
 
 // Certificate Controller
 listCertApp.controller('CertCtrl', [ '$scope', '$location', '$filter', 'listCertService', function ListCertCtrl($scope, $location, $filter, listCertService) {
-    $scope.certificates = [];
+	$scope.open = function () {
+		$scope.shouldBeOpen = true;
+	};
 
-    $scope.certToSend = listCertService.selectedCertificate;
-    // changes to certToSend is propagated to other controllers via the service
-    // scope
-    $scope.sendConfirmed = function() {
+	$scope.close = function () {
+		$scope.closeMsg = 'I was closed at: ' + new Date();
+		$scope.shouldBeOpen = false;
+	};
 
-        console.log("sending " + $scope.certToSend.id);
-        listCertService.sendCertificate($scope.certToSend, function(fromServer, oldItem) {
-            console.log("(send) statusUpdate callback:" + fromServer);
-            // Better way to update the object?
-            oldItem.status = fromServer.status;
-            oldItem.statusTranslated = fromServer.statusTranslated;
-            oldItem.selected = false;
-            $location.path("/lista");
-
-        });
-
-    }
-
+	$scope.opts = {
+		backdropFade: true,
+		dialogFade:true
+	};
 } ]);
 
 // Send Certification Controller

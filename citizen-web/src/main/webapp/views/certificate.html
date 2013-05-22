@@ -8,6 +8,22 @@
 </div>
 
 <!-- Modals -->
+<!-- <div ng-controller="SendModalCtrl"> -->
+	<div modal="shouldBeOpen" close="close()" options="opts">
+		<div class="modal-header">
+			<button class="close" ng-click="close()">×</button>
+			<h3>Intyget har skickats till Försäkringskassan</h3>
+		</div>
+		<div class="modal-body">
+			<p>Ärendet behandlas nu av Försäkringskassan.</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success" ng-click="close()">OK</button>
+		</div>
+	</div>
+<!-- </div> -->
+
+		<!--
 <div id="sendModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
   <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -20,7 +36,7 @@
 	<a href="#" class="btn btn-success" data-dismiss="modal" aria-hidden="true">OK</a>
   </div>
 </div>
-
+-->
 <div id="archiveModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="archiveModalLabel" aria-hidden="true">
   <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -74,8 +90,11 @@
 		<h1>Granska och skicka</h1>
 		<p>Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.</p>
 		<form id="view-as-pdf" action="/api/certificate/dfb6d8a7-47f1-4a76-9bf2-7bc712298dc5.pdf" method="get" target="_blank">
-			<p class="btn-row"><button id="send-to-fk" role="button" data-toggle="modal" data-target="#sendModal" type="submit" class="btn btn-success">Skicka till Försäkringskassan</button>
-			<button id="downloadprint" type="submit" class="btn btn-inverse">Ladda ner / Skriv ut</button></p>
+			<p class="btn-row">
+				<!--<button id="send-to-fk" role="button" data-toggle="modal" data-target="#sendModal" type="submit" class="btn btn-success">Skicka till Försäkringskassan</button>-->
+				<button type="button" ng-click="open()" class="btn btn-success">Skicka till Försäkringskassan</button>
+				<button id="downloadprint" type="submit" class="btn btn-inverse">Ladda ner / Skriv ut</button>
+			</p>
 		</form>
 	</div>
 	<div class="span5 eventbox">
@@ -100,7 +119,7 @@
 							Utfärdat: <span class="cert-titlebar-value">2013-03-11</span>
 						</div>
 						<div class="span1 archive">
-							<a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img src="/img/archive-icon.gif" /></a>
+							<a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
 						</div>
 					</div>
 				</div>
