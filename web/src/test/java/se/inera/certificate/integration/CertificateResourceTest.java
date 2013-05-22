@@ -26,17 +26,17 @@ public class CertificateResourceTest {
     @Test
     public void testGetCertificate() throws Exception {
         certificateResource.getCertificate("1");
-        
+
         verify(entityManager).find(Certificate.class, "1");
     }
-    
+
     @Test
     public void testDeleteCertificate() throws Exception {
         Certificate certificate = new Certificate("1", "");
         when(entityManager.find(Certificate.class, "1")).thenReturn(certificate);
-        
+
         certificateResource.deleteCertificate("1");
-               
+
         verify(entityManager).find(Certificate.class, "1");
         verify(entityManager).remove(certificate);
     }
@@ -45,7 +45,7 @@ public class CertificateResourceTest {
     public void testInsertCertificate() throws Exception {
         Certificate certificate = new Certificate("1", "");
         certificateResource.insertCertificate(certificate);
-               
+
         verify(entityManager).persist(certificate);
     }
 }

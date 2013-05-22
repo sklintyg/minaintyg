@@ -1,15 +1,18 @@
 package se.inera.certificate.service.impl;
 
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 import se.inera.certificate.dao.ConsentDao;
 import se.inera.certificate.service.ConsentService;
-
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConsentServiceImplTest {

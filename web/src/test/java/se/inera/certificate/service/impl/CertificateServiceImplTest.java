@@ -25,12 +25,12 @@ import se.inera.certificate.service.ConsentService;
 /**
  * @author andreaskaltenbach
  */
-@RunWith( MockitoJUnitRunner.class )
+@RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
 
     @Mock
     private CertificateDao certificateDao = mock(CertificateDao.class);
-    
+
     @Mock
     private ConsentService consentService = mock(ConsentService.class);
 
@@ -42,8 +42,8 @@ public class CertificateServiceImplTest {
         Certificate certificate = new Certificate("certificateId", "document");
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate );
-        
+        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+
         Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
         assertTrue(found.getDeleted());
     }
@@ -54,8 +54,8 @@ public class CertificateServiceImplTest {
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate );
-        
+        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+
         Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
         assertFalse(found.getDeleted());
     }
@@ -66,8 +66,8 @@ public class CertificateServiceImplTest {
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate );
-        
+        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+
         Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
         assertTrue(found.getDeleted());
     }

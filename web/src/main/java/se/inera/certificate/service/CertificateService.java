@@ -32,7 +32,7 @@ import java.util.List;
 public interface CertificateService {
 
     /**
-     * Returns the list of certificates for the patient and filter criteria
+     * Returns the list of certificates for the patient and filter criteria.
      *
      * @param civicRegistrationNumber the patient's civic registration number
      * @param certificateTypes optional certificate type filter. If empty or null, all certificate types will be returned
