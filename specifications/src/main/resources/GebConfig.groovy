@@ -1,5 +1,6 @@
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.safari.SafariDriver
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -13,6 +14,9 @@ waiting {
 environments {
 	chrome {
 		driver = { new ChromeDriver() }
+	}
+	safari {
+		driver = { new SafariDriver() }
 	}
 	firefox {
 		driver = { new FirefoxDriver() }

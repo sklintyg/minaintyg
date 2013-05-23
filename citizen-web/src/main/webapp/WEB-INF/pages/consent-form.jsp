@@ -149,7 +149,7 @@
 
               <form action='<c:url value="/web/ge-samtycke"/>' method="post">
                 <p class="btn-row">
-                  <input id="giveconsent" type="submit" value="Jag lämnar mitt samtycke" class="btn btn-success" /> <a id="noconsentBtn" href="#" class="btn-link">Jag vill inte använda Mina intyg</a>
+                  <input id="giveconsent" type="submit" value="Jag lämnar mitt samtycke" class="btn btn-success" /> <input id="noconsentBtn" type="button" value="Jag vill inte använda Mina intyg" class="btn btn-link" />
                 </p>
               </form>
             </div>
