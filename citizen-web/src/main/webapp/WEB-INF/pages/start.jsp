@@ -27,17 +27,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="ROBOTS" content="nofollow, noindex" />
-
-<title><spring:message code="application.name" /></title>
-
-<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
-
-<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="ROBOTS" content="nofollow, noindex" />
+	
+	<title><spring:message code="application.name" /></title>
+	
+	<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
+	
+	<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
+	<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
+	<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 </head>
 
 <body ng-app="ListCertApp">
@@ -77,10 +76,12 @@
     </div>
   </div>
 
+	<!--
   <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>-->
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>

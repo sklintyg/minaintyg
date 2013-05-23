@@ -67,9 +67,6 @@
 
         <div id="status">
           <div class="status-row">
-            <a href="<c:url value="/web/settings" />"><spring:message code="label.settings" /></a> | <a href="<c:url value="/web/logout" />"><spring:message code="label.logout" /></a>
-          </div>
-          <div class="status-row">
             <span class="logged-in"><spring:message code="header.loggedInAs" /></span>&nbsp;<strong><sec:authentication property="principal.username" /></strong>
           </div>
         </div>
