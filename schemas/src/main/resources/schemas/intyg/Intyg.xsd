@@ -6,15 +6,8 @@
            attributeFormDefault="unqualified"
            version="1.0">
 
-  <xs:element name="intyg" type="intygType">
-  </xs:element>
+  <xs:element name="lakarutlatande" type="lakarutlatandeType"/>
 
-  <xs:complexType name="intygType">
-    <xs:sequence>
-      <xs:element name="lakarutlatande" type="lakarutlatandeType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="lakarutlatandeType">
     <xs:sequence>
       <xs:element name="id" type="xs:string"/>
@@ -24,6 +17,7 @@
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
       <xs:element name="vardenhet" type="vardenhetType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="patientType">

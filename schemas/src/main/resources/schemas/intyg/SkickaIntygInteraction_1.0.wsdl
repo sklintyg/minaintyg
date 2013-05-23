@@ -16,11 +16,11 @@
 	</wsdl:types>
 
 	<wsdl:message name="SkickaIntygRequest">
-		<wsdl:part name="intyg" element="i:intyg" />
+		<wsdl:part name="intyg" element="i:lakarutlatande" />
 	</wsdl:message>
 
 	<wsdl:message name="SkickaIntygResponse">
-		<wsdl:part name="intyg" element="i:intyg"/>
+		<wsdl:part name="intyg" element="i:lakarutlatande"/>
 	</wsdl:message>
 
 	<wsdl:portType name="SkickaIntygResponderInterface">
