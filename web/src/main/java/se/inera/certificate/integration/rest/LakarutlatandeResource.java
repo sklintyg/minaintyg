@@ -12,7 +12,12 @@ import se.inera.certificate.model.Patient;
  */
 public class LakarutlatandeResource implements IneraCertificateRestApi {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER;
+
+    static {
+        OBJECT_MAPPER = new ObjectMapper();
+        OBJECT_MAPPER.registerModule(new LakarutlatandeJacksonModule());
+    }
 
     @Override
     public String getCertificate(String certificateId) {
