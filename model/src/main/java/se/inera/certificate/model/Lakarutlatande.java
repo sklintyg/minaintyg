@@ -21,6 +21,8 @@ public class Lakarutlatande {
 
     private Vardenhet vardenhet;
 
+    private Ovrigt ovrigt;
+
     public String getId() {
         return id;
     }
@@ -75,5 +77,13 @@ public class Lakarutlatande {
 
     public void setVardenhet(Vardenhet vardenhet) {
         this.vardenhet = vardenhet;
+    }
+
+    public Ovrigt getOvrigt() {
+        return ovrigt;
+    }
+
+    public void setOvrigt(Ovrigt ovrigt) {
+        this.ovrigt = ovrigt;
     }
 }

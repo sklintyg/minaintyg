@@ -1,22 +1,42 @@
 package se.inera.certificate.integration.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Lakarutlatande;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import se.inera.certificate.model.Ovrigt;
+import se.inera.certificate.model.Patient;
 
 /**
  * @author andreaskaltenbach
  */
-public class LakarutlatandeResource {
+public class LakarutlatandeResource implements IneraCertificateRestApi {
 
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Lakarutlatande getLakarutlatande(@PathParam("id") String id) {
-        return new Lakarutlatande();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    @Override
+    public String getCertificate(String certificateId) {
+
+        try {
+            return OBJECT_MAPPER.writeValueAsString(lakarutlatande());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return "{\"failed\":true}";
+    }
+
+    private Lakarutlatande lakarutlatande() {
+        Lakarutlatande lakarutlatande = new Lakarutlatande();
+        lakarutlatande.setId("123");
+
+        Patient patient = new Patient();
+        patient.setId("19001122-3344");
+        lakarutlatande.setPatient(patient);
+
+        Ovrigt ovrigt = new Ovrigt();
+        ovrigt.setData("{\"resmal\":\"San Francisco\"}");
+        lakarutlatande.setOvrigt(ovrigt);
+
+        return lakarutlatande;
     }
 }
