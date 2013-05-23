@@ -51,6 +51,10 @@ public class ConsentServiceImpl implements ConsentService {
         parameters.setPersonnummer(username);
 
         GetConsentResponseType consent = getConsent.getConsent(null, parameters);
+        //When resultcode is error we cannot trust what the isConsentGiven says, since always have a value...
+        if (consent.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
+            throw new RuntimeException("Cant determine consentStatus - ERROR result from GetConsentResponderInterface: " + consent.getResult().getErrorText());
+        }
         boolean consentResult = consent.isConsentGiven();
         LOG.debug("Consent result is {}", consentResult);
         return consentResult;

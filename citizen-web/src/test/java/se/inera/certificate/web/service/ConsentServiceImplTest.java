@@ -38,7 +38,10 @@ public class ConsentServiceImplTest {
     public void testFetchConsentGiven() {
         GetConsentResponseType consentResponse = new GetConsentResponseType();
         consentResponse.setConsentGiven(true);
-
+        ResultOfCall resultOfCall = new ResultOfCall();
+        resultOfCall.setResultCode(ResultCodeEnum.OK);
+        consentResponse.setResult(resultOfCall);
+        
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
         boolean result = service.fetchConsent("1234567890");
         assertTrue(result);
@@ -49,7 +52,10 @@ public class ConsentServiceImplTest {
     public void testFetchConsentNotGiven() {
         GetConsentResponseType consentResponse = new GetConsentResponseType();
         consentResponse.setConsentGiven(false);
-
+        ResultOfCall resultOfCall = new ResultOfCall();
+        resultOfCall.setResultCode(ResultCodeEnum.OK);
+        consentResponse.setResult(resultOfCall);
+        
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
         boolean result = service.fetchConsent("1234567890");
         assertFalse(result);
@@ -79,6 +85,19 @@ public class ConsentServiceImplTest {
         when(setConsent.setConsent(Mockito.any(AttributedURIType.class), Mockito.any(SetConsentRequestType.class))).thenReturn(consentResponse);
         boolean result = service.setConsent("1234567890", true);
         assertFalse(result);
+
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetConsentWhenErrorResponseCode() {
+        GetConsentResponseType consentResponse = new GetConsentResponseType();
+        ResultOfCall resultOfCall = new ResultOfCall();
+        resultOfCall.setResultCode(ResultCodeEnum.ERROR);
+        consentResponse.setResult(resultOfCall);
+        consentResponse.setConsentGiven(false);
+
+        when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
+        service.fetchConsent("1234567890");
 
     }
 

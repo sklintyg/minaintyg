@@ -23,6 +23,9 @@ package se.inera.certificate.web.service;
 public interface ConsentService {
 
     /**
+     * Returns whether consent has been given by the user or not. Should throw {@link RuntimeException} if the consent 
+     * state could not be determined.
+     * 
      * @param username
      * @return
      */
