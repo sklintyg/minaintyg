@@ -11,7 +11,7 @@
 
 	<wsdl:types>
 	  <xs:schema>
-      <xs:import schemaLocation="Intyg.xsd" namespace="urn:intyg:1"/>
+      <xs:import schemaLocation="../../../../../../module-api/src/main/resources/Intyg.xsd" namespace="urn:intyg:1"/>
     </xs:schema>
 	</wsdl:types>
 
