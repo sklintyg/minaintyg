@@ -21,6 +21,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 
 /**
@@ -32,13 +33,17 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
 
     private Logger logger = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
 
-    private final JAXBContext jaxbContext;
+    private JAXBContext jaxbContext;
 
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
 
-    public RegisterMedicalCertificateResponderStub() throws JAXBException {
-        jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
+    public RegisterMedicalCertificateResponderStub() {
+        try {
+            jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
+        } catch (JAXBException e) {
+            Throwables.propagate(e);
+        }
     }
 
     @Override

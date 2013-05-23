@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+
+import com.google.common.base.Throwables;
+
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionResponseType;
@@ -32,8 +35,12 @@ public class SendMedicalCertificateQuestionResponderStub implements SendMedicalC
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
 
-    public SendMedicalCertificateQuestionResponderStub() throws JAXBException {
-        jaxbContext = JAXBContext.newInstance(SendMedicalCertificateQuestionType.class);
+    public SendMedicalCertificateQuestionResponderStub() {
+        try {
+            jaxbContext = JAXBContext.newInstance(SendMedicalCertificateQuestionType.class);
+        } catch (JAXBException e) {
+            throw Throwables.propagate(e);
+        }
     }
 
     @Override
