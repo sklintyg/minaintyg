@@ -63,6 +63,7 @@
     <!-- set up protection of the needed url's in the app-->
     <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
       <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:intercept-url pattern="/moduleapi/**" access="hasRole('ROLE_CITIZEN')" />
       <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
       <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
     </security:http>
