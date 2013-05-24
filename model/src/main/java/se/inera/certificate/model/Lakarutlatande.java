@@ -21,6 +21,8 @@ public class Lakarutlatande {
 
     private Vardenhet vardenhet;
 
+    private String sjukdomsfarlopp;
+
     private Ovrigt ovrigt;
 
     public String getId() {
@@ -79,6 +81,14 @@ public class Lakarutlatande {
         this.vardenhet = vardenhet;
     }
 
+    public String getSjukdomsfarlopp() {
+        return sjukdomsfarlopp;
+    }
+
+    public void setSjukdomsfarlopp(String sjukdomsfarlopp) {
+        this.sjukdomsfarlopp = sjukdomsfarlopp;
+    }
+
     public Ovrigt getOvrigt() {
         return ovrigt;
     }
@@ -86,4 +96,5 @@ public class Lakarutlatande {
     public void setOvrigt(Ovrigt ovrigt) {
         this.ovrigt = ovrigt;
     }
+
 }
