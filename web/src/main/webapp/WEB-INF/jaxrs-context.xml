@@ -45,7 +45,7 @@
 
   <beans profile="dev,test">
 
-    <bean id="jacksonJsonProvider" class="se.inera.certificate.integration.CustomJacksonJaxbJsonProvider"/>
+    <bean id="jacksonJsonProvider" class="se.inera.certificate.integration.json.CustomJacksonJaxbJsonProvider"/>
 
     <jaxrs:server id="certificateService" address="/resources">
       <jaxrs:serviceBeans>

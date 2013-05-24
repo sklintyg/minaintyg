@@ -1,4 +1,4 @@
-package se.inera.certificate.integration;
+package se.inera.certificate.integration.json;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;

@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import se.inera.certificate.integration.json.CustomJacksonJaxbJsonProvider;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomJacksonJaxbJsonProviderTest {
