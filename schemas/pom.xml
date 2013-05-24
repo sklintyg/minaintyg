@@ -49,8 +49,40 @@
         <artifactId>cxf-codegen-plugin</artifactId>
         <version>${cxf.version}</version>
         <executions>
+
           <execution>
-            <id>wsdl-to-java</id>
+            <id>wsdl2java-internal-interfaces</id>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <wsdlOptions>
+                <wsdlOption>
+                  <wsdl>
+                    ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
+                  </wsdl>
+                  <extraargs>
+                    <!-- Exclude generation of intyg JAXB classes as they are already delivered by the module-api artifact -->
+                    <extraarg>-nexclude</extraarg>
+                    <extraarg>urn:intyg:1</extraarg>
+                    <extraarg>-xjc-b,${basedir}/bindings/skicka-intyg-binding.xjb</extraarg>
+                    <extraarg>-validate</extraarg>
+                    <extraarg>-verbose</extraarg>
+                    <extraarg>-xjc-XhashCode</extraarg>
+                    <extraarg>-xjc-Xequals</extraarg>
+                    <extraarg>-xjc-XtoString</extraarg>
+                    <extraarg>-xjc-Xinheritance</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:intyg:1=se.inera.certificate.integration.v1</extraarg>
+                  </extraargs>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>wsdl2java-external-interfaces</id>
             <goals>
               <goal>wsdl2java</goal>
             </goals>
@@ -260,18 +292,6 @@
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
                       classpath:schemas/certificate/v1/interactions/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-                    </extraarg>
-                  </extraargs>
-                </wsdlOption>
-                <wsdlOption>
-                  <wsdl>
-                    ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
-                  </wsdl>
-                  <extraargs>
-                    <!-- Exclude generation of intyg JAXB classes as they are already delivered by the module-api artifact -->
-                    <extraarg>-nexclude</extraarg>
-                    <extraarg>
-                      urn:intyg:1
                     </extraarg>
                   </extraargs>
                 </wsdlOption>

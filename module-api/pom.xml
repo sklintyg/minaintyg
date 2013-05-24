@@ -58,6 +58,8 @@
               <xsdOptions>
                 <xsdOption>
                   <xsd>src/main/resources/Intyg.xsd</xsd>
+                  <extension>true</extension>
+                  <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
                   <packagename>se.inera.certificate.integration.v1</packagename>
                 </xsdOption>
               </xsdOptions>
