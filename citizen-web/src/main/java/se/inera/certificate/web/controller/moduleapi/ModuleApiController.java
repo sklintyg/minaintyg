@@ -1,5 +1,8 @@
 package se.inera.certificate.web.controller.moduleapi;
 
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,8 @@ import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.web.service.CitizenService;
 
 @Controller
-@RequestMapping(value = "/certificate", produces = "application/json")
+@RequestMapping(value = "/certificate")
+
 public class ModuleApiController   {
 
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
@@ -25,6 +29,7 @@ public class ModuleApiController   {
     private CitizenService citizenService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
     @ResponseBody
     public String getCertificate(@PathVariable(value = "id") String id) {
         LOG.debug("getCertificate: {}",id);
