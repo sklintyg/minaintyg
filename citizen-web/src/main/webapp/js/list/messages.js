@@ -16,7 +16,8 @@ var messages = {
             "archive" : "Arkivera",
             "send" : "Skicka",
             "cancel" : "Avbryt",
-            "goback" : "Tillbaka"
+            "goback" : "Tillbaka",
+            "show" : "Visa"
         },
         "certificates" : {
             "types" : {
