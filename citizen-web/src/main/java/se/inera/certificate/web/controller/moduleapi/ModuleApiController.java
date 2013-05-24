@@ -9,35 +9,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.web.service.CertificateService;
+import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.web.service.CitizenService;
 
 @Controller
 @RequestMapping(value = "/certificate", produces = "application/json")
-public class ModuleApiController {
+public class ModuleApiController   {
 
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
 
     @Autowired
-    private CertificateService certificateService;
+    private IneraCertificateRestApi certificateRestService;
 
     @Autowired
     private CitizenService citizenService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CertificateMeta getCertificate(@PathVariable(value = "id") String id) {
+    public String getCertificate(@PathVariable(value = "id") String id) {
         LOG.debug("getCertificate: {}",id);
-        CertificateMeta mock = new CertificateMeta();
-        mock.setId(id);
-        mock.setType("RLI");
-        mock.setCareunitName("En vårdenhet");
-        
-        return mock;
+        return certificateRestService.getCertificate(id);
        
     }
-
-   
-
 }

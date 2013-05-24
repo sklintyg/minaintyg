@@ -10,8 +10,7 @@
 	GNU Affero General Public License for more details. You should have received 
 	a copy of the GNU Affero General Public License along with this program. 
 	If not, see <http://www.gnu.org/licenses/>. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate-web</groupId>
   <artifactId>certificate-web</artifactId>
@@ -19,10 +18,10 @@
   <packaging>pom</packaging>
   <name>Inera Certificate Web (Citizen web app)</name>
 
-	<modules>
-		<module>citizen-web</module>
-		<module>specifications</module>
-	</modules>
+  <modules>
+    <module>citizen-web</module>
+    <module>specifications</module>
+  </modules>
 
   <properties>
     <system.mode>dev</system.mode>
@@ -35,8 +34,9 @@
     <logback.version>1.0.0</logback.version>
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
     <inera.certificate.schemas.version>1.0-SNAPSHOT</inera.certificate.schemas.version>
+    <inera.certificate.moduleapi.version>1.0-SNAPSHOT</inera.certificate.moduleapi.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
-     <aspectj.version>1.7.1</aspectj.version>
+    <aspectj.version>1.7.1</aspectj.version>
   </properties>
 
   <dependencies>
@@ -131,6 +131,11 @@
         <groupId>se.inera.certificate</groupId>
         <artifactId>schemas</artifactId>
         <version>${inera.certificate.schemas.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.certificate</groupId>
+        <artifactId>module-api</artifactId>
+        <version>${inera.certificate.moduleapi.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -258,7 +263,7 @@
         <artifactId>spring-aop</artifactId>
         <version>${spring.version}</version>
       </dependency>
-     <dependency>
+      <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
         <version>${aspectj.version}</version>
@@ -267,7 +272,7 @@
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
         <version>${aspectj.version}</version>
-      </dependency>            
+      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
