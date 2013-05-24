@@ -18,11 +18,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class LakarutlatandeResource implements IneraCertificateRestApi {
 
-    private static final ObjectMapper OBJECT_MAPPER;
+    private ObjectMapper objectMapper;
 
-    static {
-        OBJECT_MAPPER = new ObjectMapper();
-        OBJECT_MAPPER.registerModule(new LakarutlatandeJacksonModule());
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -30,9 +29,9 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
 
         try {
             if (certificateId.startsWith("rli")) {
-                return OBJECT_MAPPER.writeValueAsString(lakarutlatande(certificateId));
+                return objectMapper.writeValueAsString(lakarutlatande(certificateId));
             } else {
-                return OBJECT_MAPPER.writeValueAsString(lakarutlatandeFk7263(certificateId));
+                return objectMapper.writeValueAsString(lakarutlatandeFk7263(certificateId));
             }
 
         } catch (JsonProcessingException e) {

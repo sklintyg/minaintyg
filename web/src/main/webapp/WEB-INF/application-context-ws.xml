@@ -96,12 +96,13 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/skicka-intyg/v1.0"
-                    implementor="se.inera.certificate.integration.SkickaIntygResponder">
-
-    </jaxws:endpoint>
-
-
+  <jaxws:endpoint address="/skicka-intyg/v1.0">
+    <jaxws:implementor>
+      <bean class="se.inera.certificate.integration.SkickaIntygResponder">
+        <property name="port" value="${modules.port}"/>
+      </bean>
+    </jaxws:implementor>
+  </jaxws:endpoint>
 
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificatesClient"

@@ -13,6 +13,13 @@ import javax.xml.ws.Holder;
 @SchemaValidation
 public class SkickaIntygResponder implements SkickaIntygResponderInterface {
 
+    private String host;
+
+
+    public void setPort(String port) {
+        host = "http://localhost:" + port;
+    }
+
     @Override
     public void skickaIntyg(Holder<LakarutlatandeType> lakarutlatande) {
         String type = lakarutlatande.value.getTyp();
@@ -30,7 +37,7 @@ public class SkickaIntygResponder implements SkickaIntygResponderInterface {
     private void sendLakarutlatandeForValidation(String type, LakarutlatandeType lakarutlatande) {
 
 
-        ModuleRestApi endpoint = JAXRSClientFactory.create("http://localhost/" + type, ModuleRestApi.class);
+        ModuleRestApi endpoint = JAXRSClientFactory.create(host + "/" + type + "/api", ModuleRestApi.class);
 
         endpoint.validate(new LakarutlatandeType());
     }

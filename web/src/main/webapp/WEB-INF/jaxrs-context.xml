@@ -28,10 +28,22 @@
         http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
 
   <beans>
+
+    <bean id="objectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+
+    <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
+      <property name="mapper" ref="objectMapper"/>
+    </bean>
+
+
+
     <jaxrs:server address="/">
       <jaxrs:serviceBeans>
-        <bean class="se.inera.certificate.integration.rest.LakarutlatandeResource"/>
+        <bean class="se.inera.certificate.integration.rest.LakarutlatandeResource">
+          <property name="objectMapper" ref="objectMapper"/>
+        </bean>
       </jaxrs:serviceBeans>
+
       <jaxrs:providers>
         <ref bean="jacksonJsonProvider"/>
       </jaxrs:providers>
@@ -42,11 +54,7 @@
 
   </beans>
 
-
   <beans profile="dev,test">
-
-    <bean id="jacksonJsonProvider" class="se.inera.certificate.integration.json.CustomJacksonJaxbJsonProvider"/>
-
     <jaxrs:server id="certificateService" address="/resources">
       <jaxrs:serviceBeans>
         <ref bean="certificateBean"/>
