@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCertService', function ListCertCtrl($scope, $filter, $location, listCertService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', 'listCertService', function ListCertCtrl($scope, $filter, $location, $window, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
 
@@ -13,9 +13,10 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', 'listCert
             selected : true
         });
         console.log("send " + items.length);
-        listCertService.selectedCertificate = items[0];
-        $location.path("/skicka-intyg");
-
+        var item = items[0];
+        listCertService.selectedCertificate = item;
+        var path =  "/" + item.type.toLowerCase() + "/web/visa-intyg/" + item.id
+        $window.location.href = path;
     }
 
     $scope.archiveSelected = function() {

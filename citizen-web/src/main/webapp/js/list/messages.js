@@ -16,11 +16,13 @@ var messages = {
             "archive" : "Arkivera",
             "send" : "Skicka",
             "cancel" : "Avbryt",
-            "goback" : "Tillbaka"
+            "goback" : "Tillbaka",
+            "show" : "Visa"
         },
         "certificates" : {
             "types" : {
-              "fk7263" : "läkarintyg"
+              "fk7263" : "läkarintyg",
+              "rli" : "reseläkarintyg"
             },
             "status" : {
                 "cancelled" : "Makulerat",
