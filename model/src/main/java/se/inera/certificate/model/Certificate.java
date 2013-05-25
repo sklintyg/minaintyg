@@ -37,10 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
  * in the database. The encoding is UTF-8.
@@ -97,8 +93,6 @@ public class Certificate {
      */
     @Column(name = "SIGNED_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate signedDate;
 
     /**
@@ -106,8 +100,6 @@ public class Certificate {
      */
     @Column(name = "VALID_FROM_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validFromDate;
 
     /**
@@ -115,8 +107,6 @@ public class Certificate {
      */
     @Column(name = "VALID_TO_DATE", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer.class)
-    @JsonDeserialize(using = com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer.class)
     private LocalDate validToDate;
 
     /**

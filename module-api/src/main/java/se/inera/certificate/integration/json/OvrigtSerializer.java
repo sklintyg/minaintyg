@@ -1,6 +1,5 @@
-package se.inera.certificate.integration.rest;
+package se.inera.certificate.integration.json;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdScalarSerializer;
@@ -9,6 +8,9 @@ import se.inera.certificate.model.Ovrigt;
 import java.io.IOException;
 
 /**
+ * Serializes an Ovrigt instance to JSON.
+ * Simply takes the 'data' string and includes it as raw JSON data.
+ *
  * @author andreaskaltenbach
  */
 public class OvrigtSerializer extends StdScalarSerializer<Ovrigt> {
@@ -16,7 +18,7 @@ public class OvrigtSerializer extends StdScalarSerializer<Ovrigt> {
     public OvrigtSerializer() { super(Ovrigt.class); }
 
     @Override
-    public void serialize(Ovrigt ovrigt, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonGenerationException {
+    public void serialize(Ovrigt ovrigt, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeRaw(":" + ovrigt.getData());
     }
 }
