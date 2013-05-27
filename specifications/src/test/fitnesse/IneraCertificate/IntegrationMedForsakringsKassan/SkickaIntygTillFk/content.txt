@@ -1,0 +1,13 @@
+Givet att samtycke finns
+
+|Samtycke|
+|personnr|samtycke|
+|121212-1212|ja|
+
+Och intyget skickas till fk
+
+|Skicka Intyg Till Fk|
+|personnummer|intyg|
+|121212-1212|intyg-1|
+
+Så finns intyget hos fk
