@@ -62,8 +62,12 @@
                   <wsdl>
                     ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/skicka-intyg-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
-                    <extraarg>-xjc-b,${basedir}/bindings/skicka-intyg-binding.xjb</extraarg>
                     <extraarg>-validate</extraarg>
                     <extraarg>-verbose</extraarg>
                     <extraarg>-xjc-XhashCode</extraarg>
@@ -86,10 +90,14 @@
             <phase>generate-sources</phase>
             <configuration>
               <defaultOptions>
+                <bindingFiles>
+                  <bindingFile>
+                    ${basedir}/bindings/general-binding.xjb
+                  </bindingFile>
+                </bindingFiles>
                 <extraargs>
                   <extraarg>-validate</extraarg>
                   <extraarg>-verbose</extraarg>
-                  <extraarg>-xjc-b,${basedir}/bindings/general-binding.xjb</extraarg>
                   <extraarg>-xjc-XhashCode</extraarg>
                   <extraarg>-xjc-Xequals</extraarg>
                   <extraarg>-xjc-XtoString</extraarg>
