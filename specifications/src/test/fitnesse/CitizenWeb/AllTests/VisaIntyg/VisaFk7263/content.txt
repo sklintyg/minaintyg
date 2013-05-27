@@ -1,0 +1,10 @@
+|script|!-ListaIntyg-!|
+|logga på som|19121212-1212|
+|inkorg sidan visas|
+|lista med intyg visas|
+|visa intyg|intyg-1|
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets typ är|fk7263|
+|intygets id är|intyg-1|

@@ -13,4 +13,3 @@
 |personnr|samtycke|
 |19121212-1212|nej|
 |19121212-9999|nej|
-

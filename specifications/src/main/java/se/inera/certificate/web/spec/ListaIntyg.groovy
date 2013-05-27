@@ -47,4 +47,11 @@ public class ListaIntyg {
         }
     }
 
+    public void visaIntyg(String id) {
+        Browser.drive {
+            at(InboxPage);
+            page.viewCertificate(id);
+        }
+    }
+
 }

@@ -58,11 +58,13 @@
     </div>
 
     <div class="row-fluid">
-      <button id="send-to-fk" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="sendSelected()"
+      <button id="viewCertificateBtn" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0"
+              ng-click="sendSelected()"
         type="submit" class="btn popover-trigger">
         <message key="button.show" />
       </button>
-      <button id="remove" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0" ng-click="archiveSelected()"
+      <button id="archiveCertificateBtn" ng-class="{'btn-success':(certificates | filter: {selected:true}).length>0 }" ng-disabled="(certificates | filter: {selected:true}).length == 0"
+              ng-click="archiveSelected()"
         type="submit" class="btn popover-trigger">
         <message key="button.archive" />
       </button>
