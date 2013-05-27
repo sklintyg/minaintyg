@@ -11,3 +11,7 @@ Och intyget skickas till fk
 |121212-1212|intyg-1|
 
 Så finns intyget hos fk
+
+|Verifiera Intyg Hos Fk|
+|id|status?|
+|intyg-1|skickat|
