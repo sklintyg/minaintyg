@@ -43,7 +43,7 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
         Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
 
         // TODO: Hur hanterar vi olika typer av intyg och destinationer? / PW
-        if (certificate.getType().equals("fk7263")) {
+        if (certificate.getType().equalsIgnoreCase("fk7263")) {
             CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(certificate.getType());
             registerMedicalCertificateResponder.registerMedicalCertificate(logicalAddress, getJaxbObject(certificateSupport, certificate));
             response.setResult(ResultOfCallUtil.okResult());
@@ -69,7 +69,7 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
     // TODO: Move to Util... Duplicated code / PW
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
         for (CertificateSupport certificateSupport : supportedCertificates) {
-            if (certificateSupport.certificateType().equals(certificateType)) {
+            if (certificateSupport.certificateType().equalsIgnoreCase(certificateType)) {
                 return certificateSupport;
             }
         }

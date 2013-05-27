@@ -60,6 +60,12 @@
       <artifactId>http-builder</artifactId>
       <version>${groovy.httpBuilder.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+    
   </dependencies>
 
   <build>
