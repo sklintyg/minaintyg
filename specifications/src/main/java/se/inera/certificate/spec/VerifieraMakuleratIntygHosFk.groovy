@@ -21,6 +21,11 @@ public class VerifieraMakuleratIntygHosFk extends RestClientFixture {
 
     
     public String makulerat() {
-        return response.data[id]['Makulerad']
+        def row = response.data[id]
+        if (row != null) {
+            return row['Makulerad']
+        } else {
+            return "Nej"
+        }
     }
 }
