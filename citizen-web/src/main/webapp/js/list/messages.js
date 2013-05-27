@@ -21,8 +21,8 @@ var messages = {
         },
         "certificates" : {
             "types" : {
-              "fk7263" : "läkarintyg",
-              "rli" : "reseläkarintyg"
+              "fk7263" : "Läkarintyg",
+              "rli" : "Reseläkarintyg"
             },
             "status" : {
                 "cancelled" : "Makulerat",
