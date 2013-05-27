@@ -2,6 +2,7 @@ package se.inera.certificate.integration.rest;
 
 import org.joda.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Lakarutlatande;
@@ -18,11 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class LakarutlatandeResource implements IneraCertificateRestApi {
 
+    @Autowired
     private ObjectMapper objectMapper;
-
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public String getCertificate(String certificateId) {

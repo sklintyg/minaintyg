@@ -9,6 +9,8 @@ public class Valideringsresultat {
 
     private List<String> fel;
 
+    public Valideringsresultat() {}
+
     public Valideringsresultat(List<String> fel) {
         this.fel = fel;
     }
