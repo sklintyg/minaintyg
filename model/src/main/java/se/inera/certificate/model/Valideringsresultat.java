@@ -1,5 +1,6 @@
 package se.inera.certificate.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,7 +10,9 @@ public class Valideringsresultat {
 
     private List<String> fel;
 
-    public Valideringsresultat() {}
+    public Valideringsresultat() {
+        fel = Collections.emptyList();
+    }
 
     public Valideringsresultat(List<String> fel) {
         this.fel = fel;
