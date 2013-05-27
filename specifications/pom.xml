@@ -154,7 +154,7 @@
     <profile>
       <id>test-server</id>
         <properties>
-          <certificate.baseUrl>https://test.minaintyg.se/services/</certificate.baseUrl>
+          <certificate.baseUrl>http://test.minaintyg.se/inera-certificate/</certificate.baseUrl>
         </properties>
     </profile>
     <profile>
