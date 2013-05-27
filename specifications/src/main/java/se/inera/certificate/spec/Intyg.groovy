@@ -30,10 +30,10 @@ public class Intyg extends RestClientFixture {
          type:typ,
          civicRegistrationNumber:personnr,
          signedDate:datum,
-         signingDoctorName: 'Doctor Ruth',
+         signingDoctorName: 'Lennart Ström',
                 validFromDate:datum,
                 validToDate:datum,
-         careUnitName: 'Betty Ford Center',
+         careUnitName: 'Närhälsan i Majorna',
          document: document()
         ]
     }
