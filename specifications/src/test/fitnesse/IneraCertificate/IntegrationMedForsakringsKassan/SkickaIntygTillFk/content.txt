@@ -4,14 +4,26 @@ Givet att samtycke finns
 |personnr|samtycke|
 |121212-1212|ja|
 
-Och intyget skickas till fk
+Och intyget skickas till FK
 
 |Skicka Intyg Till Fk|
 |personnummer|intyg|
 |121212-1212|intyg-1|
 
-Så finns intyget hos fk
+Så finns intyget hos FK
 
 |Verifiera Intyg Hos Fk|
 |id|status?|
 |intyg-1|skickat|
+
+Makulera Intyg Hos FK
+
+|Makulera Intyg Till Fk|
+|personnummer|intyg|
+|121212-1212|intyg-1|
+
+Nu är intyget makulerat hos FK
+
+|Verifiera Makulerat Intyg Hos Fk|
+|id|makulerat?|
+|intyg-1|JA|
