@@ -63,9 +63,6 @@
                     ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
                   </wsdl>
                   <extraargs>
-                    <!-- Exclude generation of intyg JAXB classes as they are already delivered by the module-api artifact -->
-                    <extraarg>-nexclude</extraarg>
-                    <extraarg>urn:intyg:1</extraarg>
                     <extraarg>-xjc-b,${basedir}/bindings/skicka-intyg-binding.xjb</extraarg>
                     <extraarg>-validate</extraarg>
                     <extraarg>-verbose</extraarg>

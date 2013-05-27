@@ -35,8 +35,6 @@
       <property name="mapper" ref="objectMapper"/>
     </bean>
 
-
-
     <jaxrs:server address="/">
       <jaxrs:serviceBeans>
         <bean class="se.inera.certificate.integration.rest.LakarutlatandeResource">

@@ -1,4 +1,4 @@
-package se.inera.certificate.integration;
+package se.inera.certificate.integration.rest;
 
 
 import se.inera.certificate.integration.v1.Lakarutlatande;
