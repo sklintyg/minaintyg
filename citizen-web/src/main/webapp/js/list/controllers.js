@@ -15,7 +15,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         console.log("send " + items.length);
         var item = items[0];
         listCertService.selectedCertificate = item;
-        var path =  "/" + item.type.toLowerCase() + "/web/visa-intyg/" + item.id
+        var path =  "/" + item.type.toLowerCase() + "/intyg/" + item.id
         $window.location.href = path;
     }
 
