@@ -44,7 +44,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
-    private static final Logger log = LoggerFactory.getLogger(CertificateServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
     @Autowired
     private ListCertificatesResponderInterface listService;
@@ -107,10 +107,10 @@ public class CertificateServiceImpl implements CertificateService {
         dto.setSentDate(meta.getSignDate().toString());
         dto.setType(meta.getCertificateType());
         dto.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
-        log.debug("{} is archived: {}", dto.getId(), dto.getArchived());
+        LOG.debug("{} is archived: {}", dto.getId(), dto.getArchived());
 
         final List<CertificateStatusType> stats = meta.getStatus();
-        log.debug("Status length {}", stats.size());
+        LOG.debug("Status length {}", stats.size());
         Collections.sort(stats, STATUS_COMPARATOR);
         for (CertificateStatusType stat : stats) {
             if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
