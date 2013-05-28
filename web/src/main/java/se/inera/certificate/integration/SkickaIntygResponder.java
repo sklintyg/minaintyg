@@ -41,14 +41,8 @@ public class SkickaIntygResponder implements SkickaIntygResponderInterface {
         // let the certificate validate by the corresponding certificate module
         validate(type, lakarutlatande.value);
 
-
         // if valid -> proceed with storing the certificate along with its custom binary info
         String certificateExtension = extractCertificateExtensionData(type, lakarutlatande.value);
-
-
-
-
-
     }
 
     private ModuleRestApi getModuleRestService(String type) {
