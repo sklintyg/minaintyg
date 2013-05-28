@@ -1,3 +1,5 @@
+!3 Går igenom flöde där samtycke nekas
+
 |script|!-GeSamtycke-!|
 |logga på som|19121212-1212|
 |ge samtycke sidan visas|

@@ -1,3 +1,5 @@
+!3 Givet att användaren EJ har intyg så skall det ej visas något.
+
 |script|!-ListaIntyg-!|
 |logga på som|19121212-9999|
 |inkorg sidan visas|

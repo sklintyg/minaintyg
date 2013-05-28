@@ -1,3 +1,5 @@
+!3 Arkivera ett intyg. Verifiera att intyget ej längre är med i listan.
+
 |script|!-ListaIntyg-!|
 |logga på som|19121212-1212|
 |inkorg sidan visas|

@@ -1,8 +1,12 @@
+!3 Först logga in och lista alla befintliga intyg.
+
 |script|!-ListaIntyg-!|
 |logga på som|19121212-1212|
 |inkorg sidan visas|
 |lista med intyg visas|
 |visa intyg|rli-intyg-3|
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ.
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|

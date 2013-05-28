@@ -1,3 +1,7 @@
+!3 Går igenom flöde för att ge samtycke.
+
+Logga på som ny användare och ge samtycke och verifiera att inkorgssidan visas. Efter detta - logga sedan på igen och gör samma verifiering.
+
 |script|!-GeSamtycke-!|
 |logga på som|19121212-1212|
 |ge samtycke sidan visas|

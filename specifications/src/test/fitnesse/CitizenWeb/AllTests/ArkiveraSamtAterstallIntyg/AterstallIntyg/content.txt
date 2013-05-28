@@ -1,0 +1,12 @@
+!3 Verifiera möjligheten att återställa arkiverat intyg.
+
+Testet arkivera först ett intyg, för att sedan visa arkiverade intyg och därefter återställa detta.
+
+Verifiering sker att intyget ej längre listas bland de arkiverade utan istället i inkorgen.
+
+|script|!-ListaIntyg-!|
+|logga på som|19121212-1212|
+|inkorg sidan visas|
+|lista med intyg visas|
+|arkivera intyg | intyg-1 |
+|intyg finns ej i listan | intyg-1 |
