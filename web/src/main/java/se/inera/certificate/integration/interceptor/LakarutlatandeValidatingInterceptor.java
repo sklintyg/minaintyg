@@ -30,7 +30,7 @@ public class LakarutlatandeValidatingInterceptor extends AbstractSoapInterceptor
         try {
             new LakarutlatandeValidator(lakarutlatande).validate();
         } catch (ValidationException ex) {
-            throw new SoapFault(ex.getMessage(), Fault.FAULT_CODE_CLIENT);
+            throw new SoapFault(ex.getMessage(), ex, Fault.FAULT_CODE_CLIENT);
         }
 
     }
