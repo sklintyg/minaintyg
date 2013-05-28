@@ -5,11 +5,11 @@ package se.inera.certificate.model;
  */
 public class Patient {
 
-    String id;
-    String fornamn;
-    String mellannamn;
-    String efternamn;
-    String tilltalsnamn;
+    private String id;
+    private String fornamn;
+    private String mellannamn;
+    private String efternamn;
+    private String tilltalsnamn;
 
     public String getId() {
         return id;
