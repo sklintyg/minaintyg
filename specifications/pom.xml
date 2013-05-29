@@ -16,7 +16,7 @@
     <groovy.httpBuilder.version>0.6</groovy.httpBuilder.version>
     <!-- These next 3 are the default values anyway -->
     <fitnesse.port>9123</fitnesse.port>
-    <fitnesse.working>${project.build.directory}/fitnesse</fitnesse.working>
+    <fitnesse.working>${project.basedir}/src/test/fitnesse</fitnesse.working>
     <fitnesse.root>FitNesseRoot</fitnesse.root>
     <!-- This example has no unit tests, just integration tests -->
     <skipTests>true</skipTests>
@@ -98,7 +98,7 @@
           <port>${fitnesse.port}</port>
           <workingDir>${fitnesse.working}</workingDir>
           <root>${fitnesse.root}</root>
-          <createSymLink>true</createSymLink>
+          <createSymLink>false</createSymLink>
           <suite>IneraCertificate</suite>
         </configuration>
         <dependencies>
