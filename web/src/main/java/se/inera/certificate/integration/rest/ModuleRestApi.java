@@ -19,11 +19,11 @@ public interface ModuleRestApi {
     @Path("/extension")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    Object extract (Lakarutlatande lakarutlatande);
+    Object extract(Lakarutlatande lakarutlatande);
 
     @POST
     @Path("/valid")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    Valideringsresultat validate (Lakarutlatande lakarutlatande);
+    Valideringsresultat validate(Lakarutlatande lakarutlatande);
 }

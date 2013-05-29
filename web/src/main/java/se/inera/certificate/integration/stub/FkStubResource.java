@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 @Transactional
 public class FkStubResource {
 
-    private static final String[] KEYS = { "Personnummer", "Makulerad" };
+    private static final String[] KEYS = {"Personnummer", "Makulerad"};
 
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
