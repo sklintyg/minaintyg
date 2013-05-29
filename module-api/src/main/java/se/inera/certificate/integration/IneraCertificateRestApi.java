@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 public interface IneraCertificateRestApi {
 
     @GET
-    @Path( "/certificate/{id}" )
-    @Produces( MediaType.APPLICATION_JSON )
+    @Path("/certificate/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     String getCertificate(@PathParam("id") String certificateId);
 }
