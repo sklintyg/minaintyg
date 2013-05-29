@@ -1,6 +1,6 @@
 <ul id="tabs">
-  <li class="disabled" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> <message key="label.inbox" /></li>
-  <li class="" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> <message key="label.archived" /></li>
+  <li id="inboxTab" class="disabled" onclick="javascript:window.location.hash='#lista'"><img src="/img/inkorg_icon.png" /> <message key="label.inbox" /></li>
+  <li id="archivedTab" class="" onclick="javascript:window.location.hash='#arkiverade'"><img src="/img/borttagna_icon.png" /> <message key="label.archived" /></li>
 </ul>
 
 <h1>
@@ -45,7 +45,7 @@
         <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
         <td><message key="certificates.status.{{cert.status}}" fallback=""/></td>
-        <td><a href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
+        <td><a id="restoreCertificate-{{cert.id}}" href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
       </tr>
     </tbody>
 

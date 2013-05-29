@@ -4,20 +4,20 @@ import geb.Page
 
 class ConsentPage extends Page {
 
-	static at = { $("#consentTerms").isDisplayed() }
+    static at = { $("#consentTerms").isDisplayed() }
 
-	static content = {
-		giveConsentButton { $("#giveconsent") }
-		denyConsentButton { $("#noconsentBtn") }
-	}
-	
-	def giveConsent() {
-		giveConsentButton.click()
-	}
+    static content = {
+        giveConsentButton { $("#giveconsent") }
+        denyConsentButton { $("#noconsentBtn") }
+    }
 
-	def denyConsent() {
-		denyConsentButton.click()
-	}
+    def giveConsent() {
+        giveConsentButton.click()
+    }
+
+    def denyConsent() {
+        denyConsentButton.click()
+    }
 
 
 }

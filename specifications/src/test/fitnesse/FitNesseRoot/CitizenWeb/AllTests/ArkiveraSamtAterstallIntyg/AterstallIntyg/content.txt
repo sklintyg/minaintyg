@@ -1,0 +1,14 @@
+!3 Verifiera möjligheten att återställa arkiverat intyg.
+
+Testet arkiverar först ett intyg och verifierar att det finns med i listan med arkiverade intyg.
+
+!include .CitizenWeb.AllTests.ArkiveraSamtAterstallIntyg.ArkiveraIntyg
+
+Därefter återställs detta och verifiering sker att intyget ej längre listas bland de arkiverade utan istället i inkorgen.
+
+|script|!-ListaIntyg-!|
+|återställ intyg|intyg-1|
+|arkiverat intyg finns ej i listan | intyg-1 |
+|gå till inkorgen|
+|inkorgsidan visas|
+|intyg finns i listan | intyg-1 |

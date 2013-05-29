@@ -5,24 +5,28 @@ import se.inera.certificate.web.pages.IntygPage
 
 public class VisaIntyg {
 
-	public boolean intygssidanVisas() {
-		Browser.drive {
-			at(IntygPage)
-		}
-	}
-
-    public boolean intygetsTypÄr(String typ) {
+    public boolean intygssidanVisas() {
         Browser.drive {
             at(IntygPage)
-            assert $("#certType", title:typ).size() == 1
         }
     }
 
-    public boolean intygetsIdÄr(String id) {
+    public boolean intygetsTypÄr(String typ) {
+        def result = false
         Browser.drive {
             at(IntygPage)
-            assert $("#certId", title:id).size() == 1
+            result = ($("#certType", title: typ).size() == 1)
         }
+        result
+    }
+
+    public boolean intygetsIdÄr(String id) {
+        def result = false
+        Browser.drive {
+            at(IntygPage)
+            result = ($("#certId", title: id).size() == 1)
+        }
+        result
     }
 
 

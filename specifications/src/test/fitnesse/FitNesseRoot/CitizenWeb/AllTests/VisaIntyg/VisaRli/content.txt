@@ -2,7 +2,7 @@
 
 |script|!-ListaIntyg-!|
 |logga på som|19121212-1212|
-|inkorg sidan visas|
+|inkorgsidan visas|
 |lista med intyg visas|
 |visa intyg|rli-intyg-3|
 

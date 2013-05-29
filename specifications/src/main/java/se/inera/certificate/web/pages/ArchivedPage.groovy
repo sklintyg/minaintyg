@@ -2,11 +2,11 @@ package se.inera.certificate.web.pages
 
 import geb.Page
 
-class InboxPage extends Page {
+class ArchivedPage extends Page {
 
-    static url = "start#/lista"
-
-    static at = { $("#inboxHeader").isDisplayed() }
+	static url = "start#/arkiverade"
+ 
+	static at = { $("#archivedHeader").isDisplayed() }
 
     static content = {
         certificateTable(required: false) { $("#certTable") }
@@ -17,21 +17,16 @@ class InboxPage extends Page {
         archivedTab(required: false) { $("#archivedTab") }
     }
 
-    def archiveCertificate(String id) {
-        $("#certificate-${id}").click()
-        archiveCertificateButton.click()
+    def restoreCertificate(String id) {
+        $("#restoreCertificate-${id}").click()
     }
 
     def boolean certificateExists(String id) {
-        $("#certificate-${id}").isDisplayed();
+        System.out.println("HAPP")
+        $("#restoreCertificate-${id}").isDisplayed()
     }
 
-    def viewCertificate(String id) {
-        $("#certificate-${id}").click()
-        viewCertificateButton.click()
-    }
-
-    def goToArchivedTab() {
-        archivedTab.click()
+    def goToInboxPage() {
+        inboxTab.click()
     }
 }

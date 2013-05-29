@@ -1,8 +1,15 @@
-!3 Arkivera ett intyg. Verifiera att intyget ej längre är med i listan.
+!3 Arkivera ett intyg. 
+
+* Verifiera att intyget ej längre är med i listan.
+* Verifiera att intyget finns i listan med arkiverade intyg.
 
 |script|!-ListaIntyg-!|
 |logga på som|19121212-1212|
-|inkorg sidan visas|
+|inkorgsidan visas|
 |lista med intyg visas|
 |arkivera intyg | intyg-1 |
 |intyg finns ej i listan | intyg-1 |
+|gå till arkiverade intyg|
+|arkiveradesidan visas|
+|lista med arkiverade intyg visas|
+|arkiverat intyg finns i listan | intyg-1 |

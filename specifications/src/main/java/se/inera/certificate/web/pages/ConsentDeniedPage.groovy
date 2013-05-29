@@ -4,6 +4,6 @@ import geb.Page
 
 class ConsentDeniedPage extends Page {
 
-	static at = { $("#refuseConsentMessage").isDisplayed() }
+    static at = { $("#refuseConsentMessage").isDisplayed() }
 
 }

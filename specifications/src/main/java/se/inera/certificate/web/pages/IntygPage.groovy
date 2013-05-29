@@ -4,7 +4,7 @@ import geb.Page
 
 class IntygPage extends Page {
 
-	static at = { $("#certificate").isDisplayed() }
+    static at = { $("#certificate").isDisplayed() }
 
     static content = {
         certificateId { $("#certId") }
