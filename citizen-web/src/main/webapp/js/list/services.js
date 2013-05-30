@@ -6,7 +6,9 @@
  * This service gets a list of all certificates. It also caches the list to
  * avoid having to fetch the list every time a controller requests it.
  */
-listCertApp.factory('listCertService', [ '$http', function($http) {
+angular.module('services.listCertService', []);
+angular.module('services.listCertService').factory('listCertService', [ '$http', function($http) {
+
 
     // cached certificates response
     var cachedList = null;

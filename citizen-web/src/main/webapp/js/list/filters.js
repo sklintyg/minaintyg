@@ -3,7 +3,8 @@
 /* Filters */
 
 // Filter items that should be listed in inbox
-listCertApp.filter('inboxfilter', function() {
+angular.module('filters.inboxfilter', []);
+angular.module('filters.inboxfilter').filter('inboxfilter', function() {
     return function(certificates) {
         var out = [];
 
@@ -17,7 +18,8 @@ listCertApp.filter('inboxfilter', function() {
 });
 
 // Filter items that should be listed in inbox-archived
-listCertApp.filter('archivedfilter', function() {
+angular.module('filters.archivedfilter', []);
+angular.module('filters.archivedfilter').filter('archivedfilter', function() {
     return function(certificates) {
         var out = [];
 

@@ -76,9 +76,7 @@
     </div>
   </div>
 
-	<!--
-  <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>-->
+	
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
@@ -86,11 +84,13 @@
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
-
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
+  
+  <!-- Dependencies to common components -->
+  <script type="text/javascript" src="<c:url value="/js/modules/message-directive.js"/>"></script>
 
+  
 
 </body>
 </html>
