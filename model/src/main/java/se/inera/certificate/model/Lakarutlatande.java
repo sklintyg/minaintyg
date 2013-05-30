@@ -2,6 +2,8 @@ package se.inera.certificate.model;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.List;
+
 /**
  * @author andreaskaltenbach
  */
@@ -20,6 +22,18 @@ public class Lakarutlatande {
     private HosPersonal skapadAv;
 
     private Vardenhet vardenhet;
+
+    private List<Aktivitet> aktiviteter;
+
+    private List<Funktionsnedsattning> funktionsnedsattningar;
+
+    private List<Aktivitetsbegransning> aktivitetsbegransningar;
+
+    private BedomtTillstand bedomtTillstand;
+
+    private List<Vardkontakt> vardkontakter;
+
+    private List<Referens> referenser;
 
     private String sjukdomsfarlopp;
 
@@ -97,4 +111,51 @@ public class Lakarutlatande {
         this.ovrigt = ovrigt;
     }
 
+    public List<Aktivitet> getAktiviteter() {
+        return aktiviteter;
+    }
+
+    public void setAktiviteter(List<Aktivitet> aktiviteter) {
+        this.aktiviteter = aktiviteter;
+    }
+
+    public List<Funktionsnedsattning> getFunktionsnedsattningar() {
+        return funktionsnedsattningar;
+    }
+
+    public void setFunktionsnedsattningar(List<Funktionsnedsattning> funktionsnedsattningar) {
+        this.funktionsnedsattningar = funktionsnedsattningar;
+    }
+
+    public List<Aktivitetsbegransning> getAktivitetsbegransningar() {
+        return aktivitetsbegransningar;
+    }
+
+    public void setAktivitetsbegransningar(List<Aktivitetsbegransning> aktivitetsbegransningar) {
+        this.aktivitetsbegransningar = aktivitetsbegransningar;
+    }
+
+    public BedomtTillstand getBedomtTillstand() {
+        return bedomtTillstand;
+    }
+
+    public void setBedomtTillstand(BedomtTillstand bedomtTillstand) {
+        this.bedomtTillstand = bedomtTillstand;
+    }
+
+    public List<Vardkontakt> getVardkontakter() {
+        return vardkontakter;
+    }
+
+    public void setVardkontakter(List<Vardkontakt> vardkontakter) {
+        this.vardkontakter = vardkontakter;
+    }
+
+    public List<Referens> getReferenser() {
+        return referenser;
+    }
+
+    public void setReferenser(List<Referens> referenser) {
+        this.referenser = referenser;
+    }
 }
