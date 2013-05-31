@@ -35,6 +35,8 @@ public class CustomObjectMapper extends ObjectMapper {
         private Module() {
             addSerializer(Ovrigt.class, new OvrigtSerializer());
 
+            addSerializer(String.class, new TrimmingStringSerializer());
+
             addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
             addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
 

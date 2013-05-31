@@ -55,7 +55,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
         lakarutlatande.setId(source.getLakarutlatandeId());
         lakarutlatande.setTyp(FK_7263);
-        lakarutlatande.setKommentar(source.getKommentar().trim());
+        lakarutlatande.setKommentar(source.getKommentar());
         lakarutlatande.setSigneringsdatum(source.getSigneringsdatum());
         lakarutlatande.setVardenhet(convert(source.getSkapadAvHosPersonal().getEnhet()));
         lakarutlatande.setPatient(convert(source.getPatient()));
@@ -114,11 +114,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static BedomtTillstand convert(BedomtTillstandType source) {
         BedomtTillstand bedomtTillstand = new BedomtTillstand();
-
-        if (source.getBeskrivning() != null) {
-            bedomtTillstand.setBeskrivning(source.getBeskrivning().trim());
-        }
-
+        bedomtTillstand.setBeskrivning(source.getBeskrivning());
         return bedomtTillstand;
     }
 
@@ -158,9 +154,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static Aktivitet convert(AktivitetType source) {
         Aktivitet aktivitet = new Aktivitet();
-        if (source.getBeskrivning() != null) {
-            aktivitet.setBeskrivning(source.getBeskrivning().trim());
-        }
+        aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(convert(source.getAktivitetskod()));
         return aktivitet;
     }
@@ -198,20 +192,13 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static Funktionsnedsattning convertToFunktionsnedsattning(FunktionstillstandType source) {
         Funktionsnedsattning funktionsnedsattning = new Funktionsnedsattning();
-
-        if (source.getBeskrivning() != null) {
-            funktionsnedsattning.setBeskrivning(source.getBeskrivning().trim());
-        }
+        funktionsnedsattning.setBeskrivning(source.getBeskrivning());
         return funktionsnedsattning;
     }
 
     private static Aktivitetsbegransning convertToAktivitetsbegransning(FunktionstillstandType funktionstillstand) {
         Aktivitetsbegransning aktivitetsbegransning = new Aktivitetsbegransning();
-
-        if (funktionstillstand.getBeskrivning() != null) {
-            aktivitetsbegransning.setBeskrivning(funktionstillstand.getBeskrivning().trim());
-        }
-
+        aktivitetsbegransning.setBeskrivning(funktionstillstand.getBeskrivning());
         aktivitetsbegransning.setArbetsformaga(convert(funktionstillstand.getArbetsformaga()));
         return aktivitetsbegransning;
     }
@@ -219,9 +206,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
     private static Arbetsformaga convert(ArbetsformagaType source) {
         Arbetsformaga arbetsformaga = new Arbetsformaga();
 
-        if (source.getMotivering() != null) {
-            arbetsformaga.setMotivering(source.getMotivering().trim());
-        }
+        arbetsformaga.setMotivering(source.getMotivering());
 
         if (source.getArbetsuppgift() != null) {
             arbetsformaga.setArbetsuppgift(source.getArbetsuppgift().getTypAvArbetsuppgift());

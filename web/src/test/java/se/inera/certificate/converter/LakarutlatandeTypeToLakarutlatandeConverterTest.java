@@ -1,5 +1,7 @@
 package se.inera.certificate.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -16,8 +18,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author andreaskaltenbach
@@ -39,6 +39,6 @@ public class LakarutlatandeTypeToLakarutlatandeConverterTest {
         JsonNode tree = objectMapper.valueToTree(lakarutlatande);
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getInputStream());
 
-        assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString(), expectedTree, tree);
+        assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
     }
 }

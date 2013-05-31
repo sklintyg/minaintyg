@@ -69,16 +69,16 @@
     ],
     "funktionsnedsattningar": [
         {
-            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-\n      och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger\n      att patienten inte kan använda armen särkilt mycket."
+            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
         }
     ],
     "aktivitetsbegransningar": [
         {
-            "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt.\n      Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan\n      inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så\n      mycket som möjligt under tiden för läkning.",
+            "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
             "arbetsformaga": {
-                "motivering": "Skadan har förvärrats vid varje tillfälle patienten\n        använt armen. Måste hållas i total stillhet tills läkningsprocessen\n        kommit en bit på väg. Eventuellt kan utredning visa att operation är\n        nödvändig för att läka skadan.",
+                "motivering": "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
                 "prognosangivelse": "DET_GAR_INTE_ATT_BEDOMMA",
-                "arbetsuppgift": "Dirigent. Dirigerar en större orkester på deltid\n        ",
+                "arbetsuppgift": "Dirigent. Dirigerar en större orkester på deltid",
                 "arbetsformagaNedsattningar": [
                     {
                         "varaktighetTom": "2011-05-31",
@@ -110,7 +110,7 @@
         }
     ],
     "bedomtTillstand": {
-        "beskrivning": "Patienten klämde höger överarm vid olycka i hemmet.\n      Problemen har pågått en längre tid."
+        "beskrivning": "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
     },
     "referenser": [
         {
