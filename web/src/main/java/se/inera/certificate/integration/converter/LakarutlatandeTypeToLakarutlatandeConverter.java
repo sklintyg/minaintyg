@@ -1,11 +1,31 @@
 package se.inera.certificate.integration.converter;
 
-import se.inera.certificate.model.*;
+import se.inera.certificate.model.Aktivitet;
+import se.inera.certificate.model.Aktivitetsbegransning;
+import se.inera.certificate.model.Arbetsformaga;
+import se.inera.certificate.model.ArbetsformagaNedsattning;
+import se.inera.certificate.model.BedomtTillstand;
+import se.inera.certificate.model.Funktionsnedsattning;
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Prognosangivelse;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
+import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Sysselsattning;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
@@ -20,6 +40,9 @@ import java.util.List;
 public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     public static final String FK_7263 = "fk7263";
+
+    private LakarutlatandeTypeToLakarutlatandeConverter() {
+    }
 
     /**
      * Converts a JAXB {@link LakarutlatandeType} to a {@link Lakarutlatande}.
@@ -43,6 +66,8 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
                     break;
                 case KROPPSFUNKTION:
                     funktionsnedsattningar.add(convertToFunktionsnedsattning(funktionstillstand));
+                    break;
+                default:
                     break;
             }
         }
@@ -83,8 +108,9 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
                 return se.inera.certificate.model.Referenstyp.JOURNALUPPGIFTER;
             case ANNAT:
                 return se.inera.certificate.model.Referenstyp.ANNAT;
+            default:
+                return null;
         }
-        return null;
     }
 
     private static List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
@@ -106,7 +132,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
         switch (aktivitetskod) {
             case ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
                 return se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
-            case     ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL:
+            case ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL:
                 return se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
             case GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
                 return se.inera.certificate.model.Aktivitetskod.GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
@@ -128,8 +154,9 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
                 return se.inera.certificate.model.Aktivitetskod.OVRIGT;
             case PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN:
                 return se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
+            default:
+                return null;
         }
-        return null;
     }
 
     private static Funktionsnedsattning convertToFunktionsnedsattning(FunktionstillstandType source) {
@@ -183,8 +210,9 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
                 return se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
             case NEDSATT_MED_1_4:
                 return se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
+            default:
+                return null;
         }
-        return null;
     }
 
     private static List<Sysselsattning> convert(List<SysselsattningType> source) {
@@ -203,8 +231,9 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
                 return Sysselsattning.ARBETSLOSHET;
             case FORALDRALEDIGHET:
                 return Sysselsattning.FORALDRALEDIGHET;
+            default:
+                return null;
         }
-        return null;
     }
 
     private static Prognosangivelse convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse source) {
