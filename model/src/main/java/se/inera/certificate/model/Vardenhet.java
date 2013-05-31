@@ -6,11 +6,13 @@ package se.inera.certificate.model;
 public class Vardenhet {
 
     private String id;
+    private String arbetsplatskod;
     private String namn;
     private String postadress;
     private String postnummer;
     private String postort;
     private String telefonnummer;
+    private String epost;
 
     private Vardgivare vardgivare;
 
@@ -20,6 +22,14 @@ public class Vardenhet {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getArbetsplatskod() {
+        return arbetsplatskod;
+    }
+
+    public void setArbetsplatskod(String arbetsplatskod) {
+        this.arbetsplatskod = arbetsplatskod;
     }
 
     public String getNamn() {
@@ -68,5 +78,13 @@ public class Vardenhet {
 
     public void setTelefonnummer(String telefonnummer) {
         this.telefonnummer = telefonnummer;
+    }
+
+    public String getEpost() {
+        return epost;
+    }
+
+    public void setEpost(String epost) {
+        this.epost = epost;
     }
 }

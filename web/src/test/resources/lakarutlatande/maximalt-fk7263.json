@@ -1,90 +1,125 @@
-{"id": "80832895-5a9c-450a-bd74-08af43750788", "typ": "fk7263", "signeringsdatum": "2011-01-26T00:00:00.000", "patient": {
-    "id": "19121212-1212",
-    "fornamn": "Test Testorsson"
-}, "skapadAv": {
-    "id": "Personal HSA-ID",
-    "namn": "En Läkare"
-}, "vardenhet": {
-    "id": "1.2.752.129.2.1.4.1",
-    "namn": "Kir mott",
-    "vardgivare": {
-        "id": "1.2.752.129.2.1.4.1",
-        "namn": "Landstinget Norrland"
-    }
-}, "aktiviteter": [
-    {
-        "aktivitetskod": "PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN"
+{
+    "id": "80832895-5a9c-450a-bd74-08af43750788",
+    "typ": "fk7263",
+    "kommentar":"Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
+    "signeringsdatum": "2011-01-26T00:00:00.000",
+    "patient": {
+        "id": "19121212-1212",
+        "fornamn": "Test Testorsson"
     },
-    {
-        "aktivitetskod": "PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN"
-    },
-    {
-        "aktivitetskod": "OVRIGT",
-        "beskrivning": "När skadan förbättrats rekommenderas muskeluppbyggande\n      sjukgymnastik\n    "
-    },
-    {
-        "aktivitetskod": "PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN",
-        "beskrivning": "Utreds om operation är nödvändig"
-    },
-    {
-        "aktivitetskod": "PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD",
-        "beskrivning": "Patienten ansvarar för att armen hålls i stillhet"
-    },
-    {
-        "aktivitetskod": "GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL"
-    },
-    {
-        "aktivitetskod": "FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT"
-    },
-    {
-        "aktivitetskod": "KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL"
-    }
-], "funktionsnedsattningar": [
-    {
-        "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-\n      och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger\n      att patienten inte kan använda armen särkilt mycket.\n    "
-    }
-], "aktivitetsbegransningar": [
-    {
-        "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt.\n      Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan\n      inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så\n      mycket som möjligt under tiden för läkning.\n    ",
-        "arbetsformaga": {
-            "motivering": "Skadan har förvärrats vid varje tillfälle patienten\n        använt armen. Måste hållas i total stillhet tills läkningsprocessen\n        kommit en bit på väg. Eventuellt kan utredning visa att operation är\n        nödvändig för att läka skadan.\n      ",
-            "prognosangivelse": "DET_GAR_INTE_ATT_BEDOMMA",
-            "arbetsuppgift": "Dirigent. Dirigerar en större orkester på deltid\n        ",
-            "arbetsformagaNedsattningar": [
-                {
-                    "varaktighetTom": "2011-05-31",
-                    "varaktighetFrom": "2011-04-01",
-                    "nedsattningsgrad": "NEDSATT_MED_1_4"
-                },
-                {
-                    "varaktighetTom": "2011-03-31",
-                    "varaktighetFrom": "2011-03-07",
-                    "nedsattningsgrad": "NEDSATT_MED_1_2"
-                },
-                {
-                    "varaktighetTom": "2011-03-06",
-                    "varaktighetFrom": "2011-02-14",
-                    "nedsattningsgrad": "NEDSATT_MED_3_4"
-                },
-                {
-                    "varaktighetTom": "2011-02-13",
-                    "varaktighetFrom": "2011-01-26",
-                    "nedsattningsgrad": "HELT_NEDSATT"
-                }
-            ],
-            "sysselsattningar": ["NUVARANDE_ARBETE", "ARBETSLOSHET", "FORALDRALEDIGHET"]
+    "vardkontakter": [
+        {
+            "vardkontakttyp" : "MIN_UNDERSOKNING_AV_PATIENTEN",
+            "vardkontaktstid" : "2011-01-26"
+        },
+{
+            "vardkontakttyp" : "MIN_TELEFONKONTAKT_MED_PATIENTEN",
+            "vardkontaktstid" : "2011-01-12"
         }
-    }
-], "bedomtTillstand": {
-    "beskrivning": "Patienten klämde höger överarm vid olycka i hemmet.\n      Problemen har pågått en längre tid.\n    "
-}, "referenser": [
-    {
-        "referenstyp": "JOURNALUPPGIFTER",
-        "datum": "2010-01-14"
+    ],
+
+
+    "skapadAv": {
+        "id": "Personal HSA-ID",
+        "namn": "En Läkare"
     },
-    {
-        "referenstyp": "ANNAT",
-        "datum": "2010-01-24"
-    }
-]
-   }
+    "vardenhet": {
+        "id": "VardenhetY",
+        "arbetsplatskod" : "123456789011",
+        "namn": "Kir mott",
+
+        "postadress":"Lasarettsvägen 13",
+        "postnummer":"85150",
+        "postort":"Sundsvall",
+        "telefonnummer":"060-1818000",
+        "epost":"kirmott@vardenhet.se",
+        "vardgivare": {
+            "id": "VardgivarId",
+            "namn": "Landstinget Norrland"
+        }
+    },
+    "aktiviteter": [
+        {
+            "aktivitetskod": "PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN"
+        },
+        {
+            "aktivitetskod": "PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN"
+        },
+        {
+            "aktivitetskod": "OVRIGT",
+            "beskrivning": "När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik"
+        },
+        {
+            "aktivitetskod": "PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN",
+            "beskrivning": "Utreds om operation är nödvändig"
+        },
+        {
+            "aktivitetskod": "PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD",
+            "beskrivning": "Patienten ansvarar för att armen hålls i stillhet"
+        },
+        {
+            "aktivitetskod": "GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL"
+        },
+        {
+            "aktivitetskod": "FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT"
+        },
+        {
+            "aktivitetskod": "KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL"
+        }
+    ],
+    "funktionsnedsattningar": [
+        {
+            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-\n      och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger\n      att patienten inte kan använda armen särkilt mycket."
+        }
+    ],
+    "aktivitetsbegransningar": [
+        {
+            "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt.\n      Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan\n      inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så\n      mycket som möjligt under tiden för läkning.",
+            "arbetsformaga": {
+                "motivering": "Skadan har förvärrats vid varje tillfälle patienten\n        använt armen. Måste hållas i total stillhet tills läkningsprocessen\n        kommit en bit på väg. Eventuellt kan utredning visa att operation är\n        nödvändig för att läka skadan.",
+                "prognosangivelse": "DET_GAR_INTE_ATT_BEDOMMA",
+                "arbetsuppgift": "Dirigent. Dirigerar en större orkester på deltid\n        ",
+                "arbetsformagaNedsattningar": [
+                    {
+                        "varaktighetTom": "2011-05-31",
+                        "varaktighetFrom": "2011-04-01",
+                        "nedsattningsgrad": "NEDSATT_MED_1_4"
+                    },
+                    {
+                        "varaktighetTom": "2011-03-31",
+                        "varaktighetFrom": "2011-03-07",
+                        "nedsattningsgrad": "NEDSATT_MED_1_2"
+                    },
+                    {
+                        "varaktighetTom": "2011-03-06",
+                        "varaktighetFrom": "2011-02-14",
+                        "nedsattningsgrad": "NEDSATT_MED_3_4"
+                    },
+                    {
+                        "varaktighetTom": "2011-02-13",
+                        "varaktighetFrom": "2011-01-26",
+                        "nedsattningsgrad": "HELT_NEDSATT"
+                    }
+                ],
+                "sysselsattningar": [
+                    "NUVARANDE_ARBETE",
+                    "ARBETSLOSHET",
+                    "FORALDRALEDIGHET"
+                ]
+            }
+        }
+    ],
+    "bedomtTillstand": {
+        "beskrivning": "Patienten klämde höger överarm vid olycka i hemmet.\n      Problemen har pågått en längre tid."
+    },
+    "referenser": [
+        {
+            "referenstyp": "JOURNALUPPGIFTER",
+            "datum": "2010-01-14"
+        },
+        {
+            "referenstyp": "ANNAT",
+            "datum": "2010-01-24"
+        }
+    ]
+}

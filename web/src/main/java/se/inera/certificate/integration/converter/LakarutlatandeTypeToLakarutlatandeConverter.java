@@ -14,6 +14,7 @@ import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.Vardkontakt;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -26,6 +27,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
@@ -52,6 +55,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
         lakarutlatande.setId(source.getLakarutlatandeId());
         lakarutlatande.setTyp(FK_7263);
+        lakarutlatande.setKommentar(source.getKommentar().trim());
         lakarutlatande.setSigneringsdatum(source.getSigneringsdatum());
         lakarutlatande.setVardenhet(convert(source.getSkapadAvHosPersonal().getEnhet()));
         lakarutlatande.setPatient(convert(source.getPatient()));
@@ -77,13 +81,44 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
         lakarutlatande.setAktiviteter(convertAktiviteter(source.getAktivitet()));
         lakarutlatande.setReferenser(convertReferenser(source.getReferens()));
         lakarutlatande.setBedomtTillstand(convert(source.getBedomtTillstand()));
+        lakarutlatande.setVardkontakter(convertVardkontakter(source.getVardkontakt()));
 
         return lakarutlatande;
     }
 
+    private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
+        List<Vardkontakt> vardkontakter = new ArrayList<>();
+        for (VardkontaktType vardkontakt : source) {
+            vardkontakter.add(convert(vardkontakt));
+        }
+        return vardkontakter;
+    }
+
+    private static Vardkontakt convert(VardkontaktType source) {
+        Vardkontakt vardkontakt = new Vardkontakt();
+        vardkontakt.setVardkontakttyp(convert(source.getVardkontakttyp()));
+        vardkontakt.setVardkontaktstid(source.getVardkontaktstid());
+        return vardkontakt;
+    }
+
+    private static se.inera.certificate.model.Vardkontakttyp convert(Vardkontakttyp source) {
+        switch (source) {
+            case MIN_TELEFONKONTAKT_MED_PATIENTEN:
+                return se.inera.certificate.model.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
+            case MIN_UNDERSOKNING_AV_PATIENTEN:
+                return se.inera.certificate.model.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
+            default:
+                return null;
+        }
+    }
+
     private static BedomtTillstand convert(BedomtTillstandType source) {
         BedomtTillstand bedomtTillstand = new BedomtTillstand();
-        bedomtTillstand.setBeskrivning(source.getBeskrivning());
+
+        if (source.getBeskrivning() != null) {
+            bedomtTillstand.setBeskrivning(source.getBeskrivning().trim());
+        }
+
         return bedomtTillstand;
     }
 
@@ -123,7 +158,9 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static Aktivitet convert(AktivitetType source) {
         Aktivitet aktivitet = new Aktivitet();
-        aktivitet.setBeskrivning(source.getBeskrivning());
+        if (source.getBeskrivning() != null) {
+            aktivitet.setBeskrivning(source.getBeskrivning().trim());
+        }
         aktivitet.setAktivitetskod(convert(source.getAktivitetskod()));
         return aktivitet;
     }
@@ -161,20 +198,31 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static Funktionsnedsattning convertToFunktionsnedsattning(FunktionstillstandType source) {
         Funktionsnedsattning funktionsnedsattning = new Funktionsnedsattning();
-        funktionsnedsattning.setBeskrivning(source.getBeskrivning());
+
+        if (source.getBeskrivning() != null) {
+            funktionsnedsattning.setBeskrivning(source.getBeskrivning().trim());
+        }
         return funktionsnedsattning;
     }
 
     private static Aktivitetsbegransning convertToAktivitetsbegransning(FunktionstillstandType funktionstillstand) {
         Aktivitetsbegransning aktivitetsbegransning = new Aktivitetsbegransning();
-        aktivitetsbegransning.setBeskrivning(funktionstillstand.getBeskrivning());
+
+        if (funktionstillstand.getBeskrivning() != null) {
+            aktivitetsbegransning.setBeskrivning(funktionstillstand.getBeskrivning().trim());
+        }
+
         aktivitetsbegransning.setArbetsformaga(convert(funktionstillstand.getArbetsformaga()));
         return aktivitetsbegransning;
     }
 
     private static Arbetsformaga convert(ArbetsformagaType source) {
         Arbetsformaga arbetsformaga = new Arbetsformaga();
-        arbetsformaga.setMotivering(source.getMotivering());
+
+        if (source.getMotivering() != null) {
+            arbetsformaga.setMotivering(source.getMotivering().trim());
+        }
+
         if (source.getArbetsuppgift() != null) {
             arbetsformaga.setArbetsuppgift(source.getArbetsuppgift().getTypAvArbetsuppgift());
         }
@@ -268,15 +316,25 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
     private static Vardenhet convert(EnhetType enhet) {
         Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setId(enhet.getEnhetsId().getRoot());
+        vardenhet.setId(enhet.getEnhetsId().getExtension());
+        if (enhet.getArbetsplatskod() != null) {
+            vardenhet.setArbetsplatskod(enhet.getArbetsplatskod().getExtension());
+        }
         vardenhet.setNamn(enhet.getEnhetsnamn());
+
+        vardenhet.setPostadress(enhet.getPostadress());
+        vardenhet.setPostnummer(enhet.getPostnummer());
+        vardenhet.setPostort(enhet.getPostort());
+        vardenhet.setTelefonnummer(enhet.getTelefonnummer());
+        vardenhet.setEpost(enhet.getEpost());
+
         vardenhet.setVardgivare(convert(enhet.getVardgivare()));
         return vardenhet;
     }
 
     private static Vardgivare convert(VardgivareType source) {
         Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(source.getVardgivareId().getRoot());
+        vardgivare.setId(source.getVardgivareId().getExtension());
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;
     }
