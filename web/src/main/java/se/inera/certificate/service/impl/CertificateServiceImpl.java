@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
@@ -39,6 +42,9 @@ import java.util.List;
  */
 @Service
 public class CertificateServiceImpl implements CertificateService {
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private static final Comparator<CertificateStateHistoryEntry> SORTER = new Comparator<CertificateStateHistoryEntry>() {
 
@@ -69,13 +75,40 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public void storeCertificate(Certificate certificate) {
+    public Certificate storeCertificate(Lakarutlatande lakarutlatande) {
+
+        // turn a lakarutlatande into a certificate entity
+        Certificate certificate = createCertificate(lakarutlatande);
 
         // add initial RECEIVED state using current time as receiving timestamp
         CertificateStateHistoryEntry state = new CertificateStateHistoryEntry(MI, CertificateState.RECEIVED, new LocalDateTime());
         certificate.getStates().add(state);
 
         certificateDao.store(certificate);
+
+        return certificate;
+    }
+
+    public String toJson(Lakarutlatande lakarutlatande) {
+        try {
+            return objectMapper.writeValueAsString(lakarutlatande);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to serialize lakarutlatande.", e);
+        }
+    }
+
+    public Certificate createCertificate(Lakarutlatande lakarutlatande) {
+        Certificate certificate = new Certificate(lakarutlatande.getId(), toJson(lakarutlatande));
+
+        certificate.setType(lakarutlatande.getTyp());
+        certificate.setSigningDoctorName(lakarutlatande.getSkapadAv().getNamn());
+        certificate.setSignedDate(lakarutlatande.getSigneringsdatum());
+        certificate.setCareUnitName(lakarutlatande.getVardenhet().getNamn());
+        certificate.setCivicRegistrationNumber(lakarutlatande.getPatient().getId());
+        certificate.setValidFromDate(lakarutlatande.calculateValidFromDate());
+        certificate.setValidToDate(lakarutlatande.calculateValidToDate());
+
+        return certificate;
     }
 
     @Override
@@ -90,7 +123,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private List<Certificate> fixDeletedStatus(List<Certificate> certificates) {
-        for (Certificate certificate: certificates) {
+        for (Certificate certificate : certificates) {
             fixDeletedStatus(certificate);
         }
         return certificates;
@@ -104,11 +137,13 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private Boolean isDeleted(List<CertificateStateHistoryEntry> entries) {
-        for (CertificateStateHistoryEntry entry: entries) {
+        for (CertificateStateHistoryEntry entry : entries) {
             switch (entry.getState()) {
-            case DELETED: return true;
-            case RESTORED: return false;
-            default:
+                case DELETED:
+                    return true;
+                case RESTORED:
+                    return false;
+                default:
             }
         }
         return false;

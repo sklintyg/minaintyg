@@ -81,7 +81,7 @@ public class ModelConverterTest {
                 .certificateType("fk7263")
                 .validity(new LocalDate(2000, 1, 1), new LocalDate(2020, 1, 1))
                 .signingDoctorName("Doctor Who")
-                .signedDate(new LocalDate(1999, 12, 31))
+                .signedDate(new LocalDateTime(1999, 12, 31, 23, 59))
                 .careUnitName("London Bridge Hospital")
                 .deleted(false)
                 .state(PROCESSED, "fk")

@@ -1,5 +1,6 @@
 package se.inera.certificate.model;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import java.util.List;
@@ -158,4 +159,40 @@ public class Lakarutlatande {
     public void setReferenser(List<Referens> referenser) {
         this.referenser = referenser;
     }
+
+    public LocalDate calculateValidFromDate() {
+
+        if (aktivitetsbegransningar == null) {
+            return null;
+        }
+
+        LocalDate fromDate = null;
+
+        for (Aktivitetsbegransning aktivitetsbegransning : aktivitetsbegransningar) {
+            LocalDate aktivitetsbegransningFromDate = aktivitetsbegransning.calculateValidFromDate();
+            if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
+                fromDate = aktivitetsbegransningFromDate;
+            }
+        }
+        return fromDate;
+    }
+
+    public LocalDate calculateValidToDate() {
+
+        if (aktivitetsbegransningar == null) {
+            return null;
+        }
+
+        LocalDate toDate = null;
+
+        for (Aktivitetsbegransning aktivitetsbegransning : aktivitetsbegransningar) {
+            LocalDate aktivitetsbegransningToDate = aktivitetsbegransning.calculateValidToDate();
+            if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
+                toDate = aktivitetsbegransningToDate;
+            }
+        }
+        return toDate;
+    }
+
+
 }

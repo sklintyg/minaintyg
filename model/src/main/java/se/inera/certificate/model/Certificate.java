@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
@@ -92,8 +93,8 @@ public class Certificate {
      * Time this certificate was signed.
      */
     @Column(name = "SIGNED_DATE", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate signedDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime signedDate;
 
     /**
      * Time from which this certificate is valid.
@@ -199,11 +200,11 @@ public class Certificate {
         this.civicRegistrationNumber = civicRegistrationNumber;
     }
 
-    public LocalDate getSignedDate() {
+    public LocalDateTime getSignedDate() {
         return signedDate;
     }
 
-    public void setSignedDate(LocalDate signedDate) {
+    public void setSignedDate(LocalDateTime signedDate) {
         this.signedDate = signedDate;
     }
 
@@ -240,6 +241,11 @@ public class Certificate {
     }
 
     private byte[] toBytes(String data) {
+
+        if (data == null) {
+            return new byte[0];
+        }
+
         try {
             return data.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {

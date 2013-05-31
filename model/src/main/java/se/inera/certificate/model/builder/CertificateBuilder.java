@@ -51,7 +51,7 @@ public class CertificateBuilder {
         return this;
     }
 
-    public CertificateBuilder signedDate(LocalDate signedDate) {
+    public CertificateBuilder signedDate(LocalDateTime signedDate) {
         certificate.setSignedDate(signedDate);
         return this;
     }

@@ -19,6 +19,7 @@
 package se.inera.certificate.dao.impl;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,7 +143,7 @@ public class CertificateDaoImplTest {
     public void testGetDocument() {
 
         Certificate certificate = CertificateFactory.buildCertificate("1", new LocalDate("2013-04-25"), new LocalDate("2013-05-25"));
-        certificate.setSignedDate(new LocalDate("2013-04-24"));
+        certificate.setSignedDate(new LocalDateTime("2013-04-24"));
         certificateDao.store(certificate);
 
         entityManager.flush();
@@ -150,12 +151,12 @@ public class CertificateDaoImplTest {
 
         Certificate storedCertificate = certificateDao.getCertificate("1");
 
-        assertEquals(new LocalDate("2013-04-24"), storedCertificate.getSignedDate());
+        assertEquals(new LocalDateTime("2013-04-24"), storedCertificate.getSignedDate());
         assertEquals(new LocalDate("2013-04-25"), storedCertificate.getValidFromDate());
         assertEquals(new LocalDate("2013-05-25"), storedCertificate.getValidToDate());
 
         String document = storedCertificate.getDocument();
-        assertEquals("<RegisterMedicalCertificate xmlns=\"urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3\"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>", document);
+        assertEquals("{\"name\":\"Some JSON\"}", document);
     }
 
     @Test

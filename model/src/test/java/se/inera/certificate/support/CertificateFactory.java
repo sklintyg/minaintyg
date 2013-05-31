@@ -1,6 +1,7 @@
 package se.inera.certificate.support;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.builder.CertificateBuilder;
 
@@ -13,14 +14,14 @@ public final class CertificateFactory {
     }
 
     public static final String CERTIFICATE_ID = "123456";
-    public static final String CERTIFICATE_DOCUMENT = "<RegisterMedicalCertificate xmlns=\"urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3\"><lakarutlatande></lakarutlatande></RegisterMedicalCertificate>";
+    public static final String CERTIFICATE_DOCUMENT = "{\"name\":\"Some JSON\"}";
     public static final String CIVIC_REGISTRATION_NUMBER = "19001122-3344";
     public static final String FK7263 = "fk7263";
 
     public static final LocalDate VALID_FROM = new LocalDate(2000, 1, 1);
     public static final LocalDate VALID_TO = new LocalDate(2000, 12, 31);
 
-    public static final LocalDate SIGNED_DATE = new LocalDate(1999, 12, 31);
+    public static final LocalDateTime SIGNED_DATE = new LocalDateTime(1999, 12, 31, 10, 32);
     public static final String SIGNING_DOCTOR = "Dr. Oetker";
 
     public static final String CARE_UNIT_NAME = "London Bridge Hospital";

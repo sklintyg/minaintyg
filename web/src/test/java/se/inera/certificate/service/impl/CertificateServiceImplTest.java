@@ -1,26 +1,29 @@
 package se.inera.certificate.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
+import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 /**
  * @author andreaskaltenbach
@@ -33,6 +36,9 @@ public class CertificateServiceImplTest {
 
     @Mock
     private ConsentService consentService = mock(ConsentService.class);
+
+    @Mock
+    private ObjectMapper objectMapper = mock(ObjectMapper.class);
 
     @InjectMocks
     private CertificateService certificateService = new CertificateServiceImpl();
@@ -72,11 +78,39 @@ public class CertificateServiceImplTest {
         assertTrue(found.getDeleted());
     }
 
-    @Test
-    public void newCertificateGetsStatusReceived() {
+    private Lakarutlatande lakarutlatande() throws IOException {
+        ObjectMapper customObjectMapper = new CustomObjectMapper();
+        InputStream inputStream = new ClassPathResource("lakarutlatande/lakarutlatande.json").getInputStream();
+        return customObjectMapper.readValue(inputStream, Lakarutlatande.class);
+    }
 
-        Certificate certificate = new Certificate("certId", "<cert/>");
-        certificateService.storeCertificate(certificate);
+    @Test
+    public void testStoreCertificateExtractsCorrectInfo() throws IOException {
+
+        when(objectMapper.writeValueAsString(any(Lakarutlatande.class))).thenReturn("Some JSON");
+
+        Certificate certificate = certificateService.storeCertificate(lakarutlatande());
+
+        assertEquals("1", certificate.getId());
+        assertEquals("fk7263", certificate.getType());
+        assertNotNull(certificate.getDocument());
+        assertEquals("Hans Rosling", certificate.getSigningDoctorName());
+        assertEquals("Vårdcentrum i väst", certificate.getCareUnitName());
+        assertEquals("19001122-3344", certificate.getCivicRegistrationNumber());
+        assertEquals(new LocalDateTime("2013-05-31T09:51:38.570"), certificate.getSignedDate());
+        assertEquals(new LocalDate("2013-06-01"), certificate.getValidFromDate());
+        assertEquals(new LocalDate("2013-06-12"), certificate.getValidToDate());
+
+        assertEquals("Some JSON", certificate.getDocument());
+
+        verify(objectMapper).writeValueAsString(any(Lakarutlatande.class));
+        verify(certificateDao).store(certificate);
+    }
+
+    @Test
+    public void newCertificateGetsStatusReceived() throws IOException {
+
+        Certificate certificate = certificateService.storeCertificate(lakarutlatande());
 
         assertEquals(1, certificate.getStates().size());
         assertEquals(CertificateState.RECEIVED, certificate.getStates().get(0).getState());

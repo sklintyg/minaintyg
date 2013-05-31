@@ -23,6 +23,7 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Lakarutlatande;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public interface CertificateService {
      */
     Certificate getCertificate(String civicRegistrationNumber, String certificateId) throws MissingConsentException;
 
-    void storeCertificate(Certificate certificate);
+    Certificate storeCertificate(Lakarutlatande lakarutlatande);
 
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 }

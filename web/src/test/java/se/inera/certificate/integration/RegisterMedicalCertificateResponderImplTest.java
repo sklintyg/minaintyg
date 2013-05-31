@@ -1,6 +1,7 @@
 package se.inera.certificate.integration;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -8,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
@@ -18,10 +19,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
-import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -48,25 +47,21 @@ public class RegisterMedicalCertificateResponderImplTest {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         JAXBElement<RegisterMedicalCertificateType> request =  unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/fk7263.xml").getInputStream()), RegisterMedicalCertificateType.class);
 
-        ArgumentCaptor<Certificate> argument = ArgumentCaptor.forClass(Certificate.class);
+        ArgumentCaptor<Lakarutlatande> argument = ArgumentCaptor.forClass(Lakarutlatande.class);
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request.getValue());
 
         verify(certificateService).storeCertificate(argument.capture());
 
         assertEquals("6ea04fd0-5fef-4809-823b-efeddf8a4d55", argument.getValue().getId());
-        assertEquals("Landstinget Norrland", argument.getValue().getCareUnitName());
-        assertEquals("19940701-0066", argument.getValue().getCivicRegistrationNumber());
-        assertEquals(new LocalDate("2013-03-17"), argument.getValue().getSignedDate());
-        assertEquals("En Läkare", argument.getValue().getSigningDoctorName());
-        assertEquals(new LocalDate("2013-03-17"), argument.getValue().getValidFromDate());
-        assertEquals(new LocalDate("2013-05-01"), argument.getValue().getValidToDate());
-        assertEquals("fk7263", argument.getValue().getType());
-
-        Source source = new StreamSource(new StringReader(argument.getValue().getDocument()));
-        JAXBElement<RegisterMedicalCertificateType> document = unmarshaller.unmarshal(source, RegisterMedicalCertificateType.class);
-
-        assertEquals(request.getValue(), document.getValue());
+        assertEquals("Kir Mott", argument.getValue().getVardenhet().getNamn());
+        assertEquals("Landstinget Norrland", argument.getValue().getVardenhet().getVardgivare().getNamn());
+        assertEquals("19940701-0066", argument.getValue().getPatient().getId());
+        assertEquals(new LocalDateTime("2013-03-17"), argument.getValue().getSigneringsdatum());
+        assertEquals("En Läkare", argument.getValue().getSkapadAv().getNamn());
+        assertEquals(new LocalDate("2013-03-17"), argument.getValue().calculateValidFromDate());
+        assertEquals(new LocalDate("2013-05-01"), argument.getValue().calculateValidToDate());
+        assertEquals("fk7263", argument.getValue().getTyp());
 
         assertEquals(OK, response.getResult().getResultCode());
     }

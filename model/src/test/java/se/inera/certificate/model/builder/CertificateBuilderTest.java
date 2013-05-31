@@ -1,6 +1,7 @@
 package se.inera.certificate.model.builder;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import se.inera.certificate.model.Certificate;
 
@@ -11,7 +12,7 @@ public class CertificateBuilderTest {
 
     private static final LocalDate FROM_DATE = new LocalDate(2013, 3, 1);
     private static final LocalDate TO_DATE = new LocalDate(2013, 3, 20);
-    private static final LocalDate SIGNED_DATE = new LocalDate(2013, 3, 1);
+    private static final LocalDateTime SIGNED_DATE = new LocalDateTime(2013, 3, 1, 11, 32);
 
     @Test
     public void setAllFields() {
