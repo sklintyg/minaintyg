@@ -3,7 +3,7 @@ package se.inera.certificate.integration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import intyg.skickaintyg._1.SkickaIntygResponderInterface;
+import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.cxf.annotations.SchemaValidation;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Collections;
  * @author andreaskaltenbach
  */
 @SchemaValidation
-public class SkickaIntygResponder implements SkickaIntygResponderInterface {
+public class RegistreraIntygResponder implements RegistreraIntygResponderInterface {
 
     private String host;
 
@@ -35,7 +35,7 @@ public class SkickaIntygResponder implements SkickaIntygResponderInterface {
     }
 
     @Override
-    public void skickaIntyg(Holder<Lakarutlatande> lakarutlatande) {
+    public void registreraIntyg(Holder<Lakarutlatande> lakarutlatande) {
         String type = lakarutlatande.value.getTyp();
 
         // let the certificate validate by the corresponding certificate module

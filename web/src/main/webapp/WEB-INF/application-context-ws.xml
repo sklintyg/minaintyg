@@ -96,9 +96,9 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/skicka-intyg/v1.0">
+  <jaxws:endpoint address="/registrera-intyg/v1.0">
     <jaxws:implementor>
-      <bean class="se.inera.certificate.integration.SkickaIntygResponder">
+      <bean class="se.inera.certificate.integration.RegistreraIntygResponder">
         <property name="port" value="${modules.port}"/>
       </bean>
     </jaxws:implementor>

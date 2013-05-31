@@ -60,11 +60,11 @@
               <wsdlOptions>
                 <wsdlOption>
                   <wsdl>
-                    ${schema.path}/intyg/SkickaIntygInteraction_1.0.wsdl
+                    ${schema.path}/intyg/RegistreraIntygInteraction_1.0.wsdl
                   </wsdl>
                   <bindingFiles>
                     <bindingFile>
-                      ${basedir}/bindings/skicka-intyg-binding.xjb
+                      ${basedir}/bindings/registrera-intyg-binding.xjb
                     </bindingFile>
                   </bindingFiles>
                   <extraargs>

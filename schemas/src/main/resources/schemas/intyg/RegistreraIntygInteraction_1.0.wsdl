@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions 
-	name="SkickaIntygInteraction"
+	name="RegistreraIntygInteraction"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
 	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:i="urn:intyg:1"
-	xmlns:tns="urn:intyg:SkickaIntyg:1"
-	targetNamespace="urn:intyg:SkickaIntyg:1">
+	xmlns:tns="urn:intyg:RegistreraIntyg:1"
+	targetNamespace="urn:intyg:RegistreraIntyg:1">
 
 	<wsdl:types>
 	  <xs:schema>
@@ -15,28 +15,28 @@
     </xs:schema>
 	</wsdl:types>
 
-	<wsdl:message name="SkickaIntygRequest">
+	<wsdl:message name="RegistreraIntygRequest">
 		<wsdl:part name="intyg" element="i:lakarutlatande" />
 	</wsdl:message>
 
-	<wsdl:message name="SkickaIntygResponse">
+	<wsdl:message name="RegistreraIntygResponse">
 		<wsdl:part name="intyg" element="i:lakarutlatande"/>
 	</wsdl:message>
 
-	<wsdl:portType name="SkickaIntygResponderInterface">
+	<wsdl:portType name="RegistreraIntygResponderInterface">
 	
-		<wsdl:operation name="SkickaIntyg">
-			<wsdl:input message="tns:SkickaIntygRequest"/>
-			<wsdl:output message="tns:SkickaIntygResponse"/>
+		<wsdl:operation name="RegistreraIntyg">
+			<wsdl:input message="tns:RegistreraIntygRequest"/>
+			<wsdl:output message="tns:RegistreraIntygResponse"/>
 		</wsdl:operation>
 		
 	</wsdl:portType>
 	
-	<wsdl:binding name="SkickaIntygResponderBinding" type="tns:SkickaIntygResponderInterface">
+	<wsdl:binding name="RegistreraIntygResponderBinding" type="tns:RegistreraIntygResponderInterface">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
-		<wsdl:operation name="SkickaIntyg">
-			<soap:operation soapAction="urn:intyg:SkickaIntygResponder:1"/>
+		<wsdl:operation name="RegistreraIntyg">
+			<soap:operation soapAction="urn:intyg:RegistreraIntygResponder:1"/>
 			<wsdl:input>
 				<soap:body use="literal" parts="intyg"/>
 			</wsdl:input>
@@ -47,8 +47,8 @@
 
 	</wsdl:binding>
 
-	<wsdl:service name="SkickaIntygResponderService">
-		<wsdl:port name="SkickaIntygResponderPort" binding="tns:SkickaIntygResponderBinding">
+	<wsdl:service name="RegistreraIntygResponderService">
+		<wsdl:port name="RegistreraIntygResponderPort" binding="tns:RegistreraIntygResponderBinding">
 			<soap:address location="http://tempuri.org"/>
 		</wsdl:port>
 	</wsdl:service>
