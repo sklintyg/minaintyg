@@ -33,7 +33,7 @@ public final class LocalDateAdapterTest {
     private static final String DATE_TIME_STRING = "2012-11-13T13:55:50.844";
     private static final String DATE_STRING = "2012-11-13";
 
-    private static finavalidator.LakarutlatandeValidatorTestl LocalDate DATE = new LocalDate(2012, 11, 13);
+    private static final LocalDate DATE = new LocalDate(2012, 11, 13);
     private static final LocalDateTime DATE_TIME = new LocalDateTime(2012, 11, 13, 13, 55, 50, 844);
     private static final LocalDateTime DATE_TIME_START_OF_DAY_STRING = new LocalDateTime(2012, 11, 13, 0, 0, 0);
 
