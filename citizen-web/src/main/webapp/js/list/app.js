@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var listCertApp = angular.module('ListCertApp', ['ui.bootstrap', 'mi.filters', 'services.listCertService', 'directives.message','directives.mi.header']).config([ '$routeProvider', function ($routeProvider) {
+var listCertApp = angular.module('ListCertApp', ['ui.bootstrap', 'mi.filters', 'services.listCertService', 'modules.messages','directives.mi']).config([ '$routeProvider', function ($routeProvider) {
     $routeProvider.when('/lista', {
 	        templateUrl: '/views/list.html',
 	        controller: 'ListCtrl'
@@ -27,7 +27,8 @@ var listCertApp = angular.module('ListCertApp', ['ui.bootstrap', 'mi.filters', '
         });
 } ]);
 
-listCertApp.run(['$rootScope', function ($rootScope) {
+listCertApp.run(['$rootScope', 'messageService', function ($rootScope, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
+    messageService.addResources(minaIntygResources);
 }]);
