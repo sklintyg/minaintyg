@@ -1,19 +1,26 @@
 package se.inera.certificate.integration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
+
+import java.util.Collections;
+
+import javax.xml.ws.Holder;
+
 import org.apache.cxf.annotations.SchemaValidation;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.integration.converter.LakarutlatandeJaxbToLakarutlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.integration.validator.ValidationException;
+import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.Valideringsresultat;
+import se.inera.certificate.service.CertificateService;
 
-import javax.xml.ws.Holder;
-import java.util.Collections;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
  * @author andreaskaltenbach
@@ -29,6 +36,8 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private CertificateService certificateService;
 
     public void setPort(String port) {
         host = "http://localhost:" + port;
@@ -41,8 +50,15 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         // let the certificate validate by the corresponding certificate module
         validate(type, lakarutlatande.value);
 
-        // if valid -> proceed with storing the certificate along with its custom binary info
         String certificateExtension = extractCertificateExtensionData(type, lakarutlatande.value);
+
+        se.inera.certificate.model.Lakarutlatande model  = LakarutlatandeJaxbToLakarutlatandeConverter.convert(lakarutlatande.value);
+
+        Ovrigt ovrigt = new Ovrigt();
+        ovrigt.setData(certificateExtension);
+        model.setOvrigt(ovrigt );
+
+        certificateService.storeCertificate(model);
     }
 
     private ModuleRestApi getModuleRestService(String type) {
