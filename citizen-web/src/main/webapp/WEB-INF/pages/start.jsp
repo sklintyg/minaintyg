@@ -37,21 +37,23 @@
 <link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
 </head>
 
 <body ng-app="ListCertApp">
+
+  <mvk-top-bar></mvk-top-bar>
+
   <div class="container">
-    <div id="page-header-container">
-      <mi-header user-name="<sec:authentication property="principal.username" />" />
-    </div>
-    <div id="navigation-container">
-      <mi-main-navigation></mi-main-navigation>
-    </div>
+
     <div id="content-container">
-
-
-
       <div class="content">
+        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+        
+        <div id="navigation-container">
+          <mi-main-navigation></mi-main-navigation>
+        </div>
+
         <div class="row-fluid">
           <div id="content-body" class="span12">
             <%-- No script to show at least something when javascript is off --%>
@@ -63,7 +65,7 @@
                 <spring:message code="error.noscript.text" />
               </div>
             </noscript>
-             <%-- ng-view that holds dynamic content managed by angular app --%>
+            <%-- ng-view that holds dynamic content managed by angular app --%>
             <div ng-view></div>
           </div>
         </div>

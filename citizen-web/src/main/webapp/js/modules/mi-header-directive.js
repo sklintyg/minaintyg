@@ -1,6 +1,6 @@
-angular.module('directives.mi.header', []);
+angular.module('directives.mi', []);
 
-angular.module('directives.mi.header').directive("miHeader", ['$rootScope', function($rootScope) {
+angular.module('directives.mi').directive("miHeader", ['$rootScope', function($rootScope) {
     return {
         restrict : "E",
         replace : true,
@@ -8,19 +8,19 @@ angular.module('directives.mi.header').directive("miHeader", ['$rootScope', func
           userName: "@"
         },
         template :
-          "<div id='page-header'>"
-        + "<div id='page-header-left'></div>"
-        + "<div id='page-header-right'></div>"
-        + "<a href='/web/start'><img id='logo' alt='logo' ng-src='/img/logo_mina_intyg.png' /></a>"
-        + "<div id='status'>"
-        + "  <div class='status-row'>"
-        + "    <span class='logged-in'><message key='view.label.loggedinas'/></span>&nbsp;<strong>{{userName}}</strong>"
-        + "  </div>"
-        + "</div>"
+              '<span class="mi-header">' //directives must ha a single root element.
+            + ' <a href="/web/start"><img id="logo" src="/img/logo.png" /></a>'
+            + ' <div id="status">'
+            + '     <div class="status-row">'
+            + '         <message key="view.label.loggedinas"></message><br><span class="logged-in">{{userName}}</span>'
+            + '     </div>'
+            + ' </div>'
+            + '</span>'
+        
     }
 } ]);
 
-angular.module('directives.mi.header').directive("miMainNavigation", ['$rootScope', '$location' , function($rootScope, $location) {
+angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$location' , function($rootScope, $location) {
     return {
         restrict : "E",
         replace : true,
@@ -31,7 +31,7 @@ angular.module('directives.mi.header').directive("miMainNavigation", ['$rootScop
             };  
         },
         template :
-            '<div class="navbar">'
+            '<div class="navbar mi-main-navigation">'
             + '<div class="navbar-inner">'
             + '  <ul class="nav">'
             + '    <li ng-class="navClass(\'lista\')"><a href="#/lista" id="inboxTab"><message key="label.inbox" /></a></li>'
@@ -45,3 +45,25 @@ angular.module('directives.mi.header').directive("miMainNavigation", ['$rootScop
             
     }
 } ]);
+
+angular.module('directives.mi').directive("mvkTopBar", ['$rootScope', '$location' , function($rootScope, $location) {
+    return {
+        restrict : "E",
+        replace : true,
+        template :
+              '<div id="headerContainer">'
+            + ' <div id="header">'
+            + '  <div class="wrapper">'
+            + '   <a href="####" class="backButton">'
+            + '     <h1 class="assistiveText">Mina vårdkontakter</h1>'
+            + '   </a>'
+            + '   <div class="functionRow">'
+            + '    <a href="####">Logga ut</a>'
+            + '   </div>'
+            + '   <div class="clear"></div>'
+            + '  </div>'
+            + ' </div>'
+            + '</div>'
+    }
+} ]);
+

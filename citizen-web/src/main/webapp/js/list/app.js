@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var listCertApp = angular.module('ListCertApp', ['ui.bootstrap', 'mi.filters', 'services.listCertService', 'directives.message','directives.mi.header']).config([ '$routeProvider', function ($routeProvider) {
+var listCertApp = angular.module('ListCertApp', ['ui.bootstrap', 'mi.filters', 'services.listCertService', 'directives.message','directives.mi']).config([ '$routeProvider', function ($routeProvider) {
     $routeProvider.when('/lista', {
 	        templateUrl: '/views/list.html',
 	        controller: 'ListCtrl'
