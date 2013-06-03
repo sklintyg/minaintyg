@@ -24,7 +24,6 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
 
     @Override
     public String getCertificate(String certificateId) {
-
         try {
             if (certificateId.startsWith("rli")) {
                 return objectMapper.writeValueAsString(lakarutlatande(certificateId));
