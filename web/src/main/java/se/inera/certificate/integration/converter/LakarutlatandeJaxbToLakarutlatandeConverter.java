@@ -3,11 +3,6 @@ package se.inera.certificate.integration.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.integration.v1.AktivitetsbegransningType;
 import se.inera.certificate.integration.v1.ArbetsformagaType;
 import se.inera.certificate.integration.v1.BedomtTillstandType;
