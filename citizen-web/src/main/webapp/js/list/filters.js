@@ -3,8 +3,8 @@
 /* Filters */
 
 // Filter items that should be listed in inbox
-angular.module('filters.inboxfilter', []);
-angular.module('filters.inboxfilter').filter('inboxfilter', function() {
+angular.module('mi.filters', []);
+angular.module('mi.filters').filter('inboxfilter', function() {
     return function(certificates) {
         var out = [];
 
@@ -18,8 +18,7 @@ angular.module('filters.inboxfilter').filter('inboxfilter', function() {
 });
 
 // Filter items that should be listed in inbox-archived
-angular.module('filters.archivedfilter', []);
-angular.module('filters.archivedfilter').filter('archivedfilter', function() {
+angular.module('mi.filters').filter('archivedfilter', function() {
     return function(certificates) {
         var out = [];
 
