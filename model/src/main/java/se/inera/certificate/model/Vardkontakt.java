@@ -2,10 +2,6 @@ package se.inera.certificate.model;
 
 import org.joda.time.LocalDate;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 /**
  * @author andreaskaltenbach
  */

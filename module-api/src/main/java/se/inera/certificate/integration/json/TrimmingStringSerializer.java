@@ -21,7 +21,7 @@ public class TrimmingStringSerializer extends StdScalarSerializer<String> {
         super(String.class);
     }
 
-    StringSerializer standardSerializer = new StringSerializer();
+    private StringSerializer standardSerializer = new StringSerializer();
 
     @Override
     public void serialize(String value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonGenerationException {
