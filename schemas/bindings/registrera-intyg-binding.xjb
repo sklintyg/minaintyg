@@ -1,6 +1,6 @@
-<jxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
-  <jxb:bindings>
-    <jxb:globalBindings>
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+  <jaxb:bindings>
+    <jaxb:globalBindings>
       <xjc:simple/>
 
       <jaxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
@@ -10,6 +10,6 @@
       <jaxb:javaType name="org.joda.time.LocalDateTime" xmlType="xs:dateTime"
                      parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDateTime"
                      printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDateTime"/>
-    </jxb:globalBindings>
-  </jxb:bindings>
-</jxb:bindings>
+    </jaxb:globalBindings>
+  </jaxb:bindings>
+</jaxb:bindings>
