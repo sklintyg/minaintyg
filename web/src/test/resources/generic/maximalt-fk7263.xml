@@ -3,8 +3,8 @@
   <id>80832895-5a9c-450a-bd74-08af43750788</id>
   <typ>fk7263</typ>
   <kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.</kommentar>
-  <signeringsdatum>2011-01-26T00:00:00</signeringsdatum>
-  <skickatDatum>2011-03-23T09:29:15</skickatDatum>
+  <signeringsdatum>2011-01-26T00:00:00.000</signeringsdatum>
+  <skickatDatum>2011-03-23T09:29:15.193</skickatDatum>
   <patient>
     <id>19121212-1212</id>
     <fornamn>Test Testorsson</fornamn>

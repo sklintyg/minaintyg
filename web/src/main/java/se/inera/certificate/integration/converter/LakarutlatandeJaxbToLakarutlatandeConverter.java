@@ -48,7 +48,8 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
         lakarutlatande.setId(value.getId());
         lakarutlatande.setTyp(FK_7263);
         lakarutlatande.setKommentar(value.getKommentar());
-        lakarutlatande.setSigneringsdatum(toDateTime(value.getSigneringsdatum()));
+        lakarutlatande.setSigneringsDatum(value.getSigneringsdatum());
+        lakarutlatande.setSkickatDatum(value.getSkickatDatum());
         lakarutlatande.setVardenhet(convert(value.getVardenhet()));
         lakarutlatande.setPatient(convert(value.getPatient()));
         lakarutlatande.setSkapadAv(convert(value.getSkapadAv()));
@@ -124,8 +125,8 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
         for (se.inera.certificate.integration.v1.ArbetsformagaNedsattningType arbetsformagaNedsattningType : source) {
             ArbetsformagaNedsattning arbetsformagaNedsattning = new ArbetsformagaNedsattning();
             arbetsformagaNedsattning.setNedsattningsgrad(convert(arbetsformagaNedsattningType.getNedsattningsgrad()));
-            arbetsformagaNedsattning.setVaraktighetFrom(toDate(arbetsformagaNedsattningType.getVaraktighetFrom()));
-            arbetsformagaNedsattning.setVaraktighetTom(toDate(arbetsformagaNedsattningType.getVaraktighetTom()));
+            arbetsformagaNedsattning.setVaraktighetFrom(arbetsformagaNedsattningType.getVaraktighetFrom());
+            arbetsformagaNedsattning.setVaraktighetTom(arbetsformagaNedsattningType.getVaraktighetTom());
             nedsattningar .add(arbetsformagaNedsattning);
         }
         return nedsattningar;
@@ -163,7 +164,7 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
     private static Vardkontakt convert(se.inera.certificate.integration.v1.VardkontaktType source) {
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(convert(source.getVardkontakttyp()));
-        vardkontakt.setVardkontaktstid(toDate(source.getVardkontaktstid()));
+        vardkontakt.setVardkontaktstid(source.getVardkontaktstid());
         return vardkontakt;
     }
 
@@ -189,7 +190,7 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
     private static Referens convert(se.inera.certificate.integration.v1.ReferensType source) {
         Referens referens = new Referens();
         referens.setReferenstyp(convert(source.getReferenstyp()));
-        referens.setDatum(toDate(source.getDatum()));
+        referens.setDatum(source.getDatum());
         return referens;
     }
 
@@ -303,12 +304,4 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
         return vardgivare;
     }
     
-    private static LocalDateTime toDateTime(XMLGregorianCalendar when) {
-        return new LocalDateTime(when.getYear(), when.getMonth(), when.getDay(), when.getHour(), when.getMinute(), when.getSecond(), 0);
-    }
-
-    private static LocalDate toDate(XMLGregorianCalendar when) {
-        return new LocalDate(when.getYear(), when.getMonth(), when.getDay());
-    }
-
 }
