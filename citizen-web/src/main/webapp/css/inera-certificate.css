@@ -110,7 +110,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .status-row {
-	padding-bottom: 5px;
+	color: #555;
 }
 
 div.statuslist {
@@ -371,10 +371,6 @@ td.link {
 /* Remove titles from popovers */
 h3.popover-title:empty {
 	display: none;
-}
-
-div.content {
-	padding: 40px 60px;
 }
 
 p.ingress {
