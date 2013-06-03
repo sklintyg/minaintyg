@@ -17,7 +17,7 @@ var messages = {
             "send" : "Skicka",
             "cancel" : "Avbryt",
             "goback" : "Tillbaka",
-            "show" : "Visa"
+            "show" : "Visa intyget"
         },
         "certificates" : {
             "types" : {
@@ -29,7 +29,7 @@ var messages = {
                 "sent" : "Skickat"
             },
             "header" : "Inkorgen",
-            "description" : "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Klicka på ett intyg för att titta på intyget, skriva ut det eller spara det till din dator",
+            "description" : "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Klicka på ett intyg för att titta på intyget, skriva ut det eller spara det till din dator.",
             "arhiveddescription" : "<p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att: <ul><li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg till mappen \"borttagna intyg\".</li><li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, och i vissa fall livet ut.</li><li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då ändra uppgiften i journalen.</li></ul></p><p><a href=\"http://www.datainspektionen.se/lagar-och-regler/patientdatalagen\" target=\"_blank\">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p>    <p>För att återställa ett borttaget intyg välj Återställ.</p>",
             "send" : {
                 "header" : "Skicka intyg till Försäkringskassan",
@@ -57,8 +57,8 @@ var messages = {
                 "issued" : "Utfärdat",
                 "type" : "Typ",
                 "certperiod" : "Intygsperiod",
-                "issuedby" : "Utfärdat av",
-                "latestevent" : "Senaste händelse"
+                "issuedby" : "Vårdenhet",
+                "latestevent" : "Senaste händelsen"
             }
         }
     },

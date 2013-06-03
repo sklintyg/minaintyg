@@ -8,30 +8,21 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.initialDisplaySize = 9;
     $scope.currentDisplaySize = 9;
 
-    $scope.sendSelected = function() {
-        var items = $filter('filter')($scope.certificates, {
-            selected : true
-        });
-        console.log("send " + items.length);
-        var item = items[0];
+    $scope.sendSelected = function(item) {
+        console.log("send " + item.id);
         listCertService.selectedCertificate = item;
         var path =  "/" + item.type.toLowerCase() + "/intyg/" + item.id
         $window.location.href = path;
     }
 
-    $scope.archiveSelected = function() {
-        var items = $filter('filter')($scope.certificates, {
-            selected : true
-        });
-
-        console.log("archive " + items[0]);
-        listCertService.archiveCertificate(items[0], function(fromServer, oldItem) {
+    $scope.archiveSelected = function(item) {
+        console.log("archive " + item.id);
+        listCertService.archiveCertificate(item, function(fromServer, oldItem) {
             console.log("statusUpdate callback:" + fromServer);
             // Better way to update the object?
             oldItem.archived = fromServer.archived;
             oldItem.status = fromServer.status;
             oldItem.selected = false;
-
         });
     }
 
