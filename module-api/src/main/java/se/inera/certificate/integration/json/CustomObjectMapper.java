@@ -26,7 +26,6 @@ public class CustomObjectMapper extends ObjectMapper {
         setSerializationInclusion(JsonInclude.Include.NON_NULL);
         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         registerModule(new Module());
-
     }
 
     private static final class Module extends SimpleModule {
