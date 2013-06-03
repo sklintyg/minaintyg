@@ -19,9 +19,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
@@ -60,6 +60,11 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
         lakarutlatande.setVardenhet(convert(source.getSkapadAvHosPersonal().getEnhet()));
         lakarutlatande.setPatient(convert(source.getPatient()));
         lakarutlatande.setSkapadAv(convert(source.getSkapadAvHosPersonal()));
+        lakarutlatande.setBedomtTillstand(convert(source.getMedicinsktTillstand()));
+
+        if (source.getBedomtTillstand() != null) {
+            lakarutlatande.setSjukdomsfarlopp(source.getBedomtTillstand().getBeskrivning());
+        }
 
         List<Aktivitetsbegransning> aktivitetsbegransningar = new ArrayList<>();
         List<Funktionsnedsattning> funktionsnedsattningar = new ArrayList<>();
@@ -80,10 +85,19 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
 
         lakarutlatande.setAktiviteter(convertAktiviteter(source.getAktivitet()));
         lakarutlatande.setReferenser(convertReferenser(source.getReferens()));
-        lakarutlatande.setBedomtTillstand(convert(source.getBedomtTillstand()));
         lakarutlatande.setVardkontakter(convertVardkontakter(source.getVardkontakt()));
 
         return lakarutlatande;
+    }
+
+    private static BedomtTillstand convert(MedicinsktTillstandType medicinsktTillstand) {
+        BedomtTillstand bedomtTillstand = new BedomtTillstand();
+        bedomtTillstand.setBeskrivning(medicinsktTillstand.getBeskrivning());
+
+        if (medicinsktTillstand.getTillstandskod() != null) {
+            bedomtTillstand.setTillstandskod(medicinsktTillstand.getTillstandskod().getCode());
+        }
+        return bedomtTillstand;
     }
 
     private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
@@ -110,12 +124,6 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
             default:
                 return null;
         }
-    }
-
-    private static BedomtTillstand convert(BedomtTillstandType source) {
-        BedomtTillstand bedomtTillstand = new BedomtTillstand();
-        bedomtTillstand.setBeskrivning(source.getBeskrivning());
-        return bedomtTillstand;
     }
 
     private static List<Referens> convertReferenser(List<ReferensType> source) {
