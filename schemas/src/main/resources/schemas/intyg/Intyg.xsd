@@ -17,7 +17,7 @@
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
       <xs:element name="vardenhet" type="vardenhetType"/>
-      <xs:element name="sjukdomsfarlopp" type="xs:string" minOccurs="0"/>
+      <xs:element name="sjukdomsforlopp" type="xs:string" minOccurs="0"/>
       <xs:element name="aktivitet" type="aktivitetType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="funktionsnedsattning" type="funktionsnedsattningType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="aktivitetsbegransning" type="aktivitetsbegransningType" minOccurs="0" maxOccurs="unbounded"/>
@@ -44,8 +44,14 @@
   </xs:complexType>
   <xs:complexType name="vardenhetType">
     <xs:sequence>
+      <xs:element name="arbetsplatskod" type="xs:string"/>
+      <xs:element name="epost" type="xs:string"/>
       <xs:element name="id" type="xs:string"/>
       <xs:element name="namn" type="xs:string"/>
+      <xs:element name="postadress" type="xs:string"/>
+      <xs:element name="postnummer" type="xs:string"/>
+      <xs:element name="postort" type="xs:string"/>
+      <xs:element name="telefonnummer" type="xs:string"/>
       <xs:element name="vardgivare" type="vardgivareType"/>
     </xs:sequence>
   </xs:complexType>
@@ -90,12 +96,13 @@
   <xs:complexType name="aktivitetsbegransningType">
     <xs:sequence>
       <xs:element name="beskrivning" type="xs:string"/>
-      <xs:element name="arbetsformoga" type="arbetsformogaType"/>
+      <xs:element name="arbetsformaga" type="arbetsformagaType"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="arbetsformogaType">
+  <xs:complexType name="arbetsformagaType">
     <xs:sequence>
+      <xs:element name="motivering" type="xs:string"/>
       <xs:element name="prognosangivelse" type="prognosangivelse"/>
       <xs:element name="arbetsuppgift" type="xs:string"/>
       <xs:element name="arbetsformagaNedsattning" type="arbetsformagaNedsattningType" maxOccurs="unbounded"/>
