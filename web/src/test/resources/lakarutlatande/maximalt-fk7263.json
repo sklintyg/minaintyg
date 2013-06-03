@@ -3,6 +3,7 @@
     "typ": "fk7263",
     "kommentar":"Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
     "signeringsdatum": "2011-01-26T00:00:00.000",
+    "sjukdomsfarlopp" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
     "patient": {
         "id": "19121212-1212",
         "fornamn": "Test Testorsson"
@@ -110,7 +111,8 @@
         }
     ],
     "bedomtTillstand": {
-        "beskrivning": "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
+        "beskrivning": "Klämskada på överarm",
+        "tillstandskod" : "S47"
     },
     "referenser": [
         {
