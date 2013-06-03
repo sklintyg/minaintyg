@@ -21,7 +21,7 @@
       <xs:element name="aktivitet" type="aktivitetType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="funktionsnedsattning" type="funktionsnedsattningType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="aktivitetsbegransning" type="aktivitetsbegransningType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="bedomtTillstand" type="bedomtTillstandType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="bedomtTillstand" type="bedomtTillstandType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="vardkontakt" type="vardkontaktType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="referens" type="referensType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -140,6 +140,7 @@
 
   <xs:complexType name="bedomtTillstandType">
     <xs:sequence>
+      <xs:element name="tillstandskod" type="xs:string"/>
       <xs:element name="beskrivning" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
