@@ -16,7 +16,9 @@ public class Lakarutlatande {
 
     private String kommentar;
 
-    private LocalDateTime signeringsdatum;
+    private LocalDateTime signeringsDatum;
+
+    private LocalDateTime skickatDatum;
 
     private Patient patient;
 
@@ -64,12 +66,12 @@ public class Lakarutlatande {
         this.kommentar = kommentar;
     }
 
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
+    public LocalDateTime getSigneringsDatum() {
+        return signeringsDatum;
     }
 
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
+    public void setSigneringsDatum(LocalDateTime signeringsDatum) {
+        this.signeringsDatum = signeringsDatum;
     }
 
     public Patient getPatient() {
@@ -158,6 +160,14 @@ public class Lakarutlatande {
 
     public void setReferenser(List<Referens> referenser) {
         this.referenser = referenser;
+    }
+
+    public LocalDateTime getSkickatDatum() {
+        return skickatDatum;
+    }
+
+    public void setSkickatDatum(LocalDateTime skickatDatum) {
+        this.skickatDatum = skickatDatum;
     }
 
     public LocalDate calculateValidFromDate() {

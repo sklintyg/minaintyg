@@ -1,5 +1,10 @@
 package se.inera.certificate.integration;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -21,11 +26,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 /**
  * @author andreaskaltenbach
@@ -57,7 +57,7 @@ public class RegisterMedicalCertificateResponderImplTest {
         assertEquals("Kir Mott", argument.getValue().getVardenhet().getNamn());
         assertEquals("Landstinget Norrland", argument.getValue().getVardenhet().getVardgivare().getNamn());
         assertEquals("19940701-0066", argument.getValue().getPatient().getId());
-        assertEquals(new LocalDateTime("2013-03-17"), argument.getValue().getSigneringsdatum());
+        assertEquals(new LocalDateTime("2013-03-17"), argument.getValue().getSigneringsDatum());
         assertEquals("En Läkare", argument.getValue().getSkapadAv().getNamn());
         assertEquals(new LocalDate("2013-03-17"), argument.getValue().calculateValidFromDate());
         assertEquals(new LocalDate("2013-05-01"), argument.getValue().calculateValidToDate());
