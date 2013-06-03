@@ -27,40 +27,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="ROBOTS" content="nofollow, noindex" />
-	
-	<title><spring:message code="application.name" /></title>
-	
-	<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
-	
-	<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
-	<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-	<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="ROBOTS" content="nofollow, noindex" />
+
+<title><spring:message code="application.name" /></title>
+
+<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
+
+<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 </head>
 
 <body ng-app="ListCertApp">
   <div class="container">
     <div id="page-header-container">
-   
-      <div id="page-header">
-        <div id="page-header-left"></div>
-        <div id="page-header-right"></div>
-        <a href="<c:url value="/web/start" />"><img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" /></a>
-        <div id="status">
-<!--      <div class="status-row">
-            <a href="<c:url value="/web/settings" />"><spring:message code="label.settings" /></a> | <a href="<c:url value="/web/logout" />"><spring:message code="label.logout" /></a>
-          </div>-->
-          <div class="status-row">
-            <span class="logged-in"><spring:message code="header.loggedInAs" /></span>&nbsp;<strong><sec:authentication property="principal.username" /></strong>
-          </div>
-        </div>
-      </div>
+      <mi-header user-name="<sec:authentication property="principal.username" />" />
+    </div>
+    <div id="navigation-container">
+      <mi-main-navigation></mi-main-navigation>
     </div>
     <div id="content-container">
+
+
+
       <div class="content">
         <div class="row-fluid">
           <div id="content-body" class="span12">
+            <%-- No script to show at least something when javascript is off --%>
             <noscript>
               <h1>
                 <span><spring:message code="error.noscript.title" /></span>
@@ -69,6 +63,7 @@
                 <spring:message code="error.noscript.text" />
               </div>
             </noscript>
+             <%-- ng-view that holds dynamic content managed by angular app --%>
             <div ng-view></div>
           </div>
         </div>
@@ -76,7 +71,7 @@
     </div>
   </div>
 
-	
+
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
@@ -86,11 +81,11 @@
   <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
-  
+
   <!-- Dependencies to common components -->
   <script type="text/javascript" src="<c:url value="/js/modules/message-directive.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
 
-  
 
 </body>
 </html>

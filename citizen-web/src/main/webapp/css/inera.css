@@ -76,6 +76,18 @@ legend {
 }
 
 /*
+   Navigation
+*/
+#navigation-container {
+  
+    width: 974px;
+    margin-left: auto;
+    margin-right: auto;
+  
+}
+
+
+/*
    Main content
 */
 #content-container {

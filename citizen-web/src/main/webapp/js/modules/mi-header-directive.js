@@ -1,4 +1,6 @@
-angular.module('directives.mi.header', []).directive("miHeader", ['$rootScope', function($rootScope) {
+angular.module('directives.mi.header', []);
+
+angular.module('directives.mi.header').directive("miHeader", ['$rootScope', function($rootScope) {
     return {
         restrict : "E",
         replace : true,
@@ -15,5 +17,31 @@ angular.module('directives.mi.header', []).directive("miHeader", ['$rootScope', 
         + "    <span class='logged-in'><message key='view.label.loggedinas'/></span>&nbsp;<strong>{{userName}}</strong>"
         + "  </div>"
         + "</div>"
+    }
+} ]);
+
+angular.module('directives.mi.header').directive("miMainNavigation", ['$rootScope', '$location' , function($rootScope, $location) {
+    return {
+        restrict : "E",
+        replace : true,
+        controller: function($scope, $element, $attrs) {
+            $scope.navClass = function (page) {
+                var currentRoute = $location.path().substring(1) || 'lista';
+                return page === currentRoute ? 'active' : '';
+            };  
+        },
+        template :
+            '<div class="navbar">'
+            + '<div class="navbar-inner">'
+            + '  <ul class="nav">'
+            + '    <li ng-class="navClass(\'lista\')"><a href="#/lista"><message key="label.inbox" /></a></li>'
+            + '    <li ng-class="navClass(\'arkiverade\')"><a href="#/arkiverade">Arkiverade Intyg</a></li>'
+            + '    <li ng-class="navClass(\'omminaintyg\')"><a href="#/omminaintyg">Om Mina Intyg</a></li>'
+            + '    <li ng-class="navClass(\'hjalp\')"><a href="#/hjalp">Hjälp</a></li>'
+            + '  </ul>'
+            + ' </div>'
+            + '</div>'
+            
+            
     }
 } ]);
