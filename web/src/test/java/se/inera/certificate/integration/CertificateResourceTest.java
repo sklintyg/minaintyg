@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import se.inera.certificate.integration.test.CertificateResource;
 import se.inera.certificate.model.Certificate;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -3,7 +3,6 @@ package se.inera.certificate.integration.stub;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;

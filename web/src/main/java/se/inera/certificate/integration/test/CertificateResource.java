@@ -1,4 +1,4 @@
-package se.inera.certificate.integration;
+package se.inera.certificate.integration.test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
