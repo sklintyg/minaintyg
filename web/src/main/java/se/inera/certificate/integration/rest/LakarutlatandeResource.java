@@ -43,7 +43,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
         lakarutlatande.setKommentar("Lite svag i knäna");
         lakarutlatande.setSjukdomsfarlopp("Ramlade i trappan hemma.");
         lakarutlatande.setTyp("fk7263");
-        lakarutlatande.setSigneringsdatum(new LocalDateTime());
+        lakarutlatande.setSigneringsDatum(new LocalDateTime());
         HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId("HOSID");
 
@@ -72,7 +72,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
         lakarutlatande.setPatient(patient);
         lakarutlatande.setSjukdomsfarlopp("Återkommande panikattacker inför flygningar.");
         lakarutlatande.setKommentar("Flygrädd som bara den!");
-        lakarutlatande.setSigneringsdatum(new LocalDateTime());
+        lakarutlatande.setSigneringsDatum(new LocalDateTime());
         HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId("HOSID");
 

@@ -2,7 +2,7 @@
     "id": "1",
     "typ": "fk7263",
     "kommentar": "Lite svag i knäna",
-    "signeringsdatum": "2013-05-31T09:51:38.570",
+    "signeringsDatum": "2013-05-31T09:51:38.570",
     "patient": {
         "id": "19001122-3344",
         "fornamn": "Erik",

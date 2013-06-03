@@ -56,7 +56,8 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
         lakarutlatande.setId(source.getLakarutlatandeId());
         lakarutlatande.setTyp(FK_7263);
         lakarutlatande.setKommentar(source.getKommentar());
-        lakarutlatande.setSigneringsdatum(source.getSigneringsdatum());
+        lakarutlatande.setSigneringsDatum(source.getSigneringsdatum());
+        lakarutlatande.setSkickatDatum(source.getSkickatDatum());
         lakarutlatande.setVardenhet(convert(source.getSkapadAvHosPersonal().getEnhet()));
         lakarutlatande.setPatient(convert(source.getPatient()));
         lakarutlatande.setSkapadAv(convert(source.getSkapadAvHosPersonal()));

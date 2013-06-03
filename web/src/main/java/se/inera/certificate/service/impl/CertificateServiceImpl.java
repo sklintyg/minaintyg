@@ -102,7 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         certificate.setType(lakarutlatande.getTyp());
         certificate.setSigningDoctorName(lakarutlatande.getSkapadAv().getNamn());
-        certificate.setSignedDate(lakarutlatande.getSigneringsdatum());
+        certificate.setSignedDate(lakarutlatande.getSigneringsDatum());
         certificate.setCareUnitName(lakarutlatande.getVardenhet().getNamn());
         certificate.setCivicRegistrationNumber(lakarutlatande.getPatient().getId());
         certificate.setValidFromDate(lakarutlatande.calculateValidFromDate());
