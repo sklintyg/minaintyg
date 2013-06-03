@@ -13,7 +13,7 @@
       <xs:element name="id" type="xs:string"/>
       <xs:element name="typ" type="xs:string"/>
       <xs:element name="kommentar" type="xs:string" minOccurs="0"/>
-      <xs:element name="signeringsdatum" type="xs:dateTime"/>
+      <xs:element name="signeringsDatum" type="xs:dateTime"/>
       <xs:element name="skickatDatum" type="xs:dateTime"/>
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
@@ -45,14 +45,14 @@
   </xs:complexType>
   <xs:complexType name="vardenhetType">
     <xs:sequence>
-      <xs:element name="arbetsplatskod" type="xs:string"/>
-      <xs:element name="epost" type="xs:string"/>
+      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0"/>
       <xs:element name="id" type="xs:string"/>
       <xs:element name="namn" type="xs:string"/>
-      <xs:element name="postadress" type="xs:string"/>
-      <xs:element name="postnummer" type="xs:string"/>
-      <xs:element name="postort" type="xs:string"/>
-      <xs:element name="telefonnummer" type="xs:string"/>
+      <xs:element name="postadress" type="xs:string" minOccurs="0" />
+      <xs:element name="postnummer" type="xs:string" minOccurs="0" />
+      <xs:element name="postort" type="xs:string" minOccurs="0" />
+      <xs:element name="telefonnummer" type="xs:string" minOccurs="0" />
+      <xs:element name="epost" type="xs:string" minOccurs="0" />
       <xs:element name="vardgivare" type="vardgivareType"/>
     </xs:sequence>
   </xs:complexType>
