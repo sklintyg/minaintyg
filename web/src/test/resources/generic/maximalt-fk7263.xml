@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lakarutlatande xmlns="urn:intyg:1">
+  <id>80832895-5a9c-450a-bd74-08af43750788</id>
+  <typ>fk7263</typ>
+  <kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.</kommentar>
+  <signeringsdatum>2011-01-26T00:00:00.000</signeringsdatum>
+  <skickatDatum>2011-03-23T09:29:15.193</skickatDatum>
+  <patient>
+    <id>19121212-1212</id>
+    <fornamn>Test Testorsson</fornamn>
+  </patient>
+  <skapadAv>
+    <id>Personal HSA-ID</id>
+    <namn>En Läkare</namn>
+  </skapadAv>
+  <vardenhet>
+    <id>VardenhetY</id>
+    <namn>Kir mott</namn>
+    <arbetsplatskod>123456789011</arbetsplatskod>
+    <postadress>Lasarettsvägen 13</postadress>
+    <postnummer>85150</postnummer>
+    <postort>Sundsvall</postort>
+    <telefonnummer>060-1818000</telefonnummer>
+    <epost>kirmott@vardenhet.se</epost>
+    <vardgivare>
+      <id>VardgivarId</id>
+      <namn>Landstinget Norrland</namn>
+    </vardgivare>
+  </vardenhet>
+  <vardkontakt>
+    <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
+    <vardkontaktstid>2011-01-26</vardkontaktstid>
+  </vardkontakt>
+  <vardkontakt>
+    <vardkontakttyp>Min_telefonkontakt_med_patienten</vardkontakttyp>
+    <vardkontaktstid>2011-01-12</vardkontaktstid>
+  </vardkontakt>
+  <referens>
+    <referenstyp>Journaluppgifter</referenstyp>
+    <datum>2010-01-14</datum>
+  </referens>
+  <referens>
+    <referenstyp>Annat</referenstyp>
+    <datum>2010-01-24</datum>
+  </referens>
+  <aktivitet>
+    <aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</aktivitetskod>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Ovrigt</aktivitetskod>
+    <beskrivning>När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik</beskrivning>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</aktivitetskod>
+    <beskrivning>Utreds om operation är nödvändig</beskrivning>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Planerad_eller_pagaende_annan_atgard</aktivitetskod>
+    <beskrivning>Patienten ansvarar för att armen hålls i stillhet</beskrivning>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell</aktivitetskod>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
+  </aktivitet>
+  <aktivitet>
+    <aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
+  </aktivitet>
+  <sjukdomsforlopp>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</sjukdomsforlopp>
+  <bedomtTillstand>
+    <beskrivning>Klämskada på överarm</beskrivning>
+    <tillstandskod>S47</tillstandskod>
+  </bedomtTillstand>
+  <funktionsnedsattning>
+    <beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-
+      och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger
+      att
+      patienten inte kan använda armen särkilt mycket.
+    </beskrivning>
+    <typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
+  </funktionsnedsattning>
+  <aktivitetsbegransning>
+    <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
+      Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan
+      inte lyfta
+      armen utan den ska hållas riktad nedåt och i fast läge så
+      mycket som möjligt under tiden för läkning.
+    </beskrivning>
+    <typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
+    <arbetsformaga>
+      <motivering>Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit
+        på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </motivering>
+      <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
+      <arbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</arbetsuppgift>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-04-01+02:00</varaktighetFrom>
+        <varaktighetTom>2011-05-31+02:00</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-03-07+01:00</varaktighetFrom>
+        <varaktighetTom>2011-03-31+02:00</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_1/2</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-02-14+01:00</varaktighetFrom>
+        <varaktighetTom>2011-03-06+01:00</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_3/4</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-01-26+01:00</varaktighetFrom>
+        <varaktighetTom>2011-02-13+01:00</varaktighetTom>
+        <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <sysselsattning>Nuvarande_arbete</sysselsattning>
+      <sysselsattning>Arbetsloshet</sysselsattning>
+      <sysselsattning>Foraldraledighet</sysselsattning>
+    </arbetsformaga>
+  </aktivitetsbegransning>
+</lakarutlatande>

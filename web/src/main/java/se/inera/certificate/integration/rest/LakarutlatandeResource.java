@@ -1,18 +1,17 @@
 package se.inera.certificate.integration.rest;
 
 import org.joda.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.integration.IneraCertificateRestApi;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.certificate.service.CertificateService;
 
 /**
  * @author andreaskaltenbach
@@ -20,22 +19,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LakarutlatandeResource implements IneraCertificateRestApi {
 
     @Autowired
-    private ObjectMapper objectMapper;
-
+    private CertificateService certificateService;
+    
     @Override
     public String getCertificate(String certificateId) {
-
-        try {
-            if (certificateId.startsWith("rli")) {
-                return objectMapper.writeValueAsString(lakarutlatande(certificateId));
-            } else {
-                return objectMapper.writeValueAsString(lakarutlatandeFk7263(certificateId));
-            }
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        Certificate certificate = certificateService.getCertificate(null, certificateId);
+        if (certificate != null) {
+            return certificate.getDocument();
+        } else {
+            return null;
         }
-        return "{\"failed\":true}";
     }
 
     private Lakarutlatande lakarutlatandeFk7263(String id) {

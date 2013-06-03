@@ -116,7 +116,7 @@ public class CertificateServiceImpl implements CertificateService {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
 
-    private void assertConsent(String civicRegistrationNumber) {
+    private void assertConsent(String civicRegistrationNumber) {        
         if (!consentService.isConsent(civicRegistrationNumber)) {
             throw new MissingConsentException(civicRegistrationNumber);
         }

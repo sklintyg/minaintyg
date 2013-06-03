@@ -34,7 +34,11 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Override
     public boolean isConsent(String civicRegistrationNumber) {
-        return consentDao.hasConsent(civicRegistrationNumber);
+        if (civicRegistrationNumber != null) {
+            return consentDao.hasConsent(civicRegistrationNumber);
+        } else {
+            return true;
+        }
     }
 
     @Override
