@@ -14,7 +14,7 @@
       <xs:element name="typ" type="xs:string"/>
       <xs:element name="kommentar" type="xs:string" minOccurs="0"/>
       <xs:element name="signeringsdatum" type="xs:dateTime"/>
-      <xs:element name="skickatDatum" type="xs:dateTime">
+      <xs:element name="skickatDatum" type="xs:dateTime"/>
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
       <xs:element name="vardenhet" type="vardenhetType"/>
