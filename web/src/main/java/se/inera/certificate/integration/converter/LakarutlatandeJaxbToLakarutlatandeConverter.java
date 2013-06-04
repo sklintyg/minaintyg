@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author andreaskaltenbach
  */
-public class LakarutlatandeJaxbToLakarutlatandeConverter {
+public final class LakarutlatandeJaxbToLakarutlatandeConverter {
 
     private LakarutlatandeJaxbToLakarutlatandeConverter() {
     }
