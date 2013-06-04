@@ -407,6 +407,13 @@ ul.italic li {
 	font-style: italic;
 }
 
+tbody tr td {
+    font-weight: bold;
+}
+tbody tr.SENT td {
+    font-weight: normal;
+}
+
 /* bootstrap override */
 
 .btn {
@@ -441,9 +448,21 @@ ul.italic li {
 	text-align:left;
 }
 
-tbody tr td {
-    font-weight: bold;
+.navbar-inner {
+    padding: 0;
+    float: left;
 }
-tbody tr.SENT td {
-    font-weight: normal;
+
+.navbar .divider-vertical {
+    margin: 0 0px;
 }
+
+.navbar .nav {
+    margin: 0 0px 0 0;
+}
+
+.navbar .nav>li>a {
+    padding: 10px 45px 10px;
+}
+
+/* end bootstrap override */

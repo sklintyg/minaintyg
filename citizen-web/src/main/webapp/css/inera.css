@@ -83,16 +83,13 @@ legend {
  Root class for mi-header directive
 */
 .mi-header {
-    padding: 0 8px 8px 8px;
     margin-left: auto;
     margin-right: auto;
   
 }
 
 .mi-main-navigation {
-    padding: 20px 8px 8px 8px;
-    margin-left: auto;
-    margin-right: auto;	
+    padding: 20px 0px 40px 0px;	
 }
 
 
