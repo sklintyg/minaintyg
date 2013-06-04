@@ -24,6 +24,9 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
     return {
         restrict : "E",
         replace : true,
+        scope : {
+            linkPrefix: "@"
+          },
         controller: function($scope, $element, $attrs) {
             $scope.navClass = function (page) {
                 var currentRoute = $location.path().substring(1) || 'lista';
@@ -34,13 +37,13 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
             '<div class="navbar mi-main-navigation">'
             + '<div class="navbar-inner">'
             + '  <ul class="nav">'
-            + '    <li ng-class="navClass(\'lista\')"><a href="#/lista" id="inboxTab"><message key="label.inbox" /></a></li>'
+            + '    <li ng-class="navClass(\'lista\')"><a ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="label.inbox" /></a></li>'
 		    + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'arkiverade\')"><a href="#/arkiverade" id="archivedTab">Arkiverade Intyg</a></li>'
+            + '    <li ng-class="navClass(\'arkiverade\')"><a ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab">Arkiverade Intyg</a></li>'
             + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'omminaintyg\')"><a href="#/omminaintyg">Om Mina Intyg</a></li>'
+            + '    <li ng-class="navClass(\'omminaintyg\')"><a ng-href="{{linkPrefix}}#/omminaintyg">Om Mina Intyg</a></li>'
             + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'hjalp\')"><a href="#/hjalp">Hjälp</a></li>'
+            + '    <li ng-class="navClass(\'hjalp\')"><a ng-href="{{linkPrefix}}#/hjalp">Hjälp</a></li>'
             + '  </ul>'
             + ' </div>'
             + '</div>'
