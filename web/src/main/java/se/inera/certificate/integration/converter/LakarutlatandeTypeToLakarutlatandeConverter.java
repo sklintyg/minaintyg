@@ -16,7 +16,6 @@ import static se.inera.certificate.integration.v1.Referenstyp.ANNAT;
 import static se.inera.certificate.integration.v1.Referenstyp.JOURNALUPPGIFTER;
 import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
 import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
-
 import se.inera.certificate.integration.v1.AktivitetType;
 import se.inera.certificate.integration.v1.AktivitetsbegransningType;
 import se.inera.certificate.integration.v1.Aktivitetskod;
@@ -40,9 +39,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeTyp
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -110,14 +106,6 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
             bedomtTillstand.setTillstandskod(medicinsktTillstand.getTillstandskod().getCode());
         }
         return bedomtTillstand;
-    }
-
-    private static List<VardkontaktType> convertVardkontakter(List<se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType> source) {
-        List<VardkontaktType> vardkontakter = new ArrayList<>();
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontakt : source) {
-            vardkontakter.add(convert(vardkontakt));
-        }
-        return vardkontakter;
     }
 
     private static VardkontaktType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
