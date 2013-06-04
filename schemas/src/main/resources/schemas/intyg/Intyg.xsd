@@ -46,9 +46,9 @@
   </xs:complexType>
   <xs:complexType name="vardenhetType">
     <xs:sequence>
-      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0"/>
       <xs:element name="id" type="xs:string"/>
       <xs:element name="namn" type="xs:string"/>
+      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0"/>
       <xs:element name="postadress" type="xs:string" minOccurs="0" />
       <xs:element name="postnummer" type="xs:string" minOccurs="0" />
       <xs:element name="postort" type="xs:string" minOccurs="0" />
@@ -68,7 +68,7 @@
   <xs:complexType name="aktivitetType">
     <xs:sequence>
       <xs:element name="aktivitetskod" type="aktivitetskod"/>
-      <xs:element name="beskrivning" type="xs:string"/>
+      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
