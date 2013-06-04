@@ -37,7 +37,7 @@ var minaIntygResources = {
 	    "help.header":"Hjälp",
 	    "help.description":"<p>Vid problem, frågor eller synpunkter vänder du dig till den tekniska supporten för Mina vårdkontakter.</p><p>Har du problem med inloggning, glöm inte ange inloggningssätt (e-legitimation eller engångskod) samt tekniska specifikationer såsom vilken webbläsare du använder dig av.</p><p>OBS! Mina vårdkontakter besvarar inga medicinska frågor, detta är endast teknisk support för systemet Mina intyg eller Mina vårdkontakter.</p>",
 	    "help.phone":"Telefon",
-	    "help.phone.description":"<p><strong>08-123 135 00</strong><br>Öppet alla dagar 8-21.</p>",
+	    "help.phone.description":"<p>08-123 135 00. Öppet alla dagar 8-21.</p>",
 	    "help.email":"E-post",
 	    "help.email.description":"<p>Mina intyg använder sig av Mina vårdkontakters support:</p><p><a href='https://www.minavardkontakter.se/C125755F00329208/p/VGDO-7PSG9V' target='_blank'>Till Mina vårdkontakters kontaktformulär</a></p>",
         "listtable.headers.issued": "Utfärdat",
