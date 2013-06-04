@@ -27,7 +27,7 @@ var minaIntygResources = {
         "certificates.send.includedcert": "Bifogade intyg",
         "certificates.send.label.patientname": "Patientens namn:",
         "certificates.send.label.issued": "Utfärdat:",
-        "certificates.send.label.civicnumber": "Personnr:",
+        "certificates.send.label.civicnumber": "Personnummer:",
         "certificates.send.label.issuer": "Utfärdare",
         "certificates.send.label.period": "Period:",
         "certificates.send.label.unit": "Enhet:",
