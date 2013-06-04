@@ -15,23 +15,23 @@
       <strong><message key="label.certificatesloading" /></strong>
     </p>
   </div>
-  <div ng-show="doneLoading && (certificates | inboxfilter).length>0">
-
+  <div  ng-show="doneLoading && (certificates | inboxfilter).length>0">
+	<div id="certTable">
 	  <div ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
 		  <section class="certificate">
 			<div class="row-fluid">
 				<div class="span12">
-					<div class="cert">
+					<div id="certificate-{{cert.id}}" class="cert">
 						<div class="cert-titlebar">
 							<div class="row-fluid">
 								<div class="span8">
-									<h2><message key="certificates.types.{{cert.type}}"/></h2>
+									<h2><message key="certificates.types.{{cert.type}}"></message></h2>
 								</div>
 								<div class="span3 issue">
-									  <message key="listtable.headers.issued" /> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
+									  <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
 								</div>
 								<div class="span1 archive">
-									<a href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
+									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
 								</div>
 							</div>
 						</div>
@@ -50,7 +50,7 @@
 									<span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback=""/>
 								</div>
 								<div class="span3">
-									<button class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
+									<button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
 								</div>
 								<div class="span1"></div>
 							</div>
@@ -61,6 +61,7 @@
 		  </section>
 		  <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
 	  </div>
+	</div>
   </div>
 </div>
 <div class="row-fluid">

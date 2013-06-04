@@ -11,15 +11,12 @@ class InboxPage extends Page {
     static content = {
         certificateTable(required: false) { $("#certTable") }
         noCertificates(required: false) { $("#noCerts") }
-        archiveCertificateButton(required: false) { $("#archiveCertificateBtn") }
-        viewCertificateButton(required: false) { $("#viewCertificateBtn") }
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
     }
 
     def archiveCertificate(String id) {
-        $("#certificate-${id}").click()
-        archiveCertificateButton.click()
+        $("#archiveCertificateBtn-${id}").click()
     }
 
     def boolean certificateExists(String id) {
@@ -27,8 +24,7 @@ class InboxPage extends Page {
     }
 
     def viewCertificate(String id) {
-        $("#certificate-${id}").click()
-        viewCertificateButton.click()
+        $("#viewCertificateBtn-${id}").click()
     }
 
     def goToArchivedTab() {

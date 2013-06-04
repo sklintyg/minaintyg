@@ -13,7 +13,7 @@ var minaIntygResources = {
         "button.send": "Skicka",
         "button.cancel": "Avbryt",
         "button.goback": "Tillbaka",
-        "button.show": "Visa",
+        "button.show": "Visa intyget",
         "certificates.types.fk7263": "Läkarintyg",
         "certificates.types.rli": "Reseläkarintyg",
         "certificates.status.cancelled": "Rättat",
@@ -44,7 +44,7 @@ var minaIntygResources = {
         "listtable.headers.type": "Typ",
         "listtable.headers.certperiod": "Intygsperiod",
         "listtable.headers.issuedby": "Utfärdat av",
-        "listtable.headers.latestevent": "Senaste händelse"
+        "listtable.headers.latestevent": "Senaste händelsen"
     },
     "en": {
         "label.inbox": "INBOX",
