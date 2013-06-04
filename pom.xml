@@ -36,6 +36,7 @@
     <logback.version>1.0.11</logback.version>
     <guava.version>14.0.1</guava.version>
     <aspectj.version>1.7.1</aspectj.version>
+    <xmlunit.version>1.4</xmlunit.version>
   </properties>
 
   <dependencyManagement>
@@ -190,6 +191,13 @@
         <artifactId>servlet-api</artifactId>
         <version>2.5</version>
         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+      	<groupId>xmlunit</groupId>
+      	<artifactId>xmlunit</artifactId>
+      	<version>${xmlunit.version}</version>
+        <scope>test</scope>
       </dependency>
 
     </dependencies>

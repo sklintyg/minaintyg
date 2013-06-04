@@ -2,16 +2,18 @@ package se.inera.certificate.integration;
 
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
+import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.integration.converter.LakarutlatandeTypeToLakarutlatandeConverter;
-import se.inera.certificate.model.Lakarutlatande;
-import se.inera.certificate.service.CertificateService;
+import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+
+import javax.xml.ws.Holder;
 
 /**
  * @author andreaskaltenbach
@@ -21,13 +23,13 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
     @Autowired
-    private CertificateService certificateService;
+    private RegistreraIntygResponderInterface registreraIntygResponder;
 
     @Override
     public RegisterMedicalCertificateResponseType registerMedicalCertificate(AttributedURIType logicalAddress, RegisterMedicalCertificateType request) {
 
         Lakarutlatande lakarutlatande = LakarutlatandeTypeToLakarutlatandeConverter.convert(request.getLakarutlatande());
-        certificateService.storeCertificate(lakarutlatande);
+        registreraIntygResponder.registreraIntyg(new Holder<>(lakarutlatande));
 
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(okResult());

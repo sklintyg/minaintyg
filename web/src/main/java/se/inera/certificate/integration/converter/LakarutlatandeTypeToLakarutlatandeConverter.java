@@ -1,38 +1,45 @@
 package se.inera.certificate.integration.converter;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Aktivitetsbegransning;
-import se.inera.certificate.model.Arbetsformaga;
-import se.inera.certificate.model.ArbetsformagaNedsattning;
-import se.inera.certificate.model.BedomtTillstand;
-import se.inera.certificate.model.Funktionsnedsattning;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Lakarutlatande;
-import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Prognosangivelse;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.Vardkontakt;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import static se.inera.certificate.integration.v1.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+import static se.inera.certificate.integration.v1.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
+import static se.inera.certificate.integration.v1.Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
+import static se.inera.certificate.integration.v1.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
+import static se.inera.certificate.integration.v1.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
+import static se.inera.certificate.integration.v1.Aktivitetskod.GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+import static se.inera.certificate.integration.v1.Aktivitetskod.KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL;
+import static se.inera.certificate.integration.v1.Aktivitetskod.OVRIGT;
+import static se.inera.certificate.integration.v1.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
+import static se.inera.certificate.integration.v1.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
+import static se.inera.certificate.integration.v1.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
+import static se.inera.certificate.integration.v1.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
+import static se.inera.certificate.integration.v1.Referenstyp.ANNAT;
+import static se.inera.certificate.integration.v1.Referenstyp.JOURNALUPPGIFTER;
+import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
+import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
+
+import se.inera.certificate.integration.v1.AktivitetType;
+import se.inera.certificate.integration.v1.AktivitetsbegransningType;
+import se.inera.certificate.integration.v1.Aktivitetskod;
+import se.inera.certificate.integration.v1.ArbetsformagaNedsattningType;
+import se.inera.certificate.integration.v1.ArbetsformagaType;
+import se.inera.certificate.integration.v1.BedomtTillstandType;
+import se.inera.certificate.integration.v1.FunktionsnedsattningType;
+import se.inera.certificate.integration.v1.HosPersonalType;
+import se.inera.certificate.integration.v1.Lakarutlatande;
+import se.inera.certificate.integration.v1.Nedsattningsgrad;
+import se.inera.certificate.integration.v1.Prognosangivelse;
+import se.inera.certificate.integration.v1.ReferensType;
+import se.inera.certificate.integration.v1.Referenstyp;
+import se.inera.certificate.integration.v1.Sysselsattning;
+import se.inera.certificate.integration.v1.VardenhetType;
+import se.inera.certificate.integration.v1.VardgivareType;
+import se.inera.certificate.integration.v1.VardkontaktType;
+import se.inera.certificate.integration.v1.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,35 +71,39 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         lakarutlatande.setBedomtTillstand(convert(source.getMedicinsktTillstand()));
 
         if (source.getBedomtTillstand() != null) {
-            lakarutlatande.setSjukdomsfarlopp(source.getBedomtTillstand().getBeskrivning());
+            lakarutlatande.setSjukdomsforlopp(source.getBedomtTillstand().getBeskrivning());
         }
 
-        List<Aktivitetsbegransning> aktivitetsbegransningar = new ArrayList<>();
-        List<Funktionsnedsattning> funktionsnedsattningar = new ArrayList<>();
         for (FunktionstillstandType funktionstillstand : source.getFunktionstillstand()) {
             switch (funktionstillstand.getTypAvFunktionstillstand()) {
                 case AKTIVITET:
-                    aktivitetsbegransningar.add(convertToAktivitetsbegransning(funktionstillstand));
+                    lakarutlatande.getAktivitetsbegransnings().add(convertToAktivitetsbegransning(funktionstillstand));
                     break;
                 case KROPPSFUNKTION:
-                    funktionsnedsattningar.add(convertToFunktionsnedsattning(funktionstillstand));
+                    lakarutlatande.getFunktionsnedsattnings().add(convertToFunktionsnedsattning(funktionstillstand));
                     break;
                 default:
                     break;
             }
         }
-        lakarutlatande.setAktivitetsbegransningar(aktivitetsbegransningar);
-        lakarutlatande.setFunktionsnedsattningar(funktionsnedsattningar);
 
-        lakarutlatande.setAktiviteter(convertAktiviteter(source.getAktivitet()));
-        lakarutlatande.setReferenser(convertReferenser(source.getReferens()));
-        lakarutlatande.setVardkontakter(convertVardkontakter(source.getVardkontakt()));
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source.getAktivitet()) {
+            lakarutlatande.getAktivitets().add(convert(aktivitetType));
+        }
+
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source.getReferens()) {
+            lakarutlatande.getReferens().add(convert(referensType));
+        }
+
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source.getVardkontakt()) {
+            lakarutlatande.getVardkontakts().add(convert(vardkontaktType));
+        }
 
         return lakarutlatande;
     }
 
-    private static BedomtTillstand convert(MedicinsktTillstandType medicinsktTillstand) {
-        BedomtTillstand bedomtTillstand = new BedomtTillstand();
+    private static BedomtTillstandType convert(MedicinsktTillstandType medicinsktTillstand) {
+        BedomtTillstandType bedomtTillstand = new BedomtTillstandType();
         bedomtTillstand.setBeskrivning(medicinsktTillstand.getBeskrivning());
 
         if (medicinsktTillstand.getTillstandskod() != null) {
@@ -101,119 +112,103 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         return bedomtTillstand;
     }
 
-    private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
-        List<Vardkontakt> vardkontakter = new ArrayList<>();
-        for (VardkontaktType vardkontakt : source) {
+    private static List<VardkontaktType> convertVardkontakter(List<se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType> source) {
+        List<VardkontaktType> vardkontakter = new ArrayList<>();
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontakt : source) {
             vardkontakter.add(convert(vardkontakt));
         }
         return vardkontakter;
     }
 
-    private static Vardkontakt convert(VardkontaktType source) {
-        Vardkontakt vardkontakt = new Vardkontakt();
+    private static VardkontaktType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
+        VardkontaktType vardkontakt = new VardkontaktType();
         vardkontakt.setVardkontakttyp(convert(source.getVardkontakttyp()));
         vardkontakt.setVardkontaktstid(source.getVardkontaktstid());
         return vardkontakt;
     }
 
-    private static se.inera.certificate.model.Vardkontakttyp convert(Vardkontakttyp source) {
+    private static Vardkontakttyp convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp source) {
         switch (source) {
             case MIN_TELEFONKONTAKT_MED_PATIENTEN:
-                return se.inera.certificate.model.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
+                return MIN_TELEFONKONTAKT_MED_PATIENTEN;
             case MIN_UNDERSOKNING_AV_PATIENTEN:
-                return se.inera.certificate.model.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
+                return MIN_UNDERSOKNING_AV_PATIENTEN;
             default:
                 return null;
         }
     }
 
-    private static List<Referens> convertReferenser(List<ReferensType> source) {
-        List<Referens> referenser = new ArrayList<>();
-        for (ReferensType referens : source) {
-            referenser.add(convert(referens));
-        }
-        return referenser;
-    }
-
-    private static Referens convert(ReferensType source) {
-        Referens referens = new Referens();
+    private static ReferensType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
+        ReferensType referens = new ReferensType();
         referens.setReferenstyp(convert(source.getReferenstyp()));
         referens.setDatum(source.getDatum());
         return referens;
     }
 
-    private static se.inera.certificate.model.Referenstyp convert(Referenstyp source) {
+    private static Referenstyp convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp source) {
         switch (source) {
             case JOURNALUPPGIFTER:
-                return se.inera.certificate.model.Referenstyp.JOURNALUPPGIFTER;
+                return JOURNALUPPGIFTER;
             case ANNAT:
-                return se.inera.certificate.model.Referenstyp.ANNAT;
+                return ANNAT;
             default:
                 return null;
         }
     }
 
-    private static List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
-        List<Aktivitet> aktiviteter = new ArrayList<>();
-        for (AktivitetType aktivitet : source) {
-            aktiviteter.add(convert(aktivitet));
-        }
-        return aktiviteter;
-    }
-
-    private static Aktivitet convert(AktivitetType source) {
-        Aktivitet aktivitet = new Aktivitet();
+    private static AktivitetType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
+        AktivitetType aktivitet = new AktivitetType();
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(convert(source.getAktivitetskod()));
         return aktivitet;
     }
 
-    private static se.inera.certificate.model.Aktivitetskod convert(Aktivitetskod aktivitetskod) {
+    private static Aktivitetskod convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod aktivitetskod) {
         switch (aktivitetskod) {
             case ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
-                return se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+                return ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
             case ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL:
-                return se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
+                return ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
             case GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
-                return se.inera.certificate.model.Aktivitetskod.GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+                return GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
             case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT:
-                return se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
+                return FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
             case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT:
-                return se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
+                return FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
             case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN:
-                return se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
+                return PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
             case PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD:
-                return se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
+                return PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
             case KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL:
-                return se.inera.certificate.model.Aktivitetskod.KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL;
+                return KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL;
             case PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN:
-                return se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
+                return PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
             case AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA:
-                return se.inera.certificate.model.Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
+                return AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
             case OVRIGT:
-                return se.inera.certificate.model.Aktivitetskod.OVRIGT;
+                return OVRIGT;
             case PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN:
-                return se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
+                return PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
             default:
                 return null;
         }
     }
 
-    private static Funktionsnedsattning convertToFunktionsnedsattning(FunktionstillstandType source) {
-        Funktionsnedsattning funktionsnedsattning = new Funktionsnedsattning();
+    private static FunktionsnedsattningType convertToFunktionsnedsattning(FunktionstillstandType source) {
+        FunktionsnedsattningType funktionsnedsattning = new FunktionsnedsattningType();
         funktionsnedsattning.setBeskrivning(source.getBeskrivning());
         return funktionsnedsattning;
     }
 
-    private static Aktivitetsbegransning convertToAktivitetsbegransning(FunktionstillstandType funktionstillstand) {
-        Aktivitetsbegransning aktivitetsbegransning = new Aktivitetsbegransning();
+    private static AktivitetsbegransningType convertToAktivitetsbegransning(FunktionstillstandType funktionstillstand) {
+        AktivitetsbegransningType aktivitetsbegransning = new AktivitetsbegransningType();
         aktivitetsbegransning.setBeskrivning(funktionstillstand.getBeskrivning());
         aktivitetsbegransning.setArbetsformaga(convert(funktionstillstand.getArbetsformaga()));
         return aktivitetsbegransning;
     }
 
-    private static Arbetsformaga convert(ArbetsformagaType source) {
-        Arbetsformaga arbetsformaga = new Arbetsformaga();
+    private static ArbetsformagaType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType source) {
+        ArbetsformagaType arbetsformaga = new ArbetsformagaType();
 
         arbetsformaga.setMotivering(source.getMotivering());
 
@@ -221,51 +216,42 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
             arbetsformaga.setArbetsuppgift(source.getArbetsuppgift().getTypAvArbetsuppgift());
         }
         arbetsformaga.setPrognosangivelse(convert(source.getPrognosangivelse()));
-        arbetsformaga.setSysselsattningar(convert(source.getSysselsattning()));
-        arbetsformaga.setArbetsformagaNedsattningar(convertNedsattning(source.getArbetsformagaNedsattning()));
+
+        for (SysselsattningType sysselsattningType : source.getSysselsattning()) {
+            arbetsformaga.getSysselsattnings().add(convert(sysselsattningType.getTypAvSysselsattning()));
+        }
+
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType arbetsformagaNedsattningType : source.getArbetsformagaNedsattning()) {
+            arbetsformaga.getArbetsformagaNedsattnings().add(convert(arbetsformagaNedsattningType));
+        }
+
         return arbetsformaga;
     }
 
-    private static List<ArbetsformagaNedsattning> convertNedsattning(List<ArbetsformagaNedsattningType> source) {
-        List<ArbetsformagaNedsattning> arbetsformagaNedsattningar = new ArrayList<>();
-        for (ArbetsformagaNedsattningType arbetsformagaNedsattning : source) {
-            arbetsformagaNedsattningar.add(convert(arbetsformagaNedsattning));
-        }
-        return arbetsformagaNedsattningar;
-    }
-
-    private static ArbetsformagaNedsattning convert(ArbetsformagaNedsattningType source) {
-        ArbetsformagaNedsattning nedsattning = new ArbetsformagaNedsattning();
+    private static ArbetsformagaNedsattningType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType source) {
+        ArbetsformagaNedsattningType nedsattning = new ArbetsformagaNedsattningType();
         nedsattning.setVaraktighetFrom(source.getVaraktighetFrom());
         nedsattning.setVaraktighetTom(source.getVaraktighetTom());
         nedsattning.setNedsattningsgrad(convert(source.getNedsattningsgrad()));
         return nedsattning;
     }
 
-    private static se.inera.certificate.model.Nedsattningsgrad convert(Nedsattningsgrad nedsattningsgrad) {
+    private static Nedsattningsgrad convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad nedsattningsgrad) {
         switch (nedsattningsgrad) {
             case HELT_NEDSATT:
-                return se.inera.certificate.model.Nedsattningsgrad.HELT_NEDSATT;
+                return Nedsattningsgrad.HELT_NEDSATT;
             case NEDSATT_MED_3_4:
-                return se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_3_4;
+                return Nedsattningsgrad.NEDSATT_MED_3_4;
             case NEDSATT_MED_1_2:
-                return se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
+                return Nedsattningsgrad.NEDSATT_MED_1_2;
             case NEDSATT_MED_1_4:
-                return se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
+                return Nedsattningsgrad.NEDSATT_MED_1_4;
             default:
                 return null;
         }
     }
 
-    private static List<Sysselsattning> convert(List<SysselsattningType> source) {
-        List<Sysselsattning> sysselsattningar = new ArrayList<>();
-        for (SysselsattningType sysselsattning : source) {
-            sysselsattningar.add(convert(sysselsattning.getTypAvSysselsattning()));
-        }
-        return sysselsattningar;
-    }
-
-    private static Sysselsattning convert(TypAvSysselsattning source) {
+    private static Sysselsattning convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning source) {
         switch (source) {
             case NUVARANDE_ARBETE:
                 return Sysselsattning.NUVARANDE_ARBETE;
@@ -293,22 +279,22 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         }
     }
 
-    private static HosPersonal convert(HosPersonalType source) {
-        HosPersonal hosPersonal = new HosPersonal();
+    private static HosPersonalType convert(se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType source) {
+        HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.setId(source.getPersonalId().getExtension());
         hosPersonal.setNamn(source.getFullstandigtNamn());
         return hosPersonal;
     }
 
-    private static Patient convert(PatientType source) {
-        Patient patient = new Patient();
+    private static se.inera.certificate.integration.v1.PatientType convert(se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType source) {
+        se.inera.certificate.integration.v1.PatientType patient = new se.inera.certificate.integration.v1.PatientType();
         patient.setId(source.getPersonId().getExtension());
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
         return patient;
     }
 
-    private static Vardenhet convert(EnhetType enhet) {
-        Vardenhet vardenhet = new Vardenhet();
+    private static VardenhetType convert(EnhetType enhet) {
+        VardenhetType vardenhet = new VardenhetType();
         vardenhet.setId(enhet.getEnhetsId().getExtension());
         if (enhet.getArbetsplatskod() != null) {
             vardenhet.setArbetsplatskod(enhet.getArbetsplatskod().getExtension());
@@ -325,8 +311,8 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         return vardenhet;
     }
 
-    private static Vardgivare convert(VardgivareType source) {
-        Vardgivare vardgivare = new Vardgivare();
+    private static VardgivareType convert(se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType source) {
+        VardgivareType vardgivare = new VardgivareType();
         vardgivare.setId(source.getVardgivareId().getExtension());
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;

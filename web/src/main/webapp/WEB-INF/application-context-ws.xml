@@ -98,11 +98,12 @@
 
   <jaxws:endpoint address="/registrera-intyg/v1.0">
     <jaxws:implementor>
-      <bean class="se.inera.certificate.integration.RegistreraIntygResponder">
-        <property name="port" value="${modules.port}"/>
-      </bean>
+        <ref bean="registreraIntygResponder"/>
     </jaxws:implementor>
   </jaxws:endpoint>
+  <bean id="registreraIntygResponder" class="se.inera.certificate.integration.RegistreraIntygResponder">
+    <property name="port" value="${modules.port}"/>
+  </bean>
 
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificatesClient"
