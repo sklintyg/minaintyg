@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * @author andreaskaltenbach
  */
-public class LakarutlatandeTypeToLakarutlatandeConverter {
+public final class LakarutlatandeTypeToLakarutlatandeConverter {
 
     public static final String FK_7263 = "fk7263";
 
