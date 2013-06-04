@@ -24,6 +24,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
@@ -41,6 +43,7 @@ import java.util.List;
  * @author andreaskaltenbach
  */
 @Service
+@Transactional
 public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
