@@ -2,7 +2,8 @@
 <lakarutlatande xmlns="urn:intyg:1">
   <id>80832895-5a9c-450a-bd74-08af43750788</id>
   <typ>fk7263</typ>
-  <kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.</kommentar>
+  <kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.
+  </kommentar>
   <signeringsDatum>2011-01-26T00:00:00.000</signeringsDatum>
   <skickatDatum>2011-03-23T09:29:15.193</skickatDatum>
   <patient>
@@ -27,7 +28,8 @@
       <namn>Landstinget Norrland</namn>
     </vardgivare>
   </vardenhet>
-  <sjukdomsforlopp>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</sjukdomsforlopp>
+  <sjukdomsforlopp>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.
+  </sjukdomsforlopp>
   <aktivitet>
     <aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
   </aktivitet>
@@ -58,69 +60,66 @@
   <funktionsnedsattning>
     <beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-
       och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger
-      att
-      patienten inte kan använda armen särkilt mycket.
+      att patienten inte kan använda armen särkilt mycket.
     </beskrivning>
   </funktionsnedsattning>
   <aktivitetsbegransning>
-      <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
-        Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan
-        inte lyfta
-        armen utan den ska hållas riktad nedåt och i fast läge så
-        mycket som möjligt under tiden för läkning.
-      </beskrivning>
-      <arbetsformaga>
-        <motivering>Skadan har förvärrats vid varje tillfälle patienten
-          använt armen. Måste hållas i total stillhet tills läkningsprocessen
-          kommit en bit
-          på väg. Eventuellt kan utredning visa att operation är
-          nödvändig för att läka skadan.
-        </motivering>
-        <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
-        <arbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</arbetsuppgift>
-        <arbetsformagaNedsattning>
-          <varaktighetFrom>2011-04-01+02:00</varaktighetFrom>
-          <varaktighetTom>2011-05-31+02:00</varaktighetTom>
-          <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
-        </arbetsformagaNedsattning>
-        <arbetsformagaNedsattning>
-          <varaktighetFrom>2011-03-07+01:00</varaktighetFrom>
-          <varaktighetTom>2011-03-31+02:00</varaktighetTom>
-          <nedsattningsgrad>Nedsatt_med_1/2</nedsattningsgrad>
-        </arbetsformagaNedsattning>
-        <arbetsformagaNedsattning>
-          <varaktighetFrom>2011-02-14+01:00</varaktighetFrom>
-          <varaktighetTom>2011-03-06+01:00</varaktighetTom>
-          <nedsattningsgrad>Nedsatt_med_3/4</nedsattningsgrad>
-        </arbetsformagaNedsattning>
-        <arbetsformagaNedsattning>
-          <varaktighetFrom>2011-01-26+01:00</varaktighetFrom>
-          <varaktighetTom>2011-02-13+01:00</varaktighetTom>
-          <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
-        </arbetsformagaNedsattning>
-        <sysselsattning>Nuvarande_arbete</sysselsattning>
-        <sysselsattning>Arbetsloshet</sysselsattning>
-        <sysselsattning>Foraldraledighet</sysselsattning>
-      </arbetsformaga>
-    </aktivitetsbegransning>
+    <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
+      Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan
+      inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så
+      mycket som möjligt under tiden för läkning.
+    </beskrivning>
+    <arbetsformaga>
+      <motivering>Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </motivering>
+      <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
+      <arbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</arbetsuppgift>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-04-01</varaktighetFrom>
+        <varaktighetTom>2011-05-31</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-03-07</varaktighetFrom>
+        <varaktighetTom>2011-03-31</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_1/2</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-02-14</varaktighetFrom>
+        <varaktighetTom>2011-03-06</varaktighetTom>
+        <nedsattningsgrad>Nedsatt_med_3/4</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <arbetsformagaNedsattning>
+        <varaktighetFrom>2011-01-26</varaktighetFrom>
+        <varaktighetTom>2011-02-13</varaktighetTom>
+        <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
+      </arbetsformagaNedsattning>
+      <sysselsattning>Nuvarande_arbete</sysselsattning>
+      <sysselsattning>Arbetsloshet</sysselsattning>
+      <sysselsattning>Foraldraledighet</sysselsattning>
+    </arbetsformaga>
+  </aktivitetsbegransning>
   <bedomtTillstand>
-      <tillstandskod>S47</tillstandskod>
-      <beskrivning>Klämskada på överarm</beskrivning>
-    </bedomtTillstand>
+    <tillstandskod>S47</tillstandskod>
+    <beskrivning>Klämskada på överarm</beskrivning>
+  </bedomtTillstand>
   <vardkontakt>
-      <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
-      <vardkontaktstid>2011-01-26</vardkontaktstid>
-    </vardkontakt>
-    <vardkontakt>
-      <vardkontakttyp>Min_telefonkontakt_med_patienten</vardkontakttyp>
-      <vardkontaktstid>2011-01-12</vardkontaktstid>
-    </vardkontakt>
-    <referens>
-      <referenstyp>Journaluppgifter</referenstyp>
-      <datum>2010-01-14</datum>
-    </referens>
-    <referens>
-      <referenstyp>Annat</referenstyp>
-      <datum>2010-01-24</datum>
-    </referens>
+    <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
+    <vardkontaktstid>2011-01-26</vardkontaktstid>
+  </vardkontakt>
+  <vardkontakt>
+    <vardkontakttyp>Min_telefonkontakt_med_patienten</vardkontakttyp>
+    <vardkontaktstid>2011-01-12</vardkontaktstid>
+  </vardkontakt>
+  <referens>
+    <referenstyp>Journaluppgifter</referenstyp>
+    <datum>2010-01-14</datum>
+  </referens>
+  <referens>
+    <referenstyp>Annat</referenstyp>
+    <datum>2010-01-24</datum>
+  </referens>
 </lakarutlatande>

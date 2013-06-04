@@ -74,8 +74,7 @@
     <aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
   </aktivitet>
   <bedomtTillstand>
-    <beskrivning>Patienten klämde höger överarm vid olycka i hemmet.
-      Problemen har pågått en längre tid.
+    <beskrivning>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.
     </beskrivning>
   </bedomtTillstand>
   <medicinsktTillstand>
@@ -104,8 +103,7 @@
       </motivering>
       <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
       <arbetsuppgift>
-        <typAvArbetsuppgift>Dirigent. Dirigerar en större orkester på deltid
-        </typAvArbetsuppgift>
+        <typAvArbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</typAvArbetsuppgift>
       </arbetsuppgift>
       <arbetsformagaNedsattning>
         <varaktighetFrom>2011-04-01+02:00</varaktighetFrom>

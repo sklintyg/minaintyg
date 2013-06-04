@@ -82,6 +82,11 @@
       <artifactId>servlet-api</artifactId>
     </dependency>
 
+    <dependency>
+    	<groupId>xmlunit</groupId>
+    	<artifactId>xmlunit</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>inera-certificate</finalName>
