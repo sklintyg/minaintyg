@@ -269,6 +269,7 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
     private static Patient convert(se.inera.certificate.integration.v1.PatientType source) {
         Patient patient = new Patient();
         patient.setId(source.getId());
+        patient.setFullstandigtNamn(source.getFullstandigtNamn());
         patient.setFornamn(source.getFornamn());
         patient.setEfternamn(source.getEfternamn());
         patient.setMellannamn(source.getMellannamn());

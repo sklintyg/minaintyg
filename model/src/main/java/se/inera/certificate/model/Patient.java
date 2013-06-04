@@ -6,6 +6,7 @@ package se.inera.certificate.model;
 public class Patient {
 
     private String id;
+    private String fullstandigtNamn;
     private String fornamn;
     private String mellannamn;
     private String efternamn;
@@ -49,5 +50,13 @@ public class Patient {
 
     public void setTilltalsnamn(String tilltalsnamn) {
         this.tilltalsnamn = tilltalsnamn;
+    }
+
+    public String getFullstandigtNamn() {
+        return fullstandigtNamn;
+    }
+
+    public void setFullstandigtNamn(String fullstandigtNamn) {
+        this.fullstandigtNamn = fullstandigtNamn;
     }
 }

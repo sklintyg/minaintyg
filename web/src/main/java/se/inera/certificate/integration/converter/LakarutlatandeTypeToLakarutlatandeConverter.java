@@ -303,8 +303,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverter {
     private static Patient convert(PatientType source) {
         Patient patient = new Patient();
         patient.setId(source.getPersonId().getExtension());
-        // TODO - how should we split names
-        patient.setFornamn(source.getFullstandigtNamn());
+        patient.setFullstandigtNamn(source.getFullstandigtNamn());
         return patient;
     }
 
