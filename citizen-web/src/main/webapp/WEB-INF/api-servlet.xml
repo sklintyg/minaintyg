@@ -32,6 +32,7 @@
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
+      <mvc:exclude-mapping path="/certificates/consent/**"/>
       <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
         <property name="jsonResponse" value="true" />
       </bean>

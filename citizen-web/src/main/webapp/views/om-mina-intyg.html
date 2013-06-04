@@ -4,12 +4,45 @@
     <span id="aboutHeader"><message key="about.header" /></span>
   </h1>
   <ul class="nav nav-tabs nav-stacked">
-    <li><a href="#">Om Mina Intyg</a></li>
-    <li><a href="#">Samtycke</a></li>
-    <li><a href="#">Juridik</a></li>
+    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href ng-click="navigateTo('omminaintyg')">Om Mina Intyg</a></li>
+    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href ng-click="navigateTo('samtycke')">Samtycke</a></li>
+    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href ng-click="navigateTo('juridik')">Juridik</a></li>
   </ul>
 </div>
-<div class="span9">texter, behövs controller som switchar content här när man väljer i menyn till vänster</div>
+<div class="span9">
+  <div id="about-omminaintyg" ng-show="visibility.omminaintyg">
+    <h2>Om Mina Intyg</h2>
+  </div>
+
+  <div id="about-samtycke" ng-show="visibility.samtycke">
+    <h2>Samtycke</h2>
+
+    <!-- Modal confirm dialog for revoke consent -->
+    <div modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts">
+      <div class="modal-header">
+        <button class="close" ng-click="closeConfirmDialog(false)">×</button>
+        <h3>Du har angett att du vill ta tillbaka samtycke</h3>
+      </div>
+      <div class="modal-body">
+        <p>Går du vidare innebär det att du inte kommer att kunna använda tjänsten förrän du har gett ditt samtycke igen. Vill du fortsätta?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="closeConfirmDialog(true)">OK</button>
+        <button class="btn btn-link" ng-click="closeConfirmDialog(false)">Avbryt</button>
+      </div>
+    </div>
+
+    <p class="btn-row">
+      <input id="revokeConsentBtn" ng-click="openConfirmDialog()" value="Ta tillbaka samtycke" class="btn btn-success" />
+    </p>
+
+  </div>
+
+  <div id="about-juridik" ng-show="visibility.juridik">
+    <h2>Juridik</h2>
+  </div>
+
+</div>
 
 
 

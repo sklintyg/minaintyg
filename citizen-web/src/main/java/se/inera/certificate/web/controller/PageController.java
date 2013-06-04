@@ -62,16 +62,4 @@ public class PageController {
         LOG.debug("displayConsentForm");
         return new ModelAndView("consent-form");
     }
-
-    @RequestMapping(value = "/ge-samtycke", method = RequestMethod.POST)
-    public ModelAndView setConsent() {
-        LOG.debug("setConsent");
-        // update consent in security consent
-        Citizen citizen = citizenService.getCitizen();
-        // Set and set consent status
-        citizen.setConsent(consentService.setConsent(citizen.getUsername(), true));
-        LOG.debug("consent after setConsent {}", citizen.hasConsent());
-        return new ModelAndView("start");
-    }
-
 }

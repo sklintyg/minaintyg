@@ -49,7 +49,7 @@
     <div id="content-container">
       <div class="content">
         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
-        
+
         <div id="navigation-container">
           <mi-main-navigation></mi-main-navigation>
         </div>
@@ -81,7 +81,7 @@
   <!-- Dependencies to common components -->
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
-
+  <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
 
   <!-- Application files -->
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
