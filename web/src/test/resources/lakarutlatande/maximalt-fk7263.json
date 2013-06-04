@@ -7,7 +7,7 @@
     "sjukdomsfarlopp" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
     "patient": {
         "id": "19121212-1212",
-        "fornamn": "Test Testorsson"
+        "fullstandigtNamn": "Test Testorsson"
     },
     "vardkontakter": [
         {

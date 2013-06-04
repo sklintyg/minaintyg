@@ -7,7 +7,7 @@
   <skickatDatum>2011-03-23T09:29:15.193</skickatDatum>
   <patient>
     <id>19121212-1212</id>
-    <fornamn>Test Testorsson</fornamn>
+    <fullstandigtNamn>Test Testorsson</fullstandigtNamn>
   </patient>
   <skapadAv>
     <id>Personal HSA-ID</id>

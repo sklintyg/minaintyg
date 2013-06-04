@@ -31,9 +31,10 @@
   <xs:complexType name="patientType">
     <xs:sequence>
       <xs:element name="id" type="xs:string"/>
-      <xs:element name="fornamn" type="xs:string"/>
+      <xs:element name="fullstandigtNamn" type="xs:string" minOccurs="0"/>
+      <xs:element name="fornamn" type="xs:string" minOccurs="0"/>
       <xs:element name="mellannamn" type="xs:string" minOccurs="0"/>
-      <xs:element name="efternamn" type="xs:string"/>
+      <xs:element name="efternamn" type="xs:string" minOccurs="0"/>
       <xs:element name="tilltalsnamn" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
