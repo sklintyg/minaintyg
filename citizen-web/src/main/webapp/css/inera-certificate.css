@@ -157,6 +157,12 @@ tbody tr.cancelled td {
 	font-size: 12px;
 }
 
+.cert-icon {
+    position: absolute;
+    top: 8px;
+    left: 6px;
+}
+
 .cert-titlebar {
 	color: #fff;
 	background-color: #00687D;

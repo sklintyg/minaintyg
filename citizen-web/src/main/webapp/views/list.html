@@ -23,15 +23,16 @@
 				<div class="span12">
 					<div id="certificate-{{cert.id}}" class="cert">
 						<div class="cert-titlebar">
+							<img class="cert-icon" alt="" src="/img/{{cert.type}}.png" />
 							<div class="row-fluid">
 								<div class="span8">
 									<h2><message key="certificates.types.{{cert.type}}"></message></h2>
 								</div>
 								<div class="span3 issue">
-									  <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
+									<message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
 								</div>
 								<div class="span1 archive">
-									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
+									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="<message key='button.alt.archive'></message>" src="/img/archive-icon.gif" /></a>
 								</div>
 							</div>
 						</div>
