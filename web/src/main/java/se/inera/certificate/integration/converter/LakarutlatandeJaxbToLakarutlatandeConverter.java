@@ -29,8 +29,6 @@ import java.util.List;
  */
 public class LakarutlatandeJaxbToLakarutlatandeConverter {
 
-    public static final String FK_7263 = "fk7263";
-
     private LakarutlatandeJaxbToLakarutlatandeConverter() {
     }
 
@@ -41,7 +39,7 @@ public class LakarutlatandeJaxbToLakarutlatandeConverter {
         Lakarutlatande lakarutlatande = new Lakarutlatande();
 
         lakarutlatande.setId(value.getId());
-        lakarutlatande.setTyp(FK_7263);
+        lakarutlatande.setTyp(value.getTyp());
         lakarutlatande.setKommentar(value.getKommentar());
         lakarutlatande.setSigneringsDatum(value.getSigneringsDatum());
         lakarutlatande.setSkickatDatum(value.getSkickatDatum());
