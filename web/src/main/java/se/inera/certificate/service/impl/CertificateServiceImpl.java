@@ -29,7 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.exception.InvalidCertificateIdentifierException;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
@@ -94,7 +93,7 @@ public class CertificateServiceImpl implements CertificateService {
         return certificate;
     }
 
-    public String toJson(Lakarutlatande lakarutlatande) {
+    private String toJson(Lakarutlatande lakarutlatande) {
         try {
             return objectMapper.writeValueAsString(lakarutlatande);
         } catch (JsonProcessingException e) {
@@ -102,7 +101,7 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    public Certificate createCertificate(Lakarutlatande lakarutlatande) {
+    private Certificate createCertificate(Lakarutlatande lakarutlatande) {
         Certificate certificate = new Certificate(lakarutlatande.getId(), toJson(lakarutlatande));
 
         certificate.setType(lakarutlatande.getTyp());
