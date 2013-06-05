@@ -1,3 +1,8 @@
+/**
+ * Common directives used in both MI as well as in modules. Since this js will be used/loaded from 
+ * different contextpaths, all templates are inlined. PLEASE keep source formatting in this 
+ * file as-is, otherwise the inline templates will be hard to follow. 
+ */
 angular.module('directives.mi', []);
 
 angular.module('directives.mi').directive("miHeader", ['$rootScope', function($rootScope) {
@@ -8,11 +13,11 @@ angular.module('directives.mi').directive("miHeader", ['$rootScope', function($r
           userName: "@"
         },
         template :
-              '<span class="mi-header">' //directives must ha a single root element.
+              '<span class="mi-header">' //directives must have a single root element.
             + ' <a href="/web/start"><img id="logo" src="/img/logo.png" /></a>'
             + ' <div id="status">'
             + '     <div class="status-row">'
-            + '         <message key="view.label.loggedinas"></message><br><span class="logged-in">{{userName}}</span>'
+            + '         <message key="nav.label.loggedinas"></message><br><span class="logged-in">{{userName}}</span>'
             + '     </div>'
             + ' </div>'
             + '</span>'
@@ -37,13 +42,13 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
             '<div class="navbar mi-main-navigation">'
             + '<div class="navbar-inner">'
             + '  <ul class="nav">'
-            + '    <li ng-class="navClass(\'lista\')"><a ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="label.inbox" /></a></li>'
+            + '    <li ng-class="navClass(\'lista\')"><a ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="nav.label.inbox"></message></a></li>'
 		    + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'arkiverade\')"><a ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab">Arkiverade Intyg</a></li>'
+            + '    <li ng-class="navClass(\'arkiverade\')"><a ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab"><message key="nav.label.archived"></message></a></li>'
             + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'omminaintyg\')"><a ng-href="{{linkPrefix}}#/omminaintyg">Om Mina Intyg</a></li>'
+            + '    <li ng-class="navClass(\'omminaintyg\')"><a ng-href="{{linkPrefix}}#/omminaintyg" id="aboutTab"><message key="nav.label.aboutminaintyg"></message></a></li>'
             + '    <li class="divider-vertical"></li>'
-            + '    <li ng-class="navClass(\'hjalp\')"><a ng-href="{{linkPrefix}}#/hjalp">Hjälp</a></li>'
+            + '    <li ng-class="navClass(\'hjalp\')"><a ng-href="{{linkPrefix}}#/hjalp" id="helpTab"><message key="nav.label.help"></message></a></li>'
             + '  </ul>'
             + ' </div>'
             + '</div>'
@@ -60,11 +65,11 @@ angular.module('directives.mi').directive("mvkTopBar", ['$rootScope', '$location
               '<div id="headerContainer">'
             + ' <div id="header">'
             + '  <div class="wrapper">'
-            + '   <a href="####" class="backButton">'
-            + '     <h1 class="assistiveText">Mina vårdkontakter</h1>'
+            + '   <a href="####" class="backButton" id="backToMvkLink">'
+            + '     <h1 class="assistiveText"><message key="mvk.header.linktext"></message></h1>'
             + '   </a>'
             + '   <div class="functionRow">'
-            + '    <a href="####">Logga ut</a>'
+            + '    <a href="####"  id="mvklogoutLink"><message key="mvk.header.logouttext"></message></a>'
             + '   </div>'
             + '   <div class="clear"></div>'
             + '  </div>'

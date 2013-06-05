@@ -16,7 +16,9 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
     });
 } ]);
 
-consentApp.run([ '$rootScope', function($rootScope) {
+consentApp.run([ '$rootScope','messageService', function($rootScope, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
+    messageService.addResources(commonMessageResources);
+    messageService.addResources(consentAppResources);
 } ]);

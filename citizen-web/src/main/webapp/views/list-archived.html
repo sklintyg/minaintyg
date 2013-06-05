@@ -1,7 +1,7 @@
 <h1>
-  <span id="archivedHeader"><message key="label.archived" /></span>
+  <span id="archivedHeader"><message key="archived.header" /></span>
 </h1>
-    <message key="certificates.archivedDescription" ></message>
+    <message key="archived.description" ></message>
 
   <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
     <img src="/img/ajax-loader.gif" style="text-align: center;" />
@@ -24,7 +24,7 @@
     <tbody>
       <tr ng-repeat="cert in certificates | archivedfilter" class="{{cert.status}}">
         <td>{{cert.sentDate}}</td>
-        <td><message key="certificates.types.{{cert.type}}"/></td>
+        <td><message key="certificatetypes.{{cert.type}}.commonname"/></td>
         <td>{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td>{{cert.careunitName}}</td>
         <td><message key="certificates.status.{{cert.status}}" fallback=""/></td>

@@ -1,11 +1,11 @@
 <h1>
-  <span id="inboxHeader"><message key="certificates.header" /></span>
+  <span id="inboxHeader"><message key="inbox.header" /></span>
 </h1>
 
 <div class="row-fluid">
   <div class="span7">
     <p>
-      <message key="certificates.description" />
+      <message key="inbox.description" />
     </p>
   </div>
 
@@ -26,7 +26,7 @@
 							<img class="cert-icon" alt="" ng-src="/img/{{cert.type}}.png" />
 							<div class="row-fluid">
 								<div class="span8">
-									<h2><message key="certificates.types.{{cert.type}}"></message></h2>
+									<h2><message key="certificatetypes.{{cert.type}}.commonname"></message></h2>
 								</div>
 								<div class="span3 issue">
 									<message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>

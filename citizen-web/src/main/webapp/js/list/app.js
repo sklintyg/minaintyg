@@ -31,5 +31,6 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
 listCertApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
+    messageService.addResources(commonMessageResources);
     messageService.addResources(minaIntygResources);
 } ]);

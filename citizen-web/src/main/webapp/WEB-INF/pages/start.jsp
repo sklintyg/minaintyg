@@ -78,17 +78,18 @@
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
-  <!-- Dependencies to common components -->
-  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
-
-  <!-- Application files -->
+  <%-- Application files --%>
   <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
+
+  <%-- Dependencies to common components --%>
+  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
 
 
 

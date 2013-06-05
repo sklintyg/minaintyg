@@ -78,14 +78,13 @@
 
   <script type="text/javascript" src="<c:url value="/js/consent/app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/consent/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/consent/messages.js"/>"></script>
   
-  <!--TODO: REplace with loading of common messages aswell as app specific messages
-   <script type="text/javascript" src="<c:url value="/js/consent/messages.js"/>"></script> -->
-
-  <!-- Dependencies to common components -->
+  <%-- Dependencies to common components --%>
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
 
 
 </body>
