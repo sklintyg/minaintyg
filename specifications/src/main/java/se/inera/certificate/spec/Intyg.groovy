@@ -52,11 +52,11 @@ public class Intyg extends RestClientFixture {
 
     private document(typ) {
         // slurping the FK7263 template
-        def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource("fk7263_template.json").getInputStream()))
+        def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource(typ + "_template.json").getInputStream()))
 
         // setting the certificate ID
         certificate.'id' = id
-        certificate.'typ' = typ
+
         // setting personnr in certificate XML
         certificate.patient.'id' = personnr
 
