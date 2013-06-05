@@ -4,6 +4,7 @@ import geb.Browser
 
 import se.inera.certificate.web.pages.InboxPage
 import se.inera.certificate.web.pages.ConsentPage
+import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentDeniedPage
 
 public class GeSamtycke {
@@ -18,6 +19,7 @@ public class GeSamtycke {
         Browser.drive {
             assert at(ConsentPage)
             page.giveConsent()
+           
         }
     }
 
@@ -39,7 +41,19 @@ public class GeSamtycke {
             at(ConsentPage)
         }
     }
+    
+    public boolean samtyckeGivetSidanVisas() {
+        Browser.drive {
+            at(ConsentGivenPage)
+        }
+    }
 
+    public void gåVidareTillMinaIntyg() {
+        Browser.drive {
+            at(ConsentGivenPage)
+            page.continueToMI()
+        }
+    }
     public boolean samtyckeNekatSidanVisas() {
         Browser.drive {
             at(ConsentDeniedPage)

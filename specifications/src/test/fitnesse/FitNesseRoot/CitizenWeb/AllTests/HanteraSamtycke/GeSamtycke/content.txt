@@ -1,11 +1,13 @@
 !3 Går igenom flöde för att ge samtycke.
 
-Logga på som ny användare och ge samtycke och verifiera att inkorgssidan visas. Efter detta - logga sedan på igen och gör samma verifiering.
+Logga på som ny användare och ge samtycke och verifiera att samtycke givet-sidan visas. Därefter klicka fortsätt och gå till inkorgssidan. Efter detta - logga sedan på igen med samma användare och verifiera att man då hamnar direkt på inkorgssidan.
 
 |script|!-GeSamtycke-!|
 |logga på som|19121212-1212|
 |ge samtycke sidan visas|
 |ge samtycke|
+|samtycke givet sidan visas|
+|gå vidare till mina intyg|
 |inkorg sidan visas|
 |logga på som|19121212-1212|
 |inkorg sidan visas|
