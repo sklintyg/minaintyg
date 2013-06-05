@@ -11,7 +11,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.sendSelected = function(item) {
         console.log("send " + item.id);
         listCertService.selectedCertificate = item;
-        var path = "/" + item.type.toLowerCase() + "/intyg/" + item.id
+        var path = "/m/" + item.type.toLowerCase() + "/intyg/" + item.id
         $window.location.href = path;
     }
 

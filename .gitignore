@@ -1,5 +1,8 @@
 bin
 target
+*.log
+
+rebel.xml
 
 .classpath
 .project
