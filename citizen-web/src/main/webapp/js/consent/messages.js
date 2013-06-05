@@ -1,7 +1,7 @@
 'use strict';
 var consentAppResources = {
     "sv": {
-        "consent.consentpage.title": "Samtycke för användning"
+        "consent.consentpage.title": "Ny användare"
             //TODO: extract other texts from samtyckessidan and include here
     },
     "en": {
