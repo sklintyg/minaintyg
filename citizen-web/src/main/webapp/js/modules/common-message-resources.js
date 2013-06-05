@@ -5,10 +5,10 @@ var commonMessageResources = {
         "mvk.header.logouttext" : "Logga ut",
         
         "nav.label.inbox" : "Inkorgen",
-        "nav.label.archived" : "Arkiverade Intyg",
-        "nav.label.aboutminaintyg" : "Om Mina Intyg",
+        "nav.label.archived" : "Arkiverade intyg",
+        "nav.label.aboutminaintyg" : "Om Mina intyg",
         "nav.label.help" : "Hjälp",
-        "nav.label.loggedinas" : "Inloggad som",
+        "nav.label.loggedinas" : "Du är inloggad som",
         
         "certificatetypes.fk7263.commonname" : "Läkarintyg",
         "certificatetypes.fk7263.typename" : "FK7263",

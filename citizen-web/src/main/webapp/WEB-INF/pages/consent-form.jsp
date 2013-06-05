@@ -34,10 +34,10 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
 </head>
 
 
