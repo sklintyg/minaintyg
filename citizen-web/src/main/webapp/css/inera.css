@@ -40,7 +40,11 @@ body {
 }
 
 a {
-	color: #31b2be;
+    color: #008391;
+}
+
+a:hover {
+    color: #31b2be;
 }
 
 h1,h2,h3,h4,h5 {
@@ -89,7 +93,7 @@ legend {
 }
 
 .mi-main-navigation {
-    padding: 20px 0px 40px 0px;	
+    padding: 20px 0px 60px 0px;
 }
 
 
@@ -454,6 +458,10 @@ div.table-bottom {
 	display: none;
 }
 
+.extra-margin-top {
+    margin-top: 30px;
+}
+
 button#archiveCertificateBtn {
 	float: right;
 }
@@ -475,4 +483,13 @@ button#archiveCertificateBtn {
     -moz-box-shadow: 0px 0px 10px #666;
     -webkit-box-shadow: 0px 0px 10px #666;
     box-shadow: 0px 0px 10px #666;
+}
+
+/* mvk override */
+
+#about-omminaintyg {
+}
+
+div[id*="about-"] {
+    padding: 0 90px 0 20px;
 }

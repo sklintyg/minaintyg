@@ -68,6 +68,15 @@ h2 {
 	line-height: 26px;
 }
 
+h3 {
+    font-family: helvetica, 'Sanchez','Noticia Text', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    line-height: 25px;
+    padding-top: 15px;
+}
+
 div.container {
 	background: none;
 }
@@ -460,7 +469,7 @@ tbody tr.SENT td {
 }
 
 .navbar .divider-vertical {
-    margin: 0 0px;
+    margin: 0;
 }
 
 .navbar .nav {
@@ -469,6 +478,32 @@ tbody tr.SENT td {
 
 .navbar .nav>li>a {
     padding: 10px 45px 10px;
+}
+
+.nav-stacked > .active > a, .nav-stacked > .active > a:hover, .nav-stacked > .active > a:focus {
+color: #ffffff;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+background-color: #008391;
+}
+
+.nav-stacked .active .icon-chevron-right, .nav-stacked .active a:hover .icon-chevron-right {
+background-image: url(../img/glyphicons-halflings-white.png);
+opacity: 1;
+}
+
+.nav-stacked .icon-chevron-right {
+float: right;
+margin-top: 2px;
+margin-right: -6px;
+opacity: .25;
+}
+
+.alert-info {
+    color: #555;
+}
+
+.alert-info h3 {
+    padding: 0;
 }
 
 /* end bootstrap override */

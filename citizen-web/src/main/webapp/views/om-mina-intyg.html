@@ -1,11 +1,11 @@
 <div class="span3" xmlns="http://www.w3.org/1999/html">
-  <h1>
+<!--  <h1>
     <span id="aboutHeader"><message key="about.header" /></span>
-  </h1>
+  </h1>-->
   <ul class="nav nav-tabs nav-stacked">
-    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href ng-click="navigateTo('omminaintyg')">Om Mina Intyg</a></li>
-    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href ng-click="navigateTo('samtycke')">Samtycke</a></li>
-    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href ng-click="navigateTo('juridik')">Juridik</a></li>
+    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href ng-click="navigateTo('omminaintyg')">Om Mina Intyg<i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href ng-click="navigateTo('samtycke')">Samtycke<i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href ng-click="navigateTo('juridik')">Juridik<i class="icon-chevron-right"></i></a></li>
   </ul>
 </div>
 <div class="span9">
@@ -37,7 +37,7 @@
 	<p><a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument" target="_blank">Information om e-legitimation på Mina vårdkontakter</a></p>
     <p><a href="http://www.forsakringskassan.se/privatpers/om_sjalvbetjaning/!ut/p/b1/hY7BCoJAGISfpRfYf_5Vd9ejW5AWSlmQ7SUsQoRWO0TR26fRtZrbwDcfQ44qcl19b5v61vZdfRm7UwcLILacYF4ajSyY5tKUkQR4APYDgC9J8G-_INcevXicvIDgUMoAOgw4VrEGK9qRexuMRG5Hg0kUI-N0y-vClrNl9AF-PCjS3p_p6qvnZtVMXingJIY!/dl4/d5/L2dJQSEvUUt3QS80SmtFL1o2XzgyME1CQjFBMDhTMDgwSTlIOUVGOTJHQTMx/" target="_blank">Försäkringskassan information om Mina sidor</a></p>
 
-	  <div class="alert alert-info">
+	  <div class="alert alert-info extra-margin-top">
 		  <h3>Tekniska krav och tillgänglighet</h3>
 		  <p>Mina intyg följer i största mån samma riktlinjer som Mina vårdkontakter.</p>
 		  <p><a href="https://www.minavardkontakter.se/C125755F00329208/p/OSAL-7PBG4J?opendocument" target="_blank">Se informationen under menyvalet Om Mina vårdkontakter</a>
@@ -50,7 +50,7 @@
 	<div class="alert alert-info">
 	  <h3>Återkalla samtycke</h3>
 	  <p>Du har gett ditt samtycke till att Mina intyg får hantera dina intyg elektroniskt. Du kan när som helst återkalla ditt samtycke. Det innebär att uppgifter om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. När du återkallar ditt samtycke kan du inte längre använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
-	  <p class="btn-row">
+	  <p>
 		<input id="revokeConsentBtn" ng-click="openConfirmDialog()" value="Återkalla samtycke" class="btn btn-success" />
 	  </p>
 	</div>
