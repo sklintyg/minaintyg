@@ -66,46 +66,6 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
     });
 } ]);
 
-// Certificate Controller
-listCertApp.controller('CertCtrl', [ '$scope', '$location', '$filter', 'listCertService', function ListCertCtrl($scope, $location, $filter, listCertService) {
-    $scope.open = function() {
-        $scope.shouldBeOpen = true;
-    };
-
-    $scope.close = function() {
-        $scope.closeMsg = 'I was closed at: ' + new Date();
-        $scope.shouldBeOpen = false;
-    };
-
-    $scope.opts = {
-        backdropFade : true,
-        dialogFade : true
-    };
-} ]);
-
-// Send Certification Controller
-listCertApp.controller('SendCertCtrl', [ '$scope', '$location', '$filter', 'listCertService', function ListCertCtrl($scope, $location, $filter, listCertService) {
-    $scope.certificates = [];
-
-    $scope.certToSend = listCertService.selectedCertificate;
-    // changes to certToSend is propagated to other controllers via the service
-    // scope
-    $scope.sendConfirmed = function() {
-
-        console.log("sending " + $scope.certToSend.id);
-        listCertService.sendCertificate($scope.certToSend, function(fromServer, oldItem) {
-            console.log("(send) statusUpdate callback:" + fromServer);
-            // Better way to update the object?
-            oldItem.status = fromServer.status;
-            oldItem.selected = false;
-            $location.path("/lista");
-
-        });
-
-    }
-
-} ]);
-
 // Consent Controller
 listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consentService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, $window) {
 

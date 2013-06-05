@@ -10,19 +10,11 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
             }).when('/arkiverade', {
                 templateUrl : '/views/list-archived.html',
                 controller : 'ListArchivedCtrl'
-            }).when('/intyg', {
-                templateUrl : '/views/certificate.html',
-                controller : 'CertCtrl'
-            }).when('/skicka-intyg', {
-                templateUrl : '/views/send-cert-confirm.html',
-                controller : 'SendCertCtrl'
             }).when('/omminaintyg', {
                 templateUrl : '/views/om-mina-intyg.html',
                 controller : 'AboutCtrl'
             }).when('/hjalp', {
-                templateUrl : '/views/hjalp.html',
-            // controller: 'SendCertCtrl'
-
+                templateUrl : '/views/hjalp.html'
             }).otherwise({
                 redirectTo : '/lista'
             });

@@ -266,7 +266,8 @@ input[type="radio"], input[type="checkbox"] {
 */
 
 div.container {
-	background: none;
+    padding-bottom: 50px;
+    width: 100%;
 }
 
 #content-container {
@@ -301,12 +302,6 @@ div#content-body {
 
 div.content-consent {
 	padding: 40px 60px;
-}
-
-div.container {
-    background-color: #c8c8c8;
-    padding-bottom: 50px;
-    width: 100%;
 }
 
 /*
@@ -665,7 +660,7 @@ margin-right: -6px;
 opacity: .25;
 }
 
-.alert-info {
+.alert-info p {
     color: #555;
     font-size: 13px;
 }
