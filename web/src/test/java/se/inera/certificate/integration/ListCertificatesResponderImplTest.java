@@ -20,7 +20,6 @@ package se.inera.certificate.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -35,6 +34,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -81,8 +81,7 @@ public class ListCertificatesResponderImplTest {
 
     @Test
     public void listCertificatesWithoutConsent() {
-
-        when(certificateService.listCertificates(anyString(), anyList(), any(LocalDate.class), any(LocalDate.class))).thenThrow(MissingConsentException.class);
+        when(certificateService.listCertificates(anyString(), Matchers.<List<String>>any(), any(LocalDate.class), any(LocalDate.class))).thenThrow(new MissingConsentException(""));
 
         List<String> types = Collections.emptyList();
         ListCertificatesRequestType parameters = createListCertificatesRequest("12-3", types, null, null);
