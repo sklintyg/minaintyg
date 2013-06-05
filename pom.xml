@@ -20,6 +20,7 @@
   </modules>
 
   <properties>
+    <system.mode>dev</system.mode>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cxf.version>2.7.4</cxf.version>
     <spring.version>3.2.2.RELEASE</spring.version>

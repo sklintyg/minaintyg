@@ -14,6 +14,7 @@
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+    <inera.certificates.basedir>${project.basedir}/../../inera-certificate-modules</inera.certificates.basedir>
   </properties>
 
   <dependencies>
@@ -83,8 +84,8 @@
     </dependency>
 
     <dependency>
-    	<groupId>xmlunit</groupId>
-    	<artifactId>xmlunit</artifactId>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
     </dependency>
 
   </dependencies>
@@ -96,18 +97,28 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>9.0.1.v20130408</version>
         <configuration>
-          <webApp>
+          <webAppConfig>
             <contextPath>/inera-certificate</contextPath>
-          </webApp>
+          </webAppConfig>
           <contextXml>${basedir}/src/main/webapp/WEB-INF/jetty-context.xml</contextXml>
+          <contextHandlers>
+            <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+              <war>${inera.certificates.basedir}/rli/target/rli.war</war>
+              <contextPath>/rli</contextPath>
+            </contextHandler>
+            <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+              <war>${inera.certificates.basedir}/fk7263/target/fk7263.war</war>
+              <contextPath>/fk7263</contextPath>
+            </contextHandler>
+          </contextHandlers>
           <systemProperties>
             <systemProperty>
               <name>spring.profiles.active</name>
-              <value>dev</value>
+              <value>${system.mode}</value>
             </systemProperty>
             <systemProperty>
-              <name>catalina.home</name>
-              <value>target</value>
+              <name>jetty.port</name>
+              <value>8080</value>
             </systemProperty>
           </systemProperties>
         </configuration>
