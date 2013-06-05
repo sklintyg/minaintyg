@@ -13,6 +13,7 @@ class InboxPage extends Page {
         noCertificates(required: false) { $("#noCerts") }
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
+        aboutTab(required: false) { $("#aboutTab") }
     }
 
     def archiveCertificate(String id) {
@@ -29,5 +30,9 @@ class InboxPage extends Page {
 
     def goToArchivedTab() {
         archivedTab.click()
+    }
+    
+    def goToAboutMinaIntyg() {
+        aboutTab.click()
     }
 }

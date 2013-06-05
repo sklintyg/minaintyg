@@ -1,0 +1,18 @@
+!3 Går igenom flöde för att ta tillbaka samtycke.
+Givet 
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|ja|
+
+Logga på som användare som har samtycke. Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas
+
+|script|!-TaTillbakaSamtycke-!|
+|logga på som|19121212-1212|
+|inkorg sidan visas|
+|gå till om mina intyg sidan|
+|om mina intyg sidan visas|
+|gå till om samtycke sidan|
+|om samtycke avsnitt visas|
+|välj återta samtycke|
+|bekräfta återta samtycke|
+|samtycke sidan visas|
