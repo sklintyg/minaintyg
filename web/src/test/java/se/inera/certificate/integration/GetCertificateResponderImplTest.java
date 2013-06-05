@@ -128,6 +128,7 @@ public class GetCertificateResponderImplTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void getCertificateWithoutConsent() {
         String civicRegistrationNumber = "19350108-1234";
         String certificateId = "123456";
