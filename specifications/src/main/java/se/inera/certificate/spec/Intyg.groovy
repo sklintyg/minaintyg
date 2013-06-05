@@ -1,11 +1,13 @@
 package se.inera.certificate.spec
 
-import groovy.xml.XmlUtil
-import groovyx.net.http.RESTClient
-import org.springframework.core.io.ClassPathResource
-import se.inera.certificate.spec.util.RestClientFixture
-
 import static groovyx.net.http.ContentType.JSON
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import groovyx.net.http.RESTClient
+
+import org.springframework.core.io.ClassPathResource
+
+import se.inera.certificate.spec.util.RestClientFixture
 
 public class Intyg extends RestClientFixture {
 
@@ -40,32 +42,32 @@ public class Intyg extends RestClientFixture {
 
     private document() {
         if (typ == 'FK7263') {
-            fk7263Document()
+            "\"" + document("fk7263") + "\""
         }
         else {
-            '<certificate></certificate>'
+            "\"" + document("rli") + "\""
         }
 
     }
 
-    private fk7263Document() {
+    private document(typ) {
         // slurping the FK7263 template
-        def registerMedicalCertificate = new XmlSlurper().parse(new ClassPathResource("fk7263_template.xml").getInputStream())
+        def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource(typ + "_template.json").getInputStream()))
 
         // setting the certificate ID
-        registerMedicalCertificate.lakarutlatande.'lakarutlatande-id' = id
+        certificate.'id' = id
 
         // setting personnr in certificate XML
-        registerMedicalCertificate.lakarutlatande.patient.'person-id'.setProperty('@extension', personnr)
+        certificate.patient.'id' = personnr
 
         // setting the signing date, from date and to date
-        registerMedicalCertificate.lakarutlatande.signeringsdatum = datum
-        registerMedicalCertificate.lakarutlatande.signeringsdatum = datum
-        registerMedicalCertificate.lakarutlatande.funktionstillstand.arbetsformaga.arbetsformagaNedsattning.varaktighetFrom = datum
-        registerMedicalCertificate.lakarutlatande.funktionstillstand.arbetsformaga.arbetsformagaNedsattning.varaktighetTom = datum
+        certificate.signeringsDatum = datum
+        certificate.skickatSatum = datum
 
+        certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetFrom = datum
+        certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetTom = datum
 
-        XmlUtil.serialize(registerMedicalCertificate);
+        JsonOutput.toJson(certificate)
     }
 
 }

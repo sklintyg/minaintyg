@@ -18,8 +18,10 @@
  */
 package se.inera.certificate.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +37,13 @@ import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
  */
 @Service
-@Transactional
 public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
@@ -78,6 +78,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
+    @Transactional
     public Certificate storeCertificate(Lakarutlatande lakarutlatande) {
 
         // turn a lakarutlatande into a certificate entity
@@ -92,7 +93,7 @@ public class CertificateServiceImpl implements CertificateService {
         return certificate;
     }
 
-    public String toJson(Lakarutlatande lakarutlatande) {
+    private String toJson(Lakarutlatande lakarutlatande) {
         try {
             return objectMapper.writeValueAsString(lakarutlatande);
         } catch (JsonProcessingException e) {
@@ -100,7 +101,7 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    public Certificate createCertificate(Lakarutlatande lakarutlatande) {
+    private Certificate createCertificate(Lakarutlatande lakarutlatande) {
         Certificate certificate = new Certificate(lakarutlatande.getId(), toJson(lakarutlatande));
 
         certificate.setType(lakarutlatande.getTyp());
