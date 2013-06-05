@@ -15,6 +15,11 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
 
     function _getProperty(key, language, defaultValue, fallbackToDefaultLanguage) {
         var value;
+        
+        if (typeof language === "undefined") {
+            language = $rootScope.lang;
+        }
+        
         value = _getPropertyInLanguage(language, key);
         if (typeof value === "undefined") {
             // use fallback attr value if defined
