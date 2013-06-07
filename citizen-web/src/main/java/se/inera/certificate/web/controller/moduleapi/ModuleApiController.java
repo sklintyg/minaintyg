@@ -97,6 +97,6 @@ public class ModuleApiController {
             return Response.status(response.getStatus()).build();
         }
 
-        return Response.ok(response.readEntity(String.class)).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
+        return Response.ok(response.getEntity()).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
     }
 }
