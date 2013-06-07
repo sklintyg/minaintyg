@@ -15,7 +15,7 @@ public class HttpHeaderProvider implements HeaderProvider {
     @Override
     public Map<String, String> getHeaders(HttpServletRequest httpServletRequest) {
         Citizen citizen = (Citizen) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(citizen != null) {
+        if (citizen != null) {
             return ImmutableMap.of("X-Username", citizen.getUsername());
         }
         return Collections.emptyMap();

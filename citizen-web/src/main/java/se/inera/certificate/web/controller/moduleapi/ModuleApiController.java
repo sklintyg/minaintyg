@@ -34,9 +34,9 @@ import se.inera.certificate.integration.IneraCertificateRestApi;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
- * 
+ *
  * @author marced
- * 
+ *
  */
 @Controller
 @RequestMapping(value = "/certificate")
@@ -55,7 +55,7 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id.
-     * 
+     *
      * @param id - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */

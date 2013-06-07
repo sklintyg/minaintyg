@@ -1,7 +1,5 @@
 package se.inera.certificate.web.controller.api;
 
-import java.util.List;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.web.security.Citizen;
@@ -19,6 +16,8 @@ import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/certificates", produces = "application/json")
@@ -90,9 +89,7 @@ public class ApiController {
         boolean revokedSuccessfully = consentService.setConsent(citizen.getUsername(), false);
         if (revokedSuccessfully) {
             citizen.setConsent(false);
-        } 
+        }
         return new ConsentResponse(revokedSuccessfully);
-        
     }
-
 }
