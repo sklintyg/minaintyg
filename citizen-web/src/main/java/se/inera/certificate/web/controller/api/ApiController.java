@@ -1,14 +1,18 @@
 package se.inera.certificate.web.controller.api;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.web.security.Citizen;
@@ -17,10 +21,6 @@ import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
-import java.util.List;
-
-@Controller
-@RequestMapping(value = "/certificates", produces = "application/json")
 public class ApiController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
@@ -34,46 +34,49 @@ public class ApiController {
     @Autowired
     private CitizenService citizenService;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @GET
+    @Path("/test")
     public String test() {
         LOG.debug("api.test");
         return "test";
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @ResponseBody
+    @GET
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return certificateService.getCertificates(citizen.getUsername());
     }
 
-    @RequestMapping(value = "/{id}/archive", method = RequestMethod.PUT)
-    @ResponseBody
-    public CertificateMeta archive(@PathVariable(value = "id") final String id) {
+    @PUT
+    @Path("/{id}/archive")
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.DELETED);
     }
 
-    @RequestMapping(value = "/{id}/restore", method = RequestMethod.PUT)
-    @ResponseBody
-    public CertificateMeta restore(@PathVariable(value = "id") final String id) {
+    @PUT
+    @Path("/{id}/restore")
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.RESTORED);
     }
 
-    @RequestMapping(value = "/{id}/send", method = RequestMethod.PUT)
-    @ResponseBody
-    public CertificateMeta send(@PathVariable(value = "id") final String id) {
+    @PUT
+    @Path("/{id}/send")
+    public CertificateMeta send(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {0}", id);
         // TODO: no hardcoding of targets
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "FK", StatusType.SENT);
     }
 
-    @RequestMapping(value = "/consent/give", method = RequestMethod.POST)
-    @ResponseBody
+    @POST
+    @Path("/consent/give")
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'giveConsent' for citizen {0}", citizen.getUsername());
@@ -81,8 +84,8 @@ public class ApiController {
         return new ConsentResponse(true);
     }
 
-    @RequestMapping(value = "/consent/revoke", method = RequestMethod.POST)
-    @ResponseBody
+    @POST
+    @Path("/consent/revoke")
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'revokeConsent' for citizen {0}", citizen.getUsername());
