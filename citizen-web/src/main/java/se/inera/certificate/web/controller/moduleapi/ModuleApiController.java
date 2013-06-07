@@ -20,6 +20,7 @@ package se.inera.certificate.web.controller.moduleapi;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,7 @@ import se.inera.certificate.integration.IneraCertificateRestApi;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
- *
  * @author marced
- *
  */
 @Controller
 @RequestMapping(value = "/certificate")
@@ -54,9 +53,9 @@ public class ModuleApiController {
     private IneraCertificateRestApi certificateRestService;
 
     /**
-     * Return the certificate identified by the given id.
-     *
-     * @param id - the globally unique id of a certificate.
+     * Return the certificate identified by the given id as JSON.
+     * @param id
+     *            - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -65,5 +64,21 @@ public class ModuleApiController {
     public final String getCertificate(@PathVariable(value = "id") final String id) {
         LOG.debug("getCertificate: {}", id);
         return certificateRestService.getCertificate(id);
+    }
+
+    /**
+     * Return the certificate identified by the given id as PDF.
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @return The certificate in JSON format
+     */
+    @RequestMapping(value = "/{id}/pdf", method = RequestMethod.GET)
+    @Produces("application/pdf")
+    public final Response getCertificatePdf(@PathVariable(value = "id") final String id) {
+        LOG.debug("getCertificatePdf: {}", id);
+        // Temporary dummy response until IT rest endpoint exists..
+        byte[] entity = new byte[] { 1, 0, 1, 0 };
+        return Response.ok(entity).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
+        // return certificateRestService.getCertificatePdf(id);
     }
 }
