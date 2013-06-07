@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * @author andreaskaltenbach
@@ -12,12 +13,15 @@ import javax.ws.rs.core.MediaType;
 public interface IneraCertificateRestApi {
 
     @GET
-    @Path("/certificate/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    String getCertificate(@PathParam("id") String certificateId);
+    @Path( "/certificate/{id}" )
+    @Produces("application/pdf")
+    Response getCertificatePdf(@PathParam( "id" ) String certificateId);
+
 
     @GET
-    @Path("/certificate/{id}")
-    @Produces("application/pdf")
-    byte[] getCertificatePdf(@PathParam("id") String certificateId);
+    @Path( "/certificate/{id}" )
+    @Produces( MediaType.APPLICATION_JSON )
+    Response getCertificate(@PathParam( "id" ) String certificateId);
+
+
 }

@@ -26,6 +26,11 @@ public interface ModuleRestApi {
     @Path( "/valid" )
     @Consumes( MediaType.APPLICATION_XML )
     @Produces( MediaType.TEXT_PLAIN )
-    public Response validate(Lakarutlatande intyg);
+    Response validate(Lakarutlatande intyg);
 
+    @POST
+    @Path( "/pdf" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( "application/pdf" )
+    byte[] pdf(se.inera.certificate.model.Lakarutlatande intyg);
 }

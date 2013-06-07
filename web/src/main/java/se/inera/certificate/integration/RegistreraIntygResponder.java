@@ -2,16 +2,15 @@ package se.inera.certificate.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
 import org.apache.cxf.annotations.SchemaValidation;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.integration.converter.LakarutlatandeJaxbToLakarutlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
+import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.integration.validator.ValidationException;
 import se.inera.certificate.model.Ovrigt;
@@ -22,7 +21,6 @@ import javax.ws.rs.core.Response;
 import javax.xml.ws.Holder;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 
 /**
  * @author andreaskaltenbach
@@ -32,20 +30,14 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistreraIntygResponder.class);
 
-    private String host;
-
     @Autowired
-    private JacksonJaxbJsonProvider jacksonJsonProvider;
+    private ModuleRestApiFactory moduleRestApiFactory;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
     private CertificateService certificateService;
-
-    public void setPort(String port) {
-        host = "http://localhost:" + port;
-    }
 
     @Override
     public void registreraIntyg(Holder<Lakarutlatande> lakarutlatande) {
@@ -65,15 +57,9 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         certificateService.storeCertificate(model);
     }
 
-    private ModuleRestApi getModuleRestService(String type) {
-        ModuleRestApi endpoint = JAXRSClientFactory.create(host + "/" + type + "/api", ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
-        return endpoint;
-    }
-
-
     private void validate(String type, Lakarutlatande lakarutlatande) {
 
-        ModuleRestApi endpoint = getModuleRestService(type);
+        ModuleRestApi endpoint = moduleRestApiFactory.getModuleRestService(type);
 
         Response response = endpoint.validate(lakarutlatande);
 
@@ -99,8 +85,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
     private String extractCertificateExtensionData(String type, Lakarutlatande lakarutlatande) {
 
-
-        ModuleRestApi endpoint = getModuleRestService(type);
+        ModuleRestApi endpoint = moduleRestApiFactory.getModuleRestService(type);
 
         try {
             Object certificateExtension = endpoint.extract(lakarutlatande);

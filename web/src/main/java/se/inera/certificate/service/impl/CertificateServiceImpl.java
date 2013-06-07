@@ -22,12 +22,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
@@ -36,9 +37,6 @@ import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -120,7 +118,7 @@ public class CertificateServiceImpl implements CertificateService {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
 
-    private void assertConsent(String civicRegistrationNumber) {        
+    private void assertConsent(String civicRegistrationNumber) {
         if (!consentService.isConsent(civicRegistrationNumber)) {
             throw new MissingConsentException(civicRegistrationNumber);
         }
@@ -134,9 +132,11 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private Certificate fixDeletedStatus(Certificate certificate) {
-        List<CertificateStateHistoryEntry> states = certificate.getStates();
-        Collections.sort(states, SORTER);
-        certificate.setDeleted(isDeleted(states));
+        if (certificate != null) {
+            List<CertificateStateHistoryEntry> states = certificate.getStates();
+            Collections.sort(states, SORTER);
+            certificate.setDeleted(isDeleted(states));
+        }
         return certificate;
     }
 

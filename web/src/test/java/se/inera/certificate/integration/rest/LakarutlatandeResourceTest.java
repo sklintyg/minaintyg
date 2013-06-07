@@ -1,7 +1,6 @@
 package se.inera.certificate.integration.rest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,9 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
+
+import javax.ws.rs.core.Response;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LakarutlatandeResourceTest {
@@ -26,14 +26,15 @@ public class LakarutlatandeResourceTest {
     @Test
     public void knownIdResolvesIntoLakarutlatandeJson() {
         when(certificateService.getCertificate(null, "knownid")).thenReturn(new Certificate("knownid", "{data: 1}"));
-        String lakarutlatandeJson = resource.getCertificate("knownid");
-        assertEquals("{data: 1}", lakarutlatandeJson);
+        Response response = resource.getCertificate("knownid");
+        assertEquals(200, response.getStatus());
+        assertEquals("{data: 1}", response.getEntity());
     }
 
     @Test
     public void unknownIdResolvesIntoNull() {
-        String lakarutlatandeJson = resource.getCertificate("knownid");
-        assertNull(lakarutlatandeJson);
+        Response response= resource.getCertificate("knownid");
+        assertEquals(404, response.getStatus());
     }
 
 }
