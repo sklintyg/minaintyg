@@ -61,9 +61,9 @@ public class ModuleApiController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @ResponseBody
-    public final String getCertificate(@PathVariable(value = "id") final String id) {
+    public final Response getCertificate(@PathVariable(value = "id") final String id) {
         LOG.debug("getCertificate: {}", id);
-        return certificateRestService.getCertificate(id);
+        return Response.ok(certificateRestService.getCertificate(id).getEntity()).build();
     }
 
     /**
@@ -76,9 +76,9 @@ public class ModuleApiController {
     @Produces("application/pdf")
     public final Response getCertificatePdf(@PathVariable(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
-        // Temporary dummy response until IT rest endpoint exists..
-        byte[] entity = new byte[] { 1, 0, 1, 0 };
-        return Response.ok(entity).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
-        // return certificateRestService.getCertificatePdf(id);
+
+        Response response = certificateRestService.getCertificatePdf(id);
+        return Response.ok(response.getEntity()).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
+        // return
     }
 }
