@@ -4,7 +4,7 @@
     "kommentar":"Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
     "signeringsDatum": "2011-01-26T00:00:00.000",
     "skickatDatum": "2011-03-23T09:29:15.193",
-    "sjukdomsfarlopp" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
+    "sjukdomsforlopp" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
     "patient": {
         "id": "19121212-1212",
         "fullstandigtNamn": "Test Testorsson"

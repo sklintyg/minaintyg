@@ -38,7 +38,7 @@ public class Lakarutlatande {
 
     private List<Referens> referenser;
 
-    private String sjukdomsfarlopp;
+    private String sjukdomsforlopp;
 
     private Ovrigt ovrigt;
 
@@ -98,12 +98,12 @@ public class Lakarutlatande {
         this.vardenhet = vardenhet;
     }
 
-    public String getSjukdomsfarlopp() {
-        return sjukdomsfarlopp;
+    public String getSjukdomsforlopp() {
+        return sjukdomsforlopp;
     }
 
-    public void setSjukdomsfarlopp(String sjukdomsfarlopp) {
-        this.sjukdomsfarlopp = sjukdomsfarlopp;
+    public void setSjukdomsforlopp(String sjukdomsforlopp) {
+        this.sjukdomsforlopp = sjukdomsforlopp;
     }
 
     public Ovrigt getOvrigt() {

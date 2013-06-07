@@ -48,7 +48,7 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
         lakarutlatande.setSkapadAv(convert(value.getSkapadAv()));
         lakarutlatande.setBedomtTillstand(convert(value.getBedomtTillstand()));
 
-        lakarutlatande.setSjukdomsfarlopp(value.getSjukdomsforlopp());
+        lakarutlatande.setSjukdomsforlopp(value.getSjukdomsforlopp());
 
         lakarutlatande.setAktivitetsbegransningar(convertAktivitetsbegransning(value.getAktivitetsbegransnings()));
         lakarutlatande.setFunktionsnedsattningar(convertFunktionsnedsattning(value.getFunktionsnedsattnings()));
