@@ -6,6 +6,8 @@ import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 
+import javax.ws.rs.PathParam;
+
 /**
  * @author andreaskaltenbach
  */
@@ -22,5 +24,10 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public byte[] getCertificatePdf(@PathParam( "id" ) String certificateId) {
+        return new byte[0];
     }
 }
