@@ -50,7 +50,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             byte[] pdf = moduleRestApi.pdf(lakarutlatande);
             return Response.ok(pdf).build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId);
+            throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
         }
     }
 }

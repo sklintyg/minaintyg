@@ -71,7 +71,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
                     String validationErrorMessage = IOUtils.toString(inputStream);
                     throw new ValidationException(validationErrorMessage);
                 } catch (IOException e) {
-                    throw new RuntimeException("Failed to read response for validation of '" + type + "' certificate.");
+                    throw new RuntimeException("Failed to read response for validation of '" + type + "' certificate.", e);
                 }
 
             case 200:
