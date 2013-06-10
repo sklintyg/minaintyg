@@ -2,56 +2,33 @@
   <h1><message key="consent.consentpage.title"></message></h1>
 
   <div class="alert alert-info">
-	  <p><message key="consent.consentpage.title"></message>Innan du kan använda Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas i webbtjänsten. Du ger ditt samtycke genom att trycka på knappen längst ner på sidan när du läst igenom texten. Därefter kan du börja använda Mina intyg direkt.</p>
+	  <message key="consent.info"></message>
   </div>
 
-  <h2>Om Mina intyg</h2>
-  <p>Mina intyg är en webbtjänst där du enkelt kan hantera intyg som vården utfärdat för dig eller den du är ombud för. Du kan läsa, spara ner på din dator och skriva ut dina intyg och du kan skicka intyg vidare till Försäkringskassan och till andra mottagare.</p>
+  <h2><message key="consent.aboutheader"></message></h2>
+  <p><message key="consent.abouttext"></message></p>
 
-  <h3>Personuppgifter från patientjournalen</h3>
-  <p>Intygen som du hanterar i Mina intyg är utfärdade av vården och uppgifterna är en del av din patientjournal. När du ger ditt samtycke godkänner du:
-  <ul class="italic">
-    <li>att dina personuppgifter i intygen får hanteras och visas i Mina intyg.</li>
-    <li>att dina personuppgifter i intygen får hanteras för statistiska ändamål.</li>
-  </ul>
+  <message key="consent.consentheader1"></message>
+  <message key="consent.consenttext1"></message>
 
-  <h3>Personuppgifter som hanteras i Mina intyg</h3>
+  <message key="consent.consentheader2"></message>
+  <message key="consent.consenttext2"></message>
+
+  <message key="consent.consentheader3"></message>
+  <message key="consent.consenttext3"></message>
+
+  <message key="consent.consentheader4"></message>
+  <message key="consent.consenttext4"></message>
+
+  <message key="consent.consentheader5"></message>
+  <message key="consent.consenttext5"></message>
+
+  <message key="consent.consentheader6"></message>
+  <message key="consent.consenttext6"></message>
+
+  <p class="btn-row-desc"><message key="consent.confirmtext"></message></p>
   <p>
-    De personuppgifter som hanteras i Mina intyg är de uppgifter som finns i intyget.<br /> Det är: <em>namn, personnummer, adress, diagnos, sjukdomsförlopp, funktionsnedsättning,
-      aktivitetsbegränsning, rekommendationer och planerad eller pågående behandling, arbetsförmåga, prognos och vårdbesök.</em>
-  </p>
-
-  <h3>Syfte med hanteringen av personuppgifter</h3>
-  <p>Personuppgifterna finns i Mina intyg som en service till invånaren. Du ska enkelt kunna hantera dina intyg och välja när och till vem du vill skicka ett intyg. Uppgifterna kommer också att
-    användas för att ta fram statistik om sjukskrivningar. Statistiken som tas fram går inte att härleda till dig eller någon viss person.</p>
-
-  <h3>Aktiviteter i intygstjänsten</h3>
-  <p>I Mina intyg hanteras och visas dina intyg. All aktivitet som sker, styr du själv över, som till exempel att överföra intyg till Försäkringskassan.</p>
-
-  <h3>Ansvarig</h3>
-  <p>Intygstjänsten drivs av Inera AB. I intygstjänsten behandlar Inera AB personuppgifter om enskilda personer i egenskap av personuppgiftsbiträde på uppdrag av vården.
-
-  <h3>Dina rättigheter</h3>
-  <p>Som användare av intygstjänsten har du bland annat rätt att:</p>
-  <ul class="italic">
-    <li>varje år begära kostnadsfri information om personuppgifter som Inera AB behandlar</li>
-    <li>när som helst begära rättelse av uppgifter</li>
-    <li>när som helst begära spärrning eller radering av personuppgifter förutsatt att det finns godtagbara skäl, att uppgifterna uppenbarligen inte behövs för din vård eller att det ur allmän
-      synpunkt uppenbarligen inte finns skäl att bevara uppgifterna</li>
-    <li>kräva skadestånd enligt 10 kap. 1 § PDL eller 48 § PUL vid behandling av personuppgifter i strid med lag. Du har också rätt att begära att Inera AB underrättar tredje man, till vilken
-      uppgifter lämnas ut, om uppgifternas felaktighet samt att få information om sökbegrepp, direktåtkomst och utlämnande av dina uppgifter som förekommit.</li>
-  </ul>
-
-  <h3>Återta samtycke</h3>
-  <p>Du kan när som helst återkalla ditt samtycke. Det innebär att uppgifter om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. När du återkallar ditt samtycke kan du
-    inte längre använda Mina intyg.</p>
-
-  <p>Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
-  <br />
-
-  <p class="btn-row-desc">Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg (krävs för att använda webbtjänsten).</p>
-  <p>
-    <input id="giveConsentButton" ng-click="giveConsent()" value="Jag ger mitt samtycke" class="btn btn-success" />
+    <button id="giveConsentButton" ng-click="giveConsent()" class="btn btn-success"><message key='consent.giveconsent'></message></button>
   </p>
 
 </div>

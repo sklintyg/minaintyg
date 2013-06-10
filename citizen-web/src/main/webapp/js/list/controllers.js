@@ -1,9 +1,10 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', 'listCertService', function ListCertCtrl($scope, $filter, $location, $window, listCertService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', 'listCertService','messageService', function ListCertCtrl($scope, $filter, $location, $window, listCertService,messageService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
+	$scope.messageService = messageService;
 
     $scope.initialDisplaySize = 9;
     $scope.currentDisplaySize = 9;

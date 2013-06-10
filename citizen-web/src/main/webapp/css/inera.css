@@ -154,6 +154,7 @@ p.btn-row {
 }
 
 p.btn-row-desc {
+    padding-top: 30px;
     font-style: italic;
 }
 
@@ -660,7 +661,7 @@ margin-right: -6px;
 opacity: .25;
 }
 
-.alert-info p {
+.alert-info, .alert-info p {
     color: #555;
     font-size: 13px;
 }

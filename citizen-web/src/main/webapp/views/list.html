@@ -32,7 +32,7 @@
 									<message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
 								</div>
 								<div class="span1 archive">
-									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="<message key='button.alt.archive'></message>" src="/img/archive-icon.gif" /></a>
+									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
 								</div>
 							</div>
 						</div>
