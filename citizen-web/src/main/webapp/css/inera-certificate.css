@@ -156,9 +156,7 @@ section.certificate div.cert div.cert-header {
 }
 
 section.certificate div.cert div.cert-body {
-/*	border-width: 1px 1px 0 1px;
-	border-style: solid;
-	border-color: #e9eae8;*/
+    padding-top: 20px;
 }
 
 section.certificate div.cert div.cert-body div.body-row {
