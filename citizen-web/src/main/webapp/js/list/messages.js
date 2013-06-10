@@ -12,7 +12,7 @@ var minaIntygResources = {
         "button.show" : "Visa intyget",
         
         "inbox.header" : "Inkorgen",
-        "inbox.description" : "Här listasabout-omminaintyg dina tio senaste intyg med det senast inkomna intyget överst. Visa intyget för att titta på det, skriva ut det eller spara det till din dator.",
+        "inbox.description" : "Här listas dina tio senaste intyg med det senast inkomna intyget överst. Visa intyget för att titta på det, skriva ut det eller spara det till din dator.",
        
         "archived.header" : "Arkiverade intyg",
         "archived.description" : "<p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att: <ul><li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg till mappen \"borttagna intyg\".</li><li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, och i vissa fall livet ut.</li><li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då ändra uppgiften i journalen.</li></ul></p><p><a href=\"http://www.datainspektionen.se/lagar-och-regler/patientdatalagen\" target=\"_blank\">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p>    <p>För att återställa ett borttaget intyg välj Återställ.</p>",
