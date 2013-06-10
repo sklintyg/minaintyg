@@ -33,7 +33,6 @@ public class ModuleRestApiFactory {
      */
     public ModuleRestApi getModuleRestService(String type) {
         String uri = host + "/" + type + "/api";
-        ModuleRestApi endpoint = JAXRSClientFactory.create(uri, ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
-        return endpoint;
+        return JAXRSClientFactory.create(uri, ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
     }
 }
