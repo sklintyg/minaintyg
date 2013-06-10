@@ -23,10 +23,10 @@
 				<div class="span12">
 					<div id="certificate-{{cert.id}}" class="cert">
 						<div class="cert-titlebar">
-							<img class="cert-icon" alt="" ng-src="/img/{{cert.type}}.png" />
+							<img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
 							<div class="row-fluid">
 								<div class="span8">
-									<h2><message key="certificatetypes.{{cert.type}}.commonname"></message></h2>
+									<h2><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></h2>
 								</div>
 								<div class="span3 issue">
 									<message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
