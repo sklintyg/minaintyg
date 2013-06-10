@@ -1,9 +1,12 @@
 package se.inera.certificate.model;
 
+import java.util.List;
+
+import static com.google.common.collect.Iterables.find;
+
+import com.google.common.base.Predicate;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -204,5 +207,30 @@ public class Lakarutlatande {
         return toDate;
     }
 
+    public Aktivitet getAktivitet(final Aktivitetskod aktivitetsKod) {
+        return find(aktiviteter, new Predicate<Aktivitet>() {
+            @Override
+            public boolean apply(Aktivitet aktivitet) {
+                return aktivitet.getAktivitetskod() == aktivitetsKod;
+            }
+        }, null);
+    }
 
+    public Vardkontakt getVardkontakt(final Vardkontakttyp vardkontaktTyp) {
+        return find(vardkontakter, new Predicate<Vardkontakt>() {
+            @Override
+            public boolean apply(Vardkontakt vardkontakt) {
+                return vardkontakt.getVardkontakttyp() == vardkontaktTyp;
+            }
+        }, null);
+    }
+
+    public Referens getReferens(final Referenstyp referensTyp) {
+            return find(referenser, new Predicate<Referens>() {
+                @Override
+                public boolean apply(Referens referens) {
+                    return referens.getReferenstyp() == referensTyp;
+                }
+            }, null);
+        }
 }

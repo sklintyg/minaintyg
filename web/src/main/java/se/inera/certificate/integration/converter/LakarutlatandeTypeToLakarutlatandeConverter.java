@@ -271,6 +271,7 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.setId(source.getPersonalId().getExtension());
         hosPersonal.setNamn(source.getFullstandigtNamn());
+        hosPersonal.setForskrivarkod(source.getForskrivarkod());
         return hosPersonal;
     }
 

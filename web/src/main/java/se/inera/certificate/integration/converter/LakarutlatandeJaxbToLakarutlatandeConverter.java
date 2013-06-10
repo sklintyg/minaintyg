@@ -1,5 +1,8 @@
 package se.inera.certificate.integration.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.inera.certificate.integration.v1.AktivitetsbegransningType;
 import se.inera.certificate.integration.v1.ArbetsformagaType;
 import se.inera.certificate.integration.v1.BedomtTillstandType;
@@ -20,9 +23,6 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -263,6 +263,7 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
         HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId(source.getId());
         hosPersonal.setNamn(source.getNamn());
+        hosPersonal.setForskrivarkod(source.getForskrivarkod());
         return hosPersonal;
     }
 

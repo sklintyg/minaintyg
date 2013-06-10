@@ -42,6 +42,7 @@
     <xs:sequence>
       <xs:element name="id" type="xs:string"/>
       <xs:element name="namn" type="xs:string"/>
+      <xs:element name="forskrivarkod" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="vardenhetType">
