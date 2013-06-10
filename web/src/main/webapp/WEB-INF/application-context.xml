@@ -51,9 +51,4 @@
   <bean id="certificatesContextClassCollector"
         class="se.inera.certificate.integration.certificates.config.AdditionalContextClassCollector"/>
 
-  <bean id="moduleRestApiLocator" class="se.inera.certificate.integration.rest.ModuleRestApiFactory">
-    <property name="port" value="${modules.port}"/>
-  </bean>
-
-
 </beans>

@@ -4,6 +4,8 @@ import java.util.Collections;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
  *
  * @author andreaskaltenbach
  */
+@Component
 public class ModuleRestApiFactory {
 
     private String host;
@@ -19,6 +22,8 @@ public class ModuleRestApiFactory {
     @Autowired
     private JacksonJaxbJsonProvider jacksonJsonProvider;
 
+    @Autowired
+    @Value("${modules.port}") 
     public void setPort(String port) {
         host = "http://localhost:" + port;
     }
