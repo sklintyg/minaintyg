@@ -2,10 +2,12 @@ package se.inera.certificate.integration.rest;
 
 import java.util.Collections;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
  *  Factory which creates {@link ModuleRestApi} instances to communicate with the Rest API of the certificate modules.
@@ -20,6 +22,8 @@ public class ModuleRestApiFactory {
     @Autowired
     private JacksonJaxbJsonProvider jacksonJsonProvider;
 
+    @Autowired
+    @Value("${modules.port}") 
     public void setPort(String port) {
         host = "http://localhost:" + port;
     }
@@ -28,7 +32,8 @@ public class ModuleRestApiFactory {
      * Creates a {@link ModuleRestApi} for the given certificate type.
      */
     public ModuleRestApi getModuleRestService(String type) {
-        ModuleRestApi endpoint = JAXRSClientFactory.create(host + "/" + type + "/api", ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
+        String uri = host + "/" + type + "/api";
+        ModuleRestApi endpoint = JAXRSClientFactory.create(uri, ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
         return endpoint;
     }
 }
