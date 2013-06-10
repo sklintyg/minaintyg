@@ -30,10 +30,16 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
         restrict : "E",
         replace : true,
         scope : {
-            linkPrefix: "@"
+            linkPrefix: "@",
+            defaultActive: "@"
           },
         controller: function($scope, $element, $attrs) {
             $scope.navClass = function (page) {
+                if (angular.isString($scope.defaultActive)) {
+                    if (page == $scope.defaultActive) {
+                        return 'active';
+                    }
+                }
                 var currentRoute = $location.path().substring(1) || 'lista';
                 return page === currentRoute ? 'active' : '';
             };  
