@@ -57,19 +57,19 @@ public class ModuleApiController {
      */
     @Autowired
     private IneraCertificateRestApi certificateRestService;
-    
+
     /**
      * Helper service to get current user.
      */
     @Autowired
     private CitizenService citizenService;
-    
+
     /**
-     * Intygstjanstens WS endpoint service
+     * Intygstjanstens WS endpoint service.
      */
     @Autowired
     private CertificateService certificateService;
-    
+
     /**
      * Return the certificate identified by the given id as JSON.
      *
@@ -77,9 +77,9 @@ public class ModuleApiController {
      * @return The certificate in JSON format
      */
     @GET
-    @Path( "/{id}" )
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
-    public final Response getCertificate(@PathParam( "id" ) final String id) {
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public final Response getCertificate(@PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
         Response response = certificateRestService.getCertificate(id);
@@ -90,7 +90,7 @@ public class ModuleApiController {
 
         return Response.ok(response.readEntity(String.class)).build();
     }
-    
+
     @PUT
     @Path("/{id}/send/{target}")
     public CertificateMeta send(@PathParam("id") final String id, @PathParam("target") final String target) {
@@ -106,9 +106,9 @@ public class ModuleApiController {
      * @return The certificate in JSON format
      */
     @GET
-    @Path( "/{id}/pdf" )
-    @Produces( "application/pdf" )
-    public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
+    @Path("/{id}/pdf")
+    @Produces("application/pdf")
+    public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
         Response response = certificateRestService.getCertificatePdf(id);
