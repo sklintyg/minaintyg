@@ -1,10 +1,10 @@
 'use strict';
 /**
- * Service used to functions regarding certificates, such as getCertificate, Send Certificate etc.
- * Can be used by the modules as a common component.
- *
+ * Service used to functions regarding certificates, such as getCertificate,
+ * Send Certificate etc. Can be used by the modules as a common component.
  * 
- *
+ * 
+ * 
  */
 angular.module('services.certService', []);
 angular.module('services.certService').factory('certService', [ '$http', '$rootScope', function(http, rootScope) {
@@ -21,10 +21,20 @@ angular.module('services.certService').factory('certService', [ '$http', '$rootS
         });
     }
 
-    //TODO:send certificate function
-    
+    function _sendCertificate(id, target, callback) {
+        console.log("send certificate " + id + " to " + target);
+        http.put(rootScope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + id + "/send/" + target).success(function(data) {
+
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            console.log("error " + status);
+            callback(null);
+        });
+    }
+
     // Return public API for our service
     return {
-        getCertificate : _getCertificate
+        getCertificate : _getCertificate,
+        sendCertificate : _sendCertificate
     }
 } ]);

@@ -18,27 +18,27 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
+import static javax.ws.rs.core.Response.Status.OK;
+
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
-import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import se.inera.certificate.integration.IneraCertificateRestApi;
 
-import static javax.ws.rs.core.Response.Status.*;
+import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.integration.IneraCertificateRestApi;
+import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
+import se.inera.certificate.web.service.CitizenService;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -57,7 +57,19 @@ public class ModuleApiController {
      */
     @Autowired
     private IneraCertificateRestApi certificateRestService;
-
+    
+    /**
+     * Helper service to get current user.
+     */
+    @Autowired
+    private CitizenService citizenService;
+    
+    /**
+     * Intygstjanstens WS endpoint service
+     */
+    @Autowired
+    private CertificateService certificateService;
+    
     /**
      * Return the certificate identified by the given id as JSON.
      *
@@ -77,6 +89,14 @@ public class ModuleApiController {
         }
 
         return Response.ok(response.readEntity(String.class)).build();
+    }
+    
+    @PUT
+    @Path("/{id}/send/{target}")
+    public CertificateMeta send(@PathParam("id") final String id, @PathParam("target") final String target) {
+        Citizen citizen = citizenService.getCitizen();
+        LOG.debug("Requesting 'send' for certificate {0} to target {1}", id, target);
+        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), target, StatusType.SENT);
     }
 
     /**
