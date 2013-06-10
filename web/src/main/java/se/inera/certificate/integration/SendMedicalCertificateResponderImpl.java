@@ -1,22 +1,10 @@
 package se.inera.certificate.integration;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
@@ -27,6 +15,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.r
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateResponseType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Transactional
 @SchemaValidation
 public class SendMedicalCertificateResponderImpl implements SendMedicalCertificateResponderInterface {
@@ -36,9 +26,6 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
 
     @Autowired
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateResponder;
-
-    @Autowired
-    private List<CertificateSupport> supportedCertificates;
 
     @Autowired
     private ObjectMapper objectMapper;

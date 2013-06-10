@@ -7,8 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import iso.v21090.dt.v1.II;
 
-import java.util.Collections;
-import java.util.List;
+import java.lang.reflect.Field;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -18,11 +17,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
-import se.inera.certificate.integration.certificates.CertificateSupport;
-import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
@@ -31,6 +30,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.r
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SendMedicalCertificateResponderImplTest {
@@ -44,17 +45,26 @@ public class SendMedicalCertificateResponderImplTest {
     @Mock
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateResponderInterface = mock(RegisterMedicalCertificateResponderInterface.class);
 
-    @Mock
-    private List<CertificateSupport> supportedCertificates;
-
+    private ObjectMapper objectMapper = new CustomObjectMapper();
+    
     @InjectMocks
     private SendMedicalCertificateResponderInterface responder = new SendMedicalCertificateResponderImpl();
 
     @Before
     public void before() {
-        when(supportedCertificates.iterator()).thenReturn(Collections.<CertificateSupport> singletonList(new Fk7263Support()).iterator());
+        // Force injection of objectMapper
+        for (Field field: responder.getClass().getDeclaredFields()) {
+            try {
+                if (field.getAnnotation(Autowired.class) != null && field.getType().isAssignableFrom(objectMapper.getClass())) {
+                    field.setAccessible(true);
+                        field.set(responder, objectMapper);
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
+    
     @Test
     public void testGet() throws Exception {
         SendMedicalCertificateRequestType parameters = new SendMedicalCertificateRequestType();
@@ -68,7 +78,7 @@ public class SendMedicalCertificateResponderImplTest {
         when(certificateService.getCertificate("19121212-1212", "Intygs-id-1234567890")).thenReturn(certificate);
         when(certificate.getType()).thenReturn("fk7263");
 
-        String document = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("fk7263/fk7263.xml"));
+        String document = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("lakarutlatande/maximalt-fk7263.json"));
         when(certificate.getDocument()).thenReturn(document);
 
         AttributedURIType address = new AttributedURIType();
