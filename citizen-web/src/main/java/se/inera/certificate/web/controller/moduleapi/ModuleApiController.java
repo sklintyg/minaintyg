@@ -18,9 +18,16 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +36,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import se.inera.certificate.integration.IneraCertificateRestApi;
+
+import static javax.ws.rs.core.Response.Status.*;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
- * 
+ *
  * @author marced
- * 
  */
-@Controller
-@RequestMapping(value = "/certificate")
 public class ModuleApiController {
 
     /**
@@ -54,16 +59,44 @@ public class ModuleApiController {
     private IneraCertificateRestApi certificateRestService;
 
     /**
-     * Return the certificate identified by the given id.
-     * 
+     * Return the certificate identified by the given id as JSON.
+     *
      * @param id - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @ResponseBody
-    public final String getCertificate(@PathVariable(value = "id") final String id) {
+    @GET
+    @Path( "/{id}" )
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    public final Response getCertificate(@PathParam( "id" ) final String id) {
         LOG.debug("getCertificate: {}", id);
-        return certificateRestService.getCertificate(id);
+
+        Response response = certificateRestService.getCertificate(id);
+        if (response.getStatus() != OK.getStatusCode()) {
+            LOG.error("Failed to get JSON for certificate " + id + " from inera-certificate.");
+            return Response.status(response.getStatus()).build();
+        }
+
+        return Response.ok(response.readEntity(String.class)).build();
+    }
+
+    /**
+     * Return the certificate identified by the given id as PDF.
+     *
+     * @param id - the globally unique id of a certificate.
+     * @return The certificate in JSON format
+     */
+    @GET
+    @Path( "/{id}/pdf" )
+    @Produces( "application/pdf" )
+    public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
+        LOG.debug("getCertificatePdf: {}", id);
+
+        Response response = certificateRestService.getCertificatePdf(id);
+        if (response.getStatus() != OK.getStatusCode()) {
+            LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
+            return Response.status(response.getStatus()).build();
+        }
+
+        return Response.ok(response.getEntity()).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
     }
 }

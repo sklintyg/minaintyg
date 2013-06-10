@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * AOP Advice that optionally overrides the WS call that {@link org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate} executes against MVK. The result
  * is overridden if you try to use a civic registration number as token.
- * 
+ *
  * @author marced
- * 
+ *
  */
 @Aspect
 public class MvkValidationServiceAdvice {

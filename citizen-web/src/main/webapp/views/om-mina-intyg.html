@@ -1,4 +1,4 @@
-<div class="span3" xmlns="http://www.w3.org/1999/html">
+<div id="about-mina-intyg-root" class="span3">
 <!--  <h1>
     <span id="aboutHeader"><message key="about.header" /></span>
   </h1>-->
@@ -20,14 +20,14 @@
 	  <h3>Återkalla samtycke</h3>
 	  <p>Du har gett ditt samtycke till att Mina intyg får hantera dina intyg elektroniskt. Du kan när som helst återkalla ditt samtycke. Det innebär att uppgifter om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. När du återkallar ditt samtycke kan du inte längre använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
 	  <p>
-		<input id="revokeConsentBtn" ng-click="openConfirmDialog()" value="Återkalla samtycke" class="btn btn-success" />
+		<input id="revokeConsentBtn" type="button" ng-click="openConfirmDialog()" value="Återkalla samtycke" class="btn btn-success" />
 	  </p>
 	</div>
 
 	<message key="about.samtycke"></message>
 
     <!-- Modal confirm dialog for revoke consent -->
-    <div modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts">
+    <div id="revoke-consent-confirmation-dialog" modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts">
       <div class="modal-header">
         <button class="close" ng-click="closeConfirmDialog(false)">×</button>
         <h3>Du har angett att du vill ta tillbaka samtycke</h3>
@@ -36,7 +36,7 @@
         <p>Går du vidare innebär det att du inte kommer att kunna använda tjänsten förrän du har gett ditt samtycke igen. Vill du fortsätta?</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" ng-click="closeConfirmDialog(true)">OK</button>
+        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)">OK</button>
         <button class="btn btn-link" ng-click="closeConfirmDialog(false)">Avbryt</button>
       </div>
     </div>

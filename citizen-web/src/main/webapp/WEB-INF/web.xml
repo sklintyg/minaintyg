@@ -18,14 +18,17 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-  version="3.0">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
   <display-name>Inera Certificate Web</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/eintyg.inera.se-config.xml, classpath:/eintyg.inera.se-cxf-config.xml, /WEB-INF/web-security.xml, /WEB-INF/web-proxy.xml</param-value>
+    <param-value>classpath:/eintyg.inera.se-config.xml, classpath:/eintyg.inera.se-cxf-config.xml,
+      /WEB-INF/web-security.xml, /WEB-INF/web-proxy.xml
+    </param-value>
   </context-param>
 
   <!-- Start spring context -->
@@ -39,15 +42,24 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
-    <servlet-name>api</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <servlet-name>moduleapi</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/moduleapi-servlet.xml</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
-    <servlet-name>moduleapi</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <servlet-name>api</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/api-servlet.xml</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>web</servlet-name>
     <url-pattern>/web/*</url-pattern>

@@ -10,7 +10,8 @@
 	GNU Affero General Public License for more details. You should have received
 	a copy of the GNU Affero General Public License along with this program.
 	If not, see <http://www.gnu.org/licenses/>. -->
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>certificate-web</artifactId>
@@ -22,7 +23,7 @@
   <name>Inera Certificate Citizen Web Application</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-     <inera.certificates.basedir>${project.basedir}/../../inera-certificate-modules</inera.certificates.basedir>
+    <inera.certificates.basedir>${project.basedir}/../../inera-certificate-modules</inera.certificates.basedir>
   </properties>
   <packaging>war</packaging>
 
@@ -140,7 +141,7 @@
             <contextPath>/</contextPath>
           </webAppConfig>
           <contextXml>${basedir}/src/main/webapp/WEB-INF/jetty-context.xml</contextXml>
-          <contextHandlers>            
+          <contextHandlers>
             <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
               <war>${inera.certificates.basedir}/rli/target/rli.war</war>
               <contextPath>/rli</contextPath>
