@@ -1,5 +1,6 @@
 package se.inera.certificate.integration;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
@@ -11,9 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface;
@@ -33,6 +40,9 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
     @Autowired
     private List<CertificateSupport> supportedCertificates;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public SendMedicalCertificateResponseType sendMedicalCertificate(AttributedURIType logicalAddress, SendMedicalCertificateRequestType parameters) {
         SendMedicalCertificateResponseType response = new SendMedicalCertificateResponseType();
@@ -42,10 +52,8 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
 
         Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
 
-        // TODO: Hur hanterar vi olika typer av intyg och destinationer? / PW
         if (certificate.getType().equalsIgnoreCase("fk7263")) {
-            CertificateSupport certificateSupport = retrieveCertificateSupportForCertificateType(certificate.getType());
-            registerMedicalCertificateResponder.registerMedicalCertificate(logicalAddress, getJaxbObject(certificateSupport, certificate));
+            registerMedicalCertificateResponder.registerMedicalCertificate(logicalAddress, getJaxbObject(certificate));
             response.setResult(ResultOfCallUtil.okResult());
         } else {
             response.setResult(ResultOfCallUtil.applicationErrorResult("Metoden är inte implementerad"));
@@ -54,26 +62,17 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
         return response;
     }
 
-    private RegisterMedicalCertificateType getJaxbObject(CertificateSupport certificateSupport, Certificate certificate) {
+    private RegisterMedicalCertificateType getJaxbObject(Certificate certificate) {
         try {
-            @SuppressWarnings("unchecked")
-            JAXBElement<RegisterMedicalCertificateType> elem = (JAXBElement<RegisterMedicalCertificateType>)
-            certificateSupport.getJaxbContext().createUnmarshaller().unmarshal(new StringReader(certificate.getDocument()));
-            return elem.getValue();
-        } catch (JAXBException e) {
+            RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
+            Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+            // TODO Kopiera
+            register.setLakarutlatande(new LakarutlatandeType());
+            register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
+            return register;
+        } catch (Exception e) {
             // TODO: Kasta annat undantag! /PW
             throw new RuntimeException(e);
         }
     }
-
-    // TODO: Move to Util... Duplicated code / PW
-    private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
-        for (CertificateSupport certificateSupport : supportedCertificates) {
-            if (certificateSupport.certificateType().equalsIgnoreCase(certificateType)) {
-                return certificateSupport;
-            }
-        }
-        return null;
-    }
-
 }
