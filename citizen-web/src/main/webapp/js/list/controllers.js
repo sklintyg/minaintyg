@@ -68,7 +68,7 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
 } ]);
 
 // Consent Controller
-listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consentService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, $window) {
+listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consentService', 'messageService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, messageService, $window) {
 
     // Hold left side navigation state
     $scope.visibility = {
@@ -82,6 +82,10 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consent
             $scope.visibility[key] = (key == section) ? true : false;
         });
     }
+
+	$scope.getMessage = function(key) {
+	    return messageService.getProperty(key);
+	}
 
     $scope.opts = {
         backdropFade : true,

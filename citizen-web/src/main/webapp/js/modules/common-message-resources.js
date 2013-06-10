@@ -1,6 +1,11 @@
 'use strict';
 var commonMessageResources = {
     "sv" : {
+
+	    "common.ok":"OK",
+	    "common.cancel":"Cancel",
+	    "common.goback" : "Tillbaka",
+
         "mvk.header.linktext" : "Mina vårdkontakter",
         "mvk.header.logouttext" : "Logga ut",
         

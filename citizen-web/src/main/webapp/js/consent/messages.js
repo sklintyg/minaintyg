@@ -20,6 +20,7 @@ var consentAppResources = {
 	    "consent.confirmtext": "Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg (krävs för att använda webbtjänsten).",
 	    "consent.giveconsent": "Jag ger mitt samtycke",
 	    "consent.continue": "Fortsätt",
+	    "consent.givenhead": "Du har nu gett samtycke - välj hur du vill fortsätta",
 	    "consent.giventext": "<h2>Kom du ifrån annan aktör än Mina vårdkontakter? (tex Försäkringskassan)</h2> <p>Du kan nu börja bifoga intyg hos din aktör och <strong>stänga detta fönster.</strong></p> <p><span style='font-style:italic'>Exempel:</span> För att bifoga ditt intyg till ett ärende i Försäkringskassans Mina sidor behöver du endast ge ditt samtycke, vilket du gjorde på föregående sida. Därför behöver du inte gå vidare till tjänsten Mina intyg utan kan stänga detta fönster.</p> <h2>Kom du till Mina intyg ifrån Mina vårdkontakter?</h2> <p>Om du kom till Mina intyg från Mina vårdkontakter, <strong>välj fortsätt</strong>.</p>"
 	},
     "en": {

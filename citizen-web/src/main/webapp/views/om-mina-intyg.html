@@ -3,48 +3,50 @@
     <span id="aboutHeader"><message key="about.header" /></span>
   </h1>-->
   <ul class="nav nav-tabs nav-stacked">
-    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href ng-click="navigateTo('omminaintyg')">Om Mina Intyg<i class="icon-chevron-right"></i></a></li>
-    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href ng-click="navigateTo('samtycke')">Samtycke<i class="icon-chevron-right"></i></a></li>
-    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href ng-click="navigateTo('juridik')">Juridik<i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href ng-click="navigateTo('omminaintyg')"><message key="about.omminaintyghead"></message><i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href ng-click="navigateTo('samtycke')"><message key="about.consentheader"></message><i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href ng-click="navigateTo('juridik')"><message key="about.juridikhead"></message><i class="icon-chevron-right"></i></a></li>
   </ul>
 </div>
 <div class="span9">
-  <div id="about-omminaintyg" ng-show="visibility.omminaintyg">
-	  <message key="about.omminaintyg"></message>
+  <div id="about-content-omminaintyg" ng-show="visibility.omminaintyg">
+	  <h2><message key="about.omminaintyghead"></message></h2>
+	  <message key="about.omminaintygtext"></message>
   </div>
 
-  <div id="about-samtycke" ng-show="visibility.samtycke">
-    <h2>Samtycke</h2>
+  <div id="about-content-samtycke" ng-show="visibility.samtycke">
+    <h2><message key="about.consentheader"></message></h2>
 
 	<div class="alert alert-info">
-	  <h3>Återkalla samtycke</h3>
-	  <p>Du har gett ditt samtycke till att Mina intyg får hantera dina intyg elektroniskt. Du kan när som helst återkalla ditt samtycke. Det innebär att uppgifter om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. När du återkallar ditt samtycke kan du inte längre använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
+	  <h3><message key="about.revokeconsentheader"></message></h3>
+	  <p><message key="about.revokeconsenttext"></message></p>
 	  <p>
-		<input id="revokeConsentBtn" type="button" ng-click="openConfirmDialog()" value="Återkalla samtycke" class="btn btn-success" />
+		<input id="revokeConsentBtn" type="button" ng-click="openConfirmDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
 	  </p>
 	</div>
 
-	<message key="about.samtycke"></message>
+	<message key="about.consenttext"></message>
 
     <!-- Modal confirm dialog for revoke consent -->
     <div id="revoke-consent-confirmation-dialog" modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts">
       <div class="modal-header">
         <button class="close" ng-click="closeConfirmDialog(false)">×</button>
-        <h3>Du har angett att du vill ta tillbaka samtycke</h3>
+        <h3><message key="about.revokemodal.header"></message></h3>
       </div>
       <div class="modal-body">
-        <p>Går du vidare innebär det att du inte kommer att kunna använda tjänsten förrän du har gett ditt samtycke igen. Vill du fortsätta?</p>
+        <p><message key="about.revokemodal.text"></message></p>
       </div>
       <div class="modal-footer">
-        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)">OK</button>
-        <button class="btn btn-link" ng-click="closeConfirmDialog(false)">Avbryt</button>
+        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)"><message key="common.ok"></message></button>
+        <button class="btn btn-link" ng-click="closeConfirmDialog(false)"><message key="common.cancel"></message></button>
       </div>
     </div>
 
   </div>
 
-  <div id="about-juridik" ng-show="visibility.juridik">
-	  <message key="about.juridik"></message>
+  <div id="about-content-juridik" ng-show="visibility.juridik">
+	  <h2><message key="about.juridikhead"></message></h2>
+	  <message key="about.juridiktext"></message>
   </div>
 
 </div>
