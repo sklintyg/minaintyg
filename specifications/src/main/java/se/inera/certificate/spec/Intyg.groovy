@@ -41,7 +41,7 @@ public class Intyg extends RestClientFixture {
     }
 
     private document() {
-        if (typ == 'fk7263') {
+        if ((typ == 'fk7263')||(typ == 'FK7263')) {
             "\"" + document("fk7263") + "\""
         }
         else {
