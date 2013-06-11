@@ -54,9 +54,9 @@
       </div>
     </div>
     <div id="content-container">
-      <div class="content">
+      <div class="content" style="padding-top: 0px;">
         <div class="row-fluid">
-          <div id="content-body" class="span12">
+          <div id="content-body" class="span12" style="padding-top: 25px;">
             <h1>Testinloggningar</h1>
 
             <p>
