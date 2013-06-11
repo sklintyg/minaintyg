@@ -8,7 +8,7 @@ class AboutMinaIntygPage extends Page {
 
     static content = {
         aboutSamtyckeLink(required: false) { $("#link-about-samtycke") }
-        aboutSamtyckeSection(required: false) { $("#about-samtycke") }
+        aboutSamtyckeSection(required: false) { $("#about-content-samtycke") }
         openRevokeConsentDialogLink(required: false) { $("#revokeConsentBtn") }
         
         
