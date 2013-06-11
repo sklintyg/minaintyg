@@ -41,7 +41,7 @@ public class Intyg extends RestClientFixture {
     }
 
     private document() {
-        if (typ == 'FK7263') {
+        if ((typ == 'fk7263')||(typ == 'FK7263')) {
             "\"" + document("fk7263") + "\""
         }
         else {
@@ -62,7 +62,7 @@ public class Intyg extends RestClientFixture {
 
         // setting the signing date, from date and to date
         certificate.signeringsDatum = datum
-        certificate.skickatSatum = datum
+        certificate.skickatDatum = datum
 
         certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetFrom = datum
         certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetTom = datum
