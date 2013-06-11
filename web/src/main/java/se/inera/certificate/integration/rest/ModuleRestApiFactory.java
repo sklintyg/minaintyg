@@ -32,7 +32,7 @@ public class ModuleRestApiFactory {
      * Creates a {@link ModuleRestApi} for the given certificate type.
      */
     public ModuleRestApi getModuleRestService(String type) {
-        String uri = host + "/" + type + "/api";
+        String uri = host + "/" + type.toLowerCase() + "/api";
         ModuleRestApi endpoint = JAXRSClientFactory.create(uri, ModuleRestApi.class, Collections.singletonList(jacksonJsonProvider));
         return endpoint;
     }
