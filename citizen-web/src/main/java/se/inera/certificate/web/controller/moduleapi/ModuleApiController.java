@@ -42,7 +42,6 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
- *
  * @author marced
  */
 public class ModuleApiController {
@@ -72,8 +71,8 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as JSON.
-     *
-     * @param id - the globally unique id of a certificate.
+     * @param id
+     *            - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
     @GET
@@ -91,19 +90,27 @@ public class ModuleApiController {
         return Response.ok(response.readEntity(String.class)).build();
     }
 
+    /**
+     * Send the certificate identified by the given id to the given target.
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @param target
+     *            - id of target system that should receive the certificate.
+     * @return The certificate in JSON format
+     */
     @PUT
     @Path("/{id}/send/{target}")
     public CertificateMeta send(@PathParam("id") final String id, @PathParam("target") final String target) {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'send' for certificate {0} to target {1}", id, target);
+        LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
         return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), target, StatusType.SENT);
     }
 
     /**
      * Return the certificate identified by the given id as PDF.
-     *
-     * @param id - the globally unique id of a certificate.
-     * @return The certificate in JSON format
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @return The certificate in PDF format
      */
     @GET
     @Path("/{id}/pdf")
