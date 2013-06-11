@@ -3,7 +3,7 @@ var commonMessageResources = {
     "sv" : {
 
 	    "common.ok":"OK",
-	    "common.cancel":"Cancel",
+	    "common.cancel":"Avbryt",
 	    "common.goback" : "Tillbaka",
 
         "mvk.header.linktext" : "Mina vårdkontakter",
