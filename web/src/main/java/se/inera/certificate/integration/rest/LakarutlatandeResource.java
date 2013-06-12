@@ -1,14 +1,18 @@
 package se.inera.certificate.integration.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 
-import javax.ws.rs.core.Response;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -51,6 +55,16 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             return Response.ok(pdf).build();
         } catch (IOException e) {
             throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
+        }
+    }
+
+    @Override
+    public Response sendCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId, @PathParam("target") String target) {
+        try {
+            certificateService.sendCertificate(civicRegistrationNumber, certificateId, target);
+            return Response.ok("{\"resultCode\": \"sent\"}").build();
+        } catch (IllegalArgumentException e) {
+            return Response.ok("{\"resultCode\": \"error\"}").build();
         }
     }
 }

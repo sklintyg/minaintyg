@@ -91,6 +91,13 @@ public class CertificateServiceImpl implements CertificateService {
         return certificate;
     }
 
+    @Override
+    @Transactional
+    public void sendCertificate(String civicRegistrationNumber, String certificateId, String target) {
+        // TODO Actually call send implementation and then set status sent if all ok
+        setCertificateState(civicRegistrationNumber, certificateId, target, CertificateState.SENT, null);
+    }
+
     private String toJson(Lakarutlatande lakarutlatande) {
         try {
             return objectMapper.writeValueAsString(lakarutlatande);
