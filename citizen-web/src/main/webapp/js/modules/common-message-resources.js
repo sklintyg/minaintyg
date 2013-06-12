@@ -3,7 +3,7 @@ var commonMessageResources = {
     "sv" : {
 
 	    "common.ok":"OK",
-	    "common.cancel":"Cancel",
+	    "common.cancel":"Avbryt",
 	    "common.goback" : "Tillbaka",
 
         "mvk.header.linktext" : "Mina vårdkontakter",
@@ -29,6 +29,7 @@ var commonMessageResources = {
         "certificates.send.label.issuer" : "Utfärdare",
         "certificates.send.label.period" : "Period:",
         "certificates.send.label.unit" : "Enhet:",
+        
         
         "common.module.message.sendingcertificate" : "Skickar intyg...",
 
