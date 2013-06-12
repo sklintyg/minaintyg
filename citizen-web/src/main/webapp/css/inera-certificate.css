@@ -265,3 +265,8 @@ section.modifiable-certificate div.content-box {
 	-moz-border-radius: 8px 8px 8px 8px;
 	border-radius: 8px 8px 8px 8px;	
 }
+
+.cert-summary span {
+	margin-right: 20px;
+	font-weight:bold;
+}

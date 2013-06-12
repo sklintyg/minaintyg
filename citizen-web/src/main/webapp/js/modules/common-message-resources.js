@@ -30,6 +30,7 @@ var commonMessageResources = {
         "certificates.send.label.period" : "Period:",
         "certificates.send.label.unit" : "Enhet:",
         
+        
         "common.module.message.sendingcertificate" : "Skickar intyg...",
 
         "error.pagetitle": "Ett problem har uppstått i tjänsten",
