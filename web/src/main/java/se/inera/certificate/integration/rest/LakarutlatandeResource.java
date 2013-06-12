@@ -1,5 +1,6 @@
 package se.inera.certificate.integration.rest;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
@@ -7,13 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -58,7 +56,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
             Response response = moduleRestApi.pdf(lakarutlatande);
             if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-              LOG.error("Failed to create PDF for certificate #" + certificateId + ". Certificate module returned status code " + response.getStatus());
+                LOG.error("Failed to create PDF for certificate #" + certificateId + ". Certificate module returned status code " + response.getStatus());
                 return Response.status(response.getStatus()).build();
             }
             return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
@@ -66,17 +64,17 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
         }
     }
-    
+
     @Override
-        public Response sendCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId, @PathParam("target") String target) {
-            try {
-                certificateService.sendCertificate(civicRegistrationNumber, certificateId, target);
-                return Response.ok("{\"resultCode\": \"sent\"}").build();
-            } catch (IllegalArgumentException e) {
-                return Response.ok("{\"resultCode\": \"error\"}").build();
-            }
+    public Response sendCertificate(@PathParam( "civicRegistrationNumber" ) String civicRegistrationNumber, @PathParam( "id" ) String certificateId, @PathParam( "target" ) String target) {
+        try {
+            certificateService.sendCertificate(civicRegistrationNumber, certificateId, target);
+            return Response.ok("{\"resultCode\": \"sent\"}").build();
+        } catch (IllegalArgumentException e) {
+            return Response.ok("{\"resultCode\": \"error\"}").build();
         }
-    
+    }
+
 
     private String pdfFileName(Lakarutlatande lakarutlatande) {
         return String.format("läkarutlatande_%s_%s-%s.pdf",

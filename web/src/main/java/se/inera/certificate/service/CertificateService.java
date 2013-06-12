@@ -18,14 +18,14 @@
  */
 package se.inera.certificate.service;
 
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Lakarutlatande;
-
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
