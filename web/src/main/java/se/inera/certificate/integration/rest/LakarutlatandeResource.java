@@ -7,10 +7,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -60,10 +63,20 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             }
             return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
         } catch (IOException e) {
-            LOG.error("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
         }
     }
+    
+    @Override
+        public Response sendCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId, @PathParam("target") String target) {
+            try {
+                certificateService.sendCertificate(civicRegistrationNumber, certificateId, target);
+                return Response.ok("{\"resultCode\": \"sent\"}").build();
+            } catch (IllegalArgumentException e) {
+                return Response.ok("{\"resultCode\": \"error\"}").build();
+            }
+        }
+    
 
     private String pdfFileName(Lakarutlatande lakarutlatande) {
         return String.format("läkarutlatande_%s_%s-%s.pdf",
