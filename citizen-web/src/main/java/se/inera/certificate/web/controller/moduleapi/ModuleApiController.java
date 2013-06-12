@@ -51,6 +51,7 @@ public class ModuleApiController {
      * Logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
     /**
      * Intygstjanstens REST endpoint service.
@@ -117,6 +118,7 @@ public class ModuleApiController {
             return Response.status(response.getStatus()).build();
         }
 
-        return Response.ok(response.getEntity()).header("Content-Disposition", "attachment; filename=intyg.pdf").build();
+        String contentDisposition = response.getHeaderString(CONTENT_DISPOSITION);
+        return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, contentDisposition).build();
     }
 }
