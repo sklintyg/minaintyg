@@ -185,7 +185,7 @@ public class Lakarutlatande {
         this.skickatDatum = skickatDatum;
     }
 
-    public LocalDate calculateValidFromDate() {
+    public LocalDate getValidFromDate() {
 
         if (aktivitetsbegransningar == null) {
             return null;
@@ -202,7 +202,7 @@ public class Lakarutlatande {
         return fromDate;
     }
 
-    public LocalDate calculateValidToDate() {
+    public LocalDate getValidToDate() {
 
         if (aktivitetsbegransningar == null) {
             return null;
