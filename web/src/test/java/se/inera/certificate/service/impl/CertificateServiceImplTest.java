@@ -5,6 +5,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -15,6 +16,7 @@ import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
@@ -39,6 +41,9 @@ public class CertificateServiceImplTest {
 
     @Mock
     private ObjectMapper objectMapper = mock(ObjectMapper.class);
+
+    @Mock
+    private CertificateSenderService certificateSender = mock(CertificateSenderService.class);
 
     @InjectMocks
     private CertificateService certificateService = new CertificateServiceImpl();
@@ -122,5 +127,22 @@ public class CertificateServiceImplTest {
         assertTrue(certificate.getStates().get(0).getTimestamp().isBefore(inAMinute));
 
         verify(certificateDao).store(certificate);
+    }
+
+    @Test
+    public void sendCertificateCallsSenderAndSetsStatus() throws IOException {
+        Lakarutlatande lakarutlatande = lakarutlatande();
+        String personnummer = lakarutlatande.getPatient().getId();
+        String utlatandeid = lakarutlatande.getId();
+
+        Certificate certificate = certificateService.storeCertificate(lakarutlatande);
+        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+        ArgumentCaptor<Certificate> certificateCaptor = ArgumentCaptor.forClass(Certificate.class);
+
+        certificateService.sendCertificate(personnummer, utlatandeid, "FK");
+
+        verify(certificateDao).updateStatus(eq(utlatandeid), eq(personnummer), eq(CertificateState.SENT), eq("FK"), any(LocalDateTime.class));
+        verify(certificateSender).sendCertificate(certificateCaptor.capture(), eq("FK"));
+        assertEquals(certificate.getId(), certificateCaptor.getValue().getId());
     }
 }
