@@ -1,13 +1,15 @@
 package se.inera.certificate.integration.interceptor;
 
+import javax.xml.transform.TransformerFactory;
+import java.lang.reflect.Field;
+
 import org.apache.cxf.feature.transform.AbstractXSLTInterceptor;
 import org.apache.cxf.feature.transform.XSLTOutInterceptor;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.inera.certificate.integration.xslt.ClasspathUriResolver;
-
-import javax.xml.transform.TransformerFactory;
-import java.lang.reflect.Field;
 
 /**
  * CXF interceptor which turns SOAP faults into valid SOAP responses.
@@ -18,6 +20,8 @@ import java.lang.reflect.Field;
  * @author andreaskaltenbach
  */
 public class SoapFaultToSoapResponseTransformerInterceptor extends XSLTOutInterceptor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SoapFaultToSoapResponseTransformerInterceptor.class);
 
     static {
         try {
@@ -40,6 +44,9 @@ public class SoapFaultToSoapResponseTransformerInterceptor extends XSLTOutInterc
 
     @Override
     public void handleMessage(Message message) throws Fault {
+
+        Exception exception = message.getContent(Exception.class);
+        LOGGER.error("Exception during web service call.", exception);
 
         // switch HTTP status from 500 (internal server error) to 200 (ok)
         message.getExchange().getOutFaultMessage().put(Message.RESPONSE_CODE, HTTP_OK);
