@@ -3,6 +3,18 @@ package se.inera.certificate.model;
 import java.util.List;
 
 import static com.google.common.collect.Iterables.find;
+import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
+import static se.inera.certificate.model.Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
+import static se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
+import static se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
+import static se.inera.certificate.model.Aktivitetskod.GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+import static se.inera.certificate.model.Aktivitetskod.KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL;
+import static se.inera.certificate.model.Aktivitetskod.OVRIGT;
+import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
+import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
+import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
+import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
 
 import com.google.common.base.Predicate;
 import org.joda.time.LocalDate;
@@ -208,6 +220,10 @@ public class Lakarutlatande {
     }
 
     public Aktivitet getAktivitet(final Aktivitetskod aktivitetsKod) {
+        if (aktiviteter == null) {
+            return null;
+        }
+
         return find(aktiviteter, new Predicate<Aktivitet>() {
             @Override
             public boolean apply(Aktivitet aktivitet) {
@@ -226,11 +242,59 @@ public class Lakarutlatande {
     }
 
     public Referens getReferens(final Referenstyp referensTyp) {
-            return find(referenser, new Predicate<Referens>() {
-                @Override
-                public boolean apply(Referens referens) {
-                    return referens.getReferenstyp() == referensTyp;
-                }
-            }, null);
-        }
+        return find(referenser, new Predicate<Referens>() {
+            @Override
+            public boolean apply(Referens referens) {
+                return referens.getReferenstyp() == referensTyp;
+            }
+        }, null);
+    }
+
+    public Aktivitet getForandratRessattAktuellt() {
+        return getAktivitet(FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT);
+    }
+
+    public Aktivitet getForandratRessattEjAktuellt() {
+        return getAktivitet(FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT);
+    }
+
+    public Aktivitet getKontaktMedForsakringskassanAktuell() {
+        return getAktivitet(KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringAktuell() {
+        return getAktivitet(ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringEjAktuell() {
+        return getAktivitet(ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringEjBedombar() {
+        return getAktivitet(GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
+    }
+
+    public Aktivitet getAvstangningEnligtSmittskyddslagen() {
+        return getAktivitet(AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA);
+    }
+
+    public Aktivitet getRekommenderarKontaktMedArbetsformedlingen() {
+        return getAktivitet(PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN);
+    }
+
+    public Aktivitet getRekommenderarKontaktMedForetagshalsovarden() {
+        return getAktivitet(PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN);
+    }
+
+    public Aktivitet getRekommenderarOvrigt() {
+        return getAktivitet(OVRIGT);
+    }
+
+    public Aktivitet getAtgardInomSjukvarden() {
+        return getAktivitet(PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
+    }
+
+    public Aktivitet getAnnanAtgard() {
+        return getAktivitet(PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
+    }
 }
