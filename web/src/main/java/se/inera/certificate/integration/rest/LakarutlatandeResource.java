@@ -66,7 +66,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
     }
 
     @Override
-    public Response sendCertificate(@PathParam( "civicRegistrationNumber" ) String civicRegistrationNumber, @PathParam( "id" ) String certificateId, @PathParam( "target" ) String target) {
+    public Response sendCertificate(String civicRegistrationNumber, String certificateId, String target) {
         try {
             certificateService.sendCertificate(civicRegistrationNumber, certificateId, target);
             return Response.ok("{\"resultCode\": \"sent\"}").build();
@@ -74,7 +74,6 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             return Response.ok("{\"resultCode\": \"error\"}").build();
         }
     }
-
 
     private String pdfFileName(Lakarutlatande lakarutlatande) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",

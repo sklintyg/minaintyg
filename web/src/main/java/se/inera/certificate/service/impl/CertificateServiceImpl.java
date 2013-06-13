@@ -22,21 +22,24 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -63,6 +66,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private ConsentService consentService;
 
+    @Autowired
+    private CertificateSenderService senderService;
+    
     @Override
     public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
         assertConsent(civicRegistrationNumber);
@@ -72,9 +78,13 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
         assertConsent(civicRegistrationNumber);
-        return fixDeletedStatus(certificateDao.getCertificate(id));
+        return getCertificateInternal(civicRegistrationNumber, id);
     }
 
+    private Certificate getCertificateInternal(String civicRegistrationNumber, String id) {
+        return fixDeletedStatus(certificateDao.getCertificate(id));
+    }
+    
     @Override
     @Transactional
     public Certificate storeCertificate(Lakarutlatande lakarutlatande) {
@@ -94,7 +104,11 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     @Transactional
     public void sendCertificate(String civicRegistrationNumber, String certificateId, String target) {
-        // TODO Actually call send implementation and then set status sent if all ok
+        Certificate certificate = getCertificateInternal(civicRegistrationNumber, certificateId);
+        if (certificate == null) {
+            throw new IllegalArgumentException("Could not find certificate " + certificateId + " for " + civicRegistrationNumber);
+        }
+        senderService.sendCertificate(certificate, target);
         setCertificateState(civicRegistrationNumber, certificateId, target, CertificateState.SENT, null);
     }
 

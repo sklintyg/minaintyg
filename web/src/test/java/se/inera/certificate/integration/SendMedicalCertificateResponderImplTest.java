@@ -85,13 +85,7 @@ public class SendMedicalCertificateResponderImplTest {
         address.setValue("EnAdress");
         responder.sendMedicalCertificate(address, parameters);
 
-        ArgumentCaptor<AttributedURIType> logicalAddress = ArgumentCaptor.forClass(AttributedURIType.class);
-        ArgumentCaptor<RegisterMedicalCertificateType> type = ArgumentCaptor.forClass(RegisterMedicalCertificateType.class);
-
-        verify(registerMedicalCertificateResponderInterface).registerMedicalCertificate(logicalAddress.capture(), type.capture());
-
-        assertEquals("EnAdress", logicalAddress.getValue().getValue());
-        assertNotNull(type.getValue());
+        verify(certificateService).sendCertificate("19121212-1212", "Intygs-id-1234567890", "FK");
     }
 
 }
