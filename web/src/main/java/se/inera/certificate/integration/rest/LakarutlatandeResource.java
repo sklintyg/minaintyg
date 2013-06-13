@@ -79,7 +79,7 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
     private String pdfFileName(Lakarutlatande lakarutlatande) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",
                 lakarutlatande.getPatient().getId(),
-                lakarutlatande.calculateValidFromDate().toString(DATE_FORMAT),
-                lakarutlatande.calculateValidToDate().toString(DATE_FORMAT));
+                lakarutlatande.getValidFromDate().toString(DATE_FORMAT),
+                lakarutlatande.getValidToDate().toString(DATE_FORMAT));
     }
 }

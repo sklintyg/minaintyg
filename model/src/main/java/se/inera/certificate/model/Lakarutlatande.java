@@ -297,4 +297,16 @@ public class Lakarutlatande {
     public Aktivitet getAnnanAtgard() {
         return getAktivitet(PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
     }
+
+    public String getForskrivarkodOchArbetsplatskod() {
+        return nullToEmpty(getSkapadAv().getForskrivarkod(), "-") + getVardenhet().getArbetsplatskod();
+    }
+
+    private String nullToEmpty(String value, String separator) {
+        if (value == null) {
+            return "";
+        } else {
+            return value + separator;
+        }
+    }
 }
