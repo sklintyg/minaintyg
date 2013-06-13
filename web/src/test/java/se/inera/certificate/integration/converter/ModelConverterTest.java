@@ -1,7 +1,7 @@
 package se.inera.certificate.integration.converter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.PROCESSED;
 import static se.inera.certificate.model.CertificateState.RESTORED;
@@ -65,7 +65,7 @@ public class ModelConverterTest {
 
         assertEquals("fk", metaType.getStatus().get(0).getTarget());
         assertEquals(StatusType.PROCESSED, metaType.getStatus().get(0).getType());
-        assertNull(metaType.getStatus().get(0).getTimestamp());
+        assertNotNull(metaType.getStatus().get(0).getTimestamp());
 
         assertEquals("fk", metaType.getStatus().get(1).getTarget());
         assertEquals(StatusType.DELETED, metaType.getStatus().get(1).getType());
