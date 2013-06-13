@@ -24,7 +24,7 @@ public class OvrigtSerializerTest {
     public void serializeOvrigtWithEmptyData() throws JsonProcessingException {
         Lakarutlatande lakarutlatande = lakarutlatandeWithOvrigt(new Ovrigt());
         String json = new CustomObjectMapper().writeValueAsString(lakarutlatande);
-        assertEquals("{\"ovrigt\":{},\"id\":\"123456\"}", json);
+        assertEquals("{\"id\":\"123456\",\"ovrigt\":{}}", json);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class OvrigtSerializerTest {
         Lakarutlatande lakarutlatande = lakarutlatandeWithOvrigt(ovrigt);
 
         String json = new CustomObjectMapper().writeValueAsString(lakarutlatande);
-        assertEquals("{\"ovrigt\":{\"somefield\":\"somevalue\"},\"id\":\"123456\"}", json);
+        assertEquals("{\"id\":\"123456\",\"ovrigt\":{\"somefield\":\"somevalue\"}}", json);
     }
 
     private Lakarutlatande lakarutlatandeWithOvrigt(Ovrigt ovrigt) {
