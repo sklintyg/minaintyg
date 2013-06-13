@@ -105,6 +105,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Transactional
     public void sendCertificate(String civicRegistrationNumber, String certificateId, String target) {
         Certificate certificate = getCertificateInternal(civicRegistrationNumber, certificateId);
+        if (certificate == null) {
+            throw new IllegalArgumentException("Could not find certificate " + certificateId + " for " + civicRegistrationNumber);
+        }
         senderService.sendCertificate(certificate, target);
         setCertificateState(civicRegistrationNumber, certificateId, target, CertificateState.SENT, null);
     }
