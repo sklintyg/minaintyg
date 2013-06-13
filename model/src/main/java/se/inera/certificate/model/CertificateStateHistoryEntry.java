@@ -31,7 +31,11 @@ public class CertificateStateHistoryEntry {
     public CertificateStateHistoryEntry(String target, CertificateState state, LocalDateTime timestamp) {
         this.target = target;
         this.state = state;
-        this.timestamp = timestamp;
+        if (timestamp != null) {
+            this.timestamp = timestamp;
+        } else {
+            this.timestamp = new LocalDateTime();
+        }
     }
 
     public String getTarget() {
