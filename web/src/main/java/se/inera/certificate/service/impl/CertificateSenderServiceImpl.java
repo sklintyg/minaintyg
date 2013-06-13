@@ -49,7 +49,7 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
         if (certificate.getType().equalsIgnoreCase("fk7263")) {
             AttributedURIType address = new AttributedURIType();
             address.setValue(logicalAddress);
-            registerMedicalCertificateResponder.registerMedicalCertificate(address , getJaxbObject(certificate));
+            // TODO Enable as soon as object is complete - registerMedicalCertificateResponder.registerMedicalCertificate(address , getJaxbObject(certificate));
         } else {
             throw new IllegalArgumentException("Can not send certificate of type " + certificate.getType() + " to " + target);
         }
