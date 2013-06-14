@@ -28,17 +28,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.ModuleAPIRestReponse;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -63,12 +61,6 @@ public class ModuleApiController {
      */
     @Autowired
     private CitizenService citizenService;
-
-    /**
-     * Intygstjanstens WS endpoint service.
-     */
-    @Autowired
-    private CertificateService certificateService;
 
     /**
      * Return the certificate identified by the given id as JSON.
@@ -101,10 +93,19 @@ public class ModuleApiController {
      */
     @PUT
     @Path("/{id}/send/{target}")
-    public CertificateMeta send(@PathParam("id") final String id, @PathParam("target") final String target) {
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), target, StatusType.SENT);
+        Response response = certificateRestService.sendCertificate(citizen.getUsername(), id, target);
+        if (response.getStatus() != OK.getStatusCode()) {
+            LOG.error("Failed to send certificate, returning error result");
+            return Response.ok(new ModuleAPIRestReponse("error", "GENERIC_ERROR")).build();
+        } else {
+            // return json reponse as-is from IT
+            return Response.ok(response.readEntity(String.class)).build();
+
+        }
     }
 
     /**
