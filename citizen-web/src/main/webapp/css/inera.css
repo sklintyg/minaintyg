@@ -585,6 +585,10 @@ button#archiveCertificateBtn {
 	float: right;
 }
 
+.no-padding {
+    padding: 0;
+}
+
 /* mvk override */
 
 #headerContainer {
@@ -672,6 +676,10 @@ opacity: .25;
 
 .alert-info h3 {
     padding: 0;
+}
+
+.well {
+    padding: 10px;
 }
 
 /* special styles */

@@ -42,13 +42,13 @@
 									<span class="tag"><message key="listtable.headers.issuedby" /></span> {{cert.careunitName}}
 								</div>
 								<div class="span3">
-									<span class="tag"><message key="listtable.headers.certperiod" /></span> <span id="certificate-period">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
+									<span class="tag"><message key="listtable.headers.certperiod" /></span> <span id="certificate-period-{{cert.id}}">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
 								</div>
 								<div class="span1"></div>
 							</div>
 							<div class="row-fluid">
 								<div class="span8 header-row">
-									<span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Inga händelser"/>
+									<span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Ingen"/>
 								</div>
 								<div class="span3">
 									<button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>

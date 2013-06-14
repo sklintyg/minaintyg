@@ -172,7 +172,7 @@ section.certificate div.cert div.cert-body div.body-row {
 	color: #333333;
 	font-weight: bold;
 	display: block;
-	padding: 10px 40px;
+	padding: 10px 20px;
 	background-color: #d8d8d8;
 	-webkit-border-radius: 8px 8px 0px 0px;
 	-moz-border-radius: 8px 8px 0px 0px;
@@ -269,4 +269,25 @@ section.modifiable-certificate div.content-box {
 .cert-summary span {
 	margin-right: 20px;
 	font-weight:bold;
+}
+
+div.infobox {
+    background-color: #008391;
+    -webkit-border-radius: 8px 8px 8px 8px;
+   	-moz-border-radius: 8px 8px 8px 8px;
+   	border-radius: 8px 8px 8px 8px;
+    color: #fff;
+    padding: 20px;
+}
+
+div.infobox h3 {
+    font-size: 16px;
+    padding: 0;
+    color: #fff;
+}
+
+div.infobox h4 {
+    padding: 10px 0 5px 0;
+    color: #fff;
+    font-size: 14px;
 }
