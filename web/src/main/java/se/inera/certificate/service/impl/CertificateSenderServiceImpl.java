@@ -28,23 +28,37 @@ import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.model.Aktivitet;
+import se.inera.certificate.model.Aktivitetsbegransning;
+import se.inera.certificate.model.Arbetsformaga;
+import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.BedomtTillstand;
 import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.Funktionsnedsattning;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
@@ -99,11 +113,128 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
             addAktivitet(register.getLakarutlatande().getAktivitet(), lakarutlatande.getAktiviteter());
             addReferens(register.getLakarutlatande().getReferens(), lakarutlatande.getReferenser());
             addVardkontakt(register.getLakarutlatande().getVardkontakt(), lakarutlatande.getVardkontakter());
+            addFunktionstillstand(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getFunktionsnedsattningar());
+            addAktivitestbegransningar(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getAktivitetsbegransningar());
             return register;
         } catch (Exception e) {
             // TODO: Kasta annat undantag! /PW
             throw new RuntimeException(e);
         }
+    }
+
+    private void addFunktionstillstand(List<FunktionstillstandType> target, List<Funktionsnedsattning> source) {
+        if (isNull(source)) {
+            return;
+        }
+        for (Funktionsnedsattning nedsattning: source) {
+            target.add(toJaxb(nedsattning));
+        }
+        
+    }
+
+    private FunktionstillstandType toJaxb(Funktionsnedsattning nedsattning) {
+        FunktionstillstandType funktionstillstandType = new FunktionstillstandType();
+        funktionstillstandType.setTypAvFunktionstillstand(TypAvFunktionstillstand.KROPPSFUNKTION);
+        funktionstillstandType.setBeskrivning(nedsattning.getBeskrivning());
+        return funktionstillstandType;
+    }
+
+    private void addAktivitestbegransningar(List<FunktionstillstandType> target, List<Aktivitetsbegransning> source) {
+        if (isNull(source)) {
+            return;
+        }
+        for (Aktivitetsbegransning begransning: source) {
+            target.add(toJaxb(begransning));
+        }
+    }
+
+    private FunktionstillstandType toJaxb(Aktivitetsbegransning source) {
+        FunktionstillstandType funktionstillstandType = new FunktionstillstandType();
+        funktionstillstandType.setTypAvFunktionstillstand(TypAvFunktionstillstand.AKTIVITET);
+        funktionstillstandType.setBeskrivning(source.getBeskrivning());
+        funktionstillstandType.setArbetsformaga(taJaxb(source.getArbetsformaga()));
+        return funktionstillstandType;
+    }
+
+    private ArbetsformagaType taJaxb(Arbetsformaga source) {
+        ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
+        arbetsformagaType.setMotivering(source.getMotivering());
+        arbetsformagaType.setPrognosangivelse(toJaxb(source.getPrognosangivelse()));
+        arbetsformagaType.setArbetsuppgift(getArbetsuppgift(source));
+        addArbetsformagaNedsattning(arbetsformagaType.getArbetsformagaNedsattning(), source.getArbetsformagaNedsattningar());
+        addSysselsattning(arbetsformagaType.getSysselsattning(), source.getSysselsattningar());
+        return arbetsformagaType;
+    }
+
+    private void addSysselsattning(List<SysselsattningType> target, List<Sysselsattning> source) {
+        if (source == null) {
+            return;
+        }
+        for (Sysselsattning sysselsattning: source) {
+            target.add(toJaxb(sysselsattning));
+        }
+    }
+
+    private SysselsattningType toJaxb(Sysselsattning source) {
+        SysselsattningType sysselsattningType = new SysselsattningType();
+        switch (source) {
+        case ARBETSLOSHET: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.ARBETSLOSHET); break;
+        case FORALDRALEDIGHET: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.FORALDRALEDIGHET); break;
+        case NUVARANDE_ARBETE: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.NUVARANDE_ARBETE); break;
+        default: throw new IllegalArgumentException("Can not convert " + source);
+        }
+        return sysselsattningType;
+    }
+
+    private void addArbetsformagaNedsattning(List<ArbetsformagaNedsattningType> target, List<ArbetsformagaNedsattning> source) {
+        if (source == null) {
+            return;
+        }
+        for (ArbetsformagaNedsattning nedsattning: source) {
+            target.add(toJaxb(nedsattning));
+        }
+        
+    }
+
+    private ArbetsformagaNedsattningType toJaxb(ArbetsformagaNedsattning source) {
+        ArbetsformagaNedsattningType arbetsformagaNedsattningType = new ArbetsformagaNedsattningType();
+        arbetsformagaNedsattningType.setNedsattningsgrad(toJaxb(source.getNedsattningsgrad()));
+        arbetsformagaNedsattningType.setVaraktighetFrom(source.getVaraktighetFrom());
+        arbetsformagaNedsattningType.setVaraktighetTom(source.getVaraktighetTom());
+        return arbetsformagaNedsattningType;
+    }
+
+    private Nedsattningsgrad toJaxb(se.inera.certificate.model.Nedsattningsgrad source) {
+        Nedsattningsgrad nedsattningsgrad;
+        switch(source) {
+        case HELT_NEDSATT: nedsattningsgrad = Nedsattningsgrad.HELT_NEDSATT; break;
+        case NEDSATT_MED_1_2: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2; break;
+        case NEDSATT_MED_1_4: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4; break;
+        case NEDSATT_MED_3_4: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4; break;
+        default: throw new IllegalArgumentException("Can not convert " + source);
+        }
+        return nedsattningsgrad;
+    }
+
+    private ArbetsuppgiftType getArbetsuppgift(Arbetsformaga source) {
+        ArbetsuppgiftType arbetsuppgiftType = new ArbetsuppgiftType();
+        arbetsuppgiftType.setTypAvArbetsuppgift(source.getArbetsuppgift());
+        return arbetsuppgiftType;
+    }
+
+    private Prognosangivelse toJaxb(se.inera.certificate.model.Prognosangivelse source) {
+        if (source == null) {
+            return null;
+        }
+        Prognosangivelse prognosangivelse;
+        switch (source) {
+        case ATERSTALLAS_DELVIS: prognosangivelse = Prognosangivelse.ATERSTALLAS_DELVIS; break;
+        case ATERSTALLAS_HELT: prognosangivelse = Prognosangivelse.ATERSTALLAS_HELT; break;
+        case DET_GAR_INTE_ATT_BEDOMMA: prognosangivelse = Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA; break;
+        case INTE_ATERSTALLAS: prognosangivelse = Prognosangivelse.INTE_ATERSTALLAS; break;
+        default: throw new IllegalArgumentException("Can not convert " + source);
+        }
+        return prognosangivelse;
     }
 
     private void addVardkontakt(List<VardkontaktType> target, List<Vardkontakt> source) {
