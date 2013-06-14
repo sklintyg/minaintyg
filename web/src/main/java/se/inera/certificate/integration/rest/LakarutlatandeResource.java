@@ -1,6 +1,5 @@
 package se.inera.certificate.integration.rest;
 
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
@@ -8,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
@@ -32,8 +32,16 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
     private ObjectMapper objectMapper;
 
     @Override
-    public Response getCertificate(String certificateId) {
-        Certificate certificate = certificateService.getCertificate(null, certificateId);
+    public Response getCertificate(String civicRegistrationNumber, String certificateId) {
+
+        Certificate certificate;
+        try {
+            certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
+        } catch (MissingConsentException ex) {
+            LOG.warn("Tried to fetch certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' without consent.", ex);
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
         if (certificate != null) {
             return Response.ok(certificate.getDocument()).build();
         } else {
@@ -42,27 +50,40 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
     }
 
     @Override
-    public Response getCertificatePdf(String certificateId) {
+    public Response getCertificatePdf(String civicRegistrationNumber, String certificateId) {
 
-        Certificate certificate = certificateService.getCertificate(null, certificateId);
+        Certificate certificate;
+        try {
+            certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
+        } catch (MissingConsentException ex) {
+            LOG.warn("Tried to get certificate '" + certificateId + "' as PDF for patient '" + civicRegistrationNumber + "' without consent.", ex);
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
 
         if (certificate == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        ModuleRestApi moduleRestApi = moduleRestApiFactory.getModuleRestService(certificate.getType());
-
+        Lakarutlatande lakarutlatande;
         try {
-            Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
-            Response response = moduleRestApi.pdf(lakarutlatande);
-            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-                LOG.error("Failed to create PDF for certificate #" + certificateId + ". Certificate module returned status code " + response.getStatus());
-                return Response.status(response.getStatus()).build();
-            }
-            return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
+            // unmarshal the certificate
+            lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
+            LOG.error("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+
+        // delegate the PDF generation to the certificate module
+        ModuleRestApi moduleRestApi = moduleRestApiFactory.getModuleRestService(certificate.getType());
+        Response response = moduleRestApi.pdf(lakarutlatande);
+
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            LOG.error("Failed to create PDF for certificate #" + certificateId + ". Certificate module returned status code " + response.getStatus());
+            return Response.status(response.getStatus()).build();
+        }
+
+        return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
+
     }
 
     @Override
