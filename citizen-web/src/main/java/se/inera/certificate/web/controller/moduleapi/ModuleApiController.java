@@ -35,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.api.ModuleAPIRestReponse;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
 /**
@@ -74,7 +73,7 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Response response = certificateRestService.getCertificate(id);
+        Response response = certificateRestService.getCertificate(citizenService.getCitizen().getUsername(), id);
         if (response.getStatus() != OK.getStatusCode()) {
             LOG.error("Failed to get JSON for certificate " + id + " from inera-certificate.");
             return Response.status(response.getStatus()).build();
@@ -120,7 +119,7 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        Response response = certificateRestService.getCertificatePdf(id);
+        Response response = certificateRestService.getCertificatePdf(citizenService.getCitizen().getUsername(), id);
         if (response.getStatus() != OK.getStatusCode()) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(response.getStatus()).build();
