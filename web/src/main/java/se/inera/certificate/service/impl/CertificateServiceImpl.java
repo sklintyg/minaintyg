@@ -85,7 +85,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private Certificate getCertificateInternal(String civicRegistrationNumber, String id) {
-        return fixDeletedStatus(certificateDao.getCertificate(id));
+        return fixDeletedStatus(certificateDao.getCertificate(civicRegistrationNumber, id));
     }
 
     @Override

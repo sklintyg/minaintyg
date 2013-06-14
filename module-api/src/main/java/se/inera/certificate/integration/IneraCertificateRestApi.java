@@ -16,17 +16,17 @@ import javax.ws.rs.core.Response;
 public interface IneraCertificateRestApi {
 
     @GET
-    @Path( "/certificate/{id}" )
-    @Produces("application/pdf")
-    Response getCertificatePdf(@PathParam( "id" ) String certificateId);
+    @Path( "/citizen/{civicRegistrationNumber}/certificate/{id}" )
+    @Produces( "application/pdf" )
+    Response getCertificatePdf(@PathParam( "civicRegistrationNumber" ) String civicRegistrationNumber, @PathParam( "id" ) String certificateId);
 
     @GET
-    @Path( "/certificate/{id}" )
-    @Produces( MediaType.APPLICATION_JSON )
-    Response getCertificate(@PathParam( "id" ) String certificateId);
+    @Path("/citizen/{civicRegistrationNumber}/certificate/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response getCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam( "id" ) String certificateId);
 
     @PUT
-    @Path( "/certificate/{civicRegistrationNumber}/{id}/send/{target}" )
-    @Produces( MediaType.APPLICATION_JSON )
-    Response sendCertificate(@PathParam( "civicRegistrationNumber" ) String civicRegistrationNumber, @PathParam( "id" ) String certificateId, @PathParam( "target" ) String target);
+    @Path("/citizen/{civicRegistrationNumber}/certificate/{id}/receiver/{target}")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response sendCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId, @PathParam("target") String target);
 }

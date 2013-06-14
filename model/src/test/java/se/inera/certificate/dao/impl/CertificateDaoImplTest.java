@@ -18,6 +18,25 @@
  */
 package se.inera.certificate.dao.impl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static se.inera.certificate.model.CertificateState.DELETED;
+import static se.inera.certificate.model.CertificateState.RECEIVED;
+import static se.inera.certificate.support.CertificateFactory.CERTIFICATE_ID;
+import static se.inera.certificate.support.CertificateFactory.CIVIC_REGISTRATION_NUMBER;
+import static se.inera.certificate.support.CertificateFactory.FK7263;
+import static se.inera.certificate.support.CertificateFactory.buildCertificate;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -31,31 +50,10 @@ import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.InvalidCertificateIdentifierException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.support.CertificateFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static se.inera.certificate.model.CertificateState.DELETED;
-import static se.inera.certificate.model.CertificateState.RECEIVED;
-import static se.inera.certificate.support.CertificateFactory.CIVIC_REGISTRATION_NUMBER;
-import static se.inera.certificate.support.CertificateFactory.CERTIFICATE_ID;
-import static se.inera.certificate.support.CertificateFactory.FK7263;
-import static se.inera.certificate.support.CertificateFactory.buildCertificate;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:persistence-config.xml" })
+@ContextConfiguration(locations = {"classpath:persistence-config.xml"})
 @ActiveProfiles("dev")
 @Transactional
 public class CertificateDaoImplTest {
@@ -143,13 +141,14 @@ public class CertificateDaoImplTest {
     public void testGetDocument() {
 
         Certificate certificate = CertificateFactory.buildCertificate("1", new LocalDate("2013-04-25"), new LocalDate("2013-05-25"));
+        certificate.setCivicRegistrationNumber(CIVIC_REGISTRATION_NUMBER);
         certificate.setSignedDate(new LocalDateTime("2013-04-24"));
         certificateDao.store(certificate);
 
         entityManager.flush();
         entityManager.clear();
 
-        Certificate storedCertificate = certificateDao.getCertificate("1");
+        Certificate storedCertificate = certificateDao.getCertificate(CIVIC_REGISTRATION_NUMBER, "1");
 
         assertEquals(new LocalDateTime("2013-04-24"), storedCertificate.getSignedDate());
         assertEquals(new LocalDate("2013-04-25"), storedCertificate.getValidFromDate());
@@ -162,22 +161,33 @@ public class CertificateDaoImplTest {
     @Test
     public void testStore() {
 
-        assertNull(certificateDao.getCertificate(CERTIFICATE_ID));
+        assertNull(certificateDao.getCertificate(CIVIC_REGISTRATION_NUMBER, CERTIFICATE_ID));
 
         Certificate certificate = buildCertificate();
         certificateDao.store(certificate);
 
-        assertNotNull(certificateDao.getCertificate(CERTIFICATE_ID));
+        assertNotNull(certificateDao.getCertificate(CIVIC_REGISTRATION_NUMBER, CERTIFICATE_ID));
     }
 
     @Test(expected = InvalidCertificateIdentifierException.class)
-    public void testSetCertificateStatusForNonExistingCertificate() {
-
-        certificateDao.updateStatus("12345", "asd", CertificateState.IN_PROGRESS, "fk", null);
+    public void testUpdateStatusForWrongCertificate() {
+        certificateDao.updateStatus("<unknownCertId>", "<unknownPersonnummer>", CertificateState.IN_PROGRESS, "fk", null);
     }
 
     @Test
-    public void testSetCertificateStatusForDifferentPatients() {
+    public void testGetCertificateForUnknownCertificate() {
+        certificateDao.store(buildCertificate());
+        assertNull(certificateDao.getCertificate("<unknownCertId>", "<unknownPersonnummer>"));
+    }
+
+    @Test( expected = InvalidCertificateIdentifierException.class )
+    public void testGetCertificateForWrongCivicRegistrationNumber() {
+        certificateDao.store(buildCertificate());
+        certificateDao.getCertificate("<another civic registration number>", CERTIFICATE_ID);
+    }
+
+    @Test
+    public void testUpdateStatusForDifferentPatients() {
 
         // store a certificate for reference patient
         Certificate certificate = buildCertificate();
@@ -197,20 +207,20 @@ public class CertificateDaoImplTest {
         assertEquals(1, certificate.getStates().size());
     }
 
-    public void testSetCertificateStatus() {
+    @Test
+    public void testUpdateStatusStatus() {
 
         // store a certificate for patient 19101112-1314
-        Certificate certificate = new CertificateBuilder("no1", "<diagnosis>")
-                .civicRegistrationNumber("19101112-1314").build();
+        Certificate certificate = buildCertificate();
         entityManager.persist(certificate);
 
         assertEquals(0, certificate.getStates().size());
 
-        certificateDao.updateStatus("no1", "19101112-1314", DELETED, "fk", null);
+        certificateDao.updateStatus(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, DELETED, "fk", null);
 
         assertEquals(1, certificate.getStates().size());
         assertEquals(DELETED, certificate.getStates().get(0).getState());
         assertEquals("fk", certificate.getStates().get(0).getTarget());
-        assertNull(certificate.getStates().get(0).getTimestamp());
+        assertNotNull(certificate.getStates().get(0).getTimestamp());
     }
 }
