@@ -21,6 +21,8 @@ package se.inera.certificate.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,7 +44,15 @@ public class PageController {
     @Autowired
     private CitizenService citizenService;
 
-    @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
+    @Autowired
+    @Value("${mvk.url.start}")
+    private String mvkStartUrl;
+
+    @Autowired
+    @Value("${mvk.url.logout}")
+    private String mvkLogoutUrl;
+
+    @RequestMapping(value = {"/sso"}, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
@@ -61,5 +71,19 @@ public class PageController {
     public ModelAndView displayConsentForm() {
         LOG.debug("displayConsentForm");
         return new ModelAndView("consent-form");
+    }
+
+    @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
+    public String tillbakaTillMvk() {
+        LOG.debug("tillbakaTillMvk");
+        SecurityContextHolder.clearContext();
+        return "redirect:" + mvkStartUrl;
+    }
+
+    @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
+    public String loggaUt() {
+        LOG.debug("loggaUt");
+        SecurityContextHolder.clearContext();
+        return "redirect:" + mvkLogoutUrl;
     }
 }

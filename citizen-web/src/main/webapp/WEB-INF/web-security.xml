@@ -43,6 +43,8 @@
     <security:http security="none" pattern="/" />
     <security:http security="none" pattern="/favicon.ico" />
     <security:http security="none" pattern="/web/resources/**" />
+    <security:http security="none" pattern="/web/tillbaka-till-mvk" />
+    <security:http security="none" pattern="/web/logga-ut" />
     <security:http security="none" pattern="/ws/**" />
 
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
