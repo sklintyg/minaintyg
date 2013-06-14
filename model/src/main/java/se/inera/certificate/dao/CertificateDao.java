@@ -18,12 +18,13 @@
  */
 package se.inera.certificate.dao;
 
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import se.inera.certificate.exception.InvalidCertificateIdentifierException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-
-import java.util.List;
 
 /**
  * Data Access Object for handling {@link Certificate}.
@@ -46,12 +47,16 @@ public interface CertificateDao {
 
     /**
      * Gets one {@link Certificate}.
-     *
+     * @param civicRegistrationNumber the user's civic registration number
      * @param certificateId Id of the Certificate
      *
-     * @return {@link Certificate}
+     * @return the matching certificate or {@code null} if there is no certificate for the given certificate ID and
+     * civic registration number
+     *
+     * @throws InvalidCertificateIdentifierException if the given civic registration number does not match with
+     *  the certificate's patient civic registration number
      */
-    Certificate getCertificate(String certificateId);
+    Certificate getCertificate(String civicRegistrationNumber, String certificateId);
 
     /**
      * Stores a {@link Certificate}.
@@ -60,7 +65,17 @@ public interface CertificateDao {
      */
     void store(Certificate certificate);
 
-    void updateStatus(String id, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
+    /**
+     * Updates the certificate's status.
+     * @param certificateId the certificate's ID
+     * @param civicRegistrationNumber the civic registration number of the patient associated to the certificate
+     * @param state the state of the certificate
+     * @param target the target associated with the status update (e.g. Försäkringskassan)
+     * @param timestamp the timestamp of the status update
+     * @throws InvalidCertificateIdentifierException if the combination of certificate ID and civic registration number
+     *  does not match
+     */
+    void updateStatus(String certificateId, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp) throws InvalidCertificateIdentifierException;
 
     void remove(String certificateId);
 }

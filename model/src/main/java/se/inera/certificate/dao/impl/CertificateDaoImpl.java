@@ -18,15 +18,6 @@
  */
 package se.inera.certificate.dao.impl;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.springframework.stereotype.Repository;
-import se.inera.certificate.dao.CertificateDao;
-import se.inera.certificate.exception.InvalidCertificateIdentifierException;
-import se.inera.certificate.model.Certificate;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -37,11 +28,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.exception.InvalidCertificateIdentifierException;
+import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
+
 /**
  * Implementation of {@link CertificateDao}.
  */
 @Repository
 public class CertificateDaoImpl implements CertificateDao {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CertificateDaoImpl.class);
 
     /** Injected EntityManager object. */
     @PersistenceContext
@@ -80,8 +84,22 @@ public class CertificateDaoImpl implements CertificateDao {
     }
 
     @Override
-    public Certificate getCertificate(String certificateId) {
-        return entityManager.find(Certificate.class, certificateId);
+    public Certificate getCertificate(String civicRegistrationNumber, String certificateId) {
+        Certificate certificate = entityManager.find(Certificate.class, certificateId);
+
+        if (certificate == null) {
+            return null;
+        }
+
+        // provided civic registration number has to match the certificate's civic registration number
+        if (!certificate.getCivicRegistrationNumber().equals(civicRegistrationNumber)) {
+
+            LOG.warn(String.format("Trying to access certificate '%s' for user '%s' but certificate's user is '%s'.",
+                    certificateId, civicRegistrationNumber, certificate.getCivicRegistrationNumber()));
+            throw new InvalidCertificateIdentifierException(certificateId, certificate.getCivicRegistrationNumber());
+        }
+
+        return certificate;
     }
 
     @Override

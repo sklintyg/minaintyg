@@ -1,5 +1,19 @@
 package se.inera.certificate.service.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -19,13 +33,6 @@ import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
 
 /**
  * @author andreaskaltenbach
@@ -50,37 +57,50 @@ public class CertificateServiceImplTest {
 
     @Test
     public void certificateWithDeletedStatusHasMetaDeleted() {
-        Certificate certificate = new Certificate("certificateId", "document");
+        Certificate certificate = createCertificate();
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
+        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
+
         assertTrue(found.getDeleted());
+
+        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
+    }
+
+    private Certificate createCertificate() {
+        Certificate certificate = new Certificate("<certificateId>", "document");
+        certificate.setCivicRegistrationNumber("<civicRegistrationNumber>");
+        return certificate;
     }
 
     @Test
     public void certificateWithStatusRestoredNewerThanDeletedHasMetaNotDeleted() {
-        Certificate certificate = new Certificate("certificateId", "document");
+        Certificate certificate = createCertificate();
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
+        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
         assertFalse(found.getDeleted());
+
+        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
     }
 
     @Test
     public void certificateWithStatusDeletedNewerThanRestoredHasMetaDeleted() {
-        Certificate certificate = new Certificate("certificateId", "document");
+        Certificate certificate = createCertificate();
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("civicRegistrationNumber", "certificateId");
+        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
         assertTrue(found.getDeleted());
+
+        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
     }
 
     private Lakarutlatande lakarutlatande() throws IOException {
@@ -136,11 +156,13 @@ public class CertificateServiceImplTest {
         String utlatandeid = lakarutlatande.getId();
 
         Certificate certificate = certificateService.storeCertificate(lakarutlatande);
-        when(certificateDao.getCertificate(anyString())).thenReturn(certificate);
+        certificate.setCivicRegistrationNumber("<civicRegistrationNumber>");
+        when(certificateDao.getCertificate(personnummer, utlatandeid)).thenReturn(certificate);
         ArgumentCaptor<Certificate> certificateCaptor = ArgumentCaptor.forClass(Certificate.class);
 
         certificateService.sendCertificate(personnummer, utlatandeid, "FK");
 
+        verify(certificateDao).getCertificate(personnummer,utlatandeid);
         verify(certificateDao).updateStatus(eq(utlatandeid), eq(personnummer), eq(CertificateState.SENT), eq("FK"), any(LocalDateTime.class));
         verify(certificateSender).sendCertificate(certificateCaptor.capture(), eq("FK"));
         assertEquals(certificate.getId(), certificateCaptor.getValue().getId());
