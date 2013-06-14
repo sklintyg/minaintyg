@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.service.impl;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -78,13 +79,15 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
         assertConsent(civicRegistrationNumber);
+        // TODO serialize string to model
+
         return getCertificateInternal(civicRegistrationNumber, id);
     }
 
     private Certificate getCertificateInternal(String civicRegistrationNumber, String id) {
         return fixDeletedStatus(certificateDao.getCertificate(id));
     }
-    
+
     @Override
     @Transactional
     public Certificate storeCertificate(Lakarutlatande lakarutlatande) {
@@ -139,6 +142,14 @@ public class CertificateServiceImpl implements CertificateService {
         certificateDao.updateStatus(certificateId, civicRegistrationNumber, state, target, timestamp);
     }
 
+    @Override
+    public Lakarutlatande getLakarutlatande(Certificate certificate) {
+        try {
+            return objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not parse document for " + certificate.getId(), e);
+        }
+    }
     private void assertConsent(String civicRegistrationNumber) {
         if (!consentService.isConsent(civicRegistrationNumber)) {
             throw new MissingConsentException(civicRegistrationNumber);

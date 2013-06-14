@@ -59,4 +59,6 @@ public interface CertificateService {
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 
     void sendCertificate(String civicRegistrationNumber, String certificateId, String target);
+    
+    Lakarutlatande getLakarutlatande(Certificate certificate);
 }

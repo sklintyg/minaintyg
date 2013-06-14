@@ -22,13 +22,8 @@ import static se.inera.certificate.integration.ResultOfCallUtil.applicationError
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +32,10 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
+import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
@@ -64,7 +61,6 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
 
         try {
             Certificate certificate = certificateService.getCertificate(parameters.getNationalIdentityNumber(), parameters.getCertificateId());
-
             if (certificate != null) {
                 response.setMeta(ModelConverter.toCertificateMetaType(certificate));
                 attachCertificateDocument(certificate, response);
@@ -86,21 +82,11 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             // given certificate type is not supported
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", certificate.getType())));
         } else {
-            // certificate type is supported and we unmarshall the certificate information to a JAXB element
-            try {
-                certificateType.getAny().add(buildJaxbElement(certificate.getDocument(), certificateSupport.additionalContextClasses()));
-                response.setCertificate(certificateType);
-                response.setResult(okResult());
-            } catch (JAXBException e) {
-                response.setResult(applicationErrorResult(String.format("Invalid XML document for certificate #%s", certificate.getId())));
-            }
+            Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
+            certificateType.getAny().add(LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande));
+            response.setCertificate(certificateType);
+            response.setResult(okResult());
         }
-    }
-
-    private Object buildJaxbElement(String document, List<Class<?>> classesToBeBound) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(classesToBeBound.toArray(new Class<?>[classesToBeBound.size()]));
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        return unmarshaller.unmarshal(new StringReader(document));
     }
 
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
