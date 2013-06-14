@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "")
@@ -74,16 +77,23 @@ public class PageController {
     }
 
     @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
-    public String tillbakaTillMvk() {
+    public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
-        SecurityContextHolder.clearContext();
+        invalidateSessionAndClearContext(request);
         return "redirect:" + mvkStartUrl;
     }
 
     @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
-    public String loggaUt() {
+    public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
-        SecurityContextHolder.clearContext();
+        invalidateSessionAndClearContext(request);
         return "redirect:" + mvkLogoutUrl;
     }
+
+    protected void invalidateSessionAndClearContext(HttpServletRequest request) {
+        request.getSession().invalidate();
+        SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContextHolder.clearContext();
+    }
+
 }

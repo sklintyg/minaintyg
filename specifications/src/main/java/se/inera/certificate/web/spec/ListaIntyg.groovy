@@ -13,14 +13,16 @@ public class ListaIntyg {
     }
 
     private boolean verifyAtPage(def page) {
+        def result = false
         try {
             Browser.drive {
-                at(page)
+                assert at(page)
             }
-            true
+            result = true
         } catch (AssertionError e) {
-            false
+            // Do nothing - should be false
         }
+        result
     }
 
     public boolean inkorgsidanVisas() {

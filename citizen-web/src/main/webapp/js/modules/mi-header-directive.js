@@ -14,7 +14,7 @@ angular.module('directives.mi').directive("miHeader", ['$rootScope', function($r
         },
         template :
               '<span class="mi-header">' //directives must have a single root element.
-            + ' <a href="/web/start"><img id="logo" src="/img/logo.png" /></a>'
+            + ' <a href="/web/start"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo.png" /></a>'
             + ' <div id="status">'
             + '     <div class="status-row">'
             + '         <message key="nav.label.loggedinas"></message><br><span class="logged-in">{{userName}}</span>'

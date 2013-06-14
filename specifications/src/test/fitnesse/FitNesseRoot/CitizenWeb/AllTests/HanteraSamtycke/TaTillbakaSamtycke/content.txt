@@ -14,5 +14,7 @@ Logga på som användare som har samtycke. Navigera till Om Mina Intyg / Saamtyc
 |gå till om samtycke sidan|
 |om samtycke avsnitt visas|
 |välj återta samtycke|
+|wait for|500|
 |bekräfta återta samtycke|
+|wait for|500|
 |samtycke sidan visas|
