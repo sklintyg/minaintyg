@@ -1,13 +1,26 @@
 package se.inera.certificate.web.spec;
 
 import geb.Browser
-
+import se.inera.certificate.web.pages.ArchivedPage
 import se.inera.certificate.web.pages.InboxPage
 import se.inera.certificate.web.pages.ConsentPage
 import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentDeniedPage
 
 public class GeSamtycke {
+
+    private boolean verifyAtPage(def page) {
+        def result = false
+        try {
+            Browser.drive {
+                assert at(page)
+            }
+            result = true
+        } catch (AssertionError e) {
+            // Do nothing - should be false
+        }
+        result
+    }
 
     public void loggaPåSom(String pnr) {
         Browser.drive {
@@ -19,7 +32,7 @@ public class GeSamtycke {
         Browser.drive {
             assert at(ConsentPage)
             page.giveConsent()
-           
+
         }
     }
 
@@ -31,21 +44,15 @@ public class GeSamtycke {
     }
 
     public boolean inkorgSidanVisas() {
-        Browser.drive {
-            at(InboxPage)
-        }
+        verifyAtPage(InboxPage)
     }
 
     public boolean geSamtyckeSidanVisas() {
-        Browser.drive {
-            at(ConsentPage)
-        }
+        verifyAtPage(ConsentPage)
     }
-    
+
     public boolean samtyckeGivetSidanVisas() {
-        Browser.drive {
-            at(ConsentGivenPage)
-        }
+        verifyAtPage(ConsentGivenPage)
     }
 
     public void gåVidareTillMinaIntyg() {
@@ -54,10 +61,9 @@ public class GeSamtycke {
             page.continueToMI()
         }
     }
+
     public boolean samtyckeNekatSidanVisas() {
-        Browser.drive {
-            at(ConsentDeniedPage)
-        }
+        verifyAtPage(ConsentDeniedPage)
     }
 
 }

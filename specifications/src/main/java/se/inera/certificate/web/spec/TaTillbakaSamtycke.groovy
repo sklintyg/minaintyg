@@ -13,7 +13,7 @@ public class TaTillbakaSamtycke {
     }
 
     public boolean inkorgSidanVisas() {
-        Browser.drive { at(InboxPage) }
+        verifyAtPage(InboxPage)
     }
 
     public void gåTillOmMinaIntygSidan() {
@@ -24,7 +24,7 @@ public class TaTillbakaSamtycke {
     }
 
     public boolean omMinaIntygSidanVisas() {
-        Browser.drive { at(AboutMinaIntygPage) }
+        verifyAtPage(AboutMinaIntygPage)
     }
 
     public void gåTillOmSamtyckeSidan() {
@@ -33,6 +33,7 @@ public class TaTillbakaSamtycke {
             page.gotoAboutConsentSection()
         }
     }
+
     public void omSamtyckeAvsnittVisas() {
         Browser.drive {
             assert at(AboutMinaIntygPage)
@@ -55,6 +56,24 @@ public class TaTillbakaSamtycke {
     }
 
     public boolean samtyckeSidanVisas() {
-        Browser.drive { at(ConsentPage) }
+        verifyAtPage(ConsentPage)
     }
+
+    private boolean verifyAtPage(def page) {
+        def result = false
+        try {
+            Browser.drive {
+                assert at(page)
+            }
+            result = true
+        } catch (AssertionError e) {
+            // Do nothing - should be false
+        }
+        result
+    }
+
+    public void waitFor(long millis) {
+        System.sleep(millis)
+    }
+
 }

@@ -4,12 +4,15 @@ import geb.Page
 
 class ConsentPage extends Page {
 
-    static at = { $("#consentTerms").isDisplayed() }
+    static at = { consentTerms.isDisplayed() }
 
     static content = {
+        consentTerms { $("#consentTerms") }
         giveConsentButton { $("#giveConsentButton") }
         consentGivenView(required: false) { $("#consent-given") }
         continueToMIButton(required: false) { $("#continueToMI") }
+        backToMvkLink { $("#backToMvkLink") }
+        logoutLink { $("#mvklogoutLink") }
     }
 
     def giveConsent() {
@@ -18,5 +21,13 @@ class ConsentPage extends Page {
 
     def continueToMI() {
         continueToMIButton.click()
+    }
+
+    def goBackToMvk() {
+        backToMvkLink.click()
+    }
+
+    def logout() {
+        logoutLink.click()
     }
 }
