@@ -33,14 +33,20 @@ import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
@@ -74,12 +80,11 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
         }
     }
 
-    
     private RegisterMedicalCertificateType getJaxbObject(Certificate certificate) {
         try {
-            RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
             Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
-            // TODO Kopiera
+
+            RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
             register.setLakarutlatande(new LakarutlatandeType());
             register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
             register.getLakarutlatande().setTypAvUtlatande("Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring");
@@ -92,6 +97,8 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(lakarutlatande.getSjukdomsforlopp()));
             register.getLakarutlatande().setMedicinsktTillstand(toJaxb(lakarutlatande.getBedomtTillstand()));
             addAktivitet(register.getLakarutlatande().getAktivitet(), lakarutlatande.getAktiviteter());
+            addReferens(register.getLakarutlatande().getReferens(), lakarutlatande.getReferenser());
+            addVardkontakt(register.getLakarutlatande().getVardkontakt(), lakarutlatande.getVardkontakter());
             return register;
         } catch (Exception e) {
             // TODO: Kasta annat undantag! /PW
@@ -99,11 +106,58 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
         }
     }
 
+    private void addVardkontakt(List<VardkontaktType> target, List<Vardkontakt> source) {
+        if (isNull(source)) {
+            return;
+        }
+        for (Vardkontakt vardkontakt: source) {
+            target.add(toJaxb(vardkontakt));
+        }
+    }
+
+    private VardkontaktType toJaxb(Vardkontakt source) {
+        VardkontaktType vardkontaktType = new VardkontaktType();
+        vardkontaktType.setVardkontaktstid(source.getVardkontaktstid());
+        switch (source.getVardkontakttyp()) {
+        case MIN_TELEFONKONTAKT_MED_PATIENTEN: vardkontaktType.setVardkontakttyp(Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN); break;
+        case MIN_UNDERSOKNING_AV_PATIENTEN: vardkontaktType.setVardkontakttyp(Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN); break;
+        default: throw new IllegalArgumentException("Can not convert " + source.getVardkontakttyp());
+        }
+        return vardkontaktType;
+    }
+
+    private void addReferens(List<ReferensType> target, List<Referens> source) {
+        if (isNull(source)) {
+            return;
+        }
+        for (Referens referens: source) {
+            target.add(toJaxb(referens));
+        }
+    }
+
+    private ReferensType toJaxb(Referens source) {
+        ReferensType referensType = new ReferensType();
+        referensType.setDatum(source.getDatum());
+        switch (source.getReferenstyp()) {
+        case JOURNALUPPGIFTER: referensType.setReferenstyp(Referenstyp.JOURNALUPPGIFTER); break;
+        case ANNAT: referensType.setReferenstyp(Referenstyp.ANNAT); break;
+        default: throw new IllegalArgumentException("Can not convert " + source.getReferenstyp());
+        }
+        return referensType;
+    }
+
     private void addAktivitet(List<AktivitetType> target, List<Aktivitet> source) {
+        if (isNull(source)) {
+            return;
+        }
         for (Aktivitet aktivitet: source) {
             target.add(toJaxb(aktivitet));
         }
         
+    }
+
+    private boolean isNull(Object o) {
+        return o == null;
     }
 
     private AktivitetType toJaxb(Aktivitet source) {
