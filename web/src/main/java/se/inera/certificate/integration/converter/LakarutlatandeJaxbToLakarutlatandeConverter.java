@@ -22,7 +22,6 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 
 /**
  * @author andreaskaltenbach
@@ -33,7 +32,7 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
     }
 
     /**
-     * Converts a JAXB {@link LakarutlatandeType} to a {@link Lakarutlatande}.
+     * Converts a JAXB {@link se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType} to a {@link Lakarutlatande}.
      */
     public static Lakarutlatande convert(se.inera.certificate.integration.v1.Lakarutlatande value) {
         Lakarutlatande lakarutlatande = new Lakarutlatande();
