@@ -51,8 +51,6 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
     
     public static RegisterMedicalCertificateType getJaxbObject(Lakarutlatande lakarutlatande) {
         try {
-            //Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
-
             RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
             register.setLakarutlatande(new LakarutlatandeType());
             register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
