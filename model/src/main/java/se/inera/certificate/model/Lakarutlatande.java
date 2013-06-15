@@ -1,9 +1,6 @@
 package se.inera.certificate.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.base.Strings.*;
+import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.collect.Iterables.find;
 import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
 import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
@@ -18,10 +15,14 @@ import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONT
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+
+import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
 
 /**
  * @author andreaskaltenbach
@@ -302,11 +303,14 @@ public class Lakarutlatande {
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
-
         List<String> parts = new ArrayList<>();
-        if (skapadAv != null && skapadAv.getForskrivarkod() != null) parts.add(skapadAv.getForskrivarkod());
-        if (vardenhet != null && vardenhet.getArbetsplatskod() != null) parts.add(vardenhet.getArbetsplatskod());
+        if (skapadAv != null) {
+            parts.add(skapadAv.getForskrivarkod());
+        }
+        if (vardenhet != null) {
+            parts.add(vardenhet.getArbetsplatskod());
+        }
 
-        return emptyToNull(Joiner.on(" - ").join(parts));
+        return emptyToNull(Joiner.on(" - ").skipNulls().join(parts));
     }
 }
