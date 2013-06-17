@@ -1,0 +1,27 @@
+!3 Först logga in och lista alla befintliga intyg.
+
+|script|!-ListaIntyg-!|
+|logga på som|19121212-1212|
+|inkorgsidan visas|
+|lista med intyg visas|
+|visa intyg|intyg-1|
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets typ är|fk7263|
+|intygets id är|intyg-1|
+
+!3 Välj att skicka intyget. 
+
+|script|!-VisaIntyg-!|
+|välj skicka intyg|
+
+!3 Bekräfta och skicka intyget. 
+
+|script|!-SkickaIntyg-!|
+|summerings vyn visas|
+|bekräfta skicka intyg|
+|wait for|500|
+|resultat sidan visas|

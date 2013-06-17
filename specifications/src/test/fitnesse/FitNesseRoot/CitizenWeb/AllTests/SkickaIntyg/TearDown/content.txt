@@ -1,0 +1,15 @@
+!3 Rensa bort test-intyg
+
+|ta bort Intyg|
+|id|
+|intyg-1|
+|intyg-2|
+|rli-intyg-3|
+|rli-intyg-4|
+
+!3 Återta samtycken:
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|nej|
+|19121212-9999|nej|
