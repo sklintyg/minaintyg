@@ -32,28 +32,27 @@
 
 <title><spring:message code="application.name" /></title>
 
-<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 </head>
 
 
-<body>
+<body ng-app="BaseApp">
+
+  <mvk-top-bar></mvk-top-bar>
+
   <div class="container">
-    <div id="page-header-container">
-      <div id="page-header">
-        <div id="page-header-left"></div>
-        <div id="page-header-right"></div>
-        <img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" />
-      </div>
-    </div>
+
     <div id="content-container">
       <div class="content">
+        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+        <div id="navigation-container"></div>
+
         <div class="row-fluid">
           <div id="content-body" class="span12">
-
 
 
             <c:choose>
@@ -99,14 +98,29 @@
 
     </div>
   </div>
+
+
+  <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
+
+  <%-- Application files --%>
+  <script type="text/javascript" src="<c:url value="/js/base/app.js"/>"></script>
+
+  <%-- Dependencies to common components --%>
+  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
   <!-- 
   Error:
+  <c:catch>
    <c:out value="${pageContext.errorData.throwable.message}" />, 
    
    Stacktrace:
   <c:forEach items="${pageContext.errorData.throwable.stackTrace}" var="element">
     <c:out value="${element}" />, 
     </c:forEach>
+   </c:catch>
 -->
 </body>
 </html>
