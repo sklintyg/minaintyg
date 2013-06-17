@@ -70,14 +70,16 @@ public class LakarutlatandeResourceTest {
     LakarutlatandeResource resource = new LakarutlatandeResource();
 
     @Test
-    public void testGetCertificate() {
+    public void testGetCertificate() throws IOException {
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+        when(objectMapper.readValue(certificateData, Lakarutlatande.class)).thenReturn(lakarutlatande);
         Response response = resource.getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
+        verify(objectMapper).readValue(certificateData, Lakarutlatande.class);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
-        assertEquals(certificateData, response.getEntity());
+        assertEquals(lakarutlatande, response.getEntity());
     }
 
     @Test

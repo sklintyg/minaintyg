@@ -61,6 +61,8 @@ public class Lakarutlatande {
 
     private Ovrigt ovrigt;
 
+    private List<Status> status;
+
     public String getId() {
         return id;
     }
@@ -312,5 +314,13 @@ public class Lakarutlatande {
         }
 
         return emptyToNull(Joiner.on(" - ").skipNulls().join(parts));
+    }
+
+    public List<Status> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<Status> status) {
+        this.status = status;
     }
 }

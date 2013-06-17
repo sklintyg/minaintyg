@@ -1,20 +1,22 @@
 package se.inera.certificate.integration.rest;
 
-import java.io.IOException;
-
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.service.CertificateService;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -45,11 +47,32 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
 
-        if (certificate != null) {
-            return Response.ok(certificate.getDocument()).build();
-        } else {
+        if (certificate == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        Lakarutlatande lakarutlatande;
+        try {
+            lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+        } catch (IOException e) {
+            LOG.warn("Failed to unmarshal certificate '" + certificateId + "'.", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        convertStatus(certificate, lakarutlatande);
+        return Response.ok(lakarutlatande).type(MediaType.APPLICATION_JSON).build();
+    }
+
+    private static void convertStatus(Certificate source, Lakarutlatande target) {
+        List<Status> statusList = new ArrayList<>();
+        for (CertificateStateHistoryEntry historyEntry : source.getStates()) {
+            Status status = new Status();
+            status.setTarget(historyEntry.getTarget());
+            status.setTimestamp(historyEntry.getTimestamp());
+            status.setType(historyEntry.getState());
+            statusList.add(status);
+        }
+        target.setStatus(statusList);
     }
 
     @Override
