@@ -13,3 +13,5 @@ rebel.xml
 
 bin
 target
+
+specifications/src/test/fitnesse/FitNesseRoot/ErrorLogs/
