@@ -21,7 +21,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType
  *
  * @author andreaskaltenbach
  */
-class MakuleraIntygTillFk extends WsClientFixture {
+class RattaIntyg extends WsClientFixture {
 
     private RevokeMedicalCertificateResponderService revokeService = new RevokeMedicalCertificateResponderService();
     private RevokeMedicalCertificateResponderInterface revokeResponder = revokeService.revokeMedicalCertificateResponderPort
@@ -29,7 +29,7 @@ class MakuleraIntygTillFk extends WsClientFixture {
     String personnummer
     String intyg
 
-    public MakuleraIntygTillFk() {
+    public RattaIntyg() {
         setEndpoint(revokeResponder, "revoke-certificate/v1.0")
     }
 

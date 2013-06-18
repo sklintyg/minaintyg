@@ -16,9 +16,9 @@ Så finns intyget hos FK
 |id|status?|
 |intyg-1|skickat|
 
-Makulera Intyg Hos FK
+Rätta intyg
 
-|Makulera Intyg Till Fk|
+|Ratta intyg|
 |personnummer|intyg|
 |121212-1212|intyg-1|
 
