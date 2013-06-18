@@ -13,7 +13,7 @@ public class HamtaIntyg extends WsClientFixture {
     private GetCertificateResponderService getCertificateService = new GetCertificateResponderService();
     private GetCertificateResponderInterface getCertificateResponder = getCertificateService.getCertificateResponderPort
 
-    public HamtaListaAvIntyg() {
+    public HamtaIntyg() {
         setEndpoint(getCertificateResponder, "get-certificate/v1.0")
     }
 
@@ -26,7 +26,8 @@ public class HamtaIntyg extends WsClientFixture {
         request.setCertificateId(intyg)
 
         GetCertificateResponseType response = getCertificateResponder.getCertificate(logicalAddress, request)
-        result(response)
+
+        resultAsString(response)
     }
 
 }

@@ -33,7 +33,7 @@ class RattaIntyg extends WsClientFixture {
         setEndpoint(revokeResponder, "revoke-certificate/v1.0")
     }
 
-    public void execute() {
+    public String svar() {
         RevokeMedicalCertificateRequestType revokeRequestType = new RevokeMedicalCertificateRequestType()
         RevokeType revokeType = new RevokeType();
         revokeRequestType.setRevoke(revokeType)
@@ -62,5 +62,7 @@ class RattaIntyg extends WsClientFixture {
 
         
         RevokeMedicalCertificateResponseType response = revokeResponder.revokeMedicalCertificate(null, revokeRequestType)
+
+        resultAsString(response)
     }
 }

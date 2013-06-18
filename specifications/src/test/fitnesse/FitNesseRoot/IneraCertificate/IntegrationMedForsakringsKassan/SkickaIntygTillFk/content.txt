@@ -19,8 +19,8 @@ Så finns intyget hos FK
 Rätta intyg
 
 |Ratta intyg|
-|personnummer|intyg|
-|121212-1212|intyg-1|
+|personnummer|intyg|svar?|
+|121212-1212|intyg-1|ok|
 
 Nu är intyget makulerat hos FK
 

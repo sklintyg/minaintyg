@@ -35,9 +35,8 @@ public class RegistreraFk7263Intyg extends WsClientFixture {
         request.getLakarutlatande().getPatient().getPersonId().setExtension(personnummer)
         request.getLakarutlatande().setLakarutlatandeId(intyg)
 
-
         RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
 
-        result(response)
+        resultAsString(response)
     }
 }

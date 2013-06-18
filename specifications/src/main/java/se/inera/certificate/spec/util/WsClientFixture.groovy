@@ -15,12 +15,13 @@ class WsClientFixture {
         client.getRequestContext().put(Message.ENDPOINT_ADDRESS, baseUrl + serviceName)
     }
 
-    def result(def response) {
+    def resultAsString(response) {
         switch (response.getResult().getResultCode()) {
             case ResultCodeEnum.OK:
                 return "ok"
             default:
-                return "[" + result.resultCode.toString() + "] - " + result.errorText
+                return "[" + response.getResult().getResultCode().toString() + "] - " + response.getResult().getErrorText()
+
         }
     }
 }

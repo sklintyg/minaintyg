@@ -1,0 +1,18 @@
+!3 Journalsystem registrerar ett nytt intyg
+
+|Registrera fk7263 intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+!3 Föräkringskassan hämtar intyget
+
+|Hamta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+
+!3 Rensa bort test-intyg
+
+|ta bort Intyg|
+|id|
+|intyg-1|

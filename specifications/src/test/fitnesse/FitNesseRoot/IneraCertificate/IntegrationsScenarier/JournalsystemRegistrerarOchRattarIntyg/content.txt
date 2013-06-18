@@ -1,0 +1,30 @@
+!3 Givet att samtycke finns
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|ja|
+
+!3 Inga intyg ska finnas för invånaren än
+
+|Hamta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|[ERROR] - Unknown certificate ID: intyg-1|
+
+!3 Journalsystem registrerar ett nytt intyg
+
+|Registrera fk7263 intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+!3 Journalsystem rättar intyg
+
+|Ratta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+
+!3 Rensa bort test-intyg
+
+|ta bort Intyg|
+|id|
+|intyg-1|
