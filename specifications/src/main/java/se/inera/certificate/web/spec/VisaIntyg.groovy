@@ -33,8 +33,19 @@ public class VisaIntyg {
             page.startSendFlow()
         }
     }
+    public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
+        def result = false
+        Browser.drive {
+            at(IntygPage)
+            result = ($("#lastest-certificate-event", text:contains(textFragment)).size() == 1)
+        }
+        result
+    }
     
+    
+
     public void waitFor(long millis) {
         System.sleep(millis)
     }
+    
 }

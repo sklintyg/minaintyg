@@ -9,9 +9,14 @@ class SendCertificateFlowPage extends Page {
     static content = {
         confirmAndSendBtn(required: false)  { $("#confirmAndSendBtn") }
         resultMessageContainer(required: false)  { $("#send-certificate-flow-result") }
+        backToViewCertificateBtn(required: false)  { $("#backToViewCertificateBtn") }
     }
 
     def confirmSendFlow() {
         confirmAndSendBtn.click()
+    }
+    
+    def backToCertificateView() {
+        backToViewCertificateBtn.click()
     }
 }

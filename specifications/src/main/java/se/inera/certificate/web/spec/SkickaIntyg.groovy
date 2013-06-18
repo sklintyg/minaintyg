@@ -31,7 +31,12 @@ public class SkickaIntyg {
         }
         result
     }
-    
+    public void gåTillbakaTillIntyget() {
+        Browser.drive {
+            assert at(SendCertificateFlowPage)
+            page.backToCertificateView()
+        }
+    }
     public void waitFor(long millis) {
         System.sleep(millis)
     }
