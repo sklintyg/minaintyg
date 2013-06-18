@@ -1,17 +1,22 @@
 package se.inera.certificate.integration;
 
-import iso.v21090.dt.v1.II;
+import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import riv.insuranceprocess.healthreporting.medcertqa._1.Amnetyp;
 import riv.insuranceprocess.healthreporting.medcertqa._1.InnehallType;
-import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
+import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.v1.rivtabp20.RevokeMedicalCertificateResponderInterface;
@@ -19,12 +24,15 @@ import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateres
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.QuestionToFkType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 
 @Transactional
 @SchemaValidation
 public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCertificateResponderInterface {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RevokeMedicalCertificateResponderImpl.class);
 
     @Autowired
     private CertificateService certificateService;
@@ -47,36 +55,52 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
         LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();
         VardAdresseringsType vardAddress = request.getRevoke().getAdressVard();
 
+        Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
+
+        // return with INFO response if certificate to be revoked does not exist
+        if (certificate == null) {
+            LOG.info("Tried to revoke certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' but certificate does not exist");
+            response.setResult(infoResult("No certificate '" + certificateId + "' found to revoke for patient '" + civicRegistrationNumber + "'."));
+            return response;
+        }
+
+        // add a new CANCELLED state for the certificate
         certificateService.setCertificateState(civicRegistrationNumber, certificateId, "FK", CertificateState.CANCELLED, new LocalDateTime());
 
-        SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
-        QuestionToFkType question = new QuestionToFkType();
-        question.setAmne(Amnetyp.MAKULERING_AV_LAKARINTYG);
-        question.setVardReferensId(vardref);
-        question.setAvsantTidpunkt(avsantTs);
-        question.setAdressVard(vardAddress);
 
-        question.setFraga(new InnehallType());
-        question.getFraga().setMeddelandeText(meddelande);
-        question.getFraga().setSigneringsTidpunkt(signTs);
+        // if certificate was sent to Forsakringskassan before, we have to send a MAKULERING question to notify Forsakringskassan about the revocation
+        if (certificate.wasSentToTarget("FK")) {
+            SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
+            QuestionToFkType question = new QuestionToFkType();
+            question.setAmne(Amnetyp.MAKULERING_AV_LAKARINTYG);
+            question.setVardReferensId(vardref);
+            question.setAvsantTidpunkt(avsantTs);
+            question.setAdressVard(vardAddress);
 
-        question.setLakarutlatande(getLakarutlatande(certificateId, civicRegistrationNumber, signTs));
-        parameters.setQuestion(question);
+            question.setFraga(new InnehallType());
+            question.getFraga().setMeddelandeText(meddelande);
+            question.getFraga().setSigneringsTidpunkt(signTs);
 
-        sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(logicalAddress, parameters);
+            question.setLakarutlatande(request.getRevoke().getLakarutlatande());
+            parameters.setQuestion(question);
 
-        response.setResult(ResultOfCallUtil.okResult());
+            SendMedicalCertificateQuestionResponseType sendResponse = sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(logicalAddress, parameters);
+            if (sendResponse.getResult().getResultCode() != OK) {
+                handleForsakringskassaError(certificateId, sendResponse.getResult());
+            }
+        }
 
+        response.setResult(okResult());
         return response;
     }
 
-    private LakarutlatandeEnkelType getLakarutlatande(String certificateId, String civicRegistrationNumber, LocalDateTime signTs) {
-        LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
-        lakarutlatande.setLakarutlatandeId(certificateId);
-        lakarutlatande.setSigneringsTidpunkt(signTs);
-        lakarutlatande.setPatient(new PatientType());
-        lakarutlatande.getPatient().setPersonId(new II());
-        lakarutlatande.getPatient().getPersonId().setExtension(civicRegistrationNumber);
-        return lakarutlatande;
+    private void handleForsakringskassaError(String certificateId, ResultOfCall result) {
+        if (result.getResultCode() == INFO) {
+            LOG.error("Failed to send question to Försäkringskassan for revoking certificate '" + certificateId + "'. Info from forsakringskassan: " + result.getInfoText());
+        }
+        if (result.getResultCode() == ERROR) {
+            LOG.error("Failed to send question to Försäkringskassan for revoking certificate '" + certificateId + "'. Error from forsakringskassan: " + result.getErrorId() + " - " + result.getErrorText());
+        }
+        throw new RuntimeException("Informing Försäkringskassan about revoked certificate resulted in error");
     }
 }

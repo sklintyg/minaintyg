@@ -1,25 +1,24 @@
 package se.inera.certificate.integration.stub;
 
-import org.apache.cxf.annotations.SchemaValidation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.w3.wsaddressing10.AttributedURIType;
-
-import com.google.common.base.Throwables;
-
-import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.ObjectFactory;
-import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionType;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import java.io.StringWriter;
 
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
+import com.google.common.base.Throwables;
+import org.apache.cxf.annotations.SchemaValidation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.w3.wsaddressing10.AttributedURIType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.ObjectFactory;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionType;
 
 /**
  * @author par.wenaker
@@ -58,6 +57,7 @@ public class SendMedicalCertificateQuestionResponderStub implements SendMedicalC
             response.setResult(failResult("Unable to marshal certificate information"));
             return response;
         }
+        response.setResult(okResult());
         return response;
     }
 

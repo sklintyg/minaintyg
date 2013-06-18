@@ -260,4 +260,13 @@ public class Certificate {
             throw new ModelException("Failed to convert bytes to String!", e);
         }
     }
+
+    public boolean wasSentToTarget(String target) {
+        for (CertificateStateHistoryEntry state : states) {
+            if (state.getState() == CertificateState.SENT && state.getTarget() == target) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

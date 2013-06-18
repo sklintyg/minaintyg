@@ -1,0 +1,34 @@
+<RevokeMedicalCertificateRequest xmlns="urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1"
+                                 xmlns:core="urn:riv:insuranceprocess:healthreporting:2"
+                                 xmlns:qa="urn:riv:insuranceprocess:healthreporting:medcertqa:1">
+  <revoke>
+    <vardReferens-id>vardId</vardReferens-id>
+    <meddelande>Meddelande</meddelande>
+    <avsantTidpunkt>2011-03-23T09:29:15.193+01:00</avsantTidpunkt>
+    <adressVard>
+      <qa:hosPersonal>
+        <core:personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
+        <core:enhet>
+          <core:enhets-id root="1.2.752.129.2.1.4.1" extension="VardenhetY"/>
+          <core:arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
+          <core:enhetsnamn>Kir mott</core:enhetsnamn>
+          <core:postadress>Lasarettsvägen 13</core:postadress>
+          <core:postnummer>85150</core:postnummer>
+          <core:postort>Sundsvall</core:postort>
+          <core:telefonnummer>060-1818000</core:telefonnummer>
+          <core:vardgivare>
+            <core:vardgivare-id root="1.2.752.129.2.1.4.1" extension="VardgivarId"/>
+            <core:vardgivarnamn>Landstinget Norrland</core:vardgivarnamn>
+          </core:vardgivare>
+        </core:enhet>
+      </qa:hosPersonal>
+    </adressVard>
+    <lakarutlatande xmlns="urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1">
+      <qa:lakarutlatande-id>intygs-id-1234567890</qa:lakarutlatande-id>
+      <qa:signeringsTidpunkt>2011-01-26T00:00:00.000+01:00</qa:signeringsTidpunkt>
+      <qa:patient xmlns="urn:riv:insuranceprocess:healthreporting:2">
+        <person-id root="1.2.752.129.2.1.3.1" extension="19121212-1212"/>
+      </qa:patient>
+    </lakarutlatande>
+  </revoke>
+</RevokeMedicalCertificateRequest>

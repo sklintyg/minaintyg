@@ -27,7 +27,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
  */
 public final class ResultOfCallUtil {
 
-    private ResultOfCallUtil() { }
+    private ResultOfCallUtil() {
+    }
 
     public static ResultOfCall okResult() {
         ResultOfCall result = new ResultOfCall();
@@ -48,6 +49,13 @@ public final class ResultOfCallUtil {
         result.setResultCode(ResultCodeEnum.ERROR);
         result.setErrorId(errorType);
         result.setErrorText(errorText);
+        return result;
+    }
+
+    public static ResultOfCall infoResult(String infoText) {
+        ResultOfCall result = new ResultOfCall();
+        result.setResultCode(ResultCodeEnum.INFO);
+        result.setInfoText(infoText);
         return result;
     }
 }
