@@ -3,7 +3,8 @@ import org.springframework.core.io.ClassPathResource
 import se.inera.certificate.spec.util.WsClientFixture
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderService
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificate
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType
 
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Unmarshaller
@@ -27,14 +28,14 @@ public class RegistreraFk7263Intyg extends WsClientFixture {
     public String svar() {
 
         // read request template from file
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        RegisterMedicalCertificate request = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263_template.xml").getInputStream()), RegisterMedicalCertificate.class).getValue()
+        RegisterMedicalCertificateType request = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263_template.xml").getInputStream()), RegisterMedicalCertificateType.class).getValue()
 
         request.getLakarutlatande().getPatient().getPersonId().setExtension(personnummer)
         request.getLakarutlatande().setLakarutlatandeId(intyg)
 
-        response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
+        RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
 
         resultAsString(response)
     }

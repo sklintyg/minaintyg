@@ -35,6 +35,7 @@ import se.inera.certificate.integration.v1.VardgivareType;
 import se.inera.certificate.integration.v1.VardkontaktType;
 import se.inera.certificate.integration.v1.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
@@ -50,9 +51,9 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
     }
 
     /**
-     * Converts a JAXB {@link se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande} to a {@link Lakarutlatande}.
+     * Converts a JAXB {@link LakarutlatandeType} to a {@link Lakarutlatande}.
      */
-    public static Lakarutlatande convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande source) {
+    public static Lakarutlatande convert(LakarutlatandeType source) {
         Lakarutlatande lakarutlatande = new Lakarutlatande();
 
         lakarutlatande.setId(source.getLakarutlatandeId());
@@ -69,7 +70,7 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
             lakarutlatande.setSjukdomsforlopp(source.getBedomtTillstand().getBeskrivning());
         }
 
-        for (FunktionstillstandType funktionstillstand : source.getFunktionstillstands()) {
+        for (FunktionstillstandType funktionstillstand : source.getFunktionstillstand()) {
             switch (funktionstillstand.getTypAvFunktionstillstand()) {
                 case AKTIVITET:
                     lakarutlatande.getAktivitetsbegransnings().add(convertToAktivitetsbegransning(funktionstillstand));
@@ -82,7 +83,7 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
             }
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source.getAktivitets()) {
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source.getAktivitet()) {
             lakarutlatande.getAktivitets().add(convert(aktivitetType));
         }
 
@@ -90,7 +91,7 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
             lakarutlatande.getReferens().add(convert(referensType));
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source.getVardkontakts()) {
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source.getVardkontakt()) {
             lakarutlatande.getVardkontakts().add(convert(vardkontaktType));
         }
 
@@ -204,11 +205,11 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
         }
         arbetsformaga.setPrognosangivelse(convert(source.getPrognosangivelse()));
 
-        for (SysselsattningType sysselsattningType : source.getSysselsattnings()) {
+        for (SysselsattningType sysselsattningType : source.getSysselsattning()) {
             arbetsformaga.getSysselsattnings().add(convert(sysselsattningType.getTypAvSysselsattning()));
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType arbetsformagaNedsattningType : source.getArbetsformagaNedsattnings()) {
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType arbetsformagaNedsattningType : source.getArbetsformagaNedsattning()) {
             arbetsformaga.getArbetsformagaNedsattnings().add(convert(arbetsformagaNedsattningType));
         }
 

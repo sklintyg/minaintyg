@@ -8,8 +8,8 @@ import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.Phase;
 import se.inera.certificate.integration.validator.LakarutlatandeValidator;
 import se.inera.certificate.integration.validator.ValidationException;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificate;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 
 /**
@@ -24,8 +24,8 @@ public class LakarutlatandeValidatingInterceptor extends AbstractSoapInterceptor
     @Override
     public void handleMessage(SoapMessage message) throws Fault {
 
-        RegisterMedicalCertificate registerMedicalCertificate = (RegisterMedicalCertificate) MessageContentsList.getContentsList(message).get(1);
-        Lakarutlatande lakarutlatande = registerMedicalCertificate.getLakarutlatande();
+        RegisterMedicalCertificateType registerMedicalCertificate = (RegisterMedicalCertificateType) MessageContentsList.getContentsList(message).get(1);
+        LakarutlatandeType lakarutlatande = registerMedicalCertificate.getLakarutlatande();
 
         try {
             new LakarutlatandeValidator(lakarutlatande).validate();

@@ -1,14 +1,5 @@
 package se.inera.certificate.converter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
-import java.io.StringWriter;
-
 import static org.custommonkey.xmlunit.DifferenceConstants.NAMESPACE_PREFIX_ID;
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +14,17 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import se.inera.certificate.integration.converter.LakarutlatandeTypeToLakarutlatandeConverter;
 import se.inera.certificate.integration.v1.Lakarutlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificate;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * @author andreaskaltenbach
@@ -33,11 +34,11 @@ public class LakarutlatandeTypeToLakarutlatandeConverterTest {
     @Test
     public void testConversion() throws JAXBException, IOException, SAXException {
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, Lakarutlatande.class);
 
         // read LakarutlatandeType from file
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande> lakarutlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/maximalt-intyg.xml").getInputStream()), se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande.class);
+        JAXBElement<LakarutlatandeType> lakarutlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/maximalt-intyg.xml").getInputStream()), LakarutlatandeType.class);
 
         Lakarutlatande lakarutlatande = LakarutlatandeTypeToLakarutlatandeConverter.convert(lakarutlatandeElement.getValue());
 
