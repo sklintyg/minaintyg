@@ -14,7 +14,8 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
                 templateUrl : '/views/om-mina-intyg.html',
                 controller : 'AboutCtrl'
             }).when('/hjalp', {
-                templateUrl : '/views/hjalp.html'
+                templateUrl : '/views/hjalp.html',
+			    controller : 'HelpCtrl'
             }).otherwise({
                 redirectTo : '/lista'
             });

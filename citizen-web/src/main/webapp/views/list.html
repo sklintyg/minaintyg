@@ -1,4 +1,4 @@
-<h1>
+<h1 ng-focus="pagefocus" tabindex="0">
   <span id="inboxHeader"><message key="inbox.header" /></span>
 </h1>
 
@@ -9,60 +9,62 @@
     </p>
   </div>
 
-  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
-    <img src="/img/ajax-loader.gif" style="text-align: center;" />
-    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong><message key="label.certificatesloading" /></strong>
-    </p>
-  </div>
-  <div  ng-show="doneLoading && (certificates | inboxfilter).length>0">
-	<div id="certTable">
-	  <div ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
-		  <section class="certificate">
-			<div class="row-fluid">
-				<div class="span12">
-					<div id="certificate-{{cert.id}}" class="cert">
-						<div class="cert-titlebar">
-							<img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
-							<div class="row-fluid">
-								<div class="span8">
-									<h2><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></h2>
-								</div>
-								<div class="span3 issue">
-									<message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
-								</div>
-								<div class="span1 archive">
-									<a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
-								</div>
-							</div>
-						</div>
-						<div class="cert-header">
-							<div class="row-fluid">
-								<div class="span8 header-row">
-									<span class="tag"><message key="listtable.headers.issuedby" /></span> {{cert.careunitName}}
-								</div>
-								<div class="span3">
-									<span class="tag"><message key="listtable.headers.certperiod" /></span> <span id="certificate-period-{{cert.id}}">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
-								</div>
-								<div class="span1"></div>
-							</div>
-							<div class="row-fluid">
-								<div class="span8 header-row">
-									<span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Ingen"/>
-								</div>
-								<div class="span3">
-									<button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
-								</div>
-								<div class="span1"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		  </section>
-		  <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
-	  </div>
-	</div>
+  <div>
+    <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+      <img aria-labelledby="loading-message" src="/img/ajax-loader.gif" style="text-align: center;" />
+      <p id="loading-message" style="text-align: center; color: #64ABC0; margin-top: 20px;">
+        <strong><message key="label.certificatesloading" /></strong>
+      </p>
+    </div>
+    <div ng-show="doneLoading && (certificates | inboxfilter).length>0">
+      <div id="certTable">
+        <div ng-repeat="cert in certificates | inboxfilter" ng-hide="$index > currentDisplaySize"  class="{{cert.status}}">
+          <section class="certificate">
+            <div class="row-fluid">
+              <div class="span12">
+                <div id="certificate-{{cert.id}}" class="cert">
+                  <div class="cert-titlebar">
+                    <img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
+                    <div class="row-fluid">
+                      <div class="span8">
+                        <h2><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></h2>
+                      </div>
+                      <div class="span3 issue">
+                        <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
+                      </div>
+                      <div class="span1 archive">
+                        <a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cert-header">
+                    <div class="row-fluid">
+                      <div class="span8 header-row">
+                        <span class="tag"><message key="listtable.headers.issuedby" /></span> {{cert.careunitName}}
+                      </div>
+                      <div class="span3">
+                        <span class="tag"><message key="listtable.headers.certperiod" /></span> <span id="certificate-period-{{cert.id}}">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
+                      </div>
+                      <div class="span1"></div>
+                    </div>
+                    <div class="row-fluid">
+                      <div class="span8 header-row">
+                        <span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Ingen"/>
+                      </div>
+                      <div class="span3">
+                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
+                      </div>
+                      <div class="span1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </section>
+          <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row-fluid">

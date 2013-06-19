@@ -33,6 +33,9 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         // filtering is done i view
         $scope.doneLoading = true;
     });
+
+	// Set focus on new page so screen readers can announce it
+    $scope.pagefocus = true;
 } ]);
 
 listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertService', function ListCertCtrl($scope, $location, listCertService) {
@@ -65,6 +68,8 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
         $scope.certificates = list;
         $scope.doneLoading = true;
     });
+
+	$scope.pagefocus = true;
 } ]);
 
 // Consent Controller
@@ -77,9 +82,19 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consent
         "juridik" : false
     }
 
+	// Hold focus state for sub pages
+	$scope.subpagefocus = {
+     "omminaintyg" : false,
+     "samtycke" : false,
+     "juridik" : false
+    }
+
+	$scope.dialogfocus = false;
+
     $scope.navigateTo = function(section) {
         angular.forEach($scope.visibility, function(value, key) {
             $scope.visibility[key] = (key == section) ? true : false;
+	        $scope.subpagefocus[key] = (key == section) ? true : false;
         });
     }
 
@@ -94,6 +109,7 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consent
     
     $scope.openConfirmDialog = function() {
         $scope.shouldBeOpen = true;
+	    $scope.dialogfocus = true;
     };
     
     $scope.closeConfirmDialog = function(confirm) {
@@ -117,4 +133,9 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consent
         });
     };
 
+	$scope.pagefocus = true;
+} ]);
+
+listCertApp.controller('HelpCtrl', [ '$scope', '$location', 'listCertService', function ListCertCtrl($scope, $location, listCertService) {
+	$scope.pagefocus = true;
 } ]);
