@@ -64,6 +64,13 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
             return response;
         }
 
+        // return with INFO response if certificate was revoked before
+        if (certificate.isRevoked()) {
+            LOG.info("Tried to revoke certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' which already is revoked");
+            response.setResult(infoResult("Certificate '" + certificateId + "' is already revoked."));
+            return response;
+        }
+
         // add a new CANCELLED state for the certificate
         certificateService.setCertificateState(civicRegistrationNumber, certificateId, "FK", CertificateState.CANCELLED, new LocalDateTime());
 

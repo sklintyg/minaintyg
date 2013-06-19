@@ -130,10 +130,6 @@ public class RevokeMedicalCertificateResponderImplTest {
 
     @Test
     public void testRevokeUnknownCertificate() throws Exception {
-        Certificate certificate = new Certificate(CERTIFICATE_ID, "text");
-        CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry("FK", CertificateState.SENT, new LocalDateTime());
-        certificate.setStates(Collections.singletonList(historyEntry));
-
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(null);
 
         RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
@@ -142,5 +138,21 @@ public class RevokeMedicalCertificateResponderImplTest {
 
         assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());
         assertEquals("No certificate 'intygs-id-1234567890' found to revoke for patient '19121212-1212'.", response.getResult().getInfoText());
+    }
+
+    @Test
+    public void testRevokeAlreadyRevokedCertificate() throws Exception {
+        Certificate certificate = new Certificate(CERTIFICATE_ID, "text");
+        CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry("FK", CertificateState.CANCELLED, new LocalDateTime());
+        certificate.setStates(Collections.singletonList(historyEntry));
+
+        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+
+        RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
+
+        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
+
+        assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());
+        assertEquals("Certificate 'intygs-id-1234567890' is already revoked.", response.getResult().getInfoText());
     }
 }

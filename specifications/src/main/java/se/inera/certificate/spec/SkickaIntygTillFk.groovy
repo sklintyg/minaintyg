@@ -29,6 +29,8 @@ class SkickaIntygTillFk extends WsClientFixture {
     String personnummer
     String intyg
 
+    SendMedicalCertificateResponseType response
+
     public SkickaIntygTillFk() {
         setEndpoint(sendResponder, "send-certificate/v1.0")
     }
@@ -59,6 +61,10 @@ class SkickaIntygTillFk extends WsClientFixture {
         sendType.lakarutlatande.patient.personId = new II()
         sendType.lakarutlatande.patient.personId.extension = personnummer
         
-        SendMedicalCertificateResponseType response = sendResponder.sendMedicalCertificate(null, sendRequestType)
+        response = sendResponder.sendMedicalCertificate(null, sendRequestType)
+    }
+
+    public String svar() {
+        resultAsString(response)
     }
 }

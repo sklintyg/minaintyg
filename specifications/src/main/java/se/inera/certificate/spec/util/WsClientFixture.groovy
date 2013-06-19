@@ -19,6 +19,8 @@ class WsClientFixture {
         switch (response.getResult().getResultCode()) {
             case ResultCodeEnum.OK:
                 return "ok"
+            case ResultCodeEnum.INFO:
+                return "[" + response.getResult().getResultCode().toString() + "] - " + response.getResult().getInfoText()
             default:
                 return "[" + response.getResult().getResultCode().toString() + "] - " + response.getResult().getErrorText()
 

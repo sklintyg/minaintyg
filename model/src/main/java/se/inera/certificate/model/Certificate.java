@@ -18,10 +18,6 @@
  */
 package se.inera.certificate.model;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -34,10 +30,18 @@ import javax.persistence.Lob;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+
+import static com.google.common.collect.Iterables.contains;
+import static com.google.common.collect.Iterables.find;
 
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
@@ -46,7 +50,7 @@ import org.joda.time.LocalDateTime;
  * @author andreaskaltenbach
  */
 @Entity
-@Table(name = "CERTIFICATE")
+@Table( name = "CERTIFICATE" )
 @XmlRootElement
 public class Certificate {
 
@@ -263,12 +267,21 @@ public class Certificate {
         }
     }
 
-    public boolean wasSentToTarget(String target) {
-        for (CertificateStateHistoryEntry state : states) {
-            if (state.getState() == CertificateState.SENT && state.getTarget() == target) {
-                return true;
+    public boolean isRevoked() {
+        return find(states, new Predicate<CertificateStateHistoryEntry>() {
+            @Override
+            public boolean apply(CertificateStateHistoryEntry state) {
+                return state.getState() == CertificateState.CANCELLED;
             }
-        }
-        return false;
+        }, null) != null;
+    }
+
+    public boolean wasSentToTarget(final String target) {
+        return find(states, new Predicate<CertificateStateHistoryEntry>() {
+            @Override
+            public boolean apply(CertificateStateHistoryEntry state) {
+                return state.getState() == CertificateState.SENT && state.getTarget().equals(target);
+            }
+        }, null) != null;
     }
 }

@@ -1,4 +1,5 @@
 package se.inera.certificate.spec
+
 import org.springframework.core.io.ClassPathResource
 import se.inera.certificate.spec.util.WsClientFixture
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface
@@ -9,6 +10,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Unmarshaller
 import javax.xml.transform.stream.StreamSource
+
 /**
  *
  * @author andreaskaltenbach
@@ -25,8 +27,9 @@ public class RegistreraFk7263Intyg extends WsClientFixture {
     String personnummer
     String intyg
 
-    public String svar() {
+    RegisterMedicalCertificateResponseType response
 
+    public void execute() {
         // read request template from file
         JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -35,8 +38,10 @@ public class RegistreraFk7263Intyg extends WsClientFixture {
         request.getLakarutlatande().getPatient().getPersonId().setExtension(personnummer)
         request.getLakarutlatande().setLakarutlatandeId(intyg)
 
-        RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
+        response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
+    }
 
+    public String svar() {
         resultAsString(response)
     }
 }
