@@ -32,6 +32,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.RECEIVED;
+import static se.inera.certificate.model.CertificateState.RESTORED;
+import static se.inera.certificate.model.CertificateState.SENT;
 import static se.inera.certificate.support.CertificateFactory.CERTIFICATE_ID;
 import static se.inera.certificate.support.CertificateFactory.CIVIC_REGISTRATION_NUMBER;
 import static se.inera.certificate.support.CertificateFactory.FK7263;
@@ -180,7 +182,7 @@ public class CertificateDaoImplTest {
         assertNull(certificateDao.getCertificate("<unknownCertId>", "<unknownPersonnummer>"));
     }
 
-    @Test( expected = InvalidCertificateIdentifierException.class )
+    @Test(expected = InvalidCertificateIdentifierException.class)
     public void testGetCertificateForWrongCivicRegistrationNumber() {
         certificateDao.store(buildCertificate());
         certificateDao.getCertificate("<another civic registration number>", CERTIFICATE_ID);
@@ -222,5 +224,31 @@ public class CertificateDaoImplTest {
         assertEquals(DELETED, certificate.getStates().get(0).getState());
         assertEquals("fk", certificate.getStates().get(0).getTarget());
         assertNotNull(certificate.getStates().get(0).getTimestamp());
+    }
+
+    @Test
+    public void testStatusOrderForGetCertificate() {
+
+        Certificate certificate = buildCertificate();
+        entityManager.persist(certificate);
+
+        LocalDateTime lastMonth = new LocalDateTime().minusWeeks(4);
+        LocalDateTime lastWeek = new LocalDateTime().minusWeeks(1);
+        LocalDateTime yesterday = new LocalDateTime().minusDays(1);
+
+        certificateDao.updateStatus(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, DELETED, "fk", lastWeek);
+        certificateDao.updateStatus(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, SENT, "fk", lastMonth);
+        certificateDao.updateStatus(CERTIFICATE_ID, CIVIC_REGISTRATION_NUMBER, RESTORED, "fk", yesterday);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        certificate = certificateDao.getCertificate(CIVIC_REGISTRATION_NUMBER, CERTIFICATE_ID);
+
+        assertEquals(3, certificate.getStates().size());
+
+        assertEquals(yesterday, certificate.getStates().get(0).getTimestamp());
+        assertEquals(lastWeek, certificate.getStates().get(1).getTimestamp());
+        assertEquals(lastMonth, certificate.getStates().get(2).getTimestamp());
     }
 }

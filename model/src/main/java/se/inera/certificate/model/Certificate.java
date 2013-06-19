@@ -31,6 +31,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -121,6 +122,7 @@ public class Certificate {
             name = "CERTIFICATE_STATE",
             joinColumns = @JoinColumn(name = "CERTIFICATE_ID")
     )
+    @OrderBy("timestamp DESC")
     private List<CertificateStateHistoryEntry> states = new ArrayList<>();
 
     /**
