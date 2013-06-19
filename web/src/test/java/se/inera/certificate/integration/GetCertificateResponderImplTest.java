@@ -18,6 +18,10 @@
  */
 package se.inera.certificate.integration;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -26,11 +30,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -40,12 +40,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.service.CertificateService;
@@ -58,6 +58,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class GetCertificateResponderImplTest {
+
+    private static final String civicRegistrationNumber = "19350108-1234";
+    private static final String certificateId = "123456";
 
     @Mock
     private CertificateService certificateService = mock(CertificateService.class);
@@ -75,17 +78,14 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificate() throws IOException {
-        String civicRegistrationNumber = "19350108-1234";
-        String certificateId = "123456";
-
         String document = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
         Lakarutlatande lakarutlatande = new CustomObjectMapper().readValue(document, Lakarutlatande.class);
-        
+
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(
                 new CertificateBuilder("123456", document).certificateType("fk7263").build());
 
         when(certificateService.getLakarutlatande(any(Certificate.class))).thenReturn(lakarutlatande);
-        
+
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
         GetCertificateResponseType response = responder.getCertificate(null, parameters);
@@ -98,8 +98,6 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificateWithUnknownCertificateId() {
-        String civicRegistrationNumber = "19350108-1234";
-        String certificateId = "unknownId";
 
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(null);
 
@@ -111,17 +109,14 @@ public class GetCertificateResponderImplTest {
         assertNull(response.getCertificate());
         assertEquals(ERROR, response.getResult().getResultCode());
         assertEquals(ErrorIdEnum.VALIDATION_ERROR, response.getResult().getErrorId());
-        assertEquals("Unknown certificate ID: unknownId", response.getResult().getErrorText());
+        assertEquals("Unknown certificate ID: 123456", response.getResult().getErrorText());
     }
 
     @Test
     public void getCertificateWithUnsupportedCertificateType() {
-        String civicRegistrationNumber = "19350108-1234";
-        String certificateId = "123456";
 
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(
-                        new CertificateBuilder("123456").certificateType("unsupportedCertificateType").build());
-
+                new CertificateBuilder("123456").certificateType("unsupportedCertificateType").build());
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
@@ -137,8 +132,6 @@ public class GetCertificateResponderImplTest {
     @Test
     @SuppressWarnings("unchecked")
     public void getCertificateWithoutConsent() {
-        String civicRegistrationNumber = "19350108-1234";
-        String certificateId = "123456";
 
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenThrow(MissingConsentException.class);
 
@@ -150,6 +143,22 @@ public class GetCertificateResponderImplTest {
         assertNull(response.getCertificate());
         assertEquals(ERROR, response.getResult().getResultCode());
         assertEquals(ErrorIdEnum.VALIDATION_ERROR, response.getResult().getErrorId());
+    }
+
+    @Test
+    public void getRevokedCertificate() {
+
+        Certificate certificate = new CertificateBuilder(certificateId).state(CertificateState.CANCELLED, "fk").build();
+        when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(certificate);
+
+        GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
+
+        GetCertificateResponseType response = responder.getCertificate(null, parameters);
+
+        assertNull(response.getMeta());
+        assertNull(response.getCertificate());
+        assertEquals(INFO, response.getResult().getResultCode());
+        assertEquals("Certificate '123456' has been revoked", response.getResult().getInfoText());
     }
 
     private GetCertificateRequestType createGetCertificateRequest(String civicRegistrationNumber, String certificateId) {

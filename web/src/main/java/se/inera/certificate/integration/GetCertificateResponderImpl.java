@@ -25,9 +25,11 @@ import java.util.List;
 
 import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.*;
 
 import org.apache.cxf.annotations.SchemaValidation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
@@ -51,6 +53,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 @SchemaValidation
 public class GetCertificateResponderImpl implements GetCertificateResponderInterface {
 
+    private static final Logger LOG = LoggerFactory.getLogger(GetCertificateResponderImpl.class);
+
     @Autowired
     private CertificateService certificateService;
 
@@ -61,18 +65,33 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType parameters) {
         GetCertificateResponseType response = new GetCertificateResponseType();
 
+        Certificate certificate;
         try {
-            Certificate certificate = certificateService.getCertificate(parameters.getNationalIdentityNumber(), parameters.getCertificateId());
-            if (certificate != null) {
-                response.setMeta(ModelConverter.toCertificateMetaType(certificate));
-                attachCertificateDocument(certificate, response);
-            } else {
-                response.setResult(failResult(String.format("Unknown certificate ID: %s", parameters.getCertificateId())));
-            }
+            certificate = certificateService.getCertificate(parameters.getNationalIdentityNumber(), parameters.getCertificateId());
         } catch (MissingConsentException ex) {
+            // return ERROR if user has not given consent
+            LOG.info("Tried to get certificate '" + parameters.getCertificateId() + "' but user '" + parameters.getNationalIdentityNumber() + "' has not given consent.");
             response.setResult(failResult(String.format("Missing consent for patient %s", parameters.getNationalIdentityNumber())));
+            return response;
         }
 
+
+        if (certificate == null) {
+            // return ERROR if no such certificate does exist
+            LOG.info("Tried to get certificate '" + parameters.getCertificateId() + "' but no such certificate does exist for user '" + parameters.getNationalIdentityNumber() + "'.");
+            response.setResult(failResult(String.format("Unknown certificate ID: %s", parameters.getCertificateId())));
+            return response;
+        }
+
+        if (certificate.isRevoked()) {
+            // return INFO if certificate is revoked
+            LOG.info("Tried to get certificate '" + parameters.getCertificateId() + "' but certificate has been revoked'.");
+            response.setResult(infoResult("Certificate '" + parameters.getCertificateId() + "' has been revoked"));
+            return response;
+        }
+
+        response.setMeta(ModelConverter.toCertificateMetaType(certificate));
+        attachCertificateDocument(certificate, response);
         return response;
     }
 
