@@ -70,6 +70,17 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#008391', endColorstr='#00687D', GradientType=0);
 }
 
+.cert-cancelled {
+	background-color: #7f7f7f;
+	background-image:-moz-linear-gradient(top, #999999, #7f7f7f);
+	background-image:-ms-linear-gradient(top, #999999, #7f7f7f);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#999999), to(#7f7f7f));
+	background-image:-webkit-linear-gradient(top, #999999, #7f7f7f);
+	background-image:-o-linear-gradient(top, #999999, #7f7f7f);
+	background-image:linear-gradient(top, #999999, #7f7f7f);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#999999', endColorstr='#7f7f7f', GradientType=0);
+}
+
 .cert-titlebar h2 {
 	color: #fff;
 	padding: 10px 0 5px 40px;
