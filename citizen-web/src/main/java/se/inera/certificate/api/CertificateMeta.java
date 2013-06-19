@@ -14,6 +14,7 @@ public class CertificateMeta implements Serializable {
     private String status;
     private String target;
     private Boolean archived;
+    private Boolean cancelled;
     private String fromDate;
     private String tomDate;
 
@@ -71,6 +72,14 @@ public class CertificateMeta implements Serializable {
 
     public void setArchived(Boolean archived) {
         this.archived = archived;
+    }
+
+    public Boolean getCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(Boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public void setFromDate(String fromDate) {

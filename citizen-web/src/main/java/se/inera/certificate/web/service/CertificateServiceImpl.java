@@ -117,6 +117,9 @@ public class CertificateServiceImpl implements CertificateService {
                 dto.setStatus(stat.getType().toString());
                 dto.setTarget(stat.getTarget());
             }
+            if (stat.getType().equals(StatusType.CANCELLED)) {
+                dto.setCancelled(true);
+            }
         }
 
         return dto;
@@ -124,7 +127,6 @@ public class CertificateServiceImpl implements CertificateService {
 
     /**
      * Compare status newest first.
-     *
      */
     private static final Comparator<CertificateStatusType> STATUS_COMPARATOR = new Comparator<CertificateStatusType>() {
         @Override

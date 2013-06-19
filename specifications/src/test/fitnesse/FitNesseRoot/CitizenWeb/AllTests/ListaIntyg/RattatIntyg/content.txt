@@ -1,0 +1,11 @@
+!3 Givet att användaren har rättat intyg så skall detta visas på specifikt sätt i listan.
+
+|script      |!-ListaIntyg-!|
+|logga på som|19121212-1212 |
+|inkorgsidan visas          |
+|lista med intyg visas      |
+
+Se till att rättat intyg visas på rätt sätt. Intygets id är ''intyg-2''.
+
+|script                    |!-ListaIntyg-!|
+|rättat intyg visas korrekt|intyg-2       |

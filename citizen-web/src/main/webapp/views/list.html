@@ -9,6 +9,7 @@
     </p>
   </div>
 
+<<<<<<< HEAD
   <div>
     <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
       <img aria-labelledby="loading-message" src="/img/ajax-loader.gif" style="text-align: center;" />
@@ -52,7 +53,7 @@
                         <span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Ingen"/>
                       </div>
                       <div class="span3">
-                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
+                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success"  ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><message key="button.show" /></button>
                       </div>
                       <div class="span1"></div>
                     </div>
