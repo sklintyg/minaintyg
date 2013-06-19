@@ -124,6 +124,15 @@ public class ListaIntyg {
         result
     }
 
+    public boolean rättatIntygVisasKorrekt(String id) {
+        def result = false
+        Browser.drive {
+            at(InboxPage)
+            result = page.cancelledCertificateDisplayed(id);
+        }
+        result
+    }
+
     public void visaIntyg(String id) {
         Browser.drive {
             at(InboxPage)
