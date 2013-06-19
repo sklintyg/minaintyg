@@ -21,14 +21,13 @@ package se.inera.certificate.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificate;
 
 /**
  * @author andreaskaltenbach
@@ -49,7 +48,7 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
             AttributedURIType address = new AttributedURIType();
             address.setValue(logicalAddress);
             Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
-            RegisterMedicalCertificateType jaxbObject = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
+            RegisterMedicalCertificate jaxbObject = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
             registerMedicalCertificateResponder.registerMedicalCertificate(address , jaxbObject);
         } else {
             throw new IllegalArgumentException("Can not send certificate of type " + certificate.getType() + " to " + target);

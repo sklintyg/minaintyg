@@ -1,10 +1,9 @@
 package se.inera.certificate.integration.converter;
 
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
-
 import java.util.List;
 
+import iso.v21090.dt.v1.CD;
+import iso.v21090.dt.v1.II;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Aktivitetsbegransning;
 import se.inera.certificate.model.Arbetsformaga;
@@ -26,7 +25,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
@@ -37,7 +35,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstil
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificate;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
@@ -49,10 +47,10 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         
     }
     
-    public static RegisterMedicalCertificateType getJaxbObject(Lakarutlatande lakarutlatande) {
+    public static RegisterMedicalCertificate getJaxbObject(Lakarutlatande lakarutlatande) {
         try {
-            RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
-            register.setLakarutlatande(new LakarutlatandeType());
+            RegisterMedicalCertificate register = new RegisterMedicalCertificate();
+            register.setLakarutlatande(new se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande());
             register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
             register.getLakarutlatande().setTypAvUtlatande("Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring");
             register.getLakarutlatande().setKommentar(lakarutlatande.getKommentar());
@@ -63,11 +61,11 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
             register.getLakarutlatande().getSkapadAvHosPersonal().setEnhet(toJaxb(lakarutlatande.getVardenhet()));
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(lakarutlatande.getSjukdomsforlopp()));
             register.getLakarutlatande().setMedicinsktTillstand(toJaxb(lakarutlatande.getBedomtTillstand()));
-            addAktivitet(register.getLakarutlatande().getAktivitet(), lakarutlatande.getAktiviteter());
+            addAktivitet(register.getLakarutlatande().getAktivitets(), lakarutlatande.getAktiviteter());
             addReferens(register.getLakarutlatande().getReferens(), lakarutlatande.getReferenser());
-            addVardkontakt(register.getLakarutlatande().getVardkontakt(), lakarutlatande.getVardkontakter());
-            addFunktionstillstand(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getFunktionsnedsattningar());
-            addAktivitestbegransningar(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getAktivitetsbegransningar());
+            addVardkontakt(register.getLakarutlatande().getVardkontakts(), lakarutlatande.getVardkontakter());
+            addFunktionstillstand(register.getLakarutlatande().getFunktionstillstands(), lakarutlatande.getFunktionsnedsattningar());
+            addAktivitestbegransningar(register.getLakarutlatande().getFunktionstillstands(), lakarutlatande.getAktivitetsbegransningar());
             return register;
         } catch (Exception e) {
             // TODO: Kasta annat undantag! /PW
@@ -114,8 +112,8 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         arbetsformagaType.setMotivering(source.getMotivering());
         arbetsformagaType.setPrognosangivelse(toJaxb(source.getPrognosangivelse()));
         arbetsformagaType.setArbetsuppgift(getArbetsuppgift(source));
-        addArbetsformagaNedsattning(arbetsformagaType.getArbetsformagaNedsattning(), source.getArbetsformagaNedsattningar());
-        addSysselsattning(arbetsformagaType.getSysselsattning(), source.getSysselsattningar());
+        addArbetsformagaNedsattning(arbetsformagaType.getArbetsformagaNedsattnings(), source.getArbetsformagaNedsattningar());
+        addSysselsattning(arbetsformagaType.getSysselsattnings(), source.getSysselsattningar());
         return arbetsformagaType;
     }
 

@@ -1,18 +1,18 @@
 package se.inera.certificate.integration.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.Arrays.asList;
 
 import com.google.common.base.Joiner;
 import iso.v21090.dt.v1.II;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -21,14 +21,14 @@ public class LakarutlatandeValidator {
 
     public static final String ICD_10 = "ICD-10";
     public static final String ARBETSPLATS_CODE_OID = "1.2.752.29.4.71";
-    private LakarutlatandeType lakarutlatande;
+    private Lakarutlatande lakarutlatande;
     private List<String> validationErrors = new ArrayList<>();
 
     private static final List<String> PATIENT_ID_OIDS = asList("1.2.752.129.2.1.3.1", "1.2.752.129.2.1.3.3");
     private static final String HOS_PERSONAL_OID = "1.2.752.129.2.1.4.1";
     private static final String ENHET_OID = "1.2.752.129.2.1.4.1";
 
-    public LakarutlatandeValidator(LakarutlatandeType lakarutlatande) {
+    public LakarutlatandeValidator(Lakarutlatande lakarutlatande) {
         this.lakarutlatande = lakarutlatande;
     }
 
