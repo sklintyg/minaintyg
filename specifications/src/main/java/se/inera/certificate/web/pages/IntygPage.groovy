@@ -9,7 +9,10 @@ class IntygPage extends Page {
     static content = {
         certificateId { $("#certId") }
         certificateType { $("#certType") }
+        sendCertificateBtn { $("#sendCertificateBtn") }
     }
 
-
+    def startSendFlow() {
+        sendCertificateBtn.click()
+    }
 }

@@ -6,9 +6,7 @@ import se.inera.certificate.web.pages.IntygPage
 public class VisaIntyg {
 
     public boolean intygssidanVisas() {
-        Browser.drive {
-            at(IntygPage)
-        }
+        Browser.drive { at(IntygPage) }
     }
 
     public boolean intygetsTypÄr(String typ) {
@@ -28,6 +26,26 @@ public class VisaIntyg {
         }
         result
     }
+    
+    public void väljSkickaIntyg() {
+        Browser.drive {
+            at(IntygPage)
+            page.startSendFlow()
+        }
+    }
+    public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
+        def result = false
+        Browser.drive {
+            at(IntygPage)
+            result = ($("#lastest-certificate-event", text:contains(textFragment)).size() == 1)
+        }
+        result
+    }
+    
+    
 
-
+    public void waitFor(long millis) {
+        System.sleep(millis)
+    }
+    
 }
