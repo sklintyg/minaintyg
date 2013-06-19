@@ -51,7 +51,7 @@
 									<span class="tag"><message key="listtable.headers.latestEvent" /></span> <message key="certificates.status.{{cert.status}}" fallback="Ingen"/>
 								</div>
 								<div class="span3">
-									<button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
+									<button id="viewCertificateBtn-{{cert.id}}" ng-disabled="cert.cancelled" class="btn btn-success" ng-click="sendSelected(cert)"><message key="button.show" /></button>
 								</div>
 								<div class="span1"></div>
 							</div>

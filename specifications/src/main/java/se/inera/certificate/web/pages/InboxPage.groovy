@@ -31,8 +31,12 @@ class InboxPage extends Page {
     def goToArchivedTab() {
         archivedTab.click()
     }
-    
+
     def goToAboutMinaIntyg() {
         aboutTab.click()
+    }
+
+    def boolean cancelledCertificateDisplayed(String id) {
+        $("#viewCertificateBtn-${id}").isDisabled();
     }
 }

@@ -13,3 +13,8 @@
 |19121212-1212|2013-04-02|fk7263|intyg-2|
 |19121212-1212|2013-04-04|RLI|rli-intyg-3|
 |19121212-1212|2013-04-05|RLI|rli-intyg-4|
+
+|Ratta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-2|ok|
+
