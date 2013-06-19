@@ -25,7 +25,7 @@
 
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="ListCertApp">
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -74,7 +74,14 @@
     </div>
   </div>
 
-
+  <!--[if lte IE 8]>
+    <script>
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
+    </script>
+    
+    <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+ <![endif]-->
+ 
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
