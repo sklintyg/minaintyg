@@ -8,7 +8,7 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
         controller : 'ConsentCtrl'
     }).when('/samtycke-givet', {
         templateUrl : '/views/consent/consent-given.html',
-        controller : 'ConsentCtrl'
+        controller : 'ConsentGivenCtrl'
     }).when('/fel', {
         templateUrl : '/views/error.html',
     }).otherwise({

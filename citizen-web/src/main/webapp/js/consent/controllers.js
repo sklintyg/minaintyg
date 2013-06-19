@@ -12,12 +12,17 @@ consentApp.controller('ConsentCtrl', [ '$scope', '$location', '$filter', 'consen
             } else {
                 $location.path("/fel");
             }
-
         });
     };
+
+} ]);
+
+// Consent Controller
+consentApp.controller('ConsentGivenCtrl', [ '$scope', '$location', '$filter', 'consentService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, $window) {
 
     $scope.continueToMI = function() {
         $window.location.href = "/web/start";
     }
 
+	$scope.pagefocus = true;
 } ]);
