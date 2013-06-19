@@ -90,6 +90,7 @@ h1,h2,h3,h4,h5 {
 	font-family: 26px/1 ProximaNovaCnReg,'Arial Narrow',Arial,Sans-serif;
 	margin: 0;
 	color: #008391;
+    outline: none;
 }
 
 h2,h3,h4,h5 {
@@ -641,6 +642,10 @@ button#archiveCertificateBtn {
 
 .navbar .divider-vertical {
     margin: 0;
+}
+
+.nav-tabs.nav-stacked {
+    outline: none;
 }
 
 .navbar .nav {
