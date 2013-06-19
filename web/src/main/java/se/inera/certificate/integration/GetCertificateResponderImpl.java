@@ -18,18 +18,19 @@
  */
 package se.inera.certificate.integration;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.List;
+
 import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
@@ -41,6 +42,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 /**
  * @author andreaskaltenbach
@@ -83,10 +85,21 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", certificate.getType())));
         } else {
             Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
-            certificateType.getAny().add(LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande));
+
+            // TODO - this is FK7263-specific and has to be done by the FK7263 module
+            RegisterMedicalCertificateType registerMedicalCertificateType = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
+            certificateType.getAny().add(wrapJaxb(registerMedicalCertificateType));
+
             response.setCertificate(certificateType);
             response.setResult(okResult());
         }
+    }
+
+    private JAXBElement<?> wrapJaxb(RegisterMedicalCertificateType ws) {
+        JAXBElement<?> jaxbElement = new JAXBElement(
+                new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),
+                RegisterMedicalCertificateType.class, ws);
+        return jaxbElement;
     }
 
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
