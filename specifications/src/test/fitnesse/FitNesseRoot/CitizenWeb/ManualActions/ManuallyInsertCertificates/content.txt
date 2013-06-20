@@ -1,4 +1,18 @@
+!3 Givet följande samtycken:
 
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|ja|
+|19121212-9999|ja|
+
+!3 och följande intyg:
+
+|Intyg|
+|personnr|datum|typ|id|
+|19121212-1212|2013-04-01|fk7263|intyg-1|
+|19121212-1212|2013-04-02|fk7263|intyg-2|
+|19121212-1212|2013-04-04|RLI|rli-intyg-3|
+|19121212-1212|2013-04-05|RLI|rli-intyg-4|
 
 |Ratta intyg|
 |personnummer|intyg|svar?|

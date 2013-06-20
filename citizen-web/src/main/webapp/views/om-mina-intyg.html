@@ -31,7 +31,7 @@
     <div id="revoke-consent-confirmation-dialog" modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts" role="alertdialog" aria-hidden="{{!shouldBeOpen}}">
       <div class="modal-header">
         <button class="close" ng-click="closeConfirmDialog(false)" aria-label="Stäng">×</button>
-        <h3 ng-focus="dialogfocus" tabindex="-1"><message key="about.revokemodal.header"></message></h3>
+        <h3 ng-focus="dialogfocus" tabindex="-1" aria-label="Dialog start"><message key="about.revokemodal.header"></message></h3>
       </div>
       <div class="modal-body">
         <p><message key="about.revokemodal.text"></message></p>
@@ -40,6 +40,7 @@
         <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)"><message key="common.ok"></message></button>
         <button class="btn btn-link" ng-click="closeConfirmDialog(false)"><message key="common.cancel"></message></button>
       </div>
+      <span id="dialogend" tabindex="0">Dialog slut</span>
     </div>
 
   </div>
