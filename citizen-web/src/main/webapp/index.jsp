@@ -42,53 +42,43 @@
 </head>
 <body ng-app="BaseApp">
 
-  <mvk-top-bar></mvk-top-bar>
+  <mvk-top-bar hide-logout="true"></mvk-top-bar>
 
   <div class="container">
 
     <div id="content-container">
       <div class="content">
 
-        <div id="navigation-container"></div>
+        <div id="navigation-container">
+          <mi-header user-name=""></mi-header>
+        </div>
 
         <div class="row-fluid">
-          <div id="content-body" class="span12" style="padding-top: 25px;">
-            <pre>Detta är en startsida som inte skall finns tillgänglig i en produktionsmiljö!</pre>
-            <h1>Testinloggningar</h1>
+          <div id="content-body" class="span12">
+            <h1>Välkommen till Mina Intyg</h1>
+
+            <p>Här är en publik landningssida för Mina Intyg.</p>
+            <br> <br> 
+            <p>Mer info om tjänstens förträfflighet.... </p>
+            <pre>
+            .
+            .
+            .
+            .
+            
+            </pre>
+            
+            <p> Observera att Inloggad som/Logga ut inte visas på denna sida!</p>
 
             <p>
-              <a href="/web/sso?guid=19121212-1212">19121212-1212</a>
+              Gå till Mina vårdkontakter för att <a href="https://www.minavardkontakter.se">logga in</a> i tjänsten
             </p>
-
-            <p>
-              <a href="/web/sso?guid=19121212-0000">19121212-0000</a>
-            </p>
-
-            <p>
-              <a href="/web/sso?guid=19121212-0001">19121212-0001</a>
-            </p>
-
-            <p>
-              <a href="/web/sso?guid=19121212-0002">19121212-0002</a>
-            </p>
-
-            <p>
-              <a href="/web/sso?guid=19121212-0003">19121212-0003</a>
-            </p>
-
-            <h2>Logga in med annat guid</h2>
-
-            <form id="customguidform" class="navbar-form pull-left">
-              <input id="guid" type="text" class="span6" placeholder="ange guid"> <input type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
-                value="logga in">
-            </form>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
-
   <!--[if lte IE 8]>
     <script>
     window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
@@ -108,6 +98,5 @@
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
-
 </body>
 </html>
