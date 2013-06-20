@@ -33,7 +33,7 @@ var commonMessageResources = {
         
         "common.module.message.sendingcertificate" : "Skickar intyg...",
 
-        "error.pagetitle": "Ett problem har uppstått i tjänsten",
+        "error.pagetitle": "Ett problem har uppstått i tjänsten"
 
     },
     "en" : {
