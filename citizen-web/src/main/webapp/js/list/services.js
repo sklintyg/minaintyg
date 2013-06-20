@@ -7,7 +7,7 @@
  * avoid having to fetch the list every time a controller requests it.
  */
 angular.module('services.listCertService', []);
-angular.module('services.listCertService').factory('listCertService', [ '$http', function($http) {
+angular.module('services.listCertService').factory('listCertService', [ '$http', '$log', function($http, $log) {
 
 
     // cached certificates response
@@ -17,45 +17,45 @@ angular.module('services.listCertService').factory('listCertService', [ '$http',
 
     function _getCertificates(callback) {
         if (cachedList != null) {
-            console.log("returning cached response");
+            $log.debug("returning cached response");
             callback(cachedList);
             return;
         }
         $http.get('/api/certificates').success(function(data) {
-            console.log("populating cache");
+            $log.debug("populating cache");
             cachedList = data;
             callback(cachedList);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
     }
 
     function _archiveCertificate(item, callback) {
-        console.log("Archiving " + item.id);
+        $log.debug("Archiving " + item.id);
         $http.put('/api/certificates/' + item.id + "/archive").success(function(data) {
             callback(data, item);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
 
     }
 
     function _restoreCertificate(item, callback) {
-        console.log("restoring " + item.id);
+        $log.debug("restoring " + item.id);
         $http.put('/api/certificates/' + item.id + "/restore").success(function(data) {
             callback(data, item);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
 
     }
     
     function _sendCertificate(item, callback) {
-        console.log("service: sending " + item.id);
+        $log.debug("service: sending " + item.id);
         $http.put('/api/certificates/' + item.id + "/send").success(function(data) {
             callback(data, item);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
 
     }

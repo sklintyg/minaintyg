@@ -7,13 +7,13 @@
  * 
  */
 angular.module('services.consent', []);
-angular.module('services.consent').factory('consentService', [ '$http', function($http) {
+angular.module('services.consent').factory('consentService', [ '$http', '$log', function($http, $log) {
 
     function _giveConsent(callback) {
         $http.post('/api/certificates/consent/give', {}).success(function(data) {
             callback(data);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
     }
 
@@ -21,7 +21,7 @@ angular.module('services.consent').factory('consentService', [ '$http', function
         $http.post('/api/certificates/consent/revoke', {}).success(function(data) {
             callback(data);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.error("error " + status);
         });
     }
 

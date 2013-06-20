@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', 'listCertService','messageService', function ListCertCtrl($scope, $filter, $location, $window, listCertService,messageService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', '$log', 'listCertService','messageService', function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService,messageService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
 	$scope.messageService = messageService;
@@ -10,16 +10,16 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.currentDisplaySize = 9;
 
     $scope.sendSelected = function(item) {
-        console.log("send " + item.id);
+        $log.debug("send " + item.id);
         listCertService.selectedCertificate = item;
         var path = "/m/" + item.type.toLowerCase() + "/intyg/" + item.id
         $window.location.href = path;
     }
 
     $scope.archiveSelected = function(item) {
-        console.log("archive " + item.id);
+        $log.debug("archive " + item.id);
         listCertService.archiveCertificate(item, function(fromServer, oldItem) {
-            console.log("statusUpdate callback:" + fromServer);
+            $log.debug("statusUpdate callback:" + fromServer);
             // Better way to update the object?
             oldItem.archived = fromServer.archived;
             oldItem.status = fromServer.status;
@@ -38,19 +38,19 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.pagefocus = true;
 } ]);
 
-listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertService', function ListCertCtrl($scope, $location, listCertService) {
+listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'listCertService', function ListCertCtrl($scope, $location, $log, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
     $scope.initialDisplaySize = 9;
     $scope.currentDisplaySize = 9;
 
     $scope.restoreCert = function(certId) {
-        console.log("Restore requested for cert:" + certId);
+        $log.debug("Restore requested for cert:" + certId);
         for ( var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
 
                 listCertService.restoreCertificate($scope.certificates[i], function(fromServer, oldItem) {
-                    console.log("(restore) statusUpdate callback:" + fromServer);
+                    $log.debug("(restore) statusUpdate callback:" + fromServer);
                     // Better way to update the object?
                     oldItem.archived = fromServer.archived;
                     oldItem.status = fromServer.status;
@@ -73,7 +73,7 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', 'listCertSer
 } ]);
 
 // Consent Controller
-listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consentService', 'messageService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, messageService, $window) {
+listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', '$log', 'consentService', 'messageService', '$window', function ConsentCtrl($scope, $location, $filter, $log, consentService, messageService, $window) {
 
     // Hold left side navigation state
     $scope.visibility = {
@@ -114,16 +114,16 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', 'consent
     
     $scope.closeConfirmDialog = function(confirm) {
         $scope.shouldBeOpen = false;
-        console.log("closeConfirmDialog " + confirm);
+        $log.debug("closeConfirmDialog " + confirm);
         if (confirm) {
-            console.log("revoking consent..");
+            $log.debug("revoking consent..");
             revokeConsent();
         }
     };
 
     function revokeConsent() {
         consentService.revokeConsent(function(data) {
-            console.log("revokeConsent callback:" + data);
+            $log.debug("revokeConsent callback:" + data);
             if (data.result) {
                 $window.location.href = "/web/start";
             } else {

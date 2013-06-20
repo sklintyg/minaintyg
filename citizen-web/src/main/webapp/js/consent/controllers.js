@@ -5,7 +5,6 @@ consentApp.controller('ConsentCtrl', [ '$scope', '$location', '$filter', 'consen
 
     $scope.giveConsent = function() {
         consentService.giveConsent(function(data) {
-            console.log("giveConsent callback:" + data);
             // If ok, go to consent-given
             if (data.result) {
                 $location.path("/samtycke-givet");
