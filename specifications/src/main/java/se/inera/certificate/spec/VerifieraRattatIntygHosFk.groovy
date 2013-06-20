@@ -1,11 +1,10 @@
 package se.inera.certificate.spec
-
 import groovyx.net.http.RESTClient
-import groovyx.net.http.HttpResponseDecorator.HeadersDecorator;
 import se.inera.certificate.spec.util.RestClientFixture
+
 import static groovyx.net.http.ContentType.JSON
 
-public class VerifieraMakuleratIntygHosFk extends RestClientFixture {
+public class VerifieraRattatIntygHosFk extends RestClientFixture {
 
     String id
     def response
@@ -20,7 +19,7 @@ public class VerifieraMakuleratIntygHosFk extends RestClientFixture {
     }
 
     
-    public String makulerat() {
+    public String rattat() {
         def row = response.data[id]
         if (row != null) {
             return row['Makulerad']

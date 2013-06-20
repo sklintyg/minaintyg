@@ -1,28 +1,26 @@
 package se.inera.certificate.integration.stub;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-
-import java.io.StringWriter;
-import java.util.Map;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import java.io.StringWriter;
+import java.util.Map;
 
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
+import com.google.common.base.Throwables;
+import com.google.common.collect.Maps;
 import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-
-import com.google.common.base.Throwables;
-import com.google.common.collect.Maps;
 
 /**
  * @author par.wenaker
@@ -65,6 +63,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
             response.setResult(failResult("Unable to marshal certificate information"));
             return response;
         }
+        response.setResult(okResult());
         return response;
     }
 

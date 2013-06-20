@@ -1,0 +1,53 @@
+!3 Givet att samtycke finns och intyget finns registrerat
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|ja|
+
+|Registrera fk7263 intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+!3 Så ska intyget vara tillgänglig i intygstjänsten
+
+|Hamta intyg|
+|personnummer|intyg|svar?|status?|
+|19121212-1212|intyg-1|ok|[RECEIVED]|
+
+!3 Efter att skicka intyget till Försäkringskassan ska intyget finnas hos FK och får status SENT i intygstjänsten
+
+|Skicka Intyg Till Fk|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+|Verifiera Intyg Hos Fk|
+|id|status?|
+|intyg-1|skickat|
+
+|Hamta intyg|
+|personnummer|intyg|svar?|status?|
+|19121212-1212|intyg-1|ok|[SENT, RECEIVED]|
+
+!3 Ett rättat intyg ska informera Försäkringskassan. Intyget i intygstjänsten ska inte vara åtkomligt längre.
+
+|Ratta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|ok|
+
+|Verifiera Rattat Intyg Hos Fk|
+|id|rattat?|
+|intyg-1|JA|
+
+|Hamta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' has been revoked|
+
+!3 Rensa bort test-intyg och samtycket
+
+|ta bort Intyg|
+|id|
+|intyg-1|
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|nej|
