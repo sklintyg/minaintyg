@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.web.service;
 
+import iso.v21090.dt.v1.II;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,17 +31,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
+import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -51,6 +64,67 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private SetCertificateStatusResponderInterface statusService;
+
+    @Autowired
+    private SendMedicalCertificateResponderInterface sendService;
+
+    /**
+     * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
+     * interface for this type of sendCertificate that is initiated by the citizen from MI)
+     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target) {
+        LOG.debug("sendCertificate {} to {}", id, target);
+        SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
+
+        SendType sendType = new SendType();
+        VardAdresseringsType vardAdresseringsType = new VardAdresseringsType();
+        HosPersonalType hosPersonal = new HosPersonalType();
+
+        // Enhet
+        EnhetType enhet = new EnhetType();
+        enhet.setEnhetsnamn("MI");
+        II enhetsId = new II();
+        enhetsId.setExtension("MI");
+        enhet.setEnhetsId(enhetsId);
+        VardgivareType vardGivare = new VardgivareType();
+        II vardGivarId = new II();
+        vardGivarId.setExtension("MI");
+        vardGivare.setVardgivareId(vardGivarId);
+        vardGivare.setVardgivarnamn("MI");
+        enhet.setVardgivare(vardGivare);
+        hosPersonal.setEnhet(enhet);
+        hosPersonal.setFullstandigtNamn("MI");
+        II personalId = new II();
+        personalId.setExtension("MI");
+        hosPersonal.setPersonalId(personalId);
+
+        vardAdresseringsType.setHosPersonal(hosPersonal);
+
+        sendType.setAdressVard(vardAdresseringsType);
+        sendType.setAvsantTidpunkt(new LocalDateTime());
+        sendType.setVardReferensId("MI");
+
+        // Lakarutlatande
+        LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
+        lakarutlatande.setLakarutlatandeId(id);
+        lakarutlatande.setSigneringsTidpunkt(new LocalDateTime());
+        PatientType patient = new PatientType();
+        II patientIdHolder = new II();
+        patientIdHolder.setExtension(civicRegistrationNumber);
+        patient.setPersonId(patientIdHolder);
+        lakarutlatande.setPatient(patient);
+
+        sendType.setLakarutlatande(lakarutlatande);
+        req.setSend(sendType);
+        final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(null, req);
+        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+            return new ModuleAPIResponse("sent", "");
+        } else {
+            return new ModuleAPIResponse("error", "");
+        }
+    }
 
     @Override
     public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
