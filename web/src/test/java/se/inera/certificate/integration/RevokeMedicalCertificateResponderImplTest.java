@@ -33,7 +33,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateres
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestion.v1.rivtabp20.SendMedicalCertificateQuestionResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1.SendMedicalCertificateQuestionType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,10 +42,6 @@ public class RevokeMedicalCertificateResponderImplTest {
     private static final String PERSONNUMMER = "19121212-1212";
 
     private static final AttributedURIType ADDRESS = new AttributedURIType();
-    private static final String VARD_ID = "vardId";
-    private static final LocalDateTime AVSANT_TIDPUNKT = new LocalDateTime();
-    private static final LocalDateTime SIGNERINGS_TIDPUNKT = new LocalDateTime();
-    private static final HosPersonalType HOS_PERSONAL = new HosPersonalType();
 
     @Mock
     private CertificateService certificateService;
@@ -136,8 +131,8 @@ public class RevokeMedicalCertificateResponderImplTest {
 
         verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
-        assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());
-        assertEquals("No certificate 'intygs-id-1234567890' found to revoke for patient '19121212-1212'.", response.getResult().getInfoText());
+        assertEquals(ResultCodeEnum.ERROR, response.getResult().getResultCode());
+        assertEquals("No certificate 'intygs-id-1234567890' found to revoke for patient '19121212-1212'.", response.getResult().getErrorText());
     }
 
     @Test

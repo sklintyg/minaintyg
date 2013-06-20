@@ -1,5 +1,7 @@
 package se.inera.certificate.integration;
 
+import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
@@ -60,7 +62,7 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
         // return with INFO response if certificate to be revoked does not exist
         if (certificate == null) {
             LOG.info("Tried to revoke certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' but certificate does not exist");
-            response.setResult(infoResult("No certificate '" + certificateId + "' found to revoke for patient '" + civicRegistrationNumber + "'."));
+            response.setResult(failResult("No certificate '" + certificateId + "' found to revoke for patient '" + civicRegistrationNumber + "'."));
             return response;
         }
 

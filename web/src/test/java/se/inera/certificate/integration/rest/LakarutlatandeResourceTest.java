@@ -67,7 +67,7 @@ public class LakarutlatandeResourceTest {
     }
 
     @InjectMocks
-    LakarutlatandeResource resource = new LakarutlatandeResource();
+    private LakarutlatandeResource resource = new LakarutlatandeResource();
 
     @Test
     public void testGetCertificate() throws IOException {

@@ -18,11 +18,18 @@
  */
 package se.inera.certificate.service;
 
+import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.model.Certificate;
 
 /**
  * @author rogerlindsjo
  */
 public interface CertificateSenderService {
-    void sendCertificate(Certificate certificate, String target);
+    /**
+     * Sends the given certificate to the destined target.
+     * @param certificate the certificate
+     * @param target the target identifier
+     * @throws se.inera.certificate.exception.ExternalWebServiceCallFailedException thrown if the web service call does not succeed
+     */
+    void sendCertificate(Certificate certificate, String target) throws ExternalWebServiceCallFailedException;
 }

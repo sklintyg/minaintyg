@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,17 +18,19 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.dao.CertificateDao;
+import se.inera.certificate.exception.CertificateRevokedException;
+import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
@@ -37,8 +38,11 @@ import se.inera.certificate.service.ConsentService;
 /**
  * @author andreaskaltenbach
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith( MockitoJUnitRunner.class )
 public class CertificateServiceImplTest {
+
+    private static final String PERSONNUMMER = "<civicRegistrationNumber>";
+    private static final String CERTIFICATE_ID = "<certificate-id>";
 
     @Mock
     private CertificateDao certificateDao = mock(CertificateDao.class);
@@ -60,18 +64,18 @@ public class CertificateServiceImplTest {
         Certificate certificate = createCertificate();
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        Certificate found = certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         assertTrue(found.getDeleted());
 
-        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        verify(certificateDao).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
     }
 
     private Certificate createCertificate() {
-        Certificate certificate = new Certificate("<certificateId>", "document");
-        certificate.setCivicRegistrationNumber("<civicRegistrationNumber>");
+        Certificate certificate = new Certificate(CERTIFICATE_ID, "document");
+        certificate.setCivicRegistrationNumber(PERSONNUMMER);
         return certificate;
     }
 
@@ -81,12 +85,12 @@ public class CertificateServiceImplTest {
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        Certificate found = certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID);
         assertFalse(found.getDeleted());
 
-        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        verify(certificateDao).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
     }
 
     @Test
@@ -95,12 +99,12 @@ public class CertificateServiceImplTest {
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.DELETED, new LocalDateTime(2)));
         certificate.getStates().add(new CertificateStateHistoryEntry("", CertificateState.RESTORED, new LocalDateTime(1)));
         when(consentService.isConsent(anyString())).thenReturn(Boolean.TRUE);
-        when(certificateDao.getCertificate("<civicRegistrationNumber>", "<certificateId>")).thenReturn(certificate);
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
 
-        Certificate found = certificateService.getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        Certificate found = certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID);
         assertTrue(found.getDeleted());
 
-        verify(certificateDao).getCertificate("<civicRegistrationNumber>", "<certificateId>");
+        verify(certificateDao).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
     }
 
     private Lakarutlatande lakarutlatande() throws IOException {
@@ -151,20 +155,35 @@ public class CertificateServiceImplTest {
 
     @Test
     public void sendCertificateCallsSenderAndSetsStatus() throws IOException {
-        Lakarutlatande lakarutlatande = lakarutlatande();
-        String personnummer = lakarutlatande.getPatient().getId();
-        String utlatandeid = lakarutlatande.getId();
 
-        Certificate certificate = certificateService.storeCertificate(lakarutlatande);
-        certificate.setCivicRegistrationNumber("<civicRegistrationNumber>");
-        when(certificateDao.getCertificate(personnummer, utlatandeid)).thenReturn(certificate);
-        ArgumentCaptor<Certificate> certificateCaptor = ArgumentCaptor.forClass(Certificate.class);
+        Certificate certificate = new CertificateBuilder(CERTIFICATE_ID)
+                .civicRegistrationNumber(PERSONNUMMER)
+                .build();
 
-        certificateService.sendCertificate(personnummer, utlatandeid, "FK");
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
 
-        verify(certificateDao).getCertificate(personnummer,utlatandeid);
-        verify(certificateDao).updateStatus(eq(utlatandeid), eq(personnummer), eq(CertificateState.SENT), eq("FK"), any(LocalDateTime.class));
-        verify(certificateSender).sendCertificate(certificateCaptor.capture(), eq("FK"));
-        assertEquals(certificate.getId(), certificateCaptor.getValue().getId());
+        certificateService.sendCertificate(PERSONNUMMER, CERTIFICATE_ID, "fk");
+
+        verify(certificateDao).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
+        verify(certificateDao).updateStatus(CERTIFICATE_ID, PERSONNUMMER, CertificateState.SENT, "fk", null);
+        verify(certificateSender).sendCertificate(certificate, "fk");
+    }
+
+    @Test( expected = InvalidCertificateException.class )
+    public void testSendCertificateWitUnknownCertificate() {
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(null);
+
+        certificateService.sendCertificate(PERSONNUMMER, CERTIFICATE_ID, "fk");
+    }
+
+    @Test ( expected = CertificateRevokedException.class )
+    public void testSendRevokedCertificate() {
+        Certificate revokedCertificate = new CertificateBuilder(CERTIFICATE_ID)
+                .state(CertificateState.CANCELLED, null)
+                .build();
+
+        when(certificateDao.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(revokedCertificate);
+
+        certificateService.sendCertificate(PERSONNUMMER, CERTIFICATE_ID, "fk");
     }
 }

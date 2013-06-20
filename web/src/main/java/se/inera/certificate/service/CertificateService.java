@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import se.inera.certificate.exception.CertificateRevokedException;
+import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
@@ -58,7 +60,12 @@ public interface CertificateService {
 
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 
-    void sendCertificate(String civicRegistrationNumber, String certificateId, String target);
-    
+    /**
+     * Sends the certificate to the destined target.
+     * @throws InvalidCertificateException if the certificate does not exist
+     * @throws CertificateRevokedException if the certificate has been revoked
+     */
+    void sendCertificate(String civicRegistrationNumber, String certificateId, String target) throws InvalidCertificateException, CertificateRevokedException;
+
     Lakarutlatande getLakarutlatande(Certificate certificate);
 }

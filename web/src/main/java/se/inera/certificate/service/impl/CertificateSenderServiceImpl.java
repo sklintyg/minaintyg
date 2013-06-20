@@ -22,13 +22,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
 
 /**
  * @author andreaskaltenbach
@@ -42,15 +46,18 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
     @Autowired
     private CertificateService certificateService;
 
-    private String logicalAddress = "logicaladdress";
-
+    @Override
     public void sendCertificate(Certificate certificate, String target) {
         if (certificate.getType().equalsIgnoreCase("fk7263")) {
-            AttributedURIType address = new AttributedURIType();
-            address.setValue(logicalAddress);
+
             Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
             RegisterMedicalCertificateType jaxbObject = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
-            registerMedicalCertificateResponder.registerMedicalCertificate(address , jaxbObject);
+
+            RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, jaxbObject);
+            if (response.getResult().getResultCode() != OK) {
+                throw new ExternalWebServiceCallFailedException(response.getResult());
+            }
+
         } else {
             throw new IllegalArgumentException("Can not send certificate of type " + certificate.getType() + " to " + target);
         }

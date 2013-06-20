@@ -1,87 +1,55 @@
 package se.inera.certificate.integration;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
 import iso.v21090.dt.v1.II;
-
-import java.lang.reflect.Field;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.w3.wsaddressing10.AttributedURIType;
-
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.service.CertificateService;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-@RunWith(MockitoJUnitRunner.class)
+@RunWith( MockitoJUnitRunner.class )
 public class SendMedicalCertificateResponderImplTest {
+
+    private static final String CERTIFICATE_ID = "Intygs-id-1234567890";
+    private static final String PERSONNUMMER = "19121212-1212";
 
     @Mock
     private CertificateService certificateService = mock(CertificateService.class);
 
-    @Mock
-    private Certificate certificate = mock(Certificate.class);
-
-    @Mock
-    private RegisterMedicalCertificateResponderInterface registerMedicalCertificateResponderInterface = mock(RegisterMedicalCertificateResponderInterface.class);
-
-    private ObjectMapper objectMapper = new CustomObjectMapper();
-    
     @InjectMocks
     private SendMedicalCertificateResponderInterface responder = new SendMedicalCertificateResponderImpl();
 
-    @Before
-    public void before() {
-        // Force injection of objectMapper
-        for (Field field: responder.getClass().getDeclaredFields()) {
-            try {
-                if (field.getAnnotation(Autowired.class) != null && field.getType().isAssignableFrom(objectMapper.getClass())) {
-                    field.setAccessible(true);
-                        field.set(responder, objectMapper);
-                }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
     @Test
-    public void testGet() throws Exception {
-        SendMedicalCertificateRequestType parameters = new SendMedicalCertificateRequestType();
-        parameters.setSend(new SendType());
-        parameters.getSend().setLakarutlatande(new LakarutlatandeEnkelType());
-        parameters.getSend().getLakarutlatande().setLakarutlatandeId("Intygs-id-1234567890");
-        parameters.getSend().getLakarutlatande().setPatient(new PatientType());
-        parameters.getSend().getLakarutlatande().getPatient().setPersonId(new II());
-        parameters.getSend().getLakarutlatande().getPatient().getPersonId().setExtension("19121212-1212");
+    public void testSend() {
+        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(new CertificateBuilder(CERTIFICATE_ID).build());
+        SendMedicalCertificateResponseType response = responder.sendMedicalCertificate(null, createRequest());
 
-        when(certificateService.getCertificate("19121212-1212", "Intygs-id-1234567890")).thenReturn(certificate);
-        when(certificate.getType()).thenReturn("fk7263");
-
-        String document = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("lakarutlatande/maximalt-fk7263.json"));
-        when(certificate.getDocument()).thenReturn(document);
-
-        AttributedURIType address = new AttributedURIType();
-        address.setValue("EnAdress");
-        responder.sendMedicalCertificate(address, parameters);
-
-        verify(certificateService).sendCertificate("19121212-1212", "Intygs-id-1234567890", "FK");
+        assertEquals(OK, response.getResult().getResultCode());
+        verify(certificateService).sendCertificate(PERSONNUMMER, CERTIFICATE_ID, "FK");
     }
 
+    private SendMedicalCertificateRequestType createRequest() {
+        SendMedicalCertificateRequestType request = new SendMedicalCertificateRequestType();
+        request.setSend(new SendType());
+        request.getSend().setLakarutlatande(new LakarutlatandeEnkelType());
+        request.getSend().getLakarutlatande().setLakarutlatandeId(CERTIFICATE_ID);
+        request.getSend().getLakarutlatande().setPatient(new PatientType());
+        request.getSend().getLakarutlatande().getPatient().setPersonId(new II());
+        request.getSend().getLakarutlatande().getPatient().getPersonId().setExtension(PERSONNUMMER);
+        return request;
+    }
 }
