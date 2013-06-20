@@ -24,10 +24,6 @@
 |personnummer|intyg|svar?|
 |19121212-1212|intyg-1|ok|
 
-|Hamta intyg|
-|personnummer|intyg|svar?|status?|
-|19121212-1212|intyg-1|ok|[CANCELLED, RECEIVED]|
-
 !3 Intygstjänsten tillåter ej att rätta intyget en gång till
 
 |Ratta intyg|
@@ -38,12 +34,12 @@
 
 |Skicka intyg till Fk|
 |personnummer|intyg|svar?|
-|19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' is already revoked.|
+|19121212-1212|intyg-1|[ERROR] - Certificate 'intyg-1' has been revoked.|
 
 !3 Intygstjänsten tillåter ej att hämta ett rättat intyg
 |Hamta intyg|
-|personnummer|intyg|svar?|status?|
-|19121212-1212|intyg-1|ok|[CANCELLED, RECEIVED]|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' has been revoked|
 
 
 !3 Rensa bort test-intyg
