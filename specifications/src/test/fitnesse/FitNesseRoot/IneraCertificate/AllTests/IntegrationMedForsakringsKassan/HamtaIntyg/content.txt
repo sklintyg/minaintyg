@@ -1,1 +1,6 @@
-Att göra.
+|Hamta intyg|
+|personnummer|intyg|svar?|
+|010101-0101|intyg-1|[ERROR] - Missing consent for patient 010101-0101|
+|121212-1212|intyg-1|ok|
+|121212-1212|intyg-6|[ERROR] - There is no certificate 'intyg-6' for user '020202-0202'.|
+|121212-1212|intyg-7|[ERROR] - Unknown certificate ID: intyg-7|

@@ -123,7 +123,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
 
     private CertificateSupport retrieveCertificateSupportForCertificateType(String certificateType) {
         for (CertificateSupport certificateSupport : supportedCertificates) {
-            if (certificateSupport.certificateType().equals(certificateType)) {
+            if (certificateSupport.certificateType().equalsIgnoreCase(certificateType)) {
                 return certificateSupport;
             }
         }
