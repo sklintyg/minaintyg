@@ -31,7 +31,7 @@
         <td headers="type"><message key="certificatetypes.{{cert.type}}.commonname"/></td>
         <td headers="certperiod">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td headers="issuedby">{{cert.careunitName}}</td>
-        <td headers="latestEvent"><message key="certificates.status.{{cert.status}}" fallback=""/></td>
+        <td headers="latestEvent"><message key="certificates.status.{{cert.status}}" fallback="Ingen"/></td>
         <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
       </tr>
     </tbody>
