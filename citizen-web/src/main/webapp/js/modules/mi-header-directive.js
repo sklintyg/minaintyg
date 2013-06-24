@@ -67,6 +67,9 @@ angular.module('directives.mi').directive("mvkTopBar", ['$rootScope', '$location
     return {
         restrict : "E",
         replace : true,
+        scope : {
+            hideLogout: "@"
+          },
         template :
               '<div id="headerContainer" role="banner">'
             + ' <div id="header">'
@@ -74,7 +77,7 @@ angular.module('directives.mi').directive("mvkTopBar", ['$rootScope', '$location
             + '   <a href="/web/tillbaka-till-mvk" class="backButton" id="backToMvkLink">'
             + '     <h1 class="assistiveText"><message key="mvk.header.linktext"></message></h1>'
             + '   </a>'
-            + '   <div class="functionRow">'
+            + '   <div class="functionRow" ng-hide="hideLogout">'
             + '    <a href="/web/logga-ut"  id="mvklogoutLink"><message key="mvk.header.logouttext"></message></a>'
             + '   </div>'
             + '   <div class="clear"></div>'

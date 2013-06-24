@@ -7,27 +7,27 @@
  * 
  */
 angular.module('services.certService', []);
-angular.module('services.certService').factory('certService', [ '$http', '$rootScope', function(http, rootScope) {
+angular.module('services.certService').factory('certService', [ '$http', '$rootScope','$log', function(http, rootScope, $log) {
 
     var _selectedCertificate = null;
 
     function _getCertificate(id, callback) {
         http.get(rootScope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + id).success(function(data) {
-            console.log("got certificate data for id " + id);
+            $log.debug("got certificate data for id " + id);
             callback(data);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.debug("error " + status);
             callback(null);
         });
     }
 
     function _sendCertificate(id, target, callback) {
-        console.log("send certificate " + id + " to " + target);
+        $log.debug("send certificate " + id + " to " + target);
         http.put(rootScope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + id + "/send/" + target).success(function(data) {
 
             callback(data);
         }).error(function(data, status, headers, config) {
-            console.log("error " + status);
+            $log.debug("error " + status);
             callback(null);
         });
     }
