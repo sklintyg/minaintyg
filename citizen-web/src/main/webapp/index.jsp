@@ -53,27 +53,32 @@
           <mi-header user-name=""></mi-header>
         </div>
 
-        <div class="row-fluid">
-          <div id="content-body" class="span12">
-            <h1>Välkommen till Mina Intyg</h1>
+        <div id="content-body" class="row-fluid">
+          <div class="span7">
+  						<h1>Hej! Välkommen till Mina intyg.</h1>
+  						<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg via internet.</p>
+  						<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Hanteringen sköter du via ditt användarkonto och tjänsten är tillgänglig dygnet runt.</p>
+  						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att Mina intyg får hantera dina personuppgifter. Därefter kan du börja använda tjänsten omedelbart. Du kan bara använda tjänsten för dig själv. Barn och andra anhöriga måste ha egna användarkonton.</p>
+  						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten.</p>
 
-            <p>Här är en publik landningssida för Mina Intyg.</p>
-            <br> <br> 
-            <p>Mer info om tjänstens förträfflighet.... </p>
-            <pre>
-            .
-            .
-            .
-            .
-            
-            </pre>
-            
-            <p> Observera att Inloggad som/Logga ut inte visas på denna sida!</p>
+  						<h2>Bakgrund</h2>
+  						<p>Under 2011 infördes tjänsten läkarintyg i Sverige. Med tjänsten kan
+  							läkarintyg skickas elektroniskt från vården till Försäkringskassan. Mina
+  							intyg är en vidareutveckling av tjänsten som gör det möjligt för invånare
+  							att ska kunna hantera sina läkarintyg och få inflytande över vilken
+  							mottagare som ska få tillgång till läkarintyget och när. I dagsläget går det
+  							att skicka läkarintyg vidare till Försäkringskassan, men tjänsten förbättras
+  							hela tiden för att göra det möjligt att skicka till andra mottagare som
+  							exempelvis till arbetsgivare och försäkringsbolag.</p>
 
-            <p>
-              Gå till Mina vårdkontakter för att <a href="https://www.minavardkontakter.se">logga in</a> i tjänsten
-            </p>
-          </div>
+              <p class="btn-row-desc">Observera att inloggningen sker hos Mina vårdkontakter.</p>
+  						<div class="btn-row">
+  							<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
+  						</div>
+  					</div>
+  					<div class="span5">
+  						<img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
+  					</div>
         </div>
 
       </div>
