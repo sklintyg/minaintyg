@@ -28,13 +28,16 @@
                     <img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
                     <div class="row-fluid">
                       <div class="span8">
-                        <h2><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></h2>
+                        <h2>
+                          <a ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> <message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></a>
+                          <span ng-show="cert.cancelled"><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message> (rättat)</span>
+                        </h2>
                       </div>
                       <div class="span3 issue">
                         <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="span1 archive">
-                        <a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
+                        <a id="archiveCertificateBtn-{{cert.id}}" popover-trigger="mouseenter" popover="Flytta intyget till Arkiverade intyg" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
                       </div>
                     </div>
                   </div>

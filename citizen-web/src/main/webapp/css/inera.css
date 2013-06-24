@@ -527,12 +527,6 @@ div.statuslist {
     padding-top: 3px;
 }
 
-.popover-inner {
-	width: 350px;
-	background-color: #e6e7e5;
-	padding: 1px;
-}
-
 #status {
 	float: right;
 	color: #ffffff;

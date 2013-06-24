@@ -55,7 +55,6 @@
 }
 
 .cert-titlebar {
-	color: #fff;
 	background-color: #00687D;
 	-webkit-border-radius:8px 8px 0 0;
 	-moz-border-radius:8px 8px 0 0;
@@ -82,8 +81,12 @@
 }
 
 .cert-titlebar h2 {
-	color: #fff;
+	/*color: #fff;*/
 	padding: 10px 0 5px 40px;
+}
+
+.cert-titlebar h2 > a {
+    color: #fff;
 }
 
 .cert-titlebar span.cert-titlebar-type {
@@ -92,6 +95,7 @@
 }
 
 .issue {
+    color: #fff;
     padding: 12px 0 10px 0;
 }
 
@@ -100,6 +104,11 @@
 .archive {
 	border-left: 1px solid #fff;
 	display: block;
+}
+
+.archive .popover-inner {
+    width: 150px;
+    text-align: center;
 }
 
 .archive a {

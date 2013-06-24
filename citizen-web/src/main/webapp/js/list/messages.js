@@ -7,7 +7,7 @@ var minaIntygResources = {
         "label.certificatesloading" : "Dina intyg laddas. Vänligen vänta...",
         "label.archivedcertificatesloading" : "Arkiverade intyg laddas. Vänligen vänta... ",
         "button.archive" : "Arkivera",
-        "button.alt.archive" : "Arkivera intyg",
+        "button.alt.archive" : "Flytta intyget till Arkiverade intyg",
         "button.send" : "Skicka",
         "button.show" : "Visa intyget",
         
