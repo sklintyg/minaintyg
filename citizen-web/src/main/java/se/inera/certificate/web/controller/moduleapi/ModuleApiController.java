@@ -32,9 +32,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.api.ModuleAPIRestReponse;
+import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.IneraCertificateRestApi;
 import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
 /**
@@ -60,6 +61,12 @@ public class ModuleApiController {
      */
     @Autowired
     private CitizenService citizenService;
+
+    /**
+     * Intygstjanstens WS endpoint service.
+     */
+    @Autowired
+    private CertificateService certificateService;
 
     /**
      * Return the certificate identified by the given id as JSON.
@@ -88,7 +95,7 @@ public class ModuleApiController {
      *            - the globally unique id of a certificate.
      * @param target
      *            - id of target system that should receive the certificate.
-     * @return The certificate in JSON format
+     * @return The response of the send operation
      */
     @PUT
     @Path("/{id}/send/{target}")
@@ -96,15 +103,8 @@ public class ModuleApiController {
     public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
-        Response response = certificateRestService.sendCertificate(citizen.getUsername(), id, target);
-        if (response.getStatus() != OK.getStatusCode()) {
-            LOG.error("Failed to send certificate, returning error result");
-            return Response.ok(new ModuleAPIRestReponse("error", "GENERIC_ERROR")).build();
-        } else {
-            // return json reponse as-is from IT
-            return Response.ok(response.readEntity(String.class)).build();
-
-        }
+        ModuleAPIResponse response = certificateService.sendCertificate(citizen.getUsername(), id, target);
+        return Response.ok(response).build();
     }
 
     /**

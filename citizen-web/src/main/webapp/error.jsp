@@ -49,7 +49,7 @@
 
     <div id="content-container">
       <div class="content">
-        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+        <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header>
         <div id="navigation-container"></div>
 
         <div class="row-fluid">
