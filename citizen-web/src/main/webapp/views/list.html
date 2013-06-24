@@ -31,7 +31,7 @@
                         <h2><message key="certificatetypes.{{cert.type | lowercase}}.commonname"></message></h2>
                       </div>
                       <div class="span3 issue">
-                        <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate}}</span>
+                        <message key="listtable.headers.issued"></message> <span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="span1 archive">
                         <a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
