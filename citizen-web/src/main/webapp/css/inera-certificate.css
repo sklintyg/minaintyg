@@ -139,11 +139,11 @@
 	height: 32px;
 }
 
-section.certificate div.cert {
+.certificate div.cert {
 	position: relative;
 }
 
-section.certificate div.cert div.cert-header {
+.certificate div.cert div.cert-header {
 	padding: 10px 0px 0px 0px;
 	background-color: #ededed;
 	font-weight: bold;
@@ -179,11 +179,11 @@ section.certificate div.cert div.cert-header {
 	padding: 0 0 0 40px;
 }
 
-section.certificate div.cert div.cert-body {
+.certificate div.cert div.cert-body {
     padding-top: 20px;
 }
 
-section.certificate div.cert div.cert-body div.body-row {
+.certificate div.cert div.cert-body div.body-row {
 	margin: 0 0 20px 0;
 	background-color: #ededed;
 	border: 1px solid #d8d8d8;
@@ -212,7 +212,7 @@ section.certificate div.cert div.cert-body div.body-row {
 	padding: 20px 40px;
 }
 
-section.certificate div.cert div.cert-footer {
+.certificate div.cert div.cert-footer {
 	padding: 20px;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
@@ -263,7 +263,7 @@ section.certificate .btn.hide {
 }
 */
 
-section.modifiable-certificate {
+.modifiable-certificate {
 	padding: 10px;
 	border-width: 1px 1px 1px 1px;
 	border-style: solid;
@@ -274,12 +274,12 @@ section.modifiable-certificate {
 	border-radius: 8px 8px 8px 8px;	
 }
 
-section.modifiable-certificate h4 {
+.modifiable-certificate h4 {
 	color: #000;
 	margin-top: 20px;
 }
 
-section.modifiable-certificate div.content-box {
+.modifiable-certificate div.content-box {
 	padding: 5px;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
