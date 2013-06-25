@@ -15,15 +15,16 @@ import se.inera.certificate.model.Ovrigt;
  */
 public class OvrigtSerializer extends StdScalarSerializer<Ovrigt> {
 
-    public OvrigtSerializer() { super(Ovrigt.class); }
+    public OvrigtSerializer() {
+        super(Ovrigt.class);
+    }
 
     @Override
     public void serialize(Ovrigt ovrigt, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 
         if (ovrigt.getData() == null) {
             jsonGenerator.writeRawValue("{}");
-        }
-        else {
+        } else {
             jsonGenerator.writeRawValue(ovrigt.getData());
         }
     }
