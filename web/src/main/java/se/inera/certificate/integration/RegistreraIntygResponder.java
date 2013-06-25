@@ -28,6 +28,10 @@ import java.io.InputStream;
 @SchemaValidation
 public class RegistreraIntygResponder implements RegistreraIntygResponderInterface {
 
+    private static final int OK = 200;
+
+    private static final int BAD_REQUEST = 400;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistreraIntygResponder.class);
 
     @Autowired
@@ -64,7 +68,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         Response response = endpoint.validate(lakarutlatande);
 
         switch (response.getStatus()) {
-            case 400: // BadRequest -> extract validation error message and transform to ValidationException
+            case BAD_REQUEST: // BadRequest -> extract validation error message and transform to ValidationException
                 InputStream inputStream = (InputStream) response.getEntity();
 
                 try {
@@ -74,7 +78,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
                     throw new RuntimeException("Failed to read response for validation of '" + type + "' certificate.", e);
                 }
 
-            case 200:
+            case OK:
                 break;
             default:
                 String errorMessage = "Failed to validate certificate for certificate type '" + type + "'. HTTP status code is " + response.getStatus();
