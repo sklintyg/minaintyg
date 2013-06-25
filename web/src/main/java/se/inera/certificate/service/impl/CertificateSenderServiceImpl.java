@@ -18,9 +18,10 @@
  */
 package se.inera.certificate.service.impl;
 
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
@@ -31,8 +32,6 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
 
 /**
  * @author andreaskaltenbach
