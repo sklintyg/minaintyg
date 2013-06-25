@@ -50,7 +50,7 @@ import com.google.common.base.Predicate;
  * @author andreaskaltenbach
  */
 @Entity
-@Table( name = "CERTIFICATE" )
+@Table(name = "CERTIFICATE")
 @XmlRootElement
 public class Certificate {
 
