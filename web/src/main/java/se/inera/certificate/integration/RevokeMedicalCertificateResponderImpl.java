@@ -1,6 +1,5 @@
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
@@ -15,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import riv.insuranceprocess.healthreporting.medcertqa._1.Amnetyp;
 import riv.insuranceprocess.healthreporting.medcertqa._1.InnehallType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
