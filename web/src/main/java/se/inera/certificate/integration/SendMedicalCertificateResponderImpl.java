@@ -25,7 +25,7 @@ public class SendMedicalCertificateResponderImpl implements SendMedicalCertifica
 
         certificateService.sendCertificate(civicRegistrationNumber, certificateId, "FK");
         response.setResult(ResultOfCallUtil.okResult());
-        
+
         return response;
     }
 }
