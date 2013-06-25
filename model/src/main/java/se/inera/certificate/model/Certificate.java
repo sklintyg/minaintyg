@@ -18,6 +18,12 @@
  */
 package se.inera.certificate.model;
 
+import static com.google.common.collect.Iterables.find;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -30,18 +36,12 @@ import javax.persistence.Lob;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import static com.google.common.collect.Iterables.contains;
-import static com.google.common.collect.Iterables.find;
+import com.google.common.base.Predicate;
 
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
