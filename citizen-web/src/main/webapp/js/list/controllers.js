@@ -6,9 +6,6 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.doneLoading = false;
 	$scope.messageService = messageService;
 
-    $scope.initialDisplaySize = 9;
-    $scope.currentDisplaySize = 9;
-
     $scope.sendSelected = function(item) {
         $log.debug("send " + item.id);
         listCertService.selectedCertificate = item;
@@ -41,8 +38,6 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
 listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'listCertService', function ListCertCtrl($scope, $location, $log, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
-    $scope.initialDisplaySize = 9;
-    $scope.currentDisplaySize = 9;
 
     $scope.restoreCert = function(certId) {
         $log.debug("Restore requested for cert:" + certId);
