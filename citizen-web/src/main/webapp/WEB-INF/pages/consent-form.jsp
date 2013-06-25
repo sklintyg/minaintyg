@@ -31,7 +31,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
 
-<title><spring:message code="application.name" /></title>
+<title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 

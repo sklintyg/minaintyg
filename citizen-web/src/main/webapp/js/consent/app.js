@@ -5,12 +5,15 @@
 var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util' ]).config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/start', {
         templateUrl : '/views/consent/consent-start.html',
-        controller : 'ConsentCtrl'
+        controller : 'ConsentCtrl',
+	    title : 'Ny användare'
     }).when('/samtycke-givet', {
         templateUrl : '/views/consent/consent-given.html',
-        controller : 'ConsentGivenCtrl'
+        controller : 'ConsentGivenCtrl',
+		title : 'Samtycke godkänt'
     }).when('/fel', {
         templateUrl : '/views/error.html',
+		title : 'Fel'
     }).otherwise({
         redirectTo : '/start'
     });
