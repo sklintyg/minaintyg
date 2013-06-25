@@ -23,7 +23,7 @@ public class ModuleRestApiFactory {
     private JacksonJaxbJsonProvider jacksonJsonProvider;
 
     @Autowired
-    @Value("${modules.port}") 
+    @Value("${modules.port}")
     public void setPort(String port) {
         host = "http://localhost:" + port;
     }
