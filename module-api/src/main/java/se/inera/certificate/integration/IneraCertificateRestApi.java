@@ -16,14 +16,14 @@ import javax.ws.rs.core.Response;
 public interface IneraCertificateRestApi {
 
     @GET
-    @Path( "/citizen/{civicRegistrationNumber}/certificate/{id}" )
-    @Produces( "application/pdf" )
-    Response getCertificatePdf(@PathParam( "civicRegistrationNumber" ) String civicRegistrationNumber, @PathParam( "id" ) String certificateId);
+    @Path("/citizen/{civicRegistrationNumber}/certificate/{id}")
+    @Produces("application/pdf")
+    Response getCertificatePdf(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId);
 
     @GET
     @Path("/citizen/{civicRegistrationNumber}/certificate/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response getCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam( "id" ) String certificateId);
+    Response getCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId);
 
     @PUT
     @Path("/citizen/{civicRegistrationNumber}/certificate/{id}/receiver/{target}")
