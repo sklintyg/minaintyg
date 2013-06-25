@@ -132,7 +132,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         case ARBETSLOSHET: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.ARBETSLOSHET); break;
         case FORALDRALEDIGHET: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.FORALDRALEDIGHET); break;
         case NUVARANDE_ARBETE: sysselsattningType.setTypAvSysselsattning(TypAvSysselsattning.NUVARANDE_ARBETE); break;
-        default: throw new IllegalArgumentException("Can not convert " + source);
+        default: throw new IllegalArgumentException("Can not convert 'Sysselsattning' " + source);
         }
         return sysselsattningType;
     }
@@ -161,7 +161,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         case NEDSATT_MED_1_2: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2; break;
         case NEDSATT_MED_1_4: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4; break;
         case NEDSATT_MED_3_4: nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4; break;
-        default: throw new IllegalArgumentException("Can not convert " + source);
+        default: throw new IllegalArgumentException("Can not convert 'Nedsattningsgrad' " + source);
         }
         return nedsattningsgrad;
     }
@@ -182,7 +182,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         case ATERSTALLAS_HELT: prognosangivelse = Prognosangivelse.ATERSTALLAS_HELT; break;
         case DET_GAR_INTE_ATT_BEDOMMA: prognosangivelse = Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA; break;
         case INTE_ATERSTALLAS: prognosangivelse = Prognosangivelse.INTE_ATERSTALLAS; break;
-        default: throw new IllegalArgumentException("Can not convert " + source);
+        default: throw new IllegalArgumentException("Can not convert 'Prognosangivelse' " + source);
         }
         return prognosangivelse;
     }
@@ -202,7 +202,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         switch (source.getVardkontakttyp()) {
         case MIN_TELEFONKONTAKT_MED_PATIENTEN: vardkontaktType.setVardkontakttyp(Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN); break;
         case MIN_UNDERSOKNING_AV_PATIENTEN: vardkontaktType.setVardkontakttyp(Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN); break;
-        default: throw new IllegalArgumentException("Can not convert " + source.getVardkontakttyp());
+        default: throw new IllegalArgumentException("Can not convert 'Vardkontakt' " + source.getVardkontakttyp());
         }
         return vardkontaktType;
     }
@@ -222,7 +222,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         switch (source.getReferenstyp()) {
         case JOURNALUPPGIFTER: referensType.setReferenstyp(Referenstyp.JOURNALUPPGIFTER); break;
         case ANNAT: referensType.setReferenstyp(Referenstyp.ANNAT); break;
-        default: throw new IllegalArgumentException("Can not convert " + source.getReferenstyp());
+        default: throw new IllegalArgumentException("Can not convert 'Referens' " + source.getReferenstyp());
         }
         return referensType;
     }
@@ -256,7 +256,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         case PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD: aktivitet = createAktivitetType(Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD, source.getBeskrivning()); break;
         case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN: aktivitet = createAktivitetType(Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN, source.getBeskrivning()); break;
         default:
-            throw new IllegalArgumentException("Can not convert " + source.getAktivitetskod());
+            throw new IllegalArgumentException("Can not convert 'Aktivitet' " + source.getAktivitetskod());
         }
         return aktivitet;
     }
