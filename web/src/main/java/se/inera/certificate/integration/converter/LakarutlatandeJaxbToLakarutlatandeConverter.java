@@ -98,18 +98,20 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
         case NUVARANDE_ARBETE: return Sysselsattning.NUVARANDE_ARBETE;
         case FORALDRALEDIGHET: return Sysselsattning.FORALDRALEDIGHET;
         case ARBETSLOSHET: return Sysselsattning.ARBETSLOSHET;
+        default:
+            throw new IllegalArgumentException("Can not convert " + source);
         }
-        throw new IllegalArgumentException("Can not convert " + source);
     }
 
     private static Prognosangivelse convert(se.inera.certificate.integration.v1.Prognosangivelse source) {
-        switch(source){
+        switch(source) {
         case ATERSTALLAS_HELT: return Prognosangivelse.ATERSTALLAS_HELT;
         case ATERSTALLAS_DELVIS: return Prognosangivelse.ATERSTALLAS_DELVIS;
         case INTE_ATERSTALLAS: return Prognosangivelse.INTE_ATERSTALLAS;
-        case DET_GAR_INTE_ATT_BEDOMMA: return Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA;        
+        case DET_GAR_INTE_ATT_BEDOMMA: return Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA;
+        default:
+            throw new IllegalArgumentException("Can not convert " + source);
         }
-        throw new IllegalArgumentException("Can not convert " + source);
     }
 
     private static List<ArbetsformagaNedsattning> convertArbetsformaganedsattningar(List<se.inera.certificate.integration.v1.ArbetsformagaNedsattningType> source) {
@@ -129,9 +131,9 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
         for (FunktionsnedsattningType funktionsnedsattningType : source) {
             nedsattningar.add(convert(funktionsnedsattningType));
         }
-        return nedsattningar ;
+        return nedsattningar;
     }
-    
+
     private static Funktionsnedsattning convert(FunktionsnedsattningType source) {
         Funktionsnedsattning funktionsnedsattning = new Funktionsnedsattning();
         funktionsnedsattning.setBeskrivning(source.getBeskrivning());
@@ -297,5 +299,4 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
         vardgivare.setNamn(source.getNamn());
         return vardgivare;
     }
-    
 }

@@ -46,9 +46,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 public final class LakarutlatandeToRegisterMedicalCertificate {
 
     private LakarutlatandeToRegisterMedicalCertificate() {
-        
     }
-    
+
     public static RegisterMedicalCertificateType getJaxbObject(Lakarutlatande lakarutlatande) {
         try {
             RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
@@ -82,7 +81,6 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         for (Funktionsnedsattning nedsattning: source) {
             target.add(toJaxb(nedsattning));
         }
-        
     }
 
     private static FunktionstillstandType toJaxb(Funktionsnedsattning nedsattning) {
@@ -146,7 +144,6 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         for (ArbetsformagaNedsattning nedsattning: source) {
             target.add(toJaxb(nedsattning));
         }
-        
     }
 
     private static ArbetsformagaNedsattningType toJaxb(ArbetsformagaNedsattning source) {
@@ -237,7 +234,6 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         for (Aktivitet aktivitet: source) {
             target.add(toJaxb(aktivitet));
         }
-        
     }
 
     private static boolean isNull(Object o) {
