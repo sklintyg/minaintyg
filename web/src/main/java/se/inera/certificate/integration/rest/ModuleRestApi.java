@@ -23,14 +23,14 @@ public interface ModuleRestApi {
 
 
     @POST
-    @Path( "/valid" )
-    @Consumes( MediaType.APPLICATION_XML )
-    @Produces( MediaType.TEXT_PLAIN )
+    @Path("/valid")
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.TEXT_PLAIN)
     Response validate(Lakarutlatande intyg);
 
     @POST
-    @Path( "/pdf" )
-    @Consumes( MediaType.APPLICATION_JSON )
-    @Produces( "application/pdf" )
+    @Path("/pdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/pdf")
     Response pdf(se.inera.certificate.model.Lakarutlatande intyg);
 }
