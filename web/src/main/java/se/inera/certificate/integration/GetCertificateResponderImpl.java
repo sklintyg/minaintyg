@@ -18,14 +18,16 @@
  */
 package se.inera.certificate.integration;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
+import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.*;
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
@@ -115,7 +118,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
     }
 
     private JAXBElement<?> wrapJaxb(RegisterMedicalCertificateType ws) {
-        JAXBElement<?> jaxbElement = new JAXBElement(
+        JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificateType>(
                 new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),
                 RegisterMedicalCertificateType.class, ws);
         return jaxbElement;
