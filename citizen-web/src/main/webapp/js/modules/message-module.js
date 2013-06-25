@@ -70,7 +70,7 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
 }]).directive("message", ['$rootScope', 'messageService', function ($rootScope, messageService) {
 
     return {
-        restrict: "E",
+        restrict: "EA",
         scope: true,
         replace: true,
         template: "<span ng-bind-html-unsafe='resultValue'></span>",

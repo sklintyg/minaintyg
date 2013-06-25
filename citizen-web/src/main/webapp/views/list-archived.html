@@ -1,38 +1,38 @@
 <div class="row-fluid">
 	<div class="span7">
 		<h1 ng-focus="pagefocus" tabindex="0">
-		  <span id="archivedHeader"><message key="archived.header" /></span>
+		  <span id="archivedHeader" message key="archived.header"></span>
 		</h1>
-	    <message key="archived.description" ></message>
+	    <span message key="archived.description"></span>
 	</div>
 </div>
 
   <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
     <img src="/img/ajax-loader.gif" style="text-align: center;" />
     <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong><message key="label.archivedcertificatesloading" /></strong>
+      <strong><span message key="label.archivedcertificatesloading"></span></strong>
     </p>
   </div>
 
   <table id="certTable" class="table expandable" ng-show="(certificates | archivedfilter).length>0" aria-labelledby="archivedHeader">
     <thead>
       <tr>
-        <th scope="col" id="issued"><message key="listtable.headers.issued" /></th>
-        <th scope="col" id="type"><message key="listtable.headers.type" /></th>
-        <th scope="col" id="certperiod"><message key="listtable.headers.certperiod" /></th>
-        <th scope="col" id="issuedby"><message key="listtable.headers.issuedby" /></th>
-        <th scope="col" id="latestEvent"><message key="listtable.headers.latestEvent" /></th>
+        <th scope="col" id="issued"><span message key="listtable.headers.issued"></span></th>
+        <th scope="col" id="type"><span message key="listtable.headers.type"></span></th>
+        <th scope="col" id="certperiod"><span message key="listtable.headers.certperiod"></span></th>
+        <th scope="col" id="issuedby"><span message key="listtable.headers.issuedby"></span></th>
+        <th scope="col" id="latestEvent"><span message key="listtable.headers.latestEvent"></span></th>
         <th scope="col" id="restore" aria-hidden="true" aria-label="Återställ intyg">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="cert in certificates | archivedfilter" class="{{cert.status}}">
         <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
-        <td headers="type"><message key="certificatetypes.{{cert.type}}.commonname"/></td>
+        <td headers="type"><span message key="certificatetypes.{{cert.type}}.commonname"></span></td>
         <td headers="certperiod">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td headers="issuedby">{{cert.careunitName}}</td>
-        <td headers="latestEvent"><message key="certificates.status.{{cert.status}}" fallback="Ingen"/></td>
-        <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="restoreCert(cert.id)"><message key="label.restore" /></a></td>
+        <td headers="latestEvent"><span message key="certificates.status.{{cert.status}}" fallback="Ingen"></span></td>
+        <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="restoreCert(cert.id)"><span message key="label.restore"></span></a></td>
       </tr>
     </tbody>
   </table>
@@ -40,6 +40,6 @@
     <div class="table-bottom" ng-hide="(certificates | archivedfilter).length<1"></div>
 
     <div id="noCerts" class="alert alert-error" ng-show="doneLoading && (certificates | archivedfilter).length<1">
-      <message key="error.noarchivedcerts" />
+      <span message key="error.noarchivedcerts"></span>
     </div>
   

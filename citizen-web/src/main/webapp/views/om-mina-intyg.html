@@ -1,52 +1,49 @@
 <div id="about-mina-intyg-root" class="span3" aria-hidden="{{shouldBeOpen}}">
-<!--  <h1>
-    <span id="aboutHeader"><message key="about.header" /></span>
-  </h1>-->
   <ul class="nav nav-tabs nav-stacked" role="menu" ng-focus="pagefocus" tabindex="0" aria-labelledby="link-about-omminaintyg">
-    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href role="menuitem" aria-label="Länk Om mina intyg. Laddar information om mina intyg efter denna meny." aria-controls="about-content-omminaintyg" ng-click="navigateTo('omminaintyg')"><message key="about.omminaintyghead"></message><i class="icon-chevron-right"></i></a></li>
-    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href role="menuitem" aria-label="Länk Samtycke. Laddar information om samtycket till att använda mina intyg efter denna meny." aria-controls="about-content-samtycke" ng-click="navigateTo('samtycke')"><message key="about.consentheader"></message><i class="icon-chevron-right"></i></a></li>
-    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href role="menuitem" aria-label="Länk Juridik. Laddar information om det juridiska efter denna meny." aria-controls="about-content-juridik" ng-click="navigateTo('juridik')"><message key="about.juridikhead"></message><i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href role="menuitem" aria-label="Länk Om mina intyg. Laddar information om mina intyg efter denna meny." aria-controls="about-content-omminaintyg" ng-click="navigateTo('omminaintyg')"><span message key="about.omminaintyghead"></span><i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href role="menuitem" aria-label="Länk Samtycke. Laddar information om samtycket till att använda mina intyg efter denna meny." aria-controls="about-content-samtycke" ng-click="navigateTo('samtycke')"><span message key="about.consentheader"></span><i class="icon-chevron-right"></i></a></li>
+    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href role="menuitem" aria-label="Länk Juridik. Laddar information om det juridiska efter denna meny." aria-controls="about-content-juridik" ng-click="navigateTo('juridik')"><span message key="about.juridikhead"></span><i class="icon-chevron-right"></i></a></li>
   </ul>
 </div>
 <div class="span9" aria-hidden="{{shouldBeOpen}}">
   <div id="about-content-omminaintyg" ng-show="visibility.omminaintyg" aria-hidden="{{!visibility.omminaintyg}}" aria-labelledby="link-about-omminaintyg">
-	  <h2 ng-focus="subpagefocus.omminaintyg" tabindex="-1"><message key="about.omminaintyghead"></message></h2>
-	  <message key="about.omminaintygtext"></message>
+      <h2 ng-focus="subpagefocus.omminaintyg" tabindex="-1"><span message key="about.omminaintyghead"></span></h2>
+      <span message key="about.omminaintygtext"></span>
   </div>
 
   <div id="about-content-samtycke" ng-show="visibility.samtycke" aria-hidden="{{!visibility.samtycke}}" aria-labelledby="link-about-samtycke">
-    <h2 ng-focus="subpagefocus.samtycke" tabindex="-1"><message key="about.consentheader"></message></h2>
+    <h2 ng-focus="subpagefocus.samtycke" tabindex="-1"><span message key="about.consentheader"></span></h2>
 
     <div class="alert alert-info">
-      <h3><message key="about.revokeconsentheader"></message></h3>
-      <p><message key="about.revokeconsenttext"></message></p>
+      <h3><span message key="about.revokeconsentheader"></span></h3>
+      <p><span message key="about.revokeconsenttext"></span></p>
       <p>
       <input id="revokeConsentBtn" type="button" ng-click="openConfirmDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
       </p>
     </div>
 
-    <message key="about.consenttext"></message>
+    <span message key="about.consenttext"></span>
 
     <!-- Modal confirm dialog for revoke consent -->
     <div id="revoke-consent-confirmation-dialog" modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts" role="alertdialog" aria-hidden="{{!shouldBeOpen}}">
       <div class="modal-header">
         <button class="close" ng-click="closeConfirmDialog(false)" aria-label="Stäng">×</button>
-        <h3 ng-focus="dialogfocus" tabindex="-1"><message key="about.revokemodal.header"></message></h3>
+        <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="about.revokemodal.header"></span></h3>
       </div>
       <div class="modal-body">
-        <p><message key="about.revokemodal.text"></message></p>
+        <p><span message key="about.revokemodal.text"></span></p>
       </div>
       <div class="modal-footer">
-        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)"><message key="common.ok"></message></button>
-        <button class="btn btn-link" ng-click="closeConfirmDialog(false)"><message key="common.cancel"></message></button>
+        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)"><span message key="common.ok"></span></button>
+        <button class="btn btn-link" ng-click="closeConfirmDialog(false)"><span message key="common.cancel"></span></button>
       </div>
     </div>
 
   </div>
 
   <div id="about-content-juridik" ng-show="visibility.juridik" aria-hidden="{{!visibility.juridik}}" aria-labelledby="link-about-juridik">
-	  <h2 ng-focus="subpagefocus.juridik" tabindex="-1"><message key="about.juridikhead"></message></h2>
-	  <message key="about.juridiktext"></message>
+      <h2 ng-focus="subpagefocus.juridik" tabindex="-1"><span message key="about.juridikhead"></span></h2>
+      <span message key="about.juridiktext"></span>
   </div>
 
 </div>
