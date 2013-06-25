@@ -94,8 +94,7 @@ public class LakarutlatandeValidator {
         // Fält 2 - Medicinskt tillstånd kodsystemnamn - mandatory
         if (medicinsktTillstand != null) {
             if (medicinsktTillstand.getTillstandskod() == null
-                    || medicinsktTillstand.getTillstandskod().getCodeSystemName() == null
-                    || !medicinsktTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(ICD_10)) {
+                    || !ICD_10.equalsIgnoreCase(medicinsktTillstand.getTillstandskod().getCodeSystemName())) {
                 validationErrors.add("Wrong code system name for medicinskt tillstand - tillstandskod (diagnoskod)! Should be " + ICD_10);
             }
         }
