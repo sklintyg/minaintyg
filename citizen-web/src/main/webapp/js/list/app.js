@@ -6,16 +6,20 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
         [ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
             $routeProvider.when('/lista', {
                 templateUrl : '/views/list.html',
-                controller : 'ListCtrl'
+                controller : 'ListCtrl',
+	            title: 'Inkorgen'
             }).when('/arkiverade', {
                 templateUrl : '/views/list-archived.html',
-                controller : 'ListArchivedCtrl'
+                controller : 'ListArchivedCtrl',
+			    title: 'Arkiverade intyg'
             }).when('/omminaintyg', {
                 templateUrl : '/views/om-mina-intyg.html',
-                controller : 'AboutCtrl'
+                controller : 'AboutCtrl',
+			    title: 'Om mina intyg'
             }).when('/hjalp', {
                 templateUrl : '/views/hjalp.html',
-			    controller : 'HelpCtrl'
+			    controller : 'HelpCtrl',
+	            title: 'Hjälp'
             }).otherwise({
                 redirectTo : '/lista'
             });
@@ -24,9 +28,15 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
             
         } ]);
 
-listCertApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+listCertApp.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     messageService.addResources(commonMessageResources);
     messageService.addResources(minaIntygResources);
+
+	// Update page title
+	$rootScope.page_title = 'Titel';
+    $rootScope.$on('$routeChangeSuccess', function() {
+      $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+    });
 } ]);
