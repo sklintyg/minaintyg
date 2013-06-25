@@ -20,7 +20,7 @@
     <div ng-show="doneLoading && (certificates | inboxfilter).length>0">
       <div id="certTable">
         <div ng-repeat="cert in certificates | inboxfilter" class="{{cert.status}}">
-          <section class="certificate">
+          <div class="certificate">
             <div class="row-fluid">
               <div class="span12">
                 <div id="certificate-{{cert.id}}" class="cert">
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-            </section>
+            </div>
           <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
         </div>
       </div>
