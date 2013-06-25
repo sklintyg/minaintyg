@@ -18,9 +18,15 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
     $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
 } ]);
 
-consentApp.run([ '$rootScope','messageService', function($rootScope, messageService) {
+consentApp.run([ '$rootScope','$route','messageService', function($rootScope, $route, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     messageService.addResources(commonMessageResources);
     messageService.addResources(consentAppResources);
+
+	// Update page title
+	$rootScope.page_title = 'Titel';
+    $rootScope.$on('$routeChangeSuccess', function() {
+      $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+    });
 } ]);

@@ -5,6 +5,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.certificates = [];
     $scope.doneLoading = false;
 	$scope.messageService = messageService;
+	$scope.pageTitle = "Inkorgen";
 
     $scope.sendSelected = function(item) {
         $log.debug("send " + item.id);
