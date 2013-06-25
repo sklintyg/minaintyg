@@ -5,6 +5,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     $scope.certificates = [];
     $scope.doneLoading = false;
 	$scope.messageService = messageService;
+	$scope.pageTitle = "Inkorgen";
 
     $scope.initialDisplaySize = 9;
     $scope.currentDisplaySize = 9;
