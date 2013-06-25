@@ -89,6 +89,9 @@
     color: #fff;
 }
 
+.cert-titlebar h2 > span {
+    color: #fff;
+}
 .cert-titlebar span.cert-titlebar-type {
 	font-size: 10px;
 	color: #b3d6da;
