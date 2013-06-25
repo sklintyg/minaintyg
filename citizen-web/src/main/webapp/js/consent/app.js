@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi' ]).config([ '$routeProvider', function($routeProvider) {
+var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util' ]).config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/start', {
         templateUrl : '/views/consent/consent-start.html',
         controller : 'ConsentCtrl'
@@ -14,6 +14,8 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
     }).otherwise({
         redirectTo : '/start'
     });
+    
+    $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
 } ]);
 
 consentApp.run([ '$rootScope','messageService', function($rootScope, messageService) {

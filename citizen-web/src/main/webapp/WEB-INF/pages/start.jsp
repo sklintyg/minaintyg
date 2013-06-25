@@ -97,6 +97,7 @@
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/util-services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
 
 
