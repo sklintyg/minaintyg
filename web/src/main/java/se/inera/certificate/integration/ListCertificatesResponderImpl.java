@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.integration;
 
-import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
@@ -39,7 +38,6 @@ import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
  * @author andreaskaltenbach
  */
 @Transactional
-@SchemaValidation
 public class ListCertificatesResponderImpl implements ListCertificatesResponderInterface {
 
     @Autowired
