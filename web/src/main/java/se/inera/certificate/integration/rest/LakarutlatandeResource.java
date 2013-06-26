@@ -51,16 +51,14 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        Lakarutlatande lakarutlatande;
         try {
-            lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+            Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+            convertStatus(certificate, lakarutlatande);
+            return Response.ok(lakarutlatande).type(MediaType.APPLICATION_JSON).build();
         } catch (IOException e) {
             LOG.warn("Failed to unmarshal certificate '" + certificateId + "'.", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-
-        convertStatus(certificate, lakarutlatande);
-        return Response.ok(lakarutlatande).type(MediaType.APPLICATION_JSON).build();
     }
 
     private static void convertStatus(Certificate source, Lakarutlatande target) {
