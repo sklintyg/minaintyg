@@ -31,6 +31,16 @@ public class SkickaIntyg {
         }
         result
     }
+    
+    public boolean redanSkickatVarningVisas() {
+        def result = false
+        Browser.drive {
+            at(SendCertificateFlowPage)
+            result = page.alreadySentWarningMessage.isDisplayed()
+        }
+        result
+    }
+    
     public void gåTillbakaTillIntyget() {
         Browser.drive {
             assert at(SendCertificateFlowPage)
