@@ -37,6 +37,8 @@ listCertApp.run([ '$rootScope', '$route', 'messageService', function($rootScope,
 	// Update page title
 	$rootScope.page_title = 'Titel';
     $rootScope.$on('$routeChangeSuccess', function() {
-      $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+	  if ($route.current.$$route){
+		  $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+	  }
     });
 } ]);
