@@ -18,9 +18,15 @@
  */
 package se.inera.certificate.integration;
 
+import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.converter.ModelConverter;
 import se.inera.certificate.model.Certificate;
@@ -28,11 +34,6 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
-
-import java.util.List;
-
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 
 /**
  * @author andreaskaltenbach
@@ -57,7 +58,7 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
             response.setResult(okResult());
 
         } catch (MissingConsentException ex) {
-            response.setResult(failResult(String.format("Missing consent for patient %s", parameters.getNationalIdentityNumber())));
+            response.setResult(infoResult("NOCONSENT"));
         }
 
         return response;

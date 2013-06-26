@@ -24,7 +24,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 import java.util.Collections;
@@ -44,7 +44,6 @@ import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 
 /**
  * @author andreaskaltenbach
@@ -89,8 +88,8 @@ public class ListCertificatesResponderImplTest {
         ListCertificatesResponseType response = responder.listCertificates(null, parameters);
 
         assertEquals(0, response.getMeta().size());
-        assertEquals(ERROR, response.getResult().getResultCode());
-        assertEquals(ErrorIdEnum.VALIDATION_ERROR, response.getResult().getErrorId());
+        assertEquals(INFO, response.getResult().getResultCode());
+        assertEquals("NOCONSENT", response.getResult().getInfoText());
     }
 
     private ListCertificatesRequestType createListCertificatesRequest(String civicRegistrationNumber, List<String> types, LocalDate fromDate, LocalDate toDate) {
