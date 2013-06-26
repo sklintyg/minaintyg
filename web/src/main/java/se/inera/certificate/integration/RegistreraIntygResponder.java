@@ -83,7 +83,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
             default:
                 String errorMessage = "Failed to validate certificate for certificate type '" + type + "'. HTTP status code is " + response.getStatus();
                 LOGGER.error(errorMessage);
-                throw new RuntimeException(errorMessage);
+                throw new ValidationException(errorMessage);
         }
     }
 
