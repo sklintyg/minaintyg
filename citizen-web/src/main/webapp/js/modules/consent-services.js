@@ -14,6 +14,8 @@ angular.module('services.consent').factory('consentService', [ '$http', '$log', 
             callback(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
+            //give calling code a chance to handle error 
+            callback(null);
         });
     }
 
@@ -22,6 +24,8 @@ angular.module('services.consent').factory('consentService', [ '$http', '$log', 
             callback(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
+            //give calling code a chance to handle error 
+            callback(null);
         });
     }
 

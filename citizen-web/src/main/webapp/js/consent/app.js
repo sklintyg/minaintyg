@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util' ]).config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util', 'controllers.util' ]).config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/start', {
         templateUrl : '/views/consent/consent-start.html',
         controller : 'ConsentCtrl',
@@ -11,8 +11,9 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
         templateUrl : '/views/consent/consent-given.html',
         controller : 'ConsentGivenCtrl',
 		title : 'Samtycke godkänt'
-    }).when('/fel', {
+    }).when('/fel/:errorCode', {
         templateUrl : '/views/error.html',
+        controller : 'ErrorViewCtrl',
 		title : 'Fel'
     }).otherwise({
         redirectTo : '/start'

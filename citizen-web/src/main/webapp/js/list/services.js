@@ -27,6 +27,8 @@ angular.module('services.listCertService').factory('listCertService', [ '$http',
             callback(cachedList);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
+            //give calling code a chance to handle error 
+            callback(null);
         });
     }
 
@@ -36,6 +38,8 @@ angular.module('services.listCertService').factory('listCertService', [ '$http',
             callback(data, item);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
+            //give calling code a chance to handle error 
+            callback(null);
         });
 
     }
@@ -46,26 +50,17 @@ angular.module('services.listCertService').factory('listCertService', [ '$http',
             callback(data, item);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
+            //give calling code a chance to handle error 
+            callback(null);
         });
 
     }
     
-    function _sendCertificate(item, callback) {
-        $log.debug("service: sending " + item.id);
-        $http.put('/api/certificates/' + item.id + "/send").success(function(data) {
-            callback(data, item);
-        }).error(function(data, status, headers, config) {
-            $log.error("error " + status);
-        });
-
-    }
-
     // Return public API for our service
     return {
         getCertificates : _getCertificates,
         archiveCertificate : _archiveCertificate,
         restoreCertificate : _restoreCertificate,
-        sendCertificate : _sendCertificate,
         selectedCertificate : _selectedCertificate
     }
 } ]);

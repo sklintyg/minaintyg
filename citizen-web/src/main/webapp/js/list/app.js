@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 'services.listCertService', 'services.consent', 'modules.messages', 'directives.mi', 'services.util' ]).config(
+var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 'services.listCertService', 'services.consent', 'modules.messages', 'directives.mi', 'services.util', 'controllers.util' ]).config(
         [ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
             $routeProvider.when('/lista', {
                 templateUrl : '/views/list.html',
@@ -20,6 +20,10 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
                 templateUrl : '/views/hjalp.html',
 			    controller : 'HelpCtrl',
 	            title: 'Hjälp'
+            }).when('/fel/:errorCode', {
+                templateUrl : '/views/error.html',
+                controller : 'ErrorViewCtrl',
+                title : 'Fel'
             }).otherwise({
                 redirectTo : '/lista'
             });
