@@ -34,7 +34,7 @@ public class Intyg extends RestClientFixture {
          signedDate:datum,
          signingDoctorName: 'Lennart Ström',
                 validFromDate:datum,
-                validToDate:datum,
+                validToDate:new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd"),
          careUnitName: 'Närhälsan i Majorna',
          document: document()
         ]
@@ -64,9 +64,18 @@ public class Intyg extends RestClientFixture {
         certificate.signeringsDatum = datum
         certificate.skickatDatum = datum
 
-        certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetFrom = datum
-        certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0][0].varaktighetTom = datum
+        certificate.vardkontakter.each {
+            it.vardkontaktstid = datum
+        }
 
+        certificate.referenser.each {
+            it.datum = datum
+        }
+
+        certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0].each {
+            it.varaktighetFrom = datum
+            it.varaktighetTom = new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd");
+        }
         JsonOutput.toJson(certificate)
     }
 
