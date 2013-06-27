@@ -1,10 +1,10 @@
 'use strict';
 /**
  * Common services/interceptors for cross cutting concerns in the app.
+ * 
  * @author marced
  * 
  */
-
 
 /**
  * Interceptor that decorates all GET requests made by the $http service. Can be
@@ -30,31 +30,61 @@ angular.module('services.util').factory('httpRequestInterceptorCacheBuster', fun
 });
 
 /**
- * Response interceptor intercepts ALL responses coming back through the $http service.On 403 status responses, 
- * the browser is redirected to the web apps main starting point. To hook up the interceptor, simply
- * config the http provider for the app like this (in 1.1.5):
+ * Response interceptor intercepts ALL responses coming back through the $http
+ * service.On 403 status responses, the browser is redirected to the web apps
+ * main starting point. To hook up the interceptor, simply config the http
+ * provider for the app like this (in 1.1.5):
  * 
  * $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
  * 
- * TODO: refactor into a "provider", so that the redirecturl can be configured in app.config. 
- * That way, this service becomes more reusable.
+ * The url which the interceptor redirects to on a 403 response can be
+ * configured via the providers setRedirectUrl in the apps config block, e.g:
  * 
+ * http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
  */
-angular.module('services.util').factory('http403ResponseInterceptor', function($q, $window) {
-    return function(promise) {
-        // Add our custom success/failure handlers to the promise chain..
-        return promise.then(function(response) {
-            //when success - simply return response as-is
-            return response;
-        }, function(response) {
-            //for 403 responses - redirect browser to start url (that will actually do the 403 handling)
-            if (response.status == "403") {
-                $window.location.href = "/web/start";
-            }
-            //signal rejection  (not really meaningful here since we already issued a redirect of the browser)
-            return $q.reject(response);
-        });
+angular.module('services.util').provider('http403ResponseInterceptor', function() {
+
+    /**
+     * Object that holds config.
+     */
+    this.config = {
+        redirectUrl : "/"
+    };
+
+    /**
+     * Setter for configuring the redirectUrl
+     */
+    this.setRedirectUrl = function(url) {
+        this.config.redirectUrl = url;
     }
+
+    /**
+     * Mandatory provider $get function. here we can inject the dependencies the
+     * actual implementation needs, in this case $q and $window
+     */
+    this.$get = [ '$q', '$window', function($q, $window) {
+        //Ref our config object
+        var config = this.config;
+        // Add our custom success/failure handlers to the promise chain..
+        function interceptorImpl(promise) {
+            return promise.then(function(response) {
+                // success - simply return response as-is..
+                return response;
+            }, function(response) {
+                // for 403 responses - redirect browser to start url (that will
+                // actually do the 403 handling)
+                if (response.status == "403") {
+                    $window.location.href = config.redirectUrl;
+                }
+                // signal rejection (arguably not meaningful here since we just
+                // issued a redirect)
+                return $q.reject(response);
+            });
+        }
+        return interceptorImpl;
+
+    } ];
+
 });
 
 /**

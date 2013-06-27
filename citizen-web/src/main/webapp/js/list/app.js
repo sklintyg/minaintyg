@@ -3,7 +3,7 @@
 /* App Module */
 
 var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 'services.listCertService', 'services.consent', 'modules.messages', 'directives.mi', 'services.util', 'controllers.util' ]).config(
-        [ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+        [ '$routeProvider', '$httpProvider','http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
             $routeProvider.when('/lista', {
                 templateUrl : '/views/list.html',
                 controller : 'ListCtrl',
@@ -27,7 +27,11 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
             }).otherwise({
                 redirectTo : '/lista'
             });
-            
+
+            //Configure interceptor provider
+           http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
+           
+           //Add interceptor
            $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
            $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
             
