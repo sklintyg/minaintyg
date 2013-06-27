@@ -44,7 +44,7 @@ public interface CertificateService {
     CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
 
     /**
-     * Request to send a specific certificate to a specific recipient 
+     * Request to send a specific certificate to a specific recipient.
      * @param civicRegistrationNumber
      * @param id
      * @param target
