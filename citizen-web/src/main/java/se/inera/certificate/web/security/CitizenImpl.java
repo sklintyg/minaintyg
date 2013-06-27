@@ -42,7 +42,11 @@ public class CitizenImpl implements Citizen {
 
     @Override
     public Boolean hasConsent() {
-        return (consent != null && consent) ? consent : false;
+        if (consentIsKnown()) {
+            return consent;
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
     @Override

@@ -18,11 +18,12 @@
  */
 package se.inera.certificate.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,6 @@ import org.springframework.web.servlet.ModelAndView;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "")
@@ -55,7 +54,7 @@ public class PageController {
     @Value("${mvk.url.logout}")
     private String mvkLogoutUrl;
 
-    @RequestMapping(value = {"/sso"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/sso" }, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
@@ -76,14 +75,14 @@ public class PageController {
         return new ModelAndView("consent-form");
     }
 
-    @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/tillbaka-till-mvk" }, method = RequestMethod.GET)
     public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkStartUrl;
     }
 
-    @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/logga-ut" }, method = RequestMethod.GET)
     public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
         invalidateSessionAndClearContext(request);
