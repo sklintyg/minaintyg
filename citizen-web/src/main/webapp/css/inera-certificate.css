@@ -81,12 +81,13 @@
 }
 
 .cert-titlebar h2 {
-	/*color: #fff;*/
-	padding: 10px 0 5px 40px;
+
 }
 
-.cert-titlebar h2 > a {
+.cert-titlebar .cert-title {
     color: #fff;
+    padding: 10px 0 5px 40px;
+    display: block;
 }
 
 .cert-titlebar h2 > span {
