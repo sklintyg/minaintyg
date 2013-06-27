@@ -25,12 +25,13 @@
               <div class="span12">
                 <div id="certificate-{{cert.id}}" class="cert">
                   <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
-                    <img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
+                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)" ng-href="#"><img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" /></a>
+                    <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
                     <div class="row-fluid">
                       <div class="span8">
                         <h2>
-                          <a ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span></a>
-                          <span ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (rättat)</span>
+                          <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span></a>
+                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (rättat)</span>
                         </h2>
                       </div>
                       <div class="span3 issue">

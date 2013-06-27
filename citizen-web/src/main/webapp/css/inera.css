@@ -581,7 +581,7 @@ button#archiveCertificateBtn {
 }
 
 .no-padding {
-    padding: 0;
+    padding: 0 !important;
 }
 
 /* mvk override */
@@ -742,4 +742,8 @@ div.inera-box .box-header h4 {
 
 div.inera-box .box-body {
 	padding: 10px;
+}
+
+.send-warning {
+    padding: 5px 0 15px 0;
 }

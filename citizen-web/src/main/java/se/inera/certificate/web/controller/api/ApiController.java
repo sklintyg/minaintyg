@@ -42,7 +42,7 @@ public class ApiController {
     }
 
     @GET
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return certificateService.getCertificates(citizen.getUsername());
@@ -50,7 +50,7 @@ public class ApiController {
 
     @PUT
     @Path("/{id}/archive")
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
@@ -59,7 +59,7 @@ public class ApiController {
 
     @PUT
     @Path("/{id}/restore")
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
