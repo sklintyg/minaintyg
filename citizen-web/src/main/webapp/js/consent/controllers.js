@@ -6,10 +6,10 @@ consentApp.controller('ConsentCtrl', [ '$scope', '$location', '$filter', 'consen
     $scope.giveConsent = function() {
         consentService.giveConsent(function(data) {
             // If ok, go to consent-given
-            if (data.result) {
+            if (data !=null && data.result) {
                 $location.path("/samtycke-givet");
             } else {
-                $location.path("/fel");
+                $location.path("/fel/couldnotgiveconsent");
             }
         });
     };

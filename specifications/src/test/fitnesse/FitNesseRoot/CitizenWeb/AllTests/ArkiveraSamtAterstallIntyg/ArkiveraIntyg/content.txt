@@ -8,6 +8,7 @@
 |inkorgsidan visas|
 |lista med intyg visas|
 |arkivera intyg | intyg-1 |
+|wait for | 500 |
 |intyg finns ej i listan | intyg-1 |
 |gå till arkiverade intyg|
 |arkiveradesidan visas|

@@ -9,6 +9,7 @@
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ.
 
 |script|!-VisaIntyg-!|
+|wait for | 500 |
 |intygssidan visas|
 |intygets typ är|rli|
 |intygets id är|rli-intyg-3|

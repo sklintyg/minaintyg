@@ -10,6 +10,7 @@ class SendCertificateFlowPage extends Page {
         confirmAndSendBtn(required: false)  { $("#confirmAndSendBtn") }
         resultMessageContainer(required: false)  { $("#send-certificate-flow-result") }
         backToViewCertificateBtn(required: false)  { $("#backToViewCertificateBtn") }
+        alreadySentWarningMessage(required: false)  { $("#already-sent-to-recipient-message") }
     }
 
     def confirmSendFlow() {
