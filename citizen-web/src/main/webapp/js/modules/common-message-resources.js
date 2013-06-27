@@ -33,7 +33,12 @@ var commonMessageResources = {
         
         "common.module.message.sendingcertificate" : "Skickar intyg...",
 
-        "error.pagetitle": "Ett problem har uppstått i tjänsten"
+        "error.pagetitle": "Ett problem har uppstått i tjänsten",
+        'error.couldnotloadcertlist' : "Kunde inte hämta intyg just nu.",
+        "error.couldnotarchivecert" : "Intyget kunde inte flyttas till arkivet.",
+        "error.couldnotrestorecert" : "Intyget kunde inte återställas till inkorgen.",
+        "error.couldnotrevokeconsent" : "Kunde inte återta samtycke.",
+        "error.couldnotgiveconsent" : "Det gick inte att spara samtycke."
 
     },
     "en" : {
