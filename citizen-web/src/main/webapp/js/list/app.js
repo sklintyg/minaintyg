@@ -29,6 +29,7 @@ var listCertApp = angular.module('ListCertApp', [ 'ui.bootstrap', 'mi.filters', 
             });
             
            $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
+           $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
             
         } ]);
 
