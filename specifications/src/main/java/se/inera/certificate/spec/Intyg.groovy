@@ -11,32 +11,38 @@ import se.inera.certificate.spec.util.RestClientFixture
 
 public class Intyg extends RestClientFixture {
 
-	String personnr
-	String datum
-	String typ
-	String id
-
-	public void execute() {
-
+    String personnr
+    String datum
+    String typ
+    String id
+    String idTemplate
+    int from
+    int to
+    public void execute() {
         def restClient = new RESTClient(baseUrl)
-        restClient.post(
-                path: 'certificate',
-                body: certificateJson(),
-                requestContentType: JSON
-
-        )
-	}
+        for (int day in from..to) {
+            if (idTemplate) {
+                id = String.format(idTemplate, day, datum, personnr, typ)
+            }
+            restClient.post(
+                    path: 'certificate',
+                    body: certificateJson(),
+                    requestContentType: JSON
+                    )
+            datum = new Date().parse("yyyy-MM-dd", datum).plus(1).format("yyyy-MM-dd")
+        }
+    }
 
     private certificateJson() {
-        [id:id,
-         type:typ,
-         civicRegistrationNumber:personnr,
-         signedDate:datum,
-         signingDoctorName: 'Lennart Ström',
-                validFromDate:datum,
-                validToDate:new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd"),
-         careUnitName: 'Närhälsan i Majorna',
-         document: document()
+        [id:String.format(id, datum),
+            type:typ,
+            civicRegistrationNumber:personnr,
+            signedDate:datum,
+            signingDoctorName: 'Lennart Ström',
+            validFromDate:datum,
+            validToDate:new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd"),
+            careUnitName: 'Närhälsan i Majorna',
+            document: document()
         ]
     }
 
@@ -47,7 +53,6 @@ public class Intyg extends RestClientFixture {
         else {
             "\"" + document("rli") + "\""
         }
-
     }
 
     private document(typ) {
@@ -64,13 +69,9 @@ public class Intyg extends RestClientFixture {
         certificate.signeringsDatum = datum
         certificate.skickatDatum = datum
 
-        certificate.vardkontakter.each {
-            it.vardkontaktstid = datum
-        }
+        certificate.vardkontakter.each { it.vardkontaktstid = datum }
 
-        certificate.referenser.each {
-            it.datum = datum
-        }
+        certificate.referenser.each { it.datum = datum }
 
         certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0].each {
             it.varaktighetFrom = datum
@@ -78,5 +79,4 @@ public class Intyg extends RestClientFixture {
         }
         JsonOutput.toJson(certificate)
     }
-
 }
