@@ -1,53 +1,38 @@
 !3 Rensa bort test-intyg
 
 |ta bort Intyg|
-|id|
-|test-19750627-7511-intyg-1|
-|test-19750627-7511-intyg-2|
-|test-19750627-7511-intyg-3|
-|test-19750627-7511-intyg-4|
-|test-19750627-7511-intyg-5|
-|test-19750627-7511-intyg-6|
-|test-19750627-7511-intyg-7|
-|test-19750627-7511-intyg-8|
-|test-19750627-7511-intyg-9|
-|test-19750627-7511-intyg-10|
+|idTemplate|from|to|
+|test-19960916-2368-intyg-%1$s|1|6|
+|test-19530714-0359-intyg-%1$s|1|6|
+|test-19780905-2975-intyg-%1$s|1|6|
+|test-19801029-4836-intyg-%1$s|1|2|
+|test-19831015-4565-intyg-%1$s|1|5|
+|test-19790906-9309-intyg-%1$s|1|10|
+|test-19800722-0109-intyg-%1$s|1|100|
+|test-19750627-7511-intyg-%1$s|1|10|
+|test-19690722-5558-intyg-%1$s|1|20|
+|test-19681021-7551-intyg-%1$s|1|10|
+|test-19790402-1701-intyg-%1$s|1|10|
+|test-19581226-0395-intyg-%1$s|1|2|
+|test-19510501-0895-intyg-%1$s|1|10|
+|test-19510501-8922-intyg-%1$s|1|5|
+|test-19510501-8922-intyg-%1$s|6|8|
+|test-19510503-5926-intyg-%1$s|1|100|
+|test-19941126-1887-intyg-%1$s|1|5|
+|test-19730223-0532-intyg-%1$s|1|3|
 
 |ta bort Intyg|
 |id|
-|test-19690722-5558-intyg-1|
-|test-19690722-5558-intyg-2|
-|test-19690722-5558-intyg-3|
-|test-19690722-5558-intyg-4|
-|test-19690722-5558-intyg-5|
-|test-19690722-5558-intyg-6|
-|test-19690722-5558-intyg-7|
-|test-19690722-5558-intyg-8|
-|test-19690722-5558-intyg-9|
-|test-19690722-5558-intyg-10|
-|test-19690722-5558-intyg-11|
-|test-19690722-5558-intyg-12|
-|test-19690722-5558-intyg-13|
-|test-19690722-5558-intyg-14|
-|test-19690722-5558-intyg-15|
-|test-19690722-5558-intyg-16|
-|test-19690722-5558-intyg-17|
-|test-19690722-5558-intyg-18|
-|test-19690722-5558-intyg-19|
-|test-19690722-5558-intyg-20|
+|test-19840315-2724-intyg-1|
+|test-19650217-2015-intyg-1|
+|test-19680105-0680-intyg-1|
+|test-19741213-5605-intyg-1|
+|test-19731218-2616-intyg-1|
+|test-19801021-2796-intyg-1|
+|test-19760511-2775-intyg-1|
+|test-19620504-0675-intyg-1|
+|test-19620504-0675-intyg-2|
 
-|ta bort Intyg|
-|id|
-|test-19681021-7551-intyg-1|
-|test-19681021-7551-intyg-2|
-|test-19681021-7551-intyg-3|
-|test-19681021-7551-intyg-4|
-|test-19681021-7551-intyg-5|
-|test-19681021-7551-intyg-6|
-|test-19681021-7551-intyg-7|
-|test-19681021-7551-intyg-8|
-|test-19681021-7551-intyg-9|
-|test-19681021-7551-intyg-10|
 
 !3 Återta samtycken:
 
