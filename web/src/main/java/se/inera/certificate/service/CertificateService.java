@@ -68,4 +68,12 @@ public interface CertificateService {
     void sendCertificate(String civicRegistrationNumber, String certificateId, String target) throws InvalidCertificateException, CertificateRevokedException;
 
     Lakarutlatande getLakarutlatande(Certificate certificate);
+    
+    /**
+     * Revokes the certifictae.
+     * @return 
+     * @throws InvalidCertificateException if the certificate does not exist
+     * @throws CertificateRevokedException if the certificate has been revoked
+     */
+    Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) throws InvalidCertificateException, CertificateRevokedException;
 }

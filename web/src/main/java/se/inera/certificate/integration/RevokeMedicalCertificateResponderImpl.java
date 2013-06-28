@@ -18,8 +18,9 @@ import org.w3.wsaddressing10.AttributedURIType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.Amnetyp;
 import riv.insuranceprocess.healthreporting.medcertqa._1.InnehallType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
+import se.inera.certificate.exception.CertificateRevokedException;
+import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.model.Certificate;
-import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.v1.rivtabp20.RevokeMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;
@@ -49,54 +50,49 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
 
         String certificateId = request.getRevoke().getLakarutlatande().getLakarutlatandeId();
         String civicRegistrationNumber = request.getRevoke().getLakarutlatande().getPatient().getPersonId().getExtension();
-        String vardref = request.getRevoke().getVardReferensId();
-        String meddelande = request.getRevoke().getMeddelande();
 
-        // TODO: Vi behöver signeringstidpunkt för både fråga och intyg... /PW
-        LocalDateTime signTs = request.getRevoke().getLakarutlatande().getSigneringsTidpunkt();
-        LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();
-        VardAdresseringsType vardAddress = request.getRevoke().getAdressVard();
+        try {
+            Certificate certificate = certificateService.revokeCertificate(civicRegistrationNumber, certificateId);
+            // if certificate was sent to Forsakringskassan before, we have to send a MAKULERING question to notify Forsakringskassan about the revocation
+            if (certificate.wasSentToTarget("FK")) {
+                String vardref = request.getRevoke().getVardReferensId();
+                String meddelande = request.getRevoke().getMeddelande();
 
-        Certificate certificate = certificateService.getCertificate(civicRegistrationNumber, certificateId);
+                // TODO: Vi behöver signeringstidpunkt för både fråga och intyg... /PW
+                LocalDateTime signTs = request.getRevoke().getLakarutlatande().getSigneringsTidpunkt();
+                LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();
+                VardAdresseringsType vardAddress = request.getRevoke().getAdressVard();
+                
+                QuestionToFkType question = new QuestionToFkType();
+                question.setAmne(Amnetyp.MAKULERING_AV_LAKARINTYG);
+                question.setVardReferensId(vardref);
+                question.setAvsantTidpunkt(avsantTs);
+                question.setAdressVard(vardAddress);
 
-        // return with INFO response if certificate to be revoked does not exist
-        if (certificate == null) {
+                question.setFraga(new InnehallType());
+                question.getFraga().setMeddelandeText(meddelande);
+                question.getFraga().setSigneringsTidpunkt(signTs);
+
+                question.setLakarutlatande(request.getRevoke().getLakarutlatande());
+
+                SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
+                parameters.setQuestion(question);
+
+                SendMedicalCertificateQuestionResponseType sendResponse = sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(logicalAddress, parameters);
+                if (sendResponse.getResult().getResultCode() != OK) {
+                    handleForsakringskassaError(certificateId, sendResponse.getResult());
+                }
+            }
+        } catch (InvalidCertificateException e) {
+            // return with ERROR response if certificate was not found
             LOG.info("Tried to revoke certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' but certificate does not exist");
             response.setResult(failResult("No certificate '" + certificateId + "' found to revoke for patient '" + civicRegistrationNumber + "'."));
             return response;
-        }
-
-        // return with INFO response if certificate was revoked before
-        if (certificate.isRevoked()) {
+        } catch (CertificateRevokedException e) {
+            // return with INFO response if certificate was revoked before
             LOG.info("Tried to revoke certificate '" + certificateId + "' for patient '" + civicRegistrationNumber + "' which already is revoked");
             response.setResult(infoResult("Certificate '" + certificateId + "' is already revoked."));
             return response;
-        }
-
-        // add a new CANCELLED state for the certificate
-        certificateService.setCertificateState(civicRegistrationNumber, certificateId, "FK", CertificateState.CANCELLED, new LocalDateTime());
-
-
-        // if certificate was sent to Forsakringskassan before, we have to send a MAKULERING question to notify Forsakringskassan about the revocation
-        if (certificate.wasSentToTarget("FK")) {
-            SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
-            QuestionToFkType question = new QuestionToFkType();
-            question.setAmne(Amnetyp.MAKULERING_AV_LAKARINTYG);
-            question.setVardReferensId(vardref);
-            question.setAvsantTidpunkt(avsantTs);
-            question.setAdressVard(vardAddress);
-
-            question.setFraga(new InnehallType());
-            question.getFraga().setMeddelandeText(meddelande);
-            question.getFraga().setSigneringsTidpunkt(signTs);
-
-            question.setLakarutlatande(request.getRevoke().getLakarutlatande());
-            parameters.setQuestion(question);
-
-            SendMedicalCertificateQuestionResponseType sendResponse = sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(logicalAddress, parameters);
-            if (sendResponse.getResult().getResultCode() != OK) {
-                handleForsakringskassaError(certificateId, sendResponse.getResult());
-            }
         }
 
         response.setResult(okResult());

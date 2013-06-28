@@ -41,9 +41,27 @@
 |personnummer|intyg|svar?|
 |19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' has been revoked|
 
+!3 Givet att 19121212-1212 inte har samtycke
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|nej|
+
+!3 Och intyg registreras
+
+|Registrera fk7263 intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-2|ok|
+
+!3 Kan journalsystem rätta intyg
+
+|Ratta intyg|
+|personnummer|intyg|svar?|
+|19121212-1212|intyg-2|ok|
 
 !3 Rensa bort test-intyg
 
 |ta bort Intyg|
 |id|
 |intyg-1|
+|intyg-2|

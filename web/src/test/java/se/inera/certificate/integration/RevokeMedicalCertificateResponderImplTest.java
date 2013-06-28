@@ -1,19 +1,18 @@
 package se.inera.certificate.integration;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-import java.util.Collections;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+
+import java.util.Collections;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -23,6 +22,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.w3.wsaddressing10.AttributedURIType;
+
+import se.inera.certificate.exception.CertificateRevokedException;
+import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.CertificateStateHistoryEntry;
@@ -75,15 +77,14 @@ public class RevokeMedicalCertificateResponderImplTest {
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry("FK", CertificateState.SENT, new LocalDateTime());
         certificate.setStates(Collections.singletonList(historyEntry));
 
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+        when(certificateService.revokeCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
         SendMedicalCertificateQuestionResponseType sendQuestionResponse = new SendMedicalCertificateQuestionResponseType();
         sendQuestionResponse.setResult(okResult());
         when(sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(ADDRESS, expectedSendRequest())).thenReturn(sendQuestionResponse);
 
         RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
 
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
-        verify(certificateService).setCertificateState(eq(PERSONNUMMER), eq(CERTIFICATE_ID), eq("FK"), eq(CertificateState.CANCELLED), any(LocalDateTime.class));
+        verify(certificateService).revokeCertificate(PERSONNUMMER, CERTIFICATE_ID);
         verify(sendMedicalCertificateQuestionResponderInterface).sendMedicalCertificateQuestion(ADDRESS, expectedSendRequest());
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
@@ -96,7 +97,7 @@ public class RevokeMedicalCertificateResponderImplTest {
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry("FK", CertificateState.SENT, new LocalDateTime());
         certificate.setStates(Collections.singletonList(historyEntry));
 
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+        when(certificateService.revokeCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
         SendMedicalCertificateQuestionResponseType sendQuestionResponse = new SendMedicalCertificateQuestionResponseType();
         sendQuestionResponse.setResult(failResult("someErrorFromFörsäkringskassan"));
         when(sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(ADDRESS, expectedSendRequest())).thenReturn(sendQuestionResponse);
@@ -114,22 +115,19 @@ public class RevokeMedicalCertificateResponderImplTest {
 
         Certificate certificate = new Certificate(CERTIFICATE_ID, "text");
 
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+        when(certificateService.revokeCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
         RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
 
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
-        verify(certificateService).setCertificateState(eq(PERSONNUMMER), eq(CERTIFICATE_ID), eq("FK"), eq(CertificateState.CANCELLED), any(LocalDateTime.class));
+        verify(certificateService).revokeCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
     }
 
     @Test
     public void testRevokeUnknownCertificate() throws Exception {
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(null);
+        when(certificateService.revokeCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenThrow(new InvalidCertificateException("certificateId", "civicRegistrationNumber"));
 
         RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
-
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         assertEquals(ResultCodeEnum.ERROR, response.getResult().getResultCode());
         assertEquals("No certificate 'intygs-id-1234567890' found to revoke for patient '19121212-1212'.", response.getResult().getErrorText());
@@ -141,11 +139,9 @@ public class RevokeMedicalCertificateResponderImplTest {
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry("FK", CertificateState.CANCELLED, new LocalDateTime());
         certificate.setStates(Collections.singletonList(historyEntry));
 
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
+        when(certificateService.revokeCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenThrow(new CertificateRevokedException("id"));
 
         RevokeMedicalCertificateResponseType response = responder.revokeMedicalCertificate(ADDRESS, revokeRequest());
-
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());
         assertEquals("Certificate 'intygs-id-1234567890' is already revoked.", response.getResult().getInfoText());

@@ -157,6 +157,22 @@ public class CertificateServiceImpl implements CertificateService {
             throw new IllegalStateException("Could not parse document for " + certificate.getId(), e);
         }
     }
+    
+    @Override
+    public Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) throws InvalidCertificateException, CertificateRevokedException {
+        Certificate certificate = getCertificateInternal(civicRegistrationNumber, certificateId);
+
+        if (certificate == null) {
+            throw new InvalidCertificateException(certificateId, civicRegistrationNumber);
+        }
+
+        if (certificate.isRevoked()) {
+            throw new CertificateRevokedException(certificateId);
+        }
+        setCertificateState(civicRegistrationNumber, certificateId, "FK", CertificateState.CANCELLED, null);
+        return certificate;
+    }
+
     private void assertConsent(String civicRegistrationNumber) {
         if (!consentService.isConsent(civicRegistrationNumber)) {
             throw new MissingConsentException(civicRegistrationNumber);
