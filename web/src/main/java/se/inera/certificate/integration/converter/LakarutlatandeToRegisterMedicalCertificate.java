@@ -45,6 +45,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 public final class LakarutlatandeToRegisterMedicalCertificate {
 
+    private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+
     private LakarutlatandeToRegisterMedicalCertificate() {
     }
 
@@ -53,7 +55,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
             RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
             register.setLakarutlatande(new LakarutlatandeType());
             register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
-            register.getLakarutlatande().setTypAvUtlatande("Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring");
+            register.getLakarutlatande().setTypAvUtlatande(FK7263);
             register.getLakarutlatande().setKommentar(lakarutlatande.getKommentar());
             register.getLakarutlatande().setSigneringsdatum(lakarutlatande.getSigneringsDatum());
             register.getLakarutlatande().setSkickatDatum(lakarutlatande.getSkickatDatum());
