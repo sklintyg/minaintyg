@@ -280,6 +280,7 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
         CD cd = new CD();
         cd.setCode(bedomtTillstand.getTillstandskod());
         cd.setCodeSystem("ICD-10");
+        tillstand.setTillstandskod(cd);
         return tillstand;
     }
 
