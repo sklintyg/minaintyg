@@ -99,6 +99,9 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
     }
 
     private static BedomtTillstandType convert(MedicinsktTillstandType medicinsktTillstand) {
+        if (medicinsktTillstand == null) {
+            return null;
+        }
         BedomtTillstandType bedomtTillstand = new BedomtTillstandType();
         bedomtTillstand.setBeskrivning(medicinsktTillstand.getBeskrivning());
 
@@ -253,6 +256,9 @@ public final class LakarutlatandeTypeToLakarutlatandeConverter {
     }
 
     private static Prognosangivelse convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse source) {
+        if (source == null) {
+            return null;
+        }
         switch (source) {
             case ATERSTALLAS_HELT:
                 return Prognosangivelse.ATERSTALLAS_HELT;
