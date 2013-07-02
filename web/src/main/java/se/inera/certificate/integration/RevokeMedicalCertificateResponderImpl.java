@@ -62,7 +62,7 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
                 LocalDateTime signTs = request.getRevoke().getLakarutlatande().getSigneringsTidpunkt();
                 LocalDateTime avsantTs = request.getRevoke().getAvsantTidpunkt();
                 VardAdresseringsType vardAddress = request.getRevoke().getAdressVard();
-                
+
                 QuestionToFkType question = new QuestionToFkType();
                 question.setAmne(Amnetyp.MAKULERING_AV_LAKARINTYG);
                 question.setVardReferensId(vardref);

@@ -11,11 +11,10 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
  * @author andreaskaltenbach
  */
 public class ExternalWebServiceCallFailedException extends RuntimeException {
-    
-    private ResultOfCall resultOfCall;
+
+    private final ResultOfCall resultOfCall;
 
     public ExternalWebServiceCallFailedException(ResultOfCall resultOfCall) {
-        super();
         this.resultOfCall = resultOfCall;
     }
 

@@ -71,7 +71,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private CertificateSenderService senderService;
-    
+
     @Override
     public List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) {
         assertConsent(civicRegistrationNumber);
@@ -157,7 +157,7 @@ public class CertificateServiceImpl implements CertificateService {
             throw new IllegalStateException("Could not parse document for " + certificate.getId(), e);
         }
     }
-    
+
     @Override
     public Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) throws InvalidCertificateException, CertificateRevokedException {
         Certificate certificate = getCertificateInternal(civicRegistrationNumber, certificateId);
