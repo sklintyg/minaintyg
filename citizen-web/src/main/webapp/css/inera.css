@@ -677,6 +677,10 @@ opacity: .25;
     padding: 0;
 }
 
+.alert-warning {
+    color: #A77F3A;
+}
+
 .well {
     padding: 10px;
 }

@@ -164,20 +164,22 @@
 }
 
 .cert-header .row-fluid {
-	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 	padding: 10px 0;
-}
-
-.cert-header .row-fluid:first-child {
-	border: 0;
 }
 
 .cert-header .row-fluid:last-child {
 	padding-bottom: 10px;
+    border: 0;
 }
 
 .cert-header .header-row:first-child {
-	padding: 0 0 0 40px;
+	padding: 0 40px 0 40px;
+}
+
+.header-row .alert {
+    font-weight: normal;
+    margin-bottom: 5px;
 }
 
 .certificate div.cert div.cert-body {

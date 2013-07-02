@@ -20,7 +20,7 @@ var commonMessageResources = {
         "certificatetypes.rli.commonname" : "Reseläkarintyg",
         "certificatetypes.rli.typename" : "RLI",
 
-        "certificates.status.cancelled" : "Rättat",
+        "certificates.status.cancelled" : "Tillbakadraget",
         "certificates.status.sent" : "Skickat",
 
         "certificates.send.label.patientname" : "Patientens namn:",

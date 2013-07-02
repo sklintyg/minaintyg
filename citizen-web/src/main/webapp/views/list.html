@@ -31,18 +31,25 @@
                       <div class="span8">
                         <h2>
                           <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span></a>
-                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (rättat)</span>
+                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (tillbakadraget)</span>
                         </h2>
                       </div>
                       <div class="span3 issue">
                         <span message key="listtable.headers.issued"></span> <span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="span1 archive">
-                        <a id="archiveCertificateBtn-{{cert.id}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
+                        <a id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
                       </div>
                     </div>
                   </div>
                   <div class="cert-header">
+                    <div class="row-fluid" ng-show="cert.cancelled">
+                      <div class="span8 header-row">
+                        <div class="alert alert-warning">
+                          <span message key="inbox.revoked"></span>
+                        </div>
+                      </div>
+                    </div>
                     <div class="row-fluid">
                       <div class="span8 header-row">
                         <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3> {{cert.careunitName}}
