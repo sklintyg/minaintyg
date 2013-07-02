@@ -87,11 +87,11 @@
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
   <%-- Application files --%>
-  <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/app/app.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/app/filters.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/app/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/app/services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/app/messages.js"/>"></script>
 
   <%-- Dependencies to common components --%>
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
