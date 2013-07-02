@@ -1,5 +1,7 @@
 package se.inera.certificate.web.service;
 
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -20,6 +22,7 @@ import org.springframework.context.MessageSource;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.StatusMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
@@ -47,7 +50,7 @@ public class CertificateServiceImplTest {
     private ListCertificatesResponderInterface listServiceMock = mock(ListCertificatesResponderInterface.class);
 
     @InjectMocks
-    private CertificateService service = new CertificateServiceImpl();
+    private CertificateServiceImpl service = new CertificateServiceImpl();
 
     private LocalDate signDate = new LocalDate();
     private LocalDate validFromDate = new LocalDate();
@@ -59,6 +62,7 @@ public class CertificateServiceImplTest {
 
     private CertificateStatusType deletedStatus;
     private CertificateStatusType sentStatus;
+    private CertificateStatusType cancelledStatus;
 
     @Before
     public void setup() {
@@ -76,6 +80,11 @@ public class CertificateServiceImplTest {
         sentStatus.setType(StatusType.SENT);
         sentStatus.setTarget("FK");
         sentStatus.setTimestamp(firstTimeStamp);
+
+        cancelledStatus = new CertificateStatusType();
+        cancelledStatus.setType(StatusType.CANCELLED);
+        cancelledStatus.setTarget("FK");
+        cancelledStatus.setTimestamp(firstTimeStamp);
 
     }
 
@@ -106,7 +115,7 @@ public class CertificateServiceImplTest {
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getCaregiverName().equals(ISSUER_NAME));
         assertTrue(certificates.get(0).getCareunitName().equals(FACILITY_NAME));
-        assertTrue(certificates.get(0).getStatus().equals(StatusType.SENT.toString()));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.SENT.toString()));
     }
 
     @Test
@@ -138,7 +147,55 @@ public class CertificateServiceImplTest {
         when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
         List<CertificateMeta> certificates = service.getCertificates("123456789");
         assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getStatus().equals(StatusType.CANCELLED.toString()));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.CANCELLED.toString()));
     }
 
+    @Test
+    public void testIsCertificateCancelledWithNullList() {
+        List<StatusMeta> statuses = null;
+        assertFalse(service.isCertificateCancelled(statuses));
+    }
+
+    @Test
+    public void testIsCertificateCancelledWithoutCancelStatus() {
+        List<StatusMeta> statuses = new ArrayList<>();
+        StatusMeta sentStatus = new StatusMeta();
+        sentStatus.setType(StatusType.SENT.toString());
+        statuses.add(sentStatus);
+        assertFalse(service.isCertificateCancelled(statuses));
+    }
+
+    @Test
+    public void testIsCertificateCancelledWithCancelStatus() {
+        List<StatusMeta> statuses = new ArrayList<>();
+        StatusMeta sentStatus = new StatusMeta();
+        sentStatus.setType(StatusType.SENT.toString());
+        statuses.add(sentStatus);
+        StatusMeta cancelStatus = new StatusMeta();
+        cancelStatus.setType(StatusType.CANCELLED.toString());
+        statuses.add(cancelStatus);
+        assertTrue(service.isCertificateCancelled(statuses));
+    }
+
+    @Test
+    public void testConvertStatusWithNullList() {
+        List<CertificateStatusType> statuses = new ArrayList<>();
+        assertEquals(0, service.convertStatus(statuses).size());
+    }
+
+    @Test
+    public void testConvertStatusWithoutSentCancel() {
+        List<CertificateStatusType> statuses = new ArrayList<>();
+        statuses.add(deletedStatus);
+        assertEquals(0, service.convertStatus(statuses).size());
+    }
+    @Test
+    public void testConvertStatusWithSentCancel() {
+        List<CertificateStatusType> statuses = new ArrayList<>();
+        statuses.add(deletedStatus);
+        statuses.add(cancelledStatus);
+        statuses.add(sentStatus);
+        statuses.add(unhandledStatus);
+        assertEquals(2, service.convertStatus(statuses).size());
+    }
 }

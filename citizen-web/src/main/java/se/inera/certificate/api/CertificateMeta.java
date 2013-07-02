@@ -1,6 +1,8 @@
 package se.inera.certificate.api;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class CertificateMeta implements Serializable {
@@ -11,12 +13,11 @@ public class CertificateMeta implements Serializable {
     private String caregiverName;
     private String careunitName;
     private String sentDate;
-    private String status;
-    private String target;
     private Boolean archived;
     private Boolean cancelled;
     private String fromDate;
     private String tomDate;
+    private List<StatusMeta> statuses = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -56,14 +57,6 @@ public class CertificateMeta implements Serializable {
 
     public void setSentDate(String sentDate) {
         this.sentDate = sentDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Boolean getArchived() {
@@ -106,12 +99,11 @@ public class CertificateMeta implements Serializable {
         this.selected = selected;
     }
 
-    public String getTarget() {
-        return target;
+    public List<StatusMeta> getStatuses() {
+        return statuses;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setStatuses(List<StatusMeta> statuses) {
+        this.statuses = statuses;
     }
-
 }

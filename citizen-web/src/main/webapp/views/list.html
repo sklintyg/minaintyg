@@ -61,7 +61,9 @@
                     </div>
                     <div class="row-fluid">
                       <div class="span8 header-row">
-                        <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3> <span message key="certificates.status.{{cert.status}}" fallback="Ingen"></span>
+                        <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3>
+                        <span ng-show="cert.statuses.length>0" message key="certificates.status.{{cert.statuses[0].type}}" fallback="Ingen"></span>
+                        <span ng-show="cert.statuses.length==0">Ingen</span>
                       </div>
                       <div class="span3">
                         <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><span message key="button.show"></span></button>

@@ -35,6 +35,7 @@ import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
+import se.inera.certificate.api.StatusMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
@@ -71,6 +72,7 @@ public class CertificateServiceImpl implements CertificateService {
     /**
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
+     *
      * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
@@ -186,17 +188,37 @@ public class CertificateServiceImpl implements CertificateService {
         final List<CertificateStatusType> stats = meta.getStatus();
         LOG.debug("Status length {}", stats.size());
         Collections.sort(stats, STATUS_COMPARATOR);
-        for (CertificateStatusType stat : stats) {
-            if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
-                dto.setStatus(stat.getType().toString());
-                dto.setTarget(stat.getTarget());
-            }
-            if (stat.getType().equals(StatusType.CANCELLED)) {
-                dto.setCancelled(true);
-            }
-        }
+        dto.getStatuses().addAll(convertStatus(stats));
+        dto.setCancelled(isCertificateCancelled(dto.getStatuses()));
 
         return dto;
+    }
+
+    protected List<StatusMeta> convertStatus(List<CertificateStatusType> sourceList) {
+        List<StatusMeta> statusList = new ArrayList<>();
+        if (sourceList != null) {
+            for (CertificateStatusType stat : sourceList) {
+                if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
+                    StatusMeta status = new StatusMeta();
+                    status.setTarget(stat.getTarget());
+                    status.setTimestamp(stat.getTimestamp());
+                    status.setType(stat.getType().toString());
+                    statusList.add(status);
+                }
+            }
+        }
+        return statusList;
+    }
+
+    protected Boolean isCertificateCancelled(List<StatusMeta> statuses) {
+        if (statuses != null) {
+            for (StatusMeta status : statuses) {
+                if (status.getType().equals(StatusType.CANCELLED.toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
