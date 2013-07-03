@@ -94,6 +94,9 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
     }
 
     private static Sysselsattning convert(se.inera.certificate.integration.v1.Sysselsattning source) {
+        if (source == null) {
+            return null;
+        }
         switch (source) {
         case NUVARANDE_ARBETE: return Sysselsattning.NUVARANDE_ARBETE;
         case FORALDRALEDIGHET: return Sysselsattning.FORALDRALEDIGHET;
@@ -104,6 +107,9 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
     }
 
     private static Prognosangivelse convert(se.inera.certificate.integration.v1.Prognosangivelse source) {
+        if (source == null) {
+            return null;
+        }
         switch(source) {
         case ATERSTALLAS_HELT: return Prognosangivelse.ATERSTALLAS_HELT;
         case ATERSTALLAS_DELVIS: return Prognosangivelse.ATERSTALLAS_DELVIS;
@@ -141,6 +147,9 @@ public final class LakarutlatandeJaxbToLakarutlatandeConverter {
     }
 
     private static BedomtTillstand convert(BedomtTillstandType source) {
+        if (source == null) {
+            return null;
+        }
         BedomtTillstand tillstand = new BedomtTillstand();
         tillstand.setBeskrivning(source.getBeskrivning());
         tillstand.setTillstandskod(source.getTillstandskod());
