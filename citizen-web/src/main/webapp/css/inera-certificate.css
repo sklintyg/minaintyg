@@ -208,6 +208,9 @@
 
 .cert-body .body-row .unfilled {
 	color: #888;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
 }
 
 .cert-body .body-row .text {
