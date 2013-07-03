@@ -1,13 +1,19 @@
 package se.inera.certificate.integration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.xml.ws.Holder;
+
 import org.apache.commons.io.IOUtils;
-import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.integration.converter.LakarutlatandeJaxbToLakarutlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
@@ -16,16 +22,12 @@ import se.inera.certificate.integration.validator.ValidationException;
 import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.service.CertificateService;
 
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import javax.xml.ws.Holder;
-import java.io.IOException;
-import java.io.InputStream;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
  */
-@SchemaValidation
 public class RegistreraIntygResponder implements RegistreraIntygResponderInterface {
 
     private static final int OK = 200;
