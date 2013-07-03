@@ -60,6 +60,15 @@ public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
+    private static final Comparator<? super CertificateMetaType> DESCENDING_DATE = new Comparator<CertificateMetaType>() {
+
+        @Override
+        public int compare(CertificateMetaType m1, CertificateMetaType m2) {
+            return m2.getSignDate().compareTo(m1.getSignDate());
+        }
+
+    };
+
     @Autowired
     private ListCertificatesResponderInterface listService;
 
@@ -164,6 +173,8 @@ public class CertificateServiceImpl implements CertificateService {
 
         final List<CertificateMetaType> metas = response.getMeta();
         final List<CertificateMeta> dtos = new ArrayList<CertificateMeta>(metas.size());
+
+        Collections.sort(metas, DESCENDING_DATE);
 
         for (CertificateMetaType meta : metas) {
             final CertificateMeta dto = convert(meta);
