@@ -2,7 +2,9 @@ package se.inera.certificate.api;
 
 import org.joda.time.LocalDateTime;
 
-public class StatusMeta {
+import java.io.Serializable;
+
+public class StatusMeta implements Serializable {
 
     private String type;
 
