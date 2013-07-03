@@ -29,7 +29,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
 
 import org.apache.commons.io.FileUtils;
@@ -40,14 +39,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;

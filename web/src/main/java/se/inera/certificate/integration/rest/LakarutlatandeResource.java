@@ -2,20 +2,23 @@ package se.inera.certificate.integration.rest;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.IneraCertificateRestApi;
-import se.inera.certificate.model.Certificate;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.Status;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateService;
 
 /**

@@ -20,11 +20,13 @@ package se.inera.certificate.integration.converter;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+
 import org.joda.time.LocalDate;
+
 import se.inera.certificate.integration.builder.CertificateMetaTypeBuilder;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 

@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -22,15 +23,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.dao.CertificateDao;
+
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateDao;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;

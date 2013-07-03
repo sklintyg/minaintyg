@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.certificate.dao.ConsentDao;
+import se.inera.certificate.model.dao.ConsentDao;
 import se.inera.certificate.service.ConsentService;
 
 @RunWith(MockitoJUnitRunner.class)

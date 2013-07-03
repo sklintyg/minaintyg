@@ -20,7 +20,8 @@ package se.inera.certificate.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.inera.certificate.dao.ConsentDao;
+
+import se.inera.certificate.model.dao.ConsentDao;
 import se.inera.certificate.service.ConsentService;
 
 /**

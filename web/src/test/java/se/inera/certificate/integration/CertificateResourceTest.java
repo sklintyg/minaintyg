@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.certificate.integration.test.CertificateResource;
-import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.dao.Certificate;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateResourceTest {

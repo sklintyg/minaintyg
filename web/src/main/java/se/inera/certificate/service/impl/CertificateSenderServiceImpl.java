@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;

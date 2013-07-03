@@ -22,12 +22,13 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.dao.Certificate;
 
 /**
  * @author andreaskaltenbach

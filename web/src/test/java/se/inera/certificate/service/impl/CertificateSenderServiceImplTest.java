@@ -1,6 +1,7 @@
 package se.inera.certificate.service.impl;
 
 import javax.xml.bind.JAXBException;
+
 import java.io.IOException;
 
 import static org.mockito.Matchers.any;
@@ -14,12 +15,13 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.ResultOfCallUtil;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;

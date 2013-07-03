@@ -19,7 +19,7 @@
 package se.inera.certificate.service;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.dao.Certificate;
 
 /**
  * @author rogerlindsjo

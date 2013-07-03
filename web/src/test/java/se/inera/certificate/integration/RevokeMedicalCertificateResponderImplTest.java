@@ -25,9 +25,9 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.v1.rivtabp20.RevokeMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;

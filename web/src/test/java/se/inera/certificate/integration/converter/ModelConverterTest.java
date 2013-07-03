@@ -10,8 +10,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.model.dao.Certificate;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 

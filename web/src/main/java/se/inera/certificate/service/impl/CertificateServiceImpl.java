@@ -29,14 +29,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.certificate.dao.CertificateDao;
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
-import se.inera.certificate.model.Certificate;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.CertificateStateHistoryEntry;
 import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateDao;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;

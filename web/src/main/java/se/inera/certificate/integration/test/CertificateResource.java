@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import se.inera.certificate.model.Certificate;
+import se.inera.certificate.model.dao.Certificate;
 
 /**
  * @author andreaskaltenbach
