@@ -12,24 +12,30 @@ public class LoggaUt {
 
     public void tillbakaTillMvk() {
         Browser.drive {
-            assert at(ConsentPage)
+            at ConsentPage
             page.goBackToMvk()
         }
     }
 
     public void loggaUt() {
         Browser.drive {
-            assert at(ConsentPage)
+            at ConsentPage
             page.logout()
         }
     }
 
     public boolean mvksInloggningssidaVisas() {
-        verifyAtPage(MvkLoginPage)
+        Browser.drive {
+            at MvkLoginPage
+        }
     }
 
     public boolean mvksUtloggningssidaVisas() {
-        verifyAtPage(MvkLogoutPage)
+        Browser.drive {
+            waitFor {
+                at MvkLogoutPage
+            }
+        }
     }
 
     public void gåTillStartsida() {
@@ -39,20 +45,9 @@ public class LoggaUt {
     }
 
     public boolean accessDeniedVisas() {
-        verifyAtPage(AccessDeniedPage)
-    }
-
-    private boolean verifyAtPage(def page) {
-        def result = false
-        try {
-            Browser.drive {
-                assert at(page)
-            }
-            result = true
-        } catch (AssertionError e) {
-            // Do nothing - should be false
+        Browser.drive {
+            at AccessDeniedPage
         }
-        result
     }
 
     public void waitFor(long millis) {

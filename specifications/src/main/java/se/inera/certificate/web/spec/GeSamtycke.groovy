@@ -9,19 +9,6 @@ import se.inera.certificate.web.pages.ConsentDeniedPage
 
 public class GeSamtycke {
 
-    private boolean verifyAtPage(def page) {
-        def result = false
-        try {
-            Browser.drive {
-                assert at(page)
-            }
-            result = true
-        } catch (AssertionError e) {
-            // Do nothing - should be false
-        }
-        result
-    }
-
     public void loggaPåSom(String pnr) {
         Browser.drive {
             go "sso?guid=${pnr}"
@@ -30,7 +17,7 @@ public class GeSamtycke {
 
     public void geSamtycke() {
         Browser.drive {
-            assert at(ConsentPage)
+            at ConsentPage
             page.giveConsent()
 
         }
@@ -38,32 +25,40 @@ public class GeSamtycke {
 
     public void nekaSamtycke() {
         Browser.drive {
-            assert at(ConsentPage)
+            at ConsentPage
             page.denyConsent()
         }
     }
 
     public boolean inkorgSidanVisas() {
-        verifyAtPage(InboxPage)
+        Browser.drive {
+            at InboxPage
+        }
     }
 
     public boolean geSamtyckeSidanVisas() {
-        verifyAtPage(ConsentPage)
+        Browser.drive {
+            at ConsentPage
+        }
     }
 
     public boolean samtyckeGivetSidanVisas() {
-        verifyAtPage(ConsentGivenPage)
+        Browser.drive {
+            at ConsentGivenPage
+        }
     }
 
     public void gåVidareTillMinaIntyg() {
         Browser.drive {
-            at(ConsentGivenPage)
+            at ConsentGivenPage
             page.continueToMI()
         }
     }
 
     public boolean samtyckeNekatSidanVisas() {
-        verifyAtPage(ConsentDeniedPage)
+        Browser.drive {
+            at ConsentDeniedPage
+        }
     }
 
 }

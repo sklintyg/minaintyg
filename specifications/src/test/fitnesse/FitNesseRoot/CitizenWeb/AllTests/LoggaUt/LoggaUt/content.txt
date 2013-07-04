@@ -8,7 +8,6 @@ Logga på med användare och välj "Logga ut" i headern.
 
 |script|!-LoggaUt-!|
 |logga ut|
-|wait for|2000|
 |mvks utloggningssida visas|
 |gå till startsida|
 |access denied visas|
