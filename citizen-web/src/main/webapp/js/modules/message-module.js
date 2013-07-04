@@ -15,11 +15,11 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
 
     function _getProperty(key, language, defaultValue, fallbackToDefaultLanguage) {
         var value;
-        
+
         if (typeof language === "undefined") {
             language = $rootScope.lang;
         }
-        
+
         value = _getPropertyInLanguage(language, key);
         if (typeof value === "undefined") {
             // use fallback attr value if defined
@@ -50,7 +50,7 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
     }
 
     function _checkResources() {
-        if(_messageResources==null) {
+        if (_messageResources == null) {
             _messageResources = {
                 "sv": {
                     "initial.key": "Initial nyckel"
@@ -71,11 +71,15 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
 
     return {
         restrict: "EA",
-        scope: true,
+        scope: {
+            "key": "@",
+            "param": "=",
+            "params": "="
+        },
         replace: true,
         template: "<span ng-bind-html-unsafe='resultValue'></span>",
-        link: function ($scope, element, attr) {
-            var lang = $rootScope.lang;
+        link: function (scope, element, attr) {
+            var result;
             // observe changes to interpolated attribute
             attr.$observe('key', function (interpolatedKey) {
                 var normalizedKey = angular.lowercase(interpolatedKey);
@@ -85,8 +89,23 @@ angular.module('modules.messages', []).factory("messageService", ['$rootScope', 
                 } else {
                     useLanguage = $rootScope.lang;
                 }
+
+                result = messageService.getProperty(normalizedKey, useLanguage, attr.fallback, (typeof attr.fallbackDefaultLang !== "undefined"));
+
+                if (typeof scope.param !== "undefined") {
+                    console.log(scope.param);
+                    result = result.replace("%0", scope.param);
+                } else {
+                    if (typeof scope.params !== "undefined") {
+                        var myparams = scope.params;
+                        for (var i = 0; i < myparams.length; i++) {
+                            result = result.replace("%" + i, myparams[i]);
+                        }
+                    }
+                }
+
                 // now get the value to display..
-                $scope.resultValue = messageService.getProperty(normalizedKey, useLanguage, attr.fallback, (typeof attr.fallbackDefaultLang !== "undefined"));
+                scope.resultValue = result;
             });
         }
     }
