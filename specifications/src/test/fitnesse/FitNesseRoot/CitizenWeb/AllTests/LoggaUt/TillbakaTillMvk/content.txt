@@ -10,7 +10,6 @@ Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inlog
 
 |script|!-LoggaUt-!|
 |tillbaka till mvk|
-|wait for|2000|
 |mvks inloggningssida visas|
 |gå till startsida|
 |access denied visas|

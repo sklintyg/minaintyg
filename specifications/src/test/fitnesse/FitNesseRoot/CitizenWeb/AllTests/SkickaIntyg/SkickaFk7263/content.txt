@@ -9,7 +9,6 @@
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
 |script|!-VisaIntyg-!|
-|wait for | 1000 |
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|intyg-1|
@@ -24,14 +23,12 @@
 |script|!-SkickaIntyg-!|
 |summerings vyn visas|
 |bekräfta skicka intyg|
-|wait for|500|
 |resultat sidan visas|
 |gå tillbaka till intyget|
 
 !3 Verifiera att intyget nu har status 'skickat'. 
 
 |script|!-VisaIntyg-!|
-|wait for | 500 |
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|intyg-1|

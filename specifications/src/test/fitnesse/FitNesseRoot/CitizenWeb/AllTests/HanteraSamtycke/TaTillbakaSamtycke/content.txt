@@ -4,17 +4,19 @@ Givet
 |personnr|samtycke|
 |19121212-1212|ja|
 
-Logga på som användare som har samtycke. Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas
+!3 Logga på som användare som har samtycke.
+
+|script|!-ListaIntyg-!|
+|logga på som|19121212-1212|
+|inkorgsidan visas|
+
+!3 Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas
 
 |script|!-TaTillbakaSamtycke-!|
-|logga på som|19121212-1212|
-|inkorg sidan visas|
 |gå till om mina intyg sidan|
 |om mina intyg sidan visas|
 |gå till om samtycke sidan|
 |om samtycke avsnitt visas|
 |välj återta samtycke|
-|wait for|500|
 |bekräfta återta samtycke|
-|wait for|500|
 |samtycke sidan visas|

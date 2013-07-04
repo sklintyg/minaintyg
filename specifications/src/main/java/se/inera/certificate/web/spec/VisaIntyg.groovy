@@ -6,7 +6,11 @@ import se.inera.certificate.web.pages.IntygPage
 public class VisaIntyg {
 
     public boolean intygssidanVisas() {
-        Browser.drive { at(IntygPage) }
+        Browser.drive {
+            waitFor {
+                at IntygPage
+            }
+        }
     }
 
     public boolean intygetsTypÄr(String typ) {
@@ -37,16 +41,11 @@ public class VisaIntyg {
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
         def result = false
         Browser.drive {
-            at IntygPage
+            waitFor {
+                at IntygPage
+            }
             result = ($("#lastest-certificate-event", text: contains(textFragment)).size() == 1)
         }
         result
     }
-
-
-
-    public void waitFor(long millis) {
-        System.sleep(millis)
-    }
-
 }

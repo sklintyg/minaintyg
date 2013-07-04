@@ -14,20 +14,26 @@ public class ListaIntyg {
 
     public boolean inkorgsidanVisas() {
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
         }
     }
 
     public boolean arkiveradesidanVisas() {
         Browser.drive {
-            at ArchivedPage
+            waitFor {
+                at ArchivedPage
+            }
         }
     }
 
     public boolean listaMedIntygVisas() {
         def result = false
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
             result = page.certificateTable.isDisplayed()
         }
         result
@@ -36,7 +42,9 @@ public class ListaIntyg {
     public boolean listaMedArkiveradeIntygVisas() {
         def result = false
         Browser.drive {
-            at ArchivedPage
+            waitFor {
+                at ArchivedPage
+            }
             result = page.certificateTable.isDisplayed()
         }
         result
@@ -45,7 +53,9 @@ public class ListaIntyg {
     public boolean finnsIngaIntyg() {
         def result = false
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
             result = page.noCertificates.isDisplayed()
         }
         result
@@ -82,7 +92,9 @@ public class ListaIntyg {
     public boolean arkiveratIntygFinnsIListan(String id) {
         def result = false
         Browser.drive {
-            at ArchivedPage
+            waitFor {
+                at ArchivedPage
+            }
             result = page.certificateExists(id)
         }
         result
@@ -91,7 +103,9 @@ public class ListaIntyg {
     public boolean arkiveratIntygFinnsEjIListan(String id) {
         def result = false
         Browser.drive {
-            at ArchivedPage
+            waitFor {
+                at ArchivedPage
+            }
             result = !page.certificateExists(id)
         }
         result
@@ -100,7 +114,9 @@ public class ListaIntyg {
     public boolean intygFinnsIListan(String id) {
         def result = false
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
             result = page.certificateExists(id)
         }
         result
@@ -109,7 +125,9 @@ public class ListaIntyg {
     public boolean intygFinnsEjIListan(String id) {
         def result = false
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
             result = !page.certificateExists(id)
         }
         result
@@ -118,7 +136,9 @@ public class ListaIntyg {
     public boolean rättatIntygVisasKorrekt(String id) {
         def result = false
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
             result = page.cancelledCertificateDisplayed(id);
         }
         result
@@ -129,9 +149,5 @@ public class ListaIntyg {
             at InboxPage
             page.viewCertificate(id)
         }
-    }
-
-    public void waitFor(long millis) {
-        System.sleep(millis)
     }
 }
