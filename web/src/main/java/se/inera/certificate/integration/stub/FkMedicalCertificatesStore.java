@@ -1,11 +1,10 @@
 package se.inera.certificate.integration.stub;
 
-import com.google.common.collect.Maps;
-import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class FkMedicalCertificatesStore {
@@ -29,7 +28,7 @@ public class FkMedicalCertificatesStore {
     }
 
     public void makulera(String id) {
-        Map<String, String> m = Maps.newHashMap(certificates.get(id));
+        Map<String, String> m = new HashMap<>(certificates.get(id));
         m.put("Makulerad", "JA");
         certificates.put(id, m);
     }

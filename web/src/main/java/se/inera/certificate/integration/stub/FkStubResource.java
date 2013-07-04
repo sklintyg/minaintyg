@@ -1,16 +1,18 @@
 package se.inera.certificate.integration.stub;
 
-import com.google.common.collect.Maps;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 @Path("/fk")
 @Transactional
@@ -61,7 +63,7 @@ public class FkStubResource {
     @Path("/certificates")
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Map<String, String>> certificatesJson() {
-        return Maps.newHashMap(fkMedicalCertificatesStore.getAll());
+        return new HashMap<>(fkMedicalCertificatesStore.getAll());
     }
 
     @POST
@@ -81,8 +83,7 @@ public class FkStubResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, String> clearJson() {
         fkMedicalCertificatesStore.clear();
-        Map<String, String> m = Maps.newHashMap();
-        m.put("result", "ok");
-        return m;
+        Collections.singletonMap("result", "ok");
+        return Collections.singletonMap("result", "ok");
     }
 }
