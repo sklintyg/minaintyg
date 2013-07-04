@@ -38,7 +38,7 @@
     </div>
     <div ng-show="doneLoading && (certificates | inboxfilter).length>0">-->
       <div id="certTable">
-        <div ng-repeat="cert in certificates | inboxfilter" class="{{cert.status}}">
+        <div ng-repeat="cert in certificates | inboxfilter" class="{{cert.status}}" data-ng-animate="'custom'">
           <div class="certificate">
             <div class="row-fluid">
               <div class="span12">
