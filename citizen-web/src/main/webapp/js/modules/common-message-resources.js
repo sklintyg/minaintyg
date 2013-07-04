@@ -21,7 +21,8 @@ var commonMessageResources = {
         "certificatetypes.rli.typename" : "RLI",
 
         "certificates.status.cancelled" : "Tillbakadraget",
-        "certificates.status.sent" : "Skickat",
+        "certificates.status.sent" : "Skickat till",
+	    "certificates.target.fk" : "Försäkringskassan",
 
         "certificates.send.label.patientname" : "Patientens namn:",
         "certificates.send.label.issued" : "Utfärdat:",
@@ -38,8 +39,7 @@ var commonMessageResources = {
         "error.couldnotarchivecert" : "Intyget kunde inte flyttas till arkivet.",
         "error.couldnotrestorecert" : "Intyget kunde inte återställas till inkorgen.",
         "error.couldnotrevokeconsent" : "Kunde inte återta samtycke.",
-        "error.couldnotgiveconsent" : "Det gick inte att spara samtycke."
-
+        "error.couldnotgiveconsent" : "Det gick inte att spara samtycke.",
     },
     "en" : {
         "label.inbox" : "The INBOX",

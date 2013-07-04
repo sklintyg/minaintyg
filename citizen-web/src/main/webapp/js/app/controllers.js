@@ -7,6 +7,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
             $scope.doneLoading = false;
             $scope.messageService = messageService;
             $scope.pageTitle = "Inkorgen";
+	        $scope.isCollapsed = true;
 
             $scope.sendSelected = function(item) {
                 $log.debug("send " + item.id);
@@ -30,6 +31,15 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
                     }
                 });
             }
+
+	        $scope.toggleStatusShow = function() {
+		        if (!$scope.isCollapsed)
+			        $scope.isCollapsed = true;
+		        else if ($scope.isCollapsed)
+			        $scope.isCollapsed = false;
+
+		        return false;
+	        }
 
             // fetch list of certs initially
             listCertService.getCertificates(function(list) {
