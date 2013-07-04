@@ -32,19 +32,25 @@ public class GeSamtycke {
 
     public boolean inkorgSidanVisas() {
         Browser.drive {
-            at InboxPage
+            waitFor {
+                at InboxPage
+            }
         }
     }
 
     public boolean geSamtyckeSidanVisas() {
         Browser.drive {
-            at ConsentPage
+            waitFor {
+                at ConsentPage
+            }
         }
     }
 
     public boolean samtyckeGivetSidanVisas() {
         Browser.drive {
-            at ConsentGivenPage
+            waitFor {
+                at ConsentGivenPage
+            }
         }
     }
 

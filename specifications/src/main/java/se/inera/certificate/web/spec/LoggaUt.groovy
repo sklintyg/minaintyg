@@ -26,7 +26,9 @@ public class LoggaUt {
 
     public boolean mvksInloggningssidaVisas() {
         Browser.drive {
-            at MvkLoginPage
+            waitFor {
+                at MvkLoginPage
+            }
         }
     }
 
@@ -46,11 +48,9 @@ public class LoggaUt {
 
     public boolean accessDeniedVisas() {
         Browser.drive {
-            at AccessDeniedPage
+            waitFor {
+                at AccessDeniedPage
+            }
         }
-    }
-
-    public void waitFor(long millis) {
-        System.sleep(millis)
     }
 }

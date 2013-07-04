@@ -9,7 +9,9 @@ public class SkickaIntyg {
     public boolean summeringsVynVisas() {
         def result = false
         Browser.drive {
-            at SendCertificateFlowPage
+            waitFor {
+                at SendCertificateFlowPage
+            }
             result = page.confirmAndSendBtn.isDisplayed()
         }
         result
@@ -25,7 +27,9 @@ public class SkickaIntyg {
     public boolean resultatSidanVisas() {
         def result = false
         Browser.drive {
-            at SendCertificateFlowPage
+            waitFor {
+                at SendCertificateFlowPage
+            }
             result = page.resultMessageContainer.isDisplayed()
         }
         result
@@ -34,7 +38,9 @@ public class SkickaIntyg {
     public boolean redanSkickatVarningVisas() {
         def result = false
         Browser.drive {
-            at SendCertificateFlowPage
+            waitFor {
+                at SendCertificateFlowPage
+            }
             result = page.alreadySentWarningMessage.isDisplayed()
         }
         result
@@ -47,7 +53,4 @@ public class SkickaIntyg {
         }
     }
 
-    public void waitFor(long millis) {
-        System.sleep(millis)
-    }
 }

@@ -15,7 +15,6 @@
 |summerings vyn visas|
 |redan skickat varning visas|
 |bekräfta skicka intyg|
-|wait for|500|
 |resultat sidan visas|
 |gå tillbaka till intyget|
 
