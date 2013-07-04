@@ -1,3 +1,18 @@
+<!-- Modal confirm dialog for restore -->
+<div id="restore-confirmation-dialog" modal="restoreOpen" close="closeRestoreDialog(false)" options="dialogOpts" role="alertdialog" aria-hidden="{{!restoreOpen}}">
+  <div class="modal-header">
+    <button class="close" ng-click="closeRestoreDialog(false)" aria-label="{{messageService.getProperty('common.close')}}">×</button>
+    <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="archived.restoremodal.header"></span></h3>
+  </div>
+  <div class="modal-body">
+    <p><span message key="archived.restoremodal.text"></span></p>
+  </div>
+  <div class="modal-footer">
+    <button id="restore-button" class="btn btn-success" ng-click="closeRestoreDialog(true)"><span message key="label.restore"></span></button>
+    <button class="btn btn-link" ng-click="closeRestoreDialog(false)"><span message key="common.cancel"></span></button>
+  </div>
+</div>
+
 <div class="row-fluid">
 	<div class="span7">
 		<h1 ng-focus="pagefocus" tabindex="0">
@@ -32,7 +47,7 @@
         <td headers="certperiod">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
         <td headers="issuedby">{{cert.careunitName}}</td>
         <td headers="latestEvent"><span message key="certificates.status.{{cert.status}}" fallback="Ingen"></span></td>
-        <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="restoreCert(cert.id)"><span message key="label.restore"></span></a></td>
+        <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="openRestoreDialog(cert.id)"><span message key="label.restore"></span></a></td>
       </tr>
     </tbody>
   </table>

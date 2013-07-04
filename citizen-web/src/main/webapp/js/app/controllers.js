@@ -76,6 +76,30 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'lis
     $scope.certificates = [];
     $scope.doneLoading = false;
 
+    // Restore dialog
+    $scope.restoreOpen = false;
+    $scope.dialogfocus = false;
+    $scope.certToRestore = {};
+    $scope.dialogOpts = {
+     backdropFade : true,
+     dialogFade : true
+    };
+
+    $scope.openRestoreDialog = function(cert) {
+        $scope.certToRestore = cert;
+        $scope.restoreOpen = true;
+        $scope.dialogfocus = true;
+    }
+
+    $scope.closeRestoreDialog = function(confirm) {
+        if(confirm)
+        {
+	        $scope.restoreCert($scope.certToRestore)
+        }
+        $scope.restoreOpen = false;
+        $scope.dialogfocus = false;
+    }
+
     $scope.restoreCert = function(certId) {
         $log.debug("Restore requested for cert:" + certId);
         for ( var i = 0; i < $scope.certificates.length; i++) {
