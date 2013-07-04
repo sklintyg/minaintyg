@@ -15,7 +15,7 @@ public class Undantagshantering {
 
     public boolean sidanFinnsEjVisas() {
         Browser.drive {
-            at(NotFoundPage)
+            at NotFoundPage
         }
     }
 }

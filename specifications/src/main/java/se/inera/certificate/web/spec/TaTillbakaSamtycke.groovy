@@ -13,63 +13,56 @@ public class TaTillbakaSamtycke {
     }
 
     public boolean inkorgSidanVisas() {
-        verifyAtPage(InboxPage)
+        Browser.drive {
+            at InboxPage
+        }
     }
 
     public void gåTillOmMinaIntygSidan() {
         Browser.drive {
-            assert at(InboxPage)
+            at InboxPage
             page.goToAboutMinaIntyg()
         }
     }
 
     public boolean omMinaIntygSidanVisas() {
-        verifyAtPage(AboutMinaIntygPage)
+        Browser.drive {
+            at AboutMinaIntygPage
+        }
     }
 
     public void gåTillOmSamtyckeSidan() {
         Browser.drive {
-            assert at(AboutMinaIntygPage)
+            at AboutMinaIntygPage
             page.gotoAboutConsentSection()
         }
     }
 
     public void omSamtyckeAvsnittVisas() {
         Browser.drive {
-            assert at(AboutMinaIntygPage)
+            at AboutMinaIntygPage
             assert page.aboutSamtyckeSection.isDisplayed()
         }
     }
 
     public boolean väljÅtertaSamtycke() {
         Browser.drive {
-            at(AboutMinaIntygPage)
+            at AboutMinaIntygPage
             page.openRevokeConsentDialog()
         }
     }
 
     public void bekräftaÅtertaSamtycke() {
         Browser.drive {
-            assert at(AboutMinaIntygPage)
+            at AboutMinaIntygPage
             page.revokeConsent()
         }
     }
 
     public boolean samtyckeSidanVisas() {
-        verifyAtPage(ConsentPage)
-    }
-
-    private boolean verifyAtPage(def page) {
-        def result = false
-        try {
-            Browser.drive {
-                assert at(page)
-            }
-            result = true
-        } catch (AssertionError e) {
-            // Do nothing - should be false
+        Browser.drive {
+            at ConsentPage
         }
-        result
     }
 
     public void waitFor(long millis) {

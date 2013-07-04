@@ -12,7 +12,7 @@ public class VisaIntyg {
     public boolean intygetsTypÄr(String typ) {
         def result = false
         Browser.drive {
-            at(IntygPage)
+            at IntygPage
             result = ($("#certType", title: typ).size() == 1)
         }
         result
@@ -21,31 +21,32 @@ public class VisaIntyg {
     public boolean intygetsIdÄr(String id) {
         def result = false
         Browser.drive {
-            at(IntygPage)
+            at IntygPage
             result = ($("#certId", title: id).size() == 1)
         }
         result
     }
-    
+
     public void väljSkickaIntyg() {
         Browser.drive {
-            at(IntygPage)
+            at IntygPage
             page.startSendFlow()
         }
     }
+
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
         def result = false
         Browser.drive {
-            at(IntygPage)
-            result = ($("#lastest-certificate-event", text:contains(textFragment)).size() == 1)
+            at IntygPage
+            result = ($("#lastest-certificate-event", text: contains(textFragment)).size() == 1)
         }
         result
     }
-    
-    
+
+
 
     public void waitFor(long millis) {
         System.sleep(millis)
     }
-    
+
 }

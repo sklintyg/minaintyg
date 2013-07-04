@@ -12,31 +12,22 @@ public class ListaIntyg {
         }
     }
 
-    private boolean verifyAtPage(def page) {
-        def result = false
-        try {
-            Browser.drive {
-                assert at(page)
-            }
-            result = true
-        } catch (AssertionError e) {
-            // Do nothing - should be false
-        }
-        result
-    }
-
     public boolean inkorgsidanVisas() {
-        verifyAtPage(InboxPage)
+        Browser.drive {
+            at InboxPage
+        }
     }
 
     public boolean arkiveradesidanVisas() {
-        verifyAtPage(ArchivedPage)
+        Browser.drive {
+            at ArchivedPage
+        }
     }
 
     public boolean listaMedIntygVisas() {
         def result = false
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             result = page.certificateTable.isDisplayed()
         }
         result
@@ -45,7 +36,7 @@ public class ListaIntyg {
     public boolean listaMedArkiveradeIntygVisas() {
         def result = false
         Browser.drive {
-            at(ArchivedPage)
+            at ArchivedPage
             result = page.certificateTable.isDisplayed()
         }
         result
@@ -54,7 +45,7 @@ public class ListaIntyg {
     public boolean finnsIngaIntyg() {
         def result = false
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             result = page.noCertificates.isDisplayed()
         }
         result
@@ -62,28 +53,28 @@ public class ListaIntyg {
 
     public void arkiveraIntyg(String id) {
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             page.archiveCertificate(id)
         }
     }
 
     public void återställIntyg(String id) {
         Browser.drive {
-            at(ArchivedPage)
+            at ArchivedPage
             page.restoreCertificate(id)
         }
     }
 
     public void gåTillArkiveradeIntyg() {
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             page.goToArchivedTab()
         }
     }
 
     public void gåTillInkorgen() {
         Browser.drive {
-            at(ArchivedPage)
+            at ArchivedPage
             page.goToInboxPage()
         }
     }
@@ -91,7 +82,7 @@ public class ListaIntyg {
     public boolean arkiveratIntygFinnsIListan(String id) {
         def result = false
         Browser.drive {
-            at(ArchivedPage)
+            at ArchivedPage
             result = page.certificateExists(id)
         }
         result
@@ -100,7 +91,7 @@ public class ListaIntyg {
     public boolean arkiveratIntygFinnsEjIListan(String id) {
         def result = false
         Browser.drive {
-            at(ArchivedPage)
+            at ArchivedPage
             result = !page.certificateExists(id)
         }
         result
@@ -109,7 +100,7 @@ public class ListaIntyg {
     public boolean intygFinnsIListan(String id) {
         def result = false
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             result = page.certificateExists(id)
         }
         result
@@ -118,7 +109,7 @@ public class ListaIntyg {
     public boolean intygFinnsEjIListan(String id) {
         def result = false
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             result = !page.certificateExists(id)
         }
         result
@@ -127,7 +118,7 @@ public class ListaIntyg {
     public boolean rättatIntygVisasKorrekt(String id) {
         def result = false
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             result = page.cancelledCertificateDisplayed(id);
         }
         result
@@ -135,7 +126,7 @@ public class ListaIntyg {
 
     public void visaIntyg(String id) {
         Browser.drive {
-            at(InboxPage)
+            at InboxPage
             page.viewCertificate(id)
         }
     }
