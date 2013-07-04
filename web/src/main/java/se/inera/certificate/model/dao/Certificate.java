@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.model.dao;
 
-import static se.inera.certificate.model.util.Iterables.find;
+import static com.google.common.collect.Iterables.find;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -43,7 +43,8 @@ import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.ModelException;
-import se.inera.certificate.model.util.Predicate;
+
+import com.google.common.base.Predicate;
 
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
@@ -80,6 +81,7 @@ public class Certificate {
     /**
      * Name of the doctor that signed the certificate.
      */
+    // TODO: naming? (PW)
     @Column(name = "SIGNING_DOCTOR_NAME", nullable = false)
     private String signingDoctorName;
 

@@ -1,8 +1,8 @@
 package se.inera.certificate.integration.validator;
 
-import static se.inera.certificate.model.util.Strings.join;
 import static java.util.Arrays.asList;
 
+import com.google.common.base.Joiner;
 import iso.v21090.dt.v1.II;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
@@ -47,7 +47,7 @@ public class LakarutlatandeValidator {
 
         // Check patient o.i.d.
         if (patient.getPersonId().getRoot() == null || !PATIENT_ID_OIDS.contains(patient.getPersonId().getRoot())) {
-            validationErrors.add(String.format("Wrong o.i.d. for Patient Id! Should be %s", join(" or ", PATIENT_ID_OIDS)));
+            validationErrors.add(String.format("Wrong o.i.d. for Patient Id! Should be %s", Joiner.on(" or ").join(PATIENT_ID_OIDS)));
         }
     }
 

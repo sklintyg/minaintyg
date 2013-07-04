@@ -1,6 +1,6 @@
 package se.inera.certificate.integration.validator;
 
-import static se.inera.certificate.model.util.Strings.join;
+import com.google.common.base.Joiner;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ public class ValidationException extends RuntimeException {
     }
 
     public ValidationException(List<String> messages) {
-        super(join("\n", messages));
+        super(Joiner.on("\n").join(messages));
     }
 }
