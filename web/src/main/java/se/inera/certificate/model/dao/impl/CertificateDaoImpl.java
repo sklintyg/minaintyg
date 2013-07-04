@@ -71,7 +71,7 @@ public class CertificateDaoImpl implements CertificateDao {
 
         // filter by certificate types
         if (types != null && !types.isEmpty()) {
-            predicates.add(root.get("type").in(types));
+            predicates.add(root.get("type").in(toLowerCase(types)));
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));
@@ -84,6 +84,7 @@ public class CertificateDaoImpl implements CertificateDao {
         // expect a small number, so lets filter in memory
         return new DateFilter(result).filter(fromDate, toDate);
     }
+
 
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String certificateId) {
@@ -129,4 +130,11 @@ public class CertificateDaoImpl implements CertificateDao {
         entityManager.remove(certificate);
     }
 
+    private List<String> toLowerCase(List<String> list) {
+        List<String> result = new ArrayList<>();
+        for (String item: list) {
+            result.add(item.toLowerCase());
+        }
+        return result;
+    }
 }

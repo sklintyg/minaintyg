@@ -53,7 +53,7 @@ public class ListCertificatesResponderImpl implements ListCertificatesResponderI
             List<Certificate> certificates = certificateService.listCertificates(
                     parameters.getNationalIdentityNumber(), parameters.getCertificateType(), parameters.getFromDate(), parameters.getToDate());
             for (Certificate certificate : certificates) {
-                if (!certificate.getDeleted() && !certificate.isRevoked()) {
+                if (parameters.getCertificateType().isEmpty() || !(certificate.getDeleted() || certificate.isRevoked())) {
                     response.getMeta().add(ModelConverter.toCertificateMetaType(certificate));
                 }
             }
