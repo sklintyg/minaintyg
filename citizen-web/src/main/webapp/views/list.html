@@ -1,4 +1,20 @@
-<h1 ng-focus="pagefocus" tabindex="0">
+<!-- Modal confirm dialog for archive -->
+<div id="archive-confirmation-dialog" modal="archiveOpen" close="closeArchiveDialog(false)" options="dialogOpts" role="alertdialog" aria-hidden="{{!archiveOpen}}">
+  <div class="modal-header">
+    <button class="close" ng-click="closeArchiveDialog(false)" aria-label="{{messageService.getProperty('common.close')}}">×</button>
+    <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="inbox.archivemodal.header"></span></h3>
+  </div>
+  <div class="modal-body">
+    <p><span message key="inbox.archivemodal.text"></span></p>
+  </div>
+  <div class="modal-footer">
+    <button id="archive-button" class="btn btn-success" ng-click="closeArchiveDialog(true)"><span message key="button.archive"></span></button>
+    <button class="btn btn-link" ng-click="closeArchiveDialog(false)"><span message key="common.cancel"></span></button>
+  </div>
+</div>
+
+<!-- View start -->
+<h1 ng-focus="pagefocus" tabindex="0" xmlns="http://www.w3.org/1999/html">
   <span id="inboxHeader" message key="inbox.header"></span>
 </h1>
 
@@ -38,7 +54,9 @@
                         <span message key="listtable.headers.issued"></span> <span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="span1 archive">
-                        <a id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" href="#archiveModal" role="button" data-toggle="modal" ng-click="archiveSelected(cert)"><img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /></a>
+                        <a id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                          <img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" />
+                        </a>
                       </div>
                     </div>
                   </div>

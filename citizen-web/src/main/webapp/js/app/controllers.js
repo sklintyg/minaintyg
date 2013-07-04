@@ -32,13 +32,28 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
                 });
             }
 
-	        $scope.toggleStatusShow = function() {
-		        if (!$scope.isCollapsed)
-			        $scope.isCollapsed = true;
-		        else if ($scope.isCollapsed)
-			        $scope.isCollapsed = false;
+	        // Archive dialog
+	        $scope.archiveOpen = false;
+	        $scope.dialogfocus = false;
+	        $scope.certToArchive = {};
+	        $scope.dialogOpts = {
+             backdropFade : true,
+             dialogFade : true
+            };
 
-		        return false;
+	        $scope.openArchiveDialog = function(cert) {
+		        $scope.certToArchive = cert;
+		        $scope.archiveOpen = true;
+		        $scope.dialogfocus = true;
+	        }
+
+	        $scope.closeArchiveDialog = function(confirm) {
+		        if(confirm)
+		        {
+			        $scope.archiveSelected($scope.certToArchive);
+		        }
+		        $scope.archiveOpen = false;
+		        $scope.dialogfocus = false;
 	        }
 
             // fetch list of certs initially
