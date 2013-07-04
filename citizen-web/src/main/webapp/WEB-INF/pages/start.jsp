@@ -76,7 +76,7 @@
 
   <!--[if lte IE 8]>
     <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField' ]; // optional
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField','miSpinner' ]; // optional
     </script>
     
     <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
@@ -96,6 +96,7 @@
   <%-- Dependencies to common components --%>
   <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/modules/mi-common-directive.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/util-services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
