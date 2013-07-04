@@ -1,7 +1,5 @@
 package se.inera.certificate.model;
 
-import static com.google.common.base.Strings.emptyToNull;
-import static com.google.common.collect.Iterables.find;
 import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
 import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
 import static se.inera.certificate.model.Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
@@ -14,6 +12,9 @@ import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONT
 import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
+import static se.inera.certificate.model.util.Iterables.find;
+import static se.inera.certificate.model.util.Strings.emptyToNull;
+import static se.inera.certificate.model.util.Strings.join;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,7 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
+import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach
@@ -238,6 +238,7 @@ public class Lakarutlatande {
         }, null);
     }
 
+
     public Vardkontakt getVardkontakt(final Vardkontakttyp vardkontaktTyp) {
         return find(vardkontakter, new Predicate<Vardkontakt>() {
             @Override
@@ -313,7 +314,7 @@ public class Lakarutlatande {
             parts.add(vardenhet.getArbetsplatskod());
         }
 
-        return emptyToNull(Joiner.on(" - ").skipNulls().join(parts));
+        return emptyToNull(join(" - ", parts));
     }
 
     public List<Status> getStatus() {
