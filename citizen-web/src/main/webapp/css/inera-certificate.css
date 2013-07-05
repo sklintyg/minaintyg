@@ -116,6 +116,7 @@
 }
 
 .archive a {
+    cursor: pointer;
 	display: block;
 	padding: 10px 0px 0 14px;  display: block;  
 	height: 32px;
