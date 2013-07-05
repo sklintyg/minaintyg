@@ -67,11 +67,31 @@ public class ListaIntyg {
             page.archiveCertificate(id)
         }
     }
+    
+    public void konfirmeraArkiveraIntyg() {
+        Browser.drive {
+            at InboxPage
+            waitFor (message: "no button") {
+                confirmArchiveButton.displayed
+            }
+            page.confirmArchiveCertificate()
+        }
+    }
 
     public void återställIntyg(String id) {
         Browser.drive {
             at ArchivedPage
             page.restoreCertificate(id)
+        }
+    }
+
+    public void konfirmeraÅterställIntyg() {
+        Browser.drive {
+            at ArchivedPage
+            waitFor {
+                confirmRestoreButton.displayed
+            }
+            page.confirmRestoreCertificate()
         }
     }
 
@@ -105,6 +125,7 @@ public class ListaIntyg {
         Browser.drive {
             waitFor {
                 at ArchivedPage
+                !page.certificateExists(id)
             }
             result = !page.certificateExists(id)
         }
@@ -116,6 +137,7 @@ public class ListaIntyg {
         Browser.drive {
             waitFor {
                 at InboxPage
+                page.certificateExists(id)
             }
             result = page.certificateExists(id)
         }
@@ -127,6 +149,7 @@ public class ListaIntyg {
         Browser.drive {
             waitFor {
                 at InboxPage
+                !page.certificateExists(id)
             }
             result = !page.certificateExists(id)
         }

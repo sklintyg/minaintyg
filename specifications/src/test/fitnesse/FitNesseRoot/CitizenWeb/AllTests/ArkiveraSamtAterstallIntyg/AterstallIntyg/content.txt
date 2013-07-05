@@ -8,6 +8,7 @@ Därefter återställs detta och verifiering sker att intyget ej längre listas 
 
 |script|!-ListaIntyg-!|
 |återställ intyg|intyg-1|
+|konfirmera återställ intyg|
 |arkiverat intyg finns ej i listan | intyg-1 |
 |gå till inkorgen|
 |inkorgsidan visas|

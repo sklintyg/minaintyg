@@ -15,10 +15,15 @@ class ArchivedPage extends Page {
         viewCertificateButton(required: false) { $("#viewCertificateBtn") }
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
+        confirmRestoreButton(required: false) { $("#restore-button") }
     }
 
     def restoreCertificate(String id) {
         $("#restoreCertificate-${id}").click()
+    }
+
+    def confirmRestoreCertificate() {
+        confirmRestoreButton.click()
     }
 
     def boolean certificateExists(String id) {

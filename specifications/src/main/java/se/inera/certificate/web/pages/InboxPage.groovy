@@ -14,10 +14,15 @@ class InboxPage extends Page {
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
         aboutTab(required: false) { $("#aboutTab") }
+        confirmArchiveButton(required: false) { $("#archive-button") }
     }
 
     def archiveCertificate(String id) {
         $("#archiveCertificateBtn-${id}").click()
+    }
+
+    def confirmArchiveCertificate() {
+        confirmArchiveButton.click()
     }
 
     def boolean certificateExists(String id) {
