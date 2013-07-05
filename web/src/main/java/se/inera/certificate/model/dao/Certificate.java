@@ -181,7 +181,7 @@ public class Certificate {
     }
 
     public void setType(String type) {
-        this.type = type.toLowerCase();
+        this.type = type;
     }
 
     public String getSigningDoctorName() {

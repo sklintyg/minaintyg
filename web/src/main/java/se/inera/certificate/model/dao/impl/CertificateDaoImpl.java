@@ -71,7 +71,7 @@ public class CertificateDaoImpl implements CertificateDao {
 
         // filter by certificate types
         if (types != null && !types.isEmpty()) {
-            predicates.add(root.get("type").in(toLowerCase(types)));
+            predicates.add(criteriaBuilder.lower(root.<String>get("type")).in(toLowerCase(types)));
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));
