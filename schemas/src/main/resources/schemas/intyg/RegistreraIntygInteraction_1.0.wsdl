@@ -5,22 +5,22 @@
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
 	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:i="urn:intyg:1"
+	xmlns:i="urn:intyg:common-model:1"
 	xmlns:tns="urn:intyg:RegistreraIntyg:1"
 	targetNamespace="urn:intyg:RegistreraIntyg:1">
 
 	<wsdl:types>
 	  <xs:schema>
-      <xs:import schemaLocation="Intyg.xsd" namespace="urn:intyg:1"/>
-    </xs:schema>
+        <xs:import schemaLocation="intyg_common_model.xsd" namespace="urn:intyg:common-model:1"/>
+      </xs:schema>
 	</wsdl:types>
 
 	<wsdl:message name="RegistreraIntygRequest">
-		<wsdl:part name="intyg" element="i:lakarutlatande" />
+		<wsdl:part name="intyg" element="i:utlatande" />
 	</wsdl:message>
 
 	<wsdl:message name="RegistreraIntygResponse">
-		<wsdl:part name="intyg" element="i:lakarutlatande"/>
+		<wsdl:part name="intyg" element="i:utlatande"/>
 	</wsdl:message>
 
 	<wsdl:portType name="RegistreraIntygResponderInterface">

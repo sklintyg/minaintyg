@@ -75,7 +75,7 @@
                     <extraarg>-xjc-XtoString</extraarg>
                     <extraarg>-xjc-Xinheritance</extraarg>
                     <extraarg>-p</extraarg>
-                    <extraarg>urn:intyg:1=se.inera.certificate.integration.v1</extraarg>
+                    <extraarg>urn:intyg:common-model:1=se.inera.certificate.common.v1</extraarg>
                   </extraargs>
                 </wsdlOption>
               </wsdlOptions>
