@@ -27,7 +27,6 @@ class ArchivedPage extends Page {
     }
 
     def boolean certificateExists(String id) {
-        System.out.println("HAPP")
         $("#restoreCertificate-${id}").isDisplayed()
     }
 
