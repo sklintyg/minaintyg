@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1"
-	xmlns:tns="urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateResponder:1"
+	targetNamespace="urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1"
+	xmlns:tns="urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1"
 	elementFormDefault="qualified"
 	xmlns:qa="urn:riv:insuranceprocess:healthreporting:medcertqa:1" 
 	xmlns:pref2="urn:riv:insuranceprocess:healthreporting:2"
 	xmlns:cert="urn:riv:insuranceprocess:certificate:1">
 
 	<import 
-		schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd" 
+		schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd"
 		namespace="urn:riv:insuranceprocess:healthreporting:2" />
 	
 	<import
 		namespace="urn:riv:insuranceprocess:healthreporting:medcertqa:1" 
 		schemaLocation="../../core_components/MedicalCertificateQuestionsAnswers_1.0.xsd"/>
 	
-	<element name="SendMedicalCertificateResponse" type="tns:SendMedicalCertificateResponseType" />
-	<element name="SendMedicalCertificateRequest" type="tns:SendMedicalCertificateRequestType"></element>
+	<element name="RevokeMedicalCertificateResponse" type="tns:RevokeMedicalCertificateResponseType" />
+	<element name="RevokeMedicalCertificateRequest" type="tns:RevokeMedicalCertificateRequestType"></element>
 	
-	<complexType name="SendMedicalCertificateRequestType">
+	<complexType name="RevokeMedicalCertificateRequestType">
 		<sequence>
-			<element name="send" type="tns:SendType"/>
+			<element name="revoke" type="tns:RevokeType"/>
 			<any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>			
 		</sequence>
 	</complexType>
 	
-	<complexType name="SendMedicalCertificateResponseType">
+	<complexType name="RevokeMedicalCertificateResponseType">
 		<sequence>
 			<element name="result" type="pref2:ResultOfCall" />
 			<any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>
 
-	<complexType name="SendType">
+	<complexType name="RevokeType">
 		<sequence>
 			<element name="vardReferens-id" type="string"/>
+			<element name="meddelande" type="string" minOccurs="0" maxOccurs="1"/>
 			<element name="avsantTidpunkt" type="dateTime"/>
 			<element name="adressVard" type="qa:vardAdresseringsType"/>
 			<element name="lakarutlatande" type="qa:lakarutlatandeEnkelType"/>

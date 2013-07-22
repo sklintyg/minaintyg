@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:iso:21090:dt:1"
-	targetNamespace="urn:iso:21090:dt:1" elementFormDefault="qualified"
-	attributeFormDefault="unqualified" version="1.0">
-
-	<!-- Wraps the ISO 21090 schema definition in a namespace -->
-	<xs:include schemaLocation="iso-21090-datatypes.xsd" />
-
-</xs:schema>
