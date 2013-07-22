@@ -76,6 +76,8 @@
                     <extraarg>-xjc-Xinheritance</extraarg>
                     <extraarg>-p</extraarg>
                     <extraarg>urn:intyg:common-model:1=se.inera.certificate.common.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:iso:21090:dt:1=iso.v21090.dt.v1</extraarg>
                   </extraargs>
                 </wsdlOption>
               </wsdlOptions>
