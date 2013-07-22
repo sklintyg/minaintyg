@@ -25,7 +25,7 @@
 	attributeFormDefault="unqualified" 
 	version="2.0" >
 
-	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="ISO_dt_subset_1.0.xsd"/> 
+	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="iso-21090-dt-namespace.xsd"/>
 	
 	<xs:annotation>
 		<xs:documentation>

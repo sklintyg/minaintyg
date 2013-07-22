@@ -3,13 +3,11 @@
 	targetNamespace="urn:riv:insuranceprocess:healthreporting:SetCertificateStatusResponder:1"
 	xmlns:tns="urn:riv:insuranceprocess:healthreporting:SetCertificateStatusResponder:1"
 	elementFormDefault="qualified"
-	xmlns:pref="urn:riv:insuranceprocess:healthreporting:mu7263:3"
-	xmlns:pref1="urn:iso:21090:dt:1" 
 	xmlns:pref2="urn:riv:insuranceprocess:healthreporting:2"
 	xmlns:cert="urn:riv:insuranceprocess:certificate:1">
 
 	<import 
-		schemaLocation="../../core_components/ISO_dt_subset_1.0.xsd"
+		schemaLocation="../../core_components/iso-21090-dt-namespace.xsd"
 		namespace="urn:iso:21090:dt:1" />
 	<import 
 		schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd"

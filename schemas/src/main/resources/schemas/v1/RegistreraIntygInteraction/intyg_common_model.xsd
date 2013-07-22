@@ -4,7 +4,7 @@
 	elementFormDefault="qualified" attributeFormDefault="unqualified"
 	version="0.1">
 
-	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="iso-21090-dt-namespace.xsd" />
+	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="../../core_components/iso-21090-dt-namespace.xsd" />
 
 	<xs:element name="utlatande" type="utlatandeType" />
 
