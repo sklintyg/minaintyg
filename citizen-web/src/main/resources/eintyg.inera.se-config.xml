@@ -41,6 +41,11 @@
   <beans>
     <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service" />
 
+    <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
+      <property name="mapper">
+        <bean class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+      </property>
+    </bean>
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basenames">
         <list>

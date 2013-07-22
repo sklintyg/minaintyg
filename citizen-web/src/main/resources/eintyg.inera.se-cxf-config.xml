@@ -40,6 +40,9 @@
 
   <jaxrs:client id="IneraCertificateRestApi" serviceClass="se.inera.certificate.integration.IneraCertificateRestApi"
                 address="${certificates.rest.endpoint.url}">
+    <jaxrs:providers>
+      <ref bean="jacksonJsonProvider"/>
+    </jaxrs:providers>
   </jaxrs:client>
 
   <cxf:bus>

@@ -34,9 +34,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.IneraCertificateRestApi;
+import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -49,6 +52,7 @@ public class ModuleApiController {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String DATE_FORMAT = "yyyyMMdd";
 
     /**
      * Intygstjanstens REST endpoint service.
@@ -56,6 +60,9 @@ public class ModuleApiController {
     @Autowired
     private IneraCertificateRestApi certificateRestService;
 
+    @Autowired
+    private ModuleRestApiFactory moduleApiFactory;
+    
     /**
      * Helper service to get current user.
      */
@@ -67,6 +74,9 @@ public class ModuleApiController {
      */
     @Autowired
     private CertificateService certificateService;
+
+    @Autowired
+    private JacksonJaxbJsonProvider jsonProvider;
 
     /**
      * Return the certificate identified by the given id as JSON.
@@ -81,7 +91,7 @@ public class ModuleApiController {
         LOG.debug("getCertificate: {}", id);
 
         Response response = certificateRestService.getCertificate(citizenService.getCitizen().getUsername(), id);
-        if (response.getStatus() != OK.getStatusCode()) {
+        if (isNotOk(response)) {
             LOG.error("Failed to get JSON for certificate " + id + " from inera-certificate.");
             return Response.status(response.getStatus()).build();
         }
@@ -119,13 +129,39 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        Response response = certificateRestService.getCertificatePdf(citizenService.getCitizen().getUsername(), id);
-        if (response.getStatus() != OK.getStatusCode()) {
-            LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
+        Response response = certificateRestService.getCertificate(citizenService.getCitizen().getUsername(), id);
+        if (isNotOk(response)) {
+            LOG.error("Failed to get certificate " + id + " from inera-certificate.");
             return Response.status(response.getStatus()).build();
         }
 
-        String contentDisposition = response.getHeaderString(CONTENT_DISPOSITION);
-        return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, contentDisposition).build();
+        Lakarutlatande lakarutlatande = response.readEntity(Lakarutlatande.class);
+
+        Response pdf = fetchPdf(lakarutlatande);
+
+        if (isNotOk(pdf)) {
+            LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
+            return Response.status(pdf.getStatus()).build();
+        }
+        
+        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
     }
+
+    private boolean isNotOk(Response response) {
+        return response.getStatus() != OK.getStatusCode();
+    }
+
+    private Response fetchPdf(Lakarutlatande lakarutlatande) {
+        ModuleRestApi api = moduleApiFactory.getModuleRestService(lakarutlatande.getTyp());
+        Response pdf = api.pdf(lakarutlatande);
+        return pdf;
+    }
+
+    private String pdfFileName(Lakarutlatande lakarutlatande) {
+        return String.format("lakarutlatande_%s_%s-%s.pdf",
+                lakarutlatande.getPatient().getId(),
+                lakarutlatande.getValidFromDate().toString(DATE_FORMAT),
+                lakarutlatande.getValidToDate().toString(DATE_FORMAT));
+    }
+
 }
