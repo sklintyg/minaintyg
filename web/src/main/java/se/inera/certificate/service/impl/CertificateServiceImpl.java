@@ -81,8 +81,6 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public Certificate getCertificate(String civicRegistrationNumber, String id) {
         assertConsent(civicRegistrationNumber);
-        // TODO serialize string to model
-
         return getCertificateInternal(civicRegistrationNumber, id);
     }
 

@@ -17,11 +17,6 @@ public interface IneraCertificateRestApi {
 
     @GET
     @Path("/citizen/{civicRegistrationNumber}/certificate/{id}")
-    @Produces("application/pdf")
-    Response getCertificatePdf(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId);
-
-    @GET
-    @Path("/citizen/{civicRegistrationNumber}/certificate/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     Response getCertificate(@PathParam("civicRegistrationNumber") String civicRegistrationNumber, @PathParam("id") String certificateId);
 
