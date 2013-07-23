@@ -27,6 +27,5 @@ public class TrimmingStringSerializer extends StdScalarSerializer<String> {
         // trim string and replace all tabs and carriage returns
         String trimmed = value.replaceAll("\\s{2,}", " ").trim();
         standardSerializer.serialize(trimmed, jgen, provider);
-
     }
 }
