@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.service;
 
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.model.dao.Certificate;
 
 /**
@@ -31,5 +30,5 @@ public interface CertificateSenderService {
      * @param target the target identifier
      * @throws se.inera.certificate.exception.ExternalWebServiceCallFailedException thrown if the web service call does not succeed
      */
-    void sendCertificate(Certificate certificate, String target) throws ExternalWebServiceCallFailedException;
+    void sendCertificate(Certificate certificate, String target);
 }

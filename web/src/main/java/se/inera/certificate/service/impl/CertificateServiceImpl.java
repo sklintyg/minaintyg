@@ -157,7 +157,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) throws InvalidCertificateException, CertificateRevokedException {
+    public Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) {
         Certificate certificate = getCertificateInternal(civicRegistrationNumber, certificateId);
 
         if (certificate == null) {

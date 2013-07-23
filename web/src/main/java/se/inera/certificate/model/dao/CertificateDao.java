@@ -75,7 +75,7 @@ public interface CertificateDao {
      * @throws InvalidCertificateIdentifierException if the combination of certificate ID and civic registration number
      *  does not match
      */
-    void updateStatus(String certificateId, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp) throws InvalidCertificateIdentifierException;
+    void updateStatus(String certificateId, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
 
     void remove(String certificateId);
 }

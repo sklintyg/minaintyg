@@ -6,6 +6,7 @@ import org.apache.cxf.binding.soap.interceptor.AbstractSoapInterceptor;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.Phase;
+
 import se.inera.certificate.integration.validator.LakarutlatandeValidator;
 import se.inera.certificate.integration.validator.ValidationException;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
@@ -22,7 +23,7 @@ public class LakarutlatandeValidatingInterceptor extends AbstractSoapInterceptor
     }
 
     @Override
-    public void handleMessage(SoapMessage message) throws Fault {
+    public void handleMessage(SoapMessage message) {
 
         RegisterMedicalCertificateType registerMedicalCertificate = (RegisterMedicalCertificateType) MessageContentsList.getContentsList(message).get(1);
         LakarutlatandeType lakarutlatande = registerMedicalCertificate.getLakarutlatande();
