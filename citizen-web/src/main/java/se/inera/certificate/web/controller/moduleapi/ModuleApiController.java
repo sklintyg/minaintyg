@@ -62,7 +62,7 @@ public class ModuleApiController {
 
     @Autowired
     private ModuleRestApiFactory moduleApiFactory;
-    
+
     /**
      * Helper service to get current user.
      */
@@ -143,7 +143,7 @@ public class ModuleApiController {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(pdf.getStatus()).build();
         }
-        
+
         return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
     }
 
