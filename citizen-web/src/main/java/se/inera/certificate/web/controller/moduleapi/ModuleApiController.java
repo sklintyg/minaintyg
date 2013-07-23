@@ -39,8 +39,6 @@ import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
  * @author marced
@@ -74,9 +72,6 @@ public class ModuleApiController {
      */
     @Autowired
     private CertificateService certificateService;
-
-    @Autowired
-    private JacksonJaxbJsonProvider jsonProvider;
 
     /**
      * Return the certificate identified by the given id as JSON.
