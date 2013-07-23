@@ -1,6 +1,5 @@
 package se.inera.certificate.integration.rest;
 
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,7 +19,6 @@ public interface ModuleRestApi {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
     Object extract(Lakarutlatande lakarutlatande);
-
 
     @POST
     @Path("/valid")
