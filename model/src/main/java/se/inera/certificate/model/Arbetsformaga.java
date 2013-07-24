@@ -9,8 +9,6 @@ public class Arbetsformaga {
 
     private String motivering;
 
-    private Prognosangivelse prognosangivelse;
-
     private String arbetsuppgift;
 
     private List<ArbetsformagaNedsattning> arbetsformagaNedsattningar;
@@ -23,14 +21,6 @@ public class Arbetsformaga {
 
     public void setMotivering(String motivering) {
         this.motivering = motivering;
-    }
-
-    public Prognosangivelse getPrognosangivelse() {
-        return prognosangivelse;
-    }
-
-    public void setPrognosangivelse(Prognosangivelse prognosangivelse) {
-        this.prognosangivelse = prognosangivelse;
     }
 
     public String getArbetsuppgift() {
