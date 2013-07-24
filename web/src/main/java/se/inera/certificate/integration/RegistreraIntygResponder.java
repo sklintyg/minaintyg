@@ -13,8 +13,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.certificate.integration.converter.UtlatandeJaxbToUtlatandeConverter;
 import se.inera.certificate.model.Utlatande;
-import se.inera.certificate.integration.converter.LakarutlatandeJaxbToLakarutlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.integration.validator.ValidationException;
@@ -50,7 +50,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
         String certificateExtension = extractCertificateExtensionData(type, utlatande.value);
 
-        Utlatande model = LakarutlatandeJaxbToLakarutlatandeConverter.convert(utlatande.value);
+        Utlatande model = UtlatandeJaxbToUtlatandeConverter.convert(utlatande.value);
 
         Ovrigt ovrigt = new Ovrigt();
         ovrigt.setData(certificateExtension);

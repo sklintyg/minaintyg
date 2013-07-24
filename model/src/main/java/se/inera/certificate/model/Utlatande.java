@@ -7,6 +7,7 @@ import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.util.Predicate;
 
@@ -156,8 +157,9 @@ public class Utlatande {
            }, null);
     }
 
-    /*public LocalDate getValidFromDate() {
-
+    public LocalDate getValidFromDate() {
+        // TODO - reactivate implementation as soon as Mawell has decided where the nedsattningar will be stored in the new model
+        /*
         if (aktivitetsbegransningar == null) {
             return null;
         }
@@ -170,12 +172,13 @@ public class Utlatande {
                 fromDate = aktivitetsbegransningFromDate;
             }
         }
-        return fromDate;
+        return fromDate;*/
+        return null;
     }
 
     public LocalDate getValidToDate() {
-
-        if (aktivitetsbegransningar == null) {
+        // TODO - reactivate implementation as soon as Mawell has decided where the nedsattningar will be stored in the new model
+        /*if (aktivitetsbegransningar == null) {
             return null;
         }
 
@@ -187,8 +190,9 @@ public class Utlatande {
                 toDate = aktivitetsbegransningToDate;
             }
         }
-        return toDate;
-    }        */
+        return toDate;*/
+        return null;
+    }
 
     public Aktivitet getAktivitet(final Kod aktivitetsKod) {
         if (aktiviteter == null) {

@@ -2,13 +2,6 @@
   <jaxb:bindings>
     <jaxb:globalBindings>
       <xjc:simple/>
-      <jaxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
-                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDate"
-                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDate"/>
-
-      <jaxb:javaType name="org.joda.time.LocalDateTime" xmlType="xs:dateTime"
-                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDateTime"
-                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDateTime"/>
     </jaxb:globalBindings>
   </jaxb:bindings>
 </jaxb:bindings>

@@ -34,9 +34,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 /**
  * @author andreaskaltenbach
  */
-public final class LakarutlatandeJaxbToLakarutlatandeConverter {
+public final class UtlatandeJaxbToUtlatandeConverter {
 
-    private LakarutlatandeJaxbToLakarutlatandeConverter() {
+    private UtlatandeJaxbToUtlatandeConverter() {
     }
 
     /**

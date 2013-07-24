@@ -32,5 +32,5 @@ public interface ModuleRestApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    Response pdf(Utlatande intyg);
+    Response pdf(se.inera.certificate.model.Utlatande utlatande);
 }

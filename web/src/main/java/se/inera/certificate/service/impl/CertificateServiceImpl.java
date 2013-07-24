@@ -131,13 +131,17 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private Certificate createCertificate(Utlatande utlatande) {
-        Certificate certificate = new Certificate(utlatande.getId(), toJson(utlatande));
+        Certificate certificate = new Certificate(utlatande.getId().getExtension(), toJson(utlatande));
 
-        certificate.setType(utlatande.getTyp());
+        certificate.setType(utlatande.getTyp().getCode());
         certificate.setSigningDoctorName(utlatande.getSkapadAv().getNamn());
         certificate.setSignedDate(utlatande.getSigneringsDatum());
-        certificate.setCareUnitName(utlatande.getVardenhet().getNamn());
-        certificate.setCivicRegistrationNumber(utlatande.getPatient().getId());
+
+        if (utlatande.getSkapadAv() != null && utlatande.getSkapadAv().getVardenhet() != null) {
+            certificate.setCareUnitName(utlatande.getSkapadAv().getVardenhet().getNamn());
+        }
+
+        certificate.setCivicRegistrationNumber(utlatande.getPatient().getId().getExtension());
         certificate.setValidFromDate(utlatande.getValidFromDate());
         certificate.setValidToDate(utlatande.getValidToDate());
 
