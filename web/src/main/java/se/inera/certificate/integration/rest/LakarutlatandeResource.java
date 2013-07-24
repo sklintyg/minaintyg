@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.IneraCertificateRestApi;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
@@ -55,16 +55,16 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
         }
 
         try {
-            Lakarutlatande lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
-            convertStatus(certificate, lakarutlatande);
-            return Response.ok(lakarutlatande).type(MediaType.APPLICATION_JSON).build();
+            Utlatande utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
+            convertStatus(certificate, utlatande);
+            return Response.ok(utlatande).type(MediaType.APPLICATION_JSON).build();
         } catch (IOException e) {
             LOG.warn("Failed to unmarshal certificate '" + certificateId + "'.", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    private static void convertStatus(Certificate source, Lakarutlatande target) {
+    private static void convertStatus(Certificate source, Utlatande target) {
         List<Status> statusList = new ArrayList<>();
         for (CertificateStateHistoryEntry historyEntry : source.getStates()) {
             Status status = new Status();
@@ -91,10 +91,10 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        Lakarutlatande lakarutlatande;
+        Utlatande utlatande;
         try {
             // unmarshal the certificate
-            lakarutlatande = objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+            utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
         } catch (IOException e) {
             LOG.error("Failed to unmarshall lakarutlatande for certificate " + certificateId, e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -102,14 +102,14 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
 
         // delegate the PDF generation to the certificate module
         ModuleRestApi moduleRestApi = moduleRestApiFactory.getModuleRestService(certificate.getType());
-        Response response = moduleRestApi.pdf(lakarutlatande);
+        Response response = moduleRestApi.pdf(utlatande);
 
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             LOG.error("Failed to create PDF for certificate #" + certificateId + ". Certificate module returned status code " + response.getStatus());
             return Response.status(response.getStatus()).build();
         }
 
-        return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
+        return Response.ok(response.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(utlatande)).build();
 
     }
 
@@ -123,10 +123,10 @@ public class LakarutlatandeResource implements IneraCertificateRestApi {
         }
     }
 
-    private String pdfFileName(Lakarutlatande lakarutlatande) {
+    private String pdfFileName(Utlatande utlatande) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",
-                lakarutlatande.getPatient().getId(),
-                lakarutlatande.getValidFromDate().toString(DATE_FORMAT),
-                lakarutlatande.getValidToDate().toString(DATE_FORMAT));
+                utlatande.getPatient().getId(),
+                utlatande.getValidFromDate().toString(DATE_FORMAT),
+                utlatande.getValidToDate().toString(DATE_FORMAT));
     }
 }

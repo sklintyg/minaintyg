@@ -1,29 +1,25 @@
 package se.inera.certificate.integration;
 
-import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.Holder;
+import java.io.IOException;
+import java.io.InputStream;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.integration.converter.LakarutlatandeJaxbToLakarutlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
-import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.integration.validator.ValidationException;
 import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.service.CertificateService;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -46,15 +42,15 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
     private CertificateService certificateService;
 
     @Override
-    public void registreraIntyg(Holder<Lakarutlatande> lakarutlatande) {
-        String type = lakarutlatande.value.getTyp();
+    public void registreraIntyg(Holder<se.inera.certificate.common.v1.Utlatande> utlatande) {
+        String type = utlatande.value.getTypAvUtlatande().getCode();
 
         // let the certificate validate by the corresponding certificate module
-        validate(type, lakarutlatande.value);
+        validate(type, utlatande.value);
 
-        String certificateExtension = extractCertificateExtensionData(type, lakarutlatande.value);
+        String certificateExtension = extractCertificateExtensionData(type, utlatande.value);
 
-        se.inera.certificate.model.Lakarutlatande model = LakarutlatandeJaxbToLakarutlatandeConverter.convert(lakarutlatande.value);
+        Utlatande model = LakarutlatandeJaxbToLakarutlatandeConverter.convert(utlatande.value);
 
         Ovrigt ovrigt = new Ovrigt();
         ovrigt.setData(certificateExtension);
@@ -63,11 +59,11 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         certificateService.storeCertificate(model);
     }
 
-    private void validate(String type, Lakarutlatande lakarutlatande) {
+    private void validate(String type, se.inera.certificate.common.v1.Utlatande utlatande) {
 
         ModuleRestApi endpoint = moduleRestApiFactory.getModuleRestService(type);
 
-        Response response = endpoint.validate(lakarutlatande);
+        Response response = endpoint.validate(utlatande);
 
         switch (response.getStatus()) {
             case BAD_REQUEST: // BadRequest -> extract validation error message and transform to ValidationException
@@ -89,12 +85,12 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         }
     }
 
-    private String extractCertificateExtensionData(String type, Lakarutlatande lakarutlatande) {
+    private String extractCertificateExtensionData(String type, se.inera.certificate.common.v1.Utlatande utlatande) {
 
         ModuleRestApi endpoint = moduleRestApiFactory.getModuleRestService(type);
 
         try {
-            Object certificateExtension = endpoint.extract(lakarutlatande);
+            Object certificateExtension = endpoint.extract(utlatande);
 
             try {
                 return objectMapper.writeValueAsString(certificateExtension);

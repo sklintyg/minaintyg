@@ -7,14 +7,14 @@ import org.joda.time.LocalDate;
  */
 public class Referens {
 
-    private Referenstyp referenstyp;
+    private Kod referenstyp;
     private LocalDate datum;
 
-    public Referenstyp getReferenstyp() {
+    public Kod getReferenstyp() {
         return referenstyp;
     }
 
-    public void setReferenstyp(Referenstyp referenstyp) {
+    public void setReferenstyp(Kod referenstyp) {
         this.referenstyp = referenstyp;
     }
 

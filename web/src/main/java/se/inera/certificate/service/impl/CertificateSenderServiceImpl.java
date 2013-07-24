@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
@@ -49,8 +49,8 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
     public void sendCertificate(Certificate certificate, String target) {
         if (certificate.getType().equalsIgnoreCase("fk7263")) {
 
-            Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
-            RegisterMedicalCertificateType jaxbObject = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
+            Utlatande utlatande = certificateService.getLakarutlatande(certificate);
+            RegisterMedicalCertificateType jaxbObject = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(utlatande);
 
             RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, jaxbObject);
             if (response.getResult().getResultCode() != OK) {

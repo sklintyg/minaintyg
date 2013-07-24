@@ -1,27 +1,25 @@
 package se.inera.certificate.model;
 
-import org.joda.time.LocalDate;
-
 /**
  * @author andreaskaltenbach
  */
 public class Vardkontakt {
-    private Vardkontakttyp vardkontakttyp;
-    private LocalDate vardkontaktstid;
+    private Kod vardkontakttyp;
+    private LocalDateTimeInterval vardkontaktstid;
 
-    public Vardkontakttyp getVardkontakttyp() {
+    public Kod getVardkontakttyp() {
         return vardkontakttyp;
     }
 
-    public void setVardkontakttyp(Vardkontakttyp vardkontakttyp) {
+    public void setVardkontakttyp(Kod vardkontakttyp) {
         this.vardkontakttyp = vardkontakttyp;
     }
 
-    public LocalDate getVardkontaktstid() {
+    public LocalDateTimeInterval getVardkontaktstid() {
         return vardkontaktstid;
     }
 
-    public void setVardkontaktstid(LocalDate vardkontaktstid) {
+    public void setVardkontaktstid(LocalDateTimeInterval vardkontaktstid) {
         this.vardkontaktstid = vardkontaktstid;
     }
 }

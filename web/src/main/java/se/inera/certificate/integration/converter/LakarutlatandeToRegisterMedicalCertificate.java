@@ -12,7 +12,7 @@ import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.BedomtTillstand;
 import se.inera.certificate.model.Funktionsnedsattning;
 import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
@@ -50,25 +50,25 @@ public final class LakarutlatandeToRegisterMedicalCertificate {
     private LakarutlatandeToRegisterMedicalCertificate() {
     }
 
-    public static RegisterMedicalCertificateType getJaxbObject(Lakarutlatande lakarutlatande) {
+    public static RegisterMedicalCertificateType getJaxbObject(Utlatande utlatande) {
         try {
             RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
             register.setLakarutlatande(new LakarutlatandeType());
-            register.getLakarutlatande().setLakarutlatandeId(lakarutlatande.getId());
+            register.getLakarutlatande().setLakarutlatandeId(utlatande.getId());
             register.getLakarutlatande().setTypAvUtlatande(FK7263);
-            register.getLakarutlatande().setKommentar(lakarutlatande.getKommentar());
-            register.getLakarutlatande().setSigneringsdatum(lakarutlatande.getSigneringsDatum());
-            register.getLakarutlatande().setSkickatDatum(lakarutlatande.getSkickatDatum());
-            register.getLakarutlatande().setPatient(toJaxb(lakarutlatande.getPatient()));
-            register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(lakarutlatande.getSkapadAv()));
-            register.getLakarutlatande().getSkapadAvHosPersonal().setEnhet(toJaxb(lakarutlatande.getVardenhet()));
-            register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(lakarutlatande.getSjukdomsforlopp()));
-            register.getLakarutlatande().setMedicinsktTillstand(toJaxb(lakarutlatande.getBedomtTillstand()));
-            addAktivitet(register.getLakarutlatande().getAktivitet(), lakarutlatande.getAktiviteter());
-            addReferens(register.getLakarutlatande().getReferens(), lakarutlatande.getReferenser());
-            addVardkontakt(register.getLakarutlatande().getVardkontakt(), lakarutlatande.getVardkontakter());
-            addFunktionstillstand(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getFunktionsnedsattningar());
-            addAktivitestbegransningar(register.getLakarutlatande().getFunktionstillstand(), lakarutlatande.getAktivitetsbegransningar());
+            register.getLakarutlatande().setKommentar(utlatande.getKommentar());
+            register.getLakarutlatande().setSigneringsdatum(utlatande.getSigneringsDatum());
+            register.getLakarutlatande().setSkickatDatum(utlatande.getSkickatDatum());
+            register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
+            register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
+            register.getLakarutlatande().getSkapadAvHosPersonal().setEnhet(toJaxb(utlatande.getVardenhet()));
+            register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(utlatande.getSjukdomsforlopp()));
+            register.getLakarutlatande().setMedicinsktTillstand(toJaxb(utlatande.getBedomtTillstand()));
+            addAktivitet(register.getLakarutlatande().getAktivitet(), utlatande.getAktiviteter());
+            addReferens(register.getLakarutlatande().getReferens(), utlatande.getReferenser());
+            addVardkontakt(register.getLakarutlatande().getVardkontakt(), utlatande.getVardkontakter());
+            addFunktionstillstand(register.getLakarutlatande().getFunktionstillstand(), utlatande.getFunktionsnedsattningar());
+            addAktivitestbegransningar(register.getLakarutlatande().getFunktionstillstand(), utlatande.getAktivitetsbegransningar());
             return register;
         } catch (Exception e) {
             // TODO: Kasta annat undantag! /PW

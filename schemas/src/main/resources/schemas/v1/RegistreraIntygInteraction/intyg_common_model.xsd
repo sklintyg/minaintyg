@@ -157,16 +157,16 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="omfattningType">
+	<xs:complexType name="bestallareType">
 		<xs:sequence>
-			<xs:element name="typAvBeställare" type="iso:CD" />
+			<xs:element name="typAvBestallare" type="iso:CD" />
 
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="bestallareType">
+	<xs:complexType name="omfattningType">
 		<xs:sequence>
 			<xs:element name="antalBehandlingstillfallen" type="xs:integer"
 				minOccurs="0" />

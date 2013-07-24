@@ -1,62 +1,65 @@
 package se.inera.certificate.model;
 
+import java.util.List;
+
 /**
  * @author andreaskaltenbach
  */
 public class Patient {
 
-    private String id;
-    private String fullstandigtNamn;
-    private String fornamn;
-    private String mellannamn;
-    private String efternamn;
-    private String tilltalsnamn;
+    private Id id;
+    private List<String> fornamns;
+    private List<String> mellannamns;
+    private List<String> efternamns;
 
-    public String getId() {
+    private List<Sysselsattning> sysselsattnings;
+    private List<Arbetsuppgift> arbetsuppgifts;
+
+    public Id getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
-    public String getFornamn() {
-        return fornamn;
+    public List<String> getFornamns() {
+        return fornamns;
     }
 
-    public void setFornamn(String fornamn) {
-        this.fornamn = fornamn;
+    public void setFornamns(List<String> fornamns) {
+        this.fornamns = fornamns;
     }
 
-    public String getMellannamn() {
-        return mellannamn;
+    public List<String> getMellannamns() {
+        return mellannamns;
     }
 
-    public void setMellannamn(String mellannamn) {
-        this.mellannamn = mellannamn;
+    public void setMellannamns(List<String> mellannamns) {
+        this.mellannamns = mellannamns;
     }
 
-    public String getEfternamn() {
-        return efternamn;
+    public List<String> getEfternamns() {
+        return efternamns;
     }
 
-    public void setEfternamn(String efternamn) {
-        this.efternamn = efternamn;
+    public void setEfternamns(List<String> efternamns) {
+        this.efternamns = efternamns;
     }
 
-    public String getTilltalsnamn() {
-        return tilltalsnamn;
+    public List<Sysselsattning> getSysselsattnings() {
+        return sysselsattnings;
     }
 
-    public void setTilltalsnamn(String tilltalsnamn) {
-        this.tilltalsnamn = tilltalsnamn;
+    public void setSysselsattnings(List<Sysselsattning> sysselsattnings) {
+        this.sysselsattnings = sysselsattnings;
     }
 
-    public String getFullstandigtNamn() {
-        return fullstandigtNamn;
+    public List<Arbetsuppgift> getArbetsuppgifts() {
+        return arbetsuppgifts;
     }
 
-    public void setFullstandigtNamn(String fullstandigtNamn) {
-        this.fullstandigtNamn = fullstandigtNamn;
+    public void setArbetsuppgifts(List<Arbetsuppgift> arbetsuppgifts) {
+        this.arbetsuppgifts = arbetsuppgifts;
     }
 }

@@ -4,14 +4,14 @@ package se.inera.certificate.model;
  * @author andreaskaltenbach
  */
 public class Aktivitet {
-    private Aktivitetskod aktivitetskod;
+    private Kod aktivitetskod;
     private String beskrivning;
 
-    public Aktivitetskod getAktivitetskod() {
+    public Kod getAktivitetskod() {
         return aktivitetskod;
     }
 
-    public void setAktivitetskod(Aktivitetskod aktivitetskod) {
+    public void setAktivitetskod(Kod aktivitetskod) {
         this.aktivitetskod = aktivitetskod;
     }
 

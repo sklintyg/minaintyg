@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
-import se.inera.certificate.integration.converter.LakarutlatandeTypeToLakarutlatandeConverter;
+import se.inera.certificate.integration.converter.LakarutlatandeTypeToUtlatandeConverter;
 import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
@@ -40,7 +40,7 @@ public class LakarutlatandeTypeToLakarutlatandeConverterTest {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         JAXBElement<LakarutlatandeType> lakarutlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/maximalt-intyg.xml").getInputStream()), LakarutlatandeType.class);
 
-        Lakarutlatande lakarutlatande = LakarutlatandeTypeToLakarutlatandeConverter.convert(lakarutlatandeElement.getValue());
+        Lakarutlatande lakarutlatande = LakarutlatandeTypeToUtlatandeConverter.convert(lakarutlatandeElement.getValue());
 
         // read expected XML and compare with resulting lakarutlatande
         String expectation = FileUtils.readFileToString(new ClassPathResource("generic/maximalt-fk7263.xml").getFile());

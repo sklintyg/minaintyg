@@ -27,7 +27,7 @@ import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 
 /**
@@ -57,7 +57,7 @@ public interface CertificateService {
      */
     Certificate getCertificate(String civicRegistrationNumber, String certificateId) throws MissingConsentException;
 
-    Certificate storeCertificate(Lakarutlatande lakarutlatande);
+    Certificate storeCertificate(Utlatande utlatande);
 
     void setCertificateState(String civicRegistrationNumber, String certificateId, String target, CertificateState state, LocalDateTime timestamp);
 
@@ -68,7 +68,7 @@ public interface CertificateService {
      */
     void sendCertificate(String civicRegistrationNumber, String certificateId, String target) throws InvalidCertificateException, CertificateRevokedException;
 
-    Lakarutlatande getLakarutlatande(Certificate certificate);
+    Utlatande getLakarutlatande(Certificate certificate);
 
     /**
      * Revokes the certifictae.

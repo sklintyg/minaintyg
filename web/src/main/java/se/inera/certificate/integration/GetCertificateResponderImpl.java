@@ -40,7 +40,7 @@ import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.integration.converter.ModelConverter;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface;
@@ -106,10 +106,10 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             // given certificate type is not supported
             response.setResult(applicationErrorResult(String.format("Unsupported certificate type: %s", certificate.getType())));
         } else {
-            Lakarutlatande lakarutlatande = certificateService.getLakarutlatande(certificate);
+            Utlatande utlatande = certificateService.getLakarutlatande(certificate);
 
             // TODO - this is FK7263-specific and has to be done by the FK7263 module
-            RegisterMedicalCertificateType registerMedicalCertificateType = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(lakarutlatande);
+            RegisterMedicalCertificateType registerMedicalCertificateType = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(utlatande);
             certificateType.getAny().add(wrapJaxb(registerMedicalCertificateType));
 
             response.setCertificate(certificateType);

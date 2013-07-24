@@ -19,7 +19,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.ResultOfCallUtil;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateSenderService;
@@ -49,8 +49,8 @@ public class CertificateSenderServiceImplTest {
         Certificate certificate = new CertificateBuilder("123456")
                 .certificateType("fk7263")
                 .build();
-        Lakarutlatande lakarutlatande = new CustomObjectMapper().readValue(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile(), Lakarutlatande.class);
-        when(certificateService.getLakarutlatande(certificate)).thenReturn(lakarutlatande);
+        Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile(), Utlatande.class);
+        when(certificateService.getLakarutlatande(certificate)).thenReturn(utlatande);
 
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(ResultOfCallUtil.okResult());
@@ -68,8 +68,8 @@ public class CertificateSenderServiceImplTest {
         Certificate certificate = new CertificateBuilder("123456")
                 .certificateType("fk7263")
                 .build();
-        Lakarutlatande lakarutlatande = new CustomObjectMapper().readValue(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile(), Lakarutlatande.class);
-        when(certificateService.getLakarutlatande(certificate)).thenReturn(lakarutlatande);
+        Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile(), Utlatande.class);
+        when(certificateService.getLakarutlatande(certificate)).thenReturn(utlatande);
 
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(ResultOfCallUtil.failResult("error"));

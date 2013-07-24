@@ -4,15 +4,16 @@ package se.inera.certificate.model;
  * @author andreaskaltenbach
  */
 public class HosPersonal {
-    private String id;
+    private Id id;
     private String namn;
     private String forskrivarkod;
+    private Vardenhet vardenhet;
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
@@ -30,5 +31,13 @@ public class HosPersonal {
 
     public void setForskrivarkod(String forskrivarkod) {
         this.forskrivarkod = forskrivarkod;
+    }
+
+    public Vardenhet getVardenhet() {
+        return vardenhet;
+    }
+
+    public void setVardenhet(Vardenhet vardenhet) {
+        this.vardenhet = vardenhet;
     }
 }

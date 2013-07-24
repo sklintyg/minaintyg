@@ -30,7 +30,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
 
@@ -42,7 +42,7 @@ public class LakarutlatandeResourceTest {
     private static final String CERTIFICATE_TYPE = "<certificateType>";
 
     private static Certificate certificate;
-    private static Lakarutlatande lakarutlatande;
+    private static Utlatande utlatande;
     private static String certificateData;
 
     @Mock
@@ -66,7 +66,7 @@ public class LakarutlatandeResourceTest {
     @BeforeClass
     public static void setupCertificateData() throws IOException {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-        lakarutlatande = new CustomObjectMapper().readValue(certificateData, Lakarutlatande.class);
+        utlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
     }
 
     @InjectMocks
@@ -75,14 +75,14 @@ public class LakarutlatandeResourceTest {
     @Test
     public void testGetCertificate() throws IOException {
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
-        when(objectMapper.readValue(certificateData, Lakarutlatande.class)).thenReturn(lakarutlatande);
+        when(objectMapper.readValue(certificateData, Utlatande.class)).thenReturn(utlatande);
         Response response = resource.getCertificate(PERSONNUMMER, CERTIFICATE_ID);
 
         verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
-        verify(objectMapper).readValue(certificateData, Lakarutlatande.class);
+        verify(objectMapper).readValue(certificateData, Utlatande.class);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
-        assertEquals(lakarutlatande, response.getEntity());
+        assertEquals(utlatande, response.getEntity());
     }
 
     @Test
@@ -108,21 +108,21 @@ public class LakarutlatandeResourceTest {
 
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
-        when(objectMapper.readValue(certificateData, Lakarutlatande.class)).thenReturn(lakarutlatande);
+        when(objectMapper.readValue(certificateData, Utlatande.class)).thenReturn(utlatande);
 
         // Mimic the module API to which the PDF generation is delegated to.
         // We return an HTTP 200 together with some mock PDF data.
         Response moduleCallResponse = mock(Response.class);
         when(moduleCallResponse.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
         when(moduleCallResponse.getEntity()).thenReturn("<pdf-file>");
-        when(moduleRestApi.pdf(lakarutlatande)).thenReturn(moduleCallResponse);
+        when(moduleRestApi.pdf(utlatande)).thenReturn(moduleCallResponse);
 
         Response response = resource.getCertificatePdf(PERSONNUMMER, CERTIFICATE_ID);
 
         verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(objectMapper).readValue(certificateData, Lakarutlatande.class);
-        verify(moduleRestApi).pdf(lakarutlatande);
+        verify(objectMapper).readValue(certificateData, Utlatande.class);
+        verify(moduleRestApi).pdf(utlatande);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals("<pdf-file>", response.getEntity());
@@ -133,20 +133,20 @@ public class LakarutlatandeResourceTest {
 
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
-        when(objectMapper.readValue(certificateData, Lakarutlatande.class)).thenReturn(lakarutlatande);
+        when(objectMapper.readValue(certificateData, Utlatande.class)).thenReturn(utlatande);
 
         // Mimic the module API to which the PDF generation is delegated to.
         // We return an HTTP 501.
         Response moduleCallResponse = mock(Response.class);
         when(moduleCallResponse.getStatus()).thenReturn(Response.Status.NOT_IMPLEMENTED.getStatusCode());
-        when(moduleRestApi.pdf(lakarutlatande)).thenReturn(moduleCallResponse);
+        when(moduleRestApi.pdf(utlatande)).thenReturn(moduleCallResponse);
 
         Response response = resource.getCertificatePdf(PERSONNUMMER, CERTIFICATE_ID);
 
         verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(objectMapper).readValue(certificateData, Lakarutlatande.class);
-        verify(moduleRestApi).pdf(lakarutlatande);
+        verify(objectMapper).readValue(certificateData, Utlatande.class);
+        verify(moduleRestApi).pdf(utlatande);
 
         assertEquals(NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
@@ -156,7 +156,7 @@ public class LakarutlatandeResourceTest {
     public void testGetCertificatePdfWithFailingUnmarshaller() throws IOException {
 
         when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificate);
-        when(objectMapper.readValue(certificateData, Lakarutlatande.class)).thenThrow(new IOException());
+        when(objectMapper.readValue(certificateData, Utlatande.class)).thenThrow(new IOException());
 
         Response response = resource.getCertificatePdf(PERSONNUMMER, CERTIFICATE_ID);
 

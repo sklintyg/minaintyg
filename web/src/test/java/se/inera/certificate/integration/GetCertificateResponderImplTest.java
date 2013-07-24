@@ -45,7 +45,7 @@ import se.inera.certificate.integration.certificates.CertificateSupport;
 import se.inera.certificate.integration.certificates.fk7263.Fk7263Support;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
@@ -79,12 +79,12 @@ public class GetCertificateResponderImplTest {
     @Test
     public void getCertificate() throws IOException {
         String document = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-        Lakarutlatande lakarutlatande = new CustomObjectMapper().readValue(document, Lakarutlatande.class);
+        Utlatande utlatande = new CustomObjectMapper().readValue(document, Utlatande.class);
 
         when(certificateService.getCertificate(civicRegistrationNumber, certificateId)).thenReturn(
                 new CertificateBuilder("123456", document).certificateType("fk7263").build());
 
-        when(certificateService.getLakarutlatande(any(Certificate.class))).thenReturn(lakarutlatande);
+        when(certificateService.getLakarutlatande(any(Certificate.class))).thenReturn(utlatande);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 

@@ -20,8 +20,19 @@ package se.inera.certificate.model;
 
 public class Id {
 
-    private String extension;
     private String root;
+    private String extension;
+
+    public Id() {}
+
+    public Id(String extension) {
+        this.extension = extension;
+    }
+
+    public Id(String root, String extension) {
+        this.root = root;
+        this.extension = extension;
+    }
 
     public String getExtension() {
         return extension;

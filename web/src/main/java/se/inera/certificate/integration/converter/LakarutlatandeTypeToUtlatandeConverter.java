@@ -195,8 +195,24 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
             //TODO - how to map arbetsförmåga motivering?
             String motivering = source.getArbetsformaga().getMotivering();
 
-            // TODO - how to map nedsättningsgrader?!?
+            // TODO - are nedsättningsgrader mapped correctly?!?
             List<ArbetsformagaNedsattningType> nedsattningList = source.getArbetsformaga().getArbetsformagaNedsattning();
+            for (ArbetsformagaNedsattningType nedsattning : nedsattningList) {
+                ObservationType nedsattningObservation = new ObservationType();
+
+                CD nedsattningskod = new CD();
+                nedsattningskod.setCode(nedsattning.getNedsattningsgrad().value());
+                nedsattningObservation.setObservationskod(nedsattningskod);
+
+                TS from = new TS();
+                from.setValue(nedsattning.getVaraktighetFrom().toString(DATE_FORMAT));
+                TS tom = new TS();
+                tom.setValue(nedsattning.getVaraktighetTom().toString(DATE_FORMAT));
+                IVLTS varaktighet = new IVLTS();
+                varaktighet.setLow(from);
+                varaktighet.setHigh(tom);
+                nedsattningObservation.setObservationsperiod(varaktighet);
+            }
 
             observation.setPrognos(convert(source.getArbetsformaga().getPrognosangivelse()));
         }

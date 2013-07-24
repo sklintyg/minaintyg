@@ -33,7 +33,7 @@ import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.model.dao.CertificateDao;
 import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
@@ -92,10 +92,10 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     @Transactional
-    public Certificate storeCertificate(Lakarutlatande lakarutlatande) {
+    public Certificate storeCertificate(Utlatande utlatande) {
 
         // turn a lakarutlatande into a certificate entity
-        Certificate certificate = createCertificate(lakarutlatande);
+        Certificate certificate = createCertificate(utlatande);
 
         // add initial RECEIVED state using current time as receiving timestamp
         CertificateStateHistoryEntry state = new CertificateStateHistoryEntry(MI, CertificateState.RECEIVED, new LocalDateTime());
@@ -122,24 +122,24 @@ public class CertificateServiceImpl implements CertificateService {
         setCertificateState(civicRegistrationNumber, certificateId, target, CertificateState.SENT, null);
     }
 
-    private String toJson(Lakarutlatande lakarutlatande) {
+    private String toJson(Utlatande utlatande) {
         try {
-            return objectMapper.writeValueAsString(lakarutlatande);
+            return objectMapper.writeValueAsString(utlatande);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to serialize lakarutlatande.", e);
         }
     }
 
-    private Certificate createCertificate(Lakarutlatande lakarutlatande) {
-        Certificate certificate = new Certificate(lakarutlatande.getId(), toJson(lakarutlatande));
+    private Certificate createCertificate(Utlatande utlatande) {
+        Certificate certificate = new Certificate(utlatande.getId(), toJson(utlatande));
 
-        certificate.setType(lakarutlatande.getTyp());
-        certificate.setSigningDoctorName(lakarutlatande.getSkapadAv().getNamn());
-        certificate.setSignedDate(lakarutlatande.getSigneringsDatum());
-        certificate.setCareUnitName(lakarutlatande.getVardenhet().getNamn());
-        certificate.setCivicRegistrationNumber(lakarutlatande.getPatient().getId());
-        certificate.setValidFromDate(lakarutlatande.getValidFromDate());
-        certificate.setValidToDate(lakarutlatande.getValidToDate());
+        certificate.setType(utlatande.getTyp());
+        certificate.setSigningDoctorName(utlatande.getSkapadAv().getNamn());
+        certificate.setSignedDate(utlatande.getSigneringsDatum());
+        certificate.setCareUnitName(utlatande.getVardenhet().getNamn());
+        certificate.setCivicRegistrationNumber(utlatande.getPatient().getId());
+        certificate.setValidFromDate(utlatande.getValidFromDate());
+        certificate.setValidToDate(utlatande.getValidToDate());
 
         return certificate;
     }
@@ -150,9 +150,9 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Lakarutlatande getLakarutlatande(Certificate certificate) {
+    public Utlatande getLakarutlatande(Certificate certificate) {
         try {
-            return objectMapper.readValue(certificate.getDocument(), Lakarutlatande.class);
+            return objectMapper.readValue(certificate.getDocument(), Utlatande.class);
         } catch (IOException e) {
             throw new IllegalStateException("Could not parse document for " + certificate.getId(), e);
         }

@@ -5,14 +5,14 @@ package se.inera.certificate.model;
  */
 public class Vardgivare {
 
-    private String id;
+    private Id id;
     private String namn;
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Id id) {
         this.id = id;
     }
 

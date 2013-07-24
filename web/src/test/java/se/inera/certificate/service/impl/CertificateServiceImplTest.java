@@ -28,7 +28,7 @@ import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.model.dao.CertificateDao;
@@ -109,16 +109,16 @@ public class CertificateServiceImplTest {
         verify(certificateDao).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
     }
 
-    private Lakarutlatande lakarutlatande() throws IOException {
+    private Utlatande lakarutlatande() throws IOException {
         ObjectMapper customObjectMapper = new CustomObjectMapper();
         InputStream inputStream = new ClassPathResource("lakarutlatande/lakarutlatande.json").getInputStream();
-        return customObjectMapper.readValue(inputStream, Lakarutlatande.class);
+        return customObjectMapper.readValue(inputStream, Utlatande.class);
     }
 
     @Test
     public void testStoreCertificateExtractsCorrectInfo() throws IOException {
 
-        when(objectMapper.writeValueAsString(any(Lakarutlatande.class))).thenReturn("Some JSON");
+        when(objectMapper.writeValueAsString(any(Utlatande.class))).thenReturn("Some JSON");
 
         Certificate certificate = certificateService.storeCertificate(lakarutlatande());
 
@@ -134,7 +134,7 @@ public class CertificateServiceImplTest {
 
         assertEquals("Some JSON", certificate.getDocument());
 
-        verify(objectMapper).writeValueAsString(any(Lakarutlatande.class));
+        verify(objectMapper).writeValueAsString(any(Utlatande.class));
         verify(certificateDao).store(certificate);
     }
 
