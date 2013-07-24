@@ -18,16 +18,16 @@
  */
 package se.inera.certificate.model.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -122,12 +122,6 @@ public class CertificateDaoImpl implements CertificateDao {
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry(target, state, timestamp);
 
         certificate.getStates().add(historyEntry);
-    }
-
-    @Override
-    public void remove(String certificateId) {
-        Certificate certificate = entityManager.find(Certificate.class, certificateId);
-        entityManager.remove(certificate);
     }
 
     private List<String> toLowerCase(List<String> list) {
