@@ -137,6 +137,25 @@ public class Utlatande {
         this.skickatDatum = skickatDatum;
     }
 
+    public List<Observation> getObservationsByKategori(Kod observationsKategori) {
+        List<Observation> observations = new ArrayList<>();
+        for (Observation observation : this.observations) {
+            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+                observations.add(observation);
+            }
+        }
+        return observations;
+    }
+
+    public Observation findObservationByKategori(final Kod observationsKategori) {
+        return find(observations, new Predicate<Observation>() {
+               @Override
+               public boolean apply(Observation observation) {
+                   return observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori);
+               }
+           }, null);
+    }
+
     /*public LocalDate getValidFromDate() {
 
         if (aktivitetsbegransningar == null) {

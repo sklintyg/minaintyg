@@ -18,16 +18,15 @@
  */
 package se.inera.certificate.integration;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.List;
+
 import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
@@ -35,11 +34,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.certificates.CertificateSupport;
-import se.inera.certificate.integration.converter.LakarutlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.integration.converter.ModelConverter;
+import se.inera.certificate.integration.converter.UtlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
@@ -109,7 +107,7 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
             Utlatande utlatande = certificateService.getLakarutlatande(certificate);
 
             // TODO - this is FK7263-specific and has to be done by the FK7263 module
-            RegisterMedicalCertificateType registerMedicalCertificateType = LakarutlatandeToRegisterMedicalCertificate.getJaxbObject(utlatande);
+            RegisterMedicalCertificateType registerMedicalCertificateType = UtlatandeToRegisterMedicalCertificate.getJaxbObject(utlatande);
             certificateType.getAny().add(wrapJaxb(registerMedicalCertificateType));
 
             response.setCertificate(certificateType);

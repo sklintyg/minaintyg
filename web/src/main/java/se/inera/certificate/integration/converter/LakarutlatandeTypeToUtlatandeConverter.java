@@ -2,6 +2,10 @@ package se.inera.certificate.integration.converter;
 
 import java.util.List;
 
+import static se.inera.certificate.integration.codes.ObservationsKategorier.AKTIVITET;
+import static se.inera.certificate.integration.codes.ObservationsKategorier.KROPPSFUNKTION;
+import static se.inera.certificate.integration.codes.ObservationsKategorier.SJUKDOMSFORLOPP;
+
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
 import iso.v21090.dt.v1.IVLTS;
@@ -113,6 +117,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         // TODO - bedomtTillstand will always result in a code-less observation with only a description. We need to set the observation category
         ObservationType observation = new ObservationType();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
+        observation.setObservationskategori(SJUKDOMSFORLOPP);
         return observation;
     }
 
@@ -176,18 +181,14 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
 
         ObservationType observation = new ObservationType();
 
-        CD observationCategory = new CD();
-        // TODO - set correct observation category code
         switch (source.getTypAvFunktionstillstand()) {
             case AKTIVITET:
-                observationCategory.setCode("AKT");
+                observation.setObservationskategori(AKTIVITET);
                 break;
             case KROPPSFUNKTION:
-                observationCategory.setCode("KRO");
+                observation.setObservationskategori(KROPPSFUNKTION);
                 break;
         }
-        observation.setObservationskategori(observationCategory);
-
         observation.setBeskrivning(source.getBeskrivning());
 
 

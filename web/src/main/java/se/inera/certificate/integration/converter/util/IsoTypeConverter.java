@@ -30,9 +30,28 @@ public class IsoTypeConverter {
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
+    public static II toII(Id id) {
+        if (id == null) return null;
+
+        II ii = new II();
+        ii.setRoot(id.getRoot());
+        ii.setExtension(id.getExtension());
+        return ii;
+    }
+
     public static Kod toKod(CD cd) {
         if (cd == null) return null;
         return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
+    }
+
+    public static CD toCD(Kod kod) {
+        if (kod == null) return null;
+        CD cd = new CD();
+        cd.setCode(kod.getCode());
+        cd.setCodeSystem(kod.getCodeSystem());
+        cd.setCodeSystemName(kod.getCodeSystemName());
+        cd.setCodeSystemVersion(kod.getCodeSystemVersion());
+        return cd;
     }
 
     public static LocalDate toLocalDate(TS timestamp) {
