@@ -5,7 +5,7 @@
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="0.1">
 
-  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="../../core_components/iso-21090-dt-namespace.xsd"/>
+  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="../../core_components/iso_dt_subset_1.0.xsd"/>
   <xs:import namespace="urn:riv:insuranceprocess:healthreporting:2"
              schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd"/>
 
@@ -127,7 +127,7 @@
   <xs:complexType name="aktivitetType">
     <xs:sequence>
       <xs:element name="aktivitetskod" type="iso:CD"/>
-      <xs:element name="aktivitetstid" type="iso:IVL_TS"
+      <xs:element name="aktivitetstid" type="partialDateInterval"
                   minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="aktivitetsstatus" type="iso:CD"
@@ -232,8 +232,6 @@
                   minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0"/>
-      <xs:element name="varde" type="iso:PQ" minOccurs="0"
-                  maxOccurs="unbounded"/>
       <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
       <xs:element name="patientenInstammer" type="xs:boolean"
                   minOccurs="0"/>
@@ -251,7 +249,7 @@
     <xs:sequence>
       <xs:element name="prognoskod" type="iso:CD" minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
-      <xs:element name="period" type="iso:IVL_TS" minOccurs="0"/>
+      <xs:element name="period" type="partialDateInterval" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>

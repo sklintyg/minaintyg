@@ -10,8 +10,6 @@ import static se.inera.certificate.model.codes.ObservationsKoder.SJUKDOMSFORLOPP
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
-import iso.v21090.dt.v1.IVLTS;
-import iso.v21090.dt.v1.TS;
 import org.joda.time.Partial;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
@@ -35,9 +33,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
  * @author andreaskaltenbach
  */
 public final class LakarutlatandeTypeToUtlatandeConverter {
-
-    private static final String DATE_FORMAT = "yyyyddMM";
-    private static final String DATE_TIME_FORMAT = "yyyyddMMHHmmss";
 
     public static final String FK_7263 = "fk7263";
 
@@ -203,14 +198,6 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
                 CD nedsattningskod = new CD();
                 nedsattningskod.setCode(nedsattning.getNedsattningsgrad().value());
                 nedsattningObservation.setObservationskod(nedsattningskod);
-
-                TS from = new TS();
-                from.setValue(nedsattning.getVaraktighetFrom().toString(DATE_FORMAT));
-                TS tom = new TS();
-                tom.setValue(nedsattning.getVaraktighetTom().toString(DATE_FORMAT));
-                IVLTS varaktighet = new IVLTS();
-                varaktighet.setLow(from);
-                varaktighet.setHigh(tom);
 
                 PartialDateInterval observationsperiod = new PartialDateInterval();
                 observationsperiod.setFrom(new Partial(nedsattning.getVaraktighetFrom()));

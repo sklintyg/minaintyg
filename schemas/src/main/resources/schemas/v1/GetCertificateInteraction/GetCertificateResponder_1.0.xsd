@@ -3,7 +3,7 @@
     xmlns:tns="urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1" xmlns:pref1="urn:iso:21090:dt:1" xmlns:pref2="urn:riv:insuranceprocess:healthreporting:2"
     xmlns:cert="urn:riv:insuranceprocess:certificate:1" elementFormDefault="qualified">
 
-    <import schemaLocation="../../core_components/iso-21090-dt-namespace.xsd" namespace="urn:iso:21090:dt:1" />
+    <import schemaLocation="../../core_components/iso_dt_subset_1.0.xsd" namespace="urn:iso:21090:dt:1" />
     <import schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd" namespace="urn:riv:insuranceprocess:healthreporting:2" />
     <import schemaLocation="../../core_components/insuranceprocess_certificate_1.0.xsd" namespace="urn:riv:insuranceprocess:certificate:1" />
 
