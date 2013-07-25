@@ -89,21 +89,27 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
     private static List<Observation> convertObservations(List<ObservationType> source) {
         List<Observation> observations = new ArrayList<>();
-        for (ObservationType observation : source) {
-            observations.add(convert(observation));
+        for (ObservationType observationType : source) {
+            Observation observation = convert(observationType);
+            if (observation != null) {
+                observations.add(observation);
+            }
         }
         return observations;
     }
 
-
     private static Observation convert(ObservationType source) {
+        if(source == null) return null;
+
         Observation observation = new Observation();
 
         observation.setObservationsKategori(toKod(source.getObservationskategori()));
         observation.setObservatonsKod(toKod(source.getObservationskod()));
 
-        PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source.getObservationsperiod().getTom());
-        observation.setObservationsPeriod(observationsPeriod);
+        if (source.getObservationsperiod() != null) {
+            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source.getObservationsperiod().getTom());
+            observation.setObservationsPeriod(observationsPeriod);
+        }
 
         observation.setPrognos(convert(source.getPrognos()));
 
@@ -111,6 +117,8 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     }
 
     private static Prognos convert(PrognosType source) {
+        if (source == null) return null;
+
         Prognos prognos = new Prognos();
         prognos.setPrognosKod(toKod(source.getPrognoskod()));
         return prognos;
