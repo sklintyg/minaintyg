@@ -28,15 +28,17 @@ import org.joda.time.LocalDateTime;
  */
 public final class LocalDateAdapter {
 
+    private static final String ISO_DATE_PATTERN = "YYYY-MM-dd";
+    private static final String ISO_DATE_TIME_PATTERN = "YYYY-MM-dd'T'HH:mm:ss";
+
     private static final int DATE_END_INDEX = 10;
     private static final int TIME_END_INDEX = 23;
 
     private LocalDateAdapter() {
     }
 
-
     /**
-     *  Converts an xs:date to a Joda Time LocalDate.
+     * Converts an xs:date to a Joda Time LocalDate.
      */
     public static LocalDate parseDate(String dateString) {
         if (dateString.length() > DATE_END_INDEX) {
@@ -47,7 +49,7 @@ public final class LocalDateAdapter {
     }
 
     /**
-     *  Converts an xs:datetime to a Joda Time LocalDateTime.
+     * Converts an xs:datetime to a Joda Time LocalDateTime.
      */
     public static LocalDateTime parseDateTime(String dateString) {
         if (dateString.length() > TIME_END_INDEX) {
@@ -55,6 +57,20 @@ public final class LocalDateAdapter {
         } else {
             return new LocalDateTime(dateString);
         }
+    }
+
+    /**
+     * Converts an intyg:common-model:1:date to a Joda Time LocalDate.
+     */
+    public static LocalDate parseIsoDate(String dateString) {
+        return LocalDate.parse(dateString);
+    }
+
+    /**
+     * Converts an intyg:common-model:1:dateTime to a Joda Time LocalDateTime.
+     */
+    public static LocalDateTime parseIsoDateTime(String dateString) {
+        return LocalDateTime.parse(dateString);
     }
 
     /**
@@ -69,5 +85,19 @@ public final class LocalDateAdapter {
      */
     public static String printDate(LocalDate date) {
         return date.toString();
+    }
+
+    /**
+     * Converts a Joda Time LocalDateTime to an intyg:common-model:1:date.
+     */
+    public static String printIsoDateTime(LocalDateTime dateTime) {
+        return dateTime.toString(ISO_DATE_TIME_PATTERN);
+    }
+
+    /**
+     * Converts a Joda Time LocalDate to an intyg:common-model:1:dateTime.
+     */
+    public static String printIsoDate(LocalDate date) {
+        return date.toString(ISO_DATE_PATTERN);
     }
 }

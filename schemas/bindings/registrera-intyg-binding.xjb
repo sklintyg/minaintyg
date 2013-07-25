@@ -1,7 +1,15 @@
-<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:c="urn:intyg:common-model:1"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
   <jaxb:bindings>
     <jaxb:globalBindings>
       <xjc:simple/>
+      <jaxb:javaType name="org.joda.time.LocalDate" xmlType="c:date"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDate"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDate"/>
+      <jaxb:javaType name="org.joda.time.LocalDateTime" xmlType="c:dateTime"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDateTime"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDateTime"/>
     </jaxb:globalBindings>
   </jaxb:bindings>
 </jaxb:bindings>

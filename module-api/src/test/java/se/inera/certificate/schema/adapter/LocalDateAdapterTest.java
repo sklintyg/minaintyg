@@ -34,8 +34,12 @@ public final class LocalDateAdapterTest {
     private static final String DATE_STRING = "2012-11-13";
 
     private static final LocalDate DATE = new LocalDate(2012, 11, 13);
+    private static final LocalDateTime ISO_DATE_TIME = new LocalDateTime(2012, 11, 13, 13, 55, 50);
     private static final LocalDateTime DATE_TIME = new LocalDateTime(2012, 11, 13, 13, 55, 50, 844);
     private static final LocalDateTime DATE_TIME_START_OF_DAY_STRING = new LocalDateTime(2012, 11, 13, 0, 0, 0);
+
+    private static final String ISO_DATE_TIME_STRING = "2012-11-13T13:55:50";
+    private static final String ISO_DATE_STRING = "2012-11-13";
 
     @Test
     public void testParseDateTimeWithTimeZoneInformation() {
@@ -83,5 +87,30 @@ public final class LocalDateAdapterTest {
     public void testPrintDateTime() {
         String dateString = LocalDateAdapter.printDateTime(DATE_TIME);
         assertEquals(DATE_TIME_STRING, dateString);
+    }
+
+
+    @Test
+    public void testParseIsoDate() {
+        LocalDate date = LocalDateAdapter.parseIsoDate(ISO_DATE_STRING);
+        assertEquals(DATE, date);
+    }
+
+    @Test
+    public void testParseIsoDateTime() {
+        LocalDateTime date = LocalDateAdapter.parseIsoDateTime(ISO_DATE_TIME_STRING);
+        assertEquals(ISO_DATE_TIME, date);
+    }
+
+    @Test
+    public void testPrintIsoDate() {
+        String dateString = LocalDateAdapter.printIsoDate(DATE);
+        assertEquals(ISO_DATE_STRING, dateString);
+    }
+
+    @Test
+    public void testPrintIsoDateTime() {
+        String dateString = LocalDateAdapter.printIsoDateTime(ISO_DATE_TIME);
+        assertEquals(ISO_DATE_TIME_STRING, dateString);
     }
 }
