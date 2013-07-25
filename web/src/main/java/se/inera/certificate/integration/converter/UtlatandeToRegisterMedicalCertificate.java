@@ -318,6 +318,8 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static EnhetType toJaxb(Vardenhet source) {
+        if (source == null) return null;
+
         EnhetType enhet = new EnhetType();
         enhet.setEnhetsnamn(source.getNamn());
         enhet.setPostadress(source.getPostadress());
@@ -334,6 +336,8 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static VardgivareType toJaxb(Vardgivare source) {
+        if (source == null) return null;
+
         VardgivareType vardgivare = new VardgivareType();
         vardgivare.setVardgivarnamn(source.getNamn());
         vardgivare.setVardgivareId(toII(source.getId()));

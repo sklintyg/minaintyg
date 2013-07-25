@@ -48,9 +48,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
         utlatande.setTyp(toKod(source.getTypAvUtlatande()));
         utlatande.setKommentars(source.getKommentars());
         utlatande.setSigneringsDatum(source.getSigneringsdatum());
-
-        //TODO - convert skickatDatum
-        //utlatande.setSkickatDatum(source.getSkickatDatum());
+        utlatande.setSkickatDatum(source.getSkickatdatum());
 
         utlatande.setPatient(convert(source.getPatient()));
 
@@ -112,6 +110,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
         }
 
         observation.setPrognos(convert(source.getPrognos()));
+        observation.setBeskrivning(source.getBeskrivning());
 
         return observation;
     }
@@ -204,9 +203,16 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         Patient patient = new Patient();
         patient.setId(toId(source.getPersonId()));
-        patient.setFornamns(source.getFornamns());
-        patient.setEfternamns(source.getEfternamns());
-        patient.setMellannamns(source.getMellannamns());
+
+        if (!source.getFornamns().isEmpty()) {
+            patient.setFornamns(source.getFornamns());
+        }
+        if (!source.getEfternamns().isEmpty()) {
+            patient.setEfternamns(source.getEfternamns());
+        }
+        if (!source.getMellannamns().isEmpty()) {
+            patient.setMellannamns(source.getMellannamns());
+        }
 
         patient.setSysselsattnings(convert(source.getSysselsattnings()));
 
