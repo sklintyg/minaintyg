@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Partial;
 import se.inera.certificate.model.Ovrigt;
 
 /**
@@ -36,6 +37,8 @@ public class CustomObjectMapper extends ObjectMapper {
             addSerializer(Ovrigt.class, new OvrigtSerializer());
 
             addSerializer(String.class, new TrimmingStringSerializer());
+
+            addSerializer(Partial.class, new PartialSerializer());
 
             addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
             addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
