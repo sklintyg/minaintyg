@@ -39,6 +39,7 @@ public class CustomObjectMapper extends ObjectMapper {
             addSerializer(String.class, new TrimmingStringSerializer());
 
             addSerializer(Partial.class, new PartialSerializer());
+            addDeserializer(Partial.class, new PartialDeserializer());
 
             addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
             addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
