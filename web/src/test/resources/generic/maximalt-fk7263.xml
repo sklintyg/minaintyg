@@ -1,83 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<lakarutlatande xmlns="urn:intyg:1">
-  <id>80832895-5a9c-450a-bd74-08af43750788</id>
-  <typ>fk7263</typ>
+<utlatande xmlns="urn:intyg:common-model:1"
+           xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">
+  <utlatande-id extension="80832895-5a9c-450a-bd74-08af43750788"/>
+  <typAvUtlatande code="fk7263"/>
+
   <kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.
   </kommentar>
-  <signeringsDatum>2011-01-26T00:00:00.000</signeringsDatum>
-  <skickatDatum>2011-03-23T09:29:15.193</skickatDatum>
+  <signeringsdatum>2011-01-26T00:00:00</signeringsdatum>
+  <skickatdatum>2011-03-23T09:29:15</skickatdatum>
   <patient>
-    <id>19121212-1212</id>
-    <fullstandigtNamn>Test Testorsson</fullstandigtNamn>
+    <person-id extension="19121212-1212"/>
+    <fornamn>Test</fornamn>
+    <efternamn>Testorsson</efternamn>
+    <arbetsuppgift>
+      <typAvArbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</typAvArbetsuppgift>
+    </arbetsuppgift>
+    <sysselsattning>
+      <typAvSysselsattning code="Nuvarande_arbete"/>
+    </sysselsattning>
+    <sysselsattning>
+      <typAvSysselsattning code="Arbetsloshet"/>
+    </sysselsattning>
+    <sysselsattning>
+      <typAvSysselsattning code="Foraldraledighet"/>
+    </sysselsattning>
   </patient>
+
   <skapadAv>
-    <id>Personal HSA-ID</id>
-    <namn>En Läkare</namn>
+    <hr:personal-id extension="Personal HSA-ID"/>
+    <hr:fullstandigtNamn>En Läkare</hr:fullstandigtNamn>
+    <hr:enhet>
+      <hr:enhets-id extension="VardenhetY"/>
+      <hr:arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
+      <hr:enhetsnamn>Kir mott</hr:enhetsnamn>
+      <hr:postadress>Lasarettsvägen 13</hr:postadress>
+      <hr:postnummer>85150</hr:postnummer>
+      <hr:postort>Sundsvall</hr:postort>
+      <hr:telefonnummer>060-1818000</hr:telefonnummer>
+      <hr:epost>kirmott@vardenhet.se</hr:epost>
+      <hr:vardgivare>
+        <hr:vardgivare-id extension="VardgivarId"/>
+        <hr:vardgivarnamn>Landstinget Norrland</hr:vardgivarnamn>
+      </hr:vardgivare>
+    </hr:enhet>
   </skapadAv>
-  <vardenhet>
-    <id>VardenhetY</id>
-    <namn>Kir mott</namn>
-    <arbetsplatskod>123456789011</arbetsplatskod>
-    <postadress>Lasarettsvägen 13</postadress>
-    <postnummer>85150</postnummer>
-    <postort>Sundsvall</postort>
-    <telefonnummer>060-1818000</telefonnummer>
-    <epost>kirmott@vardenhet.se</epost>
-    <vardgivare>
-      <id>VardgivarId</id>
-      <namn>Landstinget Norrland</namn>
-    </vardgivare>
-  </vardenhet>
-  <sjukdomsforlopp>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.
-  </sjukdomsforlopp>
+
+  <vardkontakt>
+    <vardkontakttyp code="Min_undersokning_av_patienten"/>
+    <vardkontakttid>
+      <from>2011-01-26</from>
+      <tom>2011-01-26</tom>
+    </vardkontakttid>
+  </vardkontakt>
+  <vardkontakt>
+    <vardkontakttyp code="Min_telefonkontakt_med_patienten"/>
+    <vardkontakttid>
+      <from>2011-01-12</from>
+      <tom>2011-01-12</tom>
+    </vardkontakttid>
+  </vardkontakt>
+  <referens>
+    <referenstyp code="Journaluppgifter"/>
+    <referensdatum>2010-01-14</referensdatum>
+  </referens>
+  <referens>
+    <referenstyp code="Annat"/>
+    <referensdatum>2010-01-24</referensdatum>
+  </referens>
+
   <aktivitet>
-    <aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
+    <aktivitetskod code="Patienten_behover_fa_kontakt_med_Arbetsformedlingen"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</aktivitetskod>
+    <aktivitetskod code="Patienten_behover_fa_kontakt_med_foretagshalsovarden"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Ovrigt</aktivitetskod>
+    <aktivitetskod code="Ovrigt"/>
     <beskrivning>När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik</beskrivning>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</aktivitetskod>
+    <aktivitetskod code="Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden"/>
     <beskrivning>Utreds om operation är nödvändig</beskrivning>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Planerad_eller_pagaende_annan_atgard</aktivitetskod>
+    <aktivitetskod code="Planerad_eller_pagaende_annan_atgard"/>
     <beskrivning>Patienten ansvarar för att armen hålls i stillhet</beskrivning>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell</aktivitetskod>
+    <aktivitetskod code="Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
+    <aktivitetskod code="Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
+    <aktivitetskod code="Kontakt_med_Forsakringskassan_ar_aktuell"/>
   </aktivitet>
-  <funktionsnedsattning>
+
+  <observation>
+    <observationskategori code="BedömtTillstånd/Sjukdomsförlopp"/>
+    <beskrivning>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</beskrivning>
+  </observation>
+
+  <observation>
+    <observationskategori code="Kroppsfunktion"/>
     <beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-
       och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger
       att patienten inte kan använda armen särkilt mycket.
     </beskrivning>
-  </funktionsnedsattning>
-  <aktivitetsbegransning>
+  </observation>
+
+  <observation>
+    <observationskategori code="Aktivitet"/>
     <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
       Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan
       inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så
       mycket som möjligt under tiden för läkning.
     </beskrivning>
-    <arbetsformaga>
-      <motivering>Skadan har förvärrats vid varje tillfälle patienten
-        använt armen. Måste hållas i total stillhet tills läkningsprocessen
-        kommit en bit på väg. Eventuellt kan utredning visa att operation är
-        nödvändig för att läka skadan.
-      </motivering>
-      <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
-      <arbetsuppgift>Dirigent. Dirigerar en större orkester på deltid</arbetsuppgift>
-      <arbetsformagaNedsattning>
+
+    <observationsperiod>
+      <from>2012</from>
+      <tom>2012-12-12</tom>
+    </observationsperiod>
+
+    <!--
+    TODO - put arbetsformaga motivering to correct location in XML
+       <arbetsformaga>
+         <motivering>Skadan har förvärrats vid varje tillfälle patienten
+           använt armen. Måste hållas i total stillhet tills läkningsprocessen
+           kommit en bit på väg. Eventuellt kan utredning visa att operation är
+           nödvändig för att läka skadan.
+         </motivering>
+
+    -->
+
+    <!--
+
+    TODO - put nedsattningar to correct location in XML
+    <arbetsformagaNedsattning>
         <varaktighetFrom>2011-04-01</varaktighetFrom>
         <varaktighetTom>2011-05-31</varaktighetTom>
         <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
@@ -97,29 +156,17 @@
         <varaktighetTom>2011-02-13</varaktighetTom>
         <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
       </arbetsformagaNedsattning>
-      <sysselsattning>Nuvarande_arbete</sysselsattning>
-      <sysselsattning>Arbetsloshet</sysselsattning>
-      <sysselsattning>Foraldraledighet</sysselsattning>
-    </arbetsformaga>
-  </aktivitetsbegransning>
-  <bedomtTillstand>
-    <tillstandskod>S47</tillstandskod>
+      -->
+
+    <prognos>
+      <prognoskod code="Det_gar_inte_att_bedomma"/>
+    </prognos>
+  </observation>
+
+  <observation>
+    <observationskategori code="Diagnos"/>
+    <observationskod code="S47" codeSystem="ICD-10"/>
     <beskrivning>Klämskada på överarm</beskrivning>
-  </bedomtTillstand>
-  <vardkontakt>
-    <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
-    <vardkontaktstid>2011-01-26</vardkontaktstid>
-  </vardkontakt>
-  <vardkontakt>
-    <vardkontakttyp>Min_telefonkontakt_med_patienten</vardkontakttyp>
-    <vardkontaktstid>2011-01-12</vardkontaktstid>
-  </vardkontakt>
-  <referens>
-    <referenstyp>Journaluppgifter</referenstyp>
-    <datum>2010-01-14</datum>
-  </referens>
-  <referens>
-    <referenstyp>Annat</referenstyp>
-    <datum>2010-01-24</datum>
-  </referens>
-</lakarutlatande>
+  </observation>
+
+</utlatande>

@@ -96,7 +96,7 @@
   <xs:complexType name="sysselsattningType">
     <xs:sequence>
       <xs:element name="typAvSysselsattning" type="iso:CD"/>
-      <xs:element name="datum" type="iso:TS" minOccurs="0"/>
+      <xs:element name="datum" type="date" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -116,7 +116,7 @@
   <xs:complexType name="referensType">
     <xs:sequence>
       <xs:element name="referenstyp" type="iso:CD"/>
-      <xs:element name="referensdatum" type="iso:TS" minOccurs="0"/>
+      <xs:element name="referensdatum" type="date" minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
@@ -230,11 +230,8 @@
                   minOccurs="0"/>
       <xs:element name="observationskod" type="iso:CD"
                   minOccurs="0"/>
-      <xs:element name="observationstid" type="iso:TS"
-                  minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
-      <xs:element name="observationsperiod" type="iso:IVL_TS"
-                  minOccurs="0"/>
+      <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0"/>
       <xs:element name="varde" type="iso:PQ" minOccurs="0"
                   maxOccurs="unbounded"/>
       <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
@@ -287,6 +284,20 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="partialDate">
+    <xs:annotation>
+      <xs:documentation>
+        PartialDate value is a string with the format &#34;YYYY[-MM[-DD]]&#34; that conforms to the constrained ISO
+        8601.
+        In contrast to the date type, this type also allows for year-only and year-and-month values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern
+              value="[1-2][0-9]{3,3}(-((0[1-9])|(1[0-2]))(-((0[1-9])|([1-2][0-9])|(3[0-1])))?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:complexType name="dateInterval">
     <xs:sequence>
       <xs:element name="from" type="date"/>
@@ -294,11 +305,12 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="dateTimeInterval">
+  <xs:complexType name="partialDateInterval">
     <xs:sequence>
-      <xs:element name="from" type="dateTime"/>
-      <xs:element name="tom" type="dateTime"/>
+      <xs:element name="from" type="partialDate"/>
+      <xs:element name="tom" type="partialDate"/>
     </xs:sequence>
   </xs:complexType>
+
 
 </xs:schema>

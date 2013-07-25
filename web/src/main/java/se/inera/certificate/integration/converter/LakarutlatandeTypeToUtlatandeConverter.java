@@ -12,9 +12,12 @@ import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
 import iso.v21090.dt.v1.IVLTS;
 import iso.v21090.dt.v1.TS;
+import org.joda.time.Partial;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
+import se.inera.certificate.common.v1.DateInterval;
 import se.inera.certificate.common.v1.ObservationType;
+import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.PrognosType;
 import se.inera.certificate.common.v1.ReferensType;
@@ -56,12 +59,11 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         type.setCode(FK_7263);
         utlatande.setTypAvUtlatande(type);
 
-        TS signeringsdatum = new TS();
-        signeringsdatum.setValue(source.getSigneringsdatum().toString(DATE_TIME_FORMAT));
+        utlatande.setSigneringsdatum(source.getSigneringsdatum());
 
         // TODO - sort out what should happen with skickatdatum
 
-        utlatande.setSkapadAvHosPersonal(source.getSkapadAvHosPersonal());
+        utlatande.setSkapadAv(source.getSkapadAvHosPersonal());
         utlatande.setPatient(convert(source.getPatient()));
 
         utlatande.getObservations().add(convert(source.getMedicinsktTillstand()));
@@ -145,13 +147,9 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         vardkontakt.setVardkontakttyp(vardkontaktType);
 
         // TODO - do we really need a timespan with from and to date? In FK7263 case, we set fromDate=endDate
-        IVLTS vardkontaktTid = new IVLTS();
-        TS low = new TS();
-        low.setValue(source.getVardkontaktstid().toString(DATE_FORMAT));
-        vardkontaktTid.setLow(low);
-        TS high = new TS();
-        high.setValue(source.getVardkontaktstid().toString(DATE_FORMAT));
-        vardkontaktTid.setHigh(high);
+        DateInterval vardkontaktTid= new DateInterval();
+        vardkontaktTid.setFrom(source.getVardkontaktstid());
+        vardkontaktTid.setTom(source.getVardkontaktstid());
         vardkontakt.setVardkontakttid(vardkontaktTid);
         return vardkontakt;
     }
@@ -163,9 +161,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         referensType.setCode(source.getReferenstyp().value());
         referens.setReferenstyp(referensType);
 
-        TS referensDatum = new TS();
-        referensDatum.setValue(source.getDatum().toString(DATE_FORMAT));
-        referens.setReferensdatum(referensDatum);
+        referens.setReferensdatum(source.getDatum());
 
         return referens;
     }
@@ -215,7 +211,11 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
                 IVLTS varaktighet = new IVLTS();
                 varaktighet.setLow(from);
                 varaktighet.setHigh(tom);
-                nedsattningObservation.setObservationsperiod(varaktighet);
+
+                PartialDateInterval observationsperiod = new PartialDateInterval();
+                observationsperiod.setFrom(new Partial(nedsattning.getVaraktighetFrom()));
+                observationsperiod.setTom(new Partial(nedsattning.getVaraktighetTom()));
+                nedsattningObservation.setObservationsperiod(observationsperiod);
             }
 
             observation.setPrognos(convert(source.getArbetsformaga().getPrognosangivelse()));

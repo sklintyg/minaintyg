@@ -5,9 +5,6 @@ import java.util.List;
 
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toId;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toKod;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toLocalDate;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toLocalDateTime;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toLocalDateTimeInterval;
 
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ObservationType;
@@ -18,7 +15,9 @@ import se.inera.certificate.common.v1.SysselsattningType;
 import se.inera.certificate.common.v1.VardkontaktType;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -48,14 +47,14 @@ public final class UtlatandeJaxbToUtlatandeConverter {
         utlatande.setId(toId(source.getUtlatandeId()));
         utlatande.setTyp(toKod(source.getTypAvUtlatande()));
         utlatande.setKommentars(source.getKommentars());
-        utlatande.setSigneringsDatum(toLocalDateTime(source.getSigneringsdatum()));
+        utlatande.setSigneringsDatum(source.getSigneringsdatum());
 
         //TODO - convert skickatDatum
         //utlatande.setSkickatDatum(source.getSkickatDatum());
 
         utlatande.setPatient(convert(source.getPatient()));
 
-        utlatande.setSkapadAv(convert(source.getSkapadAvHosPersonal()));
+        utlatande.setSkapadAv(convert(source.getSkapadAv()));
 
         utlatande.setObservations(convertObservations(source.getObservations()));
 
@@ -102,7 +101,9 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         observation.setObservationsKategori(toKod(source.getObservationskategori()));
         observation.setObservatonsKod(toKod(source.getObservationskod()));
-        observation.setObservationsTid(toLocalDateTimeInterval(source.getObservationsperiod()));
+
+        PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source.getObservationsperiod().getTom());
+        observation.setObservationsPeriod(observationsPeriod);
 
         observation.setPrognos(convert(source.getPrognos()));
 
@@ -126,7 +127,10 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     private static Vardkontakt convert(VardkontaktType source) {
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(toKod(source.getVardkontakttyp()));
-        vardkontakt.setVardkontaktstid(toLocalDateTimeInterval(source.getVardkontakttid()));
+
+        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source.getVardkontakttid().getTom());
+        vardkontakt.setVardkontaktstid(vardkontaktTid);
+
         return vardkontakt;
     }
     private static List<Referens> convertReferenser(List<ReferensType> source) {
@@ -140,7 +144,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     private static Referens convert(ReferensType source) {
         Referens referens = new Referens();
         referens.setReferenstyp(toKod(source.getReferenstyp()));
-        referens.setDatum(toLocalDate(source.getReferensdatum()));
+        referens.setDatum(source.getReferensdatum());
         return referens;
     }
 
@@ -175,6 +179,8 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     }       */
 
     private static HosPersonal convert(HosPersonalType source) {
+        if (source == null) return null;
+
         HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId(toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
@@ -186,6 +192,8 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     }
 
     private static Patient convert(PatientType source) {
+        if (source == null) return null;
+
         Patient patient = new Patient();
         patient.setId(toId(source.getPersonId()));
         patient.setFornamns(source.getFornamns());
@@ -208,11 +216,13 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     private static Sysselsattning convert(SysselsattningType source) {
         Sysselsattning sysselsattning = new Sysselsattning();
         sysselsattning.setSysselsattningsTyp(toKod(source.getTypAvSysselsattning()));
-        sysselsattning.setDatum(toLocalDateTime(source.getDatum()));
+        sysselsattning.setDatum(source.getDatum());
         return sysselsattning;
     }
 
     private static Vardenhet convert(EnhetType source) {
+        if (source == null) return null;
+
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -227,6 +237,8 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     }
 
     private static Vardgivare convert(VardgivareType source) {
+        if (source == null) return null;
+
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(toId(source.getVardgivareId()));
         vardgivare.setNamn(source.getVardgivarnamn());

@@ -5,7 +5,7 @@ package se.inera.certificate.model;
  */
 public class Vardkontakt {
     private Kod vardkontakttyp;
-    private LocalDateTimeInterval vardkontaktstid;
+    private LocalDateInterval vardkontaktstid;
 
     public Kod getVardkontakttyp() {
         return vardkontakttyp;
@@ -15,11 +15,11 @@ public class Vardkontakt {
         this.vardkontakttyp = vardkontakttyp;
     }
 
-    public LocalDateTimeInterval getVardkontaktstid() {
+    public LocalDateInterval getVardkontaktstid() {
         return vardkontaktstid;
     }
 
-    public void setVardkontaktstid(LocalDateTimeInterval vardkontaktstid) {
+    public void setVardkontaktstid(LocalDateInterval vardkontaktstid) {
         this.vardkontaktstid = vardkontaktstid;
     }
 }

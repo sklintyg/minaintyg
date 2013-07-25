@@ -10,6 +10,9 @@
       <jaxb:javaType name="org.joda.time.LocalDateTime" xmlType="c:dateTime"
                      parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDateTime"
                      printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDateTime"/>
+      <jaxb:javaType name="org.joda.time.Partial" xmlType="c:partialDate"
+                     parseMethod="se.inera.certificate.schema.adapter.PartialAdapter.parsePartial"
+                     printMethod="se.inera.certificate.schema.adapter.PartialAdapter.printPartial"/>
     </jaxb:globalBindings>
   </jaxb:bindings>
 </jaxb:bindings>

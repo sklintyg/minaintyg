@@ -1,6 +1,6 @@
 package se.inera.certificate.model;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
 
 /**
  * @author andreaskaltenbach
@@ -8,7 +8,7 @@ import org.joda.time.LocalDateTime;
 public class Sysselsattning {
 
     private Kod sysselsattningsTyp;
-    private LocalDateTime datum;
+    private LocalDate datum;
 
     public Kod getSysselsattningsTyp() {
         return sysselsattningsTyp;
@@ -18,11 +18,11 @@ public class Sysselsattning {
         this.sysselsattningsTyp = sysselsattningsTyp;
     }
 
-    public LocalDateTime getDatum() {
+    public LocalDate getDatum() {
         return datum;
     }
 
-    public void setDatum(LocalDateTime datum) {
+    public void setDatum(LocalDate datum) {
         this.datum = datum;
     }
 }

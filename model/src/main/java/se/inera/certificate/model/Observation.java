@@ -7,7 +7,7 @@ public class Observation {
 
     private Kod observationsKategori;
     private Kod observatonsKod;
-    private LocalDateTimeInterval observationsTid;
+    private PartialInterval observationsPeriod;
     private String beskrivning;
     private Prognos prognos;
 
@@ -27,12 +27,12 @@ public class Observation {
         this.observatonsKod = observatonsKod;
     }
 
-    public LocalDateTimeInterval getObservationsTid() {
-        return observationsTid;
+    public PartialInterval getObservationsPeriod() {
+        return observationsPeriod;
     }
 
-    public void setObservationsTid(LocalDateTimeInterval observationsTid) {
-        this.observationsTid = observationsTid;
+    public void setObservationsPeriod(PartialInterval observationsPeriod) {
+        this.observationsPeriod = observationsPeriod;
     }
 
     public String getBeskrivning() {

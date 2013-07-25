@@ -237,7 +237,7 @@ public final class UtlatandeToRegisterMedicalCertificate {
         }
 
         VardkontaktType vardkontaktType = new VardkontaktType();
-        vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getStart().toLocalDate());
+        vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getStart());
         vardkontaktType.setVardkontakttyp(vardkontakttyp);
         return vardkontaktType;
     }

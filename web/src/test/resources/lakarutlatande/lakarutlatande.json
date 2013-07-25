@@ -12,14 +12,14 @@
     },
     "skapadAv": {
         "id": "HOSID",
-        "namn": "Hans Rosling"
-    },
-    "vardenhet": {
-        "id": "vardenhets-id",
-        "namn": "Vårdcentrum i väst",
-        "vardgivare": {
-            "id": "vardgivar-id",
-            "namn": "Vård i Väst"
+        "namn": "Hans Rosling",
+        "vardenhet": {
+            "id": "vardenhets-id",
+            "namn": "Vårdcentrum i väst",
+            "vardgivare": {
+                "id": "vardgivar-id",
+                "namn": "Vård i Väst"
+            }
         }
     },
     "sjukdomsforlopp": "Ramlade i trappan hemma.",
