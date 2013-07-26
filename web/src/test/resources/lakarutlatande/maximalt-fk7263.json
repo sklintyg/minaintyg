@@ -11,10 +11,11 @@
     "skickatDatum" : "2011-03-23T09:29:15.000",
     "patient" : {
         "id" : {
+            "root" : "1.2.752.129.2.1.3.1",
             "extension" : "19121212-1212"
         },
-        "fornamns" : ["Test"],
-        "efternamns" : ["Testorsson"],
+        "fornamns" : [""],
+        "efternamns" : ["Test Testorsson"],
         "sysselsattnings" : [
             {
                 "sysselsattningsTyp" : {
@@ -35,11 +36,13 @@
     },
     "skapadAv" : {
         "id" : {
+            "root" : "1.2.752.129.2.1.4.1",
             "extension" : "Personal HSA-ID"
         },
         "namn" : "En Läkare",
         "vardenhet" : {
             "id" : {
+                "root" : "1.2.752.129.2.1.4.1",
                 "extension" : "VardenhetY"
             },
             "arbetsplatskod" : {
@@ -54,6 +57,7 @@
             "epost" : "kirmott@vardenhet.se",
             "vardgivare" : {
                 "id" : {
+                    "root" : "1.2.752.129.2.1.4.1",
                     "extension" : "VardgivarId"
                 },
                 "namn" : "Landstinget Norrland"
@@ -108,6 +112,16 @@
     "observations" : [
         {
             "observationsKategori" : {
+                "code" : "Diagnos"
+            },
+            "observatonsKod" : {
+                "codeSystemName" : "ICD-10",
+                "code" : "S47"
+            },
+            "beskrivning" : "Klämskada på överarm"
+        },
+        {
+            "observationsKategori" : {
                 "code" : "BedömtTillstånd/Sjukdomsförlopp"
             },
             "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
@@ -122,26 +136,12 @@
             "observationsKategori" : {
                 "code" : "Aktivitet"
             },
-            "observationsPeriod" : {
-                "from" : "2012",
-                "tom" : "2012-12-12"
-            },
             "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
             "prognos" : {
                 "prognosKod" : {
                     "code" : "Det_gar_inte_att_bedomma"
                 }
             }
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Diagnos"
-            },
-            "observatonsKod" : {
-                "codeSystem" : "ICD-10",
-                "code" : "S47"
-            },
-            "beskrivning" : "Klämskada på överarm"
         }
     ],
     "vardkontakter" : [

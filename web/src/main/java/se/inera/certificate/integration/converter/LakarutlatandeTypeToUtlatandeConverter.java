@@ -55,8 +55,11 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         utlatande.setTypAvUtlatande(type);
 
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        utlatande.setSkickatdatum(source.getSkickatDatum());
 
-        // TODO - sort out what should happen with skickatdatum
+        if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
+            utlatande.getKommentars().add(source.getKommentar());
+        }
 
         utlatande.setSkapadAv(source.getSkapadAvHosPersonal());
         utlatande.setPatient(convert(source.getPatient()));
@@ -103,6 +106,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         SysselsattningType sysselsattning = new SysselsattningType();
         CD sysselsattningsType = new CD();
         sysselsattningsType.setCode(source.getTypAvSysselsattning().value());
+        sysselsattning.setTypAvSysselsattning(sysselsattningsType);
         return sysselsattning;
     }
 
@@ -273,6 +277,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         PatientType patient = new PatientType();
         patient.setPersonId(source.getPersonId());
         // // TODO - sort out what should happen with fullständigt namn vs. förnamn/efternamn
+        patient.getFornamns().add("");
         patient.getEfternamns().add(source.getFullstandigtNamn());
         return patient;
     }
