@@ -1,14 +1,15 @@
 package se.inera.certificate.integration.interceptor;
 
-import javax.xml.transform.TransformerFactory;
 import java.lang.reflect.Field;
+
+import javax.xml.transform.TransformerFactory;
 
 import org.apache.cxf.feature.transform.AbstractXSLTInterceptor;
 import org.apache.cxf.feature.transform.XSLTOutInterceptor;
-import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.integration.xslt.ClasspathUriResolver;
 
 /**
@@ -43,8 +44,7 @@ public class SoapFaultToSoapResponseTransformerInterceptor extends XSLTOutInterc
     }
 
     @Override
-    public void handleMessage(Message message) throws Fault {
-
+    public void handleMessage(Message message) {
         Exception exception = message.getContent(Exception.class);
         LOGGER.error("Exception during web service call.", exception);
 

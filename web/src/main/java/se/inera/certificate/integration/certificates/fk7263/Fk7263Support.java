@@ -22,7 +22,7 @@ public class Fk7263Support implements CertificateSupport {
 
     private final JAXBContext jaxbContext;
 
-    public Fk7263Support() throws CertificateSupportException {
+    public Fk7263Support() {
         try {
             jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         } catch (JAXBException e) {

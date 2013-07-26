@@ -66,22 +66,20 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         Response response = endpoint.validate(utlatande);
 
         switch (response.getStatus()) {
-            case BAD_REQUEST: // BadRequest -> extract validation error message and transform to ValidationException
-                InputStream inputStream = (InputStream) response.getEntity();
-
+        case BAD_REQUEST: 
                 try {
+                    InputStream inputStream = (InputStream) response.getEntity();
                     String validationErrorMessage = IOUtils.toString(inputStream);
                     throw new ValidationException(validationErrorMessage);
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to read response for validation of '" + type + "' certificate.", e);
                 }
-
-            case OK:
-                break;
-            default:
-                String errorMessage = "Failed to validate certificate for certificate type '" + type + "'. HTTP status code is " + response.getStatus();
-                LOGGER.error(errorMessage);
-                throw new ValidationException(errorMessage);
+        case OK:
+            break;
+        default:
+            String errorMessage = "Failed to validate certificate for certificate type '" + type + "'. HTTP status code is " + response.getStatus();
+            LOGGER.error(errorMessage);
+            throw new ValidationException(errorMessage);
         }
     }
 

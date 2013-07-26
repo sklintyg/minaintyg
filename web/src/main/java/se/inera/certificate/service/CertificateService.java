@@ -23,9 +23,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.exception.CertificateRevokedException;
-import se.inera.certificate.exception.InvalidCertificateException;
-import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
@@ -45,7 +42,7 @@ public interface CertificateService {
      * @return list of matching certificates or empty list if no such certificates can be found
      * @throws MissingConsentException if the patient has not given consent for accessing her certificates
      */
-    List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate) throws MissingConsentException;
+    List<Certificate> listCertificates(String civicRegistrationNumber, List<String> certificateTypes, LocalDate fromDate, LocalDate toDate);
 
     /**
      * Returns the certificate for the given patient and certificate ID.
@@ -55,7 +52,7 @@ public interface CertificateService {
      * @return the certificate information or null if the requested certificate does not exist
      * @throws MissingConsentException if the patient has not given consent for accessing her certificates
      */
-    Certificate getCertificate(String civicRegistrationNumber, String certificateId) throws MissingConsentException;
+    Certificate getCertificate(String civicRegistrationNumber, String certificateId);
 
     Certificate storeCertificate(Utlatande utlatande);
 
@@ -66,15 +63,15 @@ public interface CertificateService {
      * @throws InvalidCertificateException if the certificate does not exist
      * @throws CertificateRevokedException if the certificate has been revoked
      */
-    void sendCertificate(String civicRegistrationNumber, String certificateId, String target) throws InvalidCertificateException, CertificateRevokedException;
+    void sendCertificate(String civicRegistrationNumber, String certificateId, String target);
 
     Utlatande getLakarutlatande(Certificate certificate);
 
     /**
-     * Revokes the certifictae.
+     * Revokes the certificate.
      * @return the revoked certificate.
      * @throws InvalidCertificateException if the certificate does not exist
      * @throws CertificateRevokedException if the certificate has been revoked
      */
-    Certificate revokeCertificate(String civicRegistrationNumber, String certificateId) throws InvalidCertificateException, CertificateRevokedException;
+    Certificate revokeCertificate(String civicRegistrationNumber, String certificateId);
 }

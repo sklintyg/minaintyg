@@ -23,7 +23,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.exception.InvalidCertificateIdentifierException;
 import se.inera.certificate.model.CertificateState;
 
 /**
@@ -53,7 +52,7 @@ public interface CertificateDao {
      * @return the matching certificate or {@code null} if there is no certificate for the given certificate ID and
      * civic registration number
      *
-     * @throws InvalidCertificateIdentifierException if the given civic registration number does not match with
+     * @throws se.inera.certificate.exception.InvalidCertificateIdentifierException if the given civic registration number does not match with
      *  the certificate's patient civic registration number
      */
     Certificate getCertificate(String civicRegistrationNumber, String certificateId);
@@ -72,10 +71,8 @@ public interface CertificateDao {
      * @param state the state of the certificate
      * @param target the target associated with the status update (e.g. Försäkringskassan)
      * @param timestamp the timestamp of the status update
-     * @throws InvalidCertificateIdentifierException if the combination of certificate ID and civic registration number
+     * @throws se.inera.certificate.exception.InvalidCertificateIdentifierException if the combination of certificate ID and civic registration number
      *  does not match
      */
-    void updateStatus(String certificateId, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp) throws InvalidCertificateIdentifierException;
-
-    void remove(String certificateId);
+    void updateStatus(String certificateId, String civicRegistrationNumber, CertificateState state, String target, LocalDateTime timestamp);
 }
