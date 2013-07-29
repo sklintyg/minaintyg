@@ -19,7 +19,7 @@
  -->
 <wsdl:definitions name='GetCertificateInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
     xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:tjsr='urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1'
-    xmlns:tjsi='urn:riv:insuranceprocess:healthreporting:getCertificateContentInitiator:1' xmlns:tns='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'
+    xmlns:tns='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'
     targetNamespace='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'>
 
     <xs:annotation>
@@ -55,7 +55,7 @@
 
     <wsdl:binding name='GetCertificateContentResponderBinding' type='tns:GetCertificateContentResponderInterface'>
         <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='GetCertificate'>
+        <wsdl:operation name='GetCertificateContent'>
             <soap:operation soapAction='urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1:GetCertificateContent' style='document' />
             <wsdl:input>
                 <soap:header use='literal' message='tns:GetCertificateContentRequest' part='LogicalAddress' />
