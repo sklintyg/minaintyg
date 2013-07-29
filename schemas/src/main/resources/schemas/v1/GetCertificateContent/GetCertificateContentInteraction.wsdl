@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<wsdl:definitions name='GetCertificateInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+    xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:tjsr='urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1'
+    xmlns:tjsi='urn:riv:insuranceprocess:healthreporting:getCertificateContentInitiator:1' xmlns:tns='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'
+    targetNamespace='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'>
+
+    <xs:annotation>
+        <xs:documentation>
+        Draft version of new GetCertificate 
+        </xs:documentation>
+    </xs:annotation>
+
+    <wsdl:types>
+        <xs:schema targetNamespace='urn:riv:insuranceprocess:healthreporting:GetCertificateContent'>
+            <xs:import schemaLocation='GetCertificateContentResponder.xsd' namespace='urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1' />
+            <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name='GetCertificateContentRequest'>
+        <wsdl:part name="LogicalAddress" element="wsa:To">
+            <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
+        </wsdl:part>
+        <wsdl:part name='parameters' element='tjsr:GetCertificateContentRequest' />
+    </wsdl:message>
+
+    <wsdl:message name='GetCertificateContentResponse'>
+        <wsdl:part name='parameters' element='tjsr:GetCertificateContentResponse' />
+    </wsdl:message>
+
+    <wsdl:portType name='GetCertificateContentResponderInterface'>
+        <wsdl:operation name='GetCertificateContent'>
+            <wsdl:input message='tns:GetCertificateContentRequest' />
+            <wsdl:output message='tns:GetCertificateContentResponse' />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name='GetCertificateContentResponderBinding' type='tns:GetCertificateContentResponderInterface'>
+        <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+        <wsdl:operation name='GetCertificate'>
+            <soap:operation soapAction='urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1:GetCertificateContent' style='document' />
+            <wsdl:input>
+                <soap:header use='literal' message='tns:GetCertificateContentRequest' part='LogicalAddress' />
+                <soap:body use='literal' parts='parameters' />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use='literal' />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name='GetCertificateContentResponderService'>
+        <wsdl:port name='GetCertificateContentResponderPort' binding='tns:GetCertificateContentResponderBinding'>
+            <soap:address location='http://tempuri.org' />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

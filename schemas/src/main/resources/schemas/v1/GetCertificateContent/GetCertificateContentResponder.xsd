@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1"
+    xmlns:tns="urn:riv:insuranceprocess:healthreporting:GetCertificateResponder:1" xmlns:pref1="urn:iso:21090:dt:1" xmlns:pref2="urn:riv:insuranceprocess:healthreporting:2"
+    xmlns:common="urn:intyg:common-model:1" 
+    xmlns:cert="urn:riv:insuranceprocess:certificate:1" elementFormDefault="qualified">
+
+    <import schemaLocation="../../core_components/iso-21090-dt-namespace.xsd" namespace="urn:iso:21090:dt:1" />
+    <import schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd" namespace="urn:riv:insuranceprocess:healthreporting:2" />
+    <import schemaLocation="../../core_components/insuranceprocess_certificate_1.0.xsd" namespace="urn:riv:insuranceprocess:certificate:1" />
+    <import schemaLocation="../RegistreraIntygInteraction/intyg_common_model.xsd" namespace="urn:intyg:common-model:1"/>
+    
+    <element name="GetCertificateContentRequest" type="tns:GetCertificateContentRequestType" />
+    <complexType name="GetCertificateContentRequestType">
+        <sequence>
+            <element name="certificateId" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="nationalIdentityNumber" type="string" minOccurs="1" maxOccurs="1" />
+            <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <element name="GetCertificateContentResponse" type="tns:GetCertificateContentResponseType" />
+    <complexType name="GetCertificateContentResponseType">
+        <sequence>
+            <element name="certificate" type="common:utlatandeType" minOccurs="0" maxOccurs="1" />
+            <element name="result" type="pref2:ResultOfCall" minOccurs="0" maxOccurs="1" />
+            <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+</schema>
