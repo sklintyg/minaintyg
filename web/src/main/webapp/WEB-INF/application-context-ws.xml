@@ -41,6 +41,17 @@
 
   </jaxws:endpoint>
 
+  <jaxws:endpoint address="/get-certificate-content/v1.0"
+                    implementor="se.inera.certificate.integration.GetCertificateContentResponderImpl">
+      <jaxws:outFaultInterceptors>
+        <bean class="se.inera.certificate.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+          <constructor-arg value="transform/get-certificate-content-transform.xslt"/>
+        </bean>
+      </jaxws:outFaultInterceptors>
+
+    </jaxws:endpoint>
+
+
   <jaxws:endpoint address="/register-certificate/v3.0"
                   implementor="se.inera.certificate.integration.RegisterMedicalCertificateResponderImpl">
     <jaxws:inInterceptors>

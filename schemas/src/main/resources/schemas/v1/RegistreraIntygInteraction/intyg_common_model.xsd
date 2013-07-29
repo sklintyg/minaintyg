@@ -40,6 +40,8 @@
                   minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="observation" type="observationType"
                   minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="ovrigt" type="ovrigtType"
+                        minOccurs="0" maxOccurs="1"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -244,6 +246,13 @@
               maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="ovrigtType">
+      <xs:sequence>
+        <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
 
   <xs:complexType name="prognosType">
     <xs:sequence>
