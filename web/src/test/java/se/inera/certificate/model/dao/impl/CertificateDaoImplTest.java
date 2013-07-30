@@ -144,7 +144,7 @@ public class CertificateDaoImplTest {
     @Test
     public void testGetDocument() {
 
-        Certificate certificate = CertificateFactory.buildCertificate("1", new LocalDate("2013-04-25"), new LocalDate("2013-05-25"));
+        Certificate certificate = CertificateFactory.buildCertificate("1", "2013-04-25", "2013-05-25");
         certificate.setCivicRegistrationNumber(CIVIC_REGISTRATION_NUMBER);
         certificate.setSignedDate(new LocalDateTime("2013-04-24"));
         certificateDao.store(certificate);
@@ -155,8 +155,8 @@ public class CertificateDaoImplTest {
         Certificate storedCertificate = certificateDao.getCertificate(CIVIC_REGISTRATION_NUMBER, "1");
 
         assertEquals(new LocalDateTime("2013-04-24"), storedCertificate.getSignedDate());
-        assertEquals(new LocalDate("2013-04-25"), storedCertificate.getValidFromDate());
-        assertEquals(new LocalDate("2013-05-25"), storedCertificate.getValidToDate());
+        assertEquals("2013-04-25", storedCertificate.getValidFromDate());
+        assertEquals("2013-05-25", storedCertificate.getValidToDate());
 
         String document = storedCertificate.getDocument();
         assertEquals("{\"name\":\"Some JSON\"}", document);

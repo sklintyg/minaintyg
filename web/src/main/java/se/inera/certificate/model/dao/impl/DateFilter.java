@@ -18,13 +18,14 @@
  */
 package se.inera.certificate.model.dao.impl;
 
-import org.joda.time.LocalDate;
-
-import se.inera.certificate.model.dao.Certificate;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Partial;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.schema.adapter.PartialAdapter;
 
 /**
  * Class that filter a collection of {@link Certificate} that has validity dated within a
@@ -62,7 +63,7 @@ class DateFilter {
 
         List<Certificate> filteredData = new ArrayList<Certificate>(this.data.size());
         for (Certificate meta: data) {
-            if (isWithin(meta.getValidFromDate(), fromDate, toDate) || isWithin(meta.getValidToDate(), fromDate, toDate)) {
+            if (isWithin(PartialAdapter.parsePartial(meta.getValidFromDate()), fromDate, toDate) || isWithin(PartialAdapter.parsePartial(meta.getValidToDate()), fromDate, toDate)) {
                 filteredData.add(meta);
             }
         }
@@ -78,7 +79,7 @@ class DateFilter {
      *
      * @return true if date is within interval
      */
-    private boolean isWithin(LocalDate date, LocalDate from, LocalDate to) {
+    private boolean isWithin(Partial date, LocalDate from, LocalDate to) {
         return date.compareTo(from) >= 0 && date.compareTo(to) <= 0;
     }
 }

@@ -18,12 +18,6 @@
  */
 package se.inera.certificate.model.dao;
 
-import static se.inera.certificate.model.util.Iterables.find;
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -36,11 +30,14 @@ import javax.persistence.Lob;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.model.util.Iterables.find;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.ModelException;
 import se.inera.certificate.model.util.Predicate;
@@ -107,15 +104,13 @@ public class Certificate {
      * Time from which this certificate is valid.
      */
     @Column(name = "VALID_FROM_DATE", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate validFromDate;
+    private String validFromDate;
 
     /**
      * Time to which this certificate is valid.
      */
     @Column(name = "VALID_TO_DATE", nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate validToDate;
+    private String validToDate;
 
     /**
      * If this certificate is deleted or not.
@@ -216,19 +211,19 @@ public class Certificate {
         this.signedDate = signedDate;
     }
 
-    public LocalDate getValidFromDate() {
+    public String getValidFromDate() {
         return validFromDate;
     }
 
-    public void setValidFromDate(LocalDate validFromDate) {
+    public void setValidFromDate(String validFromDate) {
         this.validFromDate = validFromDate;
     }
 
-    public LocalDate getValidToDate() {
+    public String getValidToDate() {
         return validToDate;
     }
 
-    public void setValidToDate(LocalDate validToDate) {
+    public void setValidToDate(String validToDate) {
         this.validToDate = validToDate;
     }
 

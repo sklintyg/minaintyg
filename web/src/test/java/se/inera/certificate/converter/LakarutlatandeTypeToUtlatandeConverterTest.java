@@ -49,6 +49,8 @@ public class LakarutlatandeTypeToUtlatandeConverterTest {
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(utlatande, stringWriter);
 
+        System.out.println(stringWriter.toString());
+
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());

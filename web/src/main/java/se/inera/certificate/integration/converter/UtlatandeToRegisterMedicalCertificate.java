@@ -6,9 +6,9 @@ import java.util.List;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
 import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
-import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
+import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
 import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
-import static se.inera.certificate.model.codes.ObservationsKoder.SJUKDOMSFORLOPP;
+import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
 
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
@@ -69,12 +69,12 @@ public final class UtlatandeToRegisterMedicalCertificate {
             register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
             register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
 
-            Observation sjukdomsforlopp = utlatande.findObservationByKategori(SJUKDOMSFORLOPP);
+            Observation sjukdomsforlopp = utlatande.findObservationByKategori(BEDOMT_TILLSTAND);
             if (sjukdomsforlopp != null) {
                 register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(sjukdomsforlopp.getBeskrivning()));
             }
 
-            Observation diagnos = utlatande.findObservationByKategori(DIAGNOS);
+            Observation diagnos = utlatande.findObservationByKategori(MEDICINSKT_TILLSTAND);
             if (diagnos != null) {
                 register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
             }

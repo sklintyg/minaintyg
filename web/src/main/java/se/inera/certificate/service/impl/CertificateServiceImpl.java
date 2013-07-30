@@ -37,6 +37,7 @@ import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.model.dao.CertificateDao;
 import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
+import se.inera.certificate.schema.adapter.PartialAdapter;
 import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
@@ -140,8 +141,8 @@ public class CertificateServiceImpl implements CertificateService {
         }
 
         certificate.setCivicRegistrationNumber(utlatande.getPatient().getId().getExtension());
-        certificate.setValidFromDate(utlatande.getValidFromDate());
-        certificate.setValidToDate(utlatande.getValidToDate());
+        certificate.setValidFromDate(PartialAdapter.printPartial(utlatande.getValidFromDate()));
+        certificate.setValidToDate(PartialAdapter.printPartial(utlatande.getValidToDate()));
 
         return certificate;
     }

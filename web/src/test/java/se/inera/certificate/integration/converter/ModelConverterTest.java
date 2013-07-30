@@ -79,7 +79,7 @@ public class ModelConverterTest {
     private Certificate createCertificate() {
         return new CertificateBuilder("112233")
                 .certificateType("fk7263")
-                .validity(new LocalDate(2000, 1, 1), new LocalDate(2020, 1, 1))
+                .validity("2000-01-01", "2020-01-01")
                 .signingDoctorName("Doctor Who")
                 .signedDate(new LocalDateTime(1999, 12, 31, 23, 59))
                 .careUnitName("London Bridge Hospital")

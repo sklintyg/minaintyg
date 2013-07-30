@@ -1,6 +1,9 @@
 package se.inera.certificate.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import se.inera.certificate.model.util.Strings;
 
 /**
  * @author andreaskaltenbach
@@ -45,6 +48,22 @@ public class Patient {
 
     public void setEfternamns(List<String> efternamns) {
         this.efternamns = efternamns;
+    }
+
+    public String getFullstandigtNamn() {
+        List<String> names = new ArrayList<>();
+
+        if (fornamns != null) {
+            names.addAll(fornamns);
+        }
+        if (mellannamns != null) {
+            names.addAll(mellannamns);
+        }
+        if (efternamns != null) {
+            names.addAll(efternamns);
+        }
+
+        return Strings.join(" ", names);
     }
 
     public List<Sysselsattning> getSysselsattnings() {

@@ -1,8 +1,6 @@
 package se.inera.certificate.model.builder;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
@@ -32,14 +30,10 @@ public class CertificateBuilder {
         return this;
     }
 
-    public CertificateBuilder validity(LocalDate fromDate, LocalDate toDate) {
+    public CertificateBuilder validity(String fromDate, String toDate) {
         certificate.setValidFromDate(fromDate);
         certificate.setValidToDate(toDate);
         return this;
-    }
-
-    public CertificateBuilder validity(String fromDate, String toDate) {
-        return validity(new LocalDate(fromDate), new LocalDate(toDate));
     }
 
     public CertificateBuilder careUnitName(String careUnitName) {

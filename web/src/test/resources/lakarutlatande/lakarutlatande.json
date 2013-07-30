@@ -1,49 +1,52 @@
 {
-    "id": "1",
-    "typ": "fk7263",
-    "kommentar": "Lite svag i knäna",
-    "signeringsDatum": "2013-05-31T09:51:38.570",
-    "patient": {
-        "id": "19001122-3344",
-        "fornamn": "Erik",
-        "mellannamn": null,
-        "efternamn": "Eriksson",
-        "tilltalsnamn": null
+    "id" : {
+        "extension" : "1"
     },
-    "skapadAv": {
-        "id": "HOSID",
-        "namn": "Hans Rosling",
-        "vardenhet": {
-            "id": "vardenhets-id",
-            "namn": "Vårdcentrum i väst",
-            "vardgivare": {
-                "id": "vardgivar-id",
-                "namn": "Vård i Väst"
+    "typ" : {
+        "code" : "fk7263"
+    },
+    "signeringsDatum" : "2013-05-31T09:51:38.570",
+    "patient" : {
+        "id": {
+            "extension": "19001122-3344"
+        }
+    },
+    "skapadAv" : {
+        "id" : "HOSID",
+        "namn" : "Hans Rosling",
+        "vardenhet" : {
+            "id" : "vardenhets-id",
+            "namn" : "Vårdcentrum i väst",
+            "vardgivare" : {
+                "id" : "vardgivar-id",
+                "namn" : "Vård i Väst"
             }
         }
     },
-    "sjukdomsforlopp": "Ramlade i trappan hemma.",
-
-    "aktivitetsbegransningar": [
+    "observations" : [
         {
-
-            "arbetsformaga": {
-                "motivering": "Skadan har förvärrats vid varje tillfälle patienten använt armen.",
-                "prognosangivelse": "DET_GAR_INTE_ATT_BEDOMMA",
-                "arbetsformagaNedsattningar": [
-                    {
-                        "varaktighetFrom": "2013-06-01",
-                        "varaktighetTom": "2013-06-04",
-                        "nedsattningsgrad": "HELT_NEDSATT"
-                    },
-                    {
-                        "varaktighetFrom": "2013-06-05",
-                        "varaktighetTom": "2013-06-12",
-                        "nedsattningsgrad": "NEDSATT_MED_1_2"
-                    }
-                ]
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Nedsatt_med_1/2"
+            },
+            "observationsPeriod" : {
+                "from" : "2013-06-05",
+                "tom" : "2013-06-12"
+            }
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Helt_nedsatt"
+            },
+            "observationsPeriod" : {
+                "from" : "2013-06-01",
+                "tom" : "2013-06-04"
             }
         }
-    ],
-    "ovrigt": null
+    ]
 }

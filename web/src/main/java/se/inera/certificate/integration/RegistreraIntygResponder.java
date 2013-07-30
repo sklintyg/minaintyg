@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
+import org.apache.cxf.common.util.Base64Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +76,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
             Marshaller marshaller = jaxbContext.createMarshaller();
             StringWriter stringWriter = new StringWriter();
             marshaller.marshal(wrapJaxb(ovrigt), stringWriter);
-            return stringWriter.toString();
-
+            return Base64Utility.encode(stringWriter.toString().getBytes());
         } catch (JAXBException e) {
             LOGGER.error("Failed to marshall Ovrigt element", e);
             throw new RuntimeException("Failed to marshall Ovrigt element", e);

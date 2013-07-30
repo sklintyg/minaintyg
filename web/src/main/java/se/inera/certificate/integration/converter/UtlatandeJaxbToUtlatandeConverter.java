@@ -7,6 +7,7 @@ import static se.inera.certificate.integration.converter.util.IsoTypeConverter.t
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toKod;
 
 import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.PrognosType;
@@ -14,6 +15,7 @@ import se.inera.certificate.common.v1.ReferensType;
 import se.inera.certificate.common.v1.SysselsattningType;
 import se.inera.certificate.common.v1.VardkontaktType;
 import se.inera.certificate.model.Aktivitet;
+import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Observation;
@@ -62,28 +64,6 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         return utlatande;
     }
-
-    /*
-    private static Arbetsformaga convert(ArbetsformagaType source) {
-        Arbetsformaga arbetsformaga = new Arbetsformaga();
-        arbetsformaga.setArbetsuppgift(source.getArbetsuppgift());
-        arbetsformaga.setArbetsformagaNedsattningar(convertArbetsformaganedsattningar(source.getArbetsformagaNedsattnings()));
-        arbetsformaga.setPrognosangivelse(convert(source.getPrognosangivelse()));
-        arbetsformaga.setMotivering(source.getMotivering());
-        return arbetsformaga;
-    }
-
-    private static List<ArbetsformagaNedsattning> convertArbetsformaganedsattningar(List<se.inera.certificate.integration.v1.ArbetsformagaNedsattningType> source) {
-        List<ArbetsformagaNedsattning> nedsattningar = new ArrayList<>();
-        for (se.inera.certificate.integration.v1.ArbetsformagaNedsattningType arbetsformagaNedsattningType : source) {
-            ArbetsformagaNedsattning arbetsformagaNedsattning = new ArbetsformagaNedsattning();
-            arbetsformagaNedsattning.setNedsattningsgrad(convert(arbetsformagaNedsattningType.getNedsattningsgrad()));
-            arbetsformagaNedsattning.setVaraktighetFrom(arbetsformagaNedsattningType.getVaraktighetFrom());
-            arbetsformagaNedsattning.setVaraktighetTom(arbetsformagaNedsattningType.getVaraktighetTom());
-            nedsattningar .add(arbetsformagaNedsattning);
-        }
-        return nedsattningar;
-    }  */
 
     private static List<Observation> convertObservations(List<ObservationType> source) {
         List<Observation> observations = new ArrayList<>();
@@ -215,6 +195,16 @@ public final class UtlatandeJaxbToUtlatandeConverter {
         }
 
         patient.setSysselsattnings(convert(source.getSysselsattnings()));
+
+        if (!source.getArbetsuppgifts().isEmpty()) {
+            List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
+            for (ArbetsuppgiftType sourceArbetsuppgift : source.getArbetsuppgifts()) {
+                Arbetsuppgift arbetsuppgift = new Arbetsuppgift();
+                arbetsuppgift.setTypAvArbetsuppgift(sourceArbetsuppgift.getTypAvArbetsuppgift());
+                arbetsuppgifts.add(arbetsuppgift);
+            }
+            patient.setArbetsuppgifts(arbetsuppgifts);
+        }
 
         return patient;
     }

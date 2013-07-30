@@ -97,13 +97,13 @@
   </aktivitet>
 
   <observation>
-    <observationskategori code="Diagnos"/>
+    <observationskategori code="MedicinsktTillstånd"/>
     <observationskod code="S47" codeSystemName="ICD-10"/>
     <beskrivning>Klämskada på överarm</beskrivning>
   </observation>
 
   <observation>
-    <observationskategori code="BedömtTillstånd/Sjukdomsförlopp"/>
+    <observationskategori code="BedömtTillstånd"/>
     <beskrivning>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</beskrivning>
   </observation>
 
@@ -115,6 +115,7 @@
     </beskrivning>
   </observation>
 
+
   <observation>
     <observationskategori code="Aktivitet"/>
     <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
@@ -122,43 +123,48 @@
       inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så
       mycket som möjligt under tiden för läkning.
     </beskrivning>
-    <prognos>
-      <prognoskod code="Det_gar_inte_att_bedomma"/>
-    </prognos>
+  </observation>
+
+  <observation>
+    <observationskategori code="Arbetsförmåga"/>
+    <observationskod code="Det_gar_inte_att_bedomma"/>
+    <beskrivning>Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+    </beskrivning>
+  </observation>
+
+  <observation>
+    <observationskategori code="Nedsättning"/>
+    <observationskod code="Nedsatt_med_1/4"/>
+    <observationsperiod>
+      <from>2011-04-01</from>
+      <tom>2011-05-31</tom>
+    </observationsperiod>
+  </observation>
+  <observation>
+    <observationskategori code="Nedsättning"/>
+    <observationskod code="Nedsatt_med_1/2"/>
+    <observationsperiod>
+      <from>2011-03-07</from>
+      <tom>2011-03-31</tom>
+    </observationsperiod>
+  </observation>
+  <observation>
+    <observationskategori code="Nedsättning"/>
+    <observationskod code="Nedsatt_med_3/4"/>
+    <observationsperiod>
+      <from>2011-02-14</from>
+      <tom>2011-03-06</tom>
+    </observationsperiod>
+  </observation>
+  <observation>
+    <observationskategori code="Nedsättning"/>
+    <observationskod code="Helt_nedsatt"/>
+    <observationsperiod>
+          <from>2011-01-26</from>
+          <tom>2011-02-13</tom>
+        </observationsperiod>
   </observation>
 </utlatande>
-  <!--
-     TODO - put arbetsformaga motivering to correct location in XML
-        <arbetsformaga>
-          <motivering>Skadan har förvärrats vid varje tillfälle patienten
-            använt armen. Måste hållas i total stillhet tills läkningsprocessen
-            kommit en bit på väg. Eventuellt kan utredning visa att operation är
-            nödvändig för att läka skadan.
-          </motivering>
-
-     -->
-
-  <!--
-
-  TODO - put nedsattningar to correct location in XML
-  <arbetsformagaNedsattning>
-      <varaktighetFrom>2011-04-01</varaktighetFrom>
-      <varaktighetTom>2011-05-31</varaktighetTom>
-      <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
-    </arbetsformagaNedsattning>
-    <arbetsformagaNedsattning>
-      <varaktighetFrom>2011-03-07</varaktighetFrom>
-      <varaktighetTom>2011-03-31</varaktighetTom>
-      <nedsattningsgrad>Nedsatt_med_1/2</nedsattningsgrad>
-    </arbetsformagaNedsattning>
-    <arbetsformagaNedsattning>
-      <varaktighetFrom>2011-02-14</varaktighetFrom>
-      <varaktighetTom>2011-03-06</varaktighetTom>
-      <nedsattningsgrad>Nedsatt_med_3/4</nedsattningsgrad>
-    </arbetsformagaNedsattning>
-    <arbetsformagaNedsattning>
-      <varaktighetFrom>2011-01-26</varaktighetFrom>
-      <varaktighetTom>2011-02-13</varaktighetTom>
-      <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
-    </arbetsformagaNedsattning>
-    -->

@@ -18,19 +18,17 @@
  */
 package se.inera.certificate.model.dao.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
-
 import se.inera.certificate.model.dao.Certificate;
-import se.inera.certificate.model.dao.impl.DateFilter;
 
 public class DateFilterTest {
 
@@ -62,8 +60,8 @@ public class DateFilterTest {
 
     private Certificate createCertificate(String id, String from, String to) {
         Certificate c = new Certificate(id, "");
-        c.setValidFromDate(new LocalDate(from));
-        c.setValidToDate(new LocalDate(to));
+        c.setValidFromDate(from);
+        c.setValidToDate(to);
         return c;
     }
 

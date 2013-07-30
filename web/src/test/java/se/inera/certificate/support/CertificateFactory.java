@@ -1,8 +1,6 @@
 package se.inera.certificate.support;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.builder.CertificateBuilder;
 import se.inera.certificate.model.dao.Certificate;
 
@@ -19,8 +17,8 @@ public final class CertificateFactory {
     public static final String CIVIC_REGISTRATION_NUMBER = "19001122-3344";
     public static final String FK7263 = "fk7263";
 
-    public static final LocalDate VALID_FROM = new LocalDate(2000, 1, 1);
-    public static final LocalDate VALID_TO = new LocalDate(2000, 12, 31);
+    public static final String VALID_FROM = "2000-01-01";
+    public static final String VALID_TO = "2000-12-31";
 
     public static final LocalDateTime SIGNED_DATE = new LocalDateTime(1999, 12, 31, 10, 32);
     public static final String SIGNING_DOCTOR = "Dr. Oetker";
@@ -40,14 +38,10 @@ public final class CertificateFactory {
     }
 
     public static Certificate buildCertificate(String certificateId, String validFrom, String validTo) {
-        return buildCertificate(certificateId, new LocalDate(validFrom), new LocalDate(validTo));
-    }
-
-    public static Certificate buildCertificate(String certificateId, LocalDate validFrom, LocalDate validTo) {
         return buildCertificate(certificateId, FK7263, validFrom, validTo);
     }
 
-    public static Certificate buildCertificate(String certificateId, String certificateType, LocalDate validFrom, LocalDate validTo) {
+    public static Certificate buildCertificate(String certificateId, String certificateType, String validFrom, String validTo) {
         return new CertificateBuilder(certificateId, CERTIFICATE_DOCUMENT)
                 .civicRegistrationNumber(CIVIC_REGISTRATION_NUMBER)
                 .certificateType(certificateType)

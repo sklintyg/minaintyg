@@ -14,8 +14,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -129,8 +126,8 @@ public class CertificateServiceImplTest {
         assertEquals("Vårdcentrum i väst", certificate.getCareUnitName());
         assertEquals("19001122-3344", certificate.getCivicRegistrationNumber());
         assertEquals(new LocalDateTime("2013-05-31T09:51:38.570"), certificate.getSignedDate());
-        assertEquals(new LocalDate("2013-06-01"), certificate.getValidFromDate());
-        assertEquals(new LocalDate("2013-06-12"), certificate.getValidToDate());
+        assertEquals("2013-06-01", certificate.getValidFromDate());
+        assertEquals("2013-06-12", certificate.getValidToDate());
 
         assertEquals("Some JSON", certificate.getDocument());
 

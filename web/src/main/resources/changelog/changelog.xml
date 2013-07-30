@@ -24,10 +24,10 @@
       <column name="SIGNED_DATE" type="datetime">
         <constraints nullable="false"/>
       </column>
-      <column name="VALID_FROM_DATE" type="datetime">
+      <column name="VALID_FROM_DATE" type="varchar(10)">
         <constraints nullable="false"/>
       </column>
-      <column name="VALID_TO_DATE" type="datetime">
+      <column name="VALID_TO_DATE" type="varchar(10)">
         <constraints nullable="false"/>
       </column>
       <column name="DELETED" type="boolean"/>

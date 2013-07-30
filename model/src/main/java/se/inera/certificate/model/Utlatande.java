@@ -7,8 +7,9 @@ import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Partial;
+import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.util.Predicate;
 
 /**
@@ -148,50 +149,48 @@ public class Utlatande {
         return observations;
     }
 
-    public Observation findObservationByKategori(final Kod observationsKategori) {
-        return find(observations, new Predicate<Observation>() {
-               @Override
-               public boolean apply(Observation observation) {
-                   return observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori);
-               }
-           }, null);
+    public Observation getObservationByKategori(Kod observationsKategori) {
+        for (Observation observation : this.observations) {
+            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+                return observation;
+            }
+        }
+        return null;
     }
 
-    public LocalDate getValidFromDate() {
-        // TODO - reactivate implementation as soon as Mawell has decided where the nedsattningar will be stored in the new model
-        /*
-        if (aktivitetsbegransningar == null) {
-            return null;
-        }
+    public Observation findObservationByKategori(final Kod observationsKategori) {
+        return find(observations, new Predicate<Observation>() {
+            @Override
+            public boolean apply(Observation observation) {
+                return observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori);
+            }
+        }, null);
+    }
 
-        LocalDate fromDate = null;
+    public Partial getValidFromDate() {
+        List<Observation> nedsattningar = getObservationsByKategori(ObservationsKoder.NEDSATTNING);
+        Partial fromDate = null;
 
-        for (Aktivitetsbegransning aktivitetsbegransning : aktivitetsbegransningar) {
-            LocalDate aktivitetsbegransningFromDate = aktivitetsbegransning.calculateValidFromDate();
+        for (Observation nedsattning : nedsattningar) {
+            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsPeriod().getFrom();
             if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
                 fromDate = aktivitetsbegransningFromDate;
             }
         }
-        return fromDate;*/
-        return null;
+        return fromDate;
     }
 
-    public LocalDate getValidToDate() {
-        // TODO - reactivate implementation as soon as Mawell has decided where the nedsattningar will be stored in the new model
-        /*if (aktivitetsbegransningar == null) {
-            return null;
-        }
+    public Partial getValidToDate() {
+        List<Observation> nedsattningar = getObservationsByKategori(ObservationsKoder.NEDSATTNING);
+        Partial toDate = null;
 
-        LocalDate toDate = null;
-
-        for (Aktivitetsbegransning aktivitetsbegransning : aktivitetsbegransningar) {
-            LocalDate aktivitetsbegransningToDate = aktivitetsbegransning.calculateValidToDate();
+        for (Observation nedsattning : nedsattningar) {
+            Partial aktivitetsbegransningToDate = nedsattning.getObservationsPeriod().getTom();
             if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
                 toDate = aktivitetsbegransningToDate;
             }
         }
-        return toDate;*/
-        return null;
+        return toDate;
     }
 
     public Aktivitet getAktivitet(final Kod aktivitetsKod) {
@@ -202,7 +201,7 @@ public class Utlatande {
         return find(aktiviteter, new Predicate<Aktivitet>() {
             @Override
             public boolean apply(Aktivitet aktivitet) {
-                return aktivitet.getAktivitetskod() == aktivitetsKod;
+                return aktivitetsKod.equals(aktivitet.getAktivitetskod());
             }
         }, null);
     }
@@ -212,7 +211,7 @@ public class Utlatande {
         return find(vardkontakter, new Predicate<Vardkontakt>() {
             @Override
             public boolean apply(Vardkontakt vardkontakt) {
-                return vardkontakt.getVardkontakttyp() == vardkontaktTyp;
+                return vardkontaktTyp.equals(vardkontakt.getVardkontakttyp());
             }
         }, null);
     }
@@ -221,7 +220,7 @@ public class Utlatande {
         return find(referenser, new Predicate<Referens>() {
             @Override
             public boolean apply(Referens referens) {
-                return referens.getReferenstyp() == referensTyp;
+                return referensTyp.equals(referens.getReferenstyp());
             }
         }, null);
     }

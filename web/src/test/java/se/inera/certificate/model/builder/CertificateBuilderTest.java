@@ -1,17 +1,16 @@
 package se.inera.certificate.model.builder;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
-
-import se.inera.certificate.model.dao.Certificate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import org.joda.time.LocalDateTime;
+import org.junit.Test;
+import se.inera.certificate.model.dao.Certificate;
+
 public class CertificateBuilderTest {
 
-    private static final LocalDate FROM_DATE = new LocalDate(2013, 3, 1);
-    private static final LocalDate TO_DATE = new LocalDate(2013, 3, 20);
+    private static final String FROM_DATE = "2013-03-01";
+    private static final String TO_DATE = "2013-03-20";
     private static final LocalDateTime SIGNED_DATE = new LocalDateTime(2013, 3, 1, 11, 32);
 
     @Test

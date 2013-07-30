@@ -1,223 +1,303 @@
-{  "id" : {
-        "extension" : "80832895-5a9c-450a-bd74-08af43750788"
-    },
-    "typ" : {
-        "code" : "fk7263"
-    },
-    "kommentars" : [
-        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
-    ],
-    "signeringsDatum" : "2011-01-26T00:00:00.000",
-    "skickatDatum" : "2011-03-23T09:29:15.000",
-    "patient" : {
-        "id" : {
-            "root" : "1.2.752.129.2.1.3.1",
-            "extension" : "19121212-1212"
-        },
-        "fornamns" : [""],
-        "efternamns" : ["Test Testorsson"],
-        "sysselsattnings" : [
+{
+   "id" :
+      {
+         "extension" : "80832895-5a9c-450a-bd74-08af43750788"
+      },
+   "typ" :
+      {
+         "code" : "fk7263"
+      },
+   "kommentars" :
+      [
+         "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
+      ],
+   "signeringsDatum" : "2011-01-26T00:00:00.000",
+   "skickatDatum" : "2011-03-23T09:29:15.000",
+   "patient" :
+      {
+         "id" :
             {
-                "sysselsattningsTyp" : {
-                    "code" : "Nuvarande_arbete"
-                }
+               "root" : "1.2.752.129.2.1.3.1",
+               "extension" : "19121212-1212"
             },
+         "fornamns" :
+            [
+               ""
+            ],
+         "efternamns" :
+            [
+               "Test Testorsson"
+            ],
+         "sysselsattnings" :
+            [
+               {
+                  "sysselsattningsTyp" :
+                     {
+                        "code" : "Nuvarande_arbete"
+                     }
+               },
+               {
+                  "sysselsattningsTyp" :
+                     {
+                        "code" : "Arbetsloshet"
+                     }
+               },
+               {
+                  "sysselsattningsTyp" :
+                     {
+                        "code" : "Foraldraledighet"
+                     }
+               }
+            ],
+         "arbetsuppgifts" :
+            [
+               {
+                  "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
+               }
+            ],
+         "fullstandigtNamn" : "Test Testorsson"
+      },
+   "skapadAv" :
+      {
+         "id" :
             {
-                "sysselsattningsTyp" : {
-                    "code" : "Arbetsloshet"
-                }
+               "root" : "1.2.752.129.2.1.4.1",
+               "extension" : "Personal HSA-ID"
             },
+         "namn" : "En Läkare",
+         "vardenhet" :
             {
-                "sysselsattningsTyp" : {
-                    "code" : "Foraldraledighet"
-                }
+               "id" :
+                  {
+                     "root" : "1.2.752.129.2.1.4.1",
+                     "extension" : "VardenhetY"
+                  },
+               "arbetsplatskod" :
+                  {
+                     "root" : "1.2.752.29.4.71",
+                     "extension" : "123456789011"
+                  },
+               "namn" : "Kir mott",
+               "postadress" : "Lasarettsvägen 13",
+               "postnummer" : "85150",
+               "postort" : "Sundsvall",
+               "telefonnummer" : "060-1818000",
+               "epost" : "kirmott@vardenhet.se",
+               "vardgivare" :
+                  {
+                     "id" :
+                        {
+                           "root" : "1.2.752.129.2.1.4.1",
+                           "extension" : "VardgivarId"
+                        },
+                     "namn" : "Landstinget Norrland"
+                  }
             }
-        ]
-    },
-    "skapadAv" : {
-        "id" : {
-            "root" : "1.2.752.129.2.1.4.1",
-            "extension" : "Personal HSA-ID"
-        },
-        "namn" : "En Läkare",
-        "vardenhet" : {
-            "id" : {
-                "root" : "1.2.752.129.2.1.4.1",
-                "extension" : "VardenhetY"
-            },
-            "arbetsplatskod" : {
-                "root" : "1.2.752.29.4.71",
-                "extension" : "123456789011"
-            },
-            "namn" : "Kir mott",
-            "postadress" : "Lasarettsvägen 13",
-            "postnummer" : "85150",
-            "postort" : "Sundsvall",
-            "telefonnummer" : "060-1818000",
-            "epost" : "kirmott@vardenhet.se",
-            "vardgivare" : {
-                "id" : {
-                    "root" : "1.2.752.129.2.1.4.1",
-                    "extension" : "VardgivarId"
-                },
-                "namn" : "Landstinget Norrland"
-            }
-        }
-    },
-    "aktiviteter" : [
-        {
-            "aktivitetskod" : {
-                "code" : "Patienten_behover_fa_kontakt_med_Arbetsformedlingen"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Patienten_behover_fa_kontakt_med_foretagshalsovarden"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Ovrigt"
-            },
+      },
+   "aktiviteter" :
+      [
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Patienten_behover_fa_kontakt_med_Arbetsformedlingen"
+               }
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Patienten_behover_fa_kontakt_med_foretagshalsovarden"
+               }
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Ovrigt"
+               },
             "beskrivning" : "När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik"
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden"
-            },
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden"
+               },
             "beskrivning" : "Utreds om operation är nödvändig"
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Planerad_eller_pagaende_annan_atgard"
-            },
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Planerad_eller_pagaende_annan_atgard"
+               },
             "beskrivning" : "Patienten ansvarar för att armen hålls i stillhet"
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Kontakt_med_Forsakringskassan_ar_aktuell"
-            }
-        }
-    ],
-    "observations" : [
-        {
-            "observationsKategori" : {
-                "code" : "Diagnos"
-            },
-            "observatonsKod" : {
-                "codeSystemName" : "ICD-10",
-                "code" : "S47"
-            },
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"
+               }
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"
+               }
+         },
+         {
+            "aktivitetskod" :
+               {
+                  "code" : "Kontakt_med_Forsakringskassan_ar_aktuell"
+               }
+         }
+      ],
+   "observations" :
+      [
+         {
+            "observationsKategori" :
+               {
+                  "code" : "MedicinsktTillstånd"
+               },
+            "observatonsKod" :
+               {
+                  "codeSystemName" : "ICD-10",
+                  "code" : "S47"
+               },
             "beskrivning" : "Klämskada på överarm"
-        },
-        {
-            "observationsKategori" : {
-                "code" : "BedömtTillstånd/Sjukdomsförlopp"
-            },
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "BedömtTillstånd"
+               },
             "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Kroppsfunktion"
-            },
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Kroppsfunktion"
+               },
             "beskrivning" : "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Aktivitet"
-            },
-            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
-            "prognos" : {
-                "prognosKod" : {
-                    "code" : "Det_gar_inte_att_bedomma"
-                }
-            }
-        }
-    ],
-    "vardkontakter" : [
-        {
-            "vardkontakttyp" : {
-                "code" : "Min_undersokning_av_patienten"
-            },
-            "vardkontaktstid" : {
-                "start" : "2011-01-26",
-                "end" : "2011-01-26"
-            }
-        },
-        {
-            "vardkontakttyp" : {
-                "code" : "Min_telefonkontakt_med_patienten"
-            },
-            "vardkontaktstid" : {
-                "start" : "2011-01-12",
-                "end" : "2011-01-12"
-            }
-        }
-    ],
-    "referenser" : [
-        {
-            "referenstyp" : {
-                "code" : "Journaluppgifter"
-            },
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Aktivitet"
+               },
+            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Arbetsförmåga"
+               },
+            "observatonsKod" :
+               {
+                  "code" : "Det_gar_inte_att_bedomma"
+               },
+            "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Nedsättning"
+               },
+            "observatonsKod" :
+               {
+                  "code" : "Nedsatt_med_1/4"
+               },
+            "observationsPeriod" :
+               {
+                  "from" : "2011-04-01",
+                  "tom" : "2011-05-31"
+               }
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Nedsättning"
+               },
+            "observatonsKod" :
+               {
+                  "code" : "Nedsatt_med_1/2"
+               },
+            "observationsPeriod" :
+               {
+                  "from" : "2011-03-07",
+                  "tom" : "2011-03-31"
+               }
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Nedsättning"
+               },
+            "observatonsKod" :
+               {
+                  "code" : "Nedsatt_med_3/4"
+               },
+            "observationsPeriod" :
+               {
+                  "from" : "2011-02-14",
+                  "tom" : "2011-03-06"
+               }
+         },
+         {
+            "observationsKategori" :
+               {
+                  "code" : "Nedsättning"
+               },
+            "observatonsKod" :
+               {
+                  "code" : "Helt_nedsatt"
+               },
+            "observationsPeriod" :
+               {
+                  "from" : "2011-01-26",
+                  "tom" : "2011-02-13"
+               }
+         }
+      ],
+   "vardkontakter" :
+      [
+         {
+            "vardkontakttyp" :
+               {
+                  "code" : "Min_undersokning_av_patienten"
+               },
+            "vardkontaktstid" :
+               {
+                  "start" : "2011-01-26",
+                  "end" : "2011-01-26"
+               }
+         },
+         {
+            "vardkontakttyp" :
+               {
+                  "code" : "Min_telefonkontakt_med_patienten"
+               },
+            "vardkontaktstid" :
+               {
+                  "start" : "2011-01-12",
+                  "end" : "2011-01-12"
+               }
+         }
+      ],
+   "referenser" :
+      [
+         {
+            "referenstyp" :
+               {
+                  "code" : "Journaluppgifter"
+               },
             "datum" : "2010-01-14"
-        },
-        {
-            "referenstyp" : {
-                "code" : "Annat"
-            },
+         },
+         {
+            "referenstyp" :
+               {
+                  "code" : "Annat"
+               },
             "datum" : "2010-01-24"
-        }
-    ],
-    "forskrivarkodOchArbetsplatskod" : "123456789011"
+         }
+      ],
+   "validFromDate" : "2011-01-26",
+   "validToDate" : "2011-05-31",
+   "forskrivarkodOchArbetsplatskod" : "123456789011"
 }
-
-/*
- TODO - introduce missing fields for arbetsformaga once they are part of the common model:
-
- "aktivitetsbegransningar" : [
- {
- "arbetsformaga" : {
- "motivering" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
- "arbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid",
- "arbetsformagaNedsattningar" : [
- {
- "varaktighetTom" : "2011-05-31",
- "varaktighetFrom" : "2011-04-01",
- "nedsattningsgrad" : "NEDSATT_MED_1_4"
- },
- {
- "varaktighetTom" : "2011-03-31",
- "varaktighetFrom" : "2011-03-07",
- "nedsattningsgrad" : "NEDSATT_MED_1_2"
- },
- {
- "varaktighetTom" : "2011-03-06",
- "varaktighetFrom" : "2011-02-14",
- "nedsattningsgrad" : "NEDSATT_MED_3_4"
- },
- {
- "varaktighetTom" : "2011-02-13",
- "varaktighetFrom" : "2011-01-26",
- "nedsattningsgrad" : "HELT_NEDSATT"
- }
- ],
-
- }
- }
- ],
- */
-/*
- TODO - add valid from and to dates again once the nedsattningsgrader made it into the common model
- "validFromDate" : "2011-01-26",
- "validToDate" : "2011-05-31",
- */
