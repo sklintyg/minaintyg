@@ -78,7 +78,8 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
             return stringWriter.toString();
 
         } catch (JAXBException e) {
-            throw new RuntimeException("Failed to marshall Ovrigt", e);
+            LOGGER.error("Failed to marshall Ovrigt element", e);
+            throw new RuntimeException("Failed to marshall Ovrigt element", e);
         }
     }
 
