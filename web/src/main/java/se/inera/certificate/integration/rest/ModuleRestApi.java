@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.model.Utlatande;
 
 /**
  * @author andreaskaltenbach
@@ -15,14 +15,8 @@ import se.inera.certificate.common.v1.Utlatande;
 public interface ModuleRestApi {
 
     @POST
-    @Path("/extension")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_JSON)
-    Object extract(Utlatande utlatande);
-
-    @POST
     @Path("/valid")
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     Response validate(Utlatande utlatande);
 
@@ -30,5 +24,5 @@ public interface ModuleRestApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    Response pdf(se.inera.certificate.model.Utlatande utlatande);
+    Response pdf(Utlatande utlatande);
 }
