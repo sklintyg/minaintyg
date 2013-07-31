@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
-import static javax.ws.rs.core.Response.Status.OK;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -28,18 +26,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static javax.ws.rs.core.Response.Status.OK;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.IneraCertificateRestApi;
-import se.inera.certificate.model.Lakarutlatande;
+import se.inera.certificate.integration.rest.ModuleRestApi;
+import se.inera.certificate.integration.rest.ModuleRestApiFactory;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
-
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -135,33 +135,33 @@ public class ModuleApiController {
             return Response.status(response.getStatus()).build();
         }
 
-        Lakarutlatande lakarutlatande = response.readEntity(Lakarutlatande.class);
+        Utlatande utlatande = response.readEntity(Utlatande.class);
 
-        Response pdf = fetchPdf(lakarutlatande);
+        Response pdf = fetchPdf(utlatande);
 
         if (isNotOk(pdf)) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(pdf.getStatus()).build();
         }
         
-        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(lakarutlatande)).build();
+        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(utlatande)).build();
     }
 
     private boolean isNotOk(Response response) {
         return response.getStatus() != OK.getStatusCode();
     }
 
-    private Response fetchPdf(Lakarutlatande lakarutlatande) {
-        ModuleRestApi api = moduleApiFactory.getModuleRestService(lakarutlatande.getTyp());
-        Response pdf = api.pdf(lakarutlatande);
+    private Response fetchPdf(Utlatande utlatande) {
+        ModuleRestApi api = moduleApiFactory.getModuleRestService(utlatande.getTyp().getCode());
+        Response pdf = api.pdf(utlatande);
         return pdf;
     }
 
-    private String pdfFileName(Lakarutlatande lakarutlatande) {
+    private String pdfFileName(Utlatande utlatande) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",
-                lakarutlatande.getPatient().getId(),
-                lakarutlatande.getValidFromDate().toString(DATE_FORMAT),
-                lakarutlatande.getValidToDate().toString(DATE_FORMAT));
+                utlatande.getPatient().getId().getExtension(),
+                utlatande.getValidFromDate().toString(DATE_FORMAT),
+                utlatande.getValidToDate().toString(DATE_FORMAT));
     }
 
 }
