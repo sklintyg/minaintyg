@@ -13,6 +13,12 @@
       <jaxb:javaType name="org.joda.time.Partial" xmlType="c:partialDate"
                      parseMethod="se.inera.certificate.schema.adapter.PartialAdapter.parsePartial"
                      printMethod="se.inera.certificate.schema.adapter.PartialAdapter.printPartial"/>
+      <jaxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDate"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDate"/>
+      <jaxb:javaType name="org.joda.time.LocalDateTime" xmlType="xs:dateTime"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDateTime"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDateTime"/>
     </jaxb:globalBindings>
   </jaxb:bindings>
 </jaxb:bindings>

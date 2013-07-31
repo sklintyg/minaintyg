@@ -1,14 +1,23 @@
 package se.inera.certificate.integration.converter;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toId;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toKod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.ObservationType;
+import se.inera.certificate.common.v1.OvrigtType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.PrognosType;
 import se.inera.certificate.common.v1.ReferensType;
@@ -19,6 +28,7 @@ import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Prognos;
@@ -36,6 +46,19 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
  * @author andreaskaltenbach
  */
 public final class UtlatandeJaxbToUtlatandeConverter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UtlatandeJaxbToUtlatandeConverter.class);
+
+    private static final Marshaller marshaller;
+
+    static {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(OvrigtType.class);
+            marshaller = jaxbContext.createMarshaller();
+        } catch (JAXBException e) {
+            throw new RuntimeException("Failed to create JAXB context", e);
+        }
+    }
 
     private UtlatandeJaxbToUtlatandeConverter() {
     }
@@ -62,7 +85,36 @@ public final class UtlatandeJaxbToUtlatandeConverter {
         utlatande.setReferenser(convertReferenser(source.getReferens()));
         utlatande.setVardkontakter(convertVardkontakter(source.getVardkontakts()));
 
+        utlatande.setOvrigt(convert(source.getOvrigt()));
+
         return utlatande;
+    }
+
+    private static Ovrigt convert(OvrigtType source) {
+        if (source == null) return null;
+
+        Ovrigt ovrigt = new Ovrigt();
+        ovrigt.setData(ovrigtTypeAsXmlString(source));
+
+        return ovrigt;
+    }
+
+    private static JAXBElement<?> wrapJaxb(OvrigtType ovrigt) {
+        JAXBElement<?> jaxbElement = new JAXBElement<OvrigtType>(
+                new QName("urn:intyg:common-model:1", "ovrigt"),
+                OvrigtType.class, ovrigt);
+        return jaxbElement;
+    }
+
+    private static String ovrigtTypeAsXmlString(OvrigtType ovrigt) {
+        try {
+            StringWriter stringWriter = new StringWriter();
+            marshaller.marshal(wrapJaxb(ovrigt), stringWriter);
+            return stringWriter.toString();
+        } catch (JAXBException e) {
+            LOGGER.error("Failed to marshall Ovrigt element", e);
+            throw new RuntimeException("Failed to marshall Ovrigt element", e);
+        }
     }
 
     private static List<Observation> convertObservations(List<ObservationType> source) {
@@ -77,7 +129,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
     }
 
     private static Observation convert(ObservationType source) {
-        if(source == null) return null;
+        if (source == null) return null;
 
         Observation observation = new Observation();
 
@@ -120,6 +172,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         return vardkontakt;
     }
+
     private static List<Referens> convertReferenser(List<ReferensType> source) {
         List<Referens> referenser = new ArrayList<>();
         for (ReferensType referens : source) {

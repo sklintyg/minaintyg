@@ -297,6 +297,9 @@
             "datum" : "2010-01-24"
          }
       ],
+   "ovrigt":{
+       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns:ns2=\"urn:riv:insuranceprocess:healthreporting:2\" xmlns=\"urn:intyg:common-model:1\" xmlns:ns3=\"urn:riv:insuranceprocess:certificate:1\"><arrangmang xmlns:hr=\"urn:riv:insuranceprocess:healthreporting:2\"><bokningsreferens>ABC-123</bokningsreferens> </arrangmang></ovrigt>"
+   },
    "validFromDate" : "2011-01-26",
    "validToDate" : "2011-05-31",
    "forskrivarkodOchArbetsplatskod" : "123456789011"

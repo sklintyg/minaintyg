@@ -1,29 +1,20 @@
 package se.inera.certificate.integration;
 
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
 import javax.xml.ws.Holder;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
-import org.apache.cxf.common.util.Base64Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.certificate.common.v1.OvrigtType;
 import se.inera.certificate.integration.converter.UtlatandeJaxbToUtlatandeConverter;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.integration.validator.ValidationException;
-import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.service.CertificateService;
 
@@ -52,9 +43,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         String type = utlatande.value.getTypAvUtlatande().getCode();
 
         Utlatande model = UtlatandeJaxbToUtlatandeConverter.convert(utlatande.value);
-        Ovrigt ovrigt = new Ovrigt();
-        ovrigt.setData(ovrigtTypeAsXmlString(utlatande.value.getOvrigt()));
-        model.setOvrigt(ovrigt);
+
 
         // let the certificate validate by the corresponding certificate module
         validate(type, model);
@@ -62,26 +51,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
         certificateService.storeCertificate(model);
     }
 
-    private JAXBElement<?> wrapJaxb(OvrigtType ovrigt) {
-            JAXBElement<?> jaxbElement = new JAXBElement<OvrigtType>(
-                    new QName("urn:intyg:common-model:1", "ovrigt"),
-                    OvrigtType.class, ovrigt);
-            return jaxbElement;
-        }
 
-    private String ovrigtTypeAsXmlString(OvrigtType ovrigt) {
-        JAXBContext jaxbContext;
-        try {
-            jaxbContext = JAXBContext.newInstance(OvrigtType.class);
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            StringWriter stringWriter = new StringWriter();
-            marshaller.marshal(wrapJaxb(ovrigt), stringWriter);
-            return Base64Utility.encode(stringWriter.toString().getBytes());
-        } catch (JAXBException e) {
-            LOGGER.error("Failed to marshall Ovrigt element", e);
-            throw new RuntimeException("Failed to marshall Ovrigt element", e);
-        }
-    }
 
     private void validate(String type, Utlatande utlatande) {
 
