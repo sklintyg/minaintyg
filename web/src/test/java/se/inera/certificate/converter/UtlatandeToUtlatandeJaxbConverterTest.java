@@ -49,8 +49,6 @@ public class UtlatandeToUtlatandeJaxbConverterTest {
         StringWriter stringWriter = new StringWriter();
         marshaller.marshal(result, stringWriter);
 
-        System.out.println(stringWriter.toString());
-
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(FileUtils.readFileToString(xmlFile), stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
