@@ -62,7 +62,7 @@ public class ModuleApiController {
 
     @Autowired
     private ModuleRestApiFactory moduleApiFactory;
-    
+
     /**
      * Helper service to get current user.
      */
@@ -74,9 +74,6 @@ public class ModuleApiController {
      */
     @Autowired
     private CertificateService certificateService;
-
-    @Autowired
-    private JacksonJaxbJsonProvider jsonProvider;
 
     /**
      * Return the certificate identified by the given id as JSON.
