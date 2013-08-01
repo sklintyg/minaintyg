@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.cxf.annotations.SchemaValidation;
@@ -12,14 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-import riv.insuranceprocess.healthreporting.getcertificatecontent.GetCertificateContentResponderInterface;
-import riv.insuranceprocess.healthreporting.getcertificatecontentresponder._1.GetCertificateContentRequest;
-import riv.insuranceprocess.healthreporting.getcertificatecontentresponder._1.GetCertificateContentResponse;
 import se.inera.certificate.exception.MissingConsentException;
 import se.inera.certificate.integration.converter.UtlatandeToUtlatandeJaxbConverter;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;
 import se.inera.certificate.service.CertificateService;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequest;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponse;
 
 /**
  * @author andreaskaltenbach
@@ -66,6 +67,7 @@ public class GetCertificateContentResponderImpl implements GetCertificateContent
         }
 
         attachCertificateDocument(certificate, response);
+        response.setResult(okResult());
         return response;
 
     }
