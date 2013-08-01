@@ -186,6 +186,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
     }
 
     private List<PQ> convertVarden(List<PhysicalQuantity> source) {
+        if (source == null) return null;
+
         List<PQ> varden = new ArrayList<>();
 
         for (PhysicalQuantity varde : source) {
