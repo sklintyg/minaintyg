@@ -23,7 +23,7 @@ import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.UtlatandeToRegisterMedicalCertificate;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.dao.Certificate;

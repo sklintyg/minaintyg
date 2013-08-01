@@ -25,6 +25,7 @@ public interface ModuleRestApi {
     @Produces( MediaType.TEXT_PLAIN )
     Response validate(Utlatande utlatande);
 
+
     /**
      * @param utlatande
      * @return

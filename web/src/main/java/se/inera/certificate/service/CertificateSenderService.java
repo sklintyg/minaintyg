@@ -28,7 +28,7 @@ public interface CertificateSenderService {
      * Sends the given certificate to the destined target.
      * @param certificate the certificate
      * @param target the target identifier
-     * @throws se.inera.certificate.exception.ExternalWebServiceCallFailedException thrown if the web service call does not succeed
+     * @throws se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException thrown if the web service call does not succeed
      */
     void sendCertificate(Certificate certificate, String target);
 }
