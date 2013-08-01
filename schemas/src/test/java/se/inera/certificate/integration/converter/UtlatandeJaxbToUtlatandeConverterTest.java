@@ -1,4 +1,4 @@
-package se.inera.certificate.converter;
+package se.inera.certificate.integration.converter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.common.v1.Utlatande;
-import se.inera.certificate.integration.converter.UtlatandeJaxbToUtlatandeConverter;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 
 /**

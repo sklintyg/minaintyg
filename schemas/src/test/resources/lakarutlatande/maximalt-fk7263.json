@@ -168,7 +168,7 @@
             },
             "varde" : [
                 {
-                    "quantity" : 25,
+                    "quantity" : 25.0,
                     "unit" : "percent"
                 }
             ]
@@ -183,7 +183,7 @@
             },
             "varde" : [
                 {
-                    "quantity" : 50,
+                    "quantity" : 50.0,
                     "unit" : "percent"
                 }
             ]
@@ -198,7 +198,7 @@
             },
             "varde" : [
                 {
-                    "quantity" : 75,
+                    "quantity" : 75.0,
                     "unit" : "percent"
                 }
             ]
@@ -213,7 +213,7 @@
             },
             "varde" : [
                 {
-                    "quantity" : 100,
+                    "quantity" : 100.0,
                     "unit" : "percent"
                 }
             ]

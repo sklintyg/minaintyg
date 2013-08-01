@@ -1,4 +1,4 @@
-package se.inera.certificate.converter;
+package se.inera.certificate.integration.converter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -6,6 +6,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -22,35 +24,31 @@ import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import se.inera.certificate.common.v1.Utlatande;
-import se.inera.certificate.integration.converter.LakarutlatandeTypeToUtlatandeConverter;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 /**
  * @author andreaskaltenbach
  */
-public class LakarutlatandeTypeToUtlatandeConverterTest {
+public class UtlatandeJaxbToUtlatandeToUtlatandeJaxbConverterTest {
 
     @Test
     public void testConversion() throws JAXBException, IOException, SAXException {
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, Utlatande.class);
+        File xmlFile = new ClassPathResource("generic/maximalt-fk7263.xml").getFile();
 
-        // read LakarutlatandeType from file
+        // read utlatandeType from file
+        JAXBContext jaxbContext = JAXBContext.newInstance(se.inera.certificate.common.v1.Utlatande.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<LakarutlatandeType> lakarutlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("fk7263/maximalt-intyg.xml").getInputStream()), LakarutlatandeType.class);
+        JAXBElement<Utlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new FileInputStream(xmlFile)), Utlatande.class);
 
-        Utlatande utlatande = LakarutlatandeTypeToUtlatandeConverter.convert(lakarutlatandeElement.getValue());
+        se.inera.certificate.model.Utlatande utlatande = UtlatandeJaxbToUtlatandeConverter.convert(utlatandeElement.getValue());
+        Utlatande result = new UtlatandeToUtlatandeJaxbConverter(utlatande).convert();
 
-        // read expected XML and compare with resulting lakarutlatande
-        String expectation = FileUtils.readFileToString(new ClassPathResource("fk7263/maximalt-intyg-common-format.xml").getFile());
-
-        StringWriter stringWriter = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
-        marshaller.marshal(utlatande, stringWriter);
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(result, stringWriter);
 
         XMLUnit.setIgnoreWhitespace(true);
-        Diff diff = new Diff(expectation, stringWriter.toString());
+        Diff diff = new Diff(FileUtils.readFileToString(xmlFile), stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
 
         assertTrue(diff.toString(), diff.identical());

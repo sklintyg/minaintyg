@@ -6,10 +6,11 @@ import java.util.List;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
 import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
 import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
-import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
-import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
 import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
+import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
+import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
 
+import org.joda.time.LocalDate;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
@@ -21,6 +22,7 @@ import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.util.Strings;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
@@ -145,11 +147,45 @@ public final class UtlatandeToRegisterMedicalCertificate {
             }
         }
 
-        // TODO - where to fetch motivering from?!?
-        //arbetsformagaType.setMotivering(source.getMotivering());
+        Observation arbetsformaga = utlatande.getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
+        if (arbetsformaga != null) {
+            arbetsformagaType.setMotivering(arbetsformaga.getBeskrivning());
 
-        // TODO - where to fetch nedsattningar from?!?
-        //addArbetsformagaNedsattning(arbetsformagaType.getArbetsformagaNedsattning(), source.getArbetsformagaNedsattningar());
+            if (arbetsformaga.getObservationsKod() != null) {
+                arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(arbetsformaga.getObservationsKod().getCode()));
+            }
+        }
+
+        List<Observation> nedsattnings = utlatande.getObservationsByKategori(ObservationsKoder.NEDSATTNING);
+        for (Observation nedsattning : nedsattnings) {
+            ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
+
+            if (nedsattning.getVarde() != null && nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty()) {
+                switch (nedsattning.getVarde().get(0).getQuantity().intValue()) {
+                    case 25:
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
+                        break;
+                    case 50:
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
+                        break;
+                    case 75:
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
+                        break;
+                    case 100:
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
+                        break;
+                    default:
+                        throw new IllegalStateException("Wrong nedsättningsgrad " + nedsattning.getVarde().get(0).getQuantity());
+                }
+            }
+
+            if (nedsattning.getObservationsPeriod() != null) {
+                nedsattningType.setVaraktighetFrom(new LocalDate(nedsattning.getObservationsPeriod().getFrom()));
+                nedsattningType.setVaraktighetTom(new LocalDate(nedsattning.getObservationsPeriod().getTom()));
+            }
+
+            arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
+        }
 
         return arbetsformagaType;
     }
@@ -301,13 +337,14 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         AktivitetType aktivitet = new AktivitetType();
         aktivitet.setAktivitetskod(aktivitetskod);
+        aktivitet.setBeskrivning(source.getBeskrivning());
         return aktivitet;
     }
 
     private static MedicinsktTillstandType toMedicinsktTillstand(Observation diagnos) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
         tillstand.setBeskrivning(diagnos.getBeskrivning());
-        tillstand.setTillstandskod(toCD(diagnos.getObservatonsKod()));
+        tillstand.setTillstandskod(toCD(diagnos.getObservationsKod()));
         return tillstand;
     }
 

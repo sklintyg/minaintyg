@@ -9,10 +9,9 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
 import static se.inera.certificate.model.util.Iterables.addAll;
 
+import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import riv.insuranceprocess.certificate._1.CertificateStatusType;
@@ -28,12 +27,14 @@ import se.inera.certificate.common.v1.PrognosType;
 import se.inera.certificate.common.v1.ReferensType;
 import se.inera.certificate.common.v1.SysselsattningType;
 import se.inera.certificate.common.v1.VardkontaktType;
+import se.inera.certificate.integration.converter.util.IsoTypeConverter;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Status;
@@ -66,7 +67,6 @@ public class UtlatandeToUtlatandeJaxbConverter {
         }
     }
 
-
     public UtlatandeToUtlatandeJaxbConverter(Utlatande source) {
         this.source = source;
     }
@@ -74,8 +74,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
     public se.inera.certificate.common.v1.Utlatande convert() {
         se.inera.certificate.common.v1.Utlatande utlatande = new se.inera.certificate.common.v1.Utlatande();
 
-        utlatande.setUtlatandeId(toII(source.getId()));
-        utlatande.setTypAvUtlatande(toCD(source.getTyp()));
+        utlatande.setUtlatandeId(IsoTypeConverter.toII(source.getId()));
+        utlatande.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
 
         addAll(utlatande.getKommentars(), source.getKommentars());
         utlatande.setSigneringsdatum(source.getSigneringsDatum());
@@ -127,7 +127,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
         if (source == null) return null;
 
         ReferensType referens = new ReferensType();
-        referens.setReferenstyp(toCD(source.getReferenstyp()));
+        referens.setReferenstyp(IsoTypeConverter.toCD(source.getReferenstyp()));
         referens.setReferensdatum(source.getDatum());
         return referens;
     }
@@ -144,7 +144,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
     private VardkontaktType convert(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
-        vardkontakt.setVardkontakttyp(toCD(source.getVardkontakttyp()));
+        vardkontakt.setVardkontakttyp(IsoTypeConverter.toCD(source.getVardkontakttyp()));
 
         if (source.getVardkontaktstid() != null) {
             DateInterval vardkontakttid = new DateInterval();
@@ -167,8 +167,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
     private ObservationType convert(Observation source) {
         ObservationType observation = new ObservationType();
-        observation.setObservationskategori(toCD(source.getObservationsKategori()));
-        observation.setObservationskod(toCD(source.getObservatonsKod()));
+        observation.setObservationskategori(IsoTypeConverter.toCD(source.getObservationsKategori()));
+        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationsKod()));
 
         if (source.getObservationsPeriod() != null) {
             PartialDateInterval interval = new PartialDateInterval();
@@ -177,17 +177,35 @@ public class UtlatandeToUtlatandeJaxbConverter {
             observation.setObservationsperiod(interval);
         }
 
+        addAll(observation.getVardes(), convertVarden(source.getVarde()));
+
         observation.setBeskrivning(source.getBeskrivning());
         observation.setPrognos(convert(source.getPrognos()));
 
         return observation;
     }
 
+    private List<PQ> convertVarden(List<PhysicalQuantity> source) {
+        List<PQ> varden = new ArrayList<>();
+
+        for (PhysicalQuantity varde : source) {
+            varden.add(convert(varde));
+        }
+        return varden;
+    }
+
+    private PQ convert(PhysicalQuantity source) {
+        PQ pq = new PQ();
+        pq.setUnit(source.getUnit());
+        pq.setValue(source.getQuantity());
+        return pq;
+    }
+
     private PrognosType convert(Prognos source) {
         if (source == null) return null;
 
         PrognosType prognos = new PrognosType();
-        prognos.setPrognoskod(toCD(source.getPrognosKod()));
+        prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognosKod()));
         return prognos;
     }
 
@@ -202,7 +220,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
     private AktivitetType convert(Aktivitet source) {
         AktivitetType aktivitet = new AktivitetType();
-        aktivitet.setAktivitetskod(toCD(source.getAktivitetskod()));
+        aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
         aktivitet.setBeskrivning(source.getBeskrivning());
         return aktivitet;
     }
@@ -211,7 +229,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
         if (source == null) return null;
 
         HosPersonalType hosPersonal = new HosPersonalType();
-        hosPersonal.setPersonalId(toII(source.getId()));
+        hosPersonal.setPersonalId(IsoTypeConverter.toII(source.getId()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
         hosPersonal.setEnhet(convert(source.getVardenhet()));
@@ -222,8 +240,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
         if (source == null) return null;
 
         EnhetType enhet = new EnhetType();
-        enhet.setEnhetsId(toII(source.getId()));
-        enhet.setArbetsplatskod(toII(source.getArbetsplatskod()));
+        enhet.setEnhetsId(IsoTypeConverter.toII(source.getId()));
+        enhet.setArbetsplatskod(IsoTypeConverter.toII(source.getArbetsplatskod()));
         enhet.setEnhetsnamn(source.getNamn());
         enhet.setPostadress(source.getPostadress());
         enhet.setPostnummer(source.getPostnummer());
@@ -238,7 +256,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
         if (source == null) return null;
 
         VardgivareType vardgivare = new VardgivareType();
-        vardgivare.setVardgivareId(toII(source.getId()));
+        vardgivare.setVardgivareId(IsoTypeConverter.toII(source.getId()));
         vardgivare.setVardgivarnamn(source.getNamn());
         return vardgivare;
     }
@@ -247,7 +265,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
         if (source == null) return null;
 
         PatientType patient = new PatientType();
-        patient.setPersonId(toII(source.getId()));
+        patient.setPersonId(IsoTypeConverter.toII(source.getId()));
 
         addAll(patient.getFornamns(), source.getFornamns());
         addAll(patient.getMellannamns(), source.getMellannamns());
@@ -282,7 +300,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
     private SysselsattningType convert(Sysselsattning source) {
         SysselsattningType sysselsattning = new SysselsattningType();
-        sysselsattning.setTypAvSysselsattning(toCD(source.getSysselsattningsTyp()));
+        sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningsTyp()));
         sysselsattning.setDatum(source.getDatum());
         return sysselsattning;
     }

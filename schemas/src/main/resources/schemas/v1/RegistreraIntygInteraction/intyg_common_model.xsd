@@ -238,6 +238,7 @@
                   minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0"/>
+      <xs:element name="varde" type="iso:PQ" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
       <xs:element name="patientenInstammer" type="xs:boolean"
                   minOccurs="0"/>

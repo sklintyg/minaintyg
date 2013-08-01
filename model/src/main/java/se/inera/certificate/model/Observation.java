@@ -1,15 +1,18 @@
 package se.inera.certificate.model;
 
+import java.util.List;
+
 /**
  * @author andreaskaltenbach
  */
 public class Observation {
 
     private Kod observationsKategori;
-    private Kod observatonsKod;
+    private Kod observationsKod;
     private PartialInterval observationsPeriod;
     private String beskrivning;
     private Prognos prognos;
+    private List<PhysicalQuantity> varde;
 
     public Kod getObservationsKategori() {
         return observationsKategori;
@@ -19,12 +22,12 @@ public class Observation {
         this.observationsKategori = observationsKategori;
     }
 
-    public Kod getObservatonsKod() {
-        return observatonsKod;
+    public Kod getObservationsKod() {
+        return observationsKod;
     }
 
-    public void setObservatonsKod(Kod observatonsKod) {
-        this.observatonsKod = observatonsKod;
+    public void setObservationsKod(Kod observationsKod) {
+        this.observationsKod = observationsKod;
     }
 
     public PartialInterval getObservationsPeriod() {
@@ -49,5 +52,13 @@ public class Observation {
 
     public void setPrognos(Prognos prognos) {
         this.prognos = prognos;
+    }
+
+    public List<PhysicalQuantity> getVarde() {
+        return varde;
+    }
+
+    public void setVarde(List<PhysicalQuantity> varde) {
+        this.varde = varde;
     }
 }

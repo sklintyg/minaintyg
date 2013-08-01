@@ -129,43 +129,43 @@
     <observationskategori code="Arbetsförmåga"/>
     <observationskod code="Det_gar_inte_att_bedomma"/>
     <beskrivning>Skadan har förvärrats vid varje tillfälle patienten
-        använt armen. Måste hållas i total stillhet tills läkningsprocessen
-        kommit en bit på väg. Eventuellt kan utredning visa att operation är
-        nödvändig för att läka skadan.
+      använt armen. Måste hållas i total stillhet tills läkningsprocessen
+      kommit en bit på väg. Eventuellt kan utredning visa att operation är
+      nödvändig för att läka skadan.
     </beskrivning>
   </observation>
 
   <observation>
     <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_1/4"/>
     <observationsperiod>
       <from>2011-04-01</from>
       <tom>2011-05-31</tom>
     </observationsperiod>
+    <varde value="25.0" unit="percent"/>
   </observation>
   <observation>
     <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_1/2"/>
     <observationsperiod>
       <from>2011-03-07</from>
       <tom>2011-03-31</tom>
     </observationsperiod>
+    <varde value="50.0" unit="percent"/>
   </observation>
   <observation>
     <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_3/4"/>
     <observationsperiod>
       <from>2011-02-14</from>
       <tom>2011-03-06</tom>
     </observationsperiod>
+    <varde value="75.0" unit="percent"/>
   </observation>
   <observation>
     <observationskategori code="Nedsättning"/>
-    <observationskod code="Helt_nedsatt"/>
     <observationsperiod>
-          <from>2011-01-26</from>
-          <tom>2011-02-13</tom>
-        </observationsperiod>
+      <from>2011-01-26</from>
+      <tom>2011-02-13</tom>
+    </observationsperiod>
+    <varde value="100.0" unit="percent"/>
   </observation>
   <ovrigt>
     <arrangmang>
