@@ -26,14 +26,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.integration.IneraCertificateRestApi;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.model.Utlatande;
@@ -43,6 +43,7 @@ import se.inera.certificate.web.service.CitizenService;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
+ *
  * @author marced
  */
 public class ModuleApiController {
@@ -53,12 +54,6 @@ public class ModuleApiController {
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String DATE_FORMAT = "yyyyMMdd";
-
-    /**
-     * Intygstjanstens REST endpoint service.
-     */
-    @Autowired
-    private IneraCertificateRestApi certificateRestService;
 
     @Autowired
     private ModuleRestApiFactory moduleApiFactory;
@@ -77,19 +72,23 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as JSON.
-     * @param id
-     *            - the globally unique id of a certificate.
+     *
+     * @param id - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
     @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public final Response getCertificate(@PathParam("id") final String id) {
+    @Path( "/{id}" )
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    public final Response getCertificate(@PathParam( "id" ) final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Response response = certificateRestService.getCertificate(citizenService.getCitizen().getUsername(), id);
+        Utlatande utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+
+        ModuleRestApi moduleRestApi = moduleApiFactory.getModuleRestService(utlatande.getTyp().getCode());
+        Response response = moduleRestApi.convertExternalToInternal(utlatande);
+
         if (isNotOk(response)) {
-            LOG.error("Failed to get JSON for certificate " + id + " from inera-certificate.");
+            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '" +  utlatande.getTyp().getCode() + "'. Status code is " + response.getStatus());
             return Response.status(response.getStatus()).build();
         }
 
@@ -98,16 +97,15 @@ public class ModuleApiController {
 
     /**
      * Send the certificate identified by the given id to the given target.
-     * @param id
-     *            - the globally unique id of a certificate.
-     * @param target
-     *            - id of target system that should receive the certificate.
+     *
+     * @param id     - the globally unique id of a certificate.
+     * @param target - id of target system that should receive the certificate.
      * @return The response of the send operation
      */
     @PUT
-    @Path("/{id}/send/{target}")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
+    @Path( "/{id}/send/{target}" )
+    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
+    public Response send(@PathParam( "id" ) final String id, @PathParam( "target" ) final String target) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
         ModuleAPIResponse response = certificateService.sendCertificate(citizen.getUsername(), id, target);
@@ -116,23 +114,23 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as PDF.
-     * @param id
-     *            - the globally unique id of a certificate.
+     *
+     * @param id - the globally unique id of a certificate.
      * @return The certificate in PDF format
      */
     @GET
-    @Path("/{id}/pdf")
-    @Produces("application/pdf")
-    public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
+    @Path( "/{id}/pdf" )
+    @Produces( "application/pdf" )
+    public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        Response response = certificateRestService.getCertificate(citizenService.getCitizen().getUsername(), id);
-        if (isNotOk(response)) {
-            LOG.error("Failed to get certificate " + id + " from inera-certificate.");
-            return Response.status(response.getStatus()).build();
-        }
+        Utlatande utlatande;
 
-        Utlatande utlatande = response.readEntity(Utlatande.class);
+        try {
+            utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+        } catch (ExternalWebServiceCallFailedException ex) {
+            return Response.status(INTERNAL_SERVER_ERROR).build();
+        }
 
         Response pdf = fetchPdf(utlatande);
 
@@ -140,7 +138,7 @@ public class ModuleApiController {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(pdf.getStatus()).build();
         }
-        
+
         return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(utlatande)).build();
     }
 
@@ -160,5 +158,4 @@ public class ModuleApiController {
                 utlatande.getValidFromDate().toString(DATE_FORMAT),
                 utlatande.getValidToDate().toString(DATE_FORMAT));
     }
-
 }

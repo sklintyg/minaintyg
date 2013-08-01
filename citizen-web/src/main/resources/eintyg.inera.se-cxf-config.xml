@@ -38,6 +38,10 @@
                 serviceClass="se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface"
                 address="${certificates.sendcertificate.url}" />
 
+  <jaxws:client id="getCertificateContentClient"
+                  serviceClass="se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface"
+                  address="${certificates.getcertificatecontent.url}" />
+
   <jaxrs:client id="IneraCertificateRestApi" serviceClass="se.inera.certificate.integration.IneraCertificateRestApi"
                 address="${certificates.rest.endpoint.url}">
     <jaxrs:providers>

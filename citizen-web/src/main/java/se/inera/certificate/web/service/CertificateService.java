@@ -21,12 +21,16 @@ package se.inera.certificate.web.service;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public interface CertificateService {
+
+    Utlatande getUtlatande(String civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
      * @param civicRegistrationNumber

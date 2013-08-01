@@ -18,27 +18,31 @@
  */
 package se.inera.certificate.web.service;
 
-import iso.v21090.dt.v1.II;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import iso.v21090.dt.v1.II;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.api.StatusMeta;
+import se.inera.certificate.integration.converter.UtlatandeJaxbToUtlatandeConverter;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequest;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponse;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
@@ -77,6 +81,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private SendMedicalCertificateResponderInterface sendService;
+
+    @Autowired
+    private GetCertificateContentResponderInterface getCertificateContentService;
 
     /**
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
@@ -160,6 +167,23 @@ public class CertificateServiceImpl implements CertificateService {
 
         }
         return result;
+    }
+
+    @Override
+    public Utlatande getUtlatande(String civicRegistrationNumber, String certificateId) {
+        GetCertificateContentRequest request = new GetCertificateContentRequest();
+        request.setCertificateId(certificateId);
+        request.setNationalIdentityNumber(civicRegistrationNumber);
+
+        GetCertificateContentResponse response = getCertificateContentService.getCertificateContent(null, request);
+
+        switch (response.getResult().getResultCode()) {
+            case OK: return UtlatandeJaxbToUtlatandeConverter.convert(response.getCertificate());
+            default: {
+                LOG.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
+                throw new ExternalWebServiceCallFailedException(response.getResult());
+            }
+        }
     }
 
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {

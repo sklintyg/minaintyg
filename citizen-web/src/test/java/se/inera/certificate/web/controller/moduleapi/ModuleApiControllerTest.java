@@ -3,8 +3,7 @@ package se.inera.certificate.web.controller.moduleapi;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-import static javax.ws.rs.core.Response.Status.FORBIDDEN;
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
@@ -22,12 +21,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.integration.IneraCertificateRestApi;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +41,7 @@ public class ModuleApiControllerTest {
     private static String certificateData;
 
     @Mock
-    private IneraCertificateRestApi certificateService = mock(IneraCertificateRestApi.class);
+    private CertificateService certificateService = mock(CertificateService.class);
 
     @Mock
     private ModuleRestApiFactory moduleRestApiFactory;
@@ -67,8 +67,7 @@ public class ModuleApiControllerTest {
     @Test
     public void testGetCertificatePdf() throws IOException {
 
-        Response okCertificate = okCertificate();
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(okCertificate);
+        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatande);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
 
         Citizen citizen = mockCitizen();
@@ -83,7 +82,7 @@ public class ModuleApiControllerTest {
 
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
+        verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
         verify(moduleRestApi).pdf(utlatande);
 
@@ -106,8 +105,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingModule() throws IOException {
-        Response okCertificate = okCertificate();
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(okCertificate);
+        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatande);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
 
         Citizen citizen = mockCitizen();
@@ -121,7 +119,7 @@ public class ModuleApiControllerTest {
 
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
-        verify(certificateService).getCertificate(PERSONNUMMER, CERTIFICATE_ID);
+        verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
         verify(moduleRestApi).pdf(utlatande);
 
@@ -130,32 +128,18 @@ public class ModuleApiControllerTest {
     }
 
     @Test
-    public void testGetCertificatePdfWithMissingConsent() {
+    public void testGetCertificatePdfWithFailingIntygstjanst() {
         Response certificateResponse = mock(Response.class);
         when(certificateResponse.getStatus()).thenReturn(Response.Status.FORBIDDEN.getStatusCode());
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificateResponse);
+        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenThrow(ExternalWebServiceCallFailedException.class);
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
-        assertEquals(FORBIDDEN.getStatusCode(), response.getStatus());
+        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
     }
 
-    @Test
-    public void testGetCertificatePdfForUnknownCertificate() {
-        Response certificateResponse = mock(Response.class);
-        when(certificateResponse.getStatus()).thenReturn(Response.Status.NOT_FOUND.getStatusCode());
-        when(certificateService.getCertificate(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(certificateResponse);
-
-        Citizen citizen = mockCitizen();
-        when(citizenService.getCitizen()).thenReturn(citizen);
-
-        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
-
-        assertEquals(NOT_FOUND.getStatusCode(), response.getStatus());
-        assertNull(response.getEntity());
-    }
 }

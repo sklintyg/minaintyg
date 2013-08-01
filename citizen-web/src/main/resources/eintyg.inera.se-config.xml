@@ -39,7 +39,7 @@
   </beans>
 
   <beans>
-    <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service" />
+    <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service, se.inera.certificate.integration.rest" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
