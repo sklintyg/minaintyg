@@ -5,7 +5,6 @@ import javax.xml.ws.Holder;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -33,9 +32,6 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
     private ModuleRestApiFactory moduleRestApiFactory;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private CertificateService certificateService;
 
     @Override
@@ -50,8 +46,6 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
         certificateService.storeCertificate(model);
     }
-
-
 
     private void validate(String type, Utlatande utlatande) {
 
