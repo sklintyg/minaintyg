@@ -11,6 +11,7 @@ import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILL
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
+import iso.v21090.dt.v1.PQ;
 import org.joda.time.Partial;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
@@ -197,7 +198,24 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
     private static ObservationType convert(ArbetsformagaNedsattningType source) {
         ObservationType nedsattning = new ObservationType();
         nedsattning.setObservationskategori(toCD(ObservationsKoder.NEDSATTNING));
-        nedsattning.setObservationskod(toCD(new Kod(source.getNedsattningsgrad().value())));
+
+        PQ varde = new PQ();
+        varde.setUnit("percent");
+        switch (source.getNedsattningsgrad()) {
+            case HELT_NEDSATT:
+                varde.setValue(100.0);
+                break;
+            case NEDSATT_MED_3_4:
+                varde.setValue(75.0);
+                break;
+            case NEDSATT_MED_1_2:
+                varde.setValue(50.0);
+                break;
+            case NEDSATT_MED_1_4:
+                varde.setValue(25.0);
+                break;
+        }
+        nedsattning.getVardes().add(varde);
 
         PartialDateInterval observationsperiod = new PartialDateInterval();
         observationsperiod.setFrom(new Partial(source.getVaraktighetFrom()));

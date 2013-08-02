@@ -115,7 +115,6 @@
     </beskrivning>
   </observation>
 
-
   <observation>
     <observationskategori code="Aktivitet"/>
     <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
@@ -136,35 +135,35 @@
   </observation>
 
   <observation>
-    <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_1/4"/>
-    <observationsperiod>
-      <from>2011-04-01</from>
-      <tom>2011-05-31</tom>
-    </observationsperiod>
-  </observation>
-  <observation>
-    <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_1/2"/>
-    <observationsperiod>
-      <from>2011-03-07</from>
-      <tom>2011-03-31</tom>
-    </observationsperiod>
-  </observation>
-  <observation>
-    <observationskategori code="Nedsättning"/>
-    <observationskod code="Nedsatt_med_3/4"/>
-    <observationsperiod>
-      <from>2011-02-14</from>
-      <tom>2011-03-06</tom>
-    </observationsperiod>
-  </observation>
-  <observation>
-    <observationskategori code="Nedsättning"/>
-    <observationskod code="Helt_nedsatt"/>
-    <observationsperiod>
-          <from>2011-01-26</from>
-          <tom>2011-02-13</tom>
-        </observationsperiod>
-  </observation>
+      <observationskategori code="Nedsättning"/>
+      <observationsperiod>
+        <from>2011-04-01</from>
+        <tom>2011-05-31</tom>
+      </observationsperiod>
+      <varde value="25.0" unit="percent"/>
+    </observation>
+    <observation>
+      <observationskategori code="Nedsättning"/>
+      <observationsperiod>
+        <from>2011-03-07</from>
+        <tom>2011-03-31</tom>
+      </observationsperiod>
+      <varde value="50.0" unit="percent"/>
+    </observation>
+    <observation>
+      <observationskategori code="Nedsättning"/>
+      <observationsperiod>
+        <from>2011-02-14</from>
+        <tom>2011-03-06</tom>
+      </observationsperiod>
+      <varde value="75.0" unit="percent"/>
+    </observation>
+    <observation>
+      <observationskategori code="Nedsättning"/>
+      <observationsperiod>
+        <from>2011-01-26</from>
+        <tom>2011-02-13</tom>
+      </observationsperiod>
+      <varde value="100.0" unit="percent"/>
+    </observation>
 </utlatande>
