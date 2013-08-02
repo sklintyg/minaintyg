@@ -23,10 +23,10 @@ import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.applicationErrorResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.applicationErrorResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;

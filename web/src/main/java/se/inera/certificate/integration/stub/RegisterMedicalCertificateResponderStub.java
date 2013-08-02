@@ -1,7 +1,7 @@
 package se.inera.certificate.integration.stub;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 import java.io.StringWriter;
 import java.util.HashMap;

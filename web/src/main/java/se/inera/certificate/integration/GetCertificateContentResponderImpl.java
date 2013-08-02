@@ -2,9 +2,9 @@ package se.inera.certificate.integration;
 
 import java.io.IOException;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.cxf.annotations.SchemaValidation;

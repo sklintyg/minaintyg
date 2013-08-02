@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.integration;
+package se.inera.certificate.integration.util;
 
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
