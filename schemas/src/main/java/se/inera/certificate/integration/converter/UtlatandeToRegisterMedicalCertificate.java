@@ -1,15 +1,5 @@
 package se.inera.certificate.integration.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
-import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
-import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
-import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
-import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
-
 import org.joda.time.LocalDate;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
@@ -48,6 +38,16 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
+import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
+import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
+import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
+import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
+
 public final class UtlatandeToRegisterMedicalCertificate {
 
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
@@ -56,59 +56,53 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     public static RegisterMedicalCertificateType getJaxbObject(Utlatande utlatande) {
-        try {
-            RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
-            register.setLakarutlatande(new LakarutlatandeType());
-            register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
-            register.getLakarutlatande().setTypAvUtlatande(FK7263);
+        RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
+        register.setLakarutlatande(new LakarutlatandeType());
+        register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
+        register.getLakarutlatande().setTypAvUtlatande(FK7263);
 
-            if (utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty()) {
-                register.getLakarutlatande().setKommentar(utlatande.getKommentars().get(0));
-            }
-
-            register.getLakarutlatande().setSigneringsdatum(utlatande.getSigneringsDatum());
-            register.getLakarutlatande().setSkickatDatum(utlatande.getSkickatDatum());
-            register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
-            register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
-
-            Observation sjukdomsforlopp = utlatande.findObservationByKategori(BEDOMT_TILLSTAND);
-            if (sjukdomsforlopp != null) {
-                register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(sjukdomsforlopp.getBeskrivning()));
-            }
-
-            Observation diagnos = utlatande.findObservationByKategori(MEDICINSKT_TILLSTAND);
-            if (diagnos != null) {
-                register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
-            }
-
-            List<AktivitetType> aktivitets = convert(utlatande.getAktiviteter());
-            register.getLakarutlatande().getAktivitet().addAll(aktivitets);
-
-            register.getLakarutlatande().getReferens().addAll(convertReferenser(utlatande.getReferenser()));
-
-            register.getLakarutlatande().getVardkontakt().addAll(convertVardkontakter(utlatande.getVardkontakter()));
-
-            Observation kroppsfunktion = utlatande.findObservationByKategori(KROPPSFUNKTION);
-            if (kroppsfunktion != null) {
-                register.getLakarutlatande().getFunktionstillstand().add(toFunktionstillstand(kroppsfunktion, TypAvFunktionstillstand.KROPPSFUNKTION));
-            }
-
-            Observation aktivitet = utlatande.findObservationByKategori(AKTIVITET);
-            if (aktivitet != null) {
-
-                // add arbetsformaga to aktivitetsbegransing
-                FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(aktivitet, TypAvFunktionstillstand.AKTIVITET);
-                aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande, aktivitet));
-
-                register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
-
-            }
-
-            return register;
-        } catch (Exception e) {
-            // TODO: Kasta annat undantag! /PW
-            throw new RuntimeException(e);
+        if (utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty()) {
+            register.getLakarutlatande().setKommentar(utlatande.getKommentars().get(0));
         }
+
+        register.getLakarutlatande().setSigneringsdatum(utlatande.getSigneringsDatum());
+        register.getLakarutlatande().setSkickatDatum(utlatande.getSkickatDatum());
+        register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
+        register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
+
+        Observation sjukdomsforlopp = utlatande.findObservationByKategori(BEDOMT_TILLSTAND);
+        if (sjukdomsforlopp != null) {
+            register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(sjukdomsforlopp.getBeskrivning()));
+        }
+
+        Observation diagnos = utlatande.findObservationByKategori(MEDICINSKT_TILLSTAND);
+        if (diagnos != null) {
+            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
+        }
+
+        List<AktivitetType> aktivitets = convert(utlatande.getAktiviteter());
+        register.getLakarutlatande().getAktivitet().addAll(aktivitets);
+
+        register.getLakarutlatande().getReferens().addAll(convertReferenser(utlatande.getReferenser()));
+
+        register.getLakarutlatande().getVardkontakt().addAll(convertVardkontakter(utlatande.getVardkontakter()));
+
+        Observation kroppsfunktion = utlatande.findObservationByKategori(KROPPSFUNKTION);
+        if (kroppsfunktion != null) {
+            register.getLakarutlatande().getFunktionstillstand().add(toFunktionstillstand(kroppsfunktion, TypAvFunktionstillstand.KROPPSFUNKTION));
+        }
+
+        Observation aktivitet = utlatande.findObservationByKategori(AKTIVITET);
+        if (aktivitet != null) {
+
+            // add arbetsformaga to aktivitetsbegransing
+            FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(aktivitet, TypAvFunktionstillstand.AKTIVITET);
+            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande, aktivitet));
+
+            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
+
+        }
+        return register;
     }
 
     private static FunktionstillstandType toFunktionstillstand(Observation observation, TypAvFunktionstillstand typAvFunktionstillstand) {
