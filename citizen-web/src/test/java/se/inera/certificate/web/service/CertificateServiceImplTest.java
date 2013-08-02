@@ -23,6 +23,8 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.StatusMeta;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.util.ResultOfCallUtil;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
@@ -63,9 +65,12 @@ public class CertificateServiceImplTest {
     private CertificateStatusType deletedStatus;
     private CertificateStatusType sentStatus;
     private CertificateStatusType cancelledStatus;
+    
+    
 
     @Before
     public void setup() {
+    
         unhandledStatus = new CertificateStatusType();
         unhandledStatus.setType(StatusType.UNHANDLED);
         unhandledStatus.setTarget("FK");
@@ -106,10 +111,12 @@ public class CertificateServiceImplTest {
         List<CertificateMetaType> responseList = new ArrayList<CertificateMetaType>();
         responseList.add(meta);
 
-        ListCertificatesResponseType responseMock = mock(ListCertificatesResponseType.class);
-        when(responseMock.getMeta()).thenReturn(responseList);
+        ListCertificatesResponseType response  = new ListCertificatesResponseType();
+        
+        response.getMeta().addAll(responseList);
+        response.setResult(ResultOfCallUtil.okResult());
 
-        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
+        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(response);
         List<CertificateMeta> certificates = service.getCertificates("123456789");
 
         assertTrue(certificates.size() == 1);
@@ -117,7 +124,19 @@ public class CertificateServiceImplTest {
         assertTrue(certificates.get(0).getCareunitName().equals(FACILITY_NAME));
         assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.SENT.toString()));
     }
+    
+    @Test(expected=ExternalWebServiceCallFailedException.class)
+    public void testListCertificatedResultFailureHandling() {
+       
 
+        ListCertificatesResponseType response  = new ListCertificatesResponseType();
+        response.setResult(ResultOfCallUtil.failResult("an error"));
+
+        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(response);
+
+        List<CertificateMeta> certificates = service.getCertificates("123456789");
+       
+    }
     @Test
     public void testLastestRResurnedStatusIsSENT() {
         CertificateMetaType meta = new CertificateMetaType();
@@ -141,10 +160,14 @@ public class CertificateServiceImplTest {
         List<CertificateMetaType> responseList = new ArrayList<CertificateMetaType>();
         responseList.add(meta);
 
-        ListCertificatesResponseType responseMock = mock(ListCertificatesResponseType.class);
-        when(responseMock.getMeta()).thenReturn(responseList);
+        ListCertificatesResponseType response  = new ListCertificatesResponseType();
+        
+        response.getMeta().addAll(responseList);
+        response.setResult(ResultOfCallUtil.okResult());
+        
+        
 
-        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(responseMock);
+        when(listServiceMock.listCertificates(Mockito.any(AttributedURIType.class), Mockito.any(ListCertificatesRequestType.class))).thenReturn(response);
         List<CertificateMeta> certificates = service.getCertificates("123456789");
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.CANCELLED.toString()));

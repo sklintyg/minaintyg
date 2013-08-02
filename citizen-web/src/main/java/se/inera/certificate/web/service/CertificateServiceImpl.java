@@ -18,17 +18,19 @@
  */
 package se.inera.certificate.web.service;
 
+import iso.v21090.dt.v1.II;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import iso.v21090.dt.v1.II;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.CertificateMeta;
@@ -88,7 +90,6 @@ public class CertificateServiceImpl implements CertificateService {
     /**
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
-     *
      * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
@@ -178,11 +179,12 @@ public class CertificateServiceImpl implements CertificateService {
         GetCertificateContentResponse response = getCertificateContentService.getCertificateContent(null, request);
 
         switch (response.getResult().getResultCode()) {
-            case OK: return UtlatandeJaxbToUtlatandeConverter.convert(response.getCertificate());
-            default: {
-                LOG.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
-                throw new ExternalWebServiceCallFailedException(response.getResult());
-            }
+        case OK:
+            return UtlatandeJaxbToUtlatandeConverter.convert(response.getCertificate());
+        default: {
+            LOG.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
+            throw new ExternalWebServiceCallFailedException(response.getResult());
+        }
         }
     }
 
@@ -190,7 +192,17 @@ public class CertificateServiceImpl implements CertificateService {
         final ListCertificatesRequestType params = new ListCertificatesRequestType();
         params.setNationalIdentityNumber(civicRegistrationNumber);
 
-        return convert(listService.listCertificates(null, params));
+        ListCertificatesResponseType response = listService.listCertificates(null, params);
+        
+        switch (response.getResult().getResultCode()) {
+        case OK:
+            return convert(response);
+        default: {
+            LOG.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is " + response.getResult());
+            throw new ExternalWebServiceCallFailedException(response.getResult());
+        }
+        }
+
     }
 
     private List<CertificateMeta> convert(final ListCertificatesResponseType response) {
