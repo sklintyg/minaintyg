@@ -96,13 +96,6 @@ public class ModuleApiControllerTest {
         return citizen;
     }
 
-    private Response okCertificate() {
-        Response certificateResponse = mock(Response.class);
-        when(certificateResponse.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
-        when(certificateResponse.readEntity(Utlatande.class)).thenReturn(utlatande);
-        return certificateResponse;
-    }
-
     @Test
     public void testGetCertificatePdfWithFailingModule() throws IOException {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatande);

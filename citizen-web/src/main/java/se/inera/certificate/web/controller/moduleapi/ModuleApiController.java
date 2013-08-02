@@ -29,6 +29,7 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
 
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,7 @@ public class ModuleApiController {
         Utlatande utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
         ModuleRestApi moduleRestApi = moduleApiFactory.getModuleRestService(utlatande.getTyp().getCode());
+        WebClient.client(moduleRestApi).accept(MediaType.WILDCARD);
         Response response = moduleRestApi.convertExternalToInternal(utlatande);
 
         if (isNotOk(response)) {
