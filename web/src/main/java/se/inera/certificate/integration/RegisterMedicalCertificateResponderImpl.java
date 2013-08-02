@@ -2,7 +2,7 @@ package se.inera.certificate.integration;
 
 import javax.xml.ws.Holder;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.springframework.beans.factory.annotation.Autowired;

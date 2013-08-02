@@ -18,8 +18,8 @@
  */
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.ResultOfCallUtil.infoResult;
-import static se.inera.certificate.integration.ResultOfCallUtil.okResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 import java.util.List;
 
