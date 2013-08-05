@@ -46,6 +46,13 @@ public class Intyg extends RestClientFixture {
             validFromDate:giltigtFrån,
             validToDate:giltigtTill,
             careUnitName: enhet,
+			states:
+			  [
+				 [state:"RECEIVED",
+				  target:"MI",
+				  timestamp:"2013-08-05T14:30:03.227"
+				 ]
+			  ],
             document: document()
         ]
     }

@@ -254,13 +254,5 @@
     ],
     "validFromDate" : "2011-01-26",
     "validToDate" : "2011-05-31",
-    "forskrivarkodOchArbetsplatskod" : "123456789011",
-    "status" :
-      [
-         {
-            "type" : "RECEIVED",
-            "target" : "MI",
-            "timestamp" : "2013-08-05T14:30:03.227"
-         }
-      ]
+    "forskrivarkodOchArbetsplatskod" : "123456789011"
 }
