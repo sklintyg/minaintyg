@@ -11,7 +11,7 @@ angular.module('directives.mi').directive("miField", ['$rootScope', function($ro
         },
         template :
 			'<div class="body-row">'
-           +'   <h3 class="title" ng-class="{ \'unfilled\' : !filled}"><span message key="{{ title }}"></span> <span message key="view.label.blank" ng-hide="filled"></span></h3>'
+           +'   <h3 class="title" ng-class="{ \'unfilled\' : !filled}"><span message key="{{ title }}"></span><span ng-hide="filled"><span message key="view.label.blank"></span></span></h3>'
            +'   <span class="text" ng-show="filled">'
            +'       <span ng-transclude></span>'
            +'   </span>'
