@@ -35,19 +35,6 @@
       <property name="mapper" ref="objectMapper"/>
     </bean>
 
-    <jaxrs:server address="/">
-      <jaxrs:serviceBeans>
-        <bean class="se.inera.certificate.integration.rest.LakarutlatandeResource"/>
-      </jaxrs:serviceBeans>
-
-      <jaxrs:providers>
-        <ref bean="jacksonJsonProvider"/>
-      </jaxrs:providers>
-      <jaxrs:extensionMappings>
-        <entry key="json" value="application/json"/>
-      </jaxrs:extensionMappings>
-    </jaxrs:server>
-
   </beans>
 
   <beans profile="dev,test">
