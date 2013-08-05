@@ -64,7 +64,7 @@ class SkickaIntygTillFk extends WsClientFixture {
         response = sendResponder.sendMedicalCertificate(null, sendRequestType)
     }
 
-    public String svar() {
+    public String resultat() {
         resultAsString(response)
     }
 }

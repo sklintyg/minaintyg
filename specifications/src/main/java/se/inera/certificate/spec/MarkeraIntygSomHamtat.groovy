@@ -24,7 +24,7 @@ class MarkeraIntygSomHamtat extends WsClientFixture {
         setEndpoint(setCertificateStatusResponder, "set-certificate-status/v1.0")
     }
 
-    public String svar() {
+    public String resultat() {
         SetCertificateStatusRequestType parameters = new SetCertificateStatusRequestType()
         parameters.nationalIdentityNumber = personnr
         parameters.certificateId = intyg

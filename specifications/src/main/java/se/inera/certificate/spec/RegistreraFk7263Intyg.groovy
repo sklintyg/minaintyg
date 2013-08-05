@@ -41,7 +41,7 @@ public class RegistreraFk7263Intyg extends WsClientFixture {
         response = registerMedicalCertificateResponder.registerMedicalCertificate(null, request);
     }
 
-    public String svar() {
+    public String resultat() {
         resultAsString(response)
     }
 }
