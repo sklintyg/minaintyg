@@ -4,9 +4,8 @@
 |id|
 |intyg-1|
 |intyg-2|
-|intyg-3|
-|intyg-4|
-|intyg-5|
+|rli-intyg-3|
+|rli-intyg-4|
 
 !3 Återta samtycken:
 
