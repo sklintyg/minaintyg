@@ -32,6 +32,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static se.inera.certificate.model.util.Iterables.find;
@@ -280,5 +281,22 @@ public class Certificate {
                 return state.getState() == CertificateState.SENT && state.getTarget().equals(target);
             }
         }, null) != null;
+    }
+
+    @Override
+    public String toString() {
+        return "Certificate{" +
+                "id='" + id + '\'' +
+                ", document=" + fromBytes(document) +
+                ", type='" + type + '\'' +
+                ", signingDoctorName='" + signingDoctorName + '\'' +
+                ", careUnitName='" + careUnitName + '\'' +
+                ", civicRegistrationNumber='" + civicRegistrationNumber + '\'' +
+                ", signedDate=" + signedDate +
+                ", validFromDate='" + validFromDate + '\'' +
+                ", validToDate='" + validToDate + '\'' +
+                ", deleted=" + deleted +
+                ", states=" + states +
+                '}';
     }
 }
