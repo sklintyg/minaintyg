@@ -86,13 +86,13 @@
                         <div ng-show="cert.statuses.length>0">
                           {{cert.statuses[0].timestamp | date:'short'}}
                           <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                          <span ng-show="cert.statuses[0].type == 'SENT'" message key="certificates.target.{{cert.statuses[0].target}}"></span>
+                          <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
                           <div collapse="isCollapsed">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 {{status.timestamp | date:'short'}}
                                 <span message key="certificates.status.{{status.type}}"></span>
-                                <span ng-show="status.type == 'SENT'" message key="certificates.target.{{status.target}}"></span><br>
+                                <span ng-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span></span><br>
                               </div>
                             </div>
                           </div>
