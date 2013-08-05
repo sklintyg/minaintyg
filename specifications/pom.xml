@@ -103,7 +103,7 @@
       <plugin>
         <groupId>uk.co.javahelp.fitnesse</groupId>
         <artifactId>fitnesse-launcher-maven-plugin</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.4.0-20130805</version>
         <configuration>
           <port>${fitnesse.port}</port>
           <workingDir>${fitnesse.working}</workingDir>
