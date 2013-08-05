@@ -1,11 +1,12 @@
 package se.inera.certificate.integration.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -16,7 +17,7 @@ public class CertificateStateHistoryEntryConverter {
     }
 
     public static List<CertificateStatusType> toCertificateStatusType(List<CertificateStateHistoryEntry> source) {
-        if (source == null || source.isEmpty()) return null;
+        if (source == null || source.isEmpty()) return Collections.emptyList();
 
         List<CertificateStatusType> states = new ArrayList<>();
         for (CertificateStateHistoryEntry state : source) {
