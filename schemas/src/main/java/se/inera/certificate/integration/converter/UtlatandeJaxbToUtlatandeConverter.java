@@ -87,6 +87,8 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         utlatande.setOvrigt(convert(source.getOvrigt()));
 
+        utlatande.setStatus(StatusConverter.toStatus(source.getStatuses()));
+
         return utlatande;
     }
 

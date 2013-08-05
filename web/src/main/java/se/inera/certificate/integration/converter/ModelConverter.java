@@ -18,47 +18,18 @@
  */
 package se.inera.certificate.integration.converter;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.integration.builder.CertificateMetaTypeBuilder;
-import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.dao.Certificate;
-import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
+import se.inera.certificate.model.util.Iterables;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-
-import java.util.HashMap;
 
 /**
  * @author andreaskaltenbach
  */
 public final class ModelConverter {
 
-    private static final BiMap<CertificateState, StatusType> CERTIFICATE_STATE_MAP;
-
-    static {
-        CERTIFICATE_STATE_MAP = HashBiMap.create(new HashMap<CertificateState, StatusType>() {
-            private static final long serialVersionUID = 1L;
-        {
-            put(CertificateState.PROCESSED, StatusType.PROCESSED);
-            put(CertificateState.DELETED, StatusType.DELETED);
-            put(CertificateState.RESTORED, StatusType.RESTORED);
-            put(CertificateState.CANCELLED, StatusType.CANCELLED);
-            put(CertificateState.SENT, StatusType.SENT);
-            put(CertificateState.RECEIVED, StatusType.RECEIVED);
-            put(CertificateState.IN_PROGRESS, StatusType.IN_PROGRESS);
-            put(CertificateState.UNHANDLED, StatusType.UNHANDLED);
-        } });
-    }
-
     private ModelConverter() {
-    }
-
-    public static CertificateState toCertificateState(StatusType statusType) {
-         return CERTIFICATE_STATE_MAP.inverse().get(statusType);
     }
 
     public static CertificateMetaType toCertificateMetaType(Certificate source) {
@@ -72,11 +43,9 @@ public final class ModelConverter {
                 .signDate(new LocalDate(source.getSignedDate()))
                 .available(source.getDeleted() ? "false" : "true");
 
-        for (CertificateStateHistoryEntry state : source.getStates()) {
-            StatusType statusType = CERTIFICATE_STATE_MAP.get(state.getState());
-            builder.status(statusType, state.getTarget(), state.getTimestamp());
-        }
+        CertificateMetaType meta = builder.build();
 
+        Iterables.addAll(meta.getStatus(), CertificateStateHistoryEntryConverter.toCertificateStatusType(source.getStates()));
         return builder.build();
     }
 }

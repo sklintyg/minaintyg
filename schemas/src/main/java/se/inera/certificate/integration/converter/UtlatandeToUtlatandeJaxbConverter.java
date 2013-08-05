@@ -14,8 +14,6 @@ import static se.inera.certificate.model.util.Iterables.addAll;
 import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import riv.insuranceprocess.certificate._1.CertificateStatusType;
-import riv.insuranceprocess.certificate._1.StatusType;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.DateInterval;
@@ -37,7 +35,6 @@ import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Status;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
@@ -88,29 +85,10 @@ public class UtlatandeToUtlatandeJaxbConverter {
         addAll(utlatande.getObservations(), convertObservations(source.getObservations()));
         addAll(utlatande.getVardkontakts(), convertVardkontakter(source.getVardkontakter()));
         addAll(utlatande.getReferens(), convertReferenser(source.getReferenser()));
-        addAll(utlatande.getStatuses(), convertStatus(source.getStatus()));
 
         utlatande.setOvrigt(convert(source.getOvrigt()));
 
         return utlatande;
-    }
-
-    private List<CertificateStatusType> convertStatus(List<Status> source) {
-        if (source == null) return null;
-
-        List<CertificateStatusType> statusList = new ArrayList<>();
-        for (Status status : source) {
-            statusList.add(convert(status));
-        }
-        return statusList;
-    }
-
-    private CertificateStatusType convert(Status source) {
-        CertificateStatusType certificateStatusType = new CertificateStatusType();
-        certificateStatusType.setTarget(source.getTarget());
-        certificateStatusType.setTimestamp(source.getTimestamp());
-        certificateStatusType.setType(StatusType.valueOf(source.getType().name()));
-        return certificateStatusType;
     }
 
     private List<ReferensType> convertReferenser(List<Referens> source) {

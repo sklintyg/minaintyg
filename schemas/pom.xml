@@ -59,100 +59,6 @@
         <artifactId>cxf-codegen-plugin</artifactId>
         <version>${cxf.version}</version>
         <executions>
-
-          <execution>
-            <id>wsdl2java-get-certificate-content-interfaces</id>
-            <goals>
-              <goal>wsdl2java</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <wsdlOptions>
-                <wsdlOption>
-
-                  <wsdl>
-                    ${schema.path}/v1/GetCertificateContent/GetCertificateContentInteraction.wsdl
-                  </wsdl>
-                  <bindingFiles>
-                    <bindingFile>
-                      ${basedir}/bindings/registrera-intyg-binding.xjb
-                    </bindingFile>
-                  </bindingFiles>
-                  <extraargs>
-                    <extraarg>-wsdlLocation</extraarg>
-                    <extraarg>
-                      classpath:schemas/v1/GetCertificateContent/GetCertificateContentInteraction.wsdl
-                    </extraarg>
-                    <extraarg>-validate</extraarg>
-                    <extraarg>-verbose</extraarg>
-                    <extraarg>-xjc-XhashCode</extraarg>
-                    <extraarg>-xjc-Xequals</extraarg>
-                    <extraarg>-xjc-XtoString</extraarg>
-                    <extraarg>-xjc-Xinheritance</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
-                    </extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:intyg:common-model:1=se.inera.certificate.common.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:iso:21090:dt:1=iso.v21090.dt.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:2=se.inera.ifv.insuranceprocess.healthreporting.v2
-                    </extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1=se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1
-                    </extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:GetCertificateContent=se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1
-                    </extraarg>
-                  </extraargs>
-                </wsdlOption>
-              </wsdlOptions>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>wsdl2java-internal-interfaces</id>
-            <goals>
-              <goal>wsdl2java</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <wsdlOptions>
-                <wsdlOption>
-                  <wsdl>
-                    ${schema.path}/v1/RegistreraIntygInteraction/RegistreraIntygInteraction_1.0.wsdl
-                  </wsdl>
-                  <bindingFiles>
-                    <bindingFile>
-                      ${basedir}/bindings/registrera-intyg-binding.xjb
-                    </bindingFile>
-                  </bindingFiles>
-                  <extraargs>
-                    <extraarg>-validate</extraarg>
-                    <extraarg>-verbose</extraarg>
-                    <extraarg>-xjc-XhashCode</extraarg>
-                    <extraarg>-xjc-Xequals</extraarg>
-                    <extraarg>-xjc-XtoString</extraarg>
-                    <extraarg>-xjc-Xinheritance</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:intyg:common-model:1=se.inera.certificate.common.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:iso:21090:dt:1=iso.v21090.dt.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>
-                      urn:riv:insuranceprocess:healthreporting:2=se.inera.ifv.insuranceprocess.healthreporting.v2
-                    </extraarg>
-                  </extraargs>
-                </wsdlOption>
-              </wsdlOptions>
-            </configuration>
-          </execution>
-
           <execution>
             <id>wsdl2java-external-interfaces</id>
             <goals>
@@ -160,12 +66,11 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
+
+              <!-- ===================================================== -->
+              <!-- Default WSDL2Java options, common for all interactions-->
+              <!-- ===================================================== -->
               <defaultOptions>
-                <bindingFiles>
-                  <bindingFile>
-                    ${basedir}/bindings/general-binding.xjb
-                  </bindingFile>
-                </bindingFiles>
                 <extraargs>
                   <extraarg>-validate</extraarg>
                   <extraarg>-verbose</extraarg>
@@ -269,13 +174,57 @@
                   <extraarg>
                     urn:riv:insuranceprocess:healthreporting:SendMedicalCertificateQuestionResponder:1=se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificatequestionresponder.v1
                   </extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>urn:intyg:common-model:1=se.inera.certificate.common.v1</extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>
+                    urn:riv:insuranceprocess:healthreporting:GetCertificateContentResponder:1=se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1
+                  </extraarg>
+                  <extraarg>-p</extraarg>
+                  <extraarg>
+                    urn:riv:insuranceprocess:healthreporting:GetCertificateContent=se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1
+                  </extraarg>
                 </extraargs>
               </defaultOptions>
               <wsdlOptions>
+
+                <wsdlOption>
+                  <wsdl>
+                    ${schema.path}/v1/RegistreraIntygInteraction/RegistreraIntygInteraction_1.0.wsdl
+                  </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/registrera-intyg-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
+                </wsdlOption>
+
+                <wsdlOption>
+                  <wsdl>
+                    ${schema.path}/v1/GetCertificateContent/GetCertificateContentInteraction.wsdl
+                  </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/registrera-intyg-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
+                  <extraargs>
+                    <extraarg>-wsdlLocation</extraarg>
+                    <extraarg>
+                      classpath:schemas/v1/GetCertificateContent/GetCertificateContentInteraction.wsdl
+                    </extraarg>
+                  </extraargs>
+                </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/ListCertificatesInteraction/ListCertificatesInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -283,10 +232,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/GetCertificateInteraction/GetCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -294,10 +249,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -305,10 +266,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/GetConsentInteraction/GetConsentInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -320,6 +287,11 @@
                   <wsdl>
                     ${schema.path}/v1/SetConsentInteraction/SetConsentInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -327,10 +299,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/SetCertificateStatusInteraction/SetCertificateStatusInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -338,10 +316,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/SendMedicalCertificateInteraction/SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -349,10 +333,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/RevokeMedicalCertificateInteraction/RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>
@@ -360,10 +350,16 @@
                     </extraarg>
                   </extraargs>
                 </wsdlOption>
+
                 <wsdlOption>
                   <wsdl>
                     ${schema.path}/v1/SendMedicalCertificateQuestionInteraction/SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
                   </wsdl>
+                  <bindingFiles>
+                    <bindingFile>
+                      ${basedir}/bindings/general-binding.xjb
+                    </bindingFile>
+                  </bindingFiles>
                   <extraargs>
                     <extraarg>-wsdlLocation</extraarg>
                     <extraarg>

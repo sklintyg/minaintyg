@@ -1,6 +1,5 @@
 package se.inera.certificate.integration;
 
-import static se.inera.certificate.integration.converter.ModelConverter.toCertificateState;
 import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
 import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
@@ -8,8 +7,8 @@ import org.apache.cxf.annotations.SchemaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.exception.InvalidCertificateIdentifierException;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.service.CertificateService;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
@@ -31,7 +30,7 @@ public class SetCertificateStatusResponderImpl implements SetCertificateStatusRe
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
 
         try {
-            certificateService.setCertificateState(request.getNationalIdentityNumber(), request.getCertificateId(), request.getTarget(), toCertificateState(request.getStatus()), request.getTimestamp());
+            certificateService.setCertificateState(request.getNationalIdentityNumber(), request.getCertificateId(), request.getTarget(), CertificateState.valueOf(request.getStatus().name()), request.getTimestamp());
             response.setResult(okResult());
         } catch (InvalidCertificateIdentifierException e) {
             response.setResult(failResult(e.getMessage()));
