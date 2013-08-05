@@ -1,5 +1,6 @@
 package se.inera.certificate.spec
 import org.joda.time.LocalDate
+
 import se.inera.certificate.spec.util.WsClientFixture
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType
 import se.inera.ifv.insuranceprocess.healthreporting.getconsent.v1.rivtabp20.GetConsentResponderInterface
@@ -26,10 +27,18 @@ public class HamtaListaAvIntyg extends WsClientFixture {
 	}
 	
 	String personnr
+	private String[] typ
 	private LocalDate från
 	private LocalDate till
 	String kommentar
 	
+	public void setTyp(String[] array) {
+		if (isEmpty(array)) {
+			typ = []
+		} else {
+			typ = array
+		}
+	}
 	public void setFrån(String datum) {
 		this.från = LocalDate.parse(datum)
 	}
@@ -37,30 +46,57 @@ public class HamtaListaAvIntyg extends WsClientFixture {
 	public void setTill(String datum) {
 		this.till = LocalDate.parse(datum)
 	}
+
+	private String svar
+	private String intyg
 	
-	public String svar() {
+    public void execute() {
+		svar = null
+		intyg = null
 		GetConsentRequestType getConsentParameters = new GetConsentRequestType()
 		getConsentParameters.personnummer = personnr
 		GetConsentResponseType getConsentResponse = getConsentResponder.getConsent(logicalAddress, getConsentParameters)
 		if (!getConsentResponse.consentGiven) {
-			return "samtycke saknas"
+			svar = "samtycke saknas"
+			return 
 		}
 		ListCertificatesRequestType parameters = new ListCertificatesRequestType();
 		parameters.nationalIdentityNumber = personnr
 		parameters.fromDate = från
 		parameters.toDate = till
-        parameters.certificateType = ["FK7263"]
+		if (typ) {
+			parameters.certificateType = typ
+		}
 		ListCertificatesResponseType response = listCertificatesResponder.listCertificates(logicalAddress, parameters)
 		ResultOfCall result = response.result
 		if (result.resultCode == ResultCodeEnum.OK) {
+			def fk_intygs_id = []
 			def fk_intyg = []
 			List allaIntyg = response.meta
 			allaIntyg.each {CertificateMetaType metaType ->
-				fk_intyg << metaType.certificateId
-			}
-			return fk_intyg.toString()	
+				fk_intygs_id << metaType.certificateId
+				fk_intyg << metaType.certificateId + ":" + metaType.certificateType + ":" + metaType.signDate + ":" + metaType.validFrom + ":" + metaType.validTo + ":" + metaType.issuerName + ":" + metaType.facilityName
+ 			}
+			svar = fk_intygs_id.sort().toString()	
+			intyg = fk_intyg.sort().toString()	
 		} else {
-			return result.errorText
+			svar = result.errorText
+		}
+	}
+
+	public String svar() {
+		svar
+	}
+	
+	public String intyg() {
+		intyg
+	}
+	
+	private boolean isEmpty(String[] array) {
+		switch (array.length) {
+			case 0: return true;
+			case 1: return array[0].isEmpty();
+			default: return false;
 		}
 	}
 

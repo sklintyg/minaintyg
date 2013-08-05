@@ -5,32 +5,32 @@
 |19121212-1212|ja|
 
 |Hamta intyg|
-|personnummer|intyg|svar?|
+|personnummer|intyg|resultat?|
 |19121212-1212|intyg-1|[ERROR] - Unknown certificate ID: intyg-1|
 
 !3 Journalsystem registrerar ett nytt intyg 
 
 |Registrera fk7263 intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-1|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-1|OK|
 
 |Hamta intyg|
-|personnummer|intyg|svar?|status?|
-|19121212-1212|intyg-1|ok|[RECEIVED]|
+|personnummer|intyg|resultat?|status?|
+|19121212-1212|intyg-1|OK|[RECEIVED]|
 
 !3 Föräkringskassan hämtar intyget och markerar det som hämtat. Intyg får en ny status SENT
 
 |Hamta intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-1|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-1|OK|
 
 |Markera intyg som hamtat|
-|personnr|intyg|svar?|
-|19121212-1212|intyg-1|ok|
+|personnr|intyg|resultat?|
+|19121212-1212|intyg-1|OK|
 
 |Hamta intyg|
-|personnummer|intyg|svar?|status?|
-|19121212-1212|intyg-1|ok|[SENT, RECEIVED]|
+|personnummer|intyg|resultat?|status?|
+|19121212-1212|intyg-1|OK|[SENT, RECEIVED]|
 
 
 !3 Rensa bort test-intyg

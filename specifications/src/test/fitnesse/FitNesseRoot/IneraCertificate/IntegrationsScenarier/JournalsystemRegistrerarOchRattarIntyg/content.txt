@@ -5,40 +5,40 @@
 |19121212-1212|ja|
 
 |Hamta intyg|
-|personnummer|intyg|svar?|
+|personnummer|intyg|resultat?|
 |19121212-1212|intyg-1|[ERROR] - Unknown certificate ID: intyg-1|
 
 !3 Efter journalsystemet har registrerat ett nytt intyg så ska det vara tillgängligt
 
 |Registrera fk7263 intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-1|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-1|OK|
 
 |Hamta intyg|
-|personnummer|intyg|svar?|status?|
-|19121212-1212|intyg-1|ok|[RECEIVED]|
+|personnummer|intyg|resultat?|status?|
+|19121212-1212|intyg-1|OK|[RECEIVED]|
 
 !3 Journalsystem rättar intyg
 
 |Ratta intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-1|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-1|OK|
 
 !3 Intygstjänsten tillåter ej att rätta intyget en gång till
 
 |Ratta intyg|
-|personnummer|intyg|svar?|
+|personnummer|intyg|resultat?|
 |19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' is already revoked.|
 
 !3 Intygstjänsten tillåter ej att skicka ett rättat intyget
 
 |Skicka intyg till Fk|
-|personnummer|intyg|svar?|
+|personnummer|intyg|resultat?|
 |19121212-1212|intyg-1|[ERROR] - Certificate 'intyg-1' has been revoked.|
 
 !3 Intygstjänsten tillåter ej att hämta ett rättat intyg
 |Hamta intyg|
-|personnummer|intyg|svar?|
+|personnummer|intyg|resultat?|
 |19121212-1212|intyg-1|[INFO] - Certificate 'intyg-1' has been revoked|
 
 !3 Givet att 19121212-1212 inte har samtycke
@@ -50,14 +50,14 @@
 !3 Och intyg registreras
 
 |Registrera fk7263 intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-2|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-2|OK|
 
 !3 Kan journalsystem rätta intyg
 
 |Ratta intyg|
-|personnummer|intyg|svar?|
-|19121212-1212|intyg-2|ok|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-2|OK|
 
 !3 Rensa bort test-intyg
 

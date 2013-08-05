@@ -12,7 +12,11 @@ import se.inera.certificate.spec.util.RestClientFixture
 public class Intyg extends RestClientFixture {
 
     String personnr
-    String datum
+    String utfärdat
+	String giltigtFrån
+	String giltigtTill
+	String utfärdare
+	String enhet
     String typ
     String id
     String idTemplate
@@ -22,26 +26,26 @@ public class Intyg extends RestClientFixture {
         def restClient = new RESTClient(baseUrl)
         for (int day in from..to) {
             if (idTemplate) {
-                id = String.format(idTemplate, day, datum, personnr, typ)
+                id = String.format(idTemplate, day, utfärdat, personnr, typ)
             }
             restClient.post(
                     path: 'certificate',
                     body: certificateJson(),
                     requestContentType: JSON
                     )
-            datum = new Date().parse("yyyy-MM-dd", datum).plus(1).format("yyyy-MM-dd")
+            utfärdat = new Date().parse("yyyy-MM-dd", utfärdat).plus(1).format("yyyy-MM-dd")
         }
     }
 
     private certificateJson() {
-        [id:String.format(id, datum),
+        [id:String.format(id, utfärdat),
             type:typ,
             civicRegistrationNumber:personnr,
-            signedDate:datum,
-            signingDoctorName: 'Lennart Ström',
-            validFromDate:datum,
-            validToDate:new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd"),
-            careUnitName: 'Närhälsan i Majorna',
+            signedDate:utfärdat,
+            signingDoctorName: utfärdare,
+            validFromDate:giltigtFrån,
+            validToDate:giltigtTill,
+            careUnitName: enhet,
             document: document()
         ]
     }
@@ -60,23 +64,32 @@ public class Intyg extends RestClientFixture {
         def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource(typ + "_template.json").getInputStream()))
 
         // setting the certificate ID
-        certificate.'id' = id
+        certificate.'id'.extension = id
 
         // setting personnr in certificate XML
-        certificate.patient.'id' = personnr
+        certificate.patient.'id'.extension = personnr
 
+		certificate.skapadAv.namn = utfärdare
+		certificate.skapadAv.vardenhet.'id'.extension = enhet
+		certificate.skapadAv.vardenhet.namn = enhet
+		
         // setting the signing date, from date and to date
-        certificate.signeringsDatum = datum
-        certificate.skickatDatum = datum
+        certificate.signeringsDatum = utfärdat
+        certificate.skickatDatum = utfärdat
 
-        certificate.vardkontakter.each { it.vardkontaktstid = datum }
+        certificate.vardkontakter.each {
+			it.vardkontaktstid.start = utfärdat
+			it.vardkontaktstid.end = utfärdat
+		}
 
-        certificate.referenser.each { it.datum = datum }
+        certificate.referenser.each { it.datum = utfärdat }
 
+		/*
         certificate.aktivitetsbegransningar.arbetsformaga.arbetsformagaNedsattningar[0].each {
-            it.varaktighetFrom = datum
-            it.varaktighetTom = new Date().parse("yyyy-MM-dd", datum).plus(28).format("yyyy-MM-dd");
+            it.varaktighetFrom = giltigtFrån
+            it.varaktighetTom = giltigtTill
         }
+        */
         JsonOutput.toJson(certificate)
     }
 }

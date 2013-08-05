@@ -1,70 +1,262 @@
 {
-    "id": "00832895-5a9c-450a-bd74-08af43751700",
-    "typ": "rli",
-    "kommentar":"Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
-    "signeringsDatum": "2011-01-26T00:00:00.000",
-    "skickatDatum": "2011-03-23T09:29:15.193",
-    "sjukdomsforlopp" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
-    "patient": {
-        "id": "19121212-1212",
-        "fullstandigtNamn": "Test Testorsson"
+    "id" : {
+        "extension" : "80832895-5a9c-450a-bd74-08af43750788"
     },
-    "vardkontakter": [
-        {
-            "vardkontakttyp" : "MIN_UNDERSOKNING_AV_PATIENTEN",
-            "vardkontaktstid" : "2011-01-26"
-        }
+    "typ" : {
+        "code" : "fk7263"
+    },
+    "kommentars" : [
+        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
     ],
-    "skapadAv": {
-        "id": "Personal HSA-ID",
-        "namn": "En Läkare"
+    "signeringsDatum" : "2011-01-26T00:00:00.000",
+    "skickatDatum" : "2011-03-23T09:29:15.000",
+    "patient" : {
+        "id" : {
+            "root" : "1.2.752.129.2.1.3.1",
+            "extension" : "19121212-1212"
+        },
+        "fornamns" : [
+            ""
+        ],
+        "efternamns" : [
+            "Test Testorsson"
+        ],
+        "sysselsattnings" : [
+            {
+                "sysselsattningsTyp" : {
+                    "code" : "Nuvarande_arbete"
+                }
+            },
+            {
+                "sysselsattningsTyp" : {
+                    "code" : "Arbetsloshet"
+                }
+            },
+            {
+                "sysselsattningsTyp" : {
+                    "code" : "Foraldraledighet"
+                }
+            }
+        ],
+        "arbetsuppgifts" : [
+            {
+                "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
+            }
+        ],
+        "fullstandigtNamn" : "Test Testorsson"
     },
-    "vardenhet": {
-        "id": "VardenhetY",
-        "arbetsplatskod" : "123456789011",
-        "namn": "Kir mott",
-
-        "postadress":"Lasarettsvägen 13",
-        "postnummer":"85150",
-        "postort":"Sundsvall",
-        "telefonnummer":"060-1818000",
-        "epost":"kirmott@vardenhet.se",
-        "vardgivare": {
-            "id": "VardgivarId",
-            "namn": "Landstinget Norrland"
+    "skapadAv" : {
+        "id" : {
+            "root" : "1.2.752.129.2.1.4.1",
+            "extension" : "Personal HSA-ID"
+        },
+        "namn" : "En Läkare",
+        "vardenhet" : {
+            "id" : {
+                "root" : "1.2.752.129.2.1.4.1",
+                "extension" : "VardenhetY"
+            },
+            "arbetsplatskod" : {
+                "root" : "1.2.752.29.4.71",
+                "extension" : "123456789011"
+            },
+            "namn" : "Kir mott",
+            "postadress" : "Lasarettsvägen 13",
+            "postnummer" : "85150",
+            "postort" : "Sundsvall",
+            "telefonnummer" : "060-1818000",
+            "epost" : "kirmott@vardenhet.se",
+            "vardgivare" : {
+                "id" : {
+                    "root" : "1.2.752.129.2.1.4.1",
+                    "extension" : "VardgivarId"
+                },
+                "namn" : "Landstinget Norrland"
+            }
         }
     },
-    "funktionsnedsattningar": [
+    "aktiviteter" : [
         {
-            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
-        }
-    ],
-    "aktivitetsbegransningar": [
+            "aktivitetskod" : {
+                "code" : "Patienten_behover_fa_kontakt_med_Arbetsformedlingen"
+            }
+        },
         {
-            "beskrivning": "Patienten bör/kan inte flyga.",
-            "arbetsformaga": {
-                "motivering": "Risk för kraftig blödning vid kabintrycksförändringar.",
-                "prognosangivelse": "DET_GAR_INTE_ATT_BEDOMMA",
-                "arbetsuppgift": "Semester",
-                "arbetsformagaNedsattningar": [
-                    {
-                        "varaktighetTom": "2011-02-13",
-                        "varaktighetFrom": "2011-01-26",
-                        "nedsattningsgrad": "HELT_NEDSATT"
-                    }
-                ],
-                "sysselsattningar": [
-                    "NUVARANDE_ARBETE"
-                ]
+            "aktivitetskod" : {
+                "code" : "Patienten_behover_fa_kontakt_med_foretagshalsovarden"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Ovrigt"
+            },
+            "beskrivning" : "När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik"
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden"
+            },
+            "beskrivning" : "Utreds om operation är nödvändig"
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Planerad_eller_pagaende_annan_atgard"
+            },
+            "beskrivning" : "Patienten ansvarar för att armen hålls i stillhet"
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "code" : "Kontakt_med_Forsakringskassan_ar_aktuell"
             }
         }
     ],
-    "bedomtTillstand": {
-        "beskrivning": "Klämskada på överarm",
-        "tillstandskod" : "S47"
-    },
+    "observations" : [
+        {
+            "observationsKategori" : {
+                "code" : "MedicinsktTillstånd"
+            },
+            "observationsKod" : {
+                "codeSystemName" : "ICD-10",
+                "code" : "S47"
+            },
+            "beskrivning" : "Klämskada på överarm"
+        },
+        {
+            "observationsKategori" : {
+                "code" : "BedömtTillstånd"
+            },
+            "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Kroppsfunktion"
+            },
+            "beskrivning" : "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Aktivitet"
+            },
+            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Arbetsförmåga"
+            },
+            "observationsKod" : {
+                "code" : "Det_gar_inte_att_bedomma"
+            },
+            "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-04-01",
+                "tom" : "2011-05-31"
+            },
+            "varde" : [
+                {
+                    "quantity" : 25,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-03-07",
+                "tom" : "2011-03-31"
+            },
+            "varde" : [
+                {
+                    "quantity" : 50,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-02-14",
+                "tom" : "2011-03-06"
+            },
+            "varde" : [
+                {
+                    "quantity" : 75,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-01-26",
+                "tom" : "2011-02-13"
+            },
+            "varde" : [
+                {
+                    "quantity" : 100,
+                    "unit" : "percent"
+                }
+            ]
+        }
+    ],
+    "vardkontakter" : [
+        {
+            "vardkontakttyp" : {
+                "code" : "Min_undersokning_av_patienten"
+            },
+            "vardkontaktstid" : {
+                "start" : "2011-01-26",
+                "end" : "2011-01-26"
+            }
+        },
+        {
+            "vardkontakttyp" : {
+                "code" : "Min_telefonkontakt_med_patienten"
+            },
+            "vardkontaktstid" : {
+                "start" : "2011-01-12",
+                "end" : "2011-01-12"
+            }
+        }
+    ],
+    "referenser" : [
+        {
+            "referenstyp" : {
+                "code" : "Journaluppgifter"
+            },
+            "datum" : "2010-01-14"
+        },
+        {
+            "referenstyp" : {
+                "code" : "Annat"
+            },
+            "datum" : "2010-01-24"
+        }
+    ],
+    "validFromDate" : "2011-01-26",
+    "validToDate" : "2011-05-31",
+    "forskrivarkodOchArbetsplatskod" : "123456789011",
     "ovrigt":{
-        "resmal":"Långtbortistan",
-        "resenar":"Mamma Testorsson"
-    }
+       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns:ns2=\"urn:riv:insuranceprocess:healthreporting:2\" xmlns=\"urn:intyg:common-model:1\" xmlns:ns3=\"urn:riv:insuranceprocess:certificate:1\"><arrangmang xmlns:hr=\"urn:riv:insuranceprocess:healthreporting:2\"><bokningsreferens>ABC-123</bokningsreferens> </arrangmang></ovrigt>"
+   }
 }

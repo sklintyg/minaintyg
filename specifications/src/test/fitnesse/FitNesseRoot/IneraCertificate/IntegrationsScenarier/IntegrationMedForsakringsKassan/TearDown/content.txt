@@ -6,6 +6,7 @@
 |ta bort Intyg|
 |id|
 |intyg-1|
+|intyg-fk1111|
 |intyg-annan-typ|
 |intyg-2|
 |intyg-3|
