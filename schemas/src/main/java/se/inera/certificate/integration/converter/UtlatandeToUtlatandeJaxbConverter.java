@@ -1,19 +1,21 @@
 package se.inera.certificate.integration.converter;
 
+import static se.inera.certificate.model.util.Iterables.addAll;
+import iso.v21090.dt.v1.PQ;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
-
-import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.DateInterval;
@@ -190,6 +192,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
     }
 
     private List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
+        if (source == null) return null;
+        
         List<AktivitetType> aktiviteter = new ArrayList<>();
 
         for (Aktivitet aktivitet : source) {
@@ -256,6 +260,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
     }
 
     private List<ArbetsuppgiftType> convertArbetsuppgifts(List<Arbetsuppgift> source) {
+        if (source == null) return null;
+        
         List<ArbetsuppgiftType> arbetsuppgifts = new ArrayList<>();
         for (Arbetsuppgift arbetsuppgift : source) {
             arbetsuppgifts.add(convert(arbetsuppgift));
@@ -264,12 +270,16 @@ public class UtlatandeToUtlatandeJaxbConverter {
     }
 
     private ArbetsuppgiftType convert(Arbetsuppgift source) {
+        if (source == null) return null;
+        
         ArbetsuppgiftType arbetsuppgift = new ArbetsuppgiftType();
         arbetsuppgift.setTypAvArbetsuppgift(source.getTypAvArbetsuppgift());
         return arbetsuppgift;
     }
 
     private List<SysselsattningType> convertSysselsattnings(List<Sysselsattning> source) {
+        if (source == null) return null;
+        
         List<SysselsattningType> sysselsattnings = new ArrayList<>();
         for (Sysselsattning sysselsattning : source) {
             sysselsattnings.add(convert(sysselsattning));
@@ -279,6 +289,8 @@ public class UtlatandeToUtlatandeJaxbConverter {
     }
 
     private SysselsattningType convert(Sysselsattning source) {
+        if (source == null) return null;
+        
         SysselsattningType sysselsattning = new SysselsattningType();
         sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningsTyp()));
         sysselsattning.setDatum(source.getDatum());
