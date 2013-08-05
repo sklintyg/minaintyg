@@ -265,6 +265,6 @@
          }
       ],
     "ovrigt":{
-       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns:ns2=\"urn:riv:insuranceprocess:healthreporting:2\" xmlns=\"urn:intyg:common-model:1\" xmlns:ns3=\"urn:riv:insuranceprocess:certificate:1\"><arrangmang xmlns:hr=\"urn:riv:insuranceprocess:healthreporting:2\"><bokningsreferens>ABC-123</bokningsreferens> </arrangmang></ovrigt>"
+       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns=\"urn:intyg:common-model:1\"><arrangmang xmlns=\"urn:intyg:rli:model:1\"><bokningsreferens>ABC-123</bokningsreferens></arrangmang></ovrigt>"
    }
 }
