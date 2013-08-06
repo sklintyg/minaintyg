@@ -28,7 +28,7 @@
 <div class="row-fluid">
   <div class="span12">
 
-    <mi-spinner label="label.certificatesloading" show-spinner="doneLoading" show-content="doneLoading && (certificates | inboxfilter).length>0">
+    <div mi-spinner label="label.certificatesloading" show-spinner="doneLoading" show-content="doneLoading && (certificates | inboxfilter).length>0">
 <!-- keeping this in case the directive breakes something and someone want to undo it during the summer :)
     <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
       <img aria-labelledby="loading-message" src="/img/ajax-loader.gif" style="text-align: center;" />
@@ -115,7 +115,7 @@
           <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
         </div>
       </div>
-    </mi-spinner>
+    </div>
     <!-- </div> -->
   </div>
 </div>

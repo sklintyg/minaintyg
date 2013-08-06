@@ -2,7 +2,7 @@
 
 angular.module('directives.mi').directive("miSpinner", ['$rootScope', function($rootScope) {
     return {
-        restrict : "E",
+        restrict : "A",
 	    transclude : true,
         replace : true,
         scope : {
