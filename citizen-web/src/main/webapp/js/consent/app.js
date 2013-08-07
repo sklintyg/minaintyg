@@ -7,7 +7,7 @@ var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consen
             $routeProvider.when('/start', {
                 templateUrl : '/views/consent/consent-start.html',
                 controller : 'ConsentCtrl',
-                title : 'Ny användare'
+                title : 'Ditt samtycke'
             }).when('/samtycke-givet', {
                 templateUrl : '/views/consent/consent-given.html',
                 controller : 'ConsentGivenCtrl',
