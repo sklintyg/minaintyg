@@ -33,11 +33,13 @@ public class CitizenImpl implements Citizen {
 
     private Boolean consent;
     private String username;
+    private LoginMethodEnum loginMethod;
 
     private Set<SimpleGrantedAuthority> roles = Collections.singleton(new SimpleGrantedAuthority("ROLE_CITIZEN"));
 
-    public CitizenImpl(String username) {
+    public CitizenImpl(String username, LoginMethodEnum loginMethod) {
         this.username = username;
+        this.loginMethod = loginMethod;
     }
 
     @Override
@@ -92,5 +94,10 @@ public class CitizenImpl implements Citizen {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public LoginMethodEnum getLoginMethod() {
+        return loginMethod;
     }
 }

@@ -52,6 +52,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
         // Get Citizen instance from context
         Citizen citizen = citizenService.getCitizen();
+        LOG.debug("Login from " + citizen.getLoginMethod().toString());
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
             boolean consentResult = consentService.fetchConsent(citizen.getUsername());

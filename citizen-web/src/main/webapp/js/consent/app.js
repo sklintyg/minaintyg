@@ -2,16 +2,12 @@
 
 /* App Module */
 
-var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util', 'controllers.util' ]).config(
+var consentApp = angular.module('ConsentApp', [ 'ui.bootstrap', 'services.consent', 'modules.messages', 'directives.mi', 'services.util', 'controllers.util', 'ngCookies' ]).config(
         [ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
             $routeProvider.when('/start', {
                 templateUrl : '/views/consent/consent-start.html',
                 controller : 'ConsentCtrl',
                 title : 'Ditt samtycke'
-            }).when('/samtycke-givet', {
-                templateUrl : '/views/consent/consent-given.html',
-                controller : 'ConsentGivenCtrl',
-                title : 'Samtycke godkänt'
             }).when('/fel/:errorCode', {
                 templateUrl : '/views/error.html',
                 controller : 'ErrorViewCtrl',

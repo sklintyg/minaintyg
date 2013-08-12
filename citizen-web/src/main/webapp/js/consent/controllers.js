@@ -1,13 +1,15 @@
 'use strict';
 
 // Consent Controller
-consentApp.controller('ConsentCtrl', [ '$scope', '$location', '$filter', 'consentService', '$window', function ConsentCtrl($scope, $location, $filter, consentService, $window) {
+consentApp.controller('ConsentCtrl', [ '$scope', '$location', '$filter', 'consentService', '$window','$cookies', function ConsentCtrl($scope, $location, $filter, consentService, $window, $cookies) {
 
     $scope.giveConsent = function() {
         consentService.giveConsent(function(data) {
-            // If ok, go to consent-given
+            // If consent saved OK, proceed to main app and set cookie to indicate that we'e just 
+            // given consent, rather than normal login flow
             if (data !=null && data.result) {
-                $location.path("/samtycke-givet");
+                $cookies['RedirectFromConsent'] = "1";
+                $window.location.href = "/web/start";
             } else {
                 $location.path("/fel/couldnotgiveconsent");
             }

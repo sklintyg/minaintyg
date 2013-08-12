@@ -43,6 +43,6 @@ public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
     @Override
     public UserDetails lookupPrincipal(AuthenticationResult auth) {
         LOG.info("Citizen authenticated.");
-        return new CitizenImpl(auth.getUsername());
+        return new CitizenImpl(auth.getUsername(), LoginMethodEnum.MVK);
     }
 }

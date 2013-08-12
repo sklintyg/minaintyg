@@ -18,37 +18,19 @@
  */
 package se.inera.certificate.web.security;
 
-import java.io.Serializable;
-
-import org.springframework.security.core.userdetails.UserDetails;
-
 /**
- * The details of a citizen.
+ * Enumeration of the different login methods / sources that can be used to access the application.
  */
-public interface Citizen extends UserDetails, Serializable {
+public enum LoginMethodEnum {
 
-    /**
-     * Does the citizen have consent?
-     * @return a boolean
-     */
-    Boolean hasConsent();
+    MVK, FK;
 
-    /**
-     * Do we actually have a value for consent?
-     * @return
-     */
-    boolean consentIsKnown();
+    public String value() {
+        return name();
+    }
 
-    /**
-     * Set consent.
-     * @param consent
-     */
-    void setConsent(boolean consent);
-
-    /**
-     * Should return the login methos used to access the application.
-     * @return {@link LoginMethodEnum} Login method used
-     */
-    LoginMethodEnum getLoginMethod();
+    public static LoginMethodEnum fromValue(String v) {
+        return valueOf(v);
+    }
 
 }

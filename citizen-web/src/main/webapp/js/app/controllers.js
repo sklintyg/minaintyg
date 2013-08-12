@@ -1,14 +1,15 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', '$log', 'listCertService', 'messageService',
-    function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService, messageService) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', '$log', 'listCertService', 'messageService', '$cookies', '$rootScope', 
+    function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService, messageService, $cookies, $rootScope) {
         $scope.certificates = [];
         $scope.doneLoading = false;
         $scope.messageService = messageService;
         $scope.pageTitle = "Inkorgen";
         $scope.isCollapsed = true;
-
+        
+  
         $scope.sendSelected = function (item) {
             $log.debug("send " + item.id);
             listCertService.selectedCertificate = item;
@@ -55,6 +56,21 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
             $scope.dialogfocus = false;
         }
 
+        //FK dialog
+        var fromConsentPage =  $cookies['RedirectFromConsent'];
+        $scope.fkMessageOpen = fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === "FK");
+        $scope.closeFKDialog = function (backtoFK) {
+            if (backtoFK) {
+                $window.location.href = "/web/logga-ut";
+            }
+            //no matter outcome of dialog, it should be a one time popup..
+            //remove flag indicating forwarded from consent page..
+            delete $cookies['RedirectFromConsent']
+            //...and close dialog
+            $scope.fkMessageOpen = false;
+        }
+        
+        
         // fetch list of certs initially
         listCertService.getCertificates(function (list) {
             $scope.doneLoading = true;

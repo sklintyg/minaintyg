@@ -13,6 +13,24 @@
   </div>
 </div>
 
+<!-- FK-login consent just given dialog -->
+
+<div id="fk-login-consent-dialog" modal="fkMessageOpen" close="closeFKDialog(false)" options="dialogOpts" role="alertdialog" aria-hidden="{{!fkMessageOpen}}">
+  <div class="modal-header">
+    <button class="close" ng-click="closeFKDialog(false)" aria-label="{{messageService.getProperty('common.close')}}">×</button>
+    <h3 ng-focus="fkMessageOpen" tabindex="-1"><span message key="fkdialog.head"></span></h3>
+  </div>
+  <div class="modal-body">
+    <p><span message key="fkdialog.text"></span></p>
+  </div>
+  <div class="modal-footer">
+    <button id="close-fkdialog-logout-button" class="btn btn-success" ng-click="closeFKDialog(true)"><span message key="fkdialog.button.returntofk"></span></button>
+    <button id="close-fkdialog-continue-button" class="btn btn-link" ng-click="closeFKDialog(false)"><span message key="fkdialog.button.continueuse"></span></button>
+  </div>
+</div>
+
+
+
 <!-- View start -->
 <h1 ng-focus="pagefocus" tabindex="0" xmlns="http://www.w3.org/1999/html">
   <span id="inboxHeader" message key="inbox.header"></span>

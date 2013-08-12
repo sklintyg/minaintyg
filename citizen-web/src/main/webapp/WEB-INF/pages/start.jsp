@@ -39,6 +39,15 @@
   <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
   <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
   <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+  
+  <script type="text/javascript">
+    /**
+     Global JS config/constants for this app, to be used by scripts
+     **/
+    var MI_CONFIG = {
+        LOGIN_METHOD : '<sec:authentication property="principal.loginMethod" />'
+    }
+</script>
 </head>
 
 <body ng-app="ListCertApp">
@@ -84,6 +93,7 @@
 
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular-cookies.min.js"/>"></script>
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
   <%-- Application files --%>
