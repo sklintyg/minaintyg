@@ -28,6 +28,7 @@
       <mvc:exclude-mapping path="/ge-samtycke"/>
       <mvc:exclude-mapping path="/tillbaka-till-mvk"/>
       <mvc:exclude-mapping path="/logga-ut"/>
+      <mvc:exclude-mapping path="/logga-ut-fk"/>
       <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
         <property name="jsonResponse" value="false"/>
       </bean>

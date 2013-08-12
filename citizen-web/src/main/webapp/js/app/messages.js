@@ -55,7 +55,7 @@ var minaIntygResources = {
 
         "fkdialog.head" : "Samtycke givet",
         "fkdialog.text" : "Du har nu givit det samtycke som krävs för att dina intyg kan hämtas av Försäkringskassan. Nu kan du antingen logga ut för att återgå till Försäkringskassans sidor eller gå vidare in i tjänsten Mina Intyg.",
-        "fkdialog.button.returntofk" : "Logga ut",
+        "fkdialog.button.returntofk" : "Tillbaka till Försäkringskassan",
         "fkdialog.button.continueuse" : "Gå vidare till Mina Intyg"
 
     },

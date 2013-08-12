@@ -88,6 +88,13 @@ public class PageController {
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkLogoutUrl;
     }
+    
+    @RequestMapping(value = {"/logga-ut-fk" }, method = RequestMethod.GET)
+    public ModelAndView loggaUtFk(HttpServletRequest request) {
+        LOG.debug("loggaUtFk");
+        invalidateSessionAndClearContext(request);
+        return new ModelAndView("logout-fk");
+    }
 
     protected void invalidateSessionAndClearContext(HttpServletRequest request) {
         request.getSession().invalidate();

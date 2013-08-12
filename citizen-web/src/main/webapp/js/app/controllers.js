@@ -61,7 +61,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         $scope.fkMessageOpen = fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === "FK");
         $scope.closeFKDialog = function (backtoFK) {
             if (backtoFK) {
-                $window.location.href = "/web/logga-ut";
+                $window.location.href = "/web/logga-ut-fk";
             }
             //no matter outcome of dialog, it should be a one time popup..
             //remove flag indicating forwarded from consent page..
