@@ -21,23 +21,10 @@
 
   <context:annotation-config />
 
-  <beans profile="dev">
-    <context:property-placeholder location="classpath*:/services-local.properties" ignore-unresolvable="true" />
-  </beans>
+  <context:property-placeholder location="file:${user.home}/${spring.profiles.active}.minaintyg.se/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
 
-  <beans profile="test">
-    <context:property-placeholder ignore-resource-not-found="true" ignore-unresolvable="true"
-      location="file:${user.home}/.minaintyg.se/eintyg.properties" />
-    <context:property-placeholder location="classpath*:/saml.properties, classpath*:/services.properties"
-      ignore-resource-not-found="false" />
-  </beans>
-
-  <beans profile="qa">
-    <context:property-placeholder ignore-resource-not-found="true" ignore-unresolvable="true"
-                                  location="file:${user.home}/.minaintyg.se/eintyg.properties" />
-    <context:property-placeholder location="classpath*:/saml.properties, classpath*:/services.properties"
-                                  ignore-resource-not-found="false" />
-  </beans>
+  <context:property-placeholder
+    location="classpath:default.${spring.profiles.active}.properties, classpath:override.${spring.profiles.active}.properties" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
   <beans profile="prod">
   </beans>
