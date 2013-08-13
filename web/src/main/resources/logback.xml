@@ -24,9 +24,9 @@
 
   <logger name="org.hibernate" level="error" />
 
-  <logger name="org.apache.cxf.services" level="debug" />
+  <logger name="org.apache.cxf.services" level="error" />
 
-  <logger name="se.inera.certificate" level="debug" />
+  <logger name="se.inera.certificate" level="error" />
 
   <root>
     <level value="error" />
