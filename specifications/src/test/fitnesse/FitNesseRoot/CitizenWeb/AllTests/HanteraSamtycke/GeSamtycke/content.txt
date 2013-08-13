@@ -6,8 +6,6 @@ Logga på som ny användare och ge samtycke och verifiera att samtycke givet-sid
 |logga på som|19121212-1212|
 |ge samtycke sidan visas|
 |ge samtycke|
-|samtycke givet sidan visas|
-|gå vidare till mina intyg|
 |inkorg sidan visas|
 |logga på som|19121212-1212|
 |inkorg sidan visas|
