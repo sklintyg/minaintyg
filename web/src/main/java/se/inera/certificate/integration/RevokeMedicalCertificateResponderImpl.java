@@ -12,6 +12,7 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 
@@ -42,6 +43,10 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
 
     @Autowired
     private SendMedicalCertificateQuestionResponderInterface sendMedicalCertificateQuestionResponderInterface;
+
+    @Autowired
+    @Value("${revokecertificate.address.fk7263}")
+    private String sendLogicalAddressText;
 
     @Override
     public RevokeMedicalCertificateResponseType revokeMedicalCertificate(AttributedURIType logicalAddress, RevokeMedicalCertificateRequestType request) {
@@ -74,11 +79,12 @@ public class RevokeMedicalCertificateResponderImpl implements RevokeMedicalCerti
                 question.getFraga().setSigneringsTidpunkt(signTs);
 
                 question.setLakarutlatande(request.getRevoke().getLakarutlatande());
-
+                AttributedURIType sendLogicalAddress = new AttributedURIType();
+                sendLogicalAddress.setValue(sendLogicalAddressText);
                 SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
                 parameters.setQuestion(question);
 
-                SendMedicalCertificateQuestionResponseType sendResponse = sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(logicalAddress, parameters);
+                SendMedicalCertificateQuestionResponseType sendResponse = sendMedicalCertificateQuestionResponderInterface.sendMedicalCertificateQuestion(sendLogicalAddress, parameters);
                 if (sendResponse.getResult().getResultCode() != OK) {
                     handleForsakringskassaError(certificateId, sendResponse.getResult());
                 }
