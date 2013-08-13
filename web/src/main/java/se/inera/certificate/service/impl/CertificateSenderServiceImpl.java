@@ -21,7 +21,9 @@ package se.inera.certificate.service.impl;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.converter.UtlatandeToRegisterMedicalCertificate;
@@ -45,6 +47,10 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
     @Autowired
     private CertificateService certificateService;
 
+    @Autowired
+    @Value("${certificatesender.address.fk7263}")
+    private String logicalAddress;
+    
     @Override
     public void sendCertificate(Certificate certificate, String target) {
         if (certificate.getType().equalsIgnoreCase("fk7263")) {
@@ -52,7 +58,9 @@ public class CertificateSenderServiceImpl implements CertificateSenderService {
             Utlatande utlatande = certificateService.getLakarutlatande(certificate);
             RegisterMedicalCertificateType jaxbObject = UtlatandeToRegisterMedicalCertificate.getJaxbObject(utlatande);
 
-            RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(null, jaxbObject);
+            AttributedURIType address = new AttributedURIType();
+            address.setValue(logicalAddress);
+            RegisterMedicalCertificateResponseType response = registerMedicalCertificateResponder.registerMedicalCertificate(address, jaxbObject);
             if (response.getResult().getResultCode() != OK) {
                 throw new ExternalWebServiceCallFailedException(response.getResult());
             }
