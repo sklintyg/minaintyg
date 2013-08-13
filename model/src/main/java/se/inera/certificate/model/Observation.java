@@ -11,7 +11,7 @@ public class Observation {
     private Kod observationsKod;
     private PartialInterval observationsPeriod;
     private String beskrivning;
-    private List<Prognos> prognos;
+    private Prognos prognos;
     private List<PhysicalQuantity> varde;
 
     public Kod getObservationsKategori() {
@@ -46,11 +46,11 @@ public class Observation {
         this.beskrivning = beskrivning;
     }
 
-    public List<Prognos> getPrognos() {
+    public Prognos getPrognos() {
         return prognos;
     }
 
-    public void setPrognos(List<Prognos> prognos) {
+    public void setPrognos(Prognos prognos) {
         this.prognos = prognos;
     }
 

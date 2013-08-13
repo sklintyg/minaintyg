@@ -146,7 +146,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         observation.setVarde(convertVarde(source.getVardes()));
 
-        observation.setPrognos(convertPrognoser(source.getPrognos()));
+        observation.setPrognos(convert(source.getPrognos()));
         observation.setBeskrivning(source.getBeskrivning());
 
         return observation;
@@ -159,14 +159,6 @@ public final class UtlatandeJaxbToUtlatandeConverter {
             vardes.add(new PhysicalQuantity(varde.getValue(), varde.getUnit()));
         }
         return vardes;
-    }
-
-    private static List<Prognos> convertPrognoser(List<PrognosType> source) {
-        List<Prognos> prognoser = new ArrayList<>();
-        for (PrognosType prognos : source) {
-            prognoser.add(convert(prognos));
-        }
-        return prognoser;
     }
 
     private static Prognos convert(PrognosType source) {

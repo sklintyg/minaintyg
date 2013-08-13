@@ -21,7 +21,7 @@
       <xs:element name="kommentar" type="xs:string" minOccurs="0"
                   maxOccurs="unbounded"/>
       <xs:element name="signeringsdatum" type="dateTime"/>
-      <xs:element name="skickatdatum" type="dateTime" minOccurs="0"/>
+      <xs:element name="skickatdatum" type="dateTime"/>
 
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hr:hosPersonalType"/>
@@ -43,8 +43,6 @@
                   minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="observation" type="observationType"
                   minOccurs="0" maxOccurs="unbounded"/>
-
-      <!-- Ovrigt and Status should be removed -->
       <xs:element name="ovrigt" type="ovrigtType"
                         minOccurs="0" maxOccurs="1"/>
       <xs:element name="status" type="cert:CertificateStatusType" maxOccurs="unbounded" minOccurs="0" />
@@ -143,7 +141,8 @@
       <xs:element name="motivering" type="xs:string" minOccurs="0"/>
       <xs:element name="syfte" type="xs:string" minOccurs="0"/>
 
-      <xs:element name="utforsVidEnhet" type="hr:enhetType"/>
+      <xs:element name="utforsVidEnhet" type="hr:enhetType"
+                  minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="utforsAv" type="utforarrollType"
                   minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="omfattning" type="omfattningType"
@@ -237,8 +236,6 @@
                   minOccurs="0"/>
       <xs:element name="observationskod" type="iso:CD"
                   minOccurs="0"/>
-      <xs:element name="observationstid" type="partialDate"
-                  minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0"/>
       <xs:element name="varde" type="iso:PQ" minOccurs="0" maxOccurs="unbounded"/>
@@ -248,7 +245,7 @@
 
       <xs:element name="utforsAv" type="utforarrollType"
                   minOccurs="0"/>
-      <xs:element name="prognos" type="prognosType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="prognos" type="prognosType" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>

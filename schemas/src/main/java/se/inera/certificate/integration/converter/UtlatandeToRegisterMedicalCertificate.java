@@ -1,13 +1,11 @@
 package se.inera.certificate.integration.converter;
 
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Utlatande;
@@ -119,19 +117,11 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
-        // --- 2013-08-13 Gustav Norbäcker ---
-        // Rewrote the code since the external model allows for many 'prognos' on the 'observation' entity (since
-        // 2013-08-09). Maybe this should be done in some other way...
-        if (aktivitetsbegransing.getPrognos() != null) {
-            for (Prognos prognos : aktivitetsbegransing.getPrognos()) {
-                if (prognos.getPrognosKod() != null) {
-                    try {
-                        arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(prognos.getPrognosKod()
-                            .getCode()));
-                    } catch (IllegalArgumentException ex) {
-                        // prognos which is not known within the FK7263 domain -> we simply ignore this one
-                    }
-                }
+        if (aktivitetsbegransing.getPrognos() != null && aktivitetsbegransing.getPrognos().getPrognosKod() != null) {
+            try {
+                arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(aktivitetsbegransing.getPrognos().getPrognosKod().getCode()));
+            } catch (IllegalArgumentException ex) {
+                // prognos which is not known within the FK7263 domain -> we simply ignore this one
             }
         }
 
