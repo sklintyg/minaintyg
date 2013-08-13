@@ -7,16 +7,11 @@
     </layout>
   </appender>
 
-  <!--Basic file appender<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>%-4relative
-    [%thread] %-5level %class - %msg%n</pattern> </layout> <File>sample-log.txt</File>
-    </appender> -->
-
   <!--Daily rolling file appender -->
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <File>${catalina.home}/logs/certificate.log</File>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>certificate.%d{yyyy-MM-dd}.log</FileNamePattern>
+      <FileNamePattern>${catalina.home}/logs/certificate.%d{yyyy-MM-dd}.log</FileNamePattern>
     </rollingPolicy>
 
     <layout class="ch.qos.logback.classic.PatternLayout">
