@@ -34,7 +34,7 @@
 	
 	">
   
-  <context:property-placeholder location="file:${user.home}/${spring.profiles.active}.service-minaintyg.se/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
+  <context:property-placeholder location="file:${user.home}/.${spring.profiles.active}.service-minaintyg.se/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
   
   <context:property-placeholder
     location="classpath:default.${spring.profiles.active}.properties, classpath:override.${spring.profiles.active}.properties" 
