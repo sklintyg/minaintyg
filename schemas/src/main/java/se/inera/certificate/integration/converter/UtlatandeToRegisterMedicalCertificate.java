@@ -1,6 +1,18 @@
 package se.inera.certificate.integration.converter;
 
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
+import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
+import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
+import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
+import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
+import static se.inera.certificate.model.util.Iterables.addAll;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
@@ -38,16 +50,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
-import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
-import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
-import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
-import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
-
 public final class UtlatandeToRegisterMedicalCertificate {
 
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
@@ -80,12 +82,10 @@ public final class UtlatandeToRegisterMedicalCertificate {
             register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
         }
 
-        List<AktivitetType> aktivitets = convert(utlatande.getAktiviteter());
-        register.getLakarutlatande().getAktivitet().addAll(aktivitets);
-
-        register.getLakarutlatande().getReferens().addAll(convertReferenser(utlatande.getReferenser()));
-
-        register.getLakarutlatande().getVardkontakt().addAll(convertVardkontakter(utlatande.getVardkontakter()));
+        // Add collections with wrapped nullchecks method
+        addAll(register.getLakarutlatande().getAktivitet(), convert(utlatande.getAktiviteter()));
+        addAll(register.getLakarutlatande().getReferens(), convertReferenser(utlatande.getReferenser()));
+        addAll(register.getLakarutlatande().getVardkontakt(), convertVardkontakter(utlatande.getVardkontakter()));
 
         Observation kroppsfunktion = utlatande.findObservationByKategori(KROPPSFUNKTION);
         if (kroppsfunktion != null) {
@@ -111,7 +111,6 @@ public final class UtlatandeToRegisterMedicalCertificate {
         funktionstillstandType.setBeskrivning(observation.getBeskrivning());
         return funktionstillstandType;
     }
-
 
     private static ArbetsformagaType toArbetsformaga(Utlatande utlatande, Observation aktivitetsbegransing) {
 
@@ -156,20 +155,20 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
             if (nedsattning.getVarde() != null && nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty()) {
                 switch (nedsattning.getVarde().get(0).getQuantity().intValue()) {
-                    case 25:
-                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
-                        break;
-                    case 50:
-                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
-                        break;
-                    case 75:
-                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
-                        break;
-                    case 100:
-                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
-                        break;
-                    default:
-                        throw new IllegalStateException("Wrong nedsättningsgrad " + nedsattning.getVarde().get(0).getQuantity());
+                case 25:
+                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
+                    break;
+                case 50:
+                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
+                    break;
+                case 75:
+                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
+                    break;
+                case 100:
+                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
+                    break;
+                default:
+                    throw new IllegalStateException("Wrong nedsättningsgrad " + nedsattning.getVarde().get(0).getQuantity());
                 }
             }
 
@@ -197,7 +196,9 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
     private static SysselsattningType convert(Sysselsattning source) {
 
-        if (source == null || source.getSysselsattningsTyp() == null) return null;
+        if (source == null || source.getSysselsattningsTyp() == null) {
+            return null;
+        }
 
         TypAvSysselsattning typAvSysselsattning;
 
@@ -224,26 +225,29 @@ public final class UtlatandeToRegisterMedicalCertificate {
     private static Nedsattningsgrad toJaxb(se.inera.certificate.model.Nedsattningsgrad source) {
         Nedsattningsgrad nedsattningsgrad;
         switch (source) {
-            case HELT_NEDSATT:
-                nedsattningsgrad = Nedsattningsgrad.HELT_NEDSATT;
-                break;
-            case NEDSATT_MED_1_2:
-                nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2;
-                break;
-            case NEDSATT_MED_1_4:
-                nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4;
-                break;
-            case NEDSATT_MED_3_4:
-                nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4;
-                break;
-            default:
-                throw new IllegalArgumentException("Can not convert 'Nedsattningsgrad' " + source);
+        case HELT_NEDSATT:
+            nedsattningsgrad = Nedsattningsgrad.HELT_NEDSATT;
+            break;
+        case NEDSATT_MED_1_2:
+            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2;
+            break;
+        case NEDSATT_MED_1_4:
+            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4;
+            break;
+        case NEDSATT_MED_3_4:
+            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4;
+            break;
+        default:
+            throw new IllegalArgumentException("Can not convert 'Nedsattningsgrad' " + source);
         }
         return nedsattningsgrad;
     }
 
-
     private static List<VardkontaktType> convertVardkontakter(List<Vardkontakt> source) {
+        if (source == null) {
+            return null;
+        }
+
         List<VardkontaktType> vardkontaktTypes = new ArrayList<>();
         for (Vardkontakt vardkontakt : source) {
             VardkontaktType vardkontaktType = toVardkontakt(vardkontakt);
@@ -255,7 +259,9 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static VardkontaktType toVardkontakt(Vardkontakt source) {
-        if (source == null || source.getVardkontakttyp() == null) return null;
+        if (source == null || source.getVardkontakttyp() == null) {
+            return null;
+        }
 
         Vardkontakttyp vardkontakttyp;
 
@@ -272,8 +278,10 @@ public final class UtlatandeToRegisterMedicalCertificate {
         return vardkontaktType;
     }
 
-
     private static List<ReferensType> convertReferenser(List<Referens> source) {
+        if (source == null) {
+            return null;
+        }
 
         List<ReferensType> referensTypes = new ArrayList<>();
         for (Referens referens : source) {
@@ -286,7 +294,9 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static ReferensType toReferens(Referens source) {
-        if (source == null || source.getReferenstyp() == null) return null;
+        if (source == null || source.getReferenstyp() == null) {
+            return null;
+        }
 
         Referenstyp referenstyp;
 
@@ -304,6 +314,10 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static List<AktivitetType> convert(List<Aktivitet> source) {
+        if (source == null) {
+            return null;
+        }
+
         List<AktivitetType> aktivitets = new ArrayList<>();
         for (Aktivitet aktivitet : source) {
             AktivitetType aktivitetType = convert(aktivitet);
@@ -315,7 +329,6 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static AktivitetType convert(Aktivitet source) {
-
         if (source == null || source.getAktivitetskod() == null) {
             return null;
         }
@@ -349,7 +362,9 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static EnhetType toJaxb(Vardenhet source) {
-        if (source == null) return null;
+        if (source == null) {
+            return null;
+        }
 
         EnhetType enhet = new EnhetType();
         enhet.setEnhetsnamn(source.getNamn());
@@ -367,7 +382,9 @@ public final class UtlatandeToRegisterMedicalCertificate {
     }
 
     private static VardgivareType toJaxb(Vardgivare source) {
-        if (source == null) return null;
+        if (source == null) {
+            return null;
+        }
 
         VardgivareType vardgivare = new VardgivareType();
         vardgivare.setVardgivarnamn(source.getNamn());
@@ -385,7 +402,6 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         return personal;
     }
-
 
     private static PatientType toJaxb(Patient source) {
         PatientType patient = new PatientType();
