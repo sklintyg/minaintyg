@@ -688,7 +688,11 @@ opacity: .25;
 }
 
 .alert-warning {
-    color: #A77F3A;
+    color: #8A6D3B;
+}
+
+.alert-danger, .alert-error {
+	color: #A94442;
 }
 
 .well {
