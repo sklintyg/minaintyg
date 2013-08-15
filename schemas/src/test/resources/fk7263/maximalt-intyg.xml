@@ -74,29 +74,29 @@
     <aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
   </aktivitet>
   <bedomtTillstand>
-    <beskrivning>Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.
+    <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.
     </beskrivning>
   </bedomtTillstand>
   <medicinsktTillstand>
-    <beskrivning>Klämskada på överarm</beskrivning>
+    <beskrivning>Medicinskttillstånd: Klämskada på överarm</beskrivning>
     <tillstandskod codeSystemName="ICD-10" code="S47"/>
   </medicinsktTillstand>
   <funktionstillstand>
-    <beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-
+    <beskrivning>Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj-
       och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger
       att patienten inte kan använda armen särkilt mycket.
     </beskrivning>
     <typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
   </funktionstillstand>
   <funktionstillstand>
-    <beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
+    <beskrivning>Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt.
       Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan
       inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så
       mycket som möjligt under tiden för läkning.
     </beskrivning>
     <typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
     <arbetsformaga>
-      <motivering>Skadan har förvärrats vid varje tillfälle patienten
+      <motivering>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
         använt armen. Måste hållas i total stillhet tills läkningsprocessen
         kommit en bit på väg. Eventuellt kan utredning visa att operation är
         nödvändig för att läka skadan.

@@ -38,7 +38,9 @@ public class IsoTypeConverter {
         cd.setCode(kod.getCode());
         cd.setCodeSystem(kod.getCodeSystem());
         cd.setCodeSystemName(kod.getCodeSystemName());
-        cd.setCodeSystemVersion(kod.getCodeSystemVersion());
+        if(kod.getCodeSystemVersion() != null) {
+            cd.setCodeSystemVersion(kod.getCodeSystemVersion());
+        }
         return cd;
     }
 }
