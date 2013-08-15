@@ -47,22 +47,23 @@
     },
     "aktiviteter": [{
         "aktivitetskod": {
-            "code": "Avstangning_enligt_SmL_pga_smitta"
+            "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+            "codeSystemName": "kv_aktiviteter_intyg",
+            "code": "AKT11"
         }
     }],
     "observations": [{
         "observationsKategori": {
-            "code": "Aktivitet"
+            "codeSystem": "1.2.752.116.1.1.3.1.1",
+            "codeSystemName": "ICF",
+            "code": "d"
         }
     },
     {
-        "observationsKategori": {
-            "code": "Arbetsförmåga"
-        }
-    },
-    {
-        "observationsKategori": {
-            "code": "Nedsättning"
+        "observationsKod": {
+            "codeSystem": "X.Y.Z",
+            "codeSystemName": "TEMPORARY",
+            "code": "Arbetsformaga_nedsatt"
         },
         "observationsPeriod": {
             "from": "2011-05-05",
@@ -74,8 +75,10 @@
         }]
     },
     {
-        "observationsKategori": {
-            "code": "Nedsättning"
+        "observationsKod": {
+            "codeSystem": "X.Y.Z",
+            "codeSystemName": "TEMPORARY",
+            "code": "Arbetsformaga_nedsatt"
         },
         "observationsPeriod": {
             "from": "2011-06-17",
@@ -86,66 +89,6 @@
             "unit": "percent"
         }]
     }],
-    "status": [{
-        "type": "RECEIVED",
-        "target": "MI",
-        "timestamp": "2013-08-14T09:07:59.349"
-    }],
-    "arbetsformagaAktivitetsbegransning": {
-        "observationsKategori": {
-            "code": "Arbetsförmåga"
-        }
-    },
-    "namnfortydligandeOchAdress": "En Läkare\nKir mott\nLasarettsvägen 13\n85150 Sundsvall\n060-1818000",
-    "prognosAterstallningGarEjBedomma": false,
-    "arbetsformagaIForhallandeTillArbetsloshet": false,
-    "avstangningEnligtSmittskyddslagen": {
-        "aktivitetskod": {
-            "code": "Avstangning_enligt_SmL_pga_smitta"
-        }
-    },
-    "arbetsformagaIForhallandeTillNuvarandeArbete": false,
-    "arbetsformagaIForhallandeTillForaldraledighet": false,
-    "arbetsformaga": {
-        "observationsKategori": {
-            "code": "Arbetsförmåga"
-        }
-    },
-    "aktivitetsbegransning": {
-        "observationsKategori": {
-            "code": "Aktivitet"
-        }
-    },
-    "prognosDelvisAterstallning": false,
-    "prognosEjAterstallning": false,
-    "prognosFullAterstallning": false,
-    "nedsattning50percent": {
-        "observationsKategori": {
-            "code": "Nedsättning"
-        },
-        "observationsPeriod": {
-            "from": "2011-05-05",
-            "tom": "2011-06-16"
-        },
-        "varde": [{
-            "quantity": 50.0,
-            "unit": "percent"
-        }]
-    },
-    "nedsattning75percent": {
-        "observationsKategori": {
-            "code": "Nedsättning"
-        },
-        "observationsPeriod": {
-            "from": "2011-06-17",
-            "tom": "2011-06-30"
-        },
-        "varde": [{
-            "quantity": 75.0,
-            "unit": "percent"
-        }]
-    },
-    "signeringsDatumAsString": "2011-01-24",
     "validFromDate": "2011-05-05",
     "validToDate": "2011-06-30",
     "forskrivarkodOchArbetsplatskod": "123456789011"

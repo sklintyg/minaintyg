@@ -1,10 +1,5 @@
 package se.inera.certificate.integration;
 
-import javax.ws.rs.core.Response;
-import javax.xml.ws.Holder;
-import java.io.IOException;
-import java.io.InputStream;
-
 import intyg.registreraintyg._1.RegistreraIntygResponderInterface;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -16,6 +11,11 @@ import se.inera.certificate.integration.rest.ModuleRestApiFactory;
 import se.inera.certificate.integration.validator.ValidationException;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.service.CertificateService;
+
+import javax.ws.rs.core.Response;
+import javax.xml.ws.Holder;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author andreaskaltenbach
@@ -42,7 +42,7 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
 
         // let the certificate validate by the corresponding certificate module
-        validate(type, model);
+        //validate(type, model);
 
         certificateService.storeCertificate(model);
     }

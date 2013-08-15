@@ -1,16 +1,16 @@
 package se.inera.certificate.model;
 
+import org.joda.time.LocalDateTime;
+import org.joda.time.Partial;
+import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.util.Predicate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
-
-import org.joda.time.LocalDateTime;
-import org.joda.time.Partial;
-import se.inera.certificate.model.codes.ObservationsKoder;
-import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach
@@ -139,19 +139,19 @@ public class Utlatande {
         this.skickatDatum = skickatDatum;
     }
 
-    public List<Observation> getObservationsByKategori(Kod observationsKategori) {
+    public List<Observation> getObservationsByKod(Kod observationsKod) {
         List<Observation> observations = new ArrayList<>();
         for (Observation observation : this.observations) {
-            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
                 observations.add(observation);
             }
         }
         return observations;
     }
 
-    public Observation getObservationByKategori(Kod observationsKategori) {
+    public Observation getObservationByKod(Kod observationsKod) {
         for (Observation observation : this.observations) {
-            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
                 return observation;
             }
         }
@@ -168,7 +168,7 @@ public class Utlatande {
     }
 
     public Partial getValidFromDate() {
-        List<Observation> nedsattningar = getObservationsByKategori(ObservationsKoder.NEDSATTNING);
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
         Partial fromDate = null;
 
         for (Observation nedsattning : nedsattningar) {
@@ -181,7 +181,7 @@ public class Utlatande {
     }
 
     public Partial getValidToDate() {
-        List<Observation> nedsattningar = getObservationsByKategori(ObservationsKoder.NEDSATTNING);
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
         Partial toDate = null;
 
         for (Observation nedsattning : nedsattningar) {

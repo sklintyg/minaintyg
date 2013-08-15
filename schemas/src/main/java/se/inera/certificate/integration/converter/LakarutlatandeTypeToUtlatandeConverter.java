@@ -250,22 +250,25 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
 
     private static List<ObservationType> convert(ArbetsformagaType source) {
 
-        PrognosType prognos = new PrognosType();
-        switch (source.getPrognosangivelse()) {
-            case ATERSTALLAS_DELVIS:
-                prognos.setPrognoskod(toCD(Prognoskoder.ATERSTALLAS_DELVIS));
-                break;
-            case ATERSTALLAS_HELT:
-                prognos.setPrognoskod(toCD(Prognoskoder.ATERSTALLAS_HELT));
-                break;
-            case DET_GAR_INTE_ATT_BEDOMMA:
-                prognos.setPrognoskod(toCD(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA));
-                break;
-            case INTE_ATERSTALLAS:
-                prognos.setPrognoskod(toCD(Prognoskoder.INTE_ATERSTALLAS));
-                break;
+        PrognosType prognos = null;
+        if(source.getPrognosangivelse() != null) {
+            prognos = new PrognosType();
+            switch (source.getPrognosangivelse()) {
+                case ATERSTALLAS_DELVIS:
+                    prognos.setPrognoskod(toCD(Prognoskoder.ATERSTALLAS_DELVIS));
+                    break;
+                case ATERSTALLAS_HELT:
+                    prognos.setPrognoskod(toCD(Prognoskoder.ATERSTALLAS_HELT));
+                    break;
+                case DET_GAR_INTE_ATT_BEDOMMA:
+                    prognos.setPrognoskod(toCD(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA));
+                    break;
+                case INTE_ATERSTALLAS:
+                    prognos.setPrognoskod(toCD(Prognoskoder.INTE_ATERSTALLAS));
+                    break;
+            }
+            prognos.setBeskrivning(source.getMotivering());
         }
-        prognos.setBeskrivning(source.getMotivering());
 
         List<ObservationType> observations = new ArrayList<>();
 

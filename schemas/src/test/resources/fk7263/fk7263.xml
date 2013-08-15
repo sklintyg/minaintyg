@@ -4,6 +4,8 @@
   <lakarutlatande>
     <ns5:lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</ns5:lakarutlatande-id>
     <ns5:typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</ns5:typAvUtlatande>
+    <ns5:kommentar>Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.
+    </ns5:kommentar>
     <ns5:signeringsdatum>2013-03-17T00:00:00</ns5:signeringsdatum>
     <ns5:skickatDatum>2013-03-17T00:00:00</ns5:skickatDatum>
     <ns5:patient>
@@ -54,7 +56,7 @@
     </ns5:bedomtTillstand>
     <ns5:medicinsktTillstand>
       <ns5:beskrivning>Klämskada på överarm</ns5:beskrivning>
-      <ns5:tillstandskod code="S47"/>
+      <ns5:tillstandskod code="S47" codeSystemName="ICD-10"/>
     </ns5:medicinsktTillstand>
     <ns5:funktionstillstand>
       <ns5:beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig.
