@@ -1,7 +1,8 @@
 package se.inera.certificate.spec
 import javax.xml.bind.JAXBContext
 
-import se.inera.certificate.integration.json.CustomObjectMapper
+import org.skyscreamer.jsonassert.JSONAssert
+
 import se.inera.certificate.spec.util.WsClientFixture
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderService
@@ -26,35 +27,56 @@ public class HamtaIntyg extends WsClientFixture {
 
     String personnummer
     String intyg
+	String förväntatSvar
+	private String faktisktSvar
+	private String resultat
+	
+    private GetCertificateResponseType response
 
-    GetCertificateResponseType response
-
-    public void execute() {
+	public void reset() {
 		response = null
+		resultat = null
+		förväntatSvar = null
+		faktisktSvar = null
+	}
+	
+    public void execute() {
         GetCertificateRequestType request = new GetCertificateRequestType()
         request.setNationalIdentityNumber(personnummer)
         request.setCertificateId(intyg)
 
         response = getCertificateResponder.getCertificate(logicalAddress, request)
+        switch (response.result.resultCode) {
+            case ResultCodeEnum.OK:
+	            CertificateType certificate = response.certificate
+				JAXBContext payloadContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
+				org.w3c.dom.Node node = (org.w3c.dom.Node) certificate.any[0]
+				faktisktSvar = asJson(payloadContext.createUnmarshaller().unmarshal(node).value)
+				resultat = "OK"
+				break
+            case ResultCodeEnum.INFO:
+                resultat = "[${response.result.resultCode.toString()}] - ${response.result.infoText}"
+				break
+            default:
+				resultat = "[${response.result.resultCode.toString()}] - ${response.result.errorText}"
+		} 
     }
 
     public String resultat() {
-        resultAsString(response)
+        if (response.result.resultCode == ResultCodeEnum.OK && förväntatSvar) {
+            try {  
+				JSONAssert.assertEquals(förväntatSvar, faktisktSvar, false)
+				return "OK"
+			} catch (AssertionError e) {
+				asErrorMessage(e.message)
+			}
+		} else {
+			resultat
+		}
     }
 
 	public String svar() {
-		if (response) {
-	        switch (response.result.resultCode) {
-	            case ResultCodeEnum.OK:
-	                CertificateType certificate = response.certificate
-					JAXBContext payloadContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
-					org.w3c.dom.Node node = (org.w3c.dom.Node) certificate.any[0]
-					return asJson(payloadContext.createUnmarshaller().unmarshal(node).value)
-	            default:
-	                return ""
-	        }
-		}
-		else null
+		faktisktSvar
 	}
 
     public String status() {

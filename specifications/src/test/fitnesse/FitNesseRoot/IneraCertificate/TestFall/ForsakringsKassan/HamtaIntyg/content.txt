@@ -1,0 +1,31 @@
+!1 Integration med Försäkringskassan: Hämta intyg.
+
+!2 Hämtning av intyg
+
+!3 Testfall Get-Certificate-1: Hämta specifikt intyg
+
+|Hamta intyg|
+|personnummer|intyg|förväntat svar|resultat?|
+|19121212-1212|intyg-1|{"lakarutlatande":{"lakarutlatandeId":"intyg-1","signeringsdatum":"2013-04-01T00:00:00.000","patient":{"personId":{"extension":"19121212-1212"}}}}|OK|
+
+!2 Hantering av samtycke
+
+!3 Testfall Get-Certificate-2: Försök hämta specifikt intyg för person som saknar samtycke
+
+|Hamta intyg|
+|personnummer|intyg|resultat?|
+|19010101-0101|intyg-1|[ERROR] - Missing consent for patient 19010101-0101|
+
+!2 Felscenarier
+
+!3 Testfall Get-Certificate-3.1: Försök hämta specifikt intyg för fel person
+
+|Hamta intyg|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-6|[ERROR] - There is no certificate 'intyg-6' for user '19121212-1212'.|
+
+!3 Testfall Get-Certificate-3.2: Försök hämta specifikt intyg för fel person
+
+|Hamta intyg|
+|personnummer|intyg|resultat?|
+|19121212-1212|intyg-7|[ERROR] - Unknown certificate ID: intyg-7|

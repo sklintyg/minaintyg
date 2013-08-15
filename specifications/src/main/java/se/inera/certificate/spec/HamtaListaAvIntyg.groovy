@@ -18,12 +18,12 @@ public class HamtaListaAvIntyg extends WsClientFixture {
 
 	private ListCertificatesResponderService listCertificatesService = new ListCertificatesResponderService();
 	private ListCertificatesResponderInterface listCertificatesResponder = listCertificatesService.listCertificatesResponderPort
-	private GetConsentResponderService getConsentService = new GetConsentResponderService();
-	private GetConsentResponderInterface getConsentResponder = getConsentService.getConsentResponderPort
+	//private GetConsentResponderService getConsentService = new GetConsentResponderService();
+	//private GetConsentResponderInterface getConsentResponder = getConsentService.getConsentResponderPort
 
 	public HamtaListaAvIntyg() {
 		setEndpoint(listCertificatesResponder, "list-certificates/v1.0")
-		setEndpoint(getConsentResponder, "get-consent/v1.0")
+		//setEndpoint(getConsentResponder, "get-consent/v1.0")
 	}
 	
 	String personnr
@@ -53,13 +53,13 @@ public class HamtaListaAvIntyg extends WsClientFixture {
     public void execute() {
 		svar = null
 		intyg = null
-		GetConsentRequestType getConsentParameters = new GetConsentRequestType()
-		getConsentParameters.personnummer = personnr
-		GetConsentResponseType getConsentResponse = getConsentResponder.getConsent(logicalAddress, getConsentParameters)
-		if (!getConsentResponse.consentGiven) {
-			svar = "samtycke saknas"
-			return 
-		}
+		//GetConsentRequestType getConsentParameters = new GetConsentRequestType()
+		//getConsentParameters.personnummer = personnr
+		//GetConsentResponseType getConsentResponse = getConsentResponder.getConsent(logicalAddress, getConsentParameters)
+		//if (!getConsentResponse.consentGiven) {
+		//	svar = "samtycke saknas"
+		//	return 
+		//}
 		ListCertificatesRequestType parameters = new ListCertificatesRequestType();
 		parameters.nationalIdentityNumber = personnr
 		parameters.fromDate = från
@@ -79,6 +79,8 @@ public class HamtaListaAvIntyg extends WsClientFixture {
  			}
 			svar = fk_intygs_id.sort().toString()	
 			intyg = fk_intyg.sort().toString()	
+		} else if (result.resultCode == ResultCodeEnum.INFO) {
+			svar = result.infoText
 		} else {
 			svar = result.errorText
 		}

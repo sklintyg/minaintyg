@@ -16,12 +16,16 @@ class WsClientFixture {
 		return sw.toString()
 	}
 	
+	def asErrorMessage(String s) {
+		throw new Exception("message:<<${s.replace(System.getProperty('line.separator'), ' ')}>>")
+	}
+	
     static String baseUrl = System.getProperty("certificate.baseUrl", "http://localhost:8080/inera-certificate/")
     AttributedURIType logicalAddress = new AttributedURIType()
 
-    def setEndpoint(def responder, String serviceName) {
+    def setEndpoint(def responder, String serviceName, def base = baseUrl) {
         Client client = ClientProxy.getClient(responder)
-        client.getRequestContext().put(Message.ENDPOINT_ADDRESS, baseUrl + serviceName)
+        client.getRequestContext().put(Message.ENDPOINT_ADDRESS, base + serviceName)
     }
 	
 	def resultAsString(response) {

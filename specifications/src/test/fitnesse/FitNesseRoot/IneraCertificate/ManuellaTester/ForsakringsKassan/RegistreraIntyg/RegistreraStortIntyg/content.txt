@@ -1,0 +1,4 @@
+|Skicka Intyg Till Fk|
+|personnummer|intyg|resultat?|
+|19900825-2398|test-19900825-2398-intyg-L|OK|
+

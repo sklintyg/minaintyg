@@ -1,0 +1,6 @@
+|Hamta intygsinnehall|
+|personnummer|intyg|förväntatSvar|resultat?|
+|19010101-0101|intyg-1||[ERROR] - Missing consent for patient 19010101-0101|
+|19121212-1212|intyg-1|{"utlatandeId":{"extension":"intyg-1"},"typAvUtlatande":{"code":"fk7263"}}|OK|
+|19121212-1212|intyg-6||[ERROR] - There is no certificate 'intyg-6' for user '19121212-1212'.|
+|19121212-1212|intyg-7||[ERROR] - Unknown certificate ID: intyg-7|

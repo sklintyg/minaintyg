@@ -1,0 +1,5 @@
+define fk.baseUrl {https://vp.qa2.tp.cybercom.carelink.sjunet.org:20000/vp/}
+
+|Skicka Fraga|
+|vårdReferens|ämne|fråga|frågeTidpunkt|lakarutlatandeId|signeringsTidpunkt|personnr|namn|resultat?|
+|123456789012344|Ovrigt|Hej! Kan vi ses imorgon?|2013-08-05T14:30:00|65aafe58-de99-48d3-bc24-42bf7973ff0f|2013-05-20T15:30:55|19680105-0680|Test Testorsson|OK|

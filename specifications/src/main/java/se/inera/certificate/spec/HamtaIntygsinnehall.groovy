@@ -26,7 +26,8 @@ public class HamtaIntygsinnehall extends WsClientFixture {
     String intyg
 	String förväntatSvar
 	private String faktisktSvar
-	
+	private String resultat
+
     GetCertificateContentResponse response
 
     public void execute() {
@@ -36,27 +37,30 @@ public class HamtaIntygsinnehall extends WsClientFixture {
         request.setCertificateId(intyg)
 
         response = getCertificateResponder.getCertificateContent(logicalAddress, request)
+		switch (response.result.resultCode) {
+			case ResultCodeEnum.OK:
+				faktisktSvar = asJson(response.certificate)
+				resultat = "OK"
+				break
+			case ResultCodeEnum.INFO:
+				resultat = "[${response.result.resultCode.toString()}] - ${response.result.infoText}"
+				break
+			default:
+				resultat = "[${response.result.resultCode.toString()}] - ${response.result.errorText}"
+		}
+
     }
 
     public String resultat() {
-		if (response) {
-	        switch (response.result.resultCode) {
-	            case ResultCodeEnum.OK:
-					if (förväntatSvar)
-					faktisktSvar = asJson(response.certificate)
-	                try {
-						JSONAssert.assertEquals(förväntatSvar, faktisktSvar, false)
-						return "OK"
-					} catch (AssertionError e) {
-						throw new Exception("message:<<${e.message.replace(System.getProperty('line.separator'), ' ')}>>")
-					}
-	            case ResultCodeEnum.INFO:
-	                return "[${response.result.resultCode.toString()}] - ${response.result.infoText}"
-	            default:
-					return "[${response.result.resultCode.toString()}] - ${response.result.errorText}"
-	        }
+        if (response.result.resultCode == ResultCodeEnum.OK && förväntatSvar) {
+            try {
+				JSONAssert.assertEquals(förväntatSvar, faktisktSvar, false)
+				return "OK"
+			} catch (AssertionError e) {
+				asErrorMessage(e.message)
+			}
 		}
-		else "UNDEFINED"
+		else resultat
     }
 
 	public String svar() {

@@ -1,0 +1,3 @@
+|Skicka Intyg Till Fk|
+|personnummer|intyg|resultat?|
+|19680105-0680|test-19680105-0680-intyg-M|OK|

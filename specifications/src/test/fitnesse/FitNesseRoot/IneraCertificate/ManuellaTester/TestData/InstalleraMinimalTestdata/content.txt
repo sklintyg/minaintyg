@@ -1,0 +1,16 @@
+!3 Givet följande samtycken:
+
+|Samtycke|
+|personnr|samtycke|
+|19121212-1212|ja|
+|19121212-9999|ja|
+|19750719-4033|ja|
+
+!3 och följande intyg:
+
+|Intyg|
+|personnr|utfärdat|giltigtFrån|giltigtTill|utfärdare|enhet|typ|id|mall|
+|19121212-1212|2013-04-01|2013-04-01|2013-04-11|läkare1|enhet1|FK7263|intyg-1|M|
+|19121212-1212|2013-04-02|2013-04-02|2013-04-12|läkare2|enhet2|FK7263|intyg-2|S|
+|19121212-1212|2013-04-04|2013-04-04|2013-04-14|läkare1|enhet1|RLI|rli-intyg-3|M|
+|19121212-1212|2013-04-05|2013-04-05|2013-04-15|läkare2|enhet2|RLI|rli-intyg-4|S|

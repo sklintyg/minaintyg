@@ -1,6 +1,6 @@
 !-FitNesse-!-baserade specifikationer för Intygstjänsten.
 
-!contents -R2
+!contents -R4
 
 !*> '''Variables Defined'''
 !define TEST_SYSTEM {slim}

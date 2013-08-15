@@ -20,8 +20,14 @@ public class Intyg extends RestClientFixture {
     String typ
     String id
     String idTemplate
+	String mall = "M"
     int from
     int to
+	
+	public void reset() {
+		mall = "M"
+	}
+	
     public void execute() {
         def restClient = new RESTClient(baseUrl)
         for (int day in from..to) {
@@ -68,7 +74,7 @@ public class Intyg extends RestClientFixture {
 
     private document(typ) {
         // slurping the FK7263 template
-        def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource(typ + "_template.json").getInputStream()))
+        def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource("${typ}_${mall}_template.json").getInputStream()))
 
         // setting the certificate ID
         certificate.'id'.extension = id

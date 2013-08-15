@@ -1,0 +1,3 @@
+|Skicka Intyg Till Fk|
+|personnummer|intyg|resultat?|
+|19790926-1922|test-19790926-1922-intyg-S|OK|
