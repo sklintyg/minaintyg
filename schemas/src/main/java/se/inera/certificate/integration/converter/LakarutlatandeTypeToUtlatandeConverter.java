@@ -334,6 +334,8 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
             case KROPPSFUNKTION:
                 observation.setObservationskategori(toCD(ObservationsKoder.KROPPSFUNKTIONER));
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
         }
         observation.setBeskrivning(source.getBeskrivning());
         observations.add(observation);

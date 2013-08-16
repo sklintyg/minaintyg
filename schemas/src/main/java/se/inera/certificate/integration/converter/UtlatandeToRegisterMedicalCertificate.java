@@ -7,6 +7,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Utlatande;
@@ -121,9 +122,13 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         if(arbetsformagas != null && arbetsformagas.size() > 0) {
             Observation firstObservation = arbetsformagas.get(0);
-            arbetsformagaType.setMotivering(firstObservation.getBeskrivning());
             if(firstObservation.getPrognos() != null) {
-                Kod prognosKod = firstObservation.getPrognos().getPrognosKod();
+                Prognos prognos = firstObservation.getPrognos();
+
+                String beskrivning = prognos.getBeskrivning();
+                arbetsformagaType.setMotivering(beskrivning);
+
+                Kod prognosKod = prognos.getPrognosKod();
                 if(prognosKod != null) {
                     String fk7263String = Prognoskoder.mapToFk7263.get(prognosKod);
                     arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));

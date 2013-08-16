@@ -1,21 +1,8 @@
 package se.inera.certificate.integration.converter;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
 import iso.v21090.dt.v1.PQ;
-
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.DateInterval;
@@ -45,6 +32,17 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.model.util.Iterables.addAll;
 
 /**
  * @author andreaskaltenbach
@@ -188,6 +186,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
         PrognosType prognos = new PrognosType();
         prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognosKod()));
+        prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
     }
 

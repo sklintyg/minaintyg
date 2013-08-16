@@ -166,6 +166,7 @@ public final class UtlatandeJaxbToUtlatandeConverter {
 
         Prognos prognos = new Prognos();
         prognos.setPrognosKod(IsoTypeConverter.toKod(source.getPrognoskod()));
+        prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
     }
 

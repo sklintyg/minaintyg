@@ -6,6 +6,7 @@ package se.inera.certificate.model;
 public class Prognos {
 
     private Kod prognosKod;
+    private String beskrivning;
 
     public Kod getPrognosKod() {
         return prognosKod;
@@ -13,5 +14,13 @@ public class Prognos {
 
     public void setPrognosKod(Kod prognosKod) {
         this.prognosKod = prognosKod;
+    }
+
+    public String getBeskrivning() {
+        return beskrivning;
+    }
+
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
     }
 }

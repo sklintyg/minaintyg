@@ -128,11 +128,6 @@
 
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
-      använt armen. Måste hållas i total stillhet tills läkningsprocessen
-      kommit en bit på väg. Eventuellt kan utredning visa att operation är
-      nödvändig för att läka skadan.
-    </beskrivning>
     <observationsperiod>
       <from>2011-04-01</from>
       <tom>2011-05-31</tom>
@@ -140,15 +135,15 @@
     <varde value="25.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </beskrivning>
     </prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
-      använt armen. Måste hållas i total stillhet tills läkningsprocessen
-      kommit en bit på väg. Eventuellt kan utredning visa att operation är
-      nödvändig för att läka skadan.
-    </beskrivning>
     <observationsperiod>
       <from>2011-03-07</from>
       <tom>2011-03-31</tom>
@@ -156,15 +151,15 @@
     <varde value="50.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </beskrivning>
     </prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
-      använt armen. Måste hållas i total stillhet tills läkningsprocessen
-      kommit en bit på väg. Eventuellt kan utredning visa att operation är
-      nödvändig för att läka skadan.
-    </beskrivning>
     <observationsperiod>
       <from>2011-02-14</from>
       <tom>2011-03-06</tom>
@@ -172,15 +167,15 @@
     <varde value="75.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </beskrivning>
     </prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
-      använt armen. Måste hållas i total stillhet tills läkningsprocessen
-      kommit en bit på väg. Eventuellt kan utredning visa att operation är
-      nödvändig för att läka skadan.
-    </beskrivning>
     <observationsperiod>
       <from>2011-01-26</from>
       <tom>2011-02-13</tom>
@@ -188,6 +183,11 @@
     <varde value="100.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
+        använt armen. Måste hållas i total stillhet tills läkningsprocessen
+        kommit en bit på väg. Eventuellt kan utredning visa att operation är
+        nödvändig för att läka skadan.
+      </beskrivning>
     </prognos>
   </observation>
   <ovrigt>
