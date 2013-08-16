@@ -177,7 +177,7 @@ public class Utlatande {
     }
 
     public Partial getValidFromDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
         Partial fromDate = null;
 
         for (Observation nedsattning : nedsattningar) {
@@ -190,7 +190,7 @@ public class Utlatande {
     }
 
     public Partial getValidToDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
         Partial toDate = null;
 
         for (Observation nedsattning : nedsattningar) {

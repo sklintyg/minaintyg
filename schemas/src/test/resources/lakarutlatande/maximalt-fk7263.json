@@ -38,9 +38,9 @@
             },
             {
                 "sysselsattningsTyp": {
-                    "codeSystem" : "X.Y.Z",
-                    "codeSystemName" : "TEMPORARY",
-                    "code" : "Foraldraledigt"
+                    "codeSystem" : "1.2.752.116.2.1.1.1",
+                    "codeSystemName" : "SNOMED-CT",
+                    "code" : "224458009"
                 }
             }
         ],
@@ -157,9 +157,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Anamnes"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "288524001"
             },
             "beskrivning" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
         },
@@ -181,9 +181,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
             },
             "observationsPeriod" : {
                 "from" : "2011-04-01",
@@ -206,9 +206,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
             },
             "observationsPeriod" : {
                 "from" : "2011-03-07",
@@ -231,9 +231,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
             },
             "observationsPeriod" : {
                 "from" : "2011-02-14",
@@ -256,9 +256,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
             },
             "observationsPeriod" : {
                 "from" : "2011-01-26",

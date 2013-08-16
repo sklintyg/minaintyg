@@ -22,7 +22,7 @@
       <typAvSysselsattning code="73438004" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     </sysselsattning>
     <sysselsattning>
-      <typAvSysselsattning code="Foraldraledigt" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+      <typAvSysselsattning code="224458009" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     </sysselsattning>
   </patient>
 
@@ -104,7 +104,7 @@
   </observation>
 
   <observation>
-    <observationskod code="Anamnes" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+    <observationskod  code="288524001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</beskrivning>
   </observation>
 
@@ -127,7 +127,7 @@
   </observation>
 
   <observation>
-    <observationskod code="Arbetsformaga_nedsatt" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+    <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
       använt armen. Måste hållas i total stillhet tills läkningsprocessen
       kommit en bit på väg. Eventuellt kan utredning visa att operation är
@@ -143,7 +143,7 @@
     </prognos>
   </observation>
   <observation>
-    <observationskod code="Arbetsformaga_nedsatt" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+    <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
       använt armen. Måste hållas i total stillhet tills läkningsprocessen
       kommit en bit på väg. Eventuellt kan utredning visa att operation är
@@ -159,7 +159,7 @@
     </prognos>
   </observation>
   <observation>
-    <observationskod code="Arbetsformaga_nedsatt" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+    <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
       använt armen. Måste hållas i total stillhet tills läkningsprocessen
       kommit en bit på väg. Eventuellt kan utredning visa att operation är
@@ -175,7 +175,7 @@
     </prognos>
   </observation>
   <observation>
-    <observationskod code="Arbetsformaga_nedsatt" codeSystem="X.Y.Z" codeSystemName="TEMPORARY"/>
+    <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
       använt armen. Måste hållas i total stillhet tills läkningsprocessen
       kommit en bit på väg. Eventuellt kan utredning visa att operation är

@@ -88,7 +88,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
                 }
                 if (funktionstillstand.getArbetsformaga().getSysselsattning() != null) {
                     for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand.getArbetsformaga().getSysselsattning()) {
-                        utlatande.getPatient().getSysselsattnings().add(convert(sysselsattning));
+                        utlatande.getPatient().getSysselsattnings().add(convert(sysselsattning, source.getPatient()));
                     }
                 }
             }
@@ -109,7 +109,9 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         return utlatande;
     }
 
-    private static SysselsattningType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source) {
+    private static SysselsattningType convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source,
+                                              se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType patient) {
+
         SysselsattningType sysselsattning = new SysselsattningType();
         CD sysselsattningsType = null;
 
@@ -121,7 +123,16 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
                 sysselsattningsType = toCD(Sysselsattningskoder.NUVARANDE_ARBETE);
                 break;
             case FORALDRALEDIGHET:
-                sysselsattningsType = toCD(Sysselsattningskoder.FORALDRALEDIGHET);
+                String personnr = patient.getPersonId().getExtension();
+                int v = Integer.parseInt(personnr.substring(personnr.indexOf('-')).substring(3,4)) % 2;
+                switch (v) {
+                    case 0:
+                        sysselsattningsType = toCD(Sysselsattningskoder.MAMMALEDIG);
+                        break;
+                    case 1:
+                        sysselsattningsType = toCD(Sysselsattningskoder.PAPPALEDIG);
+                        break;
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Unknown SysselsattningsType: " + source.getTypAvSysselsattning() );
@@ -139,7 +150,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
     private static ObservationType convert(BedomtTillstandType bedomtTillstand) {
         ObservationType observation = new ObservationType();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
-        observation.setObservationskod(toCD(ObservationsKoder.ANAMNES));
+        observation.setObservationskod(toCD(ObservationsKoder.FORLOPP));
         return observation;
     }
 
@@ -282,7 +293,7 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
 
     private static ObservationType convert(ArbetsformagaNedsattningType source) {
         ObservationType nedsattning = new ObservationType();
-        nedsattning.setObservationskod(toCD(ObservationsKoder.ARBETSFORMAGA_NEDSATT));
+        nedsattning.setObservationskod(toCD(ObservationsKoder.ARBETSFORMAGA));
 
         PQ varde = new PQ();
         varde.setUnit("percent");

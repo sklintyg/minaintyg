@@ -73,7 +73,7 @@ public final class UtlatandeToRegisterMedicalCertificate {
         register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
 
-        Observation sjukdomsforlopp = utlatande.findObservationByKod(ObservationsKoder.ANAMNES);
+        Observation sjukdomsforlopp = utlatande.findObservationByKod(ObservationsKoder.FORLOPP);
         if (sjukdomsforlopp != null) {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(sjukdomsforlopp.getBeskrivning()));
         }
@@ -117,7 +117,7 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
-        List<Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
+        List<Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
         if(arbetsformagas != null && arbetsformagas.size() > 0) {
             Observation firstObservation = arbetsformagas.get(0);

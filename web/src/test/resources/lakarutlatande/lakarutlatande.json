@@ -26,9 +26,9 @@
     "observations" : [
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
             },
             "observationsPeriod" : {
                 "from" : "2013-06-05",
@@ -43,9 +43,9 @@
         },
         {
             "observationsKod" : {
-                "codeSystem" : "X.Y.Z",
-                "codeSystemName" : "TEMPORARY",
-                "code" : "Arbetsformaga_nedsatt"
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
              },
             "observationsPeriod" : {
                 "from" : "2013-06-01",
