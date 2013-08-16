@@ -68,7 +68,7 @@
                       <div class="span8">
                         <h2>
                           <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span></a>
-                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (tillbakadraget)</span>
+                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> (<span message key="certificates.status.cancelledlc"></span>)</span>
                         </h2>
                       </div>
                       <div class="span3 issue">

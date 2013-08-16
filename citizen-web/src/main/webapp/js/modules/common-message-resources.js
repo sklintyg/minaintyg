@@ -21,7 +21,8 @@ var commonMessageResources = {
         "certificatetypes.rli.commonname" : "Reseläkarintyg",
         "certificatetypes.rli.typename" : "RLI",
 
-        "certificates.status.cancelled" : "Tillbakadraget",
+        "certificates.status.cancelled" : "Rättat",
+        "certificates.status.cancelledlc" : "rättat",
         "certificates.status.sent" : "Skickat till",
 	    "certificates.target.fk" : "Försäkringskassan",
 
@@ -36,7 +37,7 @@ var commonMessageResources = {
         "common.module.message.sendingcertificate" : "Skickar intyg...",
 
         "error.pagetitle": "Ett problem har uppstått i tjänsten",
-        'error.couldnotloadcertlist' : "Kunde inte hämta intyg just nu.",
+        "error.couldnotloadcertlist" : "Kunde inte hämta intyg just nu.",
         "error.couldnotarchivecert" : "Intyget kunde inte flyttas till arkivet.",
         "error.couldnotrestorecert" : "Intyget kunde inte återställas till inkorgen.",
         "error.couldnotrevokeconsent" : "Kunde inte återta samtycke.",
