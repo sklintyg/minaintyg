@@ -1,21 +1,10 @@
 package se.inera.certificate.integration.converter;
 
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
-import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
-import static se.inera.certificate.model.codes.ObservationsKoder.AKTIVITET;
-import static se.inera.certificate.model.codes.ObservationsKoder.BEDOMT_TILLSTAND;
-import static se.inera.certificate.model.codes.ObservationsKoder.KROPPSFUNKTION;
-import static se.inera.certificate.model.codes.ObservationsKoder.MEDICINSKT_TILLSTAND;
-import static se.inera.certificate.model.util.Iterables.addAll;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
@@ -24,7 +13,12 @@ import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.codes.Aktivitetskoder;
 import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.codes.Prognoskoder;
+import se.inera.certificate.model.codes.Referenstypkoder;
+import se.inera.certificate.model.codes.Sysselsattningskoder;
+import se.inera.certificate.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.model.util.Strings;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
@@ -50,6 +44,13 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toCD;
+import static se.inera.certificate.integration.converter.util.IsoTypeConverter.toII;
+import static se.inera.certificate.model.util.Iterables.addAll;
+
 public final class UtlatandeToRegisterMedicalCertificate {
 
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
@@ -72,12 +73,12 @@ public final class UtlatandeToRegisterMedicalCertificate {
         register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
 
-        Observation sjukdomsforlopp = utlatande.findObservationByKategori(BEDOMT_TILLSTAND);
+        Observation sjukdomsforlopp = utlatande.findObservationByKod(ObservationsKoder.ANAMNES);
         if (sjukdomsforlopp != null) {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(sjukdomsforlopp.getBeskrivning()));
         }
 
-        Observation diagnos = utlatande.findObservationByKategori(MEDICINSKT_TILLSTAND);
+        Observation diagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (diagnos != null) {
             register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
         }
@@ -87,12 +88,12 @@ public final class UtlatandeToRegisterMedicalCertificate {
         addAll(register.getLakarutlatande().getReferens(), convertReferenser(utlatande.getReferenser()));
         addAll(register.getLakarutlatande().getVardkontakt(), convertVardkontakter(utlatande.getVardkontakter()));
 
-        Observation kroppsfunktion = utlatande.findObservationByKategori(KROPPSFUNKTION);
+        Observation kroppsfunktion = utlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (kroppsfunktion != null) {
             register.getLakarutlatande().getFunktionstillstand().add(toFunktionstillstand(kroppsfunktion, TypAvFunktionstillstand.KROPPSFUNKTION));
         }
 
-        Observation aktivitet = utlatande.findObservationByKategori(AKTIVITET);
+        Observation aktivitet = utlatande.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitet != null) {
 
             // add arbetsformaga to aktivitetsbegransing
@@ -116,11 +117,17 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
-        if (aktivitetsbegransing.getPrognos() != null && aktivitetsbegransing.getPrognos().getPrognosKod() != null) {
-            try {
-                arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(aktivitetsbegransing.getPrognos().getPrognosKod().getCode()));
-            } catch (IllegalArgumentException ex) {
-                // prognos which is not known within the FK7263 domain -> we simply ignore this one
+        List<Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
+
+        if(arbetsformagas != null && arbetsformagas.size() > 0) {
+            Observation firstObservation = arbetsformagas.get(0);
+            arbetsformagaType.setMotivering(firstObservation.getBeskrivning());
+            if(firstObservation.getPrognos() != null) {
+                Kod prognosKod = firstObservation.getPrognos().getPrognosKod();
+                if(prognosKod != null) {
+                    String fk7263String = Prognoskoder.mapToFk7263.get(prognosKod);
+                    arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
+                }
             }
         }
 
@@ -140,21 +147,11 @@ public final class UtlatandeToRegisterMedicalCertificate {
             }
         }
 
-        Observation arbetsformaga = utlatande.getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
-        if (arbetsformaga != null) {
-            arbetsformagaType.setMotivering(arbetsformaga.getBeskrivning());
-
-            if (arbetsformaga.getObservationsKod() != null) {
-                arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(arbetsformaga.getObservationsKod().getCode()));
-            }
-        }
-
-        List<Observation> nedsattnings = utlatande.getObservationsByKategori(ObservationsKoder.NEDSATTNING);
-        for (Observation nedsattning : nedsattnings) {
+        for (Observation arbetsformaga : arbetsformagas) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
 
-            if (nedsattning.getVarde() != null && nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty()) {
-                switch (nedsattning.getVarde().get(0).getQuantity().intValue()) {
+            if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()) {
+                switch (arbetsformaga.getVarde().get(0).getQuantity().intValue()) {
                 case 25:
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
                     break;
@@ -168,18 +165,17 @@ public final class UtlatandeToRegisterMedicalCertificate {
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
                     break;
                 default:
-                    throw new IllegalStateException("Wrong nedsättningsgrad " + nedsattning.getVarde().get(0).getQuantity());
+                    throw new IllegalStateException("Wrong nedsättningsgrad " + arbetsformaga.getVarde().get(0).getQuantity());
                 }
             }
 
-            if (nedsattning.getObservationsPeriod() != null) {
-                nedsattningType.setVaraktighetFrom(new LocalDate(nedsattning.getObservationsPeriod().getFrom()));
-                nedsattningType.setVaraktighetTom(new LocalDate(nedsattning.getObservationsPeriod().getTom()));
+            if (arbetsformaga.getObservationsPeriod() != null) {
+                nedsattningType.setVaraktighetFrom(new LocalDate(arbetsformaga.getObservationsPeriod().getFrom()));
+                nedsattningType.setVaraktighetTom(new LocalDate(arbetsformaga.getObservationsPeriod().getTom()));
             }
 
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }
-
         return arbetsformagaType;
     }
 
@@ -200,17 +196,19 @@ public final class UtlatandeToRegisterMedicalCertificate {
             return null;
         }
 
-        TypAvSysselsattning typAvSysselsattning;
-
+        SysselsattningType sysselsattningTyp = null;
         try {
-            typAvSysselsattning = TypAvSysselsattning.fromValue(source.getSysselsattningsTyp().getCode());
+            Kod sysselsattning = source.getSysselsattningsTyp();
+            String fk7263String = Sysselsattningskoder.mapToFk7263.get(sysselsattning);
+            if(fk7263String != null) {
+                sysselsattningTyp = new SysselsattningType();
+                sysselsattningTyp.setTypAvSysselsattning(TypAvSysselsattning.fromValue(fk7263String));
+            }
         } catch (IllegalArgumentException ex) {
             // unknown typAvSysselsattning that is not relevant in the Fk7263 context
             return null;
         }
 
-        SysselsattningType sysselsattningTyp = new SysselsattningType();
-        sysselsattningTyp.setTypAvSysselsattning(typAvSysselsattning);
         return sysselsattningTyp;
     }
 
@@ -263,18 +261,21 @@ public final class UtlatandeToRegisterMedicalCertificate {
             return null;
         }
 
-        Vardkontakttyp vardkontakttyp;
+        VardkontaktType vardkontaktType = null;
 
         try {
-            vardkontakttyp = Vardkontakttyp.fromValue(source.getVardkontakttyp().getCode());
+            Kod vardkontakttyp = source.getVardkontakttyp();
+            String fk7263String = Vardkontakttypkoder.mapToFk7263.get(vardkontakttyp);
+            if(fk7263String != null) {
+                vardkontaktType = new VardkontaktType();
+                vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getStart());
+                vardkontaktType.setVardkontakttyp(Vardkontakttyp.fromValue(fk7263String));
+            }
         } catch (IllegalArgumentException ex) {
             // unknown vardkontakttyp that is not relevant in the Fk7263 context
             return null;
         }
 
-        VardkontaktType vardkontaktType = new VardkontaktType();
-        vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getStart());
-        vardkontaktType.setVardkontakttyp(vardkontakttyp);
         return vardkontaktType;
     }
 
@@ -298,18 +299,21 @@ public final class UtlatandeToRegisterMedicalCertificate {
             return null;
         }
 
-        Referenstyp referenstyp;
+        ReferensType referensType = null;
 
         try {
-            referenstyp = Referenstyp.fromValue(source.getReferenstyp().getCode());
+            Kod referenstyp = source.getReferenstyp();
+            String fk7363String = Referenstypkoder.mapToFk7263.get(referenstyp);
+            if(fk7363String != null) {
+                referensType = new ReferensType();
+                referensType.setDatum(source.getDatum());
+                referensType.setReferenstyp(Referenstyp.fromValue(fk7363String));
+            }
         } catch (IllegalArgumentException ex) {
             // unknown referenstyp that is not relevant in the Fk7263 context
             return null;
         }
 
-        ReferensType referensType = new ReferensType();
-        referensType.setDatum(source.getDatum());
-        referensType.setReferenstyp(referenstyp);
         return referensType;
     }
 
@@ -333,18 +337,20 @@ public final class UtlatandeToRegisterMedicalCertificate {
             return null;
         }
 
-        Aktivitetskod aktivitetskod;
-
+        AktivitetType aktivitet = null;
         try {
-            aktivitetskod = Aktivitetskod.fromValue(source.getAktivitetskod().getCode());
+            Kod aktivitetskod = source.getAktivitetskod();
+            String asfk7263String = Aktivitetskoder.mapToFk7263.get(aktivitetskod);
+            if (asfk7263String != null) {
+                aktivitet = new AktivitetType();
+                aktivitet.setBeskrivning(source.getBeskrivning());
+                aktivitet.setAktivitetskod(Aktivitetskod.fromValue(asfk7263String));
+            }
         } catch (IllegalArgumentException ex) {
             // unknown aktivitetkod that is not relevant in the Fk7263 context
             return null;
         }
 
-        AktivitetType aktivitet = new AktivitetType();
-        aktivitet.setAktivitetskod(aktivitetskod);
-        aktivitet.setBeskrivning(source.getBeskrivning());
         return aktivitet;
     }
 

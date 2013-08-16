@@ -167,6 +167,15 @@ public class Utlatande {
         }, null);
     }
 
+    public Observation findObservationByKod(final Kod observationsKod) {
+        return find(observations, new Predicate<Observation>() {
+            @Override
+            public boolean apply(Observation observation) {
+                return observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod);
+            }
+        }, null);
+    }
+
     public Partial getValidFromDate() {
         List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA_NEDSATT);
         Partial fromDate = null;

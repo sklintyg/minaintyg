@@ -1,14 +1,5 @@
 package se.inera.certificate.integration.converter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +32,15 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach
