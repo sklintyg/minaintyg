@@ -1,186 +1,190 @@
 {
+  "id" : {
+    "extension" : "80832895-5a9c-450a-bd74-08af43750788"
+  },
+  "typ" : {
+    "code" : "fk7263"
+  },
+  "kommentars" : [ "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling." ],
+  "signeringsDatum" : "2011-01-26T00:00:00.000",
+  "skickatDatum" : "2011-03-23T09:29:15.000",
+  "patient" : {
     "id" : {
-        "extension" : "80832895-5a9c-450a-bd74-08af43750788"
+      "root" : "1.2.752.129.2.1.3.1",
+      "extension" : "19121212-1212"
     },
-    "typ" : {
-        "code" : "fk7263"
+    "fornamns" : [ "Test" ],
+    "efternamns" : [ "Testorsson" ],
+    "sysselsattnings" : [ {
+      "sysselsattningsTyp" : {
+        "code" : "224375002",
+        "codeSystem" : "1.2.752.116.2.1.1.1",
+        "codeSystemName" : "SNOMED-CT"
+      }
+    } ],
+    "arbetsuppgifts" : [ {
+      "typAvArbetsuppgift" : "Cirkusartist"
+    } ]
+  },
+  "skapadAv" : {
+    "id" : {
+      "root" : "1.2.752.129.2.1.4.1",
+      "extension" : "Personal HSA-ID"
     },
-    "kommentars" : [
-        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
-    ],
-    "signeringsDatum" : "2011-01-26T00:00:00.000",
-    "skickatDatum" : "2011-03-23T09:29:15.000",
-    "patient" : {
+    "namn" : "",
+    "vardenhet" : {
+      "id" : {
+        "root" : "1.2.752.129.2.1.4.1",
+        "extension" : ""
+      },
+      "arbetsplatskod" : {
+        "root" : "1.2.752.29.4.71",
+        "extension" : "123456789011"
+      },
+      "namn" : "",
+      "postadress" : "Lasarettsvägen 13",
+      "postnummer" : "85150",
+      "postort" : "Sundsvall",
+      "telefonnummer" : "060-1818000",
+      "epost" : "kirmott@vardenhet.se",
+      "vardgivare" : {
         "id" : {
-            "root" : "1.2.752.129.2.1.3.1",
-            "extension" : "19121212-1212"
+          "root" : "1.2.752.129.2.1.4.1",
+          "extension" : "VardgivarId"
         },
-        "fornamns" : [
-            "Test"
-        ],
-        "efternamns" : [
-            "Testorsson"
-        ],
-        "sysselsattnings" : [
-            {
-                "sysselsattningsTyp" : {
-                    "code" : "Nuvarande_arbete"
-                }
-            }
-        ],
-        "arbetsuppgifts" : [
-            {
-                "typAvArbetsuppgift" : "Cirkusartist"
-            }
-        ],
+        "namn" : "Landstinget Norrland"
+      }
+    }
+  },
+  "aktiviteter" : [ {
+    "sysselsattningsTyp" : {
+      "code" : "AKT6",
+      "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+      "codeSystemName" : "kv_aktiviteter_intyg"
+    }
+  }, {
+    "sysselsattningsTyp" : {
+      "code" : "AKT2",
+      "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+      "codeSystemName" : "kv_aktiviteter_intyg"
     },
-    "skapadAv" : {
-        "id" : {
-            "root" : "1.2.752.129.2.1.4.1",
-            "extension" : "Personal HSA-ID"
-        },
-        "namn" : "",
-        "vardenhet" : {
-            "id" : {
-                "root" : "1.2.752.129.2.1.4.1",
-                "extension" : ""
-            },
-            "arbetsplatskod" : {
-                "root" : "1.2.752.29.4.71",
-                "extension" : "123456789011"
-            },
-            "namn" : "",
-            "postadress" : "Lasarettsvägen 13",
-            "postnummer" : "85150",
-            "postort" : "Sundsvall",
-            "telefonnummer" : "060-1818000",
-            "epost" : "kirmott@vardenhet.se",
-            "vardgivare" : {
-                "id" : {
-                    "root" : "1.2.752.129.2.1.4.1",
-                    "extension" : "VardgivarId"
-                },
-                "namn" : "Landstinget Norrland"
-            }
-        }
+    "beskrivning" : "Avslappningsövningar och balansövningar, t ex promenad i ojämn terräng."
+  }, {
+    "sysselsattningsTyp" : {
+      "code" : "AKT5",
+      "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+      "codeSystemName" : "kv_aktiviteter_intyg"
+    }
+  }, {
+    "sysselsattningsTyp" : {
+      "code" : "AKT9",
+      "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+      "codeSystemName" : "kv_aktiviteter_intyg"
+    }
+  } ],
+  "observations" : [ {
+    "observationsKategori" : {
+      "code" : "439401001",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
     },
-    "aktiviteter" : [
-        {
-            "aktivitetskod" : {
-                "code" : "Patienten_behover_fa_kontakt_med_foretagshalsovarden"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Planerad_eller_pagaende_annan_atgard"
-            },
-            "beskrivning" : "Avslappningsövningar och balansövningar, t ex promenad i ojämn terräng."
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"
-            }
-        },
-        {
-            "aktivitetskod" : {
-                "code" : "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"
-            }
-        }
-    ],
-    "observations" : [
-        {
-            "observationsKategori" : {
-                "code" : "MedicinsktTillstånd"
-            },
-            "observationsKod" : {
-                "codeSystemName" : "ICD-10",
-                "code" : "H81"
-            },
-            "beskrivning" : "Sjukdomar i örat och mastoidutskottet"
-        },
-        {
-            "observationsKategori" : {
-                "code" : "BedömtTillstånd"
-            },
-            "beskrivning" : "Patienten upplever svår yrsel vid häftiga rörelser och är allmänt påverkad av sjukdomen."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Kroppsfunktion"
-            },
-            "beskrivning" : "Ospecifierad rubbning i balansapparatens funktion. Svårighet att utföra handlingar som kräver bra balans och kropsskontroll."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Aktivitet"
-            },
-            "beskrivning" : "Patienten arbetar trapetsartist på Cirkus Cirkör, sjukdomen försvårar utövandet av yrket."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Arbetsförmåga"
-            },
-            "observationsKod" : {
-                "code" : "Aterstallas_helt"
-            },
-            "beskrivning" : "Patienten kan inte utöva sitt yrke förrän en förbättring sker med avseende på yrseln. Det är förenat med livsfara att utföra trapetskonster och samtidigt lida av yrsel. Patientens besvär kommer dock att först minska för att därefter helt upphöra efter genomförd behandling."
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Nedsättning"
-            },
-            "observationsPeriod" : {
-                "from" : "2011-02-21",
-                "tom" : "2011-03-31"
-            },
-            "varde" : [
-                {
-                    "quantity" : 50,
-                    "unit" : "percent"
-                }
-            ]
-        },
-        {
-            "observationsKategori" : {
-                "code" : "Nedsättning"
-            },
-            "observationsPeriod" : {
-                "from" : "2011-01-24",
-                "tom" : "2011-02-20"
-            },
-            "varde" : [
-                {
-                    "quantity" : 100,
-                    "unit" : "percent"
-                }
-            ]
-        }
-    ],
-    "vardkontakter" : [
-        {
-            "vardkontakttyp" : {
-                "code" : "Min_undersokning_av_patienten"
-            },
-            "vardkontaktstid" : {
-                "start" : "2011-01-24",
-                "end" : "2011-01-24"
-            }
-        },
-        {
-            "vardkontakttyp" : {
-                "code" : "Min_telefonkontakt_med_patienten"
-            },
-            "vardkontaktstid" : {
-                "start" : "2011-01-12",
-                "end" : "2011-01-12"
-            }
-        }
-    ],
-    "referenser" : [],
-    "validFromDate" : "2011-01-24",
-    "validToDate" : "2011-03-31",
-    "forskrivarkodOchArbetsplatskod" : "123456789011",
-    "ovrigt":{
-       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns=\"urn:intyg:common-model:1\"><arrangmang xmlns=\"urn:intyg:rli:model:1\"><bokningsreferens>ABC-123</bokningsreferens></arrangmang></ovrigt>"
-   }
+    "observationsKod" : {
+      "codeSystemName" : "ICD-10",
+      "code" : "H81"
+    },
+    "beskrivning" : "Sjukdomar i örat och mastoidutskottet"
+  }, {
+    "observationsKod" : {
+      "code" : "288524001",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
+    },
+    "beskrivning" : "Patienten upplever svår yrsel vid häftiga rörelser och är allmänt påverkad av sjukdomen."
+  }, {
+    "observationsKategori" : {
+      "code" : "b",
+      "codeSystem" : "1.2.752.116.1.1.3.1.1",
+      "codeSystemName" : "ICF"
+    },
+    "beskrivning" : "Ospecifierad rubbning i balansapparatens funktion. Svårighet att utföra handlingar som kräver bra balans och kropsskontroll."
+  }, {
+    "observationsKategori" : {
+      "code" : "d",
+      "codeSystem" : "1.2.752.116.1.1.3.1.1",
+      "codeSystemName" : "ICF"
+    },
+    "beskrivning" : "Patienten arbetar trapetsartist på Cirkus Cirkör, sjukdomen försvårar utövandet av yrket."
+  }, {
+    "observationsKod" : {
+      "code" : "302119000",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
+    },
+    "observationsPeriod" : {
+      "from" : "2011-02-21",
+      "tom" : "2011-03-31"
+    },
+    "prognos" : {
+      "prognosKod" : {
+        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+        "codeSystemName" : "kv_prognos_intyg",
+        "code" : "PRO1"
+      },
+      "beskrivning" : "Patienten kan inte utöva sitt yrke förrän en förbättring sker med avseende på yrseln. Det är förenat med livsfara att utföra trapetskonster och samtidigt lida av yrsel. Patientens besvär kommer dock att först minska för att därefter helt upphöra efter genomförd behandling."
+    },
+    "varde" : [ {
+      "quantity" : 50,
+      "unit" : "percent"
+    } ]
+  }, {
+    "observationsKod" : {
+      "code" : "302119000",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
+    },
+    "observationsPeriod" : {
+      "from" : "2011-01-24",
+      "tom" : "2011-02-20"
+    },
+    "prognos" : {
+      "prognosKod" : {
+        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+        "codeSystemName" : "kv_prognos_intyg",
+        "code" : "PRO1"
+      },
+      "beskrivning" : "Patienten kan inte utöva sitt yrke förrän en förbättring sker med avseende på yrseln. Det är förenat med livsfara att utföra trapetskonster och samtidigt lida av yrsel. Patientens besvär kommer dock att först minska för att därefter helt upphöra efter genomförd behandling."
+    },
+    "varde" : [ {
+      "quantity" : 100,
+      "unit" : "percent"
+    } ]
+  } ],
+  "vardkontakter" : [ {
+    "vardkontakttyp" : {
+      "code" : "5880005",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
+    },
+    "vardkontaktstid" : {
+      "start" : "2011-01-24",
+      "end" : "2011-01-24"
+    }
+  }, {
+    "vardkontakttyp" : {
+      "code" : "185317003",
+      "codeSystem" : "1.2.752.116.2.1.1.1",
+      "codeSystemName" : "SNOMED-CT"
+    },
+    "vardkontaktstid" : {
+      "start" : "2011-01-12",
+      "end" : "2011-01-12"
+    }
+  } ],
+  "referenser" : [ ],
+  "validFromDate" : "2011-01-24",
+  "validToDate" : "2011-03-31",
+  "forskrivarkodOchArbetsplatskod" : "123456789011",
+  "ovrigt" : {
+    "data" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns=\"urn:intyg:common-model:1\"><arrangmang xmlns=\"urn:intyg:rli:model:1\"><bokningsreferens>ABC-123</bokningsreferens></arrangmang></ovrigt>"
+  }
 }
