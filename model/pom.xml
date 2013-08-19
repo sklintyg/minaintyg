@@ -4,7 +4,7 @@
   <parent>
     <artifactId>certificate</artifactId>
     <groupId>se.inera.certificate</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-RC1</version>
   </parent>
 
   <artifactId>model</artifactId>
