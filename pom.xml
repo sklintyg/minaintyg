@@ -10,6 +10,9 @@
     Inera Certificate Root Project - The parent of all other
     Inera Certificate modules.
   </description>
+  <scm>
+    <connection>scm:git:https://code.google.com/p/inera-certificate/</connection>
+  </scm>
 
   <modules>
     <module>schemas</module>
@@ -318,6 +321,14 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <pushChanges>false</pushChanges>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
