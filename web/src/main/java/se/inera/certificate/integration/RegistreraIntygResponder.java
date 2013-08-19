@@ -40,9 +40,8 @@ public class RegistreraIntygResponder implements RegistreraIntygResponderInterfa
 
         Utlatande model = UtlatandeJaxbToUtlatandeConverter.convert(utlatande.value);
 
-
         // let the certificate validate by the corresponding certificate module
-        //validate(type, model);
+        validate(type, model);
 
         certificateService.storeCertificate(model);
     }

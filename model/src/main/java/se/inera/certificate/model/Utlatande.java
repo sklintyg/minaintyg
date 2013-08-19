@@ -149,13 +149,14 @@ public class Utlatande {
         return observations;
     }
 
-    public Observation getObservationByKod(Kod observationsKod) {
+    public List<Observation> getObservationsByKategori(Kod observationsKategori) {
+        List<Observation> observations = new ArrayList<>();
         for (Observation observation : this.observations) {
-            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
-                return observation;
+            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+                observations.add(observation);
             }
         }
-        return null;
+        return observations;
     }
 
     public Observation findObservationByKategori(final Kod observationsKategori) {

@@ -82,6 +82,7 @@
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   } ],
+  "aktiviteter" : [ ],
   "observations" : [ {
     "observationsKategori" : {
       "code" : "439401001",
