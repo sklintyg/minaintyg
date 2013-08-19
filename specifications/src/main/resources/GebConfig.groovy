@@ -10,7 +10,7 @@ driver = { new FirefoxDriver() } // use firefox by default
 //driver = { new HtmlUnitDriver() }
 //baseUrl = "http://localhost:8088"
 waiting {
-    timeout = 2 // default wait is two seconds
+    timeout = 5 // default wait is two seconds
 }
 environments {
     chrome {

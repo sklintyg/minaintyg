@@ -1,306 +1,331 @@
 {
-   "id" :
-      {
-         "extension" : "80832895-5a9c-450a-bd74-08af43750788"
-      },
-   "typ" :
-      {
-         "code" : "fk7263"
-      },
-   "kommentars" :
-      [
-         "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
-      ],
-   "signeringsDatum" : "2011-01-26T00:00:00.000",
-   "skickatDatum" : "2011-03-23T09:29:15.000",
-   "patient" :
-      {
-         "id" :
+    "id" : {
+        "extension" : "80832895-5a9c-450a-bd74-08af43750788"
+    },
+    "typ" : {
+        "code" : "fk7263"
+    },
+    "kommentars" : [
+        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
+    ],
+    "signeringsDatum" : "2011-01-26T00:00:00.000",
+    "skickatDatum" : "2011-03-23T09:29:15.000",
+    "patient" : {
+        "id" : {
+            "root" : "1.2.752.129.2.1.3.1",
+            "extension" : "19121212-1212"
+        },
+        "fornamns" : [
+            ""
+        ],
+        "efternamns" : [
+            "Test Testorsson"
+        ],
+        "sysselsattnings" : [
             {
-               "root" : "1.2.752.129.2.1.3.1",
-               "extension" : "19121212-1212"
+                "sysselsattningsTyp" : {
+                    "codeSystem" : "1.2.752.116.2.1.1.1",
+                    "codeSystemName" : "SNOMED-CT",
+                    "code" : "224375002"
+                }
             },
-         "fornamns" :
-            [
-               ""
-            ],
-         "efternamns" :
-            [
-               "Test Testorsson"
-            ],
-         "sysselsattnings" :
-            [
-               {
-                  "sysselsattningsTyp" :
-                     {
-                        "code" : "Nuvarande_arbete"
-                     }
-               },
-               {
-                  "sysselsattningsTyp" :
-                     {
-                        "code" : "Arbetsloshet"
-                     }
-               },
-               {
-                  "sysselsattningsTyp" :
-                     {
-                        "code" : "Foraldraledighet"
-                     }
-               }
-            ],
-         "arbetsuppgifts" :
-            [
-               {
-                  "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
-               }
-            ],
-         "fullstandigtNamn" : "Test Testorsson"
-      },
-   "skapadAv" :
-      {
-         "id" :
             {
-               "root" : "1.2.752.129.2.1.4.1",
-               "extension" : "Personal HSA-ID"
+                "sysselsattningsTyp" : {
+                    "codeSystem" : "1.2.752.116.2.1.1.1",
+                    "codeSystemName" : "SNOMED-CT",
+                    "code" : "73438004"
+                }
             },
-         "namn" : "En Läkare",
-         "vardenhet" :
             {
-               "id" :
-                  {
-                     "root" : "1.2.752.129.2.1.4.1",
-                     "extension" : "VardenhetY"
-                  },
-               "arbetsplatskod" :
-                  {
-                     "root" : "1.2.752.29.4.71",
-                     "extension" : "123456789011"
-                  },
-               "namn" : "Kir mott",
-               "postadress" : "Lasarettsvägen 13",
-               "postnummer" : "85150",
-               "postort" : "Sundsvall",
-               "telefonnummer" : "060-1818000",
-               "epost" : "kirmott@vardenhet.se",
-               "vardgivare" :
-                  {
-                     "id" :
-                        {
-                           "root" : "1.2.752.129.2.1.4.1",
-                           "extension" : "VardgivarId"
-                        },
-                     "namn" : "Landstinget Norrland"
-                  }
+                "sysselsattningsTyp": {
+                    "codeSystem" : "1.2.752.116.2.1.1.1",
+                    "codeSystemName" : "SNOMED-CT",
+                    "code" : "224458009"
+                }
             }
-      },
-   "aktiviteter" :
-      [
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Patienten_behover_fa_kontakt_med_Arbetsformedlingen"
-               }
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Patienten_behover_fa_kontakt_med_foretagshalsovarden"
-               }
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Ovrigt"
-               },
+        ],
+        "arbetsuppgifts" : [
+            {
+                "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
+            }
+        ],
+        "fullstandigtNamn" : "Test Testorsson"
+    },
+    "skapadAv" : {
+        "id" : {
+            "root" : "1.2.752.129.2.1.4.1",
+            "extension" : "Personal HSA-ID"
+        },
+        "namn" : "En Läkare",
+        "vardenhet" : {
+            "id" : {
+                "root" : "1.2.752.129.2.1.4.1",
+                "extension" : "VardenhetY"
+            },
+            "arbetsplatskod" : {
+                "root" : "1.2.752.29.4.71",
+                "extension" : "123456789011"
+            },
+            "namn" : "Kir mott",
+            "postadress" : "Lasarettsvägen 13",
+            "postnummer" : "85150",
+            "postort" : "Sundsvall",
+            "telefonnummer" : "060-1818000",
+            "epost" : "kirmott@vardenhet.se",
+            "vardgivare" : {
+                "id" : {
+                    "root" : "1.2.752.129.2.1.4.1",
+                    "extension" : "VardgivarId"
+                },
+                "namn" : "Landstinget Norrland"
+            }
+        }
+    },
+    "aktiviteter" : [
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT7"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT6"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT12"
+            },
             "beskrivning" : "När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik"
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden"
-               },
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT1"
+            },
             "beskrivning" : "Utreds om operation är nödvändig"
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Planerad_eller_pagaende_annan_atgard"
-               },
-            "beskrivning" : "Patienten ansvarar för att armen hålls i stillhet"
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell"
-               }
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt"
-               }
-         },
-         {
-            "aktivitetskod" :
-               {
-                  "code" : "Kontakt_med_Forsakringskassan_ar_aktuell"
-               }
-         }
-      ],
-   "observations" :
-      [
-         {
-            "observationsKategori" :
-               {
-                  "code" : "MedicinsktTillstånd"
-               },
-            "observatonsKod" :
-               {
-                  "codeSystemName" : "ICD-10",
-                  "code" : "S47"
-               },
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT2"
+            },
+            "beskrivning": "Patienten ansvarar för att armen hålls i stillhet"
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT5"
+            }
+        },
+        {
+            "aktivitetskod" : {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code" : "AKT9"
+            }
+        },
+        {
+            "aktivitetskod": {
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName" : "kv_aktiviteter_intyg",
+                "code": "AKT10"
+            }
+        }
+    ],
+    "observations" : [
+        {
+            "observationsKategori": {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "439401001"
+            },
+            "observatonsKod" : {
+                "codeSystemName" : "ICD-10",
+                "code" : "S47"
+            },
             "beskrivning" : "Klämskada på överarm"
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "BedömtTillstånd"
-               },
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "288524001"
+            },
             "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Kroppsfunktion"
-               },
-            "beskrivning" : "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Aktivitet"
-               },
-            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Arbetsförmåga"
-               },
-            "observatonsKod" :
-               {
-                  "code" : "Det_gar_inte_att_bedomma"
-               },
-            "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Nedsättning"
-               },
-            "observatonsKod" :
-               {
-                  "code" : "Nedsatt_med_1/4"
-               },
-            "observationsPeriod" :
-               {
-                  "from" : "2011-04-01",
-                  "tom" : "2011-05-31"
-               }
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Nedsättning"
-               },
-            "observatonsKod" :
-               {
-                  "code" : "Nedsatt_med_1/2"
-               },
-            "observationsPeriod" :
-               {
-                  "from" : "2011-03-07",
-                  "tom" : "2011-03-31"
-               }
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Nedsättning"
-               },
-            "observatonsKod" :
-               {
-                  "code" : "Nedsatt_med_3/4"
-               },
-            "observationsPeriod" :
-               {
-                  "from" : "2011-02-14",
-                  "tom" : "2011-03-06"
-               }
-         },
-         {
-            "observationsKategori" :
-               {
-                  "code" : "Nedsättning"
-               },
-            "observatonsKod" :
-               {
-                  "code" : "Helt_nedsatt"
-               },
-            "observationsPeriod" :
-               {
-                  "from" : "2011-01-26",
-                  "tom" : "2011-02-13"
-               }
-         }
-      ],
-   "vardkontakter" :
-      [
-         {
-            "vardkontakttyp" :
-               {
-                  "code" : "Min_undersokning_av_patienten"
-               },
-            "vardkontaktstid" :
-               {
-                  "start" : "2011-01-26",
-                  "end" : "2011-01-26"
-               }
-         },
-         {
-            "vardkontakttyp" :
-               {
-                  "code" : "Min_telefonkontakt_med_patienten"
-               },
-            "vardkontaktstid" :
-               {
-                  "start" : "2011-01-12",
-                  "end" : "2011-01-12"
-               }
-         }
-      ],
-   "referenser" :
-      [
-         {
-            "referenstyp" :
-               {
-                  "code" : "Journaluppgifter"
-               },
+        },
+        {
+            "observationsKategori" : {
+                "codeSystem" : "1.2.752.116.1.1.3.1.1",
+                "codeSystemName" : "ICF",
+                "code" : "b"
+            },
+            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
+        },
+        {
+            "observationsKategori" : {
+                "codeSystem" : "1.2.752.116.1.1.3.1.1",
+                "codeSystemName" : "ICF",
+                "code" : "d"
+            },
+            "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-04-01",
+                "tom" : "2011-05-31"
+            },
+            "prognos" : {
+                "prognosKod" : {
+                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                    "codeSystemName" : "kv_prognos_intyg",
+                    "code" : "PRO4"
+                },
+                "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+            },
+            "varde" : [
+                {
+                    "quantity" : 25.0,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-03-07",
+                "tom" : "2011-03-31"
+            },
+            "prognos" : {
+                "prognosKod" : {
+                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                    "codeSystemName" : "kv_prognos_intyg",
+                    "code" : "PRO4"
+                },
+                "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+            },
+            "varde" : [
+                {
+                    "quantity" : 50.0,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-02-14",
+                "tom" : "2011-03-06"
+            },
+            "prognos" : {
+                "prognosKod" : {
+                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                    "codeSystemName" : "kv_prognos_intyg",
+                    "code" : "PRO4"
+                },
+                "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+            },
+            "varde" : [
+                {
+                    "quantity" : 75.0,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-01-26",
+                "tom" : "2011-02-13"
+            },
+            "prognos" : {
+                "prognosKod" : {
+                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                    "codeSystemName" : "kv_prognos_intyg",
+                    "code" : "PRO4"
+                },
+                "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+            },
+            "varde" : [
+                {
+                    "quantity" : 100.0,
+                    "unit" : "percent"
+                }
+            ]
+        }
+    ],
+    "vardkontakter" : [
+        {
+            "vardkontakttyp" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "5880005"
+            },
+            "vardkontaktstid" : {
+                "start" : "2011-01-26",
+                "end" : "2011-01-26"
+            }
+        },
+        {
+            "vardkontakttyp" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "185317003"
+            },
+            "vardkontaktstid" : {
+                "start" : "2011-01-12",
+                "end" : "2011-01-12"
+            }
+        }
+    ],
+    "referenser" : [
+        {
+            "referenstyp" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "419891008"
+            },
             "datum" : "2010-01-14"
-         },
-         {
-            "referenstyp" :
-               {
-                  "code" : "Annat"
-               },
+        },
+        {
+            "referenstyp" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "74964007"
+            },
             "datum" : "2010-01-24"
-         }
-      ],
-   "ovrigt":{
-       "data":"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns:ns2=\"urn:riv:insuranceprocess:healthreporting:2\" xmlns=\"urn:intyg:common-model:1\" xmlns:ns3=\"urn:riv:insuranceprocess:certificate:1\"><arrangmang xmlns:hr=\"urn:riv:insuranceprocess:healthreporting:2\"><bokningsreferens>ABC-123</bokningsreferens> </arrangmang></ovrigt>"
-   },
-   "validFromDate" : "2011-01-26",
-   "validToDate" : "2011-05-31",
-   "forskrivarkodOchArbetsplatskod" : "123456789011"
+        }
+    ],
+    "ovrigt" : {
+        "data" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ovrigt xmlns:ns2=\"urn:riv:insuranceprocess:healthreporting:2\" xmlns=\"urn:intyg:common-model:1\" xmlns:ns3=\"urn:riv:insuranceprocess:certificate:1\"><arrangmang xmlns:hr=\"urn:riv:insuranceprocess:healthreporting:2\"><bokningsreferens>ABC-123</bokningsreferens> </arrangmang></ovrigt>"
+    },
+    "validFromDate" : "2011-01-26",
+    "validToDate" : "2011-05-31",
+    "forskrivarkodOchArbetsplatskod" : "123456789011"
 }
