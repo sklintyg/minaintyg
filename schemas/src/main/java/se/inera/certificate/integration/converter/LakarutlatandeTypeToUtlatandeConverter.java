@@ -299,16 +299,16 @@ public final class LakarutlatandeTypeToUtlatandeConverter {
         varde.setUnit("percent");
         switch (source.getNedsattningsgrad()) {
             case HELT_NEDSATT:
-                varde.setValue(100.0);
+                varde.setValue(0.0);
                 break;
             case NEDSATT_MED_3_4:
-                varde.setValue(75.0);
+                varde.setValue(25.0);
                 break;
             case NEDSATT_MED_1_2:
                 varde.setValue(50.0);
                 break;
             case NEDSATT_MED_1_4:
-                varde.setValue(25.0);
+                varde.setValue(75.0);
                 break;
         }
         nedsattning.getVardes().add(varde);

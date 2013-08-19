@@ -53,7 +53,7 @@
             },
             "varde" : [
                 {
-                    "quantity" : 100,
+                    "quantity" : 0,
                     "unit" : "percent"
                 }
             ]

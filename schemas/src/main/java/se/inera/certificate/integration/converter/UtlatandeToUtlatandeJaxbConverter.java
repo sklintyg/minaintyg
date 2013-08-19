@@ -203,6 +203,7 @@ public class UtlatandeToUtlatandeJaxbConverter {
 
     private AktivitetType convert(Aktivitet source) {
         AktivitetType aktivitet = new AktivitetType();
+        System.out.println("**** " + source.getAktivitetskod());
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
         aktivitet.setBeskrivning(source.getBeskrivning());
         return aktivitet;

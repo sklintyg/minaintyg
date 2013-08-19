@@ -70,52 +70,52 @@
     }
   },
   "aktiviteter" : [ {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT7",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT6",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT12",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     },
     "beskrivning" : "När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik"
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT1",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     },
     "beskrivning" : "Utreds om operation är nödvändig"
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT2",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     },
     "beskrivning" : "Patienten ansvarar för att armen hålls i stillhet"
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT5",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT9",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT10",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
@@ -172,7 +172,7 @@
       "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
     },
     "varde" : [ {
-      "quantity" : 25,
+      "quantity" : 75,
       "unit" : "percent"
     } ]
   }, {
@@ -216,7 +216,7 @@
       "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
     },
     "varde" : [ {
-      "quantity" : 75,
+      "quantity" : 25,
       "unit" : "percent"
     } ]
   }, {
@@ -238,7 +238,7 @@
       "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
     },
     "varde" : [ {
-      "quantity" : 100,
+      "quantity" : 0,
       "unit" : "percent"
     } ]
   } ],

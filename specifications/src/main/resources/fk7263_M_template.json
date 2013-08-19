@@ -57,32 +57,31 @@
     }
   },
   "aktiviteter" : [ {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT6",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT2",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     },
     "beskrivning" : "Avslappningsövningar och balansövningar, t ex promenad i ojämn terräng."
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT5",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   }, {
-    "sysselsattningsTyp" : {
+    "aktivitetskod" : {
       "code" : "AKT9",
       "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
       "codeSystemName" : "kv_aktiviteter_intyg"
     }
   } ],
-  "aktiviteter" : [ ],
   "observations" : [ {
     "observationsKategori" : {
       "code" : "439401001",
@@ -156,7 +155,7 @@
       "beskrivning" : "Patienten kan inte utöva sitt yrke förrän en förbättring sker med avseende på yrseln. Det är förenat med livsfara att utföra trapetskonster och samtidigt lida av yrsel. Patientens besvär kommer dock att först minska för att därefter helt upphöra efter genomförd behandling."
     },
     "varde" : [ {
-      "quantity" : 100,
+      "quantity" : 0,
       "unit" : "percent"
     } ]
   } ],

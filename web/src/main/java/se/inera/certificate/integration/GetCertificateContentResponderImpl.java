@@ -1,12 +1,5 @@
 package se.inera.certificate.integration;
 
-import java.io.IOException;
-import java.util.List;
-
-import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
-import static se.inera.certificate.integration.util.ResultOfCallUtil.infoResult;
-import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
@@ -24,6 +17,13 @@ import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequest;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponse;
+
+import java.io.IOException;
+import java.util.List;
+
+import static se.inera.certificate.integration.util.ResultOfCallUtil.failResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.infoResult;
+import static se.inera.certificate.integration.util.ResultOfCallUtil.okResult;
 
 /**
  * @author andreaskaltenbach
@@ -48,6 +48,7 @@ public class GetCertificateContentResponderImpl implements GetCertificateContent
         Certificate certificate;
         try {
             certificate = certificateService.getCertificate(request.getNationalIdentityNumber(), request.getCertificateId());
+            System.out.println("\n\n"+request.getNationalIdentityNumber()+":"+request.getCertificateId()+"\n\n");
         } catch (MissingConsentException ex) {
             // return ERROR if user has not given consent
             LOG.info("Tried to get certificate '" + request.getCertificateId() + "' but user '" + request.getNationalIdentityNumber() + "' has not given consent.");

@@ -18,9 +18,16 @@
  */
 package se.inera.certificate.model.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import se.inera.certificate.exception.InvalidCertificateIdentifierException;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.certificate.model.dao.CertificateDao;
+import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,18 +35,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-
-import se.inera.certificate.exception.InvalidCertificateIdentifierException;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.dao.Certificate;
-import se.inera.certificate.model.dao.CertificateDao;
-import se.inera.certificate.model.dao.CertificateStateHistoryEntry;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Implementation of {@link CertificateDao}.
@@ -99,7 +97,7 @@ public class CertificateDaoImpl implements CertificateDao {
 
             LOG.warn(String.format("Trying to access certificate '%s' for user '%s' but certificate's user is '%s'.",
                     certificateId, civicRegistrationNumber, certificate.getCivicRegistrationNumber()));
-            throw new InvalidCertificateIdentifierException(certificateId, certificate.getCivicRegistrationNumber());
+            throw new InvalidCertificateIdentifierException(certificateId, civicRegistrationNumber);
         }
 
         return certificate;

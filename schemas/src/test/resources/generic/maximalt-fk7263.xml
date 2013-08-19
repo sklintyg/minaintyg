@@ -132,7 +132,7 @@
       <from>2011-04-01</from>
       <tom>2011-05-31</tom>
     </observationsperiod>
-    <varde value="25.0" unit="percent"/>
+    <varde value="75.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
       <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
@@ -164,7 +164,7 @@
       <from>2011-02-14</from>
       <tom>2011-03-06</tom>
     </observationsperiod>
-    <varde value="75.0" unit="percent"/>
+    <varde value="25.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
       <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten
@@ -180,7 +180,7 @@
       <from>2011-01-26</from>
       <tom>2011-02-13</tom>
     </observationsperiod>
-    <varde value="100.0" unit="percent"/>
+    <varde value="0.0" unit="percent"/>
     <prognos>
       <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
       <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten

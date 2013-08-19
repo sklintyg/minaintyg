@@ -157,16 +157,16 @@ public final class UtlatandeToRegisterMedicalCertificate {
 
             if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()) {
                 switch (arbetsformaga.getVarde().get(0).getQuantity().intValue()) {
-                case 25:
+                case 75: // 75% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
                     break;
-                case 50:
+                case 50: // 50% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
                     break;
-                case 75:
+                case 25: // 25% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
                     break;
-                case 100:
+                case 0:  // 0% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
                     break;
                 default:
