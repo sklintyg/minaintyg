@@ -323,6 +323,10 @@ i.inera-icon {
 	height: 16px;
 }
 
+i.icon-loader {
+	background-image: url("../img/ajax-loader-small-green.gif");
+}
+
 [class^="formgroup-"],[class*=" formgroup-"] {
 	border: 1px;
 }
