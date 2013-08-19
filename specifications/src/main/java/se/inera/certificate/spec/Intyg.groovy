@@ -24,15 +24,29 @@ public class Intyg extends RestClientFixture {
     int from
     int to
 	
+	private String template
+	
 	public void reset() {
 		mall = "M"
+		utfärdare = "EnUtfärdare"
+		enhet = "EnVårdEnhet"
+		giltigtFrån = null
+		giltigtTill = null
+		template = null
 	}
 	
     public void execute() {
         def restClient = new RESTClient(baseUrl)
+		if (!giltigtFrån) giltigtFrån = utfärdat
+		if (!giltigtTill) giltigtTill = new Date().parse("yyyy-MM-dd", utfärdat).plus(14).format("yyyy-MM-dd")
+		if (from && to && !idTemplate) {
+			template = "test-${personnr}-intyg-%1\$s"
+		} else if (idTemplate) {
+			template = idTemplate
+		}
         for (int day in from..to) {
-            if (idTemplate) {
-                id = String.format(idTemplate, day, utfärdat, personnr, typ)
+            if (template) {
+                id = String.format(template, day, utfärdat, personnr, typ)
             }
             restClient.post(
                     path: 'certificate',

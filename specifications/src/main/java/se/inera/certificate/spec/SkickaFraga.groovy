@@ -29,10 +29,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType
 
-/**
- *
- * @author andreaskaltenbach
- */
 class SkickaFraga extends WsClientFixture {
 
     private SendMedicalCertificateQuestionResponderService sendService = new SendMedicalCertificateQuestionResponderService();
@@ -40,7 +36,6 @@ class SkickaFraga extends WsClientFixture {
 
     String vårdReferens
     String ämne
-	String vårdAddress
     String fråga
     String frågeTidpunkt
 	String signeringsTidpunkt
@@ -59,20 +54,15 @@ class SkickaFraga extends WsClientFixture {
         JAXBContext jaxbContext = JAXBContext.newInstance(SendMedicalCertificateQuestionType.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         QuestionToFkType question = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("SendMedicalCertificateQuestion_template.xml").getInputStream()), RegisterMedicalCertificateType.class).getValue()
-		question.setAmne(Amnetyp.fromValue(ämne))
-        question.setVardReferensId(vårdReferens);
         question.setAvsantTidpunkt(LocalDateTime.now());
-        question.getFraga().setMeddelandeText(frågeTidpunkt);
-        question.getFraga().setSigneringsTidpunkt(LocalDateTime.parse(signeringsTidpunkt));
-
-        question.setLakarutlatande(new LakarutlatandeEnkelType());
-		question.getLakarutlatande().setLakarutlatandeId(lakarutlatandeId)
-		question.getLakarutlatande().setSigneringsTidpunkt(LocalDateTime.parse(signeringsTidpunkt))
-		question.getLakarutlatande().setPatient(new PatientType())
-		question.getLakarutlatande().getPatient().setPersonId(new II())
-		question.getLakarutlatande().getPatient().getPersonId().setExtension(personnr)
-		question.getLakarutlatande().getPatient().getPersonId().setRoot("1.2.752.129.2.1.3.1")
-		question.getLakarutlatande().getPatient().setFullstandigtNamn(namn)
+		if (ämne) question.setAmne(Amnetyp.fromValue(ämne))
+        if (vårdReferens) question.setVardReferensId(vårdReferens);
+        if (fråga) question.getFraga().setMeddelandeText(fråga);
+        if (frågeTidpunkt) question.getFraga().setSigneringsTidpunkt(LocalDateTime.parse(frågeTidpunkt));
+		if (lakarutlatandeId) question.getLakarutlatande().setLakarutlatandeId(lakarutlatandeId)
+		if (signeringsTidpunkt) question.getLakarutlatande().setSigneringsTidpunkt(LocalDateTime.parse(signeringsTidpunkt))
+		if (personnr) question.getLakarutlatande().getPatient().getPersonId().setExtension(personnr)
+		if (namn) question.getLakarutlatande().getPatient().setFullstandigtNamn(namn)
 
         SendMedicalCertificateQuestionType parameters = new SendMedicalCertificateQuestionType();
         parameters.setQuestion(question);

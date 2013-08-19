@@ -160,6 +160,12 @@
         </properties>
     </profile>
     <profile>
+      <id>ssh-tunnel-server</id>
+        <properties>
+          <certificate.baseUrl>http://localhost:18080/inera-certificate/</certificate.baseUrl>
+        </properties>
+    </profile>
+    <profile>
       <id>wiki</id>
       <!--
         This profile is for use when writing tests using the FitNesse wiki.
