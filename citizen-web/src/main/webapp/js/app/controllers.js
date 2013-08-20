@@ -5,6 +5,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
     function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService, messageService, $cookies, $rootScope) {
         $scope.certificates = [];
         $scope.doneLoading = false;
+        $scope.doneArchiving = true;
         $scope.messageService = messageService;
         $scope.pageTitle = "Inkorgen";
         $scope.isCollapsed = true;
@@ -17,8 +18,10 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
             $window.location.href = path;
         }
 
-        $scope.archiveSelected = function (item) {
+        $scope.archiveSelected = function () {
+        	var item = $scope.certToArchive;
             $log.debug("archive " + item.id);
+            $scope.doneArchiving = false;
             listCertService.archiveCertificate(item, function (fromServer, oldItem) {
                 $log.debug("statusUpdate callback:" + fromServer);
                 if (fromServer != null) {
@@ -26,6 +29,8 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
                     oldItem.archived = fromServer.archived;
                     oldItem.status = fromServer.status;
                     oldItem.selected = false;
+                    $scope.closeArchiveDialog();
+                    $scope.doneArchiving = true;
                 } else {
                     // show error view
                     $location.path("/fel/couldnotarchivecert");
@@ -48,10 +53,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
             $scope.dialogfocus = true;
         }
 
-        $scope.closeArchiveDialog = function (confirm) {
-            if (confirm) {
-                $scope.archiveSelected($scope.certToArchive);
-            }
+        $scope.closeArchiveDialog = function () {
             $scope.archiveOpen = false;
             $scope.dialogfocus = false;
         }
@@ -90,6 +92,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
 listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'listCertService', function ListCertCtrl($scope, $location, $log, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
+    $scope.doneRestoring = true;
 
     // Restore dialog
     $scope.restoreOpen = false;
@@ -106,16 +109,15 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'lis
         $scope.dialogfocus = true;
     }
 
-    $scope.closeRestoreDialog = function (confirm) {
-        if (confirm) {
-            $scope.restoreCert($scope.certToRestore)
-        }
+    $scope.closeRestoreDialog = function () {
         $scope.restoreOpen = false;
         $scope.dialogfocus = false;
     }
 
-    $scope.restoreCert = function (certId) {
+    $scope.restoreCert = function () {
+    	var certId = $scope.certToRestore;
         $log.debug("Restore requested for cert:" + certId);
+        $scope.doneRestoring = false;
         for (var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
 
@@ -126,6 +128,8 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'lis
                         oldItem.archived = fromServer.archived;
                         oldItem.status = fromServer.status;
                         oldItem.selected = false;
+                        $scope.closeRestoreDialog();
+                        $scope.doneRestoring = true;
                     } else {
                         // show error view
                         $location.path("/fel/couldnotrestorecert");
