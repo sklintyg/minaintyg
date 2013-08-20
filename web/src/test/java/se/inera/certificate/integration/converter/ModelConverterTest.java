@@ -1,19 +1,18 @@
 package se.inera.certificate.integration.converter;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.junit.Test;
+import se.inera.certificate.model.builder.CertificateBuilder;
+import se.inera.certificate.model.dao.Certificate;
+import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static se.inera.certificate.model.CertificateState.DELETED;
 import static se.inera.certificate.model.CertificateState.PROCESSED;
 import static se.inera.certificate.model.CertificateState.RESTORED;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
-
-import se.inera.certificate.model.builder.CertificateBuilder;
-import se.inera.certificate.model.dao.Certificate;
-import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 /**
  * @author andreaskaltenbach
@@ -68,12 +67,13 @@ public class ModelConverterTest {
         assertNotNull(metaType.getStatus().get(0).getTimestamp());
 
         assertEquals("fk", metaType.getStatus().get(1).getTarget());
-        assertEquals(StatusType.DELETED, metaType.getStatus().get(1).getType());
-        assertEquals(MARCH_FIRST, metaType.getStatus().get(1).getTimestamp());
+        assertEquals(StatusType.RESTORED, metaType.getStatus().get(1).getType());
+        assertEquals(APRIL_FIRST, metaType.getStatus().get(1).getTimestamp());
 
         assertEquals("fk", metaType.getStatus().get(2).getTarget());
-        assertEquals(StatusType.RESTORED, metaType.getStatus().get(2).getType());
-        assertEquals(APRIL_FIRST, metaType.getStatus().get(2).getTimestamp());
+        assertEquals(StatusType.DELETED, metaType.getStatus().get(2).getType());
+        assertEquals(MARCH_FIRST, metaType.getStatus().get(2).getTimestamp());
+
     }
 
     private Certificate createCertificate() {

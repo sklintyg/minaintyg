@@ -119,7 +119,7 @@ public class CertificateDaoImpl implements CertificateDao {
 
         CertificateStateHistoryEntry historyEntry = new CertificateStateHistoryEntry(target, state, timestamp);
 
-        certificate.getStates().add(historyEntry);
+        certificate.addState(historyEntry);
     }
 
     private List<String> toLowerCase(List<String> list) {

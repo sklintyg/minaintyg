@@ -61,7 +61,7 @@ public class CertificateBuilder {
     }
 
     public CertificateBuilder state(CertificateState state, String target, LocalDateTime timestamp) {
-        certificate.getStates().add(new CertificateStateHistoryEntry(target, state, timestamp));
+        certificate.addState(new CertificateStateHistoryEntry(target, state, timestamp));
         return this;
     }
 

@@ -18,6 +18,12 @@
  */
 package se.inera.certificate.model.dao;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.ModelException;
+import se.inera.certificate.model.util.Predicate;
+
 import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -32,16 +38,11 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static se.inera.certificate.model.util.Iterables.find;
-
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.ModelException;
-import se.inera.certificate.model.util.Predicate;
 
 /**
  * This class represents the document part of a certificate. The document is stored as a binary large object
@@ -124,8 +125,7 @@ public class Certificate {
             name = "CERTIFICATE_STATE",
             joinColumns = @JoinColumn(name = "CERTIFICATE_ID")
     )
-    @OrderBy("timestamp DESC")
-    private List<CertificateStateHistoryEntry> states = new ArrayList<>();
+    private Collection<CertificateStateHistoryEntry> states = new ArrayList<>();
 
     /**
      * Constructor that takes an id and a document.
@@ -237,11 +237,16 @@ public class Certificate {
     }
 
     public List<CertificateStateHistoryEntry> getStates() {
-        return states;
+        return Collections.unmodifiableList(
+                CertificateStateHistoryEntry.byTimestampDesc.sortedCopy(states));
     }
 
     public void setStates(List<CertificateStateHistoryEntry> states) {
         this.states = states;
+    }
+
+    public void addState(CertificateStateHistoryEntry state) {
+        this.states.add(state);
     }
 
     private byte[] toBytes(String data) {
@@ -266,7 +271,7 @@ public class Certificate {
     }
 
     public boolean isRevoked() {
-        return find(states, new Predicate<CertificateStateHistoryEntry>() {
+        return find(getStates(), new Predicate<CertificateStateHistoryEntry>() {
             @Override
             public boolean apply(CertificateStateHistoryEntry state) {
                 return state.getState() == CertificateState.CANCELLED;
@@ -275,7 +280,7 @@ public class Certificate {
     }
 
     public boolean wasSentToTarget(final String target) {
-        return find(states, new Predicate<CertificateStateHistoryEntry>() {
+        return find(getStates(), new Predicate<CertificateStateHistoryEntry>() {
             @Override
             public boolean apply(CertificateStateHistoryEntry state) {
                 return state.getState() == CertificateState.SENT && state.getTarget().equals(target);
@@ -299,4 +304,5 @@ public class Certificate {
                 ", states=" + states +
                 '}';
     }
+
 }

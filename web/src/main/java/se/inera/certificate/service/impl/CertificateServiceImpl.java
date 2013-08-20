@@ -18,17 +18,13 @@
  */
 package se.inera.certificate.service.impl;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.inera.certificate.exception.CertificateRevokedException;
 import se.inera.certificate.exception.InvalidCertificateException;
 import se.inera.certificate.exception.MissingConsentException;
@@ -42,8 +38,11 @@ import se.inera.certificate.service.CertificateSenderService;
 import se.inera.certificate.service.CertificateService;
 import se.inera.certificate.service.ConsentService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -98,7 +97,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         // add initial RECEIVED state using current time as receiving timestamp
         CertificateStateHistoryEntry state = new CertificateStateHistoryEntry(MI, CertificateState.RECEIVED, new LocalDateTime());
-        certificate.getStates().add(state);
+        certificate.addState(state);
 
         certificateDao.store(certificate);
 
@@ -191,7 +190,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     private Certificate fixDeletedStatus(Certificate certificate) {
         if (certificate != null) {
-            List<CertificateStateHistoryEntry> states = certificate.getStates();
+            List<CertificateStateHistoryEntry> states = new ArrayList<>(certificate.getStates());
             Collections.sort(states, SORTER);
             certificate.setDeleted(isDeleted(states));
         }

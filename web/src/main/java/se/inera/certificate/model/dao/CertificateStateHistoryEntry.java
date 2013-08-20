@@ -1,8 +1,8 @@
 package se.inera.certificate.model.dao;
 
+import com.google.common.collect.Ordering;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.CertificateState;
 
 import javax.persistence.Column;
@@ -26,6 +26,15 @@ public class CertificateStateHistoryEntry {
     @Column(name = "TIMESTAMP")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime timestamp;
+
+    private final static Ordering<LocalDateTime> ORDERING_DESC_TIME_NULL_LAST = Ordering.<LocalDateTime>natural().reverse().nullsFirst();
+
+    final static Ordering<CertificateStateHistoryEntry> byTimestampDesc = new Ordering<CertificateStateHistoryEntry>() {
+        @Override
+        public int compare(CertificateStateHistoryEntry left, CertificateStateHistoryEntry right) {
+            return ORDERING_DESC_TIME_NULL_LAST.compare(left.timestamp, right.timestamp);
+        }
+    };
 
     public CertificateStateHistoryEntry() {
     }
@@ -62,5 +71,14 @@ public class CertificateStateHistoryEntry {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "CertificateStateHistoryEntry{" +
+                "target='" + target + '\'' +
+                ", state=" + state +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }
