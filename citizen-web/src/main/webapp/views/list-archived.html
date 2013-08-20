@@ -1,15 +1,15 @@
 <!-- Modal confirm dialog for restore -->
-<div id="restore-confirmation-dialog" modal="restoreOpen" close="closeRestoreDialog(false)" options="dialogOpts" role="alertdialog" aria-hidden="{{!restoreOpen}}">
+<div id="restore-confirmation-dialog" modal="restoreOpen" close="closeRestoreDialog()" options="dialogOpts" role="alertdialog" aria-hidden="{{!restoreOpen}}">
   <div class="modal-header">
-    <button class="close" ng-click="closeRestoreDialog(false)" aria-label="{{messageService.getProperty('common.close')}}">×</button>
+    <button class="close" ng-click="closeRestoreDialog()" aria-label="{{messageService.getProperty('common.close')}}">×</button>
     <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="archived.restoremodal.header"></span></h3>
   </div>
   <div class="modal-body">
     <p><span message key="archived.restoremodal.text"></span></p>
   </div>
   <div class="modal-footer">
-    <button id="restore-button" class="btn btn-success" ng-click="closeRestoreDialog(true)"><span message key="label.restore"></span></button>
-    <button class="btn btn-link" ng-click="closeRestoreDialog(false)"><span message key="common.cancel"></span></button>
+    <button id="restore-button" class="btn btn-success" ng-click="restoreCert()" ng-disabled="!doneRestoring"><img ng-hide="doneRestoring" ng-src="/img/ajax-loader-small-green.gif" /> <span message key="label.restore"></span></button>
+    <button class="btn btn-link" ng-click="closeRestoreDialog()"><span message key="common.cancel"></span></button>
   </div>
 </div>
 
