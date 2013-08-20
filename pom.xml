@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate</groupId>
   <artifactId>certificate</artifactId>
-  <version>1.0-RC2-SNAPSHOT</version>
+  <version>1.0-RC2</version>
   <packaging>pom</packaging>
   <name>Inera Certificate</name>
   <description>
@@ -11,7 +11,7 @@
   </description>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate/</connection>
-    <tag>HEAD</tag>
+    <tag>certificate-1.0-RC2</tag>
   </scm>
 
   <modules>
