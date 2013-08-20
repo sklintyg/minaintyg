@@ -6,8 +6,8 @@
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|intyg?|
-|19121212-1212|2013-04-01|2013-04-01|[FK7263]|[intyg-1:FK7263:2013-04-01:2013-04-01:2013-04-11:läkare1:enhet1]|
-|19121212-1212|2013-04-02|2013-04-02|[FK7263]|[intyg-2:FK7263:2013-04-02:2013-04-02:2013-04-15:läkare2:enhet2]|
+|19010101-0101|2013-04-01|2013-04-01|[FK7263]|[intyg-1:FK7263:2013-04-01:2013-04-01:2013-04-11:läkare1:enhet1]|
+|19010101-0101|2013-04-02|2013-04-02|[FK7263]|[intyg-2:FK7263:2013-04-02:2013-04-02:2013-04-15:läkare2:enhet2]|
 
 !2 Hantering av intygstyper.
 
@@ -18,26 +18,26 @@ innehålla intyg av angivna typer. Om ingen typ anges, skall samtliga typer retu
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-01|2013-04-01|[FK7263]|[intyg-1]|
+|19010101-0101|2013-04-01|2013-04-01|[FK7263]|[intyg-1]|
 
 !3 Testfall List-Certificates-2.2: Hämta intygslista med 1 intyg av annan typ
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-01|2013-04-01|[FK1111]|[intyg-fk1111]|
+|19010101-0101|2013-04-01|2013-04-01|[FK1111]|[intyg-fk1111]|
 
 
 !3 Testfall List-Certificates-2.3: Hämta intygslista med 2 intyg av olika typ
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-01|2013-04-01|[FK7263, FK1111]|[intyg-1, intyg-fk1111]|
+|19010101-0101|2013-04-01|2013-04-01|[FK7263, FK1111]|[intyg-1, intyg-fk1111]|
 
 !3 Testfall List-Certificates-2.4: Hämta intygslista utan att specificera typ
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-01|2013-04-01|[]|[intyg-1, intyg-annan-typ, intyg-fk1111]|
+|19010101-0101|2013-04-01|2013-04-01|[]|[intyg-1, intyg-annan-typ, intyg-fk1111]|
 
 !2 Hantering av datum-intervall
 
@@ -47,19 +47,19 @@ I frågan anges ett datum-intervall för utfärdande. Endast intyg inom detta in
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-02|2013-04-02|[FK7263]|[intyg-2]|
+|19010101-0101|2013-04-02|2013-04-02|[FK7263]|[intyg-2]|
 
 !3 Testfall List-Certificates-3.2: Hämta intygslista där 3 intyg ligger inom intervallet
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-04-02|2013-04-04|[FK7263]|[intyg-2, intyg-3, intyg-4]|
+|19010101-0101|2013-04-02|2013-04-04|[FK7263]|[intyg-2, intyg-3, intyg-4]|
 
 !3 Testfall List-Certificates-3.3: Hämta tom intygslista, där samtliga intyg ligger utanför intervallet
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19121212-1212|2013-03-01|2013-03-31|[FK7263]|[]|
+|19010101-0101|2013-03-01|2013-03-31|[FK7263]|[]|
 
 !2 Hantering samtycke
 
@@ -67,13 +67,13 @@ I frågan anges ett datum-intervall för utfärdande. Endast intyg inom detta in
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19010101-0101|2013-04-01|2013-04-01|[FK7263]|NOCONSENT|
+|19020202-0202|2013-04-01|2013-04-01|[FK7263]|NOCONSENT|
 
 !3 Testfall List-Certificates-4.2: Hämta intygslista för person-nr som har intyg men saknar samtycke
 
 |Hamta lista av intyg|
 |personnr|från|till|typ|svar?|
-|19020202-0202|2013-04-01|2013-04-01|[FK7263]|NOCONSENT|
+|19030303-0303|2013-04-01|2013-04-01|[FK7263]|NOCONSENT|
 
 !3 Testfall List-Certificates-4.3: Hämta intygslista för person om vilken information saknas
 

@@ -2,10 +2,9 @@
 
 |ta bort Intyg|
 |id|
-|intyg-1|
-|intyg-2|
-|rli-intyg-3|
-|rli-intyg-4|
+|test-intyg-1|
+|test-intyg-2|
+|test-intyg-3|
 
 !3 Återta samtycken:
 
