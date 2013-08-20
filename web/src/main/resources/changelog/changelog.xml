@@ -63,4 +63,10 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="3" author="me">
+    <createIndex indexName="IDX_CERTIFICATE_CIVIC_REGISTRATION_NUMBER" tableName="CERTIFICATE" unique="false">
+      <column name="CIVIC_REGISTRATION_NUMBER" />
+    </createIndex>
+  </changeSet>
 </databaseChangeLog>
