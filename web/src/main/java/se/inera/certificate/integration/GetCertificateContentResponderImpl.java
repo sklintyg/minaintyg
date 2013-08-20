@@ -48,7 +48,6 @@ public class GetCertificateContentResponderImpl implements GetCertificateContent
         Certificate certificate;
         try {
             certificate = certificateService.getCertificate(request.getNationalIdentityNumber(), request.getCertificateId());
-            System.out.println("\n\n"+request.getNationalIdentityNumber()+":"+request.getCertificateId()+"\n\n");
         } catch (MissingConsentException ex) {
             // return ERROR if user has not given consent
             LOG.info("Tried to get certificate '" + request.getCertificateId() + "' but user '" + request.getNationalIdentityNumber() + "' has not given consent.");
