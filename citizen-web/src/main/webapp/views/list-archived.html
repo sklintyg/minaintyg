@@ -2,34 +2,36 @@
 <div id="restore-confirmation-dialog" modal="restoreOpen" close="closeRestoreDialog()" options="dialogOpts" role="alertdialog" aria-hidden="{{!restoreOpen}}">
   <div class="modal-header">
     <button class="close" ng-click="closeRestoreDialog()" aria-label="{{messageService.getProperty('common.close')}}">×</button>
-    <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="archived.restoremodal.header"></span></h3>
+    <h3 ng-focus="dialogfocus" tabindex="-1">
+      <span message key="archived.restoremodal.header"></span>
+    </h3>
   </div>
   <div class="modal-body">
-    <p><span message key="archived.restoremodal.text"></span></p>
+    <p>
+      <span message key="archived.restoremodal.text"></span>
+    </p>
   </div>
   <div class="modal-footer">
-    <button id="restore-button" class="btn btn-success" ng-click="restoreCert()" ng-disabled="!doneRestoring"><img ng-hide="doneRestoring" ng-src="/img/ajax-loader-small-green.gif" /> <span message key="label.restore"></span></button>
-    <button class="btn btn-link" ng-click="closeRestoreDialog()"><span message key="common.cancel"></span></button>
+    <button id="restore-button" class="btn btn-success" ng-click="restoreCert()" ng-disabled="!doneRestoring">
+      <img ng-hide="doneRestoring" ng-src="/img/ajax-loader-small-green.gif" /> <span message key="label.restore"></span>
+    </button>
+    <button class="btn btn-link" ng-click="closeRestoreDialog()">
+      <span message key="common.cancel"></span>
+    </button>
   </div>
 </div>
 
 <div class="row-fluid">
-	<div class="span7">
-		<h1 ng-focus="pagefocus" tabindex="0">
-		  <span id="archivedHeader" message key="archived.header"></span>
-		</h1>
-	    <span message key="archived.description"></span>
-	</div>
-</div>
-
-  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
-    <img aria-labelledby="loading-message" src="/img/ajax-loader.gif" style="text-align: center;" />
-    <p id="loading-message" style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong><span message key="label.archivedcertificatesloading"></span></strong>
-    </p>
+  <div class="span7">
+    <h1 ng-focus="pagefocus" tabindex="0">
+      <span id="archivedHeader" message key="archived.header"></span>
+    </h1>
+    <span message key="archived.description"></span>
   </div>
+</div>
+<div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | archivedfilter).length>0">
 
-  <table id="certTable" class="table expandable" ng-show="(certificates | archivedfilter).length>0" aria-labelledby="archivedHeader">
+  <table id="certTable" class="table expandable" aria-labelledby="archivedHeader">
     <thead>
       <tr>
         <th scope="col" id="issued"><span message key="listtable.headers.issued"></span></th>
@@ -51,10 +53,11 @@
       </tr>
     </tbody>
   </table>
-  
-    <div class="table-bottom" ng-hide="(certificates | archivedfilter).length<1"></div>
+</div>
+<!-- eof spinner -->
+<div class="table-bottom" ng-hide="(certificates | archivedfilter).length<1"></div>
 
-    <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archivedfilter).length<1">
-      <span message key="error.noarchivedcerts"></span>
-    </div>
-  
+<div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archivedfilter).length<1">
+  <span message key="error.noarchivedcerts"></span>
+</div>
+

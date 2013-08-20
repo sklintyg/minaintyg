@@ -46,7 +46,7 @@
 <div class="row-fluid">
   <div class="span12">
 
-    <div mi-spinner label="label.certificatesloading" show-spinner="doneLoading" show-content="doneLoading && (certificates | inboxfilter).length>0">
+    <div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | inboxfilter).length>0">
       <div id="certTable">
         <div ng-repeat="cert in certificates | inboxfilter" class="{{cert.status}}" data-ng-animate="'custom'">
           <div class="certificate">
