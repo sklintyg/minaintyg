@@ -21,6 +21,14 @@
     <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
     <tag>HEAD</tag>
   </scm>
+  <distributionManagement>
+    <repository>
+      <id>cloudbees-private-release-repository</id>
+      <name>Callista Software Release Respository</name>
+      <url>dav:https://repository-callistasoftware.forge.cloudbees.com/release</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
 
   <modules>
     <module>citizen-web</module>
@@ -323,10 +331,44 @@
     <repository>
       <id>callista-release</id>
       <url>https://repository-callistasoftware.forge.cloudbees.com/release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
     <repository>
       <id>callista-snapshot</id>
       <url>https://repository-callistasoftware.forge.cloudbees.com/snapshot/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>thirdparty</id>
+      <url>https://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>thirdparty-plugin</id>
+      <url>https://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

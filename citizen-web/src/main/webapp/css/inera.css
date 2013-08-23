@@ -66,8 +66,10 @@ body {
    	background-image: url("../img/bg11.png");
 }
 
+
 a {
     color: #008391;
+    cursor:pointer;
 }
 
 a:hover {
@@ -85,6 +87,8 @@ a.backlink {
 	padding-left:15px;
 	background:transparent url(/img/back-link-icon.gif) center left no-repeat;
 }
+
+button {cursor: pointer;}
 
 h1,h2,h3,h4,h5 {
 	font-family: 26px/1 ProximaNovaCnReg,'Arial Narrow',Arial,Sans-serif;
@@ -610,6 +614,7 @@ button#archiveCertificateBtn {
 .btn-success {
 	background: none;
 	background-color: #42a341;
+	cursor: pointer;
 }
 
 .btn-success:hover {
