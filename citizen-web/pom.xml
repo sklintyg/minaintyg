@@ -32,6 +32,11 @@
       <artifactId>mvk-integration</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.callistasoftware.netcare.commons</groupId>
+      <artifactId>netcare-saml</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>schemas</artifactId>
     </dependency>

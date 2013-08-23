@@ -52,15 +52,46 @@
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
     <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
 
+    <import resource="classpath*:/fk-saml-config.xml" />
+
     <security:authentication-manager>
       <security:authentication-provider ref="preAuthAuthProvider" />
     </security:authentication-manager>
 
+    <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager">
+      <constructor-arg>
+        <list>
+          <bean class="org.opensaml.saml2.metadata.provider.HTTPMetadataProvider">
+            <!-- URL containing the metadata -->
+            <constructor-arg>
+              <value type="java.lang.String">${saml.metadata.location}</value>
+            </constructor-arg>
+            <!-- Timeout for metadata loading in ms -->
+            <constructor-arg>
+              <value type="int">50000</value>
+            </constructor-arg>
+            <property name="parserPool" ref="parserPool"/>
+          </bean>
+        </list>
+      </constructor-arg>
+      <!--  OPTIONAL used when one of the metadata files contains information about this service provider -->
+      <!-- <property name="hostedSPName" value=""/> -->
+      <!--  OPTIONAL property: can tell the system which IDP should be used for authenticating user by default. -->
+      <property name="defaultIDP" value="idpexternalfksat"/>
+    </bean>
+
     <!-- Enable the MVK Auth filter for our mvk entry point url -->
+    <!-- We always clear the context before logging in -->
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
-        <!-- We always clear the context before logging in -->
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
+    </security:http>
+
+    <!-- Enable the FK SAML Auth filter for our FK entry point url -->
+    <security:http pattern="/web/fksso/**"  authentication-manager-ref="samlAuthenticationManager" entry-point-ref="mvkEntryPoint">
+      <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
+      <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
     </security:http>
 
     <!-- set up protection of the needed url's in the app-->
