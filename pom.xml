@@ -21,6 +21,14 @@
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
   </scm>
+  <distributionManagement>
+    <repository>
+      <id>cloudbees-private-release-repository</id>
+      <name>Callista Software Release Respository</name>
+      <url>dav:https://repository-callistasoftware.forge.cloudbees.com/release</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
 
   <modules>
     <module>citizen-web</module>
