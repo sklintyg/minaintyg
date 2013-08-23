@@ -40,7 +40,7 @@
     <dependency>
       <groupId>org.springframework.security.extensions</groupId>
       <artifactId>spring-security-saml2-core</artifactId>
-      <version>1.0.0-RC2-SNAPSHOT</version>
+      <version>1.0.0.RC3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.opensaml</groupId>
@@ -76,11 +76,6 @@
       <version>2.0.1</version>
     </dependency>
     <!-- End netcare replacement -->
-    <dependency>
-      <groupId>org.callistasoftware.netcare.commons</groupId>
-      <artifactId>netcare-saml</artifactId>
-      <version>1.4</version>
-    </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>schemas</artifactId>
