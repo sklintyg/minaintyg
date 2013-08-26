@@ -130,6 +130,14 @@ h3 {
     padding-top: 15px;
 }
 
+h4.footer-heading {
+	font-size: 14px;
+	font-style: italic;
+	font-weight: normal;
+    color: #666;
+	padding-top: 15px;
+}
+
 .modal-header h3 {
     padding: 0;
 }
