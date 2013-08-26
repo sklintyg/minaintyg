@@ -92,7 +92,6 @@
                 <property name="signMetadata" value="true"/>
                 <property name="entityAlias" value="defaultAlias"/>
                 <property name="entityBaseURL" value="${saml.baseUrl}" />
-                <property name="id" value="1234567890" />
                 <property name="entityId" value="${saml.baseUrl}/saml/SSO/alias/defaultAlias" />
             </bean>
         </constructor-arg>

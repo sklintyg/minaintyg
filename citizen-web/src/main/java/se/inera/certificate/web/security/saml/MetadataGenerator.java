@@ -188,8 +188,6 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         EntityDescriptor descriptor = builder.buildObject();
         if (id != null) {
             descriptor.setID(id);
-        } else {
-            descriptor.setID(entityId);
         }
         descriptor.setEntityID(entityId);
         descriptor.getRoleDescriptors().add(buildSPSSODescriptor(entityBaseURL, entityAlias, requestSigned, assertionSigned, includedNameID));
