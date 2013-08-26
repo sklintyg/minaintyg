@@ -57,11 +57,13 @@
           <div class="span7">
   						<h1>Välkommen till Mina intyg</h1>
   						<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg via internet.</p>
-  						<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Hanteringen sköter du via ditt användarkonto och tjänsten är tillgänglig dygnet runt.</p>
-  						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att Mina intyg får hantera dina personuppgifter. Därefter kan du börja använda tjänsten omedelbart. Du kan bara använda tjänsten för dig själv. Barn och andra anhöriga måste ha egna användarkonton.</p>
-  						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten.</p>
-
-              <p class="btn-row-desc">Observera att inloggningen sker hos Mina vårdkontakter.</p>
+  						<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
+  						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
+  						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att du vill hantera dina personuppgifter i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för dig själv.</p>
+						<p class="btn-row-desc">
+							<a href="#">Mer information om hur du skaffar en e-legitimation</a> <!-- TODO: Add a-link from Lena -->
+						</p>
+              			<p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
   						<div class="btn-row">
   							<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
   						</div>
