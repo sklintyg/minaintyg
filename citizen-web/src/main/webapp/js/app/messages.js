@@ -14,15 +14,15 @@ var minaIntygResources = {
         "button.show" : "Visa intyget",
 
         "inbox.header" : "Inkorgen",
-        "inbox.description" : "Här listas dina intyg med det senast inkomna intyget överst. Välj Visa intyget för att titta på det, skriva ut det eller spara det till din dator.",
-        "inbox.revoked" : "Vården har rättat detta intyg. Det kan därför inte längre visas eller skickas. Kontakta vården om du har några frågor.",
+        "inbox.description" : "Här listas alla dina intyg med det senast inkomna intyget överst. För att hantera intyget väljer du <i>Visa intyget</i>. Då kan du: <br><br> <ul><li>läsa hela intyget</li><li>spara det till din dator</li><li>skriva ut det</li><li>skicka det till Försäkringskassan</li></ul><br>Om du vill arkivera intyget väljer du <i>Arkivera intyg.</i>",
+        "inbox.revoked" : "Intyget är rättat av din vårdgivare. Det går därför inte att visa eller hantera. Kontakta din vårdgivare för mer information.",
         "inbox.archivemodal.header" : "Arkivera intyg",
-        "inbox.archivemodal.text" : "Om du väljer att arkivera intyget kommer det istället hamna under Arkiverade intyg.<br><br>Du kan när som helst återställa intyget till inkorgen igen från Arkiverade intyg.",
+        "inbox.archivemodal.text" : "När du väljer att arkivera intyget kommer det att flyttas till <i>Arkiverade intyg</i>.<br><br> Du kan när som helst återställa intyget igen från <i>Arkiverade intyg</i>.",
 
         "archived.header" : "Arkiverade intyg",
-        "archived.description" : "<p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att: <ul><li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg till mappen \"borttagna intyg\".</li><li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, och i vissa fall livet ut.</li><li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då ändra uppgiften i journalen.</li></ul></p><p><a href=\"http://www.datainspektionen.se/lagar-och-regler/patientdatalagen\" target=\"_blank\">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p>    <p>För att återställa ett borttaget intyg välj Återställ.</p>",
-        "archived.restoremodal.header" : "Återställa intyg",
-        "archived.restoremodal.text" : "Om du väljer att återställa intyget kommer det återställas till Inkorgen.<br><br>Du kan när som helst arkivera intyget till arkiverade intyg igen från Inkorgen.",
+        "archived.description" : "<p>Ett läkarintyg innehåller information som hämtas från din patientjournal. Därför gäller samma lagar och regler för ditt intyg som för journalen. Det innebär att: <ul><li>Du kan inte helt ta bort ditt intyg från intygstjänsten. Däremot kan du flytta dina gamla intyg hit till <i>Arkiverade intyg</i>.</li><li>Uppgifter i patientjournalen måste lagras i minst 10 år enligt lag. Ofta lagras de längre, i vissa fall livet ut.</li><li>Om någon uppgift är fel i ditt intyg ska du vända dig till din vårdgivare. De kan då rätta uppgiften i journalen.</li></ul></p><p><a href=\"http://www.datainspektionen.se/lagar-och-regler/patientdatalagen\" target=\"_blank\">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p><p>Du kan flytta tillbaka ett arkiverat intyg till inkorgen genom att välja <i>Återställ</i>.</p>",
+        "archived.restoremodal.header" : "Återställ intyg",
+        "archived.restoremodal.text" : "När du väljer att återställa intyget kommer det att flyttas till <i>Inkorgen</i>.<br><br>Du kan när som helst arkivera intyget igen från <i>Inkorgen</i>.",
 
         "about.header" : "Om Mina intyg",
 
