@@ -54,7 +54,7 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
             + '    <li class="divider-vertical" aria-hidden="true"></li>'
             + '    <li ng-class="navClass(\'omminaintyg\')"><a role="menuitem" ng-href="{{linkPrefix}}#/omminaintyg" id="aboutTab"><message key="nav.label.aboutminaintyg"></message></a></li>'
             + '    <li class="divider-vertical" aria-hidden="true"></li>'
-            + '    <li ng-class="navClass(\'hjalp\')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab"><message key="nav.label.help"></message></a></li>'
+            + '    <li ng-class="navClass(\'hjalp\')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab"><message key="help.header"></message></a></li>'
             + '  </ul>'
             + ' </div>'
             + '</div>'
