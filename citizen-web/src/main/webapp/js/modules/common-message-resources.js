@@ -13,7 +13,7 @@ var commonMessageResources = {
         "nav.label.inbox" : "Inkorgen",
         "nav.label.archived" : "Arkiverade intyg",
         "nav.label.aboutminaintyg" : "Om Mina intyg",
-        "nav.label.help" : "Hjälp",
+        "nav.label.help" : "Hjälp och support",
         "nav.label.loggedinas" : "Du är inloggad som",
         
         "certificatetypes.fk7263.commonname" : "Läkarintyg",
