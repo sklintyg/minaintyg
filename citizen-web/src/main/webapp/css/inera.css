@@ -138,6 +138,13 @@ h4.footer-heading {
 	padding-top: 15px;
 }
 
+
+.modal.fade { top: 10%; }
+
+.modal.fade.in { top: 20%; }
+
+.modal { top: 20%; }
+
 .modal-header h3 {
     padding: 0;
 }
