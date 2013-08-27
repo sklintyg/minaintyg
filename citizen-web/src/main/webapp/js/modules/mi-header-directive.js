@@ -58,8 +58,6 @@ angular.module('directives.mi').directive("miMainNavigation", ['$rootScope', '$l
             + '  </ul>'
             + ' </div>'
             + '</div>'
-            
-            
     }
 } ]);
 
