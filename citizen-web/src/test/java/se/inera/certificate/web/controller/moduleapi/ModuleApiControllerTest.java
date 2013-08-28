@@ -22,12 +22,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.certificate.api.CertificateContentMeta;
-import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
+import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
@@ -42,7 +42,7 @@ public class ModuleApiControllerTest {
     private static final String CERTIFICATE_ID = "123456";
     private static final String CERTIFICATE_TYPE = "fk7263";
 
-    private static GetCertificateContentHolder utlatandeHolder;
+    private static CertificateContentHolder utlatandeHolder;
     private static String certificateData;
 
     @Mock
@@ -66,7 +66,7 @@ public class ModuleApiControllerTest {
     @BeforeClass
     public static void setupCertificateData() throws IOException {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-        utlatandeHolder = new GetCertificateContentHolder();
+        utlatandeHolder = new CertificateContentHolder();
         utlatandeHolder.setCertificateContent(certificateData);
 
         Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);

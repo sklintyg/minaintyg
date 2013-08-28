@@ -34,12 +34,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.api.CertificateContentMeta;
-import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
+import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
@@ -86,7 +86,7 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam( "id" ) final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        GetCertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+        CertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
       
         LOG.debug("getCertificate - type is: {}", contentHolder.getCertificateContentMeta().getType());
@@ -132,31 +132,31 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        GetCertificateContentHolder getCertificateContentHolder;
+        CertificateContentHolder certificateContentHolder;
 
         try {
-            getCertificateContentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+            certificateContentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
         } catch (ExternalWebServiceCallFailedException ex) {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
 
-        Response pdf = fetchPdf(getCertificateContentHolder);
+        Response pdf = fetchPdf(certificateContentHolder);
 
         if (isNotOk(pdf)) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(pdf.getStatus()).build();
         }
 
-        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(getCertificateContentHolder.getCertificateContentMeta())).build();
+        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(certificateContentHolder.getCertificateContentMeta())).build();
     }
 
     private boolean isNotOk(Response response) {
         return response.getStatus() != OK.getStatusCode();
     }
 
-    private Response fetchPdf(GetCertificateContentHolder getCertificateContentHolder) {
-        ModuleRestApi api = moduleApiFactory.getModuleRestService(getCertificateContentHolder.getCertificateContentMeta().getType());
-        Response pdf = api.pdf(getCertificateContentHolder);
+    private Response fetchPdf(CertificateContentHolder certificateContentHolder) {
+        ModuleRestApi api = moduleApiFactory.getModuleRestService(certificateContentHolder.getCertificateContentMeta().getType());
+        Response pdf = api.pdf(certificateContentHolder);
         return pdf;
     }
 

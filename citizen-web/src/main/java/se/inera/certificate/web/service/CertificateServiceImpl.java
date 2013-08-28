@@ -34,13 +34,14 @@ import org.springframework.stereotype.Service;
 
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
-import se.inera.certificate.api.CertificateContentMeta;
 import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.api.StatusMeta;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
+import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
@@ -182,7 +183,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public GetCertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) {
+    public CertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) {
         GetCertificateContentRequest request = new GetCertificateContentRequest();
         request.setCertificateId(certificateId);
         request.setNationalIdentityNumber(civicRegistrationNumber);
@@ -199,14 +200,14 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private GetCertificateContentHolder convert(final GetCertificateContentResponse response) {
+    private CertificateContentHolder convert(final GetCertificateContentResponse response) {
 
-        GetCertificateContentHolder getCertificateContentHolder = new GetCertificateContentHolder();
+        CertificateContentHolder getCertificateContentHolder = new CertificateContentHolder();
         getCertificateContentHolder.setCertificateContent(response.getCertificate());
         List<CertificateStatusType> statuses = response.getStatuses();
 
         CertificateContentMeta contentMeta = new CertificateContentMeta();
-        contentMeta.setStatuses(convertStatus(statuses));
+        contentMeta.setStatuses(convertToCertificateStatus(statuses));
 
         //Deserialize certificate Json to get common properties
         Utlatande commonUtlatande;
@@ -281,6 +282,21 @@ public class CertificateServiceImpl implements CertificateService {
         return dto;
     }
 
+    protected List<CertificateStatus> convertToCertificateStatus(List<CertificateStatusType> sourceList) {
+        List<CertificateStatus> statusList = new ArrayList<>();
+        if (sourceList != null) {
+            for (CertificateStatusType stat : sourceList) {
+                if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
+                    CertificateStatus status = new CertificateStatus();
+                    status.setTarget(stat.getTarget());
+                    status.setTimestamp(stat.getTimestamp());
+                    status.setType(stat.getType().toString());
+                    statusList.add(status);
+                }
+            }
+        }
+        return statusList;
+    }
     protected List<StatusMeta> convertStatus(List<CertificateStatusType> sourceList) {
         List<StatusMeta> statusList = new ArrayList<>();
         if (sourceList != null) {
