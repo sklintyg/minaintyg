@@ -18,6 +18,9 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.OK;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -26,18 +29,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.OK;
-
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.api.CertificateContentMeta;
+import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.rest.ModuleRestApi;
 import se.inera.certificate.integration.rest.ModuleRestApiFactory;
-import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
@@ -71,6 +73,7 @@ public class ModuleApiController {
     @Autowired
     private CertificateService certificateService;
 
+    
     /**
      * Return the certificate identified by the given id as JSON.
      *
@@ -83,14 +86,17 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam( "id" ) final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Utlatande utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+        GetCertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
-        ModuleRestApi moduleRestApi = moduleApiFactory.getModuleRestService(utlatande.getTyp().getCode());
+      
+        LOG.debug("getCertificate - type is: {}", contentHolder.getCertificateContentMeta().getType());
+        
+        ModuleRestApi moduleRestApi = moduleApiFactory.getModuleRestService(contentHolder.getCertificateContentMeta().getType());
         WebClient.client(moduleRestApi).accept(MediaType.WILDCARD);
-        Response response = moduleRestApi.convertExternalToInternal(utlatande);
+        Response response = moduleRestApi.convertExternalToInternal(contentHolder);
 
         if (isNotOk(response)) {
-            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '" +  utlatande.getTyp().getCode() + "'. Status code is " + response.getStatus());
+            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '" +  contentHolder.getCertificateContentMeta().getType() + "'. Status code is " + response.getStatus());
             return Response.status(response.getStatus()).build();
         }
 
@@ -126,38 +132,38 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        Utlatande utlatande;
+        GetCertificateContentHolder getCertificateContentHolder;
 
         try {
-            utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+            getCertificateContentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
         } catch (ExternalWebServiceCallFailedException ex) {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
 
-        Response pdf = fetchPdf(utlatande);
+        Response pdf = fetchPdf(getCertificateContentHolder);
 
         if (isNotOk(pdf)) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.status(pdf.getStatus()).build();
         }
 
-        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(utlatande)).build();
+        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(getCertificateContentHolder.getCertificateContentMeta())).build();
     }
 
     private boolean isNotOk(Response response) {
         return response.getStatus() != OK.getStatusCode();
     }
 
-    private Response fetchPdf(Utlatande utlatande) {
-        ModuleRestApi api = moduleApiFactory.getModuleRestService(utlatande.getTyp().getCode());
-        Response pdf = api.pdf(utlatande);
+    private Response fetchPdf(GetCertificateContentHolder getCertificateContentHolder) {
+        ModuleRestApi api = moduleApiFactory.getModuleRestService(getCertificateContentHolder.getCertificateContentMeta().getType());
+        Response pdf = api.pdf(getCertificateContentHolder);
         return pdf;
     }
 
-    private String pdfFileName(Utlatande utlatande) {
+    private String pdfFileName(CertificateContentMeta certificateContentMeta) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",
-                utlatande.getPatient().getId().getExtension(),
-                utlatande.getValidFromDate().toString(DATE_FORMAT),
-                utlatande.getValidToDate().toString(DATE_FORMAT));
+                certificateContentMeta.getPatientId(),
+                certificateContentMeta.getFromDate().toString(DATE_FORMAT),
+                certificateContentMeta.getTomDate().toString(DATE_FORMAT));
     }
 }

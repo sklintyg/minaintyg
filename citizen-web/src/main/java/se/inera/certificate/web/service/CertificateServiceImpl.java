@@ -20,6 +20,7 @@ package se.inera.certificate.web.service;
 
 import iso.v21090.dt.v1.II;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,11 +34,13 @@ import org.springframework.stereotype.Service;
 
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
+import se.inera.certificate.api.CertificateContentMeta;
 import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.api.StatusMeta;
-import se.inera.certificate.integration.converter.UtlatandeJaxbToUtlatandeConverter;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
@@ -60,6 +63,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -86,6 +92,11 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private GetCertificateContentResponderInterface getCertificateContentService;
+
+    /**
+     * Mapper to serialize/deserialize Utlatanden
+     */
+    private static ObjectMapper objectMapper = new CustomObjectMapper();
 
     /**
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
@@ -171,7 +182,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Utlatande getUtlatande(String civicRegistrationNumber, String certificateId) {
+    public GetCertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) {
         GetCertificateContentRequest request = new GetCertificateContentRequest();
         request.setCertificateId(certificateId);
         request.setNationalIdentityNumber(civicRegistrationNumber);
@@ -180,7 +191,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return UtlatandeJaxbToUtlatandeConverter.convert(response.getCertificate());
+            return convert(response);
         default: {
             LOG.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
             throw new ExternalWebServiceCallFailedException(response.getResult());
@@ -188,12 +199,41 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
+    private GetCertificateContentHolder convert(final GetCertificateContentResponse response) {
+
+        GetCertificateContentHolder getCertificateContentHolder = new GetCertificateContentHolder();
+        getCertificateContentHolder.setCertificateContent(response.getCertificate());
+        List<CertificateStatusType> statuses = response.getStatuses();
+
+        CertificateContentMeta contentMeta = new CertificateContentMeta();
+        contentMeta.setStatuses(convertStatus(statuses));
+
+        //Deserialize certificate Json to get common properties
+        Utlatande commonUtlatande;
+        try {
+            commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), Utlatande.class);
+        } catch (IOException e) {
+            throw Throwables.propagate(e);
+        }
+        
+        // Set metadata based on common properties found on any certificate (regardless of type).
+        contentMeta.setId(commonUtlatande.getId().getExtension());
+        contentMeta.setType(commonUtlatande.getTyp().getCode().toLowerCase());
+        contentMeta.setPatientId(commonUtlatande.getPatient().getId().getExtension());
+        contentMeta.setFromDate(commonUtlatande.getValidFromDate());
+        contentMeta.setTomDate(commonUtlatande.getValidToDate());
+
+        getCertificateContentHolder.setCertificateContentMeta(contentMeta);
+
+        return getCertificateContentHolder;
+    }
+
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {
         final ListCertificatesRequestType params = new ListCertificatesRequestType();
         params.setNationalIdentityNumber(civicRegistrationNumber);
 
         ListCertificatesResponseType response = listService.listCertificates(null, params);
-        
+
         switch (response.getResult().getResultCode()) {
         case OK:
             return convert(response);

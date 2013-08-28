@@ -1,8 +1,5 @@
 package se.inera.certificate.web.controller.moduleapi;
 
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -12,7 +9,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,6 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
+import se.inera.certificate.api.CertificateContentMeta;
+import se.inera.certificate.api.GetCertificateContentHolder;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.ModuleRestApi;
@@ -30,6 +33,8 @@ import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ModuleApiControllerTest {
 
@@ -37,7 +42,7 @@ public class ModuleApiControllerTest {
     private static final String CERTIFICATE_ID = "123456";
     private static final String CERTIFICATE_TYPE = "fk7263";
 
-    private static Utlatande utlatande;
+    private static GetCertificateContentHolder utlatandeHolder;
     private static String certificateData;
 
     @Mock
@@ -61,30 +66,40 @@ public class ModuleApiControllerTest {
     @BeforeClass
     public static void setupCertificateData() throws IOException {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-        utlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
+        utlatandeHolder = new GetCertificateContentHolder();
+        utlatandeHolder.setCertificateContent(certificateData);
+
+        Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
+        CertificateContentMeta meta = new CertificateContentMeta();
+        meta.setId(commonUtlatande.getId().getExtension());
+        meta.setType(commonUtlatande.getTyp().getCode().toLowerCase());
+        meta.setPatientId(commonUtlatande.getPatient().getId().getExtension());
+        meta.setFromDate(commonUtlatande.getValidFromDate());
+        meta.setTomDate(commonUtlatande.getValidToDate());
+        utlatandeHolder.setCertificateContentMeta(meta);
     }
 
     @Test
     public void testGetCertificatePdf() throws IOException {
 
-        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatande);
+        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
-        
+
         // Mimic the module API to which the PDF generation is delegated to.
         // We return an HTTP 200 together with some mock PDF data.
         Response moduleCallResponse = mock(Response.class);
         when(moduleCallResponse.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
         when(moduleCallResponse.getEntity()).thenReturn("<pdf-file>");
-        when(moduleRestApi.pdf(utlatande)).thenReturn(moduleCallResponse);
+        when(moduleRestApi.pdf(utlatandeHolder)).thenReturn(moduleCallResponse);
 
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
         verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(moduleRestApi).pdf(utlatande);
+        verify(moduleRestApi).pdf(utlatandeHolder);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals("<pdf-file>", response.getEntity());
@@ -98,7 +113,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingModule() throws IOException {
-        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatande);
+        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
 
         Citizen citizen = mockCitizen();
@@ -108,13 +123,13 @@ public class ModuleApiControllerTest {
         // We return an HTTP 501.
         Response moduleCallResponse = mock(Response.class);
         when(moduleCallResponse.getStatus()).thenReturn(Response.Status.NOT_IMPLEMENTED.getStatusCode());
-        when(moduleRestApi.pdf(utlatande)).thenReturn(moduleCallResponse);
+        when(moduleRestApi.pdf(utlatandeHolder)).thenReturn(moduleCallResponse);
 
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
         verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
         verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(moduleRestApi).pdf(utlatande);
+        verify(moduleRestApi).pdf(utlatandeHolder);
 
         assertEquals(NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
