@@ -62,13 +62,15 @@
       <constructor-arg>
         <list>
           <bean class="org.opensaml.saml2.metadata.provider.HTTPMetadataProvider">
+            <constructor-arg>
+              <bean class="java.util.Timer"><constructor-arg type="boolean" value="true"/></bean>
+            </constructor-arg>
+            <constructor-arg>
+               <bean class="se.inera.certificate.web.util.HttpClientWithProxy" factory-method="create"/>
+            </constructor-arg>
             <!-- URL containing the metadata -->
             <constructor-arg>
               <value type="java.lang.String">${saml.metadata.location}</value>
-            </constructor-arg>
-            <!-- Timeout for metadata loading in ms -->
-            <constructor-arg>
-              <value type="int">50000</value>
             </constructor-arg>
             <property name="parserPool" ref="parserPool"/>
           </bean>
