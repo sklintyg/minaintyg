@@ -14,7 +14,7 @@ var minaIntygResources = {
         "button.show" : "Visa intyget",
 
         "inbox.header" : "Inkorgen",
-        "inbox.description" : "Här listas alla dina intyg med det senast inkomna intyget överst. För att hantera intyget väljer du <i>Visa intyget</i>. Då kan du: <br><br> <ul><li>läsa hela intyget</li><li>spara det till din dator</li><li>skriva ut det</li><li>skicka det till Försäkringskassan</li></ul><br>Om du vill arkivera intyget väljer du <i>Arkivera intyg.</i>",
+        "inbox.description" : "Här listas alla dina intyg med det senast inkomna intyget överst. För att hantera intyget väljer du <i>Visa intyget</i>. Då kan du: <br><br> <ul><li>läsa hela intyget</li><li>spara det till din dator</li><li>skriva ut det</li><li>skicka det till Försäkringskassan</li></ul><br>Om du vill arkivera intyget väljer du symbolen <i>Arkivera intyg</i> <img class='inline-icon' src='/img/archive2.png'/>.",
         "inbox.revoked" : "Intyget är rättat av din vårdgivare. Det går därför inte att visa eller hantera. Kontakta din vårdgivare för mer information.",
         "inbox.archivemodal.header" : "Arkivera intyg",
         "inbox.archivemodal.text" : "När du väljer att arkivera intyget kommer det att flyttas till <i>Arkiverade intyg</i>.<br><br> Du kan när som helst återställa intyget igen från <i>Arkiverade intyg</i>.",
