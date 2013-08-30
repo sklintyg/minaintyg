@@ -53,7 +53,7 @@
         <div id="navigation-container"></div>
 
         <div class="row-fluid">
-          <div id="content-body" class="span12">
+          <div id="content-body" class="span7">
 
 
             <c:choose>
@@ -64,14 +64,22 @@
                 <div id="loggedOut" class="alert alert-info">
                   <spring:message code="info.loggedout.text" />
                 </div>
+  	            <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+                <div class="btn-row">
+                  <a class="btn btn-success" href="http://www.minavardkontakter.se"><spring:message code="info.loggedout.fk.loginagain" /></a>
+                </div>
               </c:when>
 
               <c:when test="${param.reason eq \"denied\"}">
                 <h1>
                   <spring:message code="error.noauth.title" />
                 </h1>
-                <div id="noAuth" class="alert alert-error">
+                <div id="noAuth" class="alert alert-info">
                   <spring:message code="error.noauth.text" />
+                </div>
+  	            <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+                <div class="btn-row">
+                  <a class="btn btn-success" href="http://www.minavardkontakter.se"><spring:message code="info.loggedout.fk.loginagain" /></a>
                 </div>
               </c:when>
 

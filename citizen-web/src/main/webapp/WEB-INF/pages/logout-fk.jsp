@@ -61,6 +61,10 @@
               <spring:message code="info.loggedout.fk.text" />
             </div>
           </div>
+	      <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+		  <div class="btn-row">
+			<a class="btn btn-success" href="http://www.minavardkontakter.se"><spring:message code="info.loggedout.fk.loginagain" /></a>
+		  </div>
         </div>
       </div>
 
