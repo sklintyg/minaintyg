@@ -55,22 +55,22 @@
 
         <div id="content-body" class="row-fluid">
           <div class="span7">
-  						<h1>Välkommen till Mina intyg</h1>
-  						<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg via internet.</p>
-  						<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
-  						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
-  						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att du vill hantera dina personuppgifter i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för dig själv.</p>
-						<p>
-							<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om hur du skaffar en e-legitimation</a>
-						</p>
-              			<p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
-  						<div class="btn-row">
-  							<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
-  						</div>
-  					</div>
-  					<div class="span5">
-  						<img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
-  					</div>
+			<h1>Välkommen till Mina intyg</h1>
+			<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
+			<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
+			<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
+			<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
+			<p>
+				<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om hur du skaffar en e-legitimation</a>
+			</p>
+        	<p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
+			<div class="btn-row">
+				<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
+			</div>
+		</div>
+		<div class="span5">
+			<img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
+		</div>
         </div>
 
       </div>
