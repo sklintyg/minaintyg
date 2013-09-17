@@ -14,12 +14,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate-web</groupId>
   <artifactId>certificate-web</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Web (Citizen web app)</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
-    <tag>certificate-web-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
@@ -175,17 +175,17 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>schemas</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate.proxy</groupId>
         <artifactId>reverse-proxy</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
