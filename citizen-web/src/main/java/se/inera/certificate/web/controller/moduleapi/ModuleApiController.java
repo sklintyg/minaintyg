@@ -18,6 +18,19 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.certificate.api.ModuleAPIResponse;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.rest.ModuleRestApi;
+import se.inera.certificate.integration.rest.ModuleRestApiFactory;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
+import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
+import se.inera.certificate.web.service.CitizenService;
+
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
 
@@ -28,21 +41,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.integration.rest.ModuleRestApi;
-import se.inera.certificate.integration.rest.ModuleRestApiFactory;
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -56,7 +54,6 @@ public class ModuleApiController {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
-    private static final String DATE_FORMAT = "yyyyMMdd";
 
     @Autowired
     private ModuleRestApiFactory moduleApiFactory;
@@ -147,7 +144,9 @@ public class ModuleApiController {
             return Response.status(pdf.getStatus()).build();
         }
 
-        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; filename=" + pdfFileName(certificateContentHolder.getCertificateContentMeta())).build();
+        String filenameHeader = pdf.getHeaderString(CONTENT_DISPOSITION); // filename=...
+
+        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; " + filenameHeader).build();
     }
 
     private boolean isNotOk(Response response) {
@@ -160,10 +159,4 @@ public class ModuleApiController {
         return pdf;
     }
 
-    private String pdfFileName(CertificateContentMeta certificateContentMeta) {
-        return String.format("lakarutlatande_%s_%s-%s.pdf",
-                certificateContentMeta.getPatientId(),
-                certificateContentMeta.getFromDate().toString(DATE_FORMAT),
-                certificateContentMeta.getTomDate().toString(DATE_FORMAT));
-    }
 }
