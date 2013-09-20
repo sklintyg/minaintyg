@@ -41,7 +41,7 @@
       <property name="basenames">
         <list>
           <value>ui</value>
-          <value>system</value>
+          <value>version</value>
         </list>
       </property>
     </bean>
