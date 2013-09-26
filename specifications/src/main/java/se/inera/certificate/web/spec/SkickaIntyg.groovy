@@ -1,7 +1,8 @@
 package se.inera.certificate.web.spec
 
 import geb.Browser
-import se.inera.certificate.web.pages.SendCertificateFlowPage
+import se.inera.certificate.web.pages.SendCertificateSentPage
+import se.inera.certificate.web.pages.SendCertificateSummaryPage
 
 public class SkickaIntyg {
 
@@ -10,7 +11,7 @@ public class SkickaIntyg {
         def result = false
         Browser.drive {
             waitFor {
-                at SendCertificateFlowPage
+                at SendCertificateSummaryPage
             }
             result = page.confirmAndSendBtn.isDisplayed()
         }
@@ -19,7 +20,7 @@ public class SkickaIntyg {
 
     public void bekräftaSkickaIntyg() {
         Browser.drive {
-            at SendCertificateFlowPage
+            at SendCertificateSummaryPage
             page.confirmSendFlow()
         }
     }
@@ -28,7 +29,7 @@ public class SkickaIntyg {
         def result = false
         Browser.drive {
             waitFor {
-                at SendCertificateFlowPage
+                at SendCertificateSentPage
             }
             result = page.resultMessageContainer.isDisplayed()
         }
@@ -39,7 +40,7 @@ public class SkickaIntyg {
         def result = false
         Browser.drive {
             waitFor {
-                at SendCertificateFlowPage
+                at SendCertificateSummaryPage
             }
             result = page.alreadySentWarningMessage.isDisplayed()
         }
@@ -48,7 +49,7 @@ public class SkickaIntyg {
 
     public void gåTillbakaTillIntyget() {
         Browser.drive {
-            at SendCertificateFlowPage
+            at SendCertificateSentPage
             page.backToCertificateView()
         }
     }
