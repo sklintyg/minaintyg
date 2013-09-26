@@ -35,7 +35,7 @@
     <dependency>
       <groupId>org.fitnesse</groupId>
       <artifactId>fitnesse</artifactId>
-      <version>20130530</version>
+      <version>20130924</version>
     </dependency>
 
     <dependency>
@@ -125,12 +125,13 @@
       <plugin>
         <groupId>uk.co.javahelp.fitnesse</groupId>
         <artifactId>fitnesse-launcher-maven-plugin</artifactId>
-        <version>1.4.0-20130805</version>
+        <version>1.4.0-20130924</version>
         <configuration>
           <port>${fitnesse.port}</port>
           <workingDir>${fitnesse.working}</workingDir>
           <root>${fitnesse.root}</root>
           <createSymLink>false</createSymLink>
+          <markerFile>${project.build.directory}/fitnesse-launcher-plugin-marker</markerFile>
           <suite>CitizenWeb</suite>
           <useProjectDependencies>
               <scope>compile</scope>
