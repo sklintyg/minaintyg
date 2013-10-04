@@ -23,7 +23,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-
+<%
+String profile = System.getProperty("spring.profiles.active");
+if ("prod".equals(profile)) {
+    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+} else {
+%>
 <!DOCTYPE html>
 <html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BaseApp">
 <head>
@@ -31,7 +36,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
 
-<title><spring:message code="application.name" /></title>
+<title><spring:message code="application.name" />-<spring:message code="project.version"/>-<%= profile %></title>
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
@@ -111,3 +116,6 @@
 
 </body>
 </html>
+<%
+}
+%>
