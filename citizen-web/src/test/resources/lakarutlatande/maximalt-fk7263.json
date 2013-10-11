@@ -5,11 +5,11 @@
     "typ" : {
         "code" : "fk7263"
     },
-    "kommentars" : [
+    "kommentarer" : [
         "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
     ],
-    "signeringsDatum" : "2011-01-26T00:00:00.000",
-    "skickatDatum" : "2011-03-23T09:29:15.000",
+    "signeringsdatum" : "2011-01-26T00:00:00.000",
+    "skickatdatum" : "2011-03-23T09:29:15.000",
     "patient" : {
         "id" : {
             "root" : "1.2.752.129.2.1.3.1",
@@ -21,30 +21,30 @@
         "efternamns" : [
             "Test Testorsson"
         ],
-        "sysselsattnings" : [
+        "sysselsattningar" : [
             {
-                "sysselsattningsTyp" : {
+                "sysselsattningstyp" : {
                     "codeSystem" : "1.2.752.116.2.1.1.1",
                     "codeSystemName" : "SNOMED-CT",
                     "code" : "224375002"
                 }
             },
             {
-                "sysselsattningsTyp" : {
+                "sysselsattningstyp" : {
                     "codeSystem" : "1.2.752.116.2.1.1.1",
                     "codeSystemName" : "SNOMED-CT",
                     "code" : "73438004"
                 }
             },
             {
-                "sysselsattningsTyp": {
+                "sysselsattningstyp": {
                     "codeSystem" : "1.2.752.116.2.1.1.1",
                     "codeSystemName" : "SNOMED-CT",
                     "code" : "224458009"
                 }
             }
         ],
-        "arbetsuppgifts" : [
+        "arbetsuppgifter" : [
             {
                 "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
             }
@@ -56,7 +56,7 @@
             "root" : "1.2.752.129.2.1.4.1",
             "extension" : "Personal HSA-ID"
         },
-        "namn" : "En Läkare",
+        "namn" : "En L�kare",
         "vardenhet" : {
             "id" : {
                 "root" : "1.2.752.129.2.1.4.1",
@@ -142,9 +142,9 @@
             }
         }
     ],
-    "observations" : [
+    "observationer" : [
         {
-            "observationsKategori": {
+            "observationskategori": {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "439401001"
@@ -156,7 +156,7 @@
             "beskrivning" : "Klämskada på överarm"
         },
         {
-            "observationsKod" : {
+            "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "288524001"
@@ -164,7 +164,7 @@
             "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
         },
         {
-            "observationsKategori" : {
+            "observationskategori" : {
                 "codeSystem" : "1.2.752.116.1.1.3.1.1",
                 "codeSystemName" : "ICF",
                 "code" : "b"
@@ -172,7 +172,7 @@
             "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
         },
         {
-            "observationsKategori" : {
+            "observationskategori" : {
                 "codeSystem" : "1.2.752.116.1.1.3.1.1",
                 "codeSystemName" : "ICF",
                 "code" : "d"
@@ -180,17 +180,17 @@
             "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
         },
         {
-            "observationsKod" : {
+            "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "302119000"
             },
-            "observationsPeriod" : {
+            "observationsperiod" : {
                 "from" : "2011-04-01",
                 "tom" : "2011-05-31"
             },
             "prognos" : {
-                "prognosKod" : {
+                "prognoskod" : {
                     "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName" : "kv_prognos_intyg",
                     "code" : "PRO4"
@@ -205,17 +205,17 @@
             ]
         },
         {
-            "observationsKod" : {
+            "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "302119000"
             },
-            "observationsPeriod" : {
+            "observationsperiod" : {
                 "from" : "2011-03-07",
                 "tom" : "2011-03-31"
             },
             "prognos" : {
-                "prognosKod" : {
+                "prognoskod" : {
                     "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName" : "kv_prognos_intyg",
                     "code" : "PRO4"
@@ -230,17 +230,17 @@
             ]
         },
         {
-            "observationsKod" : {
+            "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "302119000"
             },
-            "observationsPeriod" : {
+            "observationsperiod" : {
                 "from" : "2011-02-14",
                 "tom" : "2011-03-06"
             },
             "prognos" : {
-                "prognosKod" : {
+                "prognoskod" : {
                     "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName" : "kv_prognos_intyg",
                     "code" : "PRO4"
@@ -255,17 +255,17 @@
             ]
         },
         {
-            "observationsKod" : {
+            "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "302119000"
             },
-            "observationsPeriod" : {
+            "observationsperiod" : {
                 "from" : "2011-01-26",
                 "tom" : "2011-02-13"
             },
             "prognos" : {
-                "prognosKod" : {
+                "prognoskod" : {
                     "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName" : "kv_prognos_intyg",
                     "code" : "PRO4"
