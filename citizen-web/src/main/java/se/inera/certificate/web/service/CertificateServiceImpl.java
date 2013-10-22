@@ -46,9 +46,9 @@ import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequest;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponse;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
@@ -184,11 +184,11 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public CertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) {
-        GetCertificateContentRequest request = new GetCertificateContentRequest();
+        GetCertificateContentRequestType request = new GetCertificateContentRequestType();
         request.setCertificateId(certificateId);
         request.setNationalIdentityNumber(civicRegistrationNumber);
 
-        GetCertificateContentResponse response = getCertificateContentService.getCertificateContent(null, request);
+        GetCertificateContentResponseType response = getCertificateContentService.getCertificateContent(null, request);
 
         switch (response.getResult().getResultCode()) {
         case OK:
@@ -200,7 +200,7 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private CertificateContentHolder convert(final GetCertificateContentResponse response) {
+    private CertificateContentHolder convert(final GetCertificateContentResponseType response) {
 
         CertificateContentHolder getCertificateContentHolder = new CertificateContentHolder();
         getCertificateContentHolder.setCertificateContent(response.getCertificate());
