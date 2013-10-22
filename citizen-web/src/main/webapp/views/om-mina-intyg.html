@@ -6,6 +6,7 @@
   </ul>
 </div>
 <div class="span9" aria-hidden="{{shouldBeOpen}}">
+
   <div id="about-content-omminaintyg" ng-show="visibility.omminaintyg" aria-hidden="{{!visibility.omminaintyg}}" aria-labelledby="link-about-omminaintyg">
       <h2 ng-focus="subpagefocus.omminaintyg" tabindex="-1"><span message key="about.omminaintyghead"></span></h2>
       <span message key="about.omminaintygtext"></span>
@@ -18,26 +19,11 @@
       <h3><span message key="about.revokeconsentheader"></span></h3>
       <p><span message key="about.revokeconsenttext"></span></p>
       <p>
-      <input id="revokeConsentBtn" type="button" ng-click="openConfirmDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
+      <input id="revokeConsentBtn" type="button" ng-click="openRevokeDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
       </p>
     </div>
 
     <span message key="about.consenttext"></span>
-
-    <!-- Modal confirm dialog for revoke consent -->
-    <div id="revoke-consent-confirmation-dialog" modal="shouldBeOpen" close="closeConfirmDialog(false)" options="opts" role="alertdialog" aria-hidden="{{!shouldBeOpen}}">
-      <div class="modal-header">
-        <button class="close" ng-click="closeConfirmDialog(false)" aria-label="Stäng">×</button>
-        <h3 ng-focus="dialogfocus" tabindex="-1"><span message key="about.revokemodal.header"></span></h3>
-      </div>
-      <div class="modal-body">
-        <p><span message key="about.revokemodal.text"></span></p>
-      </div>
-      <div class="modal-footer">
-        <button id="revoke-consent-button" class="btn btn-success" ng-click="closeConfirmDialog(true)"><span message key="common.ok"></span></button>
-        <button class="btn btn-link" ng-click="closeConfirmDialog(false)"><span message key="common.cancel"></span></button>
-      </div>
-    </div>
 
   </div>
 

@@ -86,7 +86,7 @@
 
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"/>'></script>
+  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.6.0/ui-bootstrap-tpls-0.6.0.js"/>'></script><!-- Please notice that this is a modified version with the bottom part of the datepicker template commented out (it couldn't be done in a nicer way unfortunately, customization is limited) -->
 
   <%-- Application files --%>
   <script type="text/javascript" src="<c:url value="/js/base/app.js"/>"></script>

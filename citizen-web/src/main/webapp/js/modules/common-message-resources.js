@@ -2,10 +2,13 @@
 var commonMessageResources = {
     "sv" : {
 
-	    "common.close" : "Stäng",
-	    "common.ok" : "OK",
-	    "common.cancel" : "Avbryt",
-	    "common.goback" : "Tillbaka",
+		    "common.close" : "Stäng",
+		    "common.ok" : "OK",
+		    "common.yes" : "Ja",
+		    "common.no" : "Nej",
+		    "common.cancel" : "Avbryt",
+		    "common.goback" : "Tillbaka",
+		    "common.nodontask" : "Nej, och fråga inte igen",
 
         "mvk.header.linktext" : "Mina vårdkontakter",
         "mvk.header.logouttext" : "Logga ut",
@@ -24,7 +27,7 @@ var commonMessageResources = {
         "certificates.status.cancelled" : "Rättat",
         "certificates.status.cancelledlc" : "Rättat",
         "certificates.status.sent" : "Skickat till",
-	    "certificates.target.fk" : "Försäkringskassan",
+        "certificates.target.fk" : "Försäkringskassan",
 
         "certificates.send.label.patientname" : "Patientens namn:",
         "certificates.send.label.issued" : "Utfärdat:",
