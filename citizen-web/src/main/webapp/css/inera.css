@@ -643,6 +643,16 @@ button#archiveCertificateBtn {
 	background-color: #52ab51;
 }
 
+.btn-info,.btn-info[disabled]  {
+  font-weight: bold;
+  background: none;
+  background-color: #28b4c4;
+}
+
+.btn-info:hover {
+  background-color: #38c4d4;
+}
+
 .btn-link {
 	color: #008391;
 }

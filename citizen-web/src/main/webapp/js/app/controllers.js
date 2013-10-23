@@ -1,15 +1,19 @@
 'use strict';
 
 /* Controllers */
-listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', '$log', 'listCertService', 'messageService', '$cookies', '$rootScope', 
-    function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService, messageService, $cookies, $rootScope) {
+listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window', '$log', 'listCertService', 'messageService', '$cookies', '$rootScope', '$timeout', 
+    function ListCertCtrl($scope, $filter, $location, $window, $log, listCertService, messageService, $cookies, $rootScope, $timeout) {
         $scope.certificates = [];
         $scope.doneLoading = false;
-        $scope.doneArchiving = true;
+        $scope.dialog = {
+        		acceptprogressdone: true, 
+        		focus: false
+        }
+        var archiveDialog = {};
+        
         $scope.messageService = messageService;
         $scope.pageTitle = "Inkorgen";
         $scope.isCollapsed = true;
-        
   
         $scope.sendSelected = function (item) {
             $log.debug("send " + item.id);
@@ -21,7 +25,7 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         $scope.archiveSelected = function () {
         	var item = $scope.certToArchive;
             $log.debug("archive " + item.id);
-            $scope.doneArchiving = false;
+            $scope.dialog.acceptprogressdone = false;
             listCertService.archiveCertificate(item, function (fromServer, oldItem) {
                 $log.debug("statusUpdate callback:" + fromServer);
                 if (fromServer != null) {
@@ -29,8 +33,8 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
                     oldItem.archived = fromServer.archived;
                     oldItem.status = fromServer.status;
                     oldItem.selected = false;
-                    $scope.closeArchiveDialog();
-                    $scope.doneArchiving = true;
+                   	archiveDialog.close();
+                    $scope.dialog.acceptprogressdone = true;
                 } else {
                     // show error view
                     $location.path("/fel/couldnotarchivecert");
@@ -39,28 +43,52 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         }
 
         // Archive dialog
-        $scope.archiveOpen = false;
-        $scope.dialogfocus = false;
         $scope.certToArchive = {};
-        $scope.dialogOpts = {
-            backdropFade: true,
-            dialogFade: true
-        };
 
         $scope.openArchiveDialog = function (cert) {
             $scope.certToArchive = cert;
-            $scope.archiveOpen = true;
-            $scope.dialogfocus = true;
-        }
-
-        $scope.closeArchiveDialog = function () {
-            $scope.archiveOpen = false;
-            $scope.dialogfocus = false;
+            $scope.dialog.focus = true;
+            archiveDialog = listCertService.showDialog(
+            		$scope, 
+            		{
+            			dialogId: "archive-confirmation-dialog",
+            			titleId: "inbox.archivemodal.header", 
+            			bodyTextId: "inbox.archivemodal.text",
+            			button1click: function() {
+            				$log.debug("archive");
+            				$scope.archiveSelected();
+            			},
+            			button1id:"archive-button",
+            			button1text: "button.archive",
+            			autoClose: false
+            		}
+          	);
         }
 
         //FK dialog
         var fromConsentPage =  $cookies['RedirectFromConsent'];
-        $scope.fkMessageOpen = fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === "FK");
+        if(fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === "FK")){
+            var fkDialog = listCertService.showDialog(
+            		$scope, 
+            		{
+            			dialogId: "fk-login-consent-dialog",
+            			titleId: "fkdialog.head", 
+            			bodyTextId: "fkdialog.text",
+            			button1click: function() {
+            				$scope.closeFKDialog(true);
+            			},
+            			button2click: function() {
+            				$scope.closeFKDialog(false);
+            			},
+            			button1id:"close-fkdialog-logout-button",
+            			button2id:"close-fkdialog-continue-button",
+            			button1text: "fkdialog.button.returntofk",
+            			button2text: "fkdialog.button.continueuse",
+            			autoClose: false
+            		}
+          	);
+        }
+        
         $scope.closeFKDialog = function (backtoFK) {
             if (backtoFK) {
                 $window.location.href = "/web/logga-ut-fk";
@@ -69,7 +97,6 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
             //remove flag indicating forwarded from consent page..
             delete $cookies['RedirectFromConsent']
             //...and close dialog
-            $scope.fkMessageOpen = false;
         }
         
         
@@ -92,32 +119,39 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
 listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'listCertService', function ListCertCtrl($scope, $location, $log, listCertService) {
     $scope.certificates = [];
     $scope.doneLoading = false;
-    $scope.doneRestoring = true;
-
+    
+    $scope.dialog = {
+    		acceptprogressdone: true,
+    		focus: false
+    }
+    
     // Restore dialog
-    $scope.restoreOpen = false;
-    $scope.dialogfocus = false;
+    var restoreDialog = {};
     $scope.certToRestore = {};
-    $scope.dialogOpts = {
-        backdropFade: true,
-        dialogFade: true
-    };
-
+    
     $scope.openRestoreDialog = function (cert) {
-        $scope.certToRestore = cert;
-        $scope.restoreOpen = true;
-        $scope.dialogfocus = true;
+      $scope.certToRestore = cert;
+      $scope.dialog.focus = true;
+      restoreDialog = listCertService.showDialog(
+      		$scope, 
+      		{
+      			dialogId: "restore-confirmation-dialog",
+      			titleId: "archived.restoremodal.header",
+      			bodyTextId: "archived.restoremodal.text",
+      			button1click: function() {
+      				$scope.restoreCert();
+      			},
+      			button1id:"restore-button",
+      			button1text: "label.restore",
+      			autoClose: false
+      		}
+    	);
     }
-
-    $scope.closeRestoreDialog = function () {
-        $scope.restoreOpen = false;
-        $scope.dialogfocus = false;
-    }
-
+    
     $scope.restoreCert = function () {
     	var certId = $scope.certToRestore;
         $log.debug("Restore requested for cert:" + certId);
-        $scope.doneRestoring = false;
+        $scope.dialog.acceptprogressdone = false;
         for (var i = 0; i < $scope.certificates.length; i++) {
             if ($scope.certificates[i].id == certId) {
 
@@ -128,8 +162,8 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'lis
                         oldItem.archived = fromServer.archived;
                         oldItem.status = fromServer.status;
                         oldItem.selected = false;
-                        $scope.closeRestoreDialog();
-                        $scope.doneRestoring = true;
+                        restoreDialog.close();
+                        $scope.dialog.acceptprogressdone = true;
                     } else {
                         // show error view
                         $location.path("/fel/couldnotrestorecert");
@@ -152,8 +186,8 @@ listCertApp.controller('ListArchivedCtrl', [ '$scope', '$location', '$log', 'lis
 } ]);
 
 // Consent Controller
-listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', '$log', 'consentService', 'messageService', '$window',
-    function ConsentCtrl($scope, $location, $filter, $log, consentService, messageService, $window) {
+listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', '$log', 'consentService', 'messageService', '$window', 'listCertService',
+    function ConsentCtrl($scope, $location, $filter, $log, consentService, messageService, $window, listCertService) {
 
         // Hold left side navigation state
         $scope.visibility = {
@@ -169,8 +203,11 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', '$log', 
             "juridik": false
         }
 
-        $scope.dialogfocus = false;
-
+        $scope.dialog = {
+        		acceptprogressdone: true,
+        		focus: false
+        }
+        
         $scope.navigateTo = function (section) {
             angular.forEach($scope.visibility, function (value, key) {
                 $scope.visibility[key] = (key == section) ? true : false;
@@ -182,37 +219,40 @@ listCertApp.controller('AboutCtrl', [ '$scope', '$location', '$filter', '$log', 
             return messageService.getProperty(key);
         }
 
-        $scope.opts = {
-            backdropFade: true,
-            dialogFade: true
-        };
-
-        $scope.openConfirmDialog = function () {
-            $scope.shouldBeOpen = true;
-            $scope.dialogfocus = true;
-        };
-
-        $scope.closeConfirmDialog = function (confirm) {
-            $scope.shouldBeOpen = false;
-            $log.debug("closeConfirmDialog " + confirm);
-            if (confirm) {
-                $log.debug("revoking consent..");
-                revokeConsent();
-            }
-        };
-
+        // Revoke dialog
+        
+        var revokeDialog = {};
+        
+        $scope.openRevokeDialog = function (cert) {
+          $scope.dialog.focus = true;
+          revokeDialog = listCertService.showDialog(
+          		$scope, 
+          		{
+          			dialogId: "revoke-consent-confirmation-dialog",
+          			titleId: "about.revokemodal.header",
+          			bodyTextId: "about.revokemodal.text",
+          			button1click: function() {
+                  $log.debug("revoking consent..");
+                  $scope.dialog.acceptprogressdone = true;
+                  revokeConsent();
+          			},
+          			button1id:"revoke-consent-button",
+          			autoClose: false
+          		}
+        	);
+        }        
+        
         function revokeConsent() {
             consentService.revokeConsent(function (data) {
                 $log.debug("revokeConsent callback:" + data);
+                $scope.dialog.acceptprogressdone = false;
                 if (data != null && data.result) {
-                    $window.location.href = "/web/start";
+                	$window.location.href = "/web/start";
                 } else {
                     $location.path("/fel/couldnotrevokeconsent");
                 }
-
             });
-        }
-        ;
+        };
 
         $scope.pagefocus = true;
     } ]);
