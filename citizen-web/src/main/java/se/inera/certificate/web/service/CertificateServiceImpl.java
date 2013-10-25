@@ -138,10 +138,10 @@ public class CertificateServiceImpl implements CertificateService {
         sendType.setLakarutlatande(lakarutlatande);
         req.setSend(sendType);
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(null, req);
-        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
-            return new ModuleAPIResponse("sent", "");
-        } else {
+        if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
             return new ModuleAPIResponse("error", "");
+        } else {
+            return new ModuleAPIResponse("sent", "");
         }
     }
 
