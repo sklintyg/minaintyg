@@ -73,6 +73,13 @@ public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
+    private static final String PERSONNUMMER = "19121212-1212";
+
+    private static final String PATIENT_ID_OID = "1.2.752.129.2.1.3.1";
+    private static final String HOS_PERSONAL_OID = "1.2.752.129.2.1.4.1";
+    private static final String ENHET_OID = "1.2.752.129.2.1.4.1";
+    private static final String ARBETSPLATS_CODE_OID = "1.2.752.29.4.71";
+
     private static final Comparator<? super CertificateMetaType> DESCENDING_DATE = new Comparator<CertificateMetaType>() {
 
         @Override
@@ -115,19 +122,33 @@ public class CertificateServiceImpl implements CertificateService {
 
         // Enhet
         EnhetType enhet = new EnhetType();
-        enhet.setEnhetsnamn("MI");
+        enhet.setEnhetsnamn("enhetsnamn");
+
         II enhetsId = new II();
-        enhetsId.setExtension("MI");
+        enhetsId.setRoot(ENHET_OID);
+        enhetsId.setExtension("enhetsid");
         enhet.setEnhetsId(enhetsId);
+
+        II arbetsplatsKod = new II();
+        arbetsplatsKod.setRoot(ARBETSPLATS_CODE_OID);
+        arbetsplatsKod.setExtension("arbetsplatskod");
+        enhet.setArbetsplatskod(arbetsplatsKod);
+
         VardgivareType vardGivare = new VardgivareType();
+
         II vardGivarId = new II();
-        vardGivarId.setExtension("MI");
+        vardGivarId.setRoot(ENHET_OID);
+        vardGivarId.setExtension("vardgivarid");
         vardGivare.setVardgivareId(vardGivarId);
+
         vardGivare.setVardgivarnamn("MI");
         enhet.setVardgivare(vardGivare);
+
         hosPersonal.setEnhet(enhet);
         hosPersonal.setFullstandigtNamn("MI");
+
         II personalId = new II();
+        personalId.setRoot(HOS_PERSONAL_OID);
         personalId.setExtension("MI");
         hosPersonal.setPersonalId(personalId);
 
@@ -139,18 +160,22 @@ public class CertificateServiceImpl implements CertificateService {
 
         // Lakarutlatande
         LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
+
         lakarutlatande.setLakarutlatandeId(id);
         lakarutlatande.setSigneringsTidpunkt(new LocalDateTime());
         PatientType patient = new PatientType();
         II patientIdHolder = new II();
+        patientIdHolder.setRoot(PATIENT_ID_OID);
         patientIdHolder.setExtension(civicRegistrationNumber);
         patient.setPersonId(patientIdHolder);
+        patient.setFullstandigtNamn("patientnamn");
         lakarutlatande.setPatient(patient);
 
         sendType.setLakarutlatande(lakarutlatande);
         req.setSend(sendType);
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(null, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
+            LOG.warn("SendCertificate error: {}",response.getResult().getErrorText()  );
             return new ModuleAPIResponse("error", "");
         } else {
             return new ModuleAPIResponse("sent", "");
