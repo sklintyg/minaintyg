@@ -4,7 +4,7 @@ import geb.Page
 
 class SendCertificateSentPage extends Page {
 
-    static at = { $("#send-certificate-flow-root-sent").isDisplayed() }
+    static at = { $("#send-certificate-flow-result").isDisplayed() }
 
     static content = {
         resultMessageContainer(required: false)  { $("#send-certificate-flow-result") }
