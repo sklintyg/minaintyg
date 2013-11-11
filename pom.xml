@@ -20,6 +20,7 @@
   <name>Inera Certificate Web (Citizen web app)</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
+    <tag>certificate-web-1.1-RB</tag>
   </scm>
   <distributionManagement>
     <repository>
