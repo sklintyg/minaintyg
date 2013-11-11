@@ -16,7 +16,7 @@
   <parent>
     <artifactId>certificate-web</artifactId>
     <groupId>se.inera.certificate-web</groupId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>citizen-web</artifactId>
