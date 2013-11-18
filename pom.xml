@@ -195,17 +195,17 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>schemas</artifactId>
-        <version>1.1-RC2</version>
+        <version>1.1-RC2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
-        <version>1.1-RC2</version>
+        <version>1.1-RC2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate.proxy</groupId>
         <artifactId>reverse-proxy</artifactId>
-        <version>1.1-RC2</version>
+        <version>1.1-RC2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
