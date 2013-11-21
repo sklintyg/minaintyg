@@ -35,14 +35,7 @@
     <dependency>
       <groupId>org.fitnesse</groupId>
       <artifactId>fitnesse</artifactId>
-      <version>20130924</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.beanshell</groupId>
-      <artifactId>bsh</artifactId>
-      <version>2.0b5</version>
-      <scope>test</scope>
+      <version>20131110</version>
     </dependency>
 
     <dependency>
@@ -151,7 +144,7 @@
       <plugin>
         <groupId>uk.co.javahelp.fitnesse</groupId>
         <artifactId>fitnesse-launcher-maven-plugin</artifactId>
-        <version>1.4.0-20131008</version>
+        <version>1.4.0-20131110</version>
         <configuration>
           <port>${fitnesse.port}</port>
           <workingDir>${fitnesse.working}</workingDir>
@@ -161,7 +154,6 @@
           <suite>CitizenWeb</suite>
           <useProjectDependencies>
               <scope>compile</scope>
-              <scope>test</scope>
           </useProjectDependencies>
         </configuration>
       </plugin>
