@@ -9,6 +9,11 @@ listCertApp.controller('ListCtrl', [ '$scope', '$filter', '$location', '$window'
         		acceptprogressdone: true, 
         		focus: false
         }
+        $scope.showCookieInfo = false;
+        $scope.toggleCookieInfo = function() {
+        	$scope.showCookieInfo = !$scope.showCookieInfo;
+        }
+        
         var archiveDialog = {};
         
         $scope.messageService = messageService;
