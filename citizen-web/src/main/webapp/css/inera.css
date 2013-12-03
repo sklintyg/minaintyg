@@ -742,6 +742,10 @@ opacity: .25;
 
 /* special styles */
 
+.cookieinfo p {
+  font-size: 13px;
+}
+
 #welcome-image {
 	margin-top: 55px;
 }

@@ -55,22 +55,47 @@
 
         <div id="content-body" class="row-fluid">
           <div class="span7">
-			<h1>Välkommen till Mina intyg</h1>
-			<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
-			<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
-			<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
-			<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
-			<p>
-				<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om hur du skaffar en e-legitimation</a>
-			</p>
-        	<p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
-			<div class="btn-row">
-				<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
-			</div>
-		</div>
-		<div class="span5">
-			<img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
-		</div>
+						<h1>Välkommen till Mina intyg</h1>
+						<p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
+						<p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan. Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
+						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
+						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
+						<p>
+							<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om hur du skaffar en e-legitimation</a>
+						</p>
+			      <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
+						<div class="btn-row">
+							<a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
+						</div>
+						
+						<div style="padding-top: 50px">
+							<p>Mina intyg använder cookies. <a href="#" onclick="toggle(); return false;">Läs mer om Kakor (cookies)</a></p>
+				       <div class="bluebox" id="cookiejar">
+				         <h3>Om Kakor (cookies)</h3>
+				       
+				         <p>Så kallade kakor (cookies) används för att underlätta för besökaren på webbplatsen. En kaka är en textfil som lagras på din dator och som innehåller information. Denna webbplats använder så kallade sessionskakor. Sessionskakor lagras temporärt i din dators minne under tiden du är inne på en webbsida. Sessionskakor försvinner när du stänger din webbläsare. Ingen personlig information om dig sparas vid användning av sessionskakor. Om du inte accepterar användandet av kakor kan du stänga av det via din webbläsares säkerhetsinställningar. Du kan även ställa in webbläsaren så att du får en varning varje gång webbplatsen försöker sätta en kaka på din dator. </p><p><strong>Observera!</strong> Om du stänger av kakor i din webbläsare kan du inte logga in i Mina Intyg.</p><p>Allmän information om kakor (cookies) och lagen om elektronisk kommunikation finns på Post- och telestyrelsens webbplats.</p> 
+				         <p>
+				          <a href='http://www.pts.se/sv/Bransch/Regler/Lagar/Lag-om-elektronisk-kommunikation/Cookies-kakor/' target='_blank'>Mer om kakor (cookies) på Post- och telestyrelsens webbplats</a>
+				         </p>
+				       </div>
+				    </div>
+						
+					  <script>
+					    var cookiejar = document.getElementById('cookiejar');
+					    cookiejar.style.display = 'none';
+					    
+					    function toggle() {
+					      if (cookiejar.style.display == 'none')
+					        cookiejar.style.display = 'block';
+					      else
+					        cookiejar.style.display = 'none';
+					    }   
+					  </script>   						
+						
+					</div>
+					<div class="span5">
+						<img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
+					</div>
         </div>
 
       </div>
