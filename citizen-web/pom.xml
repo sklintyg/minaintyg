@@ -212,6 +212,14 @@
               <name>jetty.port</name>
               <value>8088</value>
             </systemProperty>
+            <systemProperty>
+              <name>java.awt.headless</name>
+              <value>true</value>
+            </systemProperty>            
+             <systemProperty>
+              <name>catalina.base</name>
+              <value>${project.build.directory}/catalina.base</value>
+            </systemProperty>
           </systemProperties>
         </configuration>
       </plugin>
