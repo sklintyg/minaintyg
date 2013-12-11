@@ -16,10 +16,11 @@ class ArchivedPage extends Page {
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
         confirmRestoreButton(required: false) { $("#restore-button") }
+        restoreCertificateButton(required: false) { id -> $("#restoreCertificate-${id}") }
     }
 
     def restoreCertificate(String id) {
-        $("#restoreCertificate-${id}").click()
+        restoreCertificateButton(id).click()
     }
 
     def confirmRestoreCertificate() {
@@ -30,7 +31,7 @@ class ArchivedPage extends Page {
     }
 
     def boolean certificateExists(String id) {
-        $("#restoreCertificate-${id}").isDisplayed()
+        restoreCertificateButton(id).isDisplayed()
     }
 
     def goToInboxPage() {

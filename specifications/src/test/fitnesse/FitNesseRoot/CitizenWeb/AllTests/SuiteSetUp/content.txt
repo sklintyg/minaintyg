@@ -1,1 +1,4 @@
-!include .CitizenWeb.SuiteSetUp
+!include -c .CitizenWeb.SuiteSetUp
+
+|script|Browser|
+|öppna|
