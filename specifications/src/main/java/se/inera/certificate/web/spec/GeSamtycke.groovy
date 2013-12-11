@@ -1,11 +1,9 @@
 package se.inera.certificate.web.spec;
 
-import geb.Browser
-import se.inera.certificate.web.pages.ArchivedPage
-import se.inera.certificate.web.pages.InboxPage
-import se.inera.certificate.web.pages.ConsentPage
-import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentDeniedPage
+import se.inera.certificate.web.pages.ConsentGivenPage
+import se.inera.certificate.web.pages.ConsentPage
+import se.inera.certificate.web.pages.InboxPage
 
 public class GeSamtycke {
 
@@ -17,7 +15,6 @@ public class GeSamtycke {
 
     public void geSamtycke() {
         Browser.drive {
-            at ConsentPage
             page.giveConsent()
 
         }
@@ -25,7 +22,6 @@ public class GeSamtycke {
 
     public void nekaSamtycke() {
         Browser.drive {
-            at ConsentPage
             page.denyConsent()
         }
     }
@@ -56,7 +52,6 @@ public class GeSamtycke {
 
     public void gåVidareTillMinaIntyg() {
         Browser.drive {
-            at ConsentGivenPage
             page.continueToMI()
         }
     }

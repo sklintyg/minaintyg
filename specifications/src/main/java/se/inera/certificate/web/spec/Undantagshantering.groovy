@@ -1,7 +1,5 @@
 package se.inera.certificate.web.spec;
 
-import geb.Browser
-
 import se.inera.certificate.web.pages.InboxPage
 import se.inera.certificate.web.pages.NotFoundPage
 

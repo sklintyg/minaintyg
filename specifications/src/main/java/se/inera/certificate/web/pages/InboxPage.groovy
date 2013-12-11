@@ -15,10 +15,13 @@ class InboxPage extends Page {
         archivedTab(required: false) { $("#archivedTab") }
         aboutTab(required: false) { $("#aboutTab") }
         confirmArchiveButton(required: false) { $("#archive-button") }
+        certificate(required: false) { id -> $("#certificate-${id}") }
+        archiveCertificateButton(required: false) { id -> $("#archiveCertificateBtn-${id}") }
+        viewCertificateButton(required: false) { id -> $("#viewCertificateBtn-${id}") }
     }
 
     def archiveCertificate(String id) {
-        $("#archiveCertificateBtn-${id}").click()
+        archiveCertificateButton(id).click()
     }
 
     def confirmArchiveCertificate() {
@@ -29,11 +32,11 @@ class InboxPage extends Page {
     }
 
     def boolean certificateExists(String id) {
-        $("#certificate-${id}").isDisplayed();
+        certificate(id).isDisplayed();
     }
 
     def viewCertificate(String id) {
-        $("#viewCertificateBtn-${id}").click()
+        viewCertificateButton(id).click()
     }
 
     def goToArchivedTab() {
@@ -45,6 +48,7 @@ class InboxPage extends Page {
     }
 
     def boolean cancelledCertificateDisplayed(String id) {
-        $("#viewCertificateBtn-${id}").isDisabled();
+        def viewCertButton = viewCertificateButton(id)
+        !viewCertButton.isDisplayed() || viewCertButton.isDisabled();
     }
 }
