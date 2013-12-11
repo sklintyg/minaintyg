@@ -18,6 +18,8 @@
     <fitnesse.port>9124</fitnesse.port>
     <fitnesse.working>${project.basedir}/src/test/fitnesse</fitnesse.working>
     <fitnesse.root>FitNesseRoot</fitnesse.root>
+    <fitnesse.project.root>CitizenWeb</fitnesse.project.root>
+    <fitnesse.suite>${fitnesse.project.root}.AllBrowsers</fitnesse.suite>
     <!-- This example has no unit tests, just integration tests -->
     <skipTests>true</skipTests>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -121,22 +123,13 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>src/test/fitnesse/Resources</directory>
-            </fileset>
-            <fileset>
-              <directory>src/test/fitnesse/FitNesseRoot/ErrorLogs</directory>
-            </fileset>
-            <fileset>
-              <directory>src/test/fitnesse/FitNesseRoot/FitNesse</directory>
-            </fileset>
-            <fileset>
-              <directory>src/test/fitnesse/FitNesseRoot/PageHeader</directory>
-            </fileset>
-            <fileset>
-              <directory>src/test/fitnesse/FitNesseRoot/RecentChanges</directory>
-            </fileset>
-            <fileset>
-              <directory>src/test/fitnesse/FitNesseRoot/files</directory>
+              <directory>${fitnesse.working}</directory>
+              <excludes>
+                 <exclude>${fitnesse.root}/${fitnesse.project.root}/**</exclude>
+                 <exclude>${fitnesse.root}/FrontPage/**</exclude>
+                 <exclude>${fitnesse.root}/PageFooter/**</exclude>
+                 <exclude>**/.gitignore</exclude>
+               </excludes>
             </fileset>
           </filesets>
         </configuration>
@@ -151,7 +144,7 @@
           <root>${fitnesse.root}</root>
           <createSymLink>false</createSymLink>
           <markerFile>${project.build.directory}/fitnesse-launcher-plugin-marker</markerFile>
-          <suite>CitizenWeb</suite>
+          <suite>${fitnesse.suite}</suite>
           <useProjectDependencies>
               <scope>compile</scope>
           </useProjectDependencies>
