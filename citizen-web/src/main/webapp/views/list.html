@@ -21,18 +21,20 @@
               <div class="span12">
                 <div id="certificate-{{cert.id}}" class="cert">
                   <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
-                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)" ng-href="#"><img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" /></a>
+                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)" ng-href="#link"><img class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" /></a>
                     <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/img/{{cert.type | lowercase}}.png" />
                     <div class="row-fluid">
                       <div class="span8">
                         <h2>
-                          <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#"> 
-                          	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> 
+                          <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled" ng-href="#link"> 
+                          	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp; 
                           	<span class="cert-titlebar-type">
                           		<span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           	</span>
                           </a>
-                          <span class="cert-title" ng-show="cert.cancelled"><span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> - <span message key="certificates.status.cancelledlc"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span></span>
+                          <span class="cert-title" ng-show="cert.cancelled">
+                            <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> - <span message key="certificates.status.cancelledlc"></span>&nbsp;<span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span>
+                          </span>
                         </h2>
                       </div>
                       <div class="span3 issue">
