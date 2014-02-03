@@ -21,7 +21,7 @@
 
   <context:annotation-config />
 
-  <context:property-placeholder location="file:${user.home}/.${spring.profiles.active}.minaintyg.se/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
+  <context:property-placeholder location="file:${certificate.config.dir}/.${spring.profiles.active}.minaintyg.se/config.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
 
   <context:property-placeholder
     location="classpath:default.${spring.profiles.active}.properties" ignore-resource-not-found="true" ignore-unresolvable="true"/>
