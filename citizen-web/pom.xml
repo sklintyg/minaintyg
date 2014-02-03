@@ -22,6 +22,7 @@
   <name>Inera Certificate Citizen Web Application</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+    <certificate.config.dir>${project.basedir}</certificate.config.dir>
     <inera.certificates.basedir>${project.basedir}/../../inera-certificate-modules</inera.certificates.basedir>
   </properties>
   <packaging>war</packaging>
@@ -191,7 +192,7 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.0.1.v20130408</version>
+        <version>9.1.1.v20140108</version>
         <configuration>
           <webAppConfig>
             <contextPath>/</contextPath>
@@ -219,6 +220,10 @@
              <systemProperty>
               <name>catalina.base</name>
               <value>${project.build.directory}/catalina.base</value>
+            </systemProperty>
+            <systemProperty>
+              <name>logback.configurationFile</name>
+              <value>${certificate.config.dir}/logback.xml</value>
             </systemProperty>
           </systemProperties>
         </configuration>
