@@ -33,6 +33,12 @@
     <dependency>
       <groupId>org.callistasoftware.netcare.commons</groupId>
       <artifactId>mvk-integration</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-servlet_3.0_spec</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- Replace netcare-saml with separate dependencies -->
     <dependency>
@@ -140,6 +146,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>jstl</groupId>
