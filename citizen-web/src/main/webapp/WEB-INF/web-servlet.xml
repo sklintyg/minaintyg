@@ -38,13 +38,13 @@
   <beans profile="qa,prod">
     <!-- Config file must be present in qa and prod -->
     <context:property-placeholder
-      location="file:${certificate.config.dir}/.${spring.profiles.active}.minaintyg.se/config.properties" order="1" 
+      location="file:${minaintyg.config.file}" order="1" 
       ignore-resource-not-found="false" ignore-unresolvable="true" />
   </beans>
   <beans profile="dev,test">
     <!-- Config file could be missing in dev and test -->
     <context:property-placeholder
-      location="file:${certificate.config.dir}/.${spring.profiles.active}.minaintyg.se/config.properties" order="1" 
+      location="file:${minaintyg.config.file}" order="1" 
       ignore-resource-not-found="true" ignore-unresolvable="true" />
   </beans>
 
