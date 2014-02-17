@@ -37,7 +37,7 @@
   <beans>
 
     <context:property-placeholder
-      location="classpath:default.${spring.profiles.active}.properties" order="2"
+      location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties" order="2"
       ignore-resource-not-found="false" ignore-unresolvable="true"/>
 
     <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service, se.inera.certificate.integration.rest" />
