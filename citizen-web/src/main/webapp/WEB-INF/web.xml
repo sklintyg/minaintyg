@@ -29,7 +29,15 @@
       /WEB-INF/web-security.xml, /WEB-INF/web-proxy.xml
     </param-value>
   </context-param>
+  <context-param>
+      <param-name>logbackConfigParameter</param-name>
+      <param-value>minaintyg.logback.file</param-value>
+  </context-param>
 
+  <!-- Listener for external logback configuration file -->
+  <listener>
+      <listener-class>se.inera.certificate.logging.LogbackConfiguratorContextListener</listener-class>
+  </listener>
   <!-- Start spring context -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
