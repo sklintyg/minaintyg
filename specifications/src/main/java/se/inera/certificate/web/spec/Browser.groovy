@@ -1,5 +1,7 @@
 package se.inera.certificate.web.spec;
 
+import geb.driver.CachingDriverFactory
+
 public class Browser {
 
     private static geb.Browser browser
@@ -13,6 +15,7 @@ public class Browser {
         if (!browser) throw new IllegalStateException("Browser not initialized")
         browser.quit()
         browser = null
+        CachingDriverFactory.clearCache()
     }
     
     static geb.Browser drive(Closure script) {
