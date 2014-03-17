@@ -70,7 +70,7 @@
             </constructor-arg>
             <!-- URL containing the metadata -->
             <constructor-arg>
-              <value type="java.lang.String">${saml.metadata.location}</value>
+              <value type="java.lang.String">${fk.saml.metadata.location}</value>
             </constructor-arg>
             <property name="parserPool" ref="parserPool"/>
           </bean>

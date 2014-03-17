@@ -45,12 +45,12 @@
     <!-- Handler deciding where to redirect user after successful login -->
     <bean id="successRedirectHandler"
           class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-        <property name="defaultTargetUrl" value="${saml.successful.login.url}"/>
+        <property name="defaultTargetUrl" value="${fk.saml.successful.login.url}"/>
     </bean>
 
     <!-- Handler for successful logout -->
     <bean id="successLogoutHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
-        <property name="defaultTargetUrl" value="${saml.successful.logout.url}"/>
+        <property name="defaultTargetUrl" value="${fk.saml.successful.logout.url}"/>
     </bean>
 
     <!-- Register authentication manager with SAML provider -->
@@ -63,14 +63,14 @@
 
     <!-- Central storage of cryptographic keys -->
     <bean id="keyManager" class="org.springframework.security.saml.key.JKSKeyManager">
-        <constructor-arg value="${saml.keystore.file}"/>
-        <constructor-arg type="java.lang.String" value="${saml.keystore.password}"/>
+        <constructor-arg value="${fk.saml.keystore.file}"/>
+        <constructor-arg type="java.lang.String" value="${fk.saml.keystore.password}"/>
         <constructor-arg>
             <map>
-                <entry key="${saml.keystore.alias}" value="${saml.keystore.password}"/>
+                <entry key="${fk.saml.keystore.alias}" value="${fk.saml.keystore.password}"/>
             </map>
         </constructor-arg>
-        <constructor-arg type="java.lang.String" value="${saml.keystore.alias}"/>
+        <constructor-arg type="java.lang.String" value="${fk.saml.keystore.alias}"/>
     </bean>
 
     <!-- Entry point to initialize authentication, default values taken from properties file -->
@@ -91,8 +91,8 @@
                 <property name="wantAssertionSigned" value="false"/>
                 <property name="signMetadata" value="true"/>
                 <property name="entityAlias" value="defaultAlias"/>
-                <property name="entityBaseURL" value="${saml.baseUrl}" />
-                <property name="entityId" value="${saml.baseUrl}/saml/SSO/alias/defaultAlias" />
+                <property name="entityBaseURL" value="${fk.saml.baseUrl}" />
+                <property name="entityId" value="${fk.saml.baseUrl}/saml/SSO/alias/defaultAlias" />
             </bean>
         </constructor-arg>
     </bean>
@@ -103,7 +103,7 @@
     <!-- <bean id="contextProvider" class="org.springframework.security.saml.context.SAMLContextProviderLB">-->
     <bean id="contextProvider" class="se.inera.certificate.web.security.saml.SAMLContextProviderLB">
         <property name="scheme" value="https"/>
-        <property name="serverName" value="${saml.proxy.host}"/>
+        <property name="serverName" value="${fk.saml.proxy.host}"/>
         <property name="serverPort" value="443"/>
         <property name="includeServerPortInRequestURL" value="false"/>
         <property name="contextPath" value=""/>
