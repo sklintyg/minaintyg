@@ -85,14 +85,17 @@
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>schemas</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>module-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>se.inera.certificate.proxy</groupId>
       <artifactId>reverse-proxy</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

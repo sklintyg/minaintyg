@@ -44,9 +44,6 @@
     <slf4j.version>1.6.4</slf4j.version>
     <logback.version>1.0.0</logback.version>
     <mvkintegration.version>1.2</mvkintegration.version>
-    <inera.certificate.schemas.version>1.1-SNAPSHOT</inera.certificate.schemas.version>
-    <inera.certificate.moduleapi.version>1.1-SNAPSHOT</inera.certificate.moduleapi.version>
-    <inera.certificate.proxy.version>1.1-SNAPSHOT</inera.certificate.proxy.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
     <aspectj.version>1.7.1</aspectj.version>
   </properties>
@@ -192,21 +189,6 @@
             <artifactId>spring-beans</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>schemas</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>module-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate.proxy</groupId>
-        <artifactId>reverse-proxy</artifactId>
-        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
