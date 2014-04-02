@@ -31,7 +31,7 @@
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>certificate-specifications</artifactId>
-      <version>1.2-RC2-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>

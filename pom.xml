@@ -196,17 +196,17 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>schemas</artifactId>
-        <version>1.2-RC2-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
-        <version>1.2-RC2-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate.proxy</groupId>
         <artifactId>reverse-proxy</artifactId>
-        <version>1.2-RC2-SNAPSHOT</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
