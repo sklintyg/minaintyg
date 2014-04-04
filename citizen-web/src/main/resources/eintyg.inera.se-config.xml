@@ -36,11 +36,13 @@
 
   <beans>
 
+    <import resource="classpath*:module-config.xml" />
+
     <context:property-placeholder
       location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties" order="2"
       ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
-    <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service, se.inera.certificate.integration.rest" />
+    <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service, se.inera.certificate.integration.module" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">

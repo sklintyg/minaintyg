@@ -39,9 +39,9 @@ import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.api.StatusMeta;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.integration.rest.dto.CertificateStatus;
+import se.inera.certificate.integration.module.dto.CertificateContentHolder;
+import se.inera.certificate.integration.module.dto.CertificateContentMeta;
+import se.inera.certificate.integration.module.dto.CertificateStatus;
 import se.inera.certificate.model.Utlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
@@ -66,7 +66,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -239,7 +238,7 @@ public class CertificateServiceImpl implements CertificateService {
         try {
             commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), Utlatande.class);
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
         
         // Set metadata based on common properties found on any certificate (regardless of type).

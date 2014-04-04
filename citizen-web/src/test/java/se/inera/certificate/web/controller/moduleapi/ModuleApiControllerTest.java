@@ -1,12 +1,11 @@
 package se.inera.certificate.web.controller.moduleapi;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.NOT_IMPLEMENTED;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -24,11 +23,16 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.rest.ModuleRestApi;
-import se.inera.certificate.integration.rest.ModuleRestApiFactory;
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.integration.module.ModuleApiFactory;
+import se.inera.certificate.integration.module.dto.CertificateContentHolder;
+import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.model.Utlatande;
+import se.inera.certificate.model.common.MinimalUtlatande;
+import se.inera.certificate.modules.support.ModuleEntryPoint;
+import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
@@ -43,19 +47,23 @@ public class ModuleApiControllerTest {
     private static final String CERTIFICATE_TYPE = "fk7263";
 
     private static CertificateContentHolder utlatandeHolder;
+    private static ExternalModelHolder externalModelHolder;
     private static String certificateData;
 
     @Mock
     private CertificateService certificateService = mock(CertificateService.class);
 
     @Mock
-    private ModuleRestApiFactory moduleRestApiFactory;
+    private ModuleApiFactory moduleApiFactory;
+
+    @Mock
+    private ModuleEntryPoint moduleEntryPoint;
+
+    @Mock
+    private ModuleApi moduleApi;
 
     @Mock
     private CitizenService citizenService;
-
-    @Mock
-    private ModuleRestApi moduleRestApi;
 
     @Mock
     private ObjectMapper objectMapper = mock(ObjectMapper.class);
@@ -69,7 +77,7 @@ public class ModuleApiControllerTest {
         utlatandeHolder = new CertificateContentHolder();
         utlatandeHolder.setCertificateContent(certificateData);
 
-        Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
+        Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, MinimalUtlatande.class);
         CertificateContentMeta meta = new CertificateContentMeta();
         meta.setId(commonUtlatande.getId().getExtension());
         meta.setType(commonUtlatande.getTyp().getCode().toLowerCase());
@@ -77,29 +85,21 @@ public class ModuleApiControllerTest {
         meta.setFromDate(commonUtlatande.getValidFromDate());
         meta.setTomDate(commonUtlatande.getValidToDate());
         utlatandeHolder.setCertificateContentMeta(meta);
+
+        externalModelHolder = new ExternalModelHolder(certificateData);
     }
 
     @Test
-    public void testGetCertificatePdf() throws IOException {
-
+    public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
-        when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
+        when(moduleApiFactory.getModuleEntryPoint(CERTIFICATE_TYPE)).thenReturn(moduleEntryPoint);
+        when(moduleEntryPoint.getModuleApi()).thenReturn(moduleApi);
+        when(moduleApi.pdf(refEq(externalModelHolder))).thenReturn(new PdfResponse("<pdf-file>".getBytes(), "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        // Mimic the module API to which the PDF generation is delegated to.
-        // We return an HTTP 200 together with some mock PDF data.
-        Response moduleCallResponse = mock(Response.class);
-        when(moduleCallResponse.getStatus()).thenReturn(Response.Status.OK.getStatusCode());
-        when(moduleCallResponse.getEntity()).thenReturn("<pdf-file>");
-        when(moduleRestApi.pdf(utlatandeHolder)).thenReturn(moduleCallResponse);
-
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
-
-        verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
-        verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(moduleRestApi).pdf(utlatandeHolder);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals("<pdf-file>", response.getEntity());
@@ -112,26 +112,18 @@ public class ModuleApiControllerTest {
     }
 
     @Test
-    public void testGetCertificatePdfWithFailingModule() throws IOException {
+    public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
-        when(moduleRestApiFactory.getModuleRestService(CERTIFICATE_TYPE)).thenReturn(moduleRestApi);
+        when(moduleApiFactory.getModuleEntryPoint(CERTIFICATE_TYPE)).thenReturn(moduleEntryPoint);
+        when(moduleEntryPoint.getModuleApi()).thenReturn(moduleApi);
+        when(moduleApi.pdf(refEq(externalModelHolder))).thenThrow(new ModuleSystemException());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        // Mimic the module API to which the PDF generation is delegated to.
-        // We return an HTTP 501.
-        Response moduleCallResponse = mock(Response.class);
-        when(moduleCallResponse.getStatus()).thenReturn(Response.Status.NOT_IMPLEMENTED.getStatusCode());
-        when(moduleRestApi.pdf(utlatandeHolder)).thenReturn(moduleCallResponse);
-
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
-        verify(certificateService).getUtlatande(PERSONNUMMER, CERTIFICATE_ID);
-        verify(moduleRestApiFactory).getModuleRestService(CERTIFICATE_TYPE);
-        verify(moduleRestApi).pdf(utlatandeHolder);
-
-        assertEquals(NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
     }
 

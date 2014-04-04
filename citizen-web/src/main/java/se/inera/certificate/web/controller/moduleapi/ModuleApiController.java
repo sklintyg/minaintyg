@@ -18,21 +18,7 @@
  */
 package se.inera.certificate.web.controller.moduleapi;
 
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.integration.rest.ModuleRestApi;
-import se.inera.certificate.integration.rest.ModuleRestApiFactory;
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
-
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.OK;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -41,6 +27,24 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.api.ModuleAPIResponse;
+import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.module.ModuleApiFactory;
+import se.inera.certificate.integration.module.dto.CertificateContentHolder;
+import se.inera.certificate.integration.module.exception.ModuleNotFoundException;
+import se.inera.certificate.modules.support.ModuleEntryPoint;
+import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
+import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
+import se.inera.certificate.web.service.CitizenService;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
@@ -56,7 +60,7 @@ public class ModuleApiController {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
     @Autowired
-    private ModuleRestApiFactory moduleApiFactory;
+    private ModuleApiFactory moduleApiFactory;
 
     /**
      * Helper service to get current user.
@@ -85,19 +89,24 @@ public class ModuleApiController {
 
         CertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
-      
         LOG.debug("getCertificate - type is: {}", contentHolder.getCertificateContentMeta().getType());
-        
-        ModuleRestApi moduleRestApi = moduleApiFactory.getModuleRestService(contentHolder.getCertificateContentMeta().getType());
-        WebClient.client(moduleRestApi).accept(MediaType.WILDCARD);
-        Response response = moduleRestApi.convertExternalToInternal(contentHolder);
 
-        if (isNotOk(response)) {
-            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '" +  contentHolder.getCertificateContentMeta().getType() + "'. Status code is " + response.getStatus());
-            return Response.status(response.getStatus()).build();
+        try {
+            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(contentHolder.getCertificateContentMeta().getType());
+            InternalModelResponse response = module.getModuleApi().convertExternalToInternal(
+                    new ExternalModelHolder(contentHolder.getCertificateContent()));
+
+            return Response.ok(response.getInternalModel()).build();
+
+        } catch (ModuleNotFoundException e) {
+            LOG.error("Module " + id + " not found. Not loaded in application.");
+            return Response.serverError().build();
+
+        } catch (ModuleException e) {
+            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '"
+                    + contentHolder.getCertificateContentMeta().getType() + "'.");
+            return Response.serverError().build();
         }
-
-        return Response.ok(response.readEntity(String.class)).build();
     }
 
     /**
@@ -137,26 +146,21 @@ public class ModuleApiController {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
 
-        Response pdf = fetchPdf(certificateContentHolder);
+        try {
+            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(certificateContentHolder.getCertificateContentMeta().getType());
+            PdfResponse pdf = module.getModuleApi().pdf(
+                    new ExternalModelHolder(certificateContentHolder.getCertificateContent()));
 
-        if (isNotOk(pdf)) {
+            String filename = pdf.getFilename();
+            return Response.ok(new String(pdf.getPdfData())).header(CONTENT_DISPOSITION, "attachment; filename=" + filename).build();
+
+        } catch (ModuleNotFoundException e) {
+            LOG.error("Module " + id + " not found. Not loaded in application.");
+            return Response.serverError().build();
+
+        } catch (ModuleException e) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
-            return Response.status(pdf.getStatus()).build();
+            return Response.serverError().build();
         }
-
-        String filenameHeader = pdf.getHeaderString(CONTENT_DISPOSITION); // filename=...
-
-        return Response.ok(pdf.getEntity()).header(CONTENT_DISPOSITION, "attachment; " + filenameHeader).build();
     }
-
-    private boolean isNotOk(Response response) {
-        return response.getStatus() != OK.getStatusCode();
-    }
-
-    private Response fetchPdf(CertificateContentHolder certificateContentHolder) {
-        ModuleRestApi api = moduleApiFactory.getModuleRestService(certificateContentHolder.getCertificateContentMeta().getType());
-        Response pdf = api.pdf(certificateContentHolder);
-        return pdf;
-    }
-
 }

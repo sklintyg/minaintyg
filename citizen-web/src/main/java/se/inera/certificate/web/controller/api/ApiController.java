@@ -1,5 +1,10 @@
 package se.inera.certificate.web.controller.api;
 
+import static se.inera.certificate.modules.support.ApplicationOrigin.MINA_INTYG;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -7,14 +12,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
+import se.inera.certificate.integration.module.ModuleApiFactory;
+import se.inera.certificate.modules.support.ModuleEntryPoint;
+import se.inera.certificate.web.controller.api.dto.IntygModule;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
@@ -33,6 +41,9 @@ public class ApiController {
 
     @Autowired
     private CitizenService citizenService;
+
+    @Autowired
+    private ModuleApiFactory moduleApiFactory;
 
     @GET
     @Path("/test")
@@ -94,5 +105,23 @@ public class ApiController {
             citizen.setConsent(false);
         }
         return new ConsentResponse(revokedSuccessfully);
+    }
+
+    /**
+     * Serving module configuration for Angular bootstrapping
+     * 
+     * @return a JSON object
+     */
+    @GET
+    @Path("/map")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public List<IntygModule> getModulesMap() {
+        List<IntygModule> response = new ArrayList<>();
+        for (ModuleEntryPoint module : moduleApiFactory.getRegisteredModules()) {
+            response.add(new IntygModule(module.getModuleId(), module.getModuleName(), module.getModuleDescription(),
+                    module.getModuleCssPath(MINA_INTYG), module.getModuleScriptPath(MINA_INTYG)));
+        }
+
+        return response;
     }
 }
