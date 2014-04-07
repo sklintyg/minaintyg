@@ -44,6 +44,11 @@
       <artifactId>ts-diabetes</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>se.inera.certificate.modules</groupId>
+      <artifactId>common-webjar</artifactId>
+      <version>1.3-SNAPSHOT</version>
+    </dependency>
 
     <dependency>
       <groupId>org.callistasoftware.netcare.commons</groupId>
@@ -100,6 +105,35 @@
       <version>2.0.1</version>
     </dependency>
     <!-- End netcare replacement -->
+
+    <!-- Webjars -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angular-ui-bootstrap</artifactId>
+      <version>0.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs</artifactId>
+      <version>2.1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs-text</artifactId>
+      <version>2.0.10-1</version>
+    </dependency>
+    <!-- end Webjars -->
+
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>schemas</artifactId>

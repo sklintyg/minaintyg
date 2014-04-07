@@ -18,39 +18,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="ListCertApp">
+<html lang="sv" id="ng-app" ng-app="intygApp">
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="ROBOTS" content="nofollow, noindex" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="ROBOTS" content="nofollow, noindex" />
 
-  <title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
+<title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
 
-  <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-  <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-  <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
-  <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-  <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
-  
-  <script type="text/javascript">
-    /**
-     Global JS config/constants for this app, to be used by scripts
-     **/
-    var MI_CONFIG = {
-        LOGIN_METHOD : '<sec:authentication property="principal.loginMethod" />'
-    }
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+
+<script type="text/javascript">
+  /**
+   Global JS config/constants for this app, to be used by scripts
+   **/
+  var MI_CONFIG = {
+      LOGIN_METHOD : '<sec:authentication property="principal.loginMethod" />'
+  }
 </script>
 </head>
 
-<body ng-app="ListCertApp">
+<body>
 
   <mvk-top-bar></mvk-top-bar>
 
@@ -91,25 +90,7 @@
     <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
  <![endif]-->
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular-cookies.min.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"/>'></script>
-
-  <%-- Application files --%>
-  <script type="text/javascript" src="<c:url value="/js/app/app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/app/filters.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/app/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/app/services.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/app/messages.js"/>"></script>
-
-  <%-- Dependencies to common components --%>
-  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/mi-common-directive.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/consent-services.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/util-services.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
+  <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>
 
 </body>
 </html>

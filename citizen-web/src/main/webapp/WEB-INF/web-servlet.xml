@@ -18,6 +18,7 @@
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
   <mvc:annotation-driven/>
+  <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
   <mvc:default-servlet-handler/>
 
   <mvc:interceptors>

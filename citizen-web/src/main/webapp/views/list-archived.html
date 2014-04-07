@@ -6,7 +6,7 @@
     <span message key="archived.description"></span>
   </div>
 </div>
-<div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | archivedfilter).length>0">
+<div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | archived).length>0">
 
   <table id="certTable" class="table expandable" aria-labelledby="archivedHeader">
     <thead>
@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="cert in certificates | archivedfilter" class="{{cert.status}}" data-ng-animate="'custom'">
+      <tr ng-repeat="cert in certificates | archived" class="{{cert.status}}" data-ng-animate="'custom'">
         <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
         <td headers="type"><span message key="certificatetypes.{{cert.type}}.commonname"></span></td>
         <td headers="certperiod">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</td>
@@ -32,9 +32,9 @@
   </table>
 </div>
 <!-- eof spinner -->
-<div class="table-bottom" ng-hide="(certificates | archivedfilter).length<1"></div>
+<div class="table-bottom" ng-hide="(certificates | archived).length<1"></div>
 
-<div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archivedfilter).length<1">
+<div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archived).length<1">
   <span message key="error.noarchivedcerts"></span>
 </div>
 
