@@ -56,14 +56,14 @@ define([
 
         var modulesMap = JSON.parse(modules);
 
-        var modulesUrls = [];/*
+        var modulesUrls = [];
         for (var artifactId in modulesMap) {
             modulesUrls.push(modulesMap[artifactId].id + modulesMap[artifactId].scriptPath);
             loadCssFromUrl('/web/webjars/' + modulesMap[artifactId].id + modulesMap[artifactId].cssPath);
-        }*/
+        }
 
         require({ baseUrl: '/web/webjars/' }, modulesUrls, function () {
-            var modules = {};//arguments;
+            var modules = arguments;
 
             angular.element().ready(function () {
                 angular.resumeBootstrap([app.name].concat(Array.prototype.slice.call(modules, 0)));
