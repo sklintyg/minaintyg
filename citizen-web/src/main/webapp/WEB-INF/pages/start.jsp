@@ -35,7 +35,8 @@
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
+<%-- <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>"> --%>
+<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 
@@ -52,19 +53,25 @@
 <body>
 
   <mvk-top-bar></mvk-top-bar>
+	<div class="container-fluid" id="mi-logo-header">
+		<div class="content-container">
+			<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
+		</div>
+	</div>
+	<div class="container-fluid" id="mi-navigation">
+		<div class="content-container">
+			<mi-main-navigation></mi-main-navigation>	
+		</div>
+	</div>
 
-  <div class="container">
+  <div class="container-fluid">
 
     <div id="content-container">
       <div class="content">
-        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+<%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
-        <div id="navigation-container">
-          <mi-main-navigation></mi-main-navigation>
-        </div>
-
-        <div class="row-fluid">
-          <div id="content-body" class="span12">
+        <div class="row">
+          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <%-- No script to show at least something when javascript is off --%>
             <noscript>
               <h1>
@@ -80,7 +87,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
   <!--[if lte IE 8]>
     <script>

@@ -61,11 +61,10 @@
 
 body {
     font-size: 14px;
-    background-color: #c8c8c8;
+    background-color: #fff;
     text-align: left;
-   	background-image: url("../img/bg11.png");
+    background-image: none;
 }
-
 
 a {
     color: #008391;
@@ -304,11 +303,15 @@ div.container {
     -webkit-border-radius: 0 0 16px 16px;
     -moz-border-radius: 0 0 16px 16px;
     border-radius: 0 0 16px 16px;
-    width: 974px;
+    max-width: 974px;
     margin-left: auto;
     margin-right: auto;
 }
-
+.content-container {
+	max-width: 974px;
+	margin-left: auto;
+	margin-right: auto;
+}
 div.content {
     background-color: #ffffff;
     -moz-box-shadow: 0px 0px 20px #D3D3D3;
@@ -317,7 +320,7 @@ div.content {
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     border-radius: 0 0 6px 6px;
-    padding: 77px 40px 40px 40px;
+    padding: 20px 40px 40px 40px;
     position: relative;
 }
 
@@ -623,6 +626,7 @@ button#archiveCertificateBtn {
     -moz-box-shadow: 0px 0px 10px #666;
     -webkit-box-shadow: 0px 0px 10px #666;
     box-shadow: 0px 0px 10px #666;
+    height: 42px;
 }
 
 /* bootstrap override */
@@ -676,6 +680,12 @@ button#archiveCertificateBtn {
 	background-color: #656565;
 }
 
+#navbar { 
+	top: 34px;
+	z-index: 999;
+	background-color: #000;
+	border-radius: 0px;
+}
 .modal-footer {
 	text-align:left;
 }
@@ -847,3 +857,28 @@ div.inera-box .box-body {
 .custom-move.custom-move-active {
   opacity:1;
 }
+#mi-logo-header {
+	background-color: #000;
+	position: relative;
+	top: 38px;
+	height: 62px;
+}
+#mi-navigation {
+	background-color: #fafafa;
+	background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+	background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+	background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+	background-repeat: repeat-x;
+	border: 1px solid #d4d4d4;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+	position: relative;
+	top: 34px;
+	z-index: 9;
+}
+/** Helpers **/
+.white { color: #fff; }
