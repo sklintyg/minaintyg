@@ -1,14 +1,14 @@
 <div>
-	<div class="navbar-header" role="banner">
-		<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+	<div class="navbar-header hidden-xs" role="banner">
+		<button class="nav navbar navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
 			<span class="sr-only">Visa/Dölj meny</span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
 	</div>
-	<nav class="navbar-collapse bs-navbar-collapse collapse" role="navigation">
-		<ul class="nav navbar-nav">
+	<nav class="navbar-collapse bs-navbar-collapse collapsed" role="navigation">
+		<ul class="navbar nav navbar-nav">
 			<li ng-class="navClass('lista')"><a role="menuitem" ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="nav.label.inbox"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
 		    <li ng-class="navClass('arkiverade')"><a role="menuitem" ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab"><message key="nav.label.archived"></message></a></li>

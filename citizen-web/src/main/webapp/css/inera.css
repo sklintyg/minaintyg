@@ -295,17 +295,9 @@ div.container {
 }
 
 #content-container {
-    background-color: #e6e7e5;
-    padding: 0 8px 8px 8px;
-    -moz-box-shadow: 0px 2px 10px #666;
-    -webkit-box-shadow: 0px 1px 5px #666;
-    box-shadow: 0px 1px 5px #666;
-    -webkit-border-radius: 0 0 16px 16px;
-    -moz-border-radius: 0 0 16px 16px;
-    border-radius: 0 0 16px 16px;
     max-width: 974px;
-    margin-left: auto;
-    margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 .content-container {
 	max-width: 974px;
@@ -314,13 +306,7 @@ div.container {
 }
 div.content {
     background-color: #ffffff;
-    -moz-box-shadow: 0px 0px 20px #D3D3D3;
-    -webkit-box-shadow: 0px 0px 20px #D3D3D3;
-    box-shadow: 0px 0px 20px #D3D3D3;
-    -webkit-border-radius: 0 0 6px 6px;
-    -moz-border-radius: 0 0 6px 6px;
-    border-radius: 0 0 6px 6px;
-    padding: 20px 40px 40px 40px;
+    padding: 20px 15px 40px 15px;
     position: relative;
 }
 
@@ -716,17 +702,27 @@ color: #ffffff;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 background-color: #008391;
 }
-
+.navbar-nav .active > a {
+	color: #555555;
+	text-decoration: none;
+	background-color: #e5e5e5;
+	-webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+	-moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+	box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);
+}
+.navbar-nav > li > a {
+	padding: 13px 35px 15px;
+}
 .nav-stacked .active .icon-chevron-right, .nav-stacked .active a:hover .icon-chevron-right {
 background-image: url(../img/glyphicons-halflings-white.png);
 opacity: 1;
 }
 
 .nav-stacked .icon-chevron-right {
-float: right;
-margin-top: 2px;
-margin-right: -6px;
-opacity: .25;
+	float: right;
+	margin-top: 2px;
+	margin-right: -6px;
+	opacity: .25;
 }
 
 .alert-info, .alert-info p {
@@ -871,7 +867,7 @@ div.inera-box .box-body {
 	background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
 	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
 	background-repeat: repeat-x;
-	border: 1px solid #d4d4d4;
+	border-bottom: 1px solid #d4d4d4;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
 	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
