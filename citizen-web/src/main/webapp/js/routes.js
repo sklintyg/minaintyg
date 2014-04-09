@@ -2,7 +2,11 @@ define([ 'angular', 'app' ], function(angular, app) {
 	'use strict';
 
 	app.config([ '$routeProvider', function($routeProvider) {
-		$routeProvider.when('/lista', {
+		$routeProvider.when('/start', {
+			templateUrl : '/views/consent/consent-start.html',
+			controller : 'ConsentCtrl',
+			title : 'Ditt samtycke'
+		}).when('/lista', {
 			templateUrl : '/views/list.html',
 			controller : 'ListCtrl',
 			title : 'Inkorgen'
