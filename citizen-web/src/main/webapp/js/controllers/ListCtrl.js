@@ -8,11 +8,12 @@ define([], function() {
 			'$window',
 			'$log',
 			'listCertService',
+			'dialogService',
 			'messageService',
 			'$cookies',
 			'$rootScope',
 			'$timeout',
-			function($scope, $filter, $location, $window, $log, listCertService, messageService, $cookies, $rootScope,
+			function($scope, $filter, $location, $window, $log, listCertService, dialogService, messageService, $cookies, $rootScope,
 					$timeout) {
 				$scope.certificates = [];
 				$scope.doneLoading = false;
@@ -34,7 +35,7 @@ define([], function() {
 				$scope.sendSelected = function(item) {
 					$log.debug("send " + item.id);
 					listCertService.selectedCertificate = item;
-					var path = "/m/" + item.type.toLowerCase() + "/intyg/" + item.id
+					var path = "#/" + item.type.toLowerCase() + "/view/" + item.id;
 					$window.location.href = path;
 				}
 
@@ -64,7 +65,7 @@ define([], function() {
 				$scope.openArchiveDialog = function(cert) {
 					$scope.certToArchive = cert;
 					$scope.dialog.focus = true;
-					archiveDialog = listCertService.showDialog($scope, {
+					archiveDialog = dialogService.showDialog($scope, {
 						dialogId : "archive-confirmation-dialog",
 						titleId : "inbox.archivemodal.header",
 						bodyTextId : "inbox.archivemodal.text",
@@ -81,7 +82,7 @@ define([], function() {
 				// FK dialog
 				var fromConsentPage = $cookies['RedirectFromConsent'];
 				if (fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === "FK")) {
-					var fkDialog = listCertService.showDialog($scope, {
+					var fkDialog = dialogService.showDialog($scope, {
 						dialogId : "fk-login-consent-dialog",
 						titleId : "fkdialog.head",
 						bodyTextId : "fkdialog.text",

@@ -43,6 +43,7 @@ import se.inera.certificate.integration.module.dto.CertificateContentHolder;
 import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.integration.module.dto.CertificateStatus;
 import se.inera.certificate.model.Utlatande;
+import se.inera.certificate.model.common.MinimalUtlatande;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
@@ -236,7 +237,7 @@ public class CertificateServiceImpl implements CertificateService {
         //Deserialize certificate Json to get common properties
         Utlatande commonUtlatande;
         try {
-            commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), Utlatande.class);
+            commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), MinimalUtlatande.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
