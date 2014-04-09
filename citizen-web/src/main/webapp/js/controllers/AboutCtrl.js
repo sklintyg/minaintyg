@@ -2,8 +2,8 @@ define([], function() {
 	'use strict';
 
 	return [ '$scope', '$location', '$filter', '$log', 'consentService', 'messageService', '$window',
-			'listCertService',
-			function($scope, $location, $filter, $log, consentService, messageService, $window, listCertService) {
+			'dialogService',
+			function($scope, $location, $filter, $log, consentService, messageService, $window, dialogService) {
 
 				// Hold left side navigation state
 				$scope.visibility = {
@@ -41,7 +41,7 @@ define([], function() {
 
 				$scope.openRevokeDialog = function(cert) {
 					$scope.dialog.focus = true;
-					revokeDialog = listCertService.showDialog($scope, {
+					revokeDialog = dialogService.showDialog($scope, {
 						dialogId : "revoke-consent-confirmation-dialog",
 						titleId : "about.revokemodal.header",
 						bodyTextId : "about.revokemodal.text",

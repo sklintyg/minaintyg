@@ -3,14 +3,16 @@ define([
 ], function (angular) {
     'use strict';
 
-    return function(certificates) {
-        var out = [];
+    return function () {
+        return function(certificates) {
+            var out = [];
 
-        angular.forEach(certificates, function(value, key) {
-            if (value.archived) {
-                this.push(value);
-            }
-        }, out);
-        return out;
+            angular.forEach(certificates, function(value, key) {
+                if (value.archived) {
+                    this.push(value);
+                }
+            }, out);
+            return out;
+        };
     };
 });

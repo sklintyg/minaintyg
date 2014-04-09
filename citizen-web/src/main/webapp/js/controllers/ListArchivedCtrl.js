@@ -1,7 +1,7 @@
 define([], function() {
 	'use strict';
 
-	return [ '$scope', '$location', '$log', 'listCertService', function($scope, $location, $log, listCertService) {
+	return [ '$scope', '$location', '$log', 'listCertService', 'dialogService', function($scope, $location, $log, listCertService, dialogService) {
 		$scope.certificates = [];
 		$scope.doneLoading = false;
 
@@ -17,7 +17,7 @@ define([], function() {
 		$scope.openRestoreDialog = function(cert) {
 			$scope.certToRestore = cert;
 			$scope.dialog.focus = true;
-			restoreDialog = listCertService.showDialog($scope, {
+			restoreDialog = dialogService.showDialog($scope, {
 				dialogId : "restore-confirmation-dialog",
 				titleId : "archived.restoremodal.header",
 				bodyTextId : "archived.restoremodal.text",
