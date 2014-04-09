@@ -99,7 +99,7 @@ public class ModuleApiController {
             return Response.ok(response.getInternalModel()).build();
 
         } catch (ModuleNotFoundException e) {
-            LOG.error("Module " + id + " not found. Not loaded in application.");
+            LOG.error("Module " + id + " not found. Not loaded in application. Error was: " + e.getMessage());
             return Response.serverError().build();
 
         } catch (ModuleException e) {
