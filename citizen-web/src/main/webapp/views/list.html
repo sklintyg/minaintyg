@@ -41,8 +41,9 @@
                         <span message key="listtable.headers.issued"></span>&nbsp;<span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 archive">
-                        <a  class="glyphicon glyphicon-folder-close white archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
-<!--                           <img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /> -->
+                        <a  class="archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                        	<span class="glyphicon glyphicon-folder-close white"></span>
+							<!-- <img alt="{{messageService.getProperty('button.alt.archive')}}" src="/img/archive-icon.gif" /> -->
                         </a>
                       </div>
                     </div>
@@ -56,16 +57,16 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 header-row">
+                      <div class="col-xs-7 col-sm-7 col-md-8 col-lg-8 header-row">
                         <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3> {{cert.careunitName}}
                       </div>
                       <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <h3 class="tag"><span message key="listtable.headers.certperiod"></span></h3> <span id="certificate-period-{{cert.id}}">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
+                        <h3 class="tag"><span message key="listtable.headers.certperiod"></span></h3><span id="certificate-period-{{cert.id}}">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}</span>
                       </div>
                       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
                     </div>
                     <div class="row">
-                      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 header-row">
+                      <div class="col-xs-7 col-sm-7 col-md-8 col-lg-8 header-row">
                         <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3>
                         <div ng-show="cert.statuses.length>0">
                           {{cert.statuses[0].timestamp | date:'short'}}

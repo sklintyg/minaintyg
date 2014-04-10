@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>">
 
 <script type="text/javascript">
   /**

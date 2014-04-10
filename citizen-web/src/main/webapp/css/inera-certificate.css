@@ -94,7 +94,7 @@
 .cert-titlebar .cert-title {
     color: #fff;
     padding: 10px 0 5px 40px;
-    display: block;
+    display: inline-block;
 }
 
 .cert-titlebar h2 > span {
@@ -104,7 +104,7 @@
 	font-size: 10px;
 	color: #b3d6da;
 }
-
+.cert-titlebar .row { margin-right: 0px; margin-left: 0px; }
 .issue {
     color: #fff;
     padding: 12px 0 0px 0;
@@ -132,6 +132,8 @@
 	-webkit-border-radius: 0px 8px 0px 0px;
 	-moz-border-radius: 0px 8px 0px 0px;
 	border-radius: 0px 8px 0px 0px;
+	width: 100%;
+	text-align: center;
 }
 
 .archive a:hover, .cert-cancelled .archive .archive-only:hover {
@@ -166,12 +168,14 @@
     padding: 0;
 }
 
-.cert-header .row-fluid {
+.cert-header .row {
 	border-bottom: 1px solid #dddddd;
 	padding: 10px 0;
+	margin-left: 0;
+	margin-right: 0;
 }
 
-.cert-header .row-fluid:last-child {
+.cert-header .row:last-child {
 	padding-bottom: 10px;
     border: 0;
 }
