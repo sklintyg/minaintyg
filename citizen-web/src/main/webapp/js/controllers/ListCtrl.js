@@ -35,8 +35,7 @@ define([], function() {
 				$scope.sendSelected = function(item) {
 					$log.debug("send " + item.id);
 					listCertService.selectedCertificate = item;
-					var path = "#/" + item.type.toLowerCase() + "/view/" + item.id;
-					$window.location.href = path;
+					$location.path("/" + item.type.toLowerCase() + "/view/" + item.id);
 				}
 
 				$scope.archiveSelected = function() {
