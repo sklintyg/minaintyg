@@ -1,9 +1,11 @@
-<div class="row-fluid">
-  <div class="span7">
+<div class="row">
+  <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
     <h1 ng-focus="pagefocus" tabindex="0">
       <span id="archivedHeader" message key="archived.header"></span>
     </h1>
+    <p></p>
     <span message key="archived.description"></span>
+    
   </div>
 </div>
 <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | archived).length>0">

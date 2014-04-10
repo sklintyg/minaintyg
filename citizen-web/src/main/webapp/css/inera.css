@@ -64,6 +64,7 @@ body {
     background-color: #fff;
     text-align: left;
     background-image: none;
+    overflow-y: scroll;
 }
 
 a {
@@ -698,9 +699,12 @@ button#archiveCertificateBtn {
 }
 
 .nav-stacked > .active > a, .nav-stacked > .active > a:hover, .nav-stacked > .active > a:focus {
-color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-background-color: #008391;
+	color: #ffffff;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+	background-color: #008391 !important;
+}
+.nav-pills > li > a, .nav-pills > li > a:hover {
+	color: #333;
 }
 .navbar-nav .active > a {
 	color: #555555;
