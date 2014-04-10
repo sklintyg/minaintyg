@@ -52,8 +52,8 @@
       <div class="content">
         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
 
-        <div class="row-fluid">
-          <div id="content-body" class="span12">
+        <div class="row">
+          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <%-- No script to show at least something when javascript is off --%>
             <noscript>
               <h1>

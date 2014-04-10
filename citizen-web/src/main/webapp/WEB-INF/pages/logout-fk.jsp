@@ -52,8 +52,8 @@
         <mi-header user-name=""></mi-header>
         <div id="navigation-container"></div>
 
-        <div class="row-fluid">
-          <div id="content-body" class="span12">
+        <div class="row">
+          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h1>
               <spring:message code="info.loggedout.fk.title" />
             </h1>

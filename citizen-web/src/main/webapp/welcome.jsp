@@ -57,7 +57,7 @@ if ("prod".equals(profile)) {
         <div id="navigation-container"></div>
 
         <div class="row-fluid">
-          <div id="content-body" class="span12" style="padding-top: 25px;">
+          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 35px;">
             <pre>Detta är en startsida som inte skall finns tillgänglig i en produktionsmiljö!</pre>
             <h1>Testinloggningar</h1>
 
@@ -84,7 +84,7 @@ if ("prod".equals(profile)) {
             <h2>Logga in med annat guid</h2>
 
             <form id="customguidform" class="navbar-form pull-left">
-              <input id="guid" type="text" class="span6" placeholder="ange guid"> <input type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
+              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid"> <input type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
                 value="logga in">
             </form>
           </div>

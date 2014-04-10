@@ -49,11 +49,11 @@
 
     <div id="content-container">
       <div class="content">
-        <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header>
+<%--         <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header> --%>
         <div id="navigation-container"></div>
 
         <div class="row-fluid">
-          <div id="content-body" class="span7">
+          <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 
             <c:choose>
