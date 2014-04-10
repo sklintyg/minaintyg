@@ -36,12 +36,21 @@ define([
             $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
         }]);
 
-    app.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
+    app.run([ '$rootScope', '$route', 'messageService', '$window', '$log', '$http', function($rootScope, $route, messageService, $window, $log, $http) {
         $rootScope.lang = 'sv';
         $rootScope.DEFAULT_LANG = 'sv';
         $rootScope.MI_CONFIG = MI_CONFIG;
         messageService.addResources(commonMessageResources);
         messageService.addResources(messages);
+        
+        $window.onbeforeunload = function() {
+        	var request = new XMLHttpRequest();
+        	// `false` makes the request synchronous
+        	request.open('GET', '/api/certificates/onbeforeunload', false);
+        	request.send(null);
+            $log.debug('onbeforeunload');
+
+        };
 
     	// Update page title
     	$rootScope.page_title = 'Titel';
