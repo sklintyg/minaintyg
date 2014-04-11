@@ -67,7 +67,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
             if (jsonResponse) {
                 response.getOutputStream().print("Inget samtycke.json");
             } else {
-                response.sendRedirect("/web/visa-ge-samtycke");
+                response.sendRedirect("/web/visa-ge-samtycke#/consent");
             }
             // return false to indicate that the request/filter chain should stop here.
             // We have already taken care of a respone to the client.
