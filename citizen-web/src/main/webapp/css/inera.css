@@ -661,10 +661,12 @@ button#archiveCertificateBtn {
 .btn-inverse {
 	background: none;
 	background-color: #3f3f3f;
+	color: #fff;
 }
 
 .btn-inverse:hover {
 	background-color: #656565;
+	color: #fff;
 }
 
 #navbar { 
