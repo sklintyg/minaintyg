@@ -45,31 +45,36 @@
 <body ng-app="ConsentApp">
   <mvk-top-bar></mvk-top-bar>
 
+	<div class="container-fluid" id="mi-logo-header">
+		<div class="content-container">
+			<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
+		</div>
+	</div>
 
-  <div class="container">
-
-    <div id="content-container">
-      <div class="content">
-        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
-
-        <div class="row">
-          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <%-- No script to show at least something when javascript is off --%>
-            <noscript>
-              <h1>
-                <span><spring:message code="error.noscript.title" /></span>
-              </h1>
-              <div class="alert alert-error">
-                <spring:message code="error.noscript.text" />
-              </div>
-            </noscript>
-            <%-- ng-view that holds dynamic content managed by angular app --%>
-            <div ng-view></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+	
+	  <div id="content-container">
+	    <div class="content">
+		<%-- <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
+	
+	      <div class="row">
+	        <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	          <%-- No script to show at least something when javascript is off --%>
+	          <noscript>
+	            <h1>
+	              <span><spring:message code="error.noscript.title" /></span>
+	            </h1>
+	            <div class="alert alert-error">
+	              <spring:message code="error.noscript.text" />
+	            </div>
+	          </noscript>
+	          <%-- ng-view that holds dynamic content managed by angular app --%>
+	          <div ng-view></div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 
 

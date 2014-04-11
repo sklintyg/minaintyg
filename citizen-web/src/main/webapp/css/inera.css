@@ -716,6 +716,7 @@ button#archiveCertificateBtn {
 }
 .navbar-nav > li > a {
 	padding: 13px 35px 15px;
+	color: #000;
 }
 .nav-stacked .active .icon-chevron-right, .nav-stacked .active a:hover .icon-chevron-right {
 background-image: url(../img/glyphicons-halflings-white.png);
@@ -862,6 +863,7 @@ div.inera-box .box-body {
 	position: relative;
 	top: 38px;
 	height: 62px;
+	z-index: 8;
 }
 #mi-navigation {
 	background-color: #fafafa;
