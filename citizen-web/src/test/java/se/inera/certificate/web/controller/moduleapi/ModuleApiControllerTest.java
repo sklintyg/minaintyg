@@ -94,7 +94,9 @@ public class ModuleApiControllerTest {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleApiFactory.getModuleEntryPoint(CERTIFICATE_TYPE)).thenReturn(moduleEntryPoint);
         when(moduleEntryPoint.getModuleApi()).thenReturn(moduleApi);
-        when(moduleApi.pdf(refEq(externalModelHolder))).thenReturn(new PdfResponse("<pdf-file>".getBytes(), "pdf-filename.pdf"));
+       
+        byte[] bytes = "<pdf-file>".getBytes();
+        when(moduleApi.pdf(refEq(externalModelHolder))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -102,7 +104,7 @@ public class ModuleApiControllerTest {
         Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
-        assertEquals("<pdf-file>", response.getEntity());
+        assertEquals(bytes, response.getEntity());
     }
 
     private Citizen mockCitizen() {
