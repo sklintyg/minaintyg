@@ -47,8 +47,9 @@ import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 
 /**
- * Controller that exposes a REST interface to functions common to certificate modules, such as get and send certificate.
- *
+ * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
+ * certificate.
+ * 
  * @author marced
  */
 public class ModuleApiController {
@@ -74,17 +75,17 @@ public class ModuleApiController {
     @Autowired
     private CertificateService certificateService;
 
-    
     /**
      * Return the certificate identified by the given id as JSON.
-     *
-     * @param id - the globally unique id of a certificate.
+     * 
+     * @param id
+     *            - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
     @GET
-    @Path( "/{id}" )
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
-    public final Response getCertificate(@PathParam( "id" ) final String id) {
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public final Response getCertificate(@PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
         CertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
@@ -111,15 +112,17 @@ public class ModuleApiController {
 
     /**
      * Send the certificate identified by the given id to the given target.
-     *
-     * @param id     - the globally unique id of a certificate.
-     * @param target - id of target system that should receive the certificate.
+     * 
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @param target
+     *            - id of target system that should receive the certificate.
      * @return The response of the send operation
      */
     @PUT
-    @Path( "/{id}/send/{target}" )
-    @Produces( MediaType.APPLICATION_JSON + ";charset=utf-8" )
-    public Response send(@PathParam( "id" ) final String id, @PathParam( "target" ) final String target) {
+    @Path("/{id}/send/{target}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
         ModuleAPIResponse response = certificateService.sendCertificate(citizen.getUsername(), id, target);
@@ -128,14 +131,15 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as PDF.
-     *
-     * @param id - the globally unique id of a certificate.
+     * 
+     * @param id
+     *            - the globally unique id of a certificate.
      * @return The certificate in PDF format
      */
     @GET
-    @Path( "/{id}/pdf" )
-    @Produces( "application/pdf" )
-    public final Response getCertificatePdf(@PathParam( value = "id" ) final String id) {
+    @Path("/{id}/pdf")
+    @Produces("application/pdf")
+    public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
         CertificateContentHolder certificateContentHolder;
@@ -150,14 +154,14 @@ public class ModuleApiController {
             ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(certificateContentHolder.getCertificateContentMeta().getType());
             PdfResponse pdf = module.getModuleApi().pdf(
                     new ExternalModelHolder(certificateContentHolder.getCertificateContent()));
-
             String filename = pdf.getFilename();
-            return Response.ok(new String(pdf.getPdfData())).header(CONTENT_DISPOSITION, "attachment; filename=" + filename).build();
+            return Response.ok(pdf.getPdfData())
+                    .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                    .build();
 
         } catch (ModuleNotFoundException e) {
             LOG.error("Module " + id + " not found. Not loaded in application.");
             return Response.serverError().build();
-
         } catch (ModuleException e) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
             return Response.serverError().build();
