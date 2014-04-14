@@ -57,7 +57,7 @@
 
     <div id="content-container">
       <div class="content">
-        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+<%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
         <div class="row-fluid">
           <div id="content-body" class="span12">
