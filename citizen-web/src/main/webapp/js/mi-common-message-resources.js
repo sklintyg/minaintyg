@@ -26,8 +26,8 @@ define([
 	        "certificatetypes.fk7263.typename" : "FK 7263",
 	        "certificatetypes.rli.commonname" : "Reseläkarintyg",
 	        "certificatetypes.rli.typename" : "RLI",
-	        "certificatetypes.ts-bas.commonname" : "Läkarintyg Transportstyrelsen Bas",
-	        "certificatetypes.ts-bas.typename" : "TS-Bas",
+	        "certificatetypes.ts-bas.commonname" : "Transportstyrelsens läkarintyg",
+	        "certificatetypes.ts-bas.typename" : " - Bas",
 	
 	        "certificates.status.cancelled" : "Rättat",
 	        "certificates.status.cancelledlc" : "Rättat",
