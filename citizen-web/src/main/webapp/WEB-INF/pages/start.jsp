@@ -29,6 +29,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
+<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi">  
 
 <title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
 

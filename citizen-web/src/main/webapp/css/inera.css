@@ -141,7 +141,7 @@ h4.footer-heading {
 
 .modal.fade { top: 10%; }
 
-.modal.fade.in { top: 20%; }
+.modal.fade.in { top: 20%; overflow: hidden;}
 
 .modal { top: 20%; }
 
