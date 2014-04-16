@@ -887,3 +887,4 @@ div.inera-box .box-body {
 /** Helpers **/
 .white { color: #fff; }
 .margin-top-5px { margin-top: 5px; }
+.no-padding-bottom { padding-bottom: 0px !important; }
