@@ -1,34 +1,39 @@
-<div id="about-mina-intyg-root" class="col-xs-12 col-sm-3 col-md-3 col-lg-3" aria-hidden="{{shouldBeOpen}}">
-  <ul class="nav nav-pills nav-stacked" role="menu" ng-focus="pagefocus" aria-labelledby="link-about-omminaintyg">
-    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href role="menuitem" aria-label="L��nk Om mina intyg. Laddar information om mina intyg efter denna meny." aria-controls="about-content-omminaintyg" ng-click="navigateTo('omminaintyg')"><span message key="about.omminaintyghead"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
-    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href role="menuitem" aria-label="L��nk Samtycke. Laddar information om samtycket till att anv��nda mina intyg efter denna meny." aria-controls="about-content-samtycke" ng-click="navigateTo('samtycke')"><span message key="about.consentheader"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
-    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href role="menuitem" aria-label="L��nk Juridik. Laddar information om det juridiska efter denna meny." aria-controls="about-content-juridik" ng-click="navigateTo('juridik')"><span message key="about.juridikhead"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
-  </ul>
+<div class="row">
+	<div id="about-mina-intyg-root" class="col-xs-12 col-sm-3 col-md-3 col-lg-3" aria-hidden="{{shouldBeOpen}}">
+	  <ul class="nav nav-pills nav-stacked" role="menu" ng-focus="pagefocus" aria-labelledby="link-about-omminaintyg">
+	    <li ng-class="{'active': visibility['omminaintyg'] }"><a id="link-about-omminaintyg" href role="menuitem" aria-label="L��nk Om mina intyg. Laddar information om mina intyg efter denna meny." aria-controls="about-content-omminaintyg" ng-click="navigateTo('omminaintyg')"><span message key="about.omminaintyghead"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
+	    <li ng-class="{'active': visibility['samtycke'] }"><a id="link-about-samtycke" href role="menuitem" aria-label="L��nk Samtycke. Laddar information om samtycket till att anv��nda mina intyg efter denna meny." aria-controls="about-content-samtycke" ng-click="navigateTo('samtycke')"><span message key="about.consentheader"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
+	    <li ng-class="{'active': visibility['juridik'] }"><a id="link-about-juridik" href role="menuitem" aria-label="L��nk Juridik. Laddar information om det juridiska efter denna meny." aria-controls="about-content-juridik" ng-click="navigateTo('juridik')"><span message key="about.juridikhead"></span><i class="glyphicon glyphicon-chevron-right pull-right"></i></a></li>
+	  </ul>
+	</div>
 </div>
-<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" aria-hidden="{{shouldBeOpen}}">
-
-  <div id="about-content-omminaintyg" ng-show="visibility.omminaintyg" aria-hidden="{{!visibility.omminaintyg}}" aria-labelledby="link-about-omminaintyg">
-      <h2 ng-focus="subpagefocus.omminaintyg" tabindex="-1"><span message key="about.omminaintyghead"></span></h2>
-      <span message key="about.omminaintygtext"></span>
-  </div>
-
-  <div id="about-content-samtycke" ng-show="visibility.samtycke" aria-hidden="{{!visibility.samtycke}}" aria-labelledby="link-about-samtycke">
-    <h2 ng-focus="subpagefocus.samtycke" tabindex="-1"><span message key="about.consentheader"></span></h2>
-
-    <div class="alert alert-info">
-      <h3><span message key="about.revokeconsentheader"></span></h3>
-      <p><span message key="about.revokeconsenttext"></span></p>
-      <p>
-      <input id="revokeConsentBtn" type="button" ng-click="openRevokeDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
-      </p>
-    </div>
-
-    <span message key="about.consenttext"></span>
-
-  </div>
-
-  <div id="about-content-juridik" ng-show="visibility.juridik" aria-hidden="{{!visibility.juridik}}" aria-labelledby="link-about-juridik">
-      <h2 ng-focus="subpagefocus.juridik" tabindex="-1"><span message key="about.juridikhead"></span></h2>
-      <span message key="about.juridiktext"></span>
-  </div>
+<div class="row visible-xs margin-top-5px"></div>
+<div class="row">
+	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9" aria-hidden="{{shouldBeOpen}}">
+	
+	  <div id="about-content-omminaintyg" ng-show="visibility.omminaintyg" aria-hidden="{{!visibility.omminaintyg}}" aria-labelledby="link-about-omminaintyg">
+	      <h2 ng-focus="subpagefocus.omminaintyg" tabindex="-1"><span message key="about.omminaintyghead"></span></h2>
+	      <span message key="about.omminaintygtext"></span>
+	  </div>
+	
+	  <div id="about-content-samtycke" ng-show="visibility.samtycke" aria-hidden="{{!visibility.samtycke}}" aria-labelledby="link-about-samtycke">
+	    <h2 ng-focus="subpagefocus.samtycke" tabindex="-1"><span message key="about.consentheader"></span></h2>
+	
+	    <div class="alert alert-info">
+	      <h3><span message key="about.revokeconsentheader"></span></h3>
+	      <p><span message key="about.revokeconsenttext"></span></p>
+	      <p>
+	      <input id="revokeConsentBtn" type="button" ng-click="openRevokeDialog()" value="{{getMessage('about.revokeconsentheader')}}" class="btn btn-success" />
+	      </p>
+	    </div>
+	
+	    <span message key="about.consenttext"></span>
+	
+	  </div>
+	
+	  <div id="about-content-juridik" ng-show="visibility.juridik" aria-hidden="{{!visibility.juridik}}" aria-labelledby="link-about-juridik">
+	      <h2 ng-focus="subpagefocus.juridik" tabindex="-1"><span message key="about.juridikhead"></span></h2>
+	      <span message key="about.juridiktext"></span>
+	  </div>
+	</div>
 </div>

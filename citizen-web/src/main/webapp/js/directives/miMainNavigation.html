@@ -17,13 +17,13 @@
 	</nav>
 	<nav class="collapse" collapse="!isCollapsed">
 		<ul class="nav navbar-nav">
-			<li ng-class="navClass('lista')"><a role="menuitem" ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="nav.label.inbox"></message></a></li>
+			<li ng-class="navClass('lista')"><a role="menuitem" ng-href="{{linkPrefix}}#/lista" id="inboxTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.inbox"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
-		    <li ng-class="navClass('arkiverade')"><a role="menuitem" ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab"><message key="nav.label.archived"></message></a></li>
+		    <li ng-class="navClass('arkiverade')"><a role="menuitem" ng-href="{{linkPrefix}}#/arkiverade" id="archivedTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.archived"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
-		    <li ng-class="navClass('omminaintyg')"><a role="menuitem" ng-href="{{linkPrefix}}#/omminaintyg" id="aboutTab"><message key="nav.label.aboutminaintyg"></message></a></li>
+		    <li ng-class="navClass('omminaintyg')"><a role="menuitem" ng-href="{{linkPrefix}}#/omminaintyg" id="aboutTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.aboutminaintyg"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
-		    <li ng-class="navClass('hjalp')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab"><message key="nav.label.help"></message></a></li>
+		    <li ng-class="navClass('hjalp')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.help"></message></a></li>
 		</ul>
 	</nav>
 </div>
