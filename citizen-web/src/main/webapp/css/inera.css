@@ -764,7 +764,7 @@ opacity: 1;
 }
 
 div[id*="about-content"] {
-    padding: 0 90px 0 20px;
+/*     padding: 0 90px 0 20px; */
 }
 
 div.statuspopup {
