@@ -36,7 +36,6 @@
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<%-- <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>"> --%>
 <link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
@@ -100,6 +99,6 @@
  <![endif]-->
 
   <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>
-
+  
 </body>
 </html>

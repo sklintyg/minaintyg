@@ -29,15 +29,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
+<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi" />
 
 <title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
+<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>">
 
 <script type="text/javascript">
   /**
