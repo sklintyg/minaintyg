@@ -54,21 +54,21 @@
 <body>
 
   <mvk-top-bar></mvk-top-bar>
-	<div class="container-fluid" id="mi-logo-header">
+	<div class="container" id="mi-logo-header">
 		<div class="content-container">
 			<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
 		</div>
 	</div>
-	<div class="container-fluid" id="mi-navigation">
+	<div class="container" id="mi-navigation">
 		<div class="content-container">
 			<mi-main-navigation></mi-main-navigation>	
 		</div>
 	</div>
 
-  <div class="container-fluid">
+  <div class="container">
 
     <div id="content-container">
-      <div class="content">
+      <div class="">
 <%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
         <div class="row">

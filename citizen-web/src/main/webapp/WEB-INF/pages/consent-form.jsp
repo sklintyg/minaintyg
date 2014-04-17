@@ -61,7 +61,7 @@
       <div class="content">
 <%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
-        <div class="row-fluid">
+        <div class="row">
           <div id="content-body" class="span12">
             <%-- No script to show at least something when javascript is off --%>
             <noscript>

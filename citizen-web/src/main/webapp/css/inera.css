@@ -291,7 +291,7 @@ input[type="radio"], input[type="checkbox"] {
 */
 
 div.container {
-    padding-bottom: 50px;
+/*     padding-bottom: 50px; */
     width: 100%;
 }
 
