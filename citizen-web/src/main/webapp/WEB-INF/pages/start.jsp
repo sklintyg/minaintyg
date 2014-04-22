@@ -96,6 +96,8 @@
     </script>
     
     <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/matchmedia.polyfill.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/respond.js"/>"></script>
  <![endif]-->
 
   <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>

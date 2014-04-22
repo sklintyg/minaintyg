@@ -4,7 +4,7 @@
 			<span>Meny</span>
 		</button>
 	</div>
-	<nav class="hidden-xs" role="navigation">
+	<div class="hidden-xs" role="navigation">
 		<ul class="nav navbar-nav">
 			<li ng-class="navClass('lista')"><a role="menuitem" ng-href="{{linkPrefix}}#/lista" id="inboxTab"><message key="nav.label.inbox"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
@@ -14,8 +14,8 @@
 		    <li class="divider-vertical" aria-hidden="true"></li>
 		    <li ng-class="navClass('hjalp')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab"><message key="nav.label.help"></message></a></li>	
 		</ul>
-	</nav>
-	<nav class="collapse" collapse="!isCollapsed">
+	</div>
+	<div class="collapse" collapse="!isCollapsed">
 		<ul class="nav navbar-nav">
 			<li ng-class="navClass('lista')"><a role="menuitem" ng-href="{{linkPrefix}}#/lista" id="inboxTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.inbox"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
@@ -25,5 +25,5 @@
 		    <li class="divider-vertical" aria-hidden="true"></li>
 		    <li ng-class="navClass('hjalp')"><a role="menuitem" ng-href="{{linkPrefix}}#/hjalp" id="helpTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.help"></message></a></li>
 		</ul>
-	</nav>
+	</div>
 </div>
