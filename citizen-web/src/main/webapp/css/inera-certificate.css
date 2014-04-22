@@ -149,7 +149,7 @@
 	position: relative;
 }
 
-.certificate div.cert div.cert-header {
+.cert-header {
 	padding: 10px 0px 0px 0px;
 	background-color: #ededed;
 	font-weight: bold;
@@ -193,7 +193,7 @@
     padding-top: 20px;
 }
 
-.certificate div.cert div.cert-body div.body-row {
+.body-row {
 	margin: 0 0 20px 0;
 	background-color: #ededed;
 	border: 1px solid #d8d8d8;

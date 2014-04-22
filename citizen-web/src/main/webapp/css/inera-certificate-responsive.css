@@ -32,6 +32,10 @@
 		display: block;
 		padding: 10px 15px;
 	}
+	.ts-table th, .ts-table tr {
+		font-size: 12px !important;
+	}
+	.ts-table tbody td { padding: 5px !important; }
 }
 
 /* Landscape phones and down */
