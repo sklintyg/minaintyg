@@ -141,7 +141,7 @@ h4.footer-heading {
 
 .modal.fade { top: 10%; }
 
-.modal.fade.in { top: 20%; }
+.modal.fade.in { top: 20%; overflow: hidden;}
 
 .modal { top: 20%; }
 
@@ -291,7 +291,7 @@ input[type="radio"], input[type="checkbox"] {
 */
 
 div.container {
-    padding-bottom: 50px;
+/*     padding-bottom: 50px; */
     width: 100%;
 }
 
@@ -764,7 +764,7 @@ opacity: 1;
 }
 
 div[id*="about-content"] {
-    padding: 0 90px 0 20px;
+/*     padding: 0 90px 0 20px; */
 }
 
 div.statuspopup {
@@ -887,3 +887,4 @@ div.inera-box .box-body {
 /** Helpers **/
 .white { color: #fff; }
 .margin-top-5px { margin-top: 5px; }
+.no-padding-bottom { padding-bottom: 0px !important; }

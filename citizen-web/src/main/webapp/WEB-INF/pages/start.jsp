@@ -29,13 +29,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
+<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi">  
 
 <title ng-bind="$root.page_title"><spring:message code="application.name" /></title>
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<%-- <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>"> --%>
 <link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
@@ -54,21 +54,21 @@
 <body>
 
   <mvk-top-bar></mvk-top-bar>
-	<div class="container-fluid" id="mi-logo-header">
+	<div class="container" id="mi-logo-header">
 		<div class="content-container">
 			<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
 		</div>
 	</div>
-	<div class="container-fluid" id="mi-navigation">
+	<div class="container" id="mi-navigation">
 		<div class="content-container">
 			<mi-main-navigation></mi-main-navigation>	
 		</div>
 	</div>
 
-  <div class="container-fluid">
+  <div class="container">
 
     <div id="content-container">
-      <div class="content">
+      <div class="">
 <%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
         <div class="row">
@@ -96,9 +96,11 @@
     </script>
     
     <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/matchmedia.polyfill.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/respond.js"/>"></script>
  <![endif]-->
 
   <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>
-
+  
 </body>
 </html>

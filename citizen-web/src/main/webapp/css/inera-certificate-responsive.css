@@ -20,6 +20,18 @@
 		font-weight: bold;
 		border: none;
 	}
+	.issue {
+		padding: 12px 15px 10px 15px;
+	}
+	.cert-titlebar .cert-title {
+		color: #fff;
+		padding: 10px 0 5px 25px;
+		display: inline-block;
+	}
+	.cert-body .body-row .text {
+		display: block;
+		padding: 10px 15px;
+	}
 }
 
 /* Landscape phones and down */
