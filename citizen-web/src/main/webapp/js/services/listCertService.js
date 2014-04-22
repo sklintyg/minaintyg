@@ -28,7 +28,11 @@ define([
 
         function _archiveCertificate(item, callback) {
             $log.debug("Archiving " + item.id);
+
             $http.put('/api/certificates/' + item.id + "/archive").success(function(data) {
+                //Kill the cache
+                cachedList = null;
+
                 callback(data, item);
             }).error(function(data, status, headers, config) {
                 $log.error("error " + status);
