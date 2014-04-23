@@ -8,6 +8,11 @@ define([
         var cachedList = null;
 
         var _selectedCertificate = null;
+        
+        function _emptyCache() {
+        	$log.debug("Clearing cache");
+        	cachedList = null;
+        }
 
         function _getCertificates(callback) {
             if (cachedList != null) {
@@ -59,7 +64,8 @@ define([
             getCertificates : _getCertificates,
             archiveCertificate : _archiveCertificate,
             restoreCertificate : _restoreCertificate,
-            selectedCertificate : _selectedCertificate
+            selectedCertificate : _selectedCertificate,
+            emptyCache : _emptyCache 
         }
     }];
 });
