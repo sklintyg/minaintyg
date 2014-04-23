@@ -884,6 +884,14 @@ div.inera-box .box-body {
 	top: 34px;
 	z-index: 9;
 }
+.glyphicon-question-sign {
+	top: 5px;
+	font-size: 20px; 
+	margin-left: 5px;
+	color: #008391;
+}
+.glyphicon-question-sign:hover { cursor: pointer; color: #28b4c4; }
+.tooltip-inner { text-align: left; padding: 10px 14px; }
 /** Helpers **/
 .white { color: #fff; }
 .margin-top-5px { margin-top: 5px; }
