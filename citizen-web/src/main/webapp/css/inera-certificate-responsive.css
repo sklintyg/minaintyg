@@ -37,6 +37,7 @@
 	}
 	.ts-table tbody td { padding: 5px !important; }
 	.border-bottom-resp { border-bottom: 1px solid #dddddd !important; }
+	.fk7263-tooltip-icon { margin-left: 11px; }
 }
 
 /* Landscape phones and down */
