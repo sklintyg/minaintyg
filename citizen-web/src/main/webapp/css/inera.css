@@ -83,10 +83,13 @@ a.remove {
 
 a.backlink {
 	display:inline-block;
-	line-height:18px;
-	padding-left:15px;
-	background:transparent url(/img/back-link-icon.gif) center left no-repeat;
+	line-height:20px;
+	padding-left:24px;
+	background-image: url(/img/back-link-sprite.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
 }
+a.backlink:hover { background-position: 0px -20px; }
 
 button {cursor: pointer;}
 
