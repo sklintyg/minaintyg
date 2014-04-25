@@ -22,8 +22,6 @@ import iso.v21090.dt.v1.II;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -36,23 +34,23 @@ import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.api.StatusMeta;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.dto.CertificateContentHolder;
 import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.integration.module.dto.CertificateStatus;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
-import se.inera.ifv.insuranceprocess.certificate.v1.CertificateMetaType;
+import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.listcertificates.v1.rivtabp20.ListCertificatesResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.listcertificatesresponder.v1.ListCertificatesResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateResponseType;
@@ -73,24 +71,13 @@ public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
-    private static final String PERSONNUMMER = "19121212-1212";
-
     private static final String PATIENT_ID_OID = "1.2.752.129.2.1.3.1";
     private static final String HOS_PERSONAL_OID = "1.2.752.129.2.1.4.1";
     private static final String ENHET_OID = "1.2.752.129.2.1.4.1";
     private static final String ARBETSPLATS_CODE_OID = "1.2.752.29.4.71";
 
-    private static final Comparator<? super CertificateMetaType> DESCENDING_DATE = new Comparator<CertificateMetaType>() {
-
-        @Override
-        public int compare(CertificateMetaType m1, CertificateMetaType m2) {
-            return m2.getSignDate().compareTo(m1.getSignDate());
-        }
-
-    };
-
     @Autowired
-    private ListCertificatesResponderInterface listService;
+    private ListCertificatesForCitizenResponderInterface listService;
 
     @Autowired
     private SetCertificateStatusResponderInterface statusService;
@@ -255,56 +242,19 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {
-        final ListCertificatesRequestType params = new ListCertificatesRequestType();
+        final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setNationalIdentityNumber(civicRegistrationNumber);
 
-        ListCertificatesResponseType response = listService.listCertificates(null, params);
+        ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return convert(response);
-        default: {
-            LOG.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is " + response.getResult());
-            throw new ExternalWebServiceCallFailedException(response.getResult());
+            return ClinicalProcessMetaConverter.toCertificateMeta(response.getMeta());
+        default:
+            LOG.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is "
+                    + response.getResult());
+            throw new ResultTypeErrorException(response.getResult());
         }
-        }
-
-    }
-
-    private List<CertificateMeta> convert(final ListCertificatesResponseType response) {
-
-        final List<CertificateMetaType> metas = response.getMeta();
-        final List<CertificateMeta> dtos = new ArrayList<CertificateMeta>(metas.size());
-
-        Collections.sort(metas, DESCENDING_DATE);
-
-        for (CertificateMetaType meta : metas) {
-            final CertificateMeta dto = convert(meta);
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
-
-    private CertificateMeta convert(CertificateMetaType meta) {
-        final CertificateMeta dto = new CertificateMeta();
-        dto.setId(meta.getCertificateId());
-        dto.setCaregiverName(meta.getIssuerName());
-        dto.setCareunitName(meta.getFacilityName());
-        dto.setFromDate(meta.getValidFrom().toString());
-        dto.setTomDate(meta.getValidTo().toString());
-        dto.setSentDate(meta.getSignDate().toString());
-        dto.setType(meta.getCertificateType());
-        dto.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
-        LOG.debug("{} is archived: {}", dto.getId(), dto.getArchived());
-
-        final List<CertificateStatusType> stats = meta.getStatus();
-        LOG.debug("Status length {}", stats.size());
-        Collections.sort(stats, STATUS_COMPARATOR);
-        dto.getStatuses().addAll(convertStatus(stats));
-        dto.setCancelled(isCertificateCancelled(dto.getStatuses()));
-
-        return dto;
     }
 
     protected List<CertificateStatus> convertToCertificateStatus(List<CertificateStatusType> sourceList) {
@@ -322,41 +272,4 @@ public class CertificateServiceImpl implements CertificateService {
         }
         return statusList;
     }
-    protected List<StatusMeta> convertStatus(List<CertificateStatusType> sourceList) {
-        List<StatusMeta> statusList = new ArrayList<>();
-        if (sourceList != null) {
-            for (CertificateStatusType stat : sourceList) {
-                if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
-                    StatusMeta status = new StatusMeta();
-                    status.setTarget(stat.getTarget());
-                    status.setTimestamp(stat.getTimestamp());
-                    status.setType(stat.getType().toString());
-                    statusList.add(status);
-                }
-            }
-        }
-        return statusList;
-    }
-
-    protected Boolean isCertificateCancelled(List<StatusMeta> statuses) {
-        if (statuses != null) {
-            for (StatusMeta status : statuses) {
-                if (status.getType().equals(StatusType.CANCELLED.toString())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Compare status newest first.
-     */
-    private static final Comparator<CertificateStatusType> STATUS_COMPARATOR = new Comparator<CertificateStatusType>() {
-        @Override
-        public int compare(CertificateStatusType o1, CertificateStatusType o2) {
-            return o2.getTimestamp().compareTo(o1.getTimestamp());
-        }
-    };
-
 }
