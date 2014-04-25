@@ -15,8 +15,7 @@ public class CertificateMeta implements Serializable {
     private String sentDate;
     private Boolean archived;
     private Boolean cancelled;
-    private String fromDate;
-    private String tomDate;
+    private String complementaryInfo;
     private List<StatusMeta> statuses = new ArrayList<>();
 
     public String getId() {
@@ -75,20 +74,12 @@ public class CertificateMeta implements Serializable {
         this.cancelled = cancelled;
     }
 
-    public void setFromDate(String fromDate) {
-        this.fromDate = fromDate;
+    public String getComplementaryInfo() {
+        return complementaryInfo;
     }
 
-    public String getFromDate() {
-        return fromDate;
-    }
-
-    public void setTomDate(String tomDate) {
-        this.tomDate = tomDate;
-    }
-
-    public String getTomDate() {
-        return tomDate;
+    public void setComplementaryInfo(String complementaryInfo) {
+        this.complementaryInfo = complementaryInfo;
     }
 
     public Boolean getSelected() {
