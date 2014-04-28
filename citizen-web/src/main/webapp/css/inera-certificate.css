@@ -145,7 +145,7 @@
 	color: #fff;
 }
 
-.certificate div.cert {
+.certificate div.cert, .cert {
 	position: relative;
 }
 
@@ -183,7 +183,11 @@
 .cert-header .header-row:first-child {
 	padding: 0 40px 0 40px;
 }
-
+.cert-preview {
+	border-bottom: 1px solid #dddddd;
+	margin-bottom: 10px;
+}
+.cert-preview .cert-header { padding: 0px; }
 .header-row .alert {
     font-weight: normal;
     margin-bottom: 5px;
