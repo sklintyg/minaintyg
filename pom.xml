@@ -14,12 +14,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate-web</groupId>
   <artifactId>certificate-web</artifactId>
-  <version>1.2-RC3-SNAPSHOT</version>
+  <version>1.2-RC3</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Web (Citizen web app)</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
-    <tag>HEAD</tag>
+    <tag>certificate-web-1.2-RC3</tag>
   </scm>
   <distributionManagement>
     <repository>
