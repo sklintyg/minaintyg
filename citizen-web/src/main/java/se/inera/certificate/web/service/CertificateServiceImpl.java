@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3.wsaddressing10.AttributedURIType;
 
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
@@ -43,6 +44,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.dto.CertificateContentHolder;
 import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.integration.module.dto.CertificateStatus;
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
@@ -71,11 +73,6 @@ public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
-    private static final String PATIENT_ID_OID = "1.2.752.129.2.1.3.1";
-    private static final String HOS_PERSONAL_OID = "1.2.752.129.2.1.4.1";
-    private static final String ENHET_OID = "1.2.752.129.2.1.4.1";
-    private static final String ARBETSPLATS_CODE_OID = "1.2.752.29.4.71";
-
     @Autowired
     private ListCertificatesForCitizenResponderInterface listService;
 
@@ -94,49 +91,41 @@ public class CertificateServiceImpl implements CertificateService {
     private static ObjectMapper objectMapper = new CustomObjectMapper();
 
     /**
-     * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface implementation. (The responserinterface used here now should be replaced with a custom
+     * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface
+     * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
-     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String, java.lang.String)
+     * 
+     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
+     *      java.lang.String)
      */
     @Override
     public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target) {
         LOG.debug("sendCertificate {} to {}", id, target);
         SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
 
+        Utlatande utlatande;
+
+        try {
+            utlatande = objectMapper.readValue(getUtlatande(civicRegistrationNumber, id).getCertificateContent(),
+                    MinimalUtlatande.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         SendType sendType = new SendType();
         VardAdresseringsType vardAdresseringsType = new VardAdresseringsType();
-        HosPersonalType hosPersonal = new HosPersonalType();
 
         // Enhet
-        EnhetType enhet = new EnhetType();
-        enhet.setEnhetsnamn("enhetsnamn");
+        EnhetType enhet = buildEnhetFromUtlatande(utlatande);
 
-        II enhetsId = new II();
-        enhetsId.setRoot(ENHET_OID);
-        enhetsId.setExtension("enhetsid");
-        enhet.setEnhetsId(enhetsId);
-
-        II arbetsplatsKod = new II();
-        arbetsplatsKod.setRoot(ARBETSPLATS_CODE_OID);
-        arbetsplatsKod.setExtension("arbetsplatskod");
-        enhet.setArbetsplatskod(arbetsplatsKod);
-
-        VardgivareType vardGivare = new VardgivareType();
-
-        II vardGivarId = new II();
-        vardGivarId.setRoot(ENHET_OID);
-        vardGivarId.setExtension("vardgivarid");
-        vardGivare.setVardgivareId(vardGivarId);
-
-        vardGivare.setVardgivarnamn("MI");
-        enhet.setVardgivare(vardGivare);
-
+        HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.setEnhet(enhet);
-        hosPersonal.setFullstandigtNamn("MI");
+        hosPersonal.setFullstandigtNamn(utlatande.getSkapadAv().getNamn());
 
         II personalId = new II();
-        personalId.setRoot(HOS_PERSONAL_OID);
-        personalId.setExtension("MI");
+        Id personalIdSource = utlatande.getSkapadAv().getId();
+        personalId.setRoot(personalIdSource.getRoot());
+        personalId.setExtension(personalIdSource.getExtension());
         hosPersonal.setPersonalId(personalId);
 
         vardAdresseringsType.setHosPersonal(hosPersonal);
@@ -146,27 +135,87 @@ public class CertificateServiceImpl implements CertificateService {
         sendType.setVardReferensId("MI");
 
         // Lakarutlatande
-        LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
-
-        lakarutlatande.setLakarutlatandeId(id);
-        lakarutlatande.setSigneringsTidpunkt(new LocalDateTime());
-        PatientType patient = new PatientType();
-        II patientIdHolder = new II();
-        patientIdHolder.setRoot(PATIENT_ID_OID);
-        patientIdHolder.setExtension(civicRegistrationNumber);
-        patient.setPersonId(patientIdHolder);
-        patient.setFullstandigtNamn("patientnamn");
-        lakarutlatande.setPatient(patient);
+        LakarutlatandeEnkelType lakarutlatande = buildLakarutlatandeTypeFromUtlatande(utlatande);
 
         sendType.setLakarutlatande(lakarutlatande);
         req.setSend(sendType);
-        final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(null, req);
+
+        AttributedURIType uri = new AttributedURIType();
+        uri.setValue(target);
+
+        final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
             LOG.warn("SendCertificate error: {}", response.getResult().getErrorText());
             return new ModuleAPIResponse("error", "");
         } else {
             return new ModuleAPIResponse("sent", "");
         }
+    }
+
+    /**
+     * Build a {@link LakarutlatandeEnkelType} from the source {@link Utlatande}
+     * 
+     * @param utlatande
+     *            a {@link Utlatande}
+     * @return {@link LakarutlatandeEnkelType}
+     */
+    private LakarutlatandeEnkelType buildLakarutlatandeTypeFromUtlatande(Utlatande utlatande) {
+        LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
+
+        lakarutlatande.setLakarutlatandeId(utlatande.getId().getExtension());
+
+        lakarutlatande.setSigneringsTidpunkt(utlatande.getSigneringsdatum());
+
+        PatientType patient = new PatientType();
+
+        II patientIdHolder = new II();
+        patientIdHolder.setRoot(utlatande.getPatient().getId().getRoot());
+        patientIdHolder.setExtension(utlatande.getPatient().getId().getExtension());
+        patient.setPersonId(patientIdHolder);
+
+        patient.setFullstandigtNamn(utlatande.getPatient().getFullstandigtNamn());
+        lakarutlatande.setPatient(patient);
+
+        return lakarutlatande;
+    }
+
+    /**
+     * Build an EnhetType object from an Utlatande
+     * 
+     * @param utlatande
+     *            the source {@link Utlatande}
+     * @return {@link EnhetType}
+     */
+    private EnhetType buildEnhetFromUtlatande(Utlatande utlatande) {
+        EnhetType enhet = new EnhetType();
+        enhet.setEnhetsnamn(utlatande.getSkapadAv().getVardenhet().getNamn());
+
+        II enhetsId = new II();
+        Id sourceEnhetsId = utlatande.getSkapadAv().getVardenhet().getId();
+        enhetsId.setRoot(sourceEnhetsId.getRoot());
+        enhetsId.setExtension(sourceEnhetsId.getExtension());
+        enhet.setEnhetsId(enhetsId);
+
+        if (utlatande.getSkapadAv().getVardenhet().getArbetsplatskod() != null) {
+            II arbetsplatsKod = new II();
+            Id arbetsplatskodSource = utlatande.getSkapadAv().getVardenhet().getArbetsplatskod();
+            arbetsplatsKod.setRoot(arbetsplatskodSource.getRoot());
+            arbetsplatsKod.setExtension(arbetsplatskodSource.getExtension());
+            enhet.setArbetsplatskod(arbetsplatsKod);
+        }
+
+        VardgivareType vardGivare = new VardgivareType();
+
+        II vardGivarId = new II();
+        Id vardgivarIdSource = utlatande.getSkapadAv().getVardenhet().getVardgivare().getId();
+        vardGivarId.setRoot(vardgivarIdSource.getRoot());
+        vardGivarId.setExtension(vardgivarIdSource.getExtension());
+        vardGivare.setVardgivareId(vardGivarId);
+
+        vardGivare.setVardgivarnamn(utlatande.getSkapadAv().getVardenhet().getVardgivare().getNamn());
+        enhet.setVardgivare(vardGivare);
+
+        return enhet;
     }
 
     @Override
@@ -220,7 +269,7 @@ public class CertificateServiceImpl implements CertificateService {
         CertificateContentMeta contentMeta = new CertificateContentMeta();
         contentMeta.setStatuses(convertToCertificateStatus(statuses));
 
-        //Deserialize certificate Json to get common properties
+        // Deserialize certificate Json to get common properties
         Utlatande commonUtlatande;
         try {
             commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), MinimalUtlatande.class);
