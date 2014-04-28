@@ -82,11 +82,11 @@ var /** holds major version number for IE or NaN for real browsers */
  *
    <pre>
      var values = {name: 'misko', gender: 'male'};
-     var log = [];
+     var LOGGER = [];
      angular.forEach(values, function(value, key){
        this.push(key + ': ' + value);
-     }, log);
-     expect(log).toEqual(['name: misko', 'gender:male']);
+     }, LOGGER);
+     expect(LOGGER).toEqual(['name: misko', 'gender:male']);
    </pre>
  *
  * @param {Object|Array} obj Object to iterate over.
@@ -2971,7 +2971,7 @@ function $AnchorScrollProvider() {
  * @param {object} window The global window object.
  * @param {object} document jQuery wrapped document.
  * @param {function()} XHR XMLHttpRequest constructor.
- * @param {object} $log console.log or an object with the same interface.
+ * @param {object} $log console.LOGGER or an object with the same interface.
  * @param {object} $sniffer $sniffer service
  */
 function Browser(window, document, $log, $sniffer) {
@@ -4783,7 +4783,7 @@ function $DocumentProvider(){
  *
  * @description
  * Any uncaught exception in angular expressions is delegated to this service.
- * The default implementation simply delegates to `$log.error` which logs it into
+ * The default implementation simply delegates to `$LOGGER.error` which logs it into
  * the browser console.
  *
  * In unit tests, if `angular-mocks.js` is loaded, this service is overridden by
@@ -5603,7 +5603,7 @@ function $LocationProvider(){
 
 /**
  * @ngdoc object
- * @name ng.$log
+ * @name ng.$LOGGER
  * @requires $window
  *
  * @description
@@ -5615,20 +5615,20 @@ function $LocationProvider(){
  * @example
    <example>
      <file name="script.js">
-       function LogCtrl($scope, $log) {
-         $scope.$log = $log;
+       function LogCtrl($scope, $LOGGER) {
+         $scope.$LOGGER = $LOGGER;
          $scope.message = 'Hello World!';
        }
      </file>
      <file name="index.html">
        <div ng-controller="LogCtrl">
-         <p>Reload this page with open console, enter text and hit the log button...</p>
+         <p>Reload this page with open console, enter text and hit the LOGGER button...</p>
          Message:
          <input type="text" ng-model="message"/>
-         <button ng-click="$log.log(message)">log</button>
-         <button ng-click="$log.warn(message)">warn</button>
-         <button ng-click="$log.info(message)">info</button>
-         <button ng-click="$log.error(message)">error</button>
+         <button ng-click="$LOGGER.LOGGER(message)">LOGGER</button>
+         <button ng-click="$LOGGER.warn(message)">warn</button>
+         <button ng-click="$LOGGER.info(message)">info</button>
+         <button ng-click="$LOGGER.error(message)">error</button>
        </div>
      </file>
    </example>
@@ -5639,18 +5639,18 @@ function $LogProvider(){
     return {
       /**
        * @ngdoc method
-       * @name ng.$log#log
-       * @methodOf ng.$log
+       * @name ng.$LOGGER#LOGGER
+       * @methodOf ng.$LOGGER
        *
        * @description
-       * Write a log message
+       * Write a LOGGER message
        */
       log: consoleLog('log'),
 
       /**
        * @ngdoc method
-       * @name ng.$log#warn
-       * @methodOf ng.$log
+       * @name ng.$LOGGER#warn
+       * @methodOf ng.$LOGGER
        *
        * @description
        * Write a warning message
@@ -5659,8 +5659,8 @@ function $LogProvider(){
 
       /**
        * @ngdoc method
-       * @name ng.$log#info
-       * @methodOf ng.$log
+       * @name ng.$LOGGER#info
+       * @methodOf ng.$LOGGER
        *
        * @description
        * Write an information message
@@ -5669,8 +5669,8 @@ function $LogProvider(){
 
       /**
        * @ngdoc method
-       * @name ng.$log#error
-       * @methodOf ng.$log
+       * @name ng.$LOGGER#error
+       * @methodOf ng.$LOGGER
        *
        * @description
        * Write an error message
@@ -5706,7 +5706,7 @@ function $LogProvider(){
       }
 
       // we are IE which either doesn't have window.console => this is noop and we do nothing,
-      // or we are IE where console.log doesn't have apply so we log at least first 2 args
+      // or we are IE where console.LOGGER doesn't have apply so we LOGGER at least first 2 args
       return function(arg1, arg2) {
         logFn(arg1, arg2);
       }
@@ -9044,7 +9044,7 @@ function $HttpProvider() {
      * Makes the request
      *
      * !!! ACCESSES CLOSURE VARS:
-     * $httpBackend, $config, $log, $rootScope, defaultCache, $http.pendingRequests
+     * $httpBackend, $config, $LOGGER, $rootScope, defaultCache, $http.pendingRequests
      */
     function sendReq(config, reqData, reqHeaders) {
       var deferred = $q.defer(),

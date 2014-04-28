@@ -10,7 +10,11 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Certificat
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 
-public class ClinicalProcessMetaConverter {
+public final class ClinicalProcessMetaConverter {
+
+    private ClinicalProcessMetaConverter() {
+
+    }
 
     private static final Comparator<? super CertificateMetaType> DESCENDING_DATE = new Comparator<CertificateMetaType>() {
         @Override

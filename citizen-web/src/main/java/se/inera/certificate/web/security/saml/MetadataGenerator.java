@@ -24,7 +24,12 @@ import org.opensaml.saml2.common.Extensions;
 import org.opensaml.saml2.common.impl.ExtensionsBuilder;
 import org.opensaml.saml2.core.AuthnRequest;
 import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.metadata.*;
+import org.opensaml.saml2.metadata.AssertionConsumerService;
+import org.opensaml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml2.metadata.KeyDescriptor;
+import org.opensaml.saml2.metadata.NameIDFormat;
+import org.opensaml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml2.metadata.SingleLogoutService;
 import org.opensaml.samlext.idpdisco.DiscoveryResponse;
 import org.opensaml.util.URLBuilder;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
@@ -46,13 +51,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.saml.*;
+import org.springframework.security.saml.SAMLDiscovery;
+import org.springframework.security.saml.SAMLEntryPoint;
+import org.springframework.security.saml.SAMLLogoutProcessingFilter;
+import org.springframework.security.saml.SAMLProcessingFilter;
+import org.springframework.security.saml.SAMLWebSSOHoKProcessingFilter;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.metadata.ExtendedMetadata;
 
 import javax.xml.namespace.QName;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * The class is responsible for generation of service provider metadata describing the application in
@@ -125,7 +140,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
 
     private Collection<String> nameID = null;
 
-    public static final Collection<String> defaultNameID = Arrays.asList(
+    public static final Collection<String> DEFAULT_NAME_ID = Arrays.asList(
             NameIDType.EMAIL,
             NameIDType.TRANSIENT,
             NameIDType.PERSISTENT,
@@ -133,38 +148,35 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             NameIDType.X509_SUBJECT
     );
 
-    protected XMLObjectBuilderFactory builderFactory;
+    private XMLObjectBuilderFactory builderFactory;
 
-    protected KeyManager keyManager;
+    private KeyManager keyManager;
 
-    /**
-     * Filters for loading of paths.
-     */
-    protected SAMLProcessingFilter samlWebSSOFilter;
-    protected SAMLWebSSOHoKProcessingFilter samlWebSSOHoKFilter;
-    protected SAMLLogoutProcessingFilter samlLogoutProcessingFilter;
-    protected SAMLEntryPoint samlEntryPoint;
-    protected SAMLDiscovery samlDiscovery;
+    private SAMLProcessingFilter samlWebSSOFilter;
+    private SAMLWebSSOHoKProcessingFilter samlWebSSOHoKFilter;
+    private SAMLLogoutProcessingFilter samlLogoutProcessingFilter;
+    private SAMLEntryPoint samlEntryPoint;
+    private SAMLDiscovery samlDiscovery;
 
     /**
      * Class logger.
      */
-    protected final static Logger log = LoggerFactory.getLogger(MetadataGenerator.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MetadataGenerator.class);
 
     /**
      * Default constructor.
      */
     public MetadataGenerator() {
-        this.builderFactory = Configuration.getBuilderFactory();
+        this.setBuilderFactory(Configuration.getBuilderFactory());
     }
 
     public EntityDescriptor generateMetadata() {
 
         if (signingKey == null) {
-            signingKey = keyManager.getDefaultCredentialName();
+            signingKey = getKeyManager().getDefaultCredentialName();
         }
         if (encryptionKey == null) {
-            encryptionKey = keyManager.getDefaultCredentialName();
+            encryptionKey = getKeyManager().getDefaultCredentialName();
         }
         if (tlsKey == null) {
             tlsKey = null;
@@ -184,7 +196,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             throw new RuntimeException("Required attributes weren't set");
         }
 
-        SAMLObjectBuilder<EntityDescriptor> builder = (SAMLObjectBuilder<EntityDescriptor>) builderFactory.getBuilder(EntityDescriptor.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<EntityDescriptor> builder = (SAMLObjectBuilder<EntityDescriptor>) getBuilderFactory().getBuilder(EntityDescriptor.DEFAULT_ELEMENT_NAME);
         EntityDescriptor descriptor = builder.buildObject();
         if (id != null) {
             descriptor.setID(id);
@@ -194,7 +206,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
 
         try {
             if (signMetadata) {
-                signSAMLObject(descriptor, keyManager.getCredential(signingKey));
+                signSAMLObject(descriptor, getKeyManager().getCredential(signingKey));
             } else {
                 marshallSAMLObject(descriptor);
             }
@@ -207,7 +219,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     protected KeyInfo getServerKeyInfo(String alias) {
-        Credential serverCredential = keyManager.getCredential(alias);
+        Credential serverCredential = getKeyManager().getCredential(alias);
         if (serverCredential == null) {
             throw new RuntimeException("Key for alias " + alias + " not found");
         } else if (serverCredential.getPrivateKey() == null) {
@@ -264,14 +276,14 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             KeyInfoGeneratorFactory factory = manager.getDefaultManager().getFactory(credential);
             return factory.newInstance().generate(credential);
         } catch (org.opensaml.xml.security.SecurityException e) {
-            log.error("Can't obtain key from the keystore or generate key info: " + encryptionKey, e);
+            LOGGER.error("Can't obtain key from the keystore or generate key info: " + encryptionKey, e);
             throw new SAMLRuntimeException("Can't obtain key from keystore or generate key info", e);
         }
     }
 
     protected SPSSODescriptor buildSPSSODescriptor(String entityBaseURL, String entityAlias, boolean requestSigned, boolean wantAssertionSigned, Collection<String> includedNameID) {
 
-        SAMLObjectBuilder<SPSSODescriptor> builder = (SAMLObjectBuilder<SPSSODescriptor>) builderFactory.getBuilder(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<SPSSODescriptor> builder = (SAMLObjectBuilder<SPSSODescriptor>) getBuilderFactory().getBuilder(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
         SPSSODescriptor spDescriptor = builder.buildObject();
         spDescriptor.setAuthnRequestsSigned(requestSigned);
         spDescriptor.setWantAssertionsSigned(wantAssertionSigned);
@@ -360,7 +372,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             if (alias != null) {
                 result.add(alias);
             } else {
-                log.warn("Unsupported value " + value + " found");
+                LOGGER.warn("Unsupported value " + value + " found");
             }
         }
         return result;
@@ -399,7 +411,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         // Resolve alases
         includedNameID = mapAliases(includedNameID);
         Collection<NameIDFormat> formats = new LinkedList<NameIDFormat>();
-        SAMLObjectBuilder<NameIDFormat> builder = (SAMLObjectBuilder<NameIDFormat>) builderFactory.getBuilder(NameIDFormat.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<NameIDFormat> builder = (SAMLObjectBuilder<NameIDFormat>) getBuilderFactory().getBuilder(NameIDFormat.DEFAULT_ELEMENT_NAME);
 
         // Populate nameIDs
         for (String nameIDValue : includedNameID) {
@@ -441,7 +453,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     protected AssertionConsumerService getAssertionConsumerService(String entityBaseURL, String entityAlias, boolean isDefault, int index, String filterURL, String binding) {
-        SAMLObjectBuilder<AssertionConsumerService> builder = (SAMLObjectBuilder<AssertionConsumerService>) builderFactory.getBuilder(AssertionConsumerService.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<AssertionConsumerService> builder = (SAMLObjectBuilder<AssertionConsumerService>) getBuilderFactory().getBuilder(AssertionConsumerService.DEFAULT_ELEMENT_NAME);
         AssertionConsumerService consumer = builder.buildObject();
         consumer.setLocation(getServerURL(entityBaseURL, entityAlias, filterURL));
         consumer.setBinding(binding);
@@ -460,7 +472,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     protected DiscoveryResponse getDiscoveryService(String entityBaseURL, String entityAlias) {
-        SAMLObjectBuilder<DiscoveryResponse> builder = (SAMLObjectBuilder<DiscoveryResponse>) builderFactory.getBuilder(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<DiscoveryResponse> builder = (SAMLObjectBuilder<DiscoveryResponse>) getBuilderFactory().getBuilder(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
         DiscoveryResponse discovery = builder.buildObject(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
         discovery.setBinding(DiscoveryResponse.IDP_DISCO_NS);
         discovery.setLocation(getDiscoveryResponseURL(entityBaseURL, entityAlias));
@@ -468,7 +480,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     protected SingleLogoutService getSingleLogoutService(String entityBaseURL, String entityAlias, String binding) {
-        SAMLObjectBuilder<SingleLogoutService> builder = (SAMLObjectBuilder<SingleLogoutService>) builderFactory.getBuilder(SingleLogoutService.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<SingleLogoutService> builder = (SAMLObjectBuilder<SingleLogoutService>) getBuilderFactory().getBuilder(SingleLogoutService.DEFAULT_ELEMENT_NAME);
         SingleLogoutService logoutService = builder.buildObject();
         logoutService.setLocation(getServerURL(entityBaseURL, entityAlias, getSAMLLogoutFilterPath()));
         logoutService.setBinding(binding);
@@ -532,40 +544,40 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     private String getSAMLWebSSOProcessingFilterPath() {
-        if (samlWebSSOFilter != null) {
-            return samlWebSSOFilter.getFilterProcessesUrl();
+        if (getSamlWebSSOFilter() != null) {
+            return getSamlWebSSOFilter().getFilterProcessesUrl();
         } else {
             return SAMLProcessingFilter.FILTER_URL;
         }
     }
 
     private String getSAMLWebSSOHoKProcessingFilterPath() {
-        if (samlWebSSOHoKFilter != null) {
-            return samlWebSSOHoKFilter.getFilterProcessesUrl();
+        if (getSamlWebSSOHoKFilter() != null) {
+            return getSamlWebSSOHoKFilter().getFilterProcessesUrl();
         } else {
             return SAMLWebSSOHoKProcessingFilter.WEBSSO_HOK_URL;
         }
     }
 
     private String getSAMLEntryPointPath() {
-        if (samlEntryPoint != null) {
-            return samlEntryPoint.getFilterProcessesUrl();
+        if (getSamlEntryPoint() != null) {
+            return getSamlEntryPoint().getFilterProcessesUrl();
         } else {
             return SAMLEntryPoint.FILTER_URL;
         }
     }
 
     private String getSAMLDiscoveryPath() {
-        if (samlDiscovery != null) {
-            return samlDiscovery.getFilterProcessesUrl();
+        if (getSamlDiscovery() != null) {
+            return getSamlDiscovery().getFilterProcessesUrl();
         } else {
             return SAMLDiscovery.FILTER_URL;
         }
     }
 
     private String getSAMLLogoutFilterPath() {
-        if (samlLogoutProcessingFilter != null) {
-            return samlLogoutProcessingFilter.getFilterProcessesUrl();
+        if (getSamlLogoutProcessingFilter() != null) {
+            return getSamlLogoutProcessingFilter().getFilterProcessesUrl();
         } else {
             return SAMLLogoutProcessingFilter.FILTER_URL;
         }
@@ -624,7 +636,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             try {
                 Signer.signObject(signature);
             } catch (SignatureException e) {
-                log.error("Unable to sign protocol message", e);
+                LOGGER.error("Unable to sign protocol message", e);
                 throw new MessageEncodingException("Unable to sign protocol message", e);
             }
 
@@ -640,7 +652,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             }
             marshaller.marshall(samlObject);
         } catch (MarshallingException e) {
-            log.error("Unable to marshall protocol message in preparation for signing", e);
+            LOGGER.error("Unable to marshall protocol message in preparation for signing", e);
             throw new MessageEncodingException("Unable to marshall protocol message in preparation for signing", e);
         }
     }
@@ -681,7 +693,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     public Collection<String> getNameID() {
-        return nameID == null ? defaultNameID : nameID;
+        return nameID == null ? DEFAULT_NAME_ID : nameID;
     }
 
     public void setNameID(Collection<String> nameID) {
@@ -900,4 +912,42 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         this.extendedMetadata = extendedMetadata;
     }
 
+    public XMLObjectBuilderFactory getBuilderFactory() {
+        return builderFactory;
+    }
+
+    public void setBuilderFactory(XMLObjectBuilderFactory builderFactory) {
+        this.builderFactory = builderFactory;
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
+    }
+
+    /**
+     * Filters for loading of paths.
+     */
+    public SAMLProcessingFilter getSamlWebSSOFilter() {
+        return samlWebSSOFilter;
+    }
+
+    public SAMLWebSSOHoKProcessingFilter getSamlWebSSOHoKFilter() {
+        return samlWebSSOHoKFilter;
+    }
+
+    public SAMLLogoutProcessingFilter getSamlLogoutProcessingFilter() {
+        return samlLogoutProcessingFilter;
+    }
+
+    public SAMLEntryPoint getSamlEntryPoint() {
+        return samlEntryPoint;
+    }
+
+    public SAMLDiscovery getSamlDiscovery() {
+        return samlDiscovery;
+    }
+
+    public void setSamlDiscovery(SAMLDiscovery samlDiscovery) {
+        this.samlDiscovery = samlDiscovery;
+    }
 }

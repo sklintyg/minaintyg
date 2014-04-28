@@ -89,7 +89,7 @@ public class CertificateServiceImpl implements CertificateService {
     private GetCertificateContentResponderInterface getCertificateContentService;
 
     /**
-     * Mapper to serialize/deserialize Utlatanden
+     * Mapper to serialize/deserialize Utlatanden.
      */
     private static ObjectMapper objectMapper = new CustomObjectMapper();
 
@@ -162,7 +162,7 @@ public class CertificateServiceImpl implements CertificateService {
         req.setSend(sendType);
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(null, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
-            LOG.warn("SendCertificate error: {}",response.getResult().getErrorText()  );
+            LOG.warn("SendCertificate error: {}", response.getResult().getErrorText());
             return new ModuleAPIResponse("error", "");
         } else {
             return new ModuleAPIResponse("sent", "");
@@ -205,10 +205,9 @@ public class CertificateServiceImpl implements CertificateService {
         switch (response.getResult().getResultCode()) {
         case OK:
             return convert(response);
-        default: {
+        default:
             LOG.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
             throw new ExternalWebServiceCallFailedException(response.getResult());
-        }
         }
     }
 
@@ -228,7 +227,7 @@ public class CertificateServiceImpl implements CertificateService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
+
         // Set metadata based on common properties found on any certificate (regardless of type).
         contentMeta.setId(commonUtlatande.getId().getExtension());
         contentMeta.setType(commonUtlatande.getTyp().getCode().toLowerCase());

@@ -43,7 +43,7 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
      * Wrapper for original request which overrides values of scheme, server name, server port and contextPath.
      * Method isSecure returns value based on specified scheme.
      */
-    private class LPRequestWrapper extends HttpServletRequestWrapper {
+    private final class LPRequestWrapper extends HttpServletRequestWrapper {
 
         private LPRequestWrapper(HttpServletRequest request) {
             super(request);
@@ -80,7 +80,9 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
         public StringBuffer getRequestURL() {
             StringBuffer sb = new StringBuffer();
             sb.append(scheme).append("://").append(serverName);
-            if (includeServerPortInRequestURL) sb.append(":").append(serverPort);
+            if (includeServerPortInRequestURL) {
+                sb.append(":").append(serverPort);
+            }
             sb.append(contextPath);
             sb.append(getServletPath());
             String pathInfo = getPathInfo();
@@ -98,7 +100,7 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     }
 
     /**
-     * Scheme of the LB server - either http or https
+     * Scheme of the LB server - either http or https.
      *
      * @param scheme scheme
      */
@@ -107,7 +109,7 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     }
 
     /**
-     * Server name of the LB, e.g. www.myserver.com
+     * Server name of the LB, e.g. www.myserver.com.
      *
      * @param serverName server name
      */

@@ -108,8 +108,8 @@ public class ApiController {
     }
 
     /**
-     * Serving module configuration for Angular bootstrapping
-     * 
+     * Serving module configuration for Angular bootstrapping.
+     *
      * @return a JSON object
      */
     @GET
