@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 package se.inera.certificate.web.security.saml;
-
+// CHECKSTYLE:OFF
 import org.opensaml.Configuration;
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.SAMLObjectBuilder;
@@ -951,3 +951,4 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         this.samlDiscovery = samlDiscovery;
     }
 }
+// CHECKSTYLE:ON

@@ -19,7 +19,9 @@ public class CitizenAuthenticationService implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
         String userid = credential.getNameID().getValue();
         LOG.debug("SAML user: " + userid);
+        // CHECKSTYLE:OFF MagicNumber
         return new CitizenImpl(userid.substring(0, 8) + "-" + userid.substring(8), LoginMethodEnum.FK);
+        // CHECKSTYLE:ON MagicNumber
     }
 
 }

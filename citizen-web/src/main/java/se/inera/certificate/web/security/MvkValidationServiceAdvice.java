@@ -28,6 +28,7 @@ public class MvkValidationServiceAdvice {
         this.fakeMatcherRegExp = fakeMatcherRegExp;
     }
 
+    // CHECKSTYLE:OFF IllegalThrowsCheck
     @Around("execution(public org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate(..))")
     public Object overrideMVKAuth(ProceedingJoinPoint joinPoint) throws Throwable {
         AuthenticationRequest req = (AuthenticationRequest) joinPoint.getArgs()[0];
@@ -41,4 +42,5 @@ public class MvkValidationServiceAdvice {
             return joinPoint.proceed();
         }
     }
+    // CHECKSTYLE:ON IllegalThrowsCheck
 }

@@ -32,6 +32,8 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 public class ApiController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
+    private static final String CHARSET_UTF_8 = ";charset=utf-8";
+    public static final String JSON_UTF8 = MediaType.APPLICATION_JSON + CHARSET_UTF_8;
 
     @Autowired
     private CertificateService certificateService;
@@ -53,7 +55,7 @@ public class ApiController {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return certificateService.getCertificates(citizen.getUsername());
@@ -61,7 +63,7 @@ public class ApiController {
 
     @PUT
     @Path("/{id}/archive")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(JSON_UTF8)
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
@@ -70,7 +72,7 @@ public class ApiController {
 
     @PUT
     @Path("/{id}/restore")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(JSON_UTF8)
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
@@ -114,7 +116,7 @@ public class ApiController {
      */
     @GET
     @Path("/map")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(JSON_UTF8)
     public List<IntygModule> getModulesMap() {
         List<IntygModule> response = new ArrayList<>();
         for (ModuleEntryPoint module : moduleApiFactory.getRegisteredModules()) {
