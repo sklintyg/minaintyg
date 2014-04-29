@@ -32,7 +32,9 @@ define([
 	        "certificates.status.cancelled" : "Rättat",
 	        "certificates.status.cancelledlc" : "Rättat",
 	        "certificates.status.sent" : "Skickat till",
+	        
 	        "certificates.target.fk" : "Försäkringskassan",
+	        "certificates.target.ts" : "Transportstyrelsen",
 	
 	        "certificates.send.label.patientname" : "Patientens namn:",
 	        "certificates.send.label.issued" : "Utfärdat:",
