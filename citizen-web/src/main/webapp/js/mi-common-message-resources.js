@@ -24,11 +24,11 @@ define([
 	        
 	        "certificatetypes.fk7263.commonname" : "Läkarintyg",
 	        "certificatetypes.fk7263.typename" : "FK 7263",
-	        "certificatetypes.rli.commonname" : "Reseläkarintyg",
+	        "certificatetypes.rli.commonname" : "Intyg vid avbeställd resa",
 	        "certificatetypes.rli.typename" : "RLI",
 	        "certificatetypes.ts-bas.commonname" : "Transportstyrelsens läkarintyg",
 	        "certificatetypes.ts-bas.typename" : " - Bas",
-	        "certificatetypes.ts-diabetes.commonname" : "Transportstyrelsens läkarintyg avseende diabetes",
+	        "certificatetypes.ts-diabetes.commonname" : "Transportstyrelsens läkarintyg",
 	        "certificatetypes.ts-diabetes.typename" : " - Diabetes",
 	
 	        "certificates.status.cancelled" : "Rättat",
