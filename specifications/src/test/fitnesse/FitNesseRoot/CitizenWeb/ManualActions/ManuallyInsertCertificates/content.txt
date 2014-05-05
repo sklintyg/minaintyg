@@ -7,13 +7,19 @@
 
 !3 och följande intyg:
 
-|Intyg|
-|personnr|utfärdat|giltigtFrån|giltigtTill|utfärdare|enhet|typ|id|
-|19121212-1212|2013-04-01|2013-04-01|2013-04-11|läkare1|enhet1|FK7263|intyg-1|
-|19121212-1212|2013-04-02|2013-04-02|2013-04-12|läkare2|enhet2|FK7263|intyg-2|
-|19121212-1212|2013-04-04|2013-04-04|2013-04-14|läkare1|enhet1|RLI|rli-intyg-3|
-|19121212-1212|2013-04-05|2013-04-05|2013-04-15|läkare2|enhet2|RLI|rli-intyg-4|
+!|Intyg|
+|personnr     |utfärdat  |giltigtFrån|giltigtTill|utfärdarId        |utfärdare    |enhetsId          |typ   |id                        |mall|skickat|rättat|wiretap|
+|19121212-1212|2013-04-01|2013-04-01 |2013-04-11 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1042|FK7263|test-19121212-1212-intyg-1|M   |ja     |nej   |ja     |
+|19121212-1212|2013-04-02|2013-04-02 |2013-04-12 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1045|FK7263|test-19121212-1212-intyg-2|S   |ja     |nej   |nej    |
+|19121212-1212|2013-04-03|2013-04-03 |2013-04-13 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1046|FK7263|test-19121212-1212-intyg-3|L   |ja     |nej   |ja     |
+|19121212-1212|2013-04-04|2013-04-04 |2013-04-14 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1042|FK7263|test-19121212-1212-intyg-4|L   |nej    |ja    |ja     |
+|19121212-1212|2013-04-05|2013-04-05 |2013-04-15 |TST5565594230-106J|Markus Gran  |IFV1239877878-103H|FK7263|test-19121212-1212-intyg-5|SmL |ja     |nej   |ja     |
+|19121212-1212|2013-04-06|2013-04-06 |2013-04-15 |TST5565594230-106J|Markus Gran  |IFV1239877878-103H|ts-bas|test-19121212-1212-intyg-6|L   |nej    |nej   |nej    |
+|19121212-1212|2013-04-07|2013-04-07 |2013-04-15 |TST5565594230-106J|Markus Gran  |IFV1239877878-103H|ts-bas|test-19121212-1212-intyg-7|S   |nej    |nej   |nej    |
+|20130104-2394|2013-04-01|2013-04-01 |2013-04-11 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1042|FK7263|test-20130104-2394-intyg-1|M   |ja     |nej   |ja     |
+|20130104-2394|2013-04-02|2013-04-02 |2013-04-12 |TST5565594230-106J|Markus Gran  |IFV1239877878-103H|FK7263|test-20130104-2394-intyg-2|S   |nej    |nej   |nej    |
+|20130104-2394|2013-04-03|2013-04-03 |2013-04-13 |IFV1239877878-104B|Åsa Andersson|IFV1239877878-1042|FK7263|test-20130104-2394-intyg-3|L   |ja     |nej   |ja     |
 
 |Ratta intyg|
 |personnummer|intyg|resultat?|
-|19121212-1212|intyg-2|OK|
+|19121212-1212|test-19121212-1212-intyg-2|OK|
