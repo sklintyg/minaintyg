@@ -292,7 +292,9 @@ input[type="radio"], input[type="checkbox"] {
 /*
    Main content
 */
-
+.navbar-brand {
+	padding: 15px 15px 15px 0px !important;
+}
 div.container {
 /*     padding-bottom: 50px; */
     width: 100%;
