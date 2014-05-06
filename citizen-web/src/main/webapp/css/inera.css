@@ -626,11 +626,18 @@ button#archiveCertificateBtn {
 .btn {
 	padding: 10px 35px;
 	font-weight: bold;
-	border: none;
 }
 .btn:focus {
 	color: #fff;
 	text-decoration: none;
+}
+.btn-default {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+}
+.btn-default:focus {
+	color: #333;
 }
 .btn-success {
 	background: none;
