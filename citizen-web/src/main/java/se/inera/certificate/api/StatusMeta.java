@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class StatusMeta implements Serializable {
 
+    private static final long serialVersionUID = 2815488329095176133L;
+
     private String type;
 
     private String target;

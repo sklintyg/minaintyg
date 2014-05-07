@@ -20,6 +20,8 @@ package se.inera.certificate.web.controller.moduleapi;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
+import java.io.IOException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -32,10 +34,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.api.Certificate;
+import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.ModuleApiFactory;
-import se.inera.certificate.integration.module.dto.CertificateContentHolder;
 import se.inera.certificate.integration.module.exception.ModuleNotFoundException;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -45,6 +49,11 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
+import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
+import se.inera.certificate.web.util.CertificateMetaConverter;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
@@ -75,6 +84,8 @@ public class ModuleApiController {
     @Autowired
     private CertificateService certificateService;
 
+    private ObjectMapper objectMapper = new CustomObjectMapper();
+
     /**
      * Return the certificate identified by the given id as JSON.
      *
@@ -88,16 +99,18 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        CertificateContentHolder contentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+        UtlatandeWithMeta utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
-        LOG.debug("getCertificate - type is: {}", contentHolder.getCertificateContentMeta().getType());
+        LOG.debug("getCertificate - type is: {}", utlatande.getMeta().getType());
 
         try {
-            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(contentHolder.getCertificateContentMeta().getType());
+            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(utlatande.getMeta().getType());
             InternalModelResponse response = module.getModuleApi().convertExternalToInternal(
-                    new ExternalModelHolder(contentHolder.getCertificateContent()));
+                    new ExternalModelHolder(utlatande.getUtlatande()));
 
-            return Response.ok(response.getInternalModel()).build();
+            JsonNode utlatandeJson = objectMapper.readTree(response.getInternalModel());
+            CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(utlatande.getMeta());
+            return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
         } catch (ModuleNotFoundException e) {
             LOG.error("Module " + id + " not found. Not loaded in application. Error was: " + e.getMessage());
@@ -105,7 +118,11 @@ public class ModuleApiController {
 
         } catch (ModuleException e) {
             LOG.error("Failed to get module-internal representation of certificate " + id + " from module '"
-                    + contentHolder.getCertificateContentMeta().getType() + "'.");
+                    + utlatande.getMeta().getType() + "'.");
+            return Response.serverError().build();
+
+        } catch (IOException e) {
+            LOG.error("Failed to serialize module-internal representation of certificate " + id);
             return Response.serverError().build();
         }
     }
@@ -142,18 +159,17 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        CertificateContentHolder certificateContentHolder;
+        UtlatandeWithMeta utlatande;
 
         try {
-            certificateContentHolder = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+            utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
         } catch (ExternalWebServiceCallFailedException ex) {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
 
         try {
-            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(certificateContentHolder.getCertificateContentMeta().getType());
-            PdfResponse pdf = module.getModuleApi().pdf(
-                    new ExternalModelHolder(certificateContentHolder.getCertificateContent()));
+            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(utlatande.getMeta().getType());
+            PdfResponse pdf = module.getModuleApi().pdf(new ExternalModelHolder(utlatande.getUtlatande()));
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)

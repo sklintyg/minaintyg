@@ -21,7 +21,6 @@ package se.inera.certificate.web.service;
 import iso.v21090.dt.v1.II;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -33,7 +32,6 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
-import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
@@ -41,13 +39,13 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.module.dto.CertificateContentHolder;
-import se.inera.certificate.integration.module.dto.CertificateContentMeta;
-import se.inera.certificate.integration.module.dto.CertificateStatus;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
+import se.inera.certificate.web.util.UtlatandeMetaBuilder;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
@@ -106,7 +104,7 @@ public class CertificateServiceImpl implements CertificateService {
         Utlatande utlatande;
 
         try {
-            utlatande = objectMapper.readValue(getUtlatande(civicRegistrationNumber, id).getCertificateContent(),
+            utlatande = objectMapper.readValue(getUtlatande(civicRegistrationNumber, id).getUtlatande(),
                     MinimalUtlatande.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -219,8 +217,8 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
-        CertificateMeta result = null;
+    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
+        UtlatandeMetaData result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
         req.setNationalIdentityNumber(civicRegistrationNumber);
@@ -231,8 +229,8 @@ public class CertificateServiceImpl implements CertificateService {
 
         final SetCertificateStatusResponseType response = statusService.setCertificateStatus(null, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
-            List<CertificateMeta> updatedList = this.getCertificates(civicRegistrationNumber);
-            for (CertificateMeta meta : updatedList) {
+            List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
+            for (UtlatandeMetaData meta : updatedList) {
                 if (meta.getId().equals(id)) {
                     result = meta;
                     break;
@@ -244,7 +242,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) {
+    public UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) {
         GetCertificateContentRequestType request = new GetCertificateContentRequestType();
         request.setCertificateId(certificateId);
         request.setNationalIdentityNumber(civicRegistrationNumber);
@@ -260,36 +258,28 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private CertificateContentHolder convert(final GetCertificateContentResponseType response) {
-
-        CertificateContentHolder getCertificateContentHolder = new CertificateContentHolder();
-        getCertificateContentHolder.setCertificateContent(response.getCertificate());
-        List<CertificateStatusType> statuses = response.getStatuses();
-
-        CertificateContentMeta contentMeta = new CertificateContentMeta();
-        contentMeta.setStatuses(convertToCertificateStatus(statuses));
-
+    private UtlatandeWithMeta convert(final GetCertificateContentResponseType response) {
         // Deserialize certificate Json to get common properties
         Utlatande commonUtlatande;
         try {
-            commonUtlatande = objectMapper.readValue(getCertificateContentHolder.getCertificateContent(), MinimalUtlatande.class);
+            commonUtlatande = objectMapper.readValue(response.getCertificate(), MinimalUtlatande.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        // Set metadata based on common properties found on any certificate (regardless of type).
-        contentMeta.setId(commonUtlatande.getId().getExtension());
-        contentMeta.setType(commonUtlatande.getTyp().getCode().toLowerCase());
-        contentMeta.setPatientId(commonUtlatande.getPatient().getId().getExtension());
-        contentMeta.setFromDate(commonUtlatande.getValidFromDate());
-        contentMeta.setTomDate(commonUtlatande.getValidToDate());
+        UtlatandeMetaBuilder builder = UtlatandeMetaBuilder.fromUtlatande(commonUtlatande);
+        for (CertificateStatusType status : response.getStatuses()) {
+            if (status.getType().equals(StatusType.SENT) || status.getType().equals(StatusType.CANCELLED)) {
+                builder.addStatus(se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType.valueOf(status.getType().name()),
+                        status.getTarget(), status.getTimestamp());
+            }
+        }
 
-        getCertificateContentHolder.setCertificateContentMeta(contentMeta);
-
-        return getCertificateContentHolder;
+        return new UtlatandeWithMeta(response.getCertificate(), builder.build());
     }
 
-    public List<CertificateMeta> getCertificates(String civicRegistrationNumber) {
+    @Override
+    public List<UtlatandeMetaData> getCertificates(String civicRegistrationNumber) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setNationalIdentityNumber(civicRegistrationNumber);
 
@@ -297,27 +287,11 @@ public class CertificateServiceImpl implements CertificateService {
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return ClinicalProcessMetaConverter.toCertificateMeta(response.getMeta());
+            return ClinicalProcessMetaConverter.toUtlatandeMetaData(response.getMeta());
         default:
             LOG.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is "
                     + response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
-    }
-
-    protected List<CertificateStatus> convertToCertificateStatus(List<CertificateStatusType> sourceList) {
-        List<CertificateStatus> statusList = new ArrayList<>();
-        if (sourceList != null) {
-            for (CertificateStatusType stat : sourceList) {
-                if (stat.getType().equals(StatusType.SENT) || stat.getType().equals(StatusType.CANCELLED)) {
-                    CertificateStatus status = new CertificateStatus();
-                    status.setTarget(stat.getTarget());
-                    status.setTimestamp(stat.getTimestamp());
-                    status.setType(stat.getType().toString());
-                    statusList.add(status);
-                }
-            }
-        }
-        return statusList;
     }
 }

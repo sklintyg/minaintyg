@@ -1,8 +1,6 @@
 package se.inera.certificate.web.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -10,10 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.inera.certificate.integration.builder.ClinicalProcessCertificateMetaTypeBuilder;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
 public class ClinicalProcessMetaConverterTest {
 
@@ -70,31 +68,8 @@ public class ClinicalProcessMetaConverterTest {
     }
 
     @Test
-    public void testIsCertificateCancelledWithNullList() {
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
-        assertFalse(meta.getCancelled());
-    }
-
-    @Test
-    public void testIsCertificateCancelledWithoutCancelStatus() {
-        builder.status(sentStatus);
-
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
-        assertFalse(meta.getCancelled());
-    }
-
-    @Test
-    public void testIsCertificateCancelledWithCancelStatus() {
-        builder.status(sentStatus);
-        builder.status(cancelledStatus);
-
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
-        assertTrue(meta.getCancelled());
-    }
-
-    @Test
     public void testConvertStatusWithNullList() {
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
+        UtlatandeMetaData meta = ClinicalProcessMetaConverter.toUtlatandeMetaData(builder.build());
         assertEquals(0, meta.getStatuses().size());
     }
 
@@ -102,7 +77,7 @@ public class ClinicalProcessMetaConverterTest {
     public void testConvertStatusWithoutSentCancel() {
         builder.status(deletedStatus);
 
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
+        UtlatandeMetaData meta = ClinicalProcessMetaConverter.toUtlatandeMetaData(builder.build());
         assertEquals(0, meta.getStatuses().size());
     }
 
@@ -113,7 +88,7 @@ public class ClinicalProcessMetaConverterTest {
         builder.status(sentStatus);
         builder.status(unhandledStatus);
 
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
+        UtlatandeMetaData meta = ClinicalProcessMetaConverter.toUtlatandeMetaData(builder.build());
         assertEquals(2, meta.getStatuses().size());
     }
 
@@ -122,10 +97,10 @@ public class ClinicalProcessMetaConverterTest {
         builder.status(sentStatus); // Has an earlier timestamp
         builder.status(cancelledStatus); // Has a later timestamp
 
-        CertificateMeta meta = ClinicalProcessMetaConverter.toCertificateMeta(builder.build());
+        UtlatandeMetaData meta = ClinicalProcessMetaConverter.toUtlatandeMetaData(builder.build());
         // Late timestamp should be first
-        assertEquals(cancelledStatus.getType().toString(), meta.getStatuses().get(0).getType());
+        assertEquals(cancelledStatus.getType().name(), meta.getStatuses().get(0).getType().name());
         // Early timestamp should be second
-        assertEquals(sentStatus.getType().toString(), meta.getStatuses().get(1).getType());
+        assertEquals(sentStatus.getType().name(), meta.getStatuses().get(1).getType().name());
     }
 }

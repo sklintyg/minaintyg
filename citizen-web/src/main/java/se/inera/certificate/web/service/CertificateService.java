@@ -22,22 +22,22 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.integration.module.dto.CertificateContentHolder;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public interface CertificateService {
 
-    CertificateContentHolder getUtlatande(String civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+    UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
      * @param civicRegistrationNumber
      * @return
      */
-    List<CertificateMeta> getCertificates(String civicRegistrationNumber);
+    List<UtlatandeMetaData> getCertificates(String civicRegistrationNumber);
 
     /**
      * Sets a new status for the certificate.
@@ -46,7 +46,7 @@ public interface CertificateService {
      * @param type
      * @return Partially populated CertificateMeta object with id and new status and status description
      */
-    CertificateMeta setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
+    UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
 
     /**
      * Request to send a specific certificate to a specific recipient.

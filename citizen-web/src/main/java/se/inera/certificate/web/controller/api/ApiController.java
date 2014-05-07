@@ -27,6 +27,7 @@ import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
+import se.inera.certificate.web.util.CertificateMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public class ApiController {
@@ -58,7 +59,7 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return certificateService.getCertificates(citizen.getUsername());
+        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(citizen.getUsername()));
     }
 
     @PUT
@@ -67,7 +68,8 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.DELETED);
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
+                "MI", StatusType.DELETED));
     }
 
     @PUT
@@ -76,7 +78,8 @@ public class ApiController {
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "MI", StatusType.RESTORED);
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
+                "MI", StatusType.RESTORED));
     }
 
     @PUT
@@ -85,7 +88,8 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {0}", id);
         // TODO: no hardcoding of targets
-        return certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(), "FK", StatusType.SENT);
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
+                "FK", StatusType.SENT));
     }
 
     @POST
@@ -111,7 +115,7 @@ public class ApiController {
 
     /**
      * Serving module configuration for Angular bootstrapping.
-     *
+     * 
      * @return a JSON object
      */
     @GET

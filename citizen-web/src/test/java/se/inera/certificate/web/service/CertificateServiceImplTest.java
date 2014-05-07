@@ -17,16 +17,16 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 
-import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.inera.certificate.integration.builder.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.integration.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.util.ResultTypeUtil;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
@@ -64,22 +64,22 @@ public class CertificateServiceImplTest {
     @Before
     public void setup() {
         unhandledStatus = new CertificateStatusType();
-        unhandledStatus.setType(StatusType.UNHANDLED);
+        unhandledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.UNHANDLED);
         unhandledStatus.setTarget("FK");
         unhandledStatus.setTimestamp(firstTimeStamp);
 
         deletedStatus = new CertificateStatusType();
-        deletedStatus.setType(StatusType.DELETED);
+        deletedStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.DELETED);
         deletedStatus.setTarget("FK");
         deletedStatus.setTimestamp(laterTimeStamp);
 
         sentStatus = new CertificateStatusType();
-        sentStatus.setType(StatusType.SENT);
+        sentStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.SENT);
         sentStatus.setTarget("FK");
         sentStatus.setTimestamp(firstTimeStamp);
 
         cancelledStatus = new CertificateStatusType();
-        cancelledStatus.setType(StatusType.CANCELLED);
+        cancelledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
         cancelledStatus.setTarget("FK");
         cancelledStatus.setTimestamp(firstTimeStamp);
     }
@@ -104,12 +104,12 @@ public class CertificateServiceImplTest {
         response.setResult(ResultTypeUtil.okResult());
 
         when(listServiceMock.listCertificatesForCitizen(Mockito.any(String.class), Mockito.any(ListCertificatesForCitizenType.class))).thenReturn(response);
-        List<CertificateMeta> certificates = service.getCertificates("123456789");
+        List<UtlatandeMetaData> certificates = service.getCertificates("123456789");
 
         assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getCaregiverName().equals(ISSUER_NAME));
-        assertTrue(certificates.get(0).getCareunitName().equals(FACILITY_NAME));
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.SENT.toString()));
+        assertTrue(certificates.get(0).getIssuerName().equals(ISSUER_NAME));
+        assertTrue(certificates.get(0).getFacilityName().equals(FACILITY_NAME));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.SENT));
     }
     
     @Test(expected=ResultTypeErrorException.class)
@@ -124,7 +124,8 @@ public class CertificateServiceImplTest {
     @Test
     public void testGetCertificatesStatusOrder() {
         CertificateStatusType cancelledStatus = new CertificateStatusType();
-        cancelledStatus.setType(StatusType.CANCELLED);
+        cancelledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
+        cancelledStatus.setTarget("FK");
         cancelledStatus.setTimestamp(new LocalDateTime(2015, 1, 1, 12, 0));
         
         ClinicalProcessCertificateMetaTypeBuilder builder = new ClinicalProcessCertificateMetaTypeBuilder();
@@ -147,8 +148,8 @@ public class CertificateServiceImplTest {
         response.setResult(ResultTypeUtil.okResult());
 
         when(listServiceMock.listCertificatesForCitizen(Mockito.any(String.class), Mockito.any(ListCertificatesForCitizenType.class))).thenReturn(response);
-        List<CertificateMeta> certificates = service.getCertificates("123456789");
+        List<UtlatandeMetaData> certificates = service.getCertificates("123456789");
         assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.CANCELLED.toString()));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.CANCELLED));
     }
 }

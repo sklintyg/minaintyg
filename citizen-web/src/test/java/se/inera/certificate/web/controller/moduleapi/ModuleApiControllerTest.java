@@ -24,8 +24,6 @@ import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.ModuleApiFactory;
-import se.inera.certificate.integration.module.dto.CertificateContentHolder;
-import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
@@ -36,6 +34,8 @@ import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
+import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
+import se.inera.certificate.web.util.UtlatandeMetaBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,7 +46,7 @@ public class ModuleApiControllerTest {
     private static final String CERTIFICATE_ID = "123456";
     private static final String CERTIFICATE_TYPE = "fk7263";
 
-    private static CertificateContentHolder utlatandeHolder;
+    private static UtlatandeWithMeta utlatandeHolder;
     private static ExternalModelHolder externalModelHolder;
     private static String certificateData;
 
@@ -74,17 +74,11 @@ public class ModuleApiControllerTest {
     @BeforeClass
     public static void setupCertificateData() throws IOException {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-        utlatandeHolder = new CertificateContentHolder();
-        utlatandeHolder.setCertificateContent(certificateData);
 
         Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, MinimalUtlatande.class);
-        CertificateContentMeta meta = new CertificateContentMeta();
-        meta.setId(commonUtlatande.getId().getExtension());
-        meta.setType(commonUtlatande.getTyp().getCode().toLowerCase());
-        meta.setPatientId(commonUtlatande.getPatient().getId().getExtension());
-        meta.setFromDate(commonUtlatande.getValidFromDate());
-        meta.setTomDate(commonUtlatande.getValidToDate());
-        utlatandeHolder.setCertificateContentMeta(meta);
+        UtlatandeMetaBuilder builder = UtlatandeMetaBuilder.fromUtlatande(commonUtlatande);
+
+        utlatandeHolder = new UtlatandeWithMeta(certificateData, builder.build());
 
         externalModelHolder = new ExternalModelHolder(certificateData);
     }
