@@ -54,7 +54,12 @@
 <body>
 
   <mvk-top-bar></mvk-top-bar>
-
+  <div class="container" id="mi-logo-header">
+	<div class="content-container">
+		<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
+	</div>
+  </div>
+  
   <div class="container">
 
     <div id="content-container">
@@ -62,7 +67,7 @@
 <%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
         <div class="row">
-          <div id="content-body" class="span12">
+          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <%-- No script to show at least something when javascript is off --%>
             <noscript>
               <h1>

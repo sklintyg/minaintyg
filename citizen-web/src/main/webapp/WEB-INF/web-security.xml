@@ -47,7 +47,9 @@
     <security:http security="none" pattern="/web/logga-ut" />
     <security:http security="none" pattern="/web/logga-ut-fk" />
     <security:http security="none" pattern="/ws/**" />
-
+	<!-- Allow access to webjars without beeing logged in -->
+    <security:http security="none" pattern="/web/webjars/**"/>
+    
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
     <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
