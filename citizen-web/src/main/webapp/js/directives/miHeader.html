@@ -1,7 +1,12 @@
 <span class="mi-header">
 	 <div id="status">
-	     <div class="status-row" ng-show="userName.length">
-	         <message key="nav.label.loggedinas"></message><br><span class="logged-in">{{userName}}</span>
+	     <div class="status-row navbar-user-info" ng-show="userName.length">
+	         <message key="nav.label.loggedinas"></message><br>
+	         <span class="logged-in">{{userName}}</span><br>
+	         <a href="/web/logga-ut"  id="mvklogoutLink" class="mi-header-logout"><message key="mvk.header.logouttext"></message></a>
+	     </div>
+	     <div class="navbar-user-avatar">
+	     	<img class="user-avatar" alt="" ng-src="/img/avatar.png" />
 	     </div>
 	 </div>
 </span>

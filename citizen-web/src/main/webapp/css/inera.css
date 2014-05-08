@@ -293,7 +293,17 @@ input[type="radio"], input[type="checkbox"] {
    Main content
 */
 .navbar-brand {
+	padding: 23px 15px 15px 0px !important;
+}
+.navbar-user-info {
 	padding: 15px 15px 15px 0px !important;
+}
+.navbar-user-info span { color: #fff; }
+
+.navbar-user-avatar {
+	display: inline-table;
+	float: right;
+	padding: 15px 0px 0px 0px;
 }
 div.container {
 /*     padding-bottom: 50px; */
@@ -548,17 +558,14 @@ div.statuslist {
 	display: none;
 }
 
-#logo {
-    padding-top: 3px;
-}
-
 #status {
 	float: right;
 	color: #ffffff;
 	text-align: right;
 	padding: 0px 0px 0 0;
  	font-size: 12px;
-    line-height: 135%;
+    line-height: 146%;
+	display: inline-flex;
 }
 
 .logged-in {
@@ -566,11 +573,13 @@ div.statuslist {
 	font-weight: bold;
 }
 
-#status a {
+#status a, #status a span {
 	cursor: pointer;
-	text-decoration: underline;
- 	color: #ffffff;
+	color: #28b4c4;
+	font-size: 13px;
+	text-decoration: none;
 }
+#status a:hover { text-decoration: underline; }
 
 .popover-inner h3 {
 	margin: 0px;
@@ -879,7 +888,7 @@ div.inera-box .box-body {
 	background-color: #000;
 	position: relative;
 	top: 38px;
-	height: 62px;
+	height: 80px;
 	z-index: 8;
 }
 #mi-navigation {
@@ -912,6 +921,7 @@ div.inera-box .box-body {
 .white { color: #fff; }
 .margin-top-5px { margin-top: 5px; }
 .no-padding-bottom { padding-bottom: 0px !important; }
+.padding-bottom-30px { padding-bottom: 30px; }
 
 /** Fuelux sneaks **/
 .wizard {
