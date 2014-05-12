@@ -45,7 +45,7 @@ define([
             "inbox.header" : "Inkorgen",
             "inbox.description" : "Här listas alla dina intyg med det senast inkomna intyget överst. För att hantera intyget väljer du Visa intyget. Då kan du: <br><br> <ul><li>läsa hela intyget</li><li>spara det på din dator</li><li>skriva ut det</li><li>skicka det till elektroniskt till olika mottagare</li></ul><br>Om du vill arkivera intyget väljer du symbolen Arkivera intyg <span class='glyphicon glyphicon-folder-close'></span>.",
             "inbox.tooltip.archive" : "<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.",
-            "inbox.revoked" : "Intyget är rättat av din vårdgivare. Det går därför inte att visa eller hantera. Kontakta din vårdgivare för mer information.",
+            "inbox.revoked" : "Intyget är rättat av din vårdgivare. Det går därför inte att visa eller hantera. Kontakta din vårdgivare för mer information. Vill du inte längre se detta intyget i inkorgen kan du arkivera det.",
             "inbox.archivemodal.header" : "Arkivera intyg",
             "inbox.archivemodal.text" : "När du väljer att arkivera intyget kommer det att flyttas till <i>Arkiverade intyg</i>.<br><br> Du kan när som helst återställa intyget igen.",
 
