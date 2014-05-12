@@ -956,7 +956,9 @@ div.inera-box .box-body {
 }
 .wizard ul li.wstep-completed {
 	color: #000;
+	background: #e5e5e5;
 }
+.wizard ul li.wstep-completed span.chevron { border-left: 8px solid #e5e5e5 !important; }
 .wizard ul li:nth-child(1) {
 	z-index: 10;
 	padding-left: 13px;
