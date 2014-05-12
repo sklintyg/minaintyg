@@ -297,13 +297,18 @@ input[type="radio"], input[type="checkbox"] {
 }
 .navbar-user-info {
 	padding: 15px 15px 15px 0px !important;
+	display: inline-block;
 }
 .navbar-user-info span { color: #fff; }
 
 .navbar-user-avatar {
-	display: inline-table;
+	display: inline-block;
 	float: right;
 	padding: 15px 0px 0px 0px;
+}
+.navbar-user-avatar img {
+	width: 34px;
+	height: 34px;
 }
 div.container {
 /*     padding-bottom: 50px; */
@@ -883,6 +888,10 @@ div.inera-box .box-body {
 }
 .custom-move.custom-move-active {
   opacity:1;
+}
+.page-logo {
+	height: 27px;
+	width: 145px;
 }
 #mi-logo-header {
 	background-color: #000;
