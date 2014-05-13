@@ -104,7 +104,8 @@ public class UtlatandeMetaBuilder {
      */
     public static UtlatandeMetaBuilder fromUtlatande(Utlatande utlatande) {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
-        builder.id(utlatande.getId().getExtension())
+        String id = utlatande.getId().getExtension() == null ? utlatande.getId().getRoot() : utlatande.getId().getExtension();
+        builder.id(id)
                 .type(utlatande.getTyp().getCode().toLowerCase())
                 .issuerName(utlatande.getSkapadAv().getNamn())
                 .facilityName(utlatande.getSkapadAv().getVardenhet().getNamn())
