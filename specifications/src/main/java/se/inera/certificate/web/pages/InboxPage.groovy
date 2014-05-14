@@ -22,13 +22,18 @@ class InboxPage extends Page {
 
     def archiveCertificate(String id) {
         archiveCertificateButton(id).click()
-    }
 
-    def confirmArchiveCertificate() {
         // Since this dialog is animated, wait for the same time as the animation
         // in order to avoid problem with Chrome WebDriver and moving click targets
         Thread.sleep(300);
+    }
+
+    def confirmArchiveCertificate() {
         confirmArchiveButton.click()
+
+        // Since this dialog is animated, wait for the same time as the animation
+        // in order to avoid problem with Chrome WebDriver and moving click targets
+        Thread.sleep(300);
     }
 
     def boolean certificateExists(String id) {
@@ -40,6 +45,7 @@ class InboxPage extends Page {
     }
 
     def goToArchivedTab() {
+
         archivedTab.click()
     }
 

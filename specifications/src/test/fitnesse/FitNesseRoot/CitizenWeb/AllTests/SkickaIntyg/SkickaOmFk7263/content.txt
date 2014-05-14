@@ -12,8 +12,13 @@
 !3 Bekräfta och skicka intyget igen och verifiera att varningsmeddelandet visas.
 
 |script|!-SkickaIntyg-!|
+|välj mottagare vyn visas|
+|välj mottagare|FK|
+|redan skickat varning visas|
+|bekräfta vald mottagare|
 |summerings vyn visas|
 |redan skickat varning visas|
+|vald mottagare är|Försäkringskassan|
 |bekräfta skicka intyg|
 |resultat sidan visas|
 |gå tillbaka till intyget|
@@ -23,5 +28,5 @@
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets typ är|fk7263|
-|intygets id är|intyg-1|
+|intygets id är|fit-intyg-1|
 |intyget har en status text innehållande|Skickat till|

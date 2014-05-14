@@ -4,11 +4,11 @@
 |logga på som|19121212-1212|
 |inkorgsidan visas|
 |lista med intyg visas|
-|visa intyg|rli-intyg-3|
+|visa intyg|fit-intyg-3|
 
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ.
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets typ är|rli|
-|intygets id är|rli-intyg-3|
+|intygets id är|fit-intyg-3|

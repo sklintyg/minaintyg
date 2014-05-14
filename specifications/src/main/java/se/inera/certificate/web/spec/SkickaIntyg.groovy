@@ -1,10 +1,32 @@
 package se.inera.certificate.web.spec
 
 import se.inera.certificate.web.pages.SendCertificateSentPage
+import se.inera.certificate.web.pages.SendCertificateChooseRecipientPage
 import se.inera.certificate.web.pages.SendCertificateSummaryPage
 
 public class SkickaIntyg {
 
+
+    public boolean väljMottagareVynVisas() {
+        Browser.drive {
+            waitFor {
+                at SendCertificateChooseRecipientPage
+            }
+            return page.confirmRecipientSelectionBtn.isDisplayed()
+        }
+    }
+
+    public void väljMottagare(String mottagare) {
+        Browser.drive {
+            page.chooseRecipient(mottagare)
+        }
+    }
+
+    public void bekräftaValdMottagare() {
+        Browser.drive {
+            page.confirmRecipientSelection()
+        }
+    }
 
     public boolean summeringsVynVisas() {
         Browser.drive {
@@ -14,10 +36,19 @@ public class SkickaIntyg {
             return page.confirmAndSendBtn.isDisplayed()
         }
     }
+    
+    public boolean valdMottagareÄr(String mottagare) {
+        Browser.drive {
+            waitFor {
+                at SendCertificateSummaryPage
+            }
+            return page.selectedRecipientMessage.text() == mottagare
+        }
+    }
 
     public void bekräftaSkickaIntyg() {
         Browser.drive {
-            page.confirmSendFlow()
+            page.confirmSend()
         }
     }
 
@@ -32,10 +63,13 @@ public class SkickaIntyg {
 
     public boolean redanSkickatVarningVisas() {
         Browser.drive {
-            waitFor {
-                at SendCertificateSummaryPage
-            }
             return page.alreadySentWarningMessage.isDisplayed()
+        }
+    }
+    
+    public boolean redanSkickatVarningVisasInte() {
+        Browser.drive {
+            return !page.alreadySentWarningMessage.isDisplayed()
         }
     }
 

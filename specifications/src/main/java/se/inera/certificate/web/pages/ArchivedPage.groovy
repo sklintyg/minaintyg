@@ -21,13 +21,18 @@ class ArchivedPage extends Page {
 
     def restoreCertificate(String id) {
         restoreCertificateButton(id).click()
-    }
 
-    def confirmRestoreCertificate() {
         // Since this dialog is animated, wait for the same time as the animation
         // in order to avoid problem with Chrome WebDriver and moving click targets
         Thread.sleep(300);
+    }
+
+    def confirmRestoreCertificate() {
         confirmRestoreButton.click()
+
+        // Since this dialog is animated, wait for the same time as the animation
+        // in order to avoid problem with Chrome WebDriver and moving click targets
+        Thread.sleep(300);
     }
 
     def boolean certificateExists(String id) {
