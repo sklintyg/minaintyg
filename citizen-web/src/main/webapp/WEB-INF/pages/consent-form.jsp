@@ -56,7 +56,14 @@
   <mvk-top-bar></mvk-top-bar>
   <div class="container" id="mi-logo-header">
 	<div class="content-container">
-		<a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
+				<a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
+				<mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+			</div>
+		</div>
 	</div>
   </div>
   
@@ -64,7 +71,6 @@
 
     <div id="content-container">
       <div class="content">
-<%--         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header> --%>
 
         <div class="row">
           <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
