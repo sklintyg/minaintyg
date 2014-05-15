@@ -47,7 +47,22 @@
 .eventbox a {
 	font-size: 12px;
 }
-
+.certificate-event {
+	height: auto;
+	max-height: 100px;
+	border: 1px solid #c2c2c2;
+	background: #F2F2F2;
+	overflow-y: auto;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+.certificate-event p {
+	padding: 10px 10px 0px 10px;
+}
+.certificate-event-timestamp { 
+	font-size: 12px; 
+}
 .cert-icon {
     position: absolute;
     top: 12px;
