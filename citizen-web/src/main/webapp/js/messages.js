@@ -78,8 +78,8 @@ define([
 
             "listtable.headers.issued" : "Utfärdat",
             "listtable.headers.type" : "Typ",
-            "listtable.headers.certperiod" : "Intygsperiod",
-            "listtable.headers.issuedby" : "Utfärdat av",
+            "listtable.headers.certinfo" : "Intygsinformation",
+            "listtable.headers.issuedby" : "Utfärdare",
             "listtable.headers.latestevent" : "Senaste händelsen",
 
             "fkdialog.head" : "Du har gett ditt samtycke",
