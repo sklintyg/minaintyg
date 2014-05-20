@@ -27,7 +27,7 @@ define([
 	        "certificatetypes.rli.commonname" : "Intyg vid avbeställd resa",
 	        "certificatetypes.rli.typename" : "RLI",
 	        "certificatetypes.ts-bas.commonname" : "Transportstyrelsens läkarintyg",
-	        "certificatetypes.ts-bas.typename" : " - Bas",
+	        "certificatetypes.ts-bas.typename" : "",
 	        "certificatetypes.ts-diabetes.commonname" : "Transportstyrelsens läkarintyg",
 	        "certificatetypes.ts-diabetes.typename" : " - Diabetes",
 	
