@@ -22,6 +22,8 @@ define([
 	        "nav.label.help" : "Hjälp och support",
 	        "nav.label.loggedinas" : "Du är inloggad som",
 	        
+	        "common.title.helptext.moreinfo" : "Mer information",
+	        
 	        "certificatetypes.fk7263.commonname" : "Läkarintyg",
 	        "certificatetypes.fk7263.typename" : " - FK 7263",
 	        "certificatetypes.rli.commonname" : "Intyg vid avbeställd resa",
