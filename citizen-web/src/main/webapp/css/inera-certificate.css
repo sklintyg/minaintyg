@@ -116,10 +116,13 @@
 .cert-titlebar h2 > span {
     color: #fff;
 }
-.cert-titlebar span.cert-titlebar-type {
+span.cert-titlebar-type {
 	font-size: 10px;
 	color: #b3d6da;
 }
+.archived-table .cert-titlebar-type { color: #000; }
+.archived-table td { font-size: 12px; }
+
 .cert-titlebar .row { margin-right: 0px; margin-left: 0px; }
 .issue {
     color: #fff;
