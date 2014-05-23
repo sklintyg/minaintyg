@@ -8,13 +8,14 @@ define([
     'messages',
     'services',
     'mi-common-message-resources',
-    'webjars/common/js/wc-message-module',
-    'webjars/common/js/wc-utils'
-], function (angular, angularRoute, angularSanitize, controllers, directives, filters, messages, services, commonMessageResources, wcMessageModule, wcUtils) {
+    'webjars/common/minaintyg/js/filters',
+    'webjars/common/minaintyg/js/wc-message-module',
+    'webjars/common/minaintyg/js/wc-utils'
+], function (angular, angularRoute, angularSanitize, controllers, directives, filters, messages, services, commonMessageResources, commonFilters, wcMessageModule, wcUtils) {
     'use strict';
 
     var app = angular.module('intygApp', ['ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize',
-        controllers, directives, filters, services, wcMessageModule, wcUtils]);
+        controllers, directives, filters, services, commonFilters, wcMessageModule, wcUtils]);
 
     app.config(['$routeProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$httpProvider', 'http403ResponseInterceptorProvider',
         function ($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider, http403ResponseInterceptorProvider) {
@@ -27,10 +28,10 @@ define([
                 service : $provide.service,
                 $routeProvider : $routeProvider
             };
-            
+
             //Configure interceptor provider
             http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
-            
+
             //Add interceptor
             $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
             $httpProvider.responseInterceptors.push('http403ResponseInterceptor');

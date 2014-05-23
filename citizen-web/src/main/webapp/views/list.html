@@ -24,13 +24,13 @@
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div id="certificate-{{cert.id}}" class="cert">
                   <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
-                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/intyg/img/{{cert.type | lowercase}}.png" /></a>
-                    <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/intyg/img/{{cert.type | lowercase}}.png" />
+                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" /></a>
+                    <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2>
                           <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
-                          	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp; 
+                          	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp;
                           	<span class="cert-titlebar-type">
                           		<span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           	</span>
