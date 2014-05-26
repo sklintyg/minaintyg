@@ -8,9 +8,14 @@
     <p>
       <div message key="inbox.description" class="mi-text"></div>
 	  <!-- <span class='text-align-left' wc-enable-tooltip field-help-text="mi.helptext.arkivera"></span> -->
-      <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedArchive = !isCollapsedArchive" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-      <div collapse="!isCollapsedArchive" class="mi-text well well-sm margin-top-5px"><span message key="mi.helptext.arkivera"></span></div>
     </p>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+  	<p>
+  		<div message key="inbox.description.archive" class="mi-text"></div>
+  		<a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedArchive = !isCollapsedArchive" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
+      	<div collapse="!isCollapsedArchive" class="mi-text well well-sm margin-top-5px"><span message key="mi.helptext.arkivera"></span></div>	
+  	</p>
   </div>
 </div>
 <div class="row">
@@ -28,14 +33,14 @@
                     <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
-                        <h2>
-                          <a class="cert-title" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                        <h2 class="cert-title">
+                          <a ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
                           	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp;
                           	<span class="cert-titlebar-type">
-                          		<span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
+                          		<span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           	</span>
                           </a>
-                          <span class="cert-title" ng-show="cert.cancelled">
+                          <span ng-show="cert.cancelled">
                             <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> - <span message key="certificates.status.cancelledlc"></span>&nbsp;<span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span>
                           </span>
                         </h2>

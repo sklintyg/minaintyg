@@ -113,6 +113,8 @@
     display: inline-block;
 }
 
+.cert-titlebar .cert-title a { color: #fff; }
+
 .cert-titlebar h2 > span {
     color: #fff;
 }

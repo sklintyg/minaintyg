@@ -119,9 +119,13 @@ h1.bottom-spacing {
 }
 
 h2 {
-	color: #555;
+	color: #666;
+	font-family: helvetica, 'Sanchez','Noticia Text', Arial, sans-serif;
 	font-size: 16px;
-	line-height: 26px;
+	font-weight: bold;
+	color: #666;
+	line-height: 25px;
+	padding-top: 15px;
 }
 
 h3 {
@@ -933,6 +937,7 @@ div.inera-box .box-body {
 .margin-bottom-15px { margin-bottom: 15px; }
 .no-padding-bottom { padding-bottom: 0px !important; }
 .padding-bottom-30px { padding-bottom: 30px; }
+.text-nowrap { white-space: nowrap; }
 
 /** Fuelux sneaks **/
 .wizard {
