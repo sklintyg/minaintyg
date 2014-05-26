@@ -35,6 +35,7 @@ define([], function() {
 				$scope.sendSelected = function(item) {
 					$log.debug("send " + item.id);
 					listCertService.selectedCertificate = item;
+					$rootScope.keepInboxTab = true;
 					$location.path("/" + item.type.toLowerCase() + "/view/" + item.id);
 				}
 

@@ -16,7 +16,11 @@ define([ 'text!directives/miMainNavigation.html' ], function(template) {
 	                        return 'active';
 	                    }
 	                }
-	                var currentRoute = $location.path().substring(1) || 'lista';
+	                if ($rootScope.keepInboxTab == true) {
+	                    var currentRoute = 'lista';
+	                } else {
+	                    var currentRoute = $location.path().substring(1) || 'lista';
+	                }
 	                return page === currentRoute ? 'active' : '';
 	            };  
 	        },

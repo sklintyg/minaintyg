@@ -1,89 +1,94 @@
-define([
-    'angular',
-    'angularRoute',
-    'angularSanitize',
-    'controllers',
-    'directives',
-    'filters',
-    'messages',
-    'services',
-    'mi-common-message-resources',
-    'webjars/common/minaintyg/js/filters',
-    'webjars/common/minaintyg/js/wc-message-module',
-    'webjars/common/minaintyg/js/wc-utils'
-], function (angular, angularRoute, angularSanitize, controllers, directives, filters, messages, services, commonMessageResources, commonFilters, wcMessageModule, wcUtils) {
-    'use strict';
+define(
+        [ 'angular', 'angularRoute', 'angularSanitize', 'controllers', 'directives', 'filters', 'messages', 'services',
+                'mi-common-message-resources', 'webjars/common/minaintyg/js/filters', 'webjars/common/minaintyg/js/wc-message-module',
+                'webjars/common/minaintyg/js/wc-utils' ],
+        function(angular, angularRoute, angularSanitize, controllers, directives, filters, messages, services, commonMessageResources, commonFilters, wcMessageModule, wcUtils) {
+            'use strict';
 
-    var app = angular.module('intygApp', ['ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize',
-        controllers, directives, filters, services, commonFilters, wcMessageModule, wcUtils]);
+            var app = angular.module('intygApp', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', controllers, directives, filters, services,
+                    commonFilters, wcMessageModule, wcUtils ]);
 
-    app.config(['$routeProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$httpProvider', 'http403ResponseInterceptorProvider',
-        function ($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider, http403ResponseInterceptorProvider) {
+            app
+                    .config([
+                            '$routeProvider',
+                            '$controllerProvider',
+                            '$compileProvider',
+                            '$filterProvider',
+                            '$provide',
+                            '$httpProvider',
+                            'http403ResponseInterceptorProvider',
+                            function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider, http403ResponseInterceptorProvider) {
 
-            app.register = {
-                controller : $controllerProvider.register,
-                directive : $compileProvider.directive,
-                filter : $httpProvider.register,
-                factory : $provide.factory,
-                service : $provide.service,
-                $routeProvider : $routeProvider
-            };
+                                app.register = {
+                                    controller: $controllerProvider.register,
+                                    directive: $compileProvider.directive,
+                                    filter: $httpProvider.register,
+                                    factory: $provide.factory,
+                                    service: $provide.service,
+                                    $routeProvider: $routeProvider
+                                };
 
-            //Configure interceptor provider
-            http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
+                                // Configure interceptor provider
+                                http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
 
-            //Add interceptor
-            $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
-            $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
-        }]);
+                                // Add interceptor
+                                $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
+                                $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
+                            } ]);
 
-    app.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
-        $rootScope.lang = 'sv';
-        $rootScope.DEFAULT_LANG = 'sv';
-        $rootScope.MI_CONFIG = MI_CONFIG;
-        messageService.addResources(commonMessageResources);
-        messageService.addResources(messages);
+            app.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
+                $rootScope.lang = 'sv';
+                $rootScope.DEFAULT_LANG = 'sv';
+                $rootScope.MI_CONFIG = MI_CONFIG;
+                messageService.addResources(commonMessageResources);
+                messageService.addResources(messages);
 
-    	// Update page title
-    	$rootScope.page_title = 'Titel';
-        $rootScope.$on('$routeChangeSuccess', function() {
-    	  if ($route.current.$$route){
-    		  $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
-    	  }
-        });
-    }]);
+                // Update page title
+                $rootScope.page_title = 'Titel';
+                $rootScope.$on('$routeChangeSuccess', function() {
+                    if ($route.current.$$route) {
 
-    require(['text!/api/certificates/map'], function (modules) {
+                        if ($route.current.$$route.keepInboxTabActive == false) {
+                            $rootScope.keepInboxTab = false;
+                        }
+                        $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+                    }
+                });
+            } ]);
 
-        var modulesMap = JSON.parse(modules);
+            require([ 'text!/api/certificates/map' ], function(modules) {
 
-        var modulesUrls = [];
-        for (var artifactId in modulesMap) {
-            modulesUrls.push(modulesMap[artifactId].id + modulesMap[artifactId].scriptPath);
-            loadCssFromUrl('/web/webjars/' + modulesMap[artifactId].id + modulesMap[artifactId].cssPath);
-        }
+                var modulesMap = JSON.parse(modules);
 
-        require({ baseUrl: '/web/webjars/' }, modulesUrls, function () {
-            var modules = arguments;
+                var modulesUrls = [];
+                for ( var artifactId in modulesMap) {
+                    modulesUrls.push(modulesMap[artifactId].id + modulesMap[artifactId].scriptPath);
+                    loadCssFromUrl('/web/webjars/' + modulesMap[artifactId].id + modulesMap[artifactId].cssPath);
+                }
 
-            angular.element().ready(function () {
-                angular.resumeBootstrap([app.name].concat(Array.prototype.slice.call(modules, 0)));
+                require({
+                    baseUrl: '/web/webjars/'
+                }, modulesUrls, function() {
+                    var modules = arguments;
+
+                    angular.element().ready(function() {
+                        angular.resumeBootstrap([ app.name ].concat(Array.prototype.slice.call(modules, 0)));
+                    });
+                });
             });
+
+            function loadCssFromUrl(url) {
+                var link = createLinkElement(url);
+                document.getElementsByTagName('head')[0].appendChild(link);
+            }
+
+            function createLinkElement(url) {
+                var link = document.createElement('link');
+                link.type = 'text/css';
+                link.rel = 'stylesheet';
+                link.href = url;
+                return link;
+            }
+
+            return app;
         });
-    });
-
-    function loadCssFromUrl(url) {
-        var link = createLinkElement(url);
-        document.getElementsByTagName('head')[0].appendChild(link);
-    }
-
-    function createLinkElement(url) {
-        var link = document.createElement('link');
-        link.type = 'text/css';
-        link.rel = 'stylesheet';
-        link.href = url;
-        return link;
-    }
-
-    return app;
-});
