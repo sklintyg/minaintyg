@@ -5,7 +5,6 @@
     </h1>
     <p></p>
     <span message key="archived.description"></span>
-    
   </div>
 </div>
 <div class="row">
@@ -33,26 +32,24 @@
 			        <td headers="certinfo">{{cert.complementaryInfo}}</td>			
 			        <td headers="issuedby">{{cert.careunitName}}</td>			
 			        <td headers="latestEvent">
-			            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 header-row">
-			                    <div ng-show="cert.statuses.length>0">
-			                        {{cert.statuses[0].timestamp | date:'short'}}
-			                        <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-			                        <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
-			                   </div>
-			                <span ng-show="!cert.statuses">Ingen</span>
-			             </div>
+	                    <div ng-show="cert.statuses.length>0">
+	                        {{cert.statuses[0].timestamp | date:'short'}}
+	                        <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
+	                        <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
+	                    </div>
+		                <span ng-show="!cert.statuses">Ingen</span>
 			        </td>
 			        <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href ng-click="openRestoreDialog(cert.id)"><span message key="label.restore"></span></a></td>
 			      </tr>
 			    </tbody>
 			  </table>
 			</div>
-			<!-- eof spinner -->
-			<div class="table-bottom" ng-hide="(certificates | archived).length<1"></div>
-			
-			<div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archived).length<1">
-			  <span message key="error.noarchivedcerts"></span>
-			</div>
+		</div>
+		<!-- eof spinner -->
+		<div class="table-bottom" ng-hide="(certificates | archived).length<1"></div>
+		
+		<div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archived).length<1">
+		  <span message key="error.noarchivedcerts"></span>
 		</div>
 	</div>
 </div>

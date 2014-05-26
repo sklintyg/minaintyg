@@ -119,12 +119,15 @@
 
 <!-- Cookie information -->
 <div class="row padding-bottom-30px">
-  <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+  <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
 	  <div>
-	    Mina intyg använder kakor. <a ng-click="toggleCookieInfo()">Om Kakor (Cookies)</a>
+	    Mina intyg använder kakor. <a ng-click="isCollapsedCookieInfo = !isCollapsedCookieInfo">Om Kakor (Cookies)</a>
 	  </div>
-	  <div ng-show="showCookieInfo" class="cookieinfo">
-      <span message key="about.cookies"></span>
+	  <div collapse="!isCollapsedCookieInfo" class="margin-top-5px">
+	  	<div class="mi-text well well-sm">
+	  		<span message key="about.cookies"></span>
+		</div>
 	  </div>
+	  
   </div>
 </div>
