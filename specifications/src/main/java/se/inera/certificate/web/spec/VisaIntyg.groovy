@@ -13,15 +13,19 @@ public class VisaIntyg {
     }
 
     public boolean intygetsTypÄr(String typ) {
+        def result
         Browser.drive {
-           return $("#certType", title: typ).size() == 1
+           result = $("#certType", title: typ).size() == 1
         }
+        result
     }
 
     public boolean intygetsIdÄr(String id) {
+        def result
         Browser.drive {
-            return $("#certId", title: id).size() == 1
+            result = $("#certId", title: id).size() == 1
         }
+        result
     }
 
     public void väljSkickaIntyg() {

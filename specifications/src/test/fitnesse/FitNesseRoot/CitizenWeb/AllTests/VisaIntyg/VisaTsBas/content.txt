@@ -6,9 +6,9 @@
 |lista med intyg visas|
 |visa intyg|fit-intyg-3|
 
-!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ.
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
-|intygets typ är|rli|
+|intygets typ är|ts-bas|
 |intygets id är|fit-intyg-3|
