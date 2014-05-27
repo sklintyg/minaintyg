@@ -10,6 +10,9 @@ class IntygPage extends Page {
         certificateId { $("#certId") }
         certificateType { $("#certType") }
         sendCertificateBtn { $("#sendCertificateBtn") }
+        falt6aArbetsformedlingen(required: false) { $("span", text: contains("Kontakt med Arbetsförmedlingen")).text() }
+        falt6aForetagshalsovarden(required: false) { $("span", text: contains("Kontakt med företagshälsovården")).text() }
+        falt6aOvrigt(required: false) { $("span", text: contains("Övrigt:")).text() }
     }
 
     def startSendFlow() {

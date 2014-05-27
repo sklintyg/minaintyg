@@ -39,4 +39,28 @@ public class VisaIntyg {
             return $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
         }
     }
+
+    public boolean intygetsFält6aInnehållerKontaktMedArbetsförmedlingen() {
+        def falt6aArbetsformedlingen
+        Browser.drive {
+            falt6aArbetsformedlingen = page.falt6aArbetsformedlingen
+        }
+        return falt6aArbetsformedlingen != null
+    }
+    
+    public boolean intygetsFält6aInnehållerKontaktMedFöretagshälsovården() {
+        def falt6aForetagshalsovarden
+        Browser.drive {
+            falt6aForetagshalsovarden = page.falt6aForetagshalsovarden
+        }
+        return falt6aForetagshalsovarden != null
+    }
+    
+    public boolean intygetsFält6aÖvrigtInnehåller(String textFragment) {
+        def falt6aOvrigt
+        Browser.drive {
+            falt6aOvrigt = page.falt6aOvrigt
+        }
+        return falt6aOvrigt?.contains(textFragment)
+    }
 }
