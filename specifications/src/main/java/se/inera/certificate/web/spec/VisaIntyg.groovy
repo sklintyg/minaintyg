@@ -13,7 +13,7 @@ public class VisaIntyg {
     }
 
     public boolean intygetsTypÄr(String typ) {
-        def result
+        boolean result
         Browser.drive {
            result = $("#certType", title: typ).size() == 1
         }
@@ -21,7 +21,7 @@ public class VisaIntyg {
     }
 
     public boolean intygetsIdÄr(String id) {
-        def result
+        boolean result
         Browser.drive {
             result = $("#certId", title: id).size() == 1
         }
@@ -35,9 +35,11 @@ public class VisaIntyg {
     }
 
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
+        boolean result
         Browser.drive {
-            return $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
+            result = $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
         }
+        result
     }
 
     public boolean intygetsFält6aInnehållerKontaktMedArbetsförmedlingen() {
