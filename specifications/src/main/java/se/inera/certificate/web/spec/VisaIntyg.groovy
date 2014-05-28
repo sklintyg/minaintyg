@@ -13,15 +13,19 @@ public class VisaIntyg {
     }
 
     public boolean intygetsTypÄr(String typ) {
+        boolean result
         Browser.drive {
-           return $("#certType", title: typ).size() == 1
+           result = $("#certType", title: typ).size() == 1
         }
+        result
     }
 
     public boolean intygetsIdÄr(String id) {
+        boolean result
         Browser.drive {
-            return $("#certId", title: id).size() == 1
+            result = $("#certId", title: id).size() == 1
         }
+        result
     }
 
     public void väljSkickaIntyg() {
@@ -31,9 +35,11 @@ public class VisaIntyg {
     }
 
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
+        boolean result
         Browser.drive {
-            return $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
+            result = $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
         }
+        result
     }
 
     public boolean intygetsFält6aInnehållerKontaktMedArbetsförmedlingen() {
