@@ -92,7 +92,7 @@ public class CertificateServiceImpl implements CertificateService {
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
-     *
+     * 
      * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
      *      java.lang.String)
      */
@@ -152,7 +152,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     /**
      * Build a {@link LakarutlatandeEnkelType} from the source {@link Utlatande}.
-     *
+     * 
      * @param utlatande
      *            a {@link Utlatande}
      * @return {@link LakarutlatandeEnkelType}
@@ -160,7 +160,8 @@ public class CertificateServiceImpl implements CertificateService {
     private LakarutlatandeEnkelType buildLakarutlatandeTypeFromUtlatande(Utlatande utlatande) {
         LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
 
-        lakarutlatande.setLakarutlatandeId(utlatande.getId().getExtension());
+        lakarutlatande.setLakarutlatandeId((utlatande.getId().getExtension() != null ? utlatande.getId().getExtension() :
+                utlatande.getId().getRoot()));
 
         lakarutlatande.setSigneringsTidpunkt(utlatande.getSigneringsdatum());
 
@@ -179,7 +180,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     /**
      * Build an EnhetType object from an Utlatande.
-     *
+     * 
      * @param utlatande
      *            the source {@link Utlatande}
      * @return {@link EnhetType}
