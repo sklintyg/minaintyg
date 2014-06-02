@@ -10,5 +10,5 @@
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
-|intygets typ är|ts-bas|
+|intygets typ är|TS_BAS_U06_V06|
 |intygets id är|fit-intyg-3|

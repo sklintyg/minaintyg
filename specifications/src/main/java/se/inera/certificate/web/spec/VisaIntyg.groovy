@@ -37,7 +37,7 @@ public class VisaIntyg {
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
         boolean result
         Browser.drive {
-            result = $("#lastest-certificate-event", text: contains(textFragment)).size() == 1
+            result = $("#latest-certificate-event", text: contains(textFragment)).size() == 1
         }
         result
     }
