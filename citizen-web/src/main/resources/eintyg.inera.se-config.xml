@@ -56,7 +56,16 @@
           <value>version</value>
         </list>
       </property>
+
     </bean>
+        <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+      <property name="attributes">
+        <map>
+          <entry key="healthcheck" value-ref="healthcheck"/>
+        </map>
+      </property>
+    </bean>
+    <bean id="healthcheck" class="se.inera.certificate.web.overvakning.HealthCheck"/>
 
   </beans>
 
