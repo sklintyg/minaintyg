@@ -64,5 +64,14 @@ public class VisaIntyg {
             falt6aOvrigt = page.falt6aOvrigt
         }
         return falt6aOvrigt?.contains(textFragment)
+
+    }
+
+    public boolean intygetsFält8bInnehållerNedsattMed25Procent() {
+        def falt8bNedsatt25
+        Browser.drive {
+            falt8bNedsatt25 = page.falt8bNedsatt25
+        }
+        return falt8bNedsatt25 != null
     }
 }
