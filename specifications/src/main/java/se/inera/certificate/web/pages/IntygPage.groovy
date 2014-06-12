@@ -13,6 +13,7 @@ class IntygPage extends Page {
         falt6aArbetsformedlingen(required: false) { $("span", text: contains("Kontakt med Arbetsförmedlingen")).text() }
         falt6aForetagshalsovarden(required: false) { $("span", text: contains("Kontakt med företagshälsovården")).text() }
         falt6aOvrigt(required: false) { $("span", text: contains("Övrigt:")).text() }
+        falt8bNedsatt25 { $("#nedsattMed25") }
     }
 
     def startSendFlow() {
