@@ -20,3 +20,9 @@
 |intygets fält6a innehåller kontakt med arbetsförmedlingen|
 |intygets fält6a innehåller kontakt med företagshälsovården|
 |intygets fält6a övrigt innehåller|När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik|
+
+!3 Verifiera att fält 8b innehåller korrekt information. 
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets fält8b innehåller nedsatt med 25 procent|
