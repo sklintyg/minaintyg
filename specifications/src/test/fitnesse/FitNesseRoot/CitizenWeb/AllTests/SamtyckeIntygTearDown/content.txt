@@ -6,6 +6,7 @@
 |fit-intyg-2|
 |fit-intyg-3|
 |fit-intyg-4|
+|fit-intyg-5|
 
 !3 Återta samtycken:
 

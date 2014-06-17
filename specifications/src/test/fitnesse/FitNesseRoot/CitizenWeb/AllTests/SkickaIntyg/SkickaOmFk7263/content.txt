@@ -28,5 +28,5 @@
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets typ är|fk7263|
-|intygets id är|fit-intyg-1|
+|intygets id är|fit-intyg-5|
 |intyget har en status text innehållande|Skickat till|
