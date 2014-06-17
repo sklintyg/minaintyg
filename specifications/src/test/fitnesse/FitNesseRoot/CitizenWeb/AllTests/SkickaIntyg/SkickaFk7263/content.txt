@@ -1,3 +1,4 @@
+!2 Skicka icke-smittskyddsrelaterat FK7263
 !3 Först logga in och lista alla befintliga intyg.
 
 |script|!-ListaIntyg-!|
@@ -18,7 +19,7 @@
 |script|!-VisaIntyg-!|
 |välj skicka intyg|
 
-!3 Bekräfta och skicka intyget. 
+!3 Välj mottagare, bekräfta och skicka intyget. 
 
 |script|!-SkickaIntyg-!|
 |summerings vyn visas|
@@ -32,4 +33,41 @@
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|intyg-1|
+|intyget har en status text innehållande|Skickat till|
+
+!2 Skicka smittskyddsrelaterat FK7263
+!3 Först logga in och lista alla befintliga intyg.
+
+|script|!-ListaIntyg-!|
+|logga på som|19121212-1212|
+|inkorgsidan visas|
+|lista med intyg visas|
+|visa intyg|intyg-5|
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets typ är|fk7263|
+|intygets id är|intyg-5|
+
+!3 Välj att skicka intyget. 
+
+|script|!-VisaIntyg-!|
+|välj skicka intyg|
+
+!3 Välj mottagare, bekräfta och skicka intyget. 
+
+|script|!-SkickaIntyg-!|
+|summerings vyn visas|
+|bekräfta skicka intyg|
+|resultat sidan visas|
+|gå tillbaka till intyget|
+
+!3 Verifiera att intyget nu har status 'skickat'. 
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets typ är|fk7263|
+|intygets id är|intyg-5|
 |intyget har en status text innehållande|Skickat till|
