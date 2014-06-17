@@ -96,7 +96,7 @@ define([
             "fkdialog.text" : "Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.",
             "fkdialog.button.returntofk" : "Tillbaka till Försäkringskassan",
             "fkdialog.button.continueuse" : "Gå vidare till Mina intyg",
-            "mi.helptext.arkivera" : "<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg."
+            "mi.helptext.arkivera" : "<b>Att arkivera intyg</b><br/>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg."
 
         },
         "en" : {
