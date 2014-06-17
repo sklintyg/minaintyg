@@ -5,7 +5,7 @@
 |inkorgsidan visas          |
 |lista med intyg visas      |
 
-Se till att rättat intyg visas på rätt sätt. Intygets id är ''intyg-2''.
+Se till att rättat intyg visas på rätt sätt. Intygets id är ''fit-intyg-2''.
 
 |script                    |!-ListaIntyg-!|
-|rättat intyg visas korrekt|intyg-2       |
+|rättat intyg visas korrekt|fit-intyg-2       |

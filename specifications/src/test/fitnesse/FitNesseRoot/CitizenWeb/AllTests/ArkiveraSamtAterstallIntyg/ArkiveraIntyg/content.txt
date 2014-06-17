@@ -7,10 +7,10 @@
 |logga på som|19121212-1212|
 |inkorgsidan visas|
 |lista med intyg visas|
-|arkivera intyg | intyg-1 |
+|arkivera intyg | fit-intyg-1 |
 |konfirmera arkivera intyg|
-|intyg finns ej i listan | intyg-1 |
+|intyg finns ej i listan | fit-intyg-1 |
 |gå till arkiverade intyg|
 |arkiveradesidan visas|
 |lista med arkiverade intyg visas|
-|arkiverat intyg finns i listan | intyg-1 |
+|arkiverat intyg finns i listan | fit-intyg-1 |

@@ -4,14 +4,14 @@
 |logga på som|19121212-1212|
 |inkorgsidan visas|
 |lista med intyg visas|
-|visa intyg|intyg-1|
+|visa intyg|fit-intyg-1|
 
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets typ är|fk7263|
-|intygets id är|intyg-1|
+|intygets id är|fit-intyg-1|
 
 !3 Verifiera att fält 6a innehåller korrekt information. 
 

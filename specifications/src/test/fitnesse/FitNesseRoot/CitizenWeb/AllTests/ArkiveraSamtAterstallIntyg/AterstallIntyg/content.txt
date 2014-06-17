@@ -7,9 +7,9 @@ Testet arkiverar först ett intyg och verifierar att det finns med i listan med 
 Därefter återställs detta och verifiering sker att intyget ej längre listas bland de arkiverade utan istället i inkorgen.
 
 |script|!-ListaIntyg-!|
-|återställ intyg|intyg-1|
+|återställ intyg|fit-intyg-1|
 |konfirmera återställ intyg|
-|arkiverat intyg finns ej i listan | intyg-1 |
+|arkiverat intyg finns ej i listan | fit-intyg-1 |
 |gå till inkorgen|
 |inkorgsidan visas|
-|intyg finns i listan | intyg-1 |
+|intyg finns i listan | fit-intyg-1 |
