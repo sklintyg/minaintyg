@@ -13,7 +13,6 @@
 
 |script|!-SkickaIntyg-!|
 |summerings vyn visas|
-|redan skickat varning visas|
 |bekräfta skicka intyg|
 |resultat sidan visas|
 |gå tillbaka till intyget|
@@ -23,5 +22,5 @@
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets typ är|fk7263|
-|intygets id är|intyg-1|
+|intygets id är|intyg-5|
 |intyget har en status text innehållande|Skickat till|
