@@ -36,6 +36,20 @@
         <property name="jsonResponse" value="false"/>
       </bean>
     </mvc:interceptor>
+    <mvc:interceptor>
+      <mvc:mapping path="/**"/>
+      <mvc:exclude-mapping path="/sso"/>
+      <mvc:exclude-mapping path="/visa-ge-samtycke"/>
+      <mvc:exclude-mapping path="/ge-samtycke"/>
+      <mvc:exclude-mapping path="/tillbaka-till-mvk"/>
+      <mvc:exclude-mapping path="/logga-ut"/>
+      <mvc:exclude-mapping path="/logga-ut-fk"/>
+      <bean class="se.inera.certificate.web.security.BrowserClosedInterceptor">
+        <property name="timeoutSeconds" value="5"/>
+        <property name="redirectLocation" value="/web/start"/>
+        <property name="logoutHandler" ref="securityContextLogoutHandler" />
+      </bean>
+    </mvc:interceptor>
   </mvc:interceptors>
 
   <beans profile="qa,prod">

@@ -5,14 +5,17 @@ import static se.inera.certificate.modules.support.ApplicationOrigin.MINA_INTYG;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +26,7 @@ import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.integration.module.ModuleApiFactory;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.web.controller.api.dto.IntygModule;
+import se.inera.certificate.web.security.BrowserClosedInterceptor;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
@@ -129,5 +133,19 @@ public class ApiController {
         }
 
         return response;
+    }
+    
+    /**
+     * Endpoint used by client to notify server that onbeforeunload is triggered
+     * 
+     * @param HttpServletRequest req
+     * @return
+     */
+    @GET
+    @Path("/onbeforeunload")
+    public String onbeforeunload(@Context HttpServletRequest req) {
+        LOG.warn("onbeforeunload ok");
+        req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP, DateTime.now());
+        return "ok";
     }
 }
