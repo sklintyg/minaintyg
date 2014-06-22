@@ -1,0 +1,27 @@
+!3 Automatisk utloggning
+
+Automatisk utloggning ska ske vid: vidarenavigering och flik-stängning
+
+|script|!-GeSamtycke-!|
+|logga på som|19121212-1212|
+|ge samtycke sidan visas|
+
+
+
+|script|!-LoggaUt-!|
+|besök extern sida|1|
+|gå till startsida|
+|ladda om|
+
+|script|!-GeSamtycke-!|
+|ge samtycke sidan visas|
+
+|script|!-LoggaUt-!|
+|besök extern sida|6|
+|gå till startsida|
+
+|script|!-LoggaUt-!|
+|ladda om|
+|gå till startsida|
+|access denied visas|
+

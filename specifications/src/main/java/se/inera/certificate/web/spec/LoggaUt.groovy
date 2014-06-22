@@ -47,4 +47,15 @@ public class LoggaUt {
             }
         }
     }
+    public void besökExternSida(int sekunder) {
+        Browser.drive {
+            go "http://www.google.com"
+        }
+        Thread.sleep(sekunder * 1000)
+    }
+    public void laddaOm() {
+        Browser.drive {
+            getJs().exec([], "window.location.reload()")
+        }
+    }
 }

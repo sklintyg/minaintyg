@@ -138,14 +138,18 @@ public class ApiController {
     /**
      * Endpoint used by client to notify server that onbeforeunload is triggered
      * 
-     * @param HttpServletRequest req
+     * @param req javax.servlet.http.HttpServletRequest
      * @return
      */
     @GET
     @Path("/onbeforeunload")
     public String onbeforeunload(@Context HttpServletRequest req) {
-        LOG.warn("onbeforeunload ok");
-        req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP, DateTime.now());
+        if (req.getSession().getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP) == null) {
+            req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP, DateTime.now());
+        }
+        else {
+            LOG.warn("onbeforeonload already set");
+        }
         return "ok";
     }
 }
