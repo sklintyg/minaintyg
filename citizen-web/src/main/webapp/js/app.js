@@ -36,7 +36,7 @@ define(
                                 $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
                             } ]);
 
-            app.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
+            app.run([ '$rootScope', '$route', 'messageService', '$window', function($rootScope, $route, messageService, $window) {
                 $rootScope.lang = 'sv';
                 $rootScope.DEFAULT_LANG = 'sv';
                 $rootScope.MI_CONFIG = MI_CONFIG;
@@ -54,6 +54,14 @@ define(
                         $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
                     }
                 });
+
+                $window.onbeforeunload = function() {
+                    var request = new XMLHttpRequest();
+                    // `false` makes the request synchronous
+                    request.open('GET', '/api/certificates/onbeforeunload', false);
+                    request.send(null);
+                };
+
             } ]);
 
             require([ 'text!/api/certificates/map' ], function(modules) {
