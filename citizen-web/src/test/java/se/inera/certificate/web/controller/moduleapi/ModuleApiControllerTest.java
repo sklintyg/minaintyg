@@ -26,6 +26,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.ModuleApiFactory;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -90,7 +91,7 @@ public class ModuleApiControllerTest {
         when(moduleEntryPoint.getModuleApi()).thenReturn(moduleApi);
        
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdf(refEq(externalModelHolder))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+        when(moduleApi.pdf(refEq(externalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -112,7 +113,7 @@ public class ModuleApiControllerTest {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleApiFactory.getModuleEntryPoint(CERTIFICATE_TYPE)).thenReturn(moduleEntryPoint);
         when(moduleEntryPoint.getModuleApi()).thenReturn(moduleApi);
-        when(moduleApi.pdf(refEq(externalModelHolder))).thenThrow(new ModuleSystemException());
+        when(moduleApi.pdf(refEq(externalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
