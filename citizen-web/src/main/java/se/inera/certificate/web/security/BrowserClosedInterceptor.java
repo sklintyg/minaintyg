@@ -38,48 +38,47 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * från session och requesten går igenom
  */
 public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
-	public static final String BROWSER_CLOSED_TIMESTAMP = "BROWSER_CLOSED_TIMESTAMP";
-	private static final Logger LOG = LoggerFactory
-			.getLogger(BrowserClosedInterceptor.class);
+    public static final String BROWSER_CLOSED_TIMESTAMP = "BROWSER_CLOSED_TIMESTAMP";
+    private static final Logger LOG = LoggerFactory.getLogger(BrowserClosedInterceptor.class);
 
-	private LogoutHandler logoutHandler;
-	private String redirectLocation;
-	private Integer timeoutSeconds;
+    private LogoutHandler logoutHandler;
+    private String redirectLocation;
+    private Integer timeoutSeconds;
 
-	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws IOException {
+    @Override
+    public boolean preHandle(HttpServletRequest request,
+            HttpServletResponse response, Object handler) throws IOException {
 
-		HttpSession session = request.getSession();
-		DateTime then = (DateTime) session.getAttribute(BROWSER_CLOSED_TIMESTAMP);
+        HttpSession session = request.getSession();
+        DateTime then = (DateTime) session.getAttribute(BROWSER_CLOSED_TIMESTAMP);
 
-		if (then != null) {
-			if (then.plusSeconds(timeoutSeconds).isBefore(DateTime.now())) {
-				LOG.warn("Browser closed and protected page revisited, user logged out");
-				// log out user
-				logoutHandler.logout(request, response, null);
-				response.sendRedirect(redirectLocation);
-				return false;
-			} else {
-				// valid reqest remove timestamp
-				session.removeAttribute(BROWSER_CLOSED_TIMESTAMP);
-				LOG.debug("Valid refresh of browser");
-				return true;
-			}
-		}
-		// normal request
-		return true;
-	}
+        if (then != null) {
+            if (then.plusSeconds(timeoutSeconds).isBefore(DateTime.now())) {
+                LOG.warn("Browser closed and protected page revisited, user logged out");
+                // log out user
+                logoutHandler.logout(request, response, null);
+                response.sendRedirect(redirectLocation);
+                return false;
+            } else {
+                // valid reqest remove timestamp
+                session.removeAttribute(BROWSER_CLOSED_TIMESTAMP);
+                LOG.debug("Valid refresh of browser");
+                return true;
+            }
+        }
+        // normal request
+        return true;
+    }
 
-	public void setTimeoutSeconds(Integer timeoutSeconds) {
-		this.timeoutSeconds = timeoutSeconds;
-	}
+    public void setTimeoutSeconds(Integer timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
+    }
 
-	public void setLogoutHandler(LogoutHandler logoutHandler) {
-		this.logoutHandler = logoutHandler;
-	}
+    public void setLogoutHandler(LogoutHandler logoutHandler) {
+        this.logoutHandler = logoutHandler;
+    }
 
-	public void setRedirectLocation(String redirectLocation) {
-		this.redirectLocation = redirectLocation;
-	}
+    public void setRedirectLocation(String redirectLocation) {
+        this.redirectLocation = redirectLocation;
+    }
 }

@@ -134,11 +134,11 @@ public class ApiController {
 
         return response;
     }
-    
+
     /**
      * Endpoint used by client to notify server that onbeforeunload is triggered
      * 
-     * @param req javax.servlet.http.HttpServletRequest
+     * @param req
      * @return
      */
     @GET
