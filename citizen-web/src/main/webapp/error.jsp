@@ -25,25 +25,52 @@
 
 
 <!DOCTYPE html>
-<html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BaseApp">
+<html lang="sv" id="ng-app" ng-app="intygApp">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
+<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi">
 
 <title><spring:message code="application.name" /></title>
 
+<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
+<link rel="apple-touch-icon-precomposed" href="/img/touch-icon-small.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/touch-icon-big.png" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
+<%-- <link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>"> --%>
+<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>">
+
+<script type="text/javascript">
+  /**
+   Global JS config/constants for this app, to be used by scripts
+   **/
+  var MI_CONFIG = {
+      LOGIN_METHOD : '<sec:authentication property="principal.loginMethod" />'
+  }
+</script>
 </head>
 
 
 <body ng-app="BaseApp">
 
   <mvk-top-bar></mvk-top-bar>
+	<div class="container" id="mi-logo-header">
+		<div class="content-container">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
+					<a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
+					<mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+				</div>
+			</div>	
+		</div>
+	</div>
 
   <div class="container">
 
@@ -52,7 +79,7 @@
 <%--         <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header> --%>
         <div id="navigation-container"></div>
 
-        <div class="row-fluid">
+        <div class="row">
           <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 
@@ -107,36 +134,17 @@
 
     </div>
   </div>
-
+  
   <!--[if lte IE 8]>
     <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField','miSpinner', 'ngLocale' ]; // optional
     </script>
     
     <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/matchmedia.polyfill.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/respond.js"/>"></script>
  <![endif]-->
- 
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"/>'></script><!-- Please notice that this is a modified version with the bottom part of the datepicker template commented out (it couldn't be done in a nicer way unfortunately, customization is limited) -->
 
-  <%-- Application files --%>
-  <script type="text/javascript" src="<c:url value="/js/base/app.js"/>"></script>
-
-  <%-- Dependencies to common components --%>
-  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
-  <!-- 
-  Error:
-  <c:catch>
-   <c:out value="${pageContext.errorData.throwable.message}" />, 
-   
-   Stacktrace:
-  <c:forEach items="${pageContext.errorData.throwable.stackTrace}" var="element">
-    <c:out value="${element}" />, 
-    </c:forEach>
-   </c:catch>
--->
+  <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>
 </body>
 </html>
