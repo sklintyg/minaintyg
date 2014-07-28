@@ -12,8 +12,8 @@
   <name>Inera Certificate Citizen Web FitNesse specifications</name>
 
   <properties>
-    <groovy.version>2.1.8</groovy.version>
     <selenium.version>2.41.0</selenium.version>
+    <groovy.version>2.3.4</groovy.version>
     <geb.env>firefox</geb.env>
     <fitnesse.port>9124</fitnesse.port>
     <fitnesse.working>${project.basedir}/src/test/fitnesse</fitnesse.working>
@@ -108,12 +108,12 @@
           <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-eclipse-compiler</artifactId>
-            <version>2.8.0-01</version>
+            <version>2.9.0-01</version>
           </dependency>
           <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-eclipse-batch</artifactId>
-            <version>2.1.8-01</version>
+            <version>2.3.4-01</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -137,13 +137,12 @@
       <plugin>
         <groupId>uk.co.javahelp.fitnesse</groupId>
         <artifactId>fitnesse-launcher-maven-plugin</artifactId>
-        <version>1.4.0-20131110</version>
+        <version>1.4.1</version>
         <configuration>
           <port>${fitnesse.port}</port>
           <workingDir>${fitnesse.working}</workingDir>
           <root>${fitnesse.root}</root>
           <createSymLink>false</createSymLink>
-          <markerFile>${project.build.directory}/fitnesse-launcher-plugin-marker</markerFile>
           <suite>${fitnesse.suite}</suite>
           <useProjectDependencies>
               <scope>compile</scope>
