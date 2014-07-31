@@ -33,7 +33,7 @@ class InboxPage extends Page {
 
         // Since this dialog is animated, wait for the same time as the animation
         // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(300);
+        Thread.sleep(500);
     }
 
     def boolean certificateExists(String id) {
