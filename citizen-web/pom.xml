@@ -24,7 +24,6 @@
   <name>Inera Certificate Citizen Web Application</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-    <inera.certificates.basedir>${project.basedir}/../../inera-certificate-modules</inera.certificates.basedir>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
   </properties>
