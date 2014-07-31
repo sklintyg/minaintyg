@@ -304,7 +304,7 @@
             </systemProperty>
             <systemProperty>
               <name>minaintyg.config.file</name>
-              <value>${project.basedir}/config.properties</value>
+              <value>${project.basedir}/minaintyg.properties</value>
             </systemProperty>
             <systemProperty>
               <name>minaintyg.logback.file</name>
