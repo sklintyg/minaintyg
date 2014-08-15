@@ -25,6 +25,7 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
@@ -56,4 +57,11 @@ public interface CertificateService {
      * @return
      */
     ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target);
+
+    /**
+     * Retrieves a list of possible recipients for the given certificate type
+     * @param certificateType the type of certificate to check
+     * @return a List of {@link UtlatandeRecipient}
+     */
+    List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
 }

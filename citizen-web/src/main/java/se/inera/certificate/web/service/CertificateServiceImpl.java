@@ -21,6 +21,7 @@ package se.inera.certificate.web.service;
 import iso.v21090.dt.v1.II;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -33,6 +34,10 @@ import org.w3.wsaddressing10.AttributedURIType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
 import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.ModuleAPIResponse;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
@@ -43,6 +48,7 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.common.MinimalUtlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
 import se.inera.certificate.web.util.UtlatandeMetaBuilder;
@@ -82,6 +88,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private GetCertificateContentResponderInterface getCertificateContentService;
+    
+    @Autowired
+    private GetRecipientsForCertificateResponderInterface getRecipientsForCertificateService;
 
     /**
      * Mapper to serialize/deserialize Utlatanden.
@@ -291,6 +300,28 @@ public class CertificateServiceImpl implements CertificateService {
             return ClinicalProcessMetaConverter.toUtlatandeMetaData(response.getMeta());
         default:
             LOG.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is "
+                    + response.getResult());
+            throw new ResultTypeErrorException(response.getResult());
+        }
+    }
+
+    @Override 
+    public List<UtlatandeRecipient> getRecipientsForCertificate(String type) {
+        GetRecipientsForCertificateType params = new GetRecipientsForCertificateType();
+        params.setCertificateType(type);
+
+        GetRecipientsForCertificateResponseType response = getRecipientsForCertificateService.getRecipientsForCertificate(null,params);
+        switch (response.getResult().getResultCode()) {
+        case OK:
+            List<UtlatandeRecipient> recipientList = new ArrayList<UtlatandeRecipient>();
+            for (RecipientType recipientType : response.getRecipient()) {
+                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(recipientType.getId(), recipientType.getName());
+                recipientList.add(utlatandeRecipient);
+            }
+            return recipientList;
+
+        default:
+            LOG.error("Failed to fetch recipient list for cert type: " + type + " from Intygstjänsten. WS call result is "
                     + response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }

@@ -31,6 +31,7 @@ import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
+import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.util.CertificateMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
@@ -64,6 +65,14 @@ public class ApiController {
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(citizen.getUsername()));
+    }
+
+    @GET
+    @Path("/{type}/recipients")
+    @Produces(JSON_UTF8)
+    public List<UtlatandeRecipient> listRecipients(@PathParam("type") final String type) {
+        LOG.debug("Listing recipients for certificate type: {}", type);
+        return certificateService.getRecipientsForCertificate(type);
     }
 
     @PUT
