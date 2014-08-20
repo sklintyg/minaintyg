@@ -15,9 +15,23 @@ define([
             });
         }
 
+        function _getRecipients(type, onSuccess, onError) {
+            $log.debug('_getRecipients type: ' + type);
+            var restPath = '/api/certificates/' + type + '/recipients';
+            $http.get(restPath).
+                success(function(data) {
+                    onSuccess(data);
+                }).
+                error(function (data, status) {
+                    $log.error('error ' + status);
+                    onError(data);
+                });
+        }
+
         // Return public API for our service
         return {
             sendCertificate : _sendCertificate,
+            getRecipients: _getRecipients
         }
     }];
 });
