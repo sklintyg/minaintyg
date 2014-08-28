@@ -1,16 +1,15 @@
-define([ 'text!directives/miField.html' ], function(template) {
-	'use strict';
+angular.module('minaintyg').directive('miField',
+    function() {
+        'use strict';
 
-	return [ '$rootScope', function($rootScope) {
-	    return {
-	        restrict : "A",
-	        transclude : true,
-	        replace : true,
-	        scope : {
-	            fieldLabel: "@",
-	            filled: "=?"
-	        },
-	        template : template
-	    }
-	} ];
-});
+        return {
+            restrict: 'A',
+            transclude: true,
+            replace: true,
+            scope: {
+                fieldLabel: '@',
+                filled: '=?'
+            },
+            templateUrl: '/js/directives/miField.html'
+        };
+    });

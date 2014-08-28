@@ -1,12 +1,9 @@
-define([], function() {
-	'use strict';
+angular.module('minaintyg').controller('minaintyg.ConsentGivenCtrl',
+    function($filter, $location, $scope, $window) {
+        'use strict';
+        $scope.continueToMI = function() {
+            $window.location.href = '/web/start';
+        };
 
-	return [ '$scope', '$location', '$filter', 'consentService', '$window',
-			function ($scope, $location, $filter, consentService, $window) {
-				$scope.continueToMI = function() {
-					$window.location.href = "/web/start";
-				}
-
-				$scope.pagefocus = true;
-			} ];
-});
+        $scope.pagefocus = true;
+    });

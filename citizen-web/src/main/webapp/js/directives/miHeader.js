@@ -1,15 +1,13 @@
-define([ 'text!directives/miHeader.html' ], function(template) {
-	'use strict';
+angular.module('minaintyg').directive('miHeader',
+    function() {
+        'use strict';
 
-	return [ '$rootScope', function($rootScope) {
-	    return {
-	        restrict : "E",
-	        replace : true,
-	        scope : {
-	          userName: "@"
-	        },
-	        template : template
-	        
-	    }
-	} ];
-});
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                userName: '@'
+            },
+            templateUrl: '/js/directives/miHeader.html'
+        };
+    });

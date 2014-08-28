@@ -1,17 +1,16 @@
-define([ 'text!directives/miSpinner.html' ], function(template) {
-	'use strict';
+angular.module('minaintyg').directive('miSpinner',
+    function() {
+        'use strict';
 
-	return [ '$rootScope', function($rootScope) {
-	    return {
-	        restrict : "A",
-	        transclude : true,
-	        replace : true,
-	        scope : {
-	          label: "@",
-	          showSpinner: "=",
-	          showContent: "="
-	        },
-	        template : template
-	    }
-	} ];
-});
+        return {
+            restrict: 'A',
+            transclude: true,
+            replace: true,
+            scope: {
+                label: '@',
+                showSpinner: '=',
+                showContent: '='
+            },
+            templateUrl: '/js/directives/miSpinner.html'
+        };
+    });

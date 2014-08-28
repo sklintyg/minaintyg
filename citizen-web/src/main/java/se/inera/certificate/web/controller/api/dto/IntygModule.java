@@ -12,12 +12,16 @@ public class IntygModule implements Comparable<IntygModule> {
 
     private String scriptPath;
 
-    public IntygModule(String id, String label, String description, String cssPath, String scriptPath) {
+    private String dependencyDefinitionPath;
+
+    public IntygModule(String id, String label, String description, String cssPath, String scriptPath,
+                       String dependencyDefinitionPath) {
         this.id = id;
         this.label = label;
         this.description = description;
         this.cssPath = cssPath;
         this.scriptPath = scriptPath;
+        this.dependencyDefinitionPath = dependencyDefinitionPath;
     }
 
     public String getId() {
@@ -38,6 +42,10 @@ public class IntygModule implements Comparable<IntygModule> {
 
     public String getScriptPath() {
         return scriptPath;
+    }
+
+    public String getDependencyDefinitionPath() {
+        return dependencyDefinitionPath;
     }
 
     @Override

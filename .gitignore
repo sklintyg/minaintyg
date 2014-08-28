@@ -1,5 +1,7 @@
 bin
 target
+node
+node_modules
 *.log
 
 rebel.xml
@@ -10,3 +12,4 @@ rebel.xml
 
 .idea
 *.iml
+app.min.js

@@ -18,10 +18,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%
 String profile = System.getProperty("spring.profiles.active");
@@ -30,23 +30,34 @@ if ("prod".equals(profile)) {
 } else {
 %>
 <!DOCTYPE html>
-<html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BaseApp">
+<html lang="sv" id="ng-app" ng-app="minaintyg">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
-<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi"> 
+<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi">
 
-<title><spring:message code="application.name" />-<spring:message code="project.version"/>-<%= profile %></title>
+<title><spring:message code="application.name" />-<spring:message code="project.version" />-<%= profile %>
+</title>
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/bootstrap/2.3.2/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
+
+<script type="text/javascript">
+  /**
+   Global JS config/constants for this app, to be used by scripts
+   **/
+  var MI_CONFIG = {
+    BUILD_NUMBER: '<spring:message code="buildNumber" />',
+    USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
+  }
+</script>
 </head>
-<body ng-app="BaseApp">
+<body ng-app="minaintyg">
 
   <mvk-top-bar></mvk-top-bar>
 
@@ -85,7 +96,8 @@ if ("prod".equals(profile)) {
             <h2>Logga in med annat guid</h2>
 
             <form id="customguidform" class="navbar-form pull-left">
-              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid"> <input type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
+              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid"> <input
+                type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
                 value="logga in">
             </form>
           </div>
@@ -96,27 +108,35 @@ if ("prod".equals(profile)) {
   </div>
 
   <!--[if lte IE 8]>
-    <script>
+  <script>
     window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
-    </script>
-    
-    <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
- <![endif]-->
+  </script>
+  <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+  <![endif]-->
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/angular.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"/>'></script><!-- Please notice that this is a modified version with the bottom part of the datepicker template commented out (it couldn't be done in a nicer way unfortunately, customization is limited) -->
-
-  <%-- Application files --%>
-  <script type="text/javascript" src="<c:url value="/js/base/app.js"/>"></script>
-
-  <%-- Dependencies to common components --%>
-  <script type="text/javascript" src="<c:url value="/js/modules/message-module.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/mi-header-directive.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/modules/common-message-resources.js"/>"></script>
+  <c:choose>
+    <c:when test="${useMinifiedJavaScript == 'true'}">
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/i18n/angular-locale_sv-se.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-cookies.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-route.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-sanitize.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/base/app.min.js?<spring:message code="buildNumber" />"></script>
+    </c:when>
+    <c:otherwise>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/i18n/angular-locale_sv-se.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-cookies.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-route.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-sanitize.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
+      <script type="text/javascript" src="/js/base/app.js"></script>
+    </c:otherwise>
+  </c:choose>
 
 </body>
 </html>
-<%
-}
-%>
+<%}%>

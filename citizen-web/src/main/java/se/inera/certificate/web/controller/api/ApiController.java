@@ -1,26 +1,10 @@
 package se.inera.certificate.web.controller.api;
 
-import static se.inera.certificate.modules.support.ApplicationOrigin.MINA_INTYG;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.integration.module.ModuleApiFactory;
@@ -34,6 +18,20 @@ import se.inera.certificate.web.service.ConsentService;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.util.CertificateMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.support.ApplicationOrigin.MINA_INTYG;
 
 public class ApiController {
 
@@ -128,7 +126,7 @@ public class ApiController {
 
     /**
      * Serving module configuration for Angular bootstrapping.
-     * 
+     *
      * @return a JSON object
      */
     @GET
@@ -138,7 +136,8 @@ public class ApiController {
         List<IntygModule> response = new ArrayList<>();
         for (ModuleEntryPoint module : moduleApiFactory.getRegisteredModules()) {
             response.add(new IntygModule(module.getModuleId(), module.getModuleName(), module.getModuleDescription(),
-                    module.getModuleCssPath(MINA_INTYG), module.getModuleScriptPath(MINA_INTYG)));
+                    module.getModuleCssPath(MINA_INTYG), module.getModuleScriptPath(MINA_INTYG),
+                    module.getModuleDependencyDefinitionPath(MINA_INTYG)));
         }
 
         return response;
@@ -146,7 +145,7 @@ public class ApiController {
 
     /**
      * Endpoint used by client to notify server that onbeforeunload is triggered
-     * 
+     *
      * @param req
      * @return
      */
@@ -155,8 +154,7 @@ public class ApiController {
     public String onbeforeunload(@Context HttpServletRequest req) {
         if (req.getSession().getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP) == null) {
             req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP, DateTime.now());
-        }
-        else {
+        } else {
             LOG.warn("onbeforeonload already set");
         }
         return "ok";

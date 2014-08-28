@@ -1,18 +1,15 @@
-define([
-    'angular'
-], function (angular) {
-    'use strict';
+angular.module('minaintyg').filter('unarchived',
+    function() {
+        'use strict';
 
-    return function () {
         return function(certificates) {
             var out = [];
 
-            angular.forEach(certificates, function(value, key) {
+            angular.forEach(certificates, function(value) {
                 if (!value.archived) {
                     this.push(value);
                 }
             }, out);
             return out;
         };
-    };
-});
+    });

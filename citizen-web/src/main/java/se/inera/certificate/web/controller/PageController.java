@@ -18,27 +18,30 @@
  */
 package se.inera.certificate.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "")
 public class PageController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
+
+    @Autowired
+    private Environment environment;
 
     @Autowired
     private ConsentService consentService;
@@ -54,7 +57,7 @@ public class PageController {
     @Value("${mvk.url.logout}")
     private String mvkLogoutUrl;
 
-    @RequestMapping(value = {"/sso" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/sso"}, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
@@ -65,35 +68,41 @@ public class PageController {
 
     @RequestMapping(value = "/start", method = RequestMethod.GET)
     public ModelAndView displayStart() {
+        ModelAndView modelAndView = new ModelAndView("start");
+        populateUseMinifiedJavaScript(modelAndView);
         LOG.debug("displayStart");
-        return new ModelAndView("start");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/visa-ge-samtycke", method = RequestMethod.GET)
     public ModelAndView displayConsentForm() {
+        ModelAndView modelAndView = new ModelAndView("consent-form");
+        populateUseMinifiedJavaScript(modelAndView);
         LOG.debug("displayConsentForm");
-        return new ModelAndView("consent-form");
+        return modelAndView;
     }
 
-    @RequestMapping(value = {"/tillbaka-till-mvk" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
     public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkStartUrl;
     }
 
-    @RequestMapping(value = {"/logga-ut" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
     public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkLogoutUrl;
     }
 
-    @RequestMapping(value = {"/logga-ut-fk" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/logga-ut-fk"}, method = RequestMethod.GET)
     public ModelAndView loggaUtFk(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("logout-fk");
+        populateUseMinifiedJavaScript(modelAndView);
         LOG.debug("loggaUtFk");
         invalidateSessionAndClearContext(request);
-        return new ModelAndView("logout-fk");
+        return modelAndView;
     }
 
     protected void invalidateSessionAndClearContext(HttpServletRequest request) {
@@ -102,4 +111,7 @@ public class PageController {
         SecurityContextHolder.clearContext();
     }
 
+    public void populateUseMinifiedJavaScript(ModelAndView model) {
+        model.addObject("useMinifiedJavaScript", environment.getProperty("minaintyg.useMinifiedJavaScript", "true"));
+    }
 }

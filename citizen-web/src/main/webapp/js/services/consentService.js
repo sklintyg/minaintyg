@@ -1,14 +1,12 @@
-define([
-], function () {
-    'use strict';
-
-    return ['$http', '$log', function($http, $log) {
+angular.module('minaintyg').factory('minaintyg.consentService',
+    function($http, $log) {
+        'use strict';
 
         function _giveConsent(callback) {
             $http.post('/api/certificates/consent/give', {}).success(function(data) {
                 callback(data);
-            }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
+            }).error(function(data, status) {
+                $log.error('error ' + status);
                 // give calling code a chance to handle error
                 callback(null);
             });
@@ -17,8 +15,8 @@ define([
         function _revokeConsent(callback) {
             $http.post('/api/certificates/consent/revoke', {}).success(function(data) {
                 callback(data);
-            }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
+            }).error(function(data, status) {
+                $log.error('error ' + status);
                 // give calling code a chance to handle error
                 callback(null);
             });
@@ -26,8 +24,7 @@ define([
 
         // Return public API for service
         return {
-            giveConsent : _giveConsent,
-            revokeConsent : _revokeConsent
-        }
-    }];
-});
+            giveConsent: _giveConsent,
+            revokeConsent: _revokeConsent
+        };
+    });

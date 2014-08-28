@@ -24,7 +24,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html lang="sv" id="ng-app" ng-app="intygApp">
+<html lang="sv" id="ng-app" ng-app="minaintyg">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,38 +35,40 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
+<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
 <link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>?<spring:message code="buildNumber" />">
 
 <script type="text/javascript">
   /**
    Global JS config/constants for this app, to be used by scripts
    **/
   var MI_CONFIG = {
-      LOGIN_METHOD : '<sec:authentication property="principal.loginMethod" />'
+    BUILD_NUMBER: '<spring:message code="buildNumber" />',
+    LOGIN_METHOD: '<sec:authentication property="principal.loginMethod" />',
+    USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
   }
 </script>
-</head>
 
+</head>
 <body>
 
   <mvk-top-bar></mvk-top-bar>
   <div class="container" id="mi-logo-header">
-	<div class="content-container">
-		<div class="row">
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
-				<a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
-			</div>
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
-				<mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
-			</div>
-		</div>
-	</div>
+    <div class="content-container">
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
+          <a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
+          <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+        </div>
+      </div>
+    </div>
   </div>
-  
+
   <div class="container">
 
     <div id="content-container">
@@ -92,14 +94,34 @@
   </div>
 
   <!--[if lte IE 8]>
-    <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField','miSpinner', 'ngLocale' ]; // optional
-    </script>
-    
-    <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
- <![endif]-->
+  <script>
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField', 'miSpinner', 'ngLocale' ]; // optional
+  </script>
+  <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+  <![endif]-->
 
-  <script type="text/javascript" data-main="/js/main" src="<c:url value="/web/webjars/requirejs/2.1.10/require.min.js"/>"></script>
+  <c:choose>
+    <c:when test="${useMinifiedJavaScript == 'true'}">
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/i18n/angular-locale_sv-se.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-cookies.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-route.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-sanitize.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
+      <script type="text/javascript" src="/js/app.min.js?<spring:message code="buildNumber" />"></script>
+    </c:when>
+    <c:otherwise>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/i18n/angular-locale_sv-se.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-cookies.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-route.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.2.14/angular-sanitize.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
+      <script type="text/javascript" src="/js/app.js"></script>
+    </c:otherwise>
+  </c:choose>
 
 </body>
 </html>

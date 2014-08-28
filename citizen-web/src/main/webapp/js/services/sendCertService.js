@@ -1,16 +1,14 @@
-define([
-], function () {
-    'use strict';
-
-    return ['$http', '$log', function ($http, $log) {
+angular.module('minaintyg').factory('minaintyg.sendCertService',
+    function($http, $log) {
+        'use strict';
 
         function _sendCertificate(certId, recipientId, callback) {
             $http.put('/moduleapi/certificate/' + certId + '/send/' + recipientId, {}).success(function(data) {
-                $log.debug("Sending certificate:" + certId + "to target: " + recipientId);
+                $log.debug('Sending certificate:' + certId + ' to target: ' + recipientId);
                 callback(data);
-            }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
-                //give calling code a chance to handle error 
+            }).error(function(data, status) {
+                $log.error('error ' + status);
+                //give calling code a chance to handle error
                 callback(null);
             });
         }
@@ -22,7 +20,7 @@ define([
                 success(function(data) {
                     onSuccess(data);
                 }).
-                error(function (data, status) {
+                error(function(data, status) {
                     $log.error('error ' + status);
                     onError(data);
                 });
@@ -30,8 +28,7 @@ define([
 
         // Return public API for our service
         return {
-            sendCertificate : _sendCertificate,
+            sendCertificate: _sendCertificate,
             getRecipients: _getRecipients
-        }
-    }];
-});
+        };
+    });

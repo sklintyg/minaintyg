@@ -1,14 +1,13 @@
-define([ 'text!directives/mvkTopBar.html' ], function(template) {
-    'use strict';
+angular.module('minaintyg').directive('mvkTopBar',
+    function() {
+        'use strict';
 
-    return [ '$rootScope', '$location', function($rootScope, $location) {
         return {
-            restrict : "E",
-            replace : true,
-            scope : {
-                hideLogout: "@"
+            restrict: 'E',
+            replace: true,
+            scope: {
+                hideLogout: '@'
             },
-            template : template
-        }
-    } ];
-});
+            templateUrl: '/js/directives/mvkTopBar.html'
+        };
+    });
