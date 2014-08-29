@@ -82,6 +82,14 @@ app.run([ '$rootScope', '$route', '$window', 'common.messageService',
             }
         });
 
+        $window.doneLoading = false;
+        $rootScope.$on('$routeChangeStart', function() {
+            $window.doneLoading = false;
+        });
+        $rootScope.$on('$routeChangeSuccess', function() {
+            $window.doneLoading = true;
+        });
+
         $window.onbeforeunload = function() {
             var request = new XMLHttpRequest();
             // `false` makes the request synchronous

@@ -1,8 +1,9 @@
 angular.module('minaintyg').factory('minaintyg.dialogService',
-    function($modal) {
+    function($modal, $window) {
         'use strict';
 
         function _showDialog(scope, options) {
+            $window.doneLoading = false;
 
             options.dialogId =
                 (options.dialogId === undefined) ? 'id' + Math.floor(Math.random() * 11) : options.dialogId;
@@ -99,6 +100,7 @@ angular.module('minaintyg').factory('minaintyg.dialogService',
             });
 
             msgbox.result.then(function(result) {
+                $window.doneLoading = true;
                 if (options.callback) {
                     options.callback(result);
                 }
