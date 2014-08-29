@@ -24,9 +24,15 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%
+String useMinifiedJavaScript = System.getProperty("minaintyg.useMinifiedJavaScript");
+if (useMinifiedJavaScript == null) {
+  useMinifiedJavaScript = "true";
+}
+pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
+
 String profile = System.getProperty("spring.profiles.active");
 if ("prod".equals(profile)) {
-    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+  response.sendError(HttpServletResponse.SC_NOT_FOUND);
 } else {
 %>
 <!DOCTYPE html>

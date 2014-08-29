@@ -23,6 +23,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%
+String useMinifiedJavaScript = System.getProperty("minaintyg.useMinifiedJavaScript");
+if (useMinifiedJavaScript == null) {
+useMinifiedJavaScript = "true";
+}
+pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
+%>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="minaintyg">
