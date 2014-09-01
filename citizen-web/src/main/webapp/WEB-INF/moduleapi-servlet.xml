@@ -33,7 +33,6 @@
     <mvc:interceptor>
       <mvc:mapping path="/**"/>
       <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
-        <property name="jsonResponse" value="true"/>
       </bean>
     </mvc:interceptor>
   </mvc:interceptors>
@@ -52,6 +51,9 @@
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
+      <jaxrs:invoker>
+          <bean class="se.inera.certificate.web.security.VerifyConsentJAXRSInvoker"/>
+      </jaxrs:invoker>
   </jaxrs:server>
 
   <beans profile="dev">
