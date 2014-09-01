@@ -55,7 +55,8 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/test/resources/karma.conf.ci.js'
+                configFile: 'src/test/resources/karma.conf.ci.js',
+                reporters: [ 'mocha' ]
             }
         },
 
