@@ -33,7 +33,6 @@
       <!-- Since we load webjars resources via require we need to allow this without a given consent -->
       <mvc:exclude-mapping path="/webjars/**"/>
       <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
-        <property name="jsonResponse" value="false"/>
       </bean>
     </mvc:interceptor>
     <mvc:interceptor>

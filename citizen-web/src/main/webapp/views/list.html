@@ -33,7 +33,7 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
-                          <a ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                          <a href="#ng-click" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
                           	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp;
                           	<span class="cert-titlebar-type">
                           		<span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
@@ -48,7 +48,7 @@
                         <span message key="listtable.headers.issued"></span>&nbsp;<span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
                       </div>
                       <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
-                        <a  class="archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                        <a href="#ng-click"  class="archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
                         	<span class="glyphicon glyphicon-folder-close white"></span>
                         </a>
                       </div>

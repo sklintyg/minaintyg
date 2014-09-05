@@ -127,7 +127,7 @@ var miMessages = {
 
         'certificates.status.cancelled': 'Rättat',
         'certificates.status.cancelledlc': 'Rättat',
-        'certificates.status.sent': 'Skickat till',
+        'certificates.status.sent': 'Mottaget av',
 
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',

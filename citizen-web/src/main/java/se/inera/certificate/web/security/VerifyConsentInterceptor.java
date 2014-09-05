@@ -37,7 +37,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
 
-    private boolean jsonResponse;
+
 
     @Autowired
     private ConsentService consentService;
@@ -63,12 +63,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
         // Check consent state of citizen
         if (!citizen.hasConsent()) {
-            // depending on how this interceptor is configured, we should reply as json or browser-page redirect
-            if (jsonResponse) {
-                response.getOutputStream().print("Inget samtycke.json");
-            } else {
-                response.sendRedirect("/web/visa-ge-samtycke#/consent");
-            }
+            response.sendRedirect("/web/visa-ge-samtycke#/consent");
             // return false to indicate that the request/filter chain should stop here.
             // We have already taken care of a respone to the client.
             return false;
@@ -77,11 +72,4 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    public void setJsonResponse(boolean jsonResponse) {
-        this.jsonResponse = jsonResponse;
-    }
-
-    public boolean getJsonResponse() {
-        return jsonResponse;
-    }
 }

@@ -27,26 +27,9 @@ public class VerifyConsentInterceptorTest {
     @InjectMocks
     private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
 
-    @Test
-    public void testPrehandleNoConsentJson() throws Exception {
-        interceptor.setJsonResponse(true);
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
-        citizen.setConsent(false);
-        when(service.getCitizen()).thenReturn(citizen);
-
-        HttpServletResponse response = mock(HttpServletResponse.class);
-        ServletOutputStream servletOutputStream = mock(ServletOutputStream.class);
-        when(response.getOutputStream()).thenReturn(servletOutputStream);
-
-        boolean preHandle = interceptor.preHandle(null, response, null);
-        assertFalse(preHandle);
-        verify(servletOutputStream).print("Inget samtycke.json");
-
-    }
 
     @Test
     public void testPrehandleNoConsentNoJson() throws Exception {
-        interceptor.setJsonResponse(false);
         Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
@@ -63,7 +46,6 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        interceptor.setJsonResponse(true);
         Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
