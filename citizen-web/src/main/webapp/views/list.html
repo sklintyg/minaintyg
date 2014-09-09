@@ -33,12 +33,12 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
-                          <a href="#ng-click" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                          <button class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
                           	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span>&nbsp;
                           	<span class="cert-titlebar-type">
                           		<span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           	</span>
-                          </a>
+                          </button>
                           <span ng-show="cert.cancelled">
                             <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> - <span message key="certificates.status.cancelledlc"></span>&nbsp;<span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span>
                           </span>
@@ -48,9 +48,9 @@
                         <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>&nbsp;<span message key="listtable.headers.issued"></span>
                       </div>
                       <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
-                        <a href="#ng-click"  class="archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                        <button class="archive-only btn-link" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
                         	<span class="glyphicon glyphicon-folder-close white"></span>
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>
