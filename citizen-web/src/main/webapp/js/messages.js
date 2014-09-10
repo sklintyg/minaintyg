@@ -85,7 +85,7 @@ var miMessages = {
         'help.faq.question1': 'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen',
         'help.faq.answer1': 'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank" title="Ladda ner Adobe Reader">Adobe Reader</a>.',
 
-        'listtable.headers.issued': 'Utfärdat',
+        'listtable.headers.issued': 'Inkom till Mina intyg',
         'listtable.headers.type': 'Typ',
         'listtable.headers.certinfo': 'Intygsinformation',
         'listtable.headers.issuedby': 'Utfärdare',
@@ -125,8 +125,8 @@ var miMessages = {
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-diabetes.typename': ' - Diabetes',
 
-        'certificates.status.cancelled': 'Rättat',
-        'certificates.status.cancelledlc': 'Rättat',
+        'certificates.status.cancelled': 'Makulerat',
+        'certificates.status.cancelledlc': 'Makulerat',
         'certificates.status.sent': 'Mottaget av',
 
         'certificates.target.fk': 'Försäkringskassan',

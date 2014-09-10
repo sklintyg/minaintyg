@@ -45,7 +45,7 @@
                         </h2>
                       </div>
                       <div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 issue">
-                        <span message key="listtable.headers.issued"></span>&nbsp;<span class="cert-titlebar-value">{{cert.sentDate | date:'longDate'}}</span>
+                        <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>&nbsp;<span message key="listtable.headers.issued"></span>
                       </div>
                       <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
                         <a href="#ng-click"  class="archive-only" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
@@ -78,13 +78,13 @@
                         <div ng-show="cert.statuses.length>0">
                           {{cert.statuses[0].timestamp | date:'short'}}
                           <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                          <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
+                          <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
                           <div collapse="isCollapsed">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 {{status.timestamp | date:'short'}}
                                 <span message key="certificates.status.{{status.type}}"></span>
-                                <span ng-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span></span><br>
+                                <span ng-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span>s system</span><br>
                               </div>
                             </div>
                           </div>
