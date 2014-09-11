@@ -22,7 +22,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xmlns:aop="http://www.springframework.org/schema/aop"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <aop:aspectj-autoproxy />
@@ -40,17 +40,37 @@
 
   <beans>
     <security:http security="none" pattern="/welcome.jsp" />
-    <security:http security="none" pattern="/" />
+    <security:http pattern="/" entry-point-ref="mvkEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
     <security:http security="none" pattern="/health-check/health-check.jsp" />
     <security:http security="none" pattern="/favicon.ico" />
     <security:http security="none" pattern="/web/resources/**" />
-    <security:http security="none" pattern="/web/tillbaka-till-mvk" />
-    <security:http security="none" pattern="/web/logga-ut" />
-    <security:http security="none" pattern="/web/logga-ut-fk" />
+    <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="mvkEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/web/logga-ut" entry-point-ref="mvkEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/web/logga-ut-fk" entry-point-ref="mvkEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
     <security:http security="none" pattern="/ws/**" />
-	<!-- Allow access to webjars without beeing logged in -->
-    <security:http security="none" pattern="/web/webjars/**"/>
-    
+    <!-- Allow access to webjars without beeing logged in -->
+    <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
     <import resource="classpath*:/mvk-validatetoken-cxf-config.xml" />
@@ -83,6 +103,9 @@
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
     </security:http>
 
     <!-- Enable the FK SAML Auth filter for our FK entry point url -->
@@ -90,15 +113,33 @@
       <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
     </security:http>
 
     <!-- set up protection of the needed url's in the app-->
-    <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
+    <!-- prevent caching on /api and /moduleapi -->
+    <security:http pattern="/api/**" use-expressions="true" entry-point-ref="mvkEntryPoint">
       <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:headers>
+        <security:frame-options />
+        <security:cache-control />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/moduleapi/**" use-expressions="true" entry-point-ref="mvkEntryPoint">
       <security:intercept-url pattern="/moduleapi/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:headers>
+        <security:frame-options />
+        <security:cache-control />
+      </security:headers>
+    </security:http>
+    <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
       <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
-      <security:intercept-url pattern="/m/**" access="hasRole('ROLE_CITIZEN')" />
       <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
     </security:http>
 
     <!-- Filter that resets the security context -->
