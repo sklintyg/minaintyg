@@ -64,16 +64,9 @@
     <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager">
       <constructor-arg>
         <list>
-          <bean class="org.opensaml.saml2.metadata.provider.HTTPMetadataProvider">
+          <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
             <constructor-arg>
-              <bean class="java.util.Timer"><constructor-arg type="boolean" value="true"/></bean>
-            </constructor-arg>
-            <constructor-arg>
-               <bean class="se.inera.certificate.web.util.HttpClientWithProxy" factory-method="create"/>
-            </constructor-arg>
-            <!-- URL containing the metadata -->
-            <constructor-arg>
-              <value type="java.lang.String">${fk.saml.metadata.location}</value>
+              <value type="java.io.File">${fk.saml.metadata.file}</value>
             </constructor-arg>
             <property name="parserPool" ref="parserPool"/>
           </bean>
