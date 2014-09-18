@@ -15,7 +15,7 @@
   <parent>
     <artifactId>certificate-web</artifactId>
     <groupId>se.inera.certificate-web</groupId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>citizen-web</artifactId>
@@ -87,17 +87,17 @@
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>schemas</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>module-api</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>se.inera.certificate.proxy</groupId>
       <artifactId>reverse-proxy</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
