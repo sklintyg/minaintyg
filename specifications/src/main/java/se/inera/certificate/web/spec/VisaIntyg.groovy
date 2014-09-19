@@ -67,11 +67,19 @@ public class VisaIntyg {
 
     }
 
-    public boolean intygetsFält8bInnehållerNedsattMed25Procent() {
-        def falt8bNedsatt25
+    public boolean intygetsFält8bInnehållerNedsattMedProcent(int procent) {
+        def falt8bNedsatt
         Browser.drive {
-            falt8bNedsatt25 = page.falt8bNedsatt25
+            falt8bNedsatt = page."falt8bNedsatt${procent}"
         }
-        return falt8bNedsatt25 != null
+        return falt8bNedsatt != null
+    }
+
+    public boolean intygetsFält8bNedsattMedProcentInnehåller(int procent, String textFragment) {
+        def falt8bNedsatt
+        Browser.drive {
+            falt8bNedsatt = page."falt8bNedsatt${procent}"
+        }
+        return falt8bNedsatt?.text().contains(textFragment)
     }
 }

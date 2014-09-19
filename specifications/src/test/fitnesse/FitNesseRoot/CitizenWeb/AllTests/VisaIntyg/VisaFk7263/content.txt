@@ -25,4 +25,8 @@
 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
-|intygets fält8b innehåller nedsatt med 25 procent|
+|intygets fält8b innehåller nedsatt med|100|procent|
+|intygets fält8b innehåller nedsatt med|75|procent|
+|intygets fält8b innehåller nedsatt med|50|procent|
+|intygets fält8b innehåller nedsatt med|25|procent|
+|intygets fält8b nedsatt med|25|procent innehåller|Från och med 7 april 2013 – längst till och med 11 april 2013|
