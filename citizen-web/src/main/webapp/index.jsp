@@ -61,7 +61,7 @@
 						<p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess. Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
 						<p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
 						<p>
-							<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om hur du skaffar en e-legitimation</a>
+							<a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument" target="_blank">Mer information om hur du skaffar en e-legitimation</a>
 						</p>
 			      <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
 						<div class="btn-row">
