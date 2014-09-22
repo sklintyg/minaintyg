@@ -26,38 +26,22 @@
 	    <p></p>
 	    <span message key="help.faq.description"></span>
 	    <p></p>
-	    <div class="panel-group" id="accordion">
-		  <div class="panel panel-default">
-		    <div class="panel-heading">
-		      <h4 class="panel-title">
-		        <span data-toggle="collapse" data-parent="#accordion">
-		          <span message key="help.faq.question1"></span>
-		        </span>
-		      </h4>
-		    </div>
-		    <div id="collapseOne" class="panel-collapse collapse in">
-		      <div class="panel-body">
-		      	<span message key="help.faq.answer1"></span>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+      <div ng-repeat="faqsection in faqs">
+        <h2>{{faqsection.title}}</h2>
+        <div ng-repeat="faq in faqsection.questions" class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <span data-toggle="collapse" data-parent="#accordion" ng-bind-html="faq.question"></span>
+              </h4>
+            </div>
+            <div class="panel-collapse collapse in">
+              <div class="panel-body" ng-bind-html="faq.answer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 	  </div>
-	</div>
+  </div>
 </div>
-
-
-
-<!-- <div class="row"> -->
-<!-- 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7"> -->
-<!-- 		<h1 ng-focus="pagefocus" tabindex="-1"> -->
-<!-- 			<span id="aboutHeader"><span message key="help.header"></span></span> -->
-<!-- 		</h1> -->
-<!-- 		<p></p> -->
-<!-- 		<span message key="help.description"></span> -->
-
-<!-- 		<h2><span message key="help.supportlinks"></span></h2> -->
-<!-- 		<span message key="help.supportlinks.description"></span> -->
-
-<!-- 	</div> -->
-<!-- </div> -->

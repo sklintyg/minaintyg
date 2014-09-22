@@ -40,7 +40,7 @@
                           	</span>
                           </button>
                           <span ng-show="cert.cancelled">
-                            <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span> - <span message key="certificates.status.cancelledlc"></span>&nbsp;<span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span>
+                            <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span></span> - <span message key="certificates.status.cancelledlc"></span>
                           </span>
                         </h2>
                       </div>
@@ -60,6 +60,8 @@
                         <div class="alert alert-info">
                           <span message key="inbox.revoked"></span>
                           <span message key="inbox.revoked.archive"></span>
+                          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedRevoked = !isCollapsedRevoked" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
+                          <div collapse="!isCollapsedRevoked" class="mi-text well well-sm margin-top-5px"><span message key="inbox.revoked.helptext"></span></div>
                         </div>
                       </div>
                     </div>

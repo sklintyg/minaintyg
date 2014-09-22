@@ -1,5 +1,5 @@
-angular.module('minaintyg').controller('minaintyg.HelpCtrl',
-    function($scope) {
+angular.module('minaintyg').controller('minaintyg.HelpCtrl',['$scope','common.messageService',
+    function($scope, messageService) {
         'use strict';
 
         $scope.pagefocus = true;
@@ -22,4 +22,6 @@ angular.module('minaintyg').controller('minaintyg.HelpCtrl',
                 $scope.subpagefocus[key] = (key === section);
             });
         };
-    });
+
+        $scope.faqs = messageService.getProperty('help.faq');
+    }]);
