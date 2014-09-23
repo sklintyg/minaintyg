@@ -39,7 +39,7 @@
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-1|
-|intyget har en status text innehållande|Skickat till|
+|intyget har en status text innehållande|Mottaget av|
 
 !2 Skicka smittskyddsrelaterat FK7263
 !3 Först logga in och lista alla befintliga intyg.
@@ -82,4 +82,4 @@
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-5|
-|intyget har en status text innehållande|Skickat till|
+|intyget har en status text innehållande|Mottaget av|

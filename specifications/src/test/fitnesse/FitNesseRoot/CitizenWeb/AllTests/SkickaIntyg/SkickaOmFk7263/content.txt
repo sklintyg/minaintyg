@@ -29,4 +29,4 @@
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-5|
-|intyget har en status text innehållande|Skickat till|
+|intyget har en status text innehållande|Mottaget av|
