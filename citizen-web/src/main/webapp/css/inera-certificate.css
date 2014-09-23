@@ -360,3 +360,7 @@ div.infobox h4 {
 .bold {
     font-weight: bold !important;
 }
+
+.indent {
+    padding-left: 20px !important;
+}
