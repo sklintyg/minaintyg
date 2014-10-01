@@ -860,9 +860,9 @@ div.inera-box .box-body {
 
 /* ng-animate animations */
 
-.custom-enter,
-.custom-leave,
-.custom-move {
+.intyglist.ng-enter,
+.intyglist.ng-leave,
+.intyglist.ng-move {
   -webkit-transition: 1s linear all;
   -moz-transition: 1s linear all;
   -o-transition: 1s linear all;
@@ -870,28 +870,28 @@ div.inera-box .box-body {
   position:relative;
 }
 
-.custom-enter {
+.intyglist.ng-enter {
   left:-10px;
   opacity:0;
 }
-.custom-enter.custom-enter-active {
+.intyglist.ng-enter.ng-enter-active {
   left:0;
   opacity:1;
 }
 
-.custom-leave {
+.intyglist.ng-leave {
   left:0;
   opacity:1;
 }
-.custom-leave.custom-leave-active {
+.intyglist.ng-leave.ng-leave-active {
   left:-10px;
   opacity:0;
 }
 
-.custom-move {
+.intyglist.ng-move {
   opacity:0.5;
 }
-.custom-move.custom-move-active {
+.intyglist.ng-move.ng-move-active {
   opacity:1;
 }
 .page-logo {

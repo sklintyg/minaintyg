@@ -22,7 +22,7 @@
 
     <div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | unarchived).length>0">
       <div id="certTable">
-        <div ng-repeat="cert in certificates | unarchived" class="{{cert.status}}" data-ng-animate="'custom'">
+        <div ng-repeat="cert in certificates | unarchived" class="{{cert.status}}" ng-class="{'intyglist': 1}">
           <div class="certificate">
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
