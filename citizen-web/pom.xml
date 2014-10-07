@@ -109,6 +109,16 @@
     <dependency>
       <groupId>org.owasp.esapi</groupId>
       <artifactId>esapi</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     
     <dependency>
@@ -185,6 +195,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -310,10 +326,6 @@
             <systemProperty>
               <name>minaintyg.logback.file</name>
               <value>${project.basedir}/minaintyg-logback.xml</value>
-            </systemProperty>
-            <systemProperty>
-              <name>fk7263.logback.file</name>
-              <value>classpath:fk7263-logback.xml</value>
             </systemProperty>
           </systemProperties>
         </configuration>
