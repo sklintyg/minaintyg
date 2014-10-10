@@ -16,7 +16,6 @@
     "/js/filters/archivedFilter.js",
     "/js/filters/unarchivedFilter.js",
     "/js/services/consentService.js",
-    "/js/services/dialogService.js",
     "/js/services/listCertService.js",
     "/js/services/sendCertService.js"
 ]

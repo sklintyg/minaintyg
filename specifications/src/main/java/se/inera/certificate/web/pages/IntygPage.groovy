@@ -11,6 +11,8 @@ class IntygPage extends Page {
         certificateType { $("#certType") }
         sendCertificateBtn { $("#sendCertificateBtn") }
         latestCertificateEvent { $("#latest-certificate-event") }
+        archiveBtn { $("#archiveBtn") }
+        confirmArchiveBtn(required: false) { $("#archive-button") }
         falt6aArbetsformedlingen(required: false) { $("span", text: contains("Kontakt med Arbetsförmedlingen")).text() }
         falt6aForetagshalsovarden(required: false) { $("span", text: contains("Kontakt med företagshälsovården")).text() }
         falt6aOvrigt(required: false) { $("span", text: contains("Övrigt:")).text() }
@@ -19,5 +21,21 @@ class IntygPage extends Page {
 
     def startSendFlow() {
         sendCertificateBtn.click()
+    }
+
+    def archive() {
+        archiveBtn.click()
+
+        // Since this dialog is animated, wait for the same time as the animation
+        // in order to avoid problem with Chrome WebDriver and moving click targets
+        Thread.sleep(300);
+    }
+
+    def confirmArchiveCertificate() {
+        confirmArchiveBtn.click()
+
+        // Since this dialog is animated, wait for the same time as the animation
+        // in order to avoid problem with Chrome WebDriver and moving click targets
+        Thread.sleep(500);
     }
 }

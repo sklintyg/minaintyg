@@ -59,7 +59,6 @@
 
   var MI_CONFIG = {
     BUILD_NUMBER: '<spring:message code="buildNumber" />',
-    LOGIN_METHOD: '<sec:authentication property="principal.loginMethod" />',
     USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
   }
 </script>

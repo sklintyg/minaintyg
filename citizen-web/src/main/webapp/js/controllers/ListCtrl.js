@@ -1,7 +1,7 @@
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'minaintyg.dialogService',
-        'minaintyg.listCertService', 'common.messageService',
-        function($cookies, $location, $log, $rootScope, $scope, $window, dialogService, listCertService,
+    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'minaintyg.listCertService',
+        'common.dialogService', 'common.messageService',
+        function($cookies, $location, $log, $rootScope, $scope, $window, listCertService, dialogService,
             messageService) {
             'use strict';
 

@@ -34,6 +34,21 @@ public class VisaIntyg {
         }
     }
 
+    public void väljArkiveraIntyg() {
+        Browser.drive {
+            page.archive();
+        }
+    }
+
+    public void konfirmeraArkiveraIntyg() {
+        Browser.drive {
+            waitFor {
+                confirmArchiveBtn.displayed
+            }
+            page.confirmArchiveCertificate()
+        }
+    }
+
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
         boolean result
         Browser.drive {
@@ -49,7 +64,7 @@ public class VisaIntyg {
         }
         return falt6aArbetsformedlingen != null
     }
-    
+
     public boolean intygetsFält6aInnehållerKontaktMedFöretagshälsovården() {
         def falt6aForetagshalsovarden
         Browser.drive {
@@ -57,7 +72,7 @@ public class VisaIntyg {
         }
         return falt6aForetagshalsovarden != null
     }
-    
+
     public boolean intygetsFält6aÖvrigtInnehåller(String textFragment) {
         def falt6aOvrigt
         Browser.drive {

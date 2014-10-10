@@ -1,5 +1,5 @@
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$location', '$log', '$scope', 'minaintyg.dialogService', 'minaintyg.listCertService',
+    [ '$location', '$log', '$scope', 'common.dialogService', 'minaintyg.listCertService',
         function($location, $log, $scope, dialogService, listCertService) {
             'use strict';
 

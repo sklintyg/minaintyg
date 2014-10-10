@@ -1,5 +1,5 @@
 angular.module('minaintyg').controller('minaintyg.AboutCtrl',
-    [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'minaintyg.dialogService',
+    [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService',
         'common.messageService',
         function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
             'use strict';
