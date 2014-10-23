@@ -116,7 +116,7 @@ var miMessages = {
         ],
 
         'listtable.headers.issued': 'Inkom till Mina intyg',
-        'listtable.headers.type': 'Typ',
+        'listtable.headers.type': 'Typ av intyg',
         'listtable.headers.certinfo': 'Intygsinformation',
         'listtable.headers.issuedby': 'Utfärdare',
         'listtable.headers.latestevent': 'Senaste händelse',
