@@ -13,8 +13,21 @@
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-1|
 
-!3 Verifiera att fält 6a innehåller korrekt information. 
+!3 Verifiera att diagnoskoder och klartexter visas korrekt
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|note|Testa huvud-diagnos|
+|intygetsDiagnoskod1Innehåller|S47|
+|intygetsDiagnosklartext1Innehåller|Klartext1|
+|note|Testa bi-diagnos 1|
+|intygetsDiagnoskod2Innehåller|Z233|
+|intygetsDiagnosklartext2Innehåller|Klartext2|
+|note|Testa bi-diagnos 2|
+|intygetsDiagnoskod3Innehåller|Z233|
+|intygetsDiagnosklartext3Innehåller|Klartext3|
 
+
+!3 Verifiera att fält 6a innehåller korrekt information. 
 |script|!-VisaIntyg-!|
 |intygssidan visas|
 |intygets fält6a innehåller kontakt med arbetsförmedlingen|

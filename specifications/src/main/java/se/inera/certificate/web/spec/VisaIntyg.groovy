@@ -57,6 +57,49 @@ public class VisaIntyg {
         result
     }
 
+    public boolean intygetsDiagnoskod1Innehåller(String kod) {
+        def kod1
+        Browser.drive {
+            kod1 = page.diagnosKod1
+        }
+        return kod1?.contains(kod)
+    }
+    public boolean intygetsDiagnosklartext1Innehåller(String text) {
+        def text1
+        Browser.drive {
+            text1 = page.diagnosKlartext1
+        }
+        return text1?.contains(text)
+    }
+    public boolean intygetsDiagnoskod2Innehåller(String kod) {
+        def kod1
+        Browser.drive {
+            kod1 = page.diagnosKod2
+        }
+        return kod1?.contains(kod)
+    }
+    public boolean intygetsDiagnosklartext2Innehåller(String text) {
+        def text1
+        Browser.drive {
+            text1 = page.diagnosKlartext2
+        }
+        return text1?.contains(text)
+    }
+    public boolean intygetsDiagnoskod3Innehåller(String kod) {
+        def kod1
+        Browser.drive {
+            kod1 = page.diagnosKod2
+        }
+        return kod1?.contains(kod)
+    }
+    public boolean intygetsDiagnosklartext3Innehåller(String text) {
+        def text1
+        Browser.drive {
+            text1 = page.diagnosKlartext3
+        }
+        return text1?.contains(text)
+    }
+        
     public boolean intygetsFält6aInnehållerKontaktMedArbetsförmedlingen() {
         def falt6aArbetsformedlingen
         Browser.drive {
