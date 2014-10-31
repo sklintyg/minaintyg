@@ -249,6 +249,11 @@
 	padding: 20px 40px;
 }
 
+ul.padded-list > li {
+    padding-bottom: 5px;
+    padding-left: 16px;
+}
+
 .certificate div.cert div.cert-footer {
 	padding: 20px;
 	border-width: 0 1px 1px 1px;
@@ -360,4 +365,9 @@ div.infobox h4 {
 
 .indent {
     padding-left: 20px !important;
+}
+
+.cert-answer {
+    font-weight: bold;
+    white-space: pre-line;
 }

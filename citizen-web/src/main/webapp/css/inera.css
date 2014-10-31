@@ -208,6 +208,11 @@ legend {
 	border: 0;		
 }
 
+.multiline {
+    white-space: pre-line;
+}
+
+
 /*
    Navigation
 */
