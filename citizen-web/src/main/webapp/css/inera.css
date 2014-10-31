@@ -155,6 +155,10 @@ p {
 	text-align: justify;
 }
 
+.multiline {
+    white-space: pre-line;
+}
+
 /* Remove titles from popovers */
 h3.popover-title:empty {
 	display: none;
