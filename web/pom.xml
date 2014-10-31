@@ -1,30 +1,19 @@
 <?xml version="1.0"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part
-  of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
-  Inera Certificate Web is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or (at
-  your option) any later version. Inera Certificate Web is distributed in the
-  hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU Affero General Public License for more details. You should have received
-  a copy of the GNU Affero General Public License along with this program.
-  If not, see <http://www.gnu.org/licenses/>. -->
-<project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>certificate-web</artifactId>
-    <groupId>se.inera.certificate-web</groupId>
+    <groupId>se.inera.intyg.minaintyg</groupId>
+    <artifactId>minaintyg</artifactId>
     <version>1.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>citizen-web</artifactId>
+  <artifactId>minaintyg-web</artifactId>
   <packaging>war</packaging>
-  <name>Inera Certificate Citizen Web Application</name>
+
+  <name>Mina intyg Web</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -34,36 +23,40 @@
 
   <dependencies>
 
-    <!-- Dependencies to Intygstjansten -->
+    <!-- Common -->
     <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>logback-util</artifactId>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-web</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>module-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>certificate-schemas</artifactId>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>logging-util</artifactId>
     </dependency>
 
-    <!-- Dependencies to Intygstjansten's modules -->
+    <!-- Intygstjanst -->
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
+      <groupId>se.inera.intyg.intygstjanst</groupId>
+      <artifactId>module-api</artifactId>
+    </dependency>
+
+    <!--Intygstyper -->
+    <dependency>
+      <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>fk7263</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
+      <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>ts-bas</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
+      <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>ts-diabetes</artifactId>
     </dependency>
+
+    <!-- Schemas -->
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
-      <artifactId>common-webjar</artifactId>
+      <groupId>se.inera.intyg.schemas</groupId>
+      <artifactId>intygstjanst-schemas</artifactId>
     </dependency>
 
     <!-- Dependency to Netcare's MVK integration -->
@@ -145,10 +138,6 @@
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
     </dependency>
-<!--     <dependency> -->
-<!--       <groupId>org.webjars</groupId> -->
-<!--       <artifactId>requirejs</artifactId> -->
-<!--     </dependency> -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>respond</artifactId>
@@ -259,7 +248,7 @@
   </dependencies>
 
   <build>
-    <finalName>inera-certificate-citizen-web</finalName>
+    <finalName>minaintyg</finalName>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -341,7 +330,8 @@
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
-              <includeGroupIds>org.webjars,se.inera.certificate.modules</includeGroupIds>
+              <includeGroupIds>org.webjars,se.inera.intyg.intygstyper,se.inera.intyg.common</includeGroupIds>
+              <excludeArtifactIds>common-pom,logging-util</excludeArtifactIds>
               <outputDirectory>${project.build.directory}/webjardependenciestemp</outputDirectory>
             </configuration>
           </execution>
