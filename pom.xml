@@ -1,65 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part
-  of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
-  Inera Certificate Web is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or (at
-  your option) any later version. Inera Certificate Web is distributed in the
-  hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU Affero General Public License for more details. You should have received
-  a copy of the GNU Affero General Public License along with this program.
-  If not, see <http://www.gnu.org/licenses/>. -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>se.inera.intyg</groupId>
-    <artifactId>intyg-parent</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <groupId>se.inera.intyg.common</groupId>
+    <artifactId>common-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>se.inera.certificate-web</groupId>
-  <artifactId>certificate-web</artifactId>
+  <groupId>se.inera.intyg.minaintyg</groupId>
+  <artifactId>minaintyg</artifactId>
+  <version>1.3-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Inera Certificate Web (Mina Intyg)</name>
+
+  <name>Mina intyg</name>
 
   <properties>
-    <!-- Project related -->
-    <repository.host>repository-callistasoftware.forge.cloudbees.com</repository.host>
+
+    <!-- Common -->
+    <common-support.version>1.0-SNAPSHOT</common-support.version>
+    <common-web.version>1.0-SNAPSHOT</common-web.version>
+    <integration-util.version>1.0-SNAPSHOT</integration-util.version>
+    <logging-util.version>1.1.3-SNAPSHOT</logging-util.version>
+
+    <!-- Intygstjanst -->
+    <intygstjanst.version>1.3-SNAPSHOT</intygstjanst.version>
+
+    <!-- Intygstyper -->
+    <fk7263.version>1.0-SNAPSHOT</fk7263.version>
+    <ts-bas.version>1.0-SNAPSHOT</ts-bas.version>
+    <ts-diabetes.version>1.0-SNAPSHOT</ts-diabetes.version>
+
+    <!-- Schemas -->
+    <schemas.version>1.0-SNAPSHOT</schemas.version>
+
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
-
-    <!-- Dependency to Intygstjansten's services -->
-    <certificate.version>1.3-SNAPSHOT</certificate.version>
-    <certificate-logback-util.version>1.1.2</certificate-logback-util.version>
-
-    <!-- Dependency to Intygstjansten's modules -->
-    <modules-fk7263.version>1.0-SNAPSHOT</modules-fk7263.version>
-    <modules-ts.version>1.0-SNAPSHOT</modules-ts.version>
-    <modules-common-webjar.version>1.3-SNAPSHOT</modules-common-webjar.version>
-
-    <!-- Dependency to Intygstjansten proxy project -->
-    <inera.certificate.proxy.version>1.1-SNAPSHOT</inera.certificate.proxy.version>
 
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
 
   <modules>
-    <module>citizen-web</module>
     <module>specifications</module>
+    <module>web</module>
   </modules>
 
   <scm>
-    <connection>scm:git:https://code.google.com/p/inera-certificate-web/</connection>
+    <connection>scm:git:https://github.com/sklintyg/minaintyg.git</connection>
     <tag>HEAD</tag>
   </scm>
 
   <dependencyManagement>
     <dependencies>
+
+      <!-- Common -->
+      <dependency>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-support</artifactId>
+        <version>${common-support.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-web</artifactId>
+        <version>${common-web.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>integration-util</artifactId>
+        <version>${integration-util.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>logging-util</artifactId>
+        <version>${logging-util.version}</version>
+      </dependency>
+
+      <!-- Intygstjanst -->
+      <dependency>
+        <groupId>se.inera.intyg.intygstjanst</groupId>
+        <artifactId>intygstjanst-specifications</artifactId>
+        <version>${intygstjanst.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.intygstjanst</groupId>
+        <artifactId>module-api</artifactId>
+        <version>${intygstjanst.version}</version>
+      </dependency>
+
+      <!-- Intygstyper -->
+      <dependency>
+        <groupId>se.inera.intyg.intygstyper</groupId>
+        <artifactId>fk7263</artifactId>
+        <version>${fk7263.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.intygstyper</groupId>
+        <artifactId>ts-bas</artifactId>
+        <version>${ts-bas.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.intygstyper</groupId>
+        <artifactId>ts-diabetes</artifactId>
+        <version>${ts-diabetes.version}</version>
+      </dependency>
+
+      <!-- Schemas -->
+      <dependency>
+        <groupId>se.inera.intyg.schemas</groupId>
+        <artifactId>intygstjanst-schemas</artifactId>
+        <version>${schemas.version}</version>
+      </dependency>
+
       <!-- Dependency to Netcare's MVK integration -->
       <dependency>
         <groupId>org.callistasoftware.netcare.commons</groupId>
@@ -83,50 +136,6 @@
             <artifactId>spring-beans</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-
-      <!-- Dependency to Intygstjansten's projects -->
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>certificate-specifications</artifactId>
-        <version>${certificate.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>logback-util</artifactId>
-        <version>${certificate-logback-util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>module-api</artifactId>
-        <version>${certificate.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>certificate-schemas</artifactId>
-        <version>${certificate.version}</version>
-      </dependency>
-
-      <!-- Dependency to Intygstjansten's modules -->
-      <dependency>
-        <groupId>se.inera.certificate.modules</groupId>
-        <artifactId>fk7263</artifactId>
-        <version>${modules-fk7263.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate.modules</groupId>
-        <artifactId>ts-bas</artifactId>
-        <version>${modules-ts.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate.modules</groupId>
-        <artifactId>ts-diabetes</artifactId>
-        <version>${modules-ts.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.certificate.modules</groupId>
-        <artifactId>common-webjar</artifactId>
-        <version>${modules-common-webjar.version}</version>
       </dependency>
 
       <!-- Spring dependencies -->
