@@ -13,7 +13,7 @@
   <artifactId>minaintyg-specifications</artifactId>
   <packaging>jar</packaging>
 
-  <name>Mina intyg FitNesse specifications</name>
+  <name>Mina intyg (FitNesse)</name>
 
   <properties>
     <intygstjanst.versions>1.3-SNAPSHOT</intygstjanst.versions>

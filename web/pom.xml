@@ -13,7 +13,7 @@
   <artifactId>minaintyg-web</artifactId>
   <packaging>war</packaging>
 
-  <name>Mina intyg Web</name>
+  <name>Mina intyg (Web)</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -56,7 +56,7 @@
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
-      <artifactId>intygstjanst-schemas</artifactId>
+      <artifactId>schemas-intygstjanst</artifactId>
     </dependency>
 
     <!-- Dependency to Netcare's MVK integration -->

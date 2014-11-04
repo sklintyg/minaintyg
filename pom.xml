@@ -109,7 +109,7 @@
       <!-- Schemas -->
       <dependency>
         <groupId>se.inera.intyg.schemas</groupId>
-        <artifactId>intygstjanst-schemas</artifactId>
+        <artifactId>schemas-intygstjanst</artifactId>
         <version>${schemas.version}</version>
       </dependency>
 
