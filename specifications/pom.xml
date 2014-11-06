@@ -35,7 +35,6 @@
     <skipTests>true</skipTests>
 
     <geb.env>firefox</geb.env>
-    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
 
   <dependencies>

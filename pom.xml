@@ -38,8 +38,6 @@
 
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
-
-    <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
 
   <modules>
