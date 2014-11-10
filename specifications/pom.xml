@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.minaintyg</groupId>
     <artifactId>minaintyg</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>0-SNAPSHOT</version>
   </parent>
 
   <artifactId>minaintyg-specifications</artifactId>
@@ -16,7 +16,6 @@
   <name>Mina intyg (FitNesse)</name>
 
   <properties>
-    <intygstjanst.versions>1.3-SNAPSHOT</intygstjanst.versions>
 
     <!-- URL to Intygstjansten -->
     <certificate.baseUrl>http://localhost:8080/inera-certificate/</certificate.baseUrl>
@@ -44,7 +43,7 @@
     <dependency>
       <groupId>se.inera.intyg.intygstjanst</groupId>
       <artifactId>intygstjanst-specifications</artifactId>
-      <version>${intygstjanst.versions}</version>
+      <version>${intygstjanst.version}</version>
     </dependency>
 
     <dependency>
