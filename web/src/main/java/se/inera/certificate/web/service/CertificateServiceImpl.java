@@ -29,10 +29,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
+
+
+
 import org.w3.wsaddressing10.AttributedURIType;
 
-import riv.insuranceprocess.healthreporting.medcertqa._1.LakarutlatandeEnkelType;
-import riv.insuranceprocess.healthreporting.medcertqa._1.VardAdresseringsType;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
@@ -41,7 +44,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipients
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Id;
@@ -69,6 +72,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+import se.inera.webcert.medcertqa.v1.LakarutlatandeEnkelType;
+import se.inera.webcert.medcertqa.v1.VardAdresseringsType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
