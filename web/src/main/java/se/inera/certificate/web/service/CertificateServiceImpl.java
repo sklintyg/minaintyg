@@ -45,7 +45,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.integration.exception.ResultTypeErrorException;
+import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Utlatande;

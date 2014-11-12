@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
-import se.inera.certificate.integration.builder.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
 public class ClinicalProcessMetaConverterTest {
