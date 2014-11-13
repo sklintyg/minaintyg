@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.api.Certificate;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.integration.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.module.ModuleApiFactory;
 import se.inera.certificate.integration.module.exception.ModuleNotFoundException;
