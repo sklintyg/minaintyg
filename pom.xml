@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -34,7 +34,8 @@
     <ts-diabetes.version>0-SNAPSHOT</ts-diabetes.version>
 
     <!-- Schemas -->
-    <schemas.version>0-SNAPSHOT</schemas.version>
+    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
+    <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
 
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.2</mvkintegration.version>
@@ -105,9 +106,14 @@
 
       <!-- Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas</groupId>
-        <artifactId>schemas-intygstjanst</artifactId>
-        <version>${schemas.version}</version>
+        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+        <version>${clinicalprocess-healthcond-certificate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
+        <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
+        <version>${insuranceprocess-healthreporting.version}</version>
       </dependency>
 
       <!-- Dependency to Netcare's MVK integration -->
