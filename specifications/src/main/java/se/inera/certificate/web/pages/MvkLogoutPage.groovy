@@ -1,8 +1,8 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class MvkLogoutPage extends Page {
+class MvkLogoutPage extends AbstractPage {
 
     static at = { $("div", class: "logoutWrap").isDisplayed() }
 

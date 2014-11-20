@@ -1,9 +1,8 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class MvkLoginPage extends Page {
+class MvkLoginPage extends AbstractPage {
 
     static at = { $("h2", class: "loginSubTitle").isDisplayed() }
-
 }

@@ -1,10 +1,10 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class SendCertificateChooseRecipientPage extends Page {
+class SendCertificateChooseRecipientPage extends AbstractPage {
 
-    static at = { $("#send-certificate-flow-root-recipients").isDisplayed() }
+    static at = { doneLoading() && $("#send-certificate-flow-root-recipients").isDisplayed() }
 
     static content = {
         chooseRecipientBtn(required: false)  { id -> $("recipient-${id}") }

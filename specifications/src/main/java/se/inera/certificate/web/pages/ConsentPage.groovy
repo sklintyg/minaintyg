@@ -1,10 +1,10 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class ConsentPage extends Page {
+class ConsentPage extends AbstractPage {
 
-    static at = { consentTerms.isDisplayed() }
+    static at = { doneLoading() && consentTerms.isDisplayed() }
 
     static content = {
         consentTerms { $("#consentTerms") }

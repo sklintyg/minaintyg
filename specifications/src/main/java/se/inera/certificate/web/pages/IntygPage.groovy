@@ -1,10 +1,10 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class IntygPage extends Page {
+class IntygPage extends AbstractPage {
 
-    static at = { $("#certificate").isDisplayed() }
+    static at = { doneLoading() && $("#certificate").isDisplayed() }
 
     static content = {
         certificateId { $("#certId") }
@@ -31,17 +31,12 @@ class IntygPage extends Page {
 
     def archive() {
         archiveBtn.click()
-
-        // Since this dialog is animated, wait for the same time as the animation
-        // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(300);
     }
 
     def confirmArchiveCertificate() {
+        waitFor {
+            doneLoading()
+        }
         confirmArchiveBtn.click()
-
-        // Since this dialog is animated, wait for the same time as the animation
-        // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(500);
     }
 }

@@ -1,35 +1,33 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class AboutMinaIntygPage extends Page {
+class AboutMinaIntygPage extends AbstractPage {
 
-    static at = { $("#about-mina-intyg-root").isDisplayed() }
+    static at = { doneLoading() && $("#about-mina-intyg-root").isDisplayed() }
 
     static content = {
         aboutSamtyckeLink(required: false) { $("#link-about-samtycke") }
         aboutSamtyckeSection(required: false) { $("#about-content-samtycke") }
         openRevokeConsentDialogLink(required: false) { $("#revokeConsentBtn") }
-        
-        
+
+
         revokeConsentDialog(required: false) { $("#revoke-consent-confirmation-dialog") }
         revokeConsentButton(required: false) { $("#revoke-consent-button") }
     }
-    
+
     def gotoAboutConsentSection() {
         aboutSamtyckeLink.click()
     }
-    
+
     def openRevokeConsentDialog() {
         openRevokeConsentDialogLink.click()
     }
-    
+
     def revokeConsent() {
-        // Since this dialog is animated, wait for the same time as the animation
-        // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(300);
+        waitFor {
+            doneLoading()
+        }
         revokeConsentButton.click()
     }
-
-   
 }

@@ -1,10 +1,10 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class SendCertificateSummaryPage extends Page {
+class SendCertificateSummaryPage extends AbstractPage {
 
-    static at = { $("#send-certificate-flow-root-summary").isDisplayed() }
+    static at = { doneLoading() && $("#send-certificate-flow-root-summary").isDisplayed() }
 
     static content = {
         confirmAndSendBtn(required: false)  { $("#confirmAndSendBtn") }

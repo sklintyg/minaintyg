@@ -3,12 +3,15 @@ window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
 var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
 
-app.run([ '$rootScope', 'common.messageService', function($rootScope, messageService) {
+app.run([ '$rootScope', '$window', 'common.messageService', function($rootScope, $window, messageService) {
     'use strict';
 
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     messageService.addResources(miMessages);
+
+    $window.doneLoading = true;
+    $window.dialogDoneLoading = true;
 } ]);
 
 var modulePromises = [];

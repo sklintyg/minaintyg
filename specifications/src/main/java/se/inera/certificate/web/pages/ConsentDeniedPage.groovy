@@ -1,9 +1,8 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class ConsentDeniedPage extends Page {
+class ConsentDeniedPage extends AbstractPage {
 
-    static at = { $("#refuseConsentMessage").isDisplayed() }
-
+    static at = { doneLoading() && $("#refuseConsentMessage").isDisplayed() }
 }

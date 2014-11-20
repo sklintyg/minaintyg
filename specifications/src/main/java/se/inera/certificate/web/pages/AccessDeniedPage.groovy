@@ -1,7 +1,7 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class AccessDeniedPage extends Page {
-    static at = { $("#noAuth").isDisplayed() }
+class AccessDeniedPage extends AbstractPage {
+    static at = { doneLoading() && $("#noAuth").isDisplayed() }
 }

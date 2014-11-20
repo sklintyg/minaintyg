@@ -59,7 +59,7 @@ public class ListaIntyg {
             page.archiveCertificate(id)
         }
     }
-    
+
     public void konfirmeraArkiveraIntyg() {
         Browser.drive {
             waitFor (message: "no button") {

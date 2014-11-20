@@ -1,12 +1,12 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class ArchivedPage extends Page {
+class ArchivedPage extends AbstractPage {
 
 	static url = "start#/arkiverade"
- 
-	static at = { $("#archivedHeader").isDisplayed() }
+
+	static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
 
     static content = {
         certificateTable(required: false) { $("#certTable") }
@@ -21,18 +21,13 @@ class ArchivedPage extends Page {
 
     def restoreCertificate(String id) {
         restoreCertificateButton(id).click()
-
-        // Since this dialog is animated, wait for the same time as the animation
-        // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(300);
     }
 
     def confirmRestoreCertificate() {
+        waitFor {
+            doneLoading()
+        }
         confirmRestoreButton.click()
-
-        // Since this dialog is animated, wait for the same time as the animation
-        // in order to avoid problem with Chrome WebDriver and moving click targets
-        Thread.sleep(300);
     }
 
     def boolean certificateExists(String id) {

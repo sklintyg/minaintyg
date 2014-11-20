@@ -1,9 +1,8 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class NotFoundPage extends Page {
+class NotFoundPage extends AbstractPage {
 
     static at = { $("#notFound").isDisplayed() }
-
 }

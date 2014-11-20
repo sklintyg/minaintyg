@@ -83,6 +83,8 @@ app.run([ '$rootScope', '$route', '$window', 'common.messageService',
         });
 
         $window.doneLoading = false;
+        $window.dialogDoneLoading = true;
+
         $rootScope.$on('$routeChangeStart', function() {
             $window.doneLoading = false;
         });

@@ -1,10 +1,10 @@
 package se.inera.certificate.web.pages
 
-import geb.Page
+import se.inera.certificate.page.AbstractPage
 
-class ConsentGivenPage extends Page {
+class ConsentGivenPage extends AbstractPage {
 
-    static at = { $("#consent-given").isDisplayed() }
+    static at = { doneLoading() && $("#consent-given").isDisplayed() }
 
     static content = {
         continueToMIButton(required: false) { $("#continueToMI") }
