@@ -7,9 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
-import se.inera.certificate.integration.module.ModuleApiFactory;
-import se.inera.certificate.modules.support.ModuleEntryPoint;
-import se.inera.certificate.web.controller.api.dto.IntygModule;
+import se.inera.certificate.modules.registry.IntygModule;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
 import se.inera.certificate.web.security.BrowserClosedInterceptor;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
@@ -49,7 +48,7 @@ public class ApiController {
     private CitizenService citizenService;
 
     @Autowired
-    private ModuleApiFactory moduleApiFactory;
+    private IntygModuleRegistry moduleRegistry;
 
     @GET
     @Path("/test")
@@ -133,14 +132,7 @@ public class ApiController {
     @Path("/map")
     @Produces(JSON_UTF8)
     public List<IntygModule> getModulesMap() {
-        List<IntygModule> response = new ArrayList<>();
-        for (ModuleEntryPoint module : moduleApiFactory.getRegisteredModules()) {
-            response.add(new IntygModule(module.getModuleId(), module.getModuleName(), module.getModuleDescription(),
-                    module.getModuleCssPath(MINA_INTYG), module.getModuleScriptPath(MINA_INTYG),
-                    module.getModuleDependencyDefinitionPath(MINA_INTYG)));
-        }
-
-        return response;
+        return moduleRegistry.listAllModules();
     }
 
     /**

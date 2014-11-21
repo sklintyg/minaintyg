@@ -39,10 +39,9 @@ import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.module.ModuleApiFactory;
-import se.inera.certificate.integration.module.exception.ModuleNotFoundException;
+import se.inera.certificate.modules.registry.ModuleNotFoundException;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
 import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -71,7 +70,7 @@ public class ModuleApiController {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
     @Autowired
-    private ModuleApiFactory moduleApiFactory;
+    private IntygModuleRegistry moduleRegistry;
 
     /**
      * Helper service to get current user.
@@ -105,8 +104,7 @@ public class ModuleApiController {
         LOG.debug("getCertificate - type is: {}", utlatande.getMeta().getType());
 
         try {
-            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(utlatande.getMeta().getType());
-            InternalModelResponse response = module.getModuleApi().convertExternalToInternal(
+            InternalModelResponse response = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).convertExternalToInternal(
                     new ExternalModelHolder(utlatande.getUtlatande()));
 
             JsonNode utlatandeJson = objectMapper.readTree(response.getInternalModel());
@@ -169,8 +167,7 @@ public class ModuleApiController {
         }
 
         try {
-            ModuleEntryPoint module = moduleApiFactory.getModuleEntryPoint(utlatande.getMeta().getType());
-            PdfResponse pdf = module.getModuleApi().pdf(new ExternalModelHolder(utlatande.getUtlatande()), ApplicationOrigin.MINA_INTYG);
+            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).pdf(new ExternalModelHolder(utlatande.getUtlatande()), ApplicationOrigin.MINA_INTYG);
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)

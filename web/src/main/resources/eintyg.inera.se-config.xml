@@ -67,6 +67,10 @@
     </bean>
     <bean id="healthcheck" class="se.inera.certificate.web.overvakning.HealthCheck"/>
 
+    <bean id="moduleRegistry" class="se.inera.certificate.modules.registry.IntygModuleRegistryImpl">
+      <property name="origin" value="MINA_INTYG"/>
+    </bean>
+
   </beans>
 
 </beans>

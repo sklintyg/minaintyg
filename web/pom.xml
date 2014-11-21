@@ -32,12 +32,6 @@
       <artifactId>logging-util</artifactId>
     </dependency>
 
-    <!-- Intygstjanst -->
-    <dependency>
-      <groupId>se.inera.intyg.intygstjanst</groupId>
-      <artifactId>module-api</artifactId>
-    </dependency>
-
     <!--Intygstyper -->
     <dependency>
       <groupId>se.inera.intyg.intygstyper</groupId>

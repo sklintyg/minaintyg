@@ -78,11 +78,6 @@
         <artifactId>intygstjanst-specifications</artifactId>
         <version>${intygstjanst.version}</version>
       </dependency>
-      <dependency>
-        <groupId>se.inera.intyg.intygstjanst</groupId>
-        <artifactId>module-api</artifactId>
-        <version>${intygstjanst.version}</version>
-      </dependency>
 
       <!-- Intygstyper -->
       <dependency>
