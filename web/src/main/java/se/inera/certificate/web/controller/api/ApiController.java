@@ -1,10 +1,23 @@
 package se.inera.certificate.web.controller.api;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.modules.registry.IntygModule;
@@ -17,20 +30,6 @@ import se.inera.certificate.web.service.ConsentService;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.util.CertificateMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.modules.support.ApplicationOrigin.MINA_INTYG;
 
 public class ApiController {
 

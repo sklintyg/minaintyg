@@ -37,6 +37,7 @@
   <beans>
 
     <import resource="classpath*:module-config.xml" />
+    <import resource="classpath*:mi-module-cxf-servlet.xml" />
 
     <context:property-placeholder
       location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties" order="2"
