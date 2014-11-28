@@ -40,12 +40,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
-import se.inera.certificate.integration.module.exception.CertificateRevokedException;
-import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.model.common.internal.Utlatande;
-import se.inera.certificate.modules.support.api.CertificateHolder;
-import se.inera.certificate.modules.support.api.ModuleContainerApi;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType;
@@ -71,7 +66,7 @@ import se.inera.webcert.medcertqa.v1.VardAdresseringsType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class CertificateServiceImpl implements CertificateService, ModuleContainerApi {
+public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
@@ -236,14 +231,4 @@ public class CertificateServiceImpl implements CertificateService, ModuleContain
         }
     }
 
-    @Override
-    public void certificateReceived(CertificateHolder certificate, boolean wireTapped) throws CertificateAlreadyExistsException,
-            InvalidCertificateException {
-        throw new RuntimeException("Not implemented in this context");
-    }
-
-    @Override
-    public CertificateHolder getCertificate(String certificateId, String personId) throws InvalidCertificateException, CertificateRevokedException {
-        throw new RuntimeException("Not implemented in this context");
-    }
 }
