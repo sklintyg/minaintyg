@@ -361,6 +361,7 @@
                   <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/fk7263">
                   </fileset>
                 </copy>
+                <!--
                 <copy todir="${project.build.directory}/webjardependencies/ts-bas" verbose="false">
                   <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/ts-bas">
                   </fileset>
@@ -369,6 +370,7 @@
                   <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/ts-diabetes">
                   </fileset>
                 </copy>
+                -->
               </target>
             </configuration>
             <goals>
