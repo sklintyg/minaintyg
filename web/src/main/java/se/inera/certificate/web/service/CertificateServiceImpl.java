@@ -170,8 +170,8 @@ public class CertificateServiceImpl implements CertificateService {
     private LakarutlatandeEnkelType buildLakarutlatandeTypeFromUtlatande(Utlatande utlatande) {
         LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
 
-        lakarutlatande.setLakarutlatandeId((utlatande.getId().getExtension() != null ? utlatande.getId().getExtension() :
-                utlatande.getId().getRoot()));
+        lakarutlatande.setLakarutlatandeId((utlatande.getId().getExtension() != null ? utlatande.getId().getExtension()
+                : utlatande.getId().getRoot()));
 
         lakarutlatande.setSigneringsTidpunkt(utlatande.getSigneringsdatum());
 
