@@ -15,7 +15,7 @@ import org.joda.time.LocalDateTime;
  */
 public class UtlatandeMetaData {
 
-    /** The id of the utlatande */
+    /** The id of the utlatande. */
     private final String id;
 
     /** The type of utlatande. */

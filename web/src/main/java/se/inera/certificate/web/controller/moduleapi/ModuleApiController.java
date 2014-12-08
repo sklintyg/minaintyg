@@ -58,7 +58,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
  * certificate.
- * 
+ *
  * @author marced
  */
 public class ModuleApiController {
@@ -88,7 +88,7 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as JSON.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @return The certificate in JSON format
@@ -128,7 +128,7 @@ public class ModuleApiController {
 
     /**
      * Send the certificate identified by the given id to the given target.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @param target
@@ -147,7 +147,7 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as PDF.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @return The certificate in PDF format
@@ -167,7 +167,8 @@ public class ModuleApiController {
         }
 
         try {
-            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).pdf(new ExternalModelHolder(utlatande.getUtlatande()), ApplicationOrigin.MINA_INTYG);
+            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).pdf(new ExternalModelHolder(utlatande.getUtlatande()),
+                    ApplicationOrigin.MINA_INTYG);
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)

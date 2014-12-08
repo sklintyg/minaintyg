@@ -88,7 +88,8 @@ public class UtlatandeMetaBuilder {
     }
 
     /**
-     * Utility method for creating a {@link UtlatandeMetaBuilder} from a {@link Utlatande} object populated with:
+     * Utility method for creating a {@link UtlatandeMetaBuilder} from a {@link Utlatande} object populated with.
+     *
      * <ul>
      * <li>id
      * <li>type
@@ -96,10 +97,10 @@ public class UtlatandeMetaBuilder {
      * <li>facilityName
      * <li>signDate
      * </ul>
-     * 
+     *
      * @param utlatande
      *            The utlatande to extract meta data from.
-     * 
+     *
      * @return A prepopulated builder.
      */
     public static UtlatandeMetaBuilder fromUtlatande(Utlatande utlatande) {

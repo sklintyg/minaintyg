@@ -18,10 +18,7 @@
  */
 package se.inera.certificate.web.service;
 
-import java.util.List;
-
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
@@ -29,12 +26,15 @@ import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
+import java.util.List;
+
 public interface CertificateService {
 
     UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
+     *
      * @param civicRegistrationNumber
      * @return
      */
@@ -42,6 +42,7 @@ public interface CertificateService {
 
     /**
      * Sets a new status for the certificate.
+     *
      * @param id
      * @param target
      * @param type
@@ -51,6 +52,7 @@ public interface CertificateService {
 
     /**
      * Request to send a specific certificate to a specific recipient.
+     *
      * @param civicRegistrationNumber
      * @param id
      * @param target
@@ -59,8 +61,10 @@ public interface CertificateService {
     ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target);
 
     /**
-     * Retrieves a list of possible recipients for the given certificate type
-     * @param certificateType the type of certificate to check
+     * Retrieves a list of possible recipients for the given certificate type.
+     *
+     * @param certificateType
+     *            the type of certificate to check
      * @return a List of {@link UtlatandeRecipient}
      */
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);

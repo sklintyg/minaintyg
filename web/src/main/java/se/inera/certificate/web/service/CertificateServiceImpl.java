@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
-
-
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.api.ModuleAPIResponse;
@@ -93,7 +89,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private GetCertificateContentResponderInterface getCertificateContentService;
-    
+
     @Autowired
     private GetRecipientsForCertificateResponderInterface getRecipientsForCertificateService;
 
@@ -106,7 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
-     * 
+     *
      * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
      *      java.lang.String)
      */
@@ -166,7 +162,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     /**
      * Build a {@link LakarutlatandeEnkelType} from the source {@link Utlatande}.
-     * 
+     *
      * @param utlatande
      *            a {@link Utlatande}
      * @return {@link LakarutlatandeEnkelType}
@@ -194,7 +190,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     /**
      * Build an EnhetType object from an Utlatande.
-     * 
+     *
      * @param utlatande
      *            the source {@link Utlatande}
      * @return {@link EnhetType}
@@ -310,12 +306,12 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    @Override 
+    @Override
     public List<UtlatandeRecipient> getRecipientsForCertificate(String type) {
         GetRecipientsForCertificateType params = new GetRecipientsForCertificateType();
         params.setCertificateType(type);
 
-        GetRecipientsForCertificateResponseType response = getRecipientsForCertificateService.getRecipientsForCertificate(null,params);
+        GetRecipientsForCertificateResponseType response = getRecipientsForCertificateService.getRecipientsForCertificate(null, params);
         switch (response.getResult().getResultCode()) {
         case OK:
             List<UtlatandeRecipient> recipientList = new ArrayList<UtlatandeRecipient>();

@@ -1,29 +1,21 @@
 package se.inera.certificate.web.security;
 
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.ws.rs.core.Response;
-
 import com.google.common.collect.ImmutableSet;
 import org.apache.cxf.jaxrs.JAXRSInvoker;
 import org.apache.cxf.jaxrs.model.OperationResourceInfo;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.MessageContentsList;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 
-
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by orjan on 14-08-19(34).
@@ -38,17 +30,13 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
     @Autowired
     private CitizenService citizenService;
 
-
-
     private AtomicLong consentCounter = new AtomicLong();
 
-    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap","onbeforeunload","giveConsent");
-
+    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "onbeforeunload", "giveConsent");
 
     @Override
     public Object invoke(Exchange exchange, Object requestParams, Object resourceObject) {
         LOG.debug("invoke(...)");
-
 
         LOG.debug("Verifying citizen consent...");
         // Get Citizen instance from context
@@ -76,16 +64,17 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
                 OperationResourceInfo ori = exchange.get(OperationResourceInfo.class);
                 Method m = ori.getMethodToInvoke();
                 LOG.debug("Method called is {} ", m.getName());
-                methodName =  m.getName();
+                methodName = m.getName();
             } else {
-                methodName =  "";
+                methodName = "";
             }
 
             if (ALLOWED_METHODS.contains(methodName)) {
                 LOG.debug("Allowing method {}", methodName);
             } else {
                 try {
-                    return new MessageContentsList(Response.status(Response.Status.FORBIDDEN).contentLocation(new URI("\\web\\visa-ge-samtycke#\\consent")).build());
+                    return new MessageContentsList(Response.status(Response.Status.FORBIDDEN)
+                            .contentLocation(new URI("\\web\\visa-ge-samtycke#\\consent")).build());
                 } catch (URISyntaxException e) {
                     return new MessageContentsList(Response.status(Response.Status.FORBIDDEN).build());
                 }
@@ -103,10 +92,10 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
 }
 
-//Servlet filters -> CXF interceptors.
+// Servlet filters -> CXF interceptors.
 //
-//        If you mix JAX-RS 2.0 filters & CXF interceptors, then
+// If you mix JAX-RS 2.0 filters & CXF interceptors, then
 //
-//        Servlet filters -> CXF interceptors before UNMARSHAL phase ->
-//        PreMatch Container Request Filter -> CXF interceptors after UNMARSHAL
-//        phase -> per-method specific Container Request Filters
+// Servlet filters -> CXF interceptors before UNMARSHAL phase ->
+// PreMatch Container Request Filter -> CXF interceptors after UNMARSHAL
+// phase -> per-method specific Container Request Filters

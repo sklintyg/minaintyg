@@ -35,7 +35,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * timestamp i HttpSession ignoreras anropet - om timestamp finns och är äldre
  * än timeoutSeconds loggas användaren ut och redirectas till redirectLocation -
  * om timestamp finns och är yngre än timeoutSeconds plockas timestampen bort
- * från session och requesten går igenom
+ * från session och requesten går igenom.
  */
 public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
     public static final String BROWSER_CLOSED_TIMESTAMP = "BROWSER_CLOSED_TIMESTAMP";
