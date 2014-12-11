@@ -15,6 +15,9 @@ import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
  */
 public final class ClinicalProcessMetaConverter {
 
+    private ClinicalProcessMetaConverter() {
+    }
+
     private static final Comparator<? super CertificateMetaType> DESCENDING_DATE = new Comparator<CertificateMetaType>() {
         @Override
         public int compare(CertificateMetaType m1, CertificateMetaType m2) {

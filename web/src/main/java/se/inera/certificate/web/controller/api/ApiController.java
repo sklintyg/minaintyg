@@ -135,7 +135,7 @@ public class ApiController {
     }
 
     /**
-     * Endpoint used by client to notify server that onbeforeunload is triggered
+     * Endpoint used by client to notify server that onbeforeunload is triggered.
      *
      * @param req
      * @return

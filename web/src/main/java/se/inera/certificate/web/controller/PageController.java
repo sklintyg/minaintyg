@@ -57,7 +57,7 @@ public class PageController {
     @Value("${mvk.url.logout}")
     private String mvkLogoutUrl;
 
-    @RequestMapping(value = {"/sso"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
@@ -82,21 +82,21 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/tillbaka-till-mvk" }, method = RequestMethod.GET)
     public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkStartUrl;
     }
 
-    @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/logga-ut" }, method = RequestMethod.GET)
     public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
         invalidateSessionAndClearContext(request);
         return "redirect:" + mvkLogoutUrl;
     }
 
-    @RequestMapping(value = {"/logga-ut-fk"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/logga-ut-fk" }, method = RequestMethod.GET)
     public ModelAndView loggaUtFk(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("logout-fk");
         populateUseMinifiedJavaScript(modelAndView);

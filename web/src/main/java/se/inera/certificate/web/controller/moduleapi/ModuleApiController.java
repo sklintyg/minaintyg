@@ -57,7 +57,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
  * certificate.
- * 
+ *
  * @author marced
  */
 public class ModuleApiController {
@@ -87,7 +87,7 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as JSON.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @return The certificate in JSON format
@@ -113,7 +113,7 @@ public class ModuleApiController {
 
     /**
      * Send the certificate identified by the given id to the given target.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @param target
@@ -132,7 +132,7 @@ public class ModuleApiController {
 
     /**
      * Return the certificate identified by the given id as PDF.
-     * 
+     *
      * @param id
      *            - the globally unique id of a certificate.
      * @return The certificate in PDF format

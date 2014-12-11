@@ -12,7 +12,10 @@ import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 /**
  * Converts meta data from the internal {@link UtlatandeMetaData} to the REST service model {@link CertificateMeta}.
  */
-public class CertificateMetaConverter {
+public final class CertificateMetaConverter {
+
+    private CertificateMetaConverter() {
+    }
 
     public static CertificateMeta toCertificateMeta(UtlatandeMetaData meta) {
         CertificateMeta result = new CertificateMeta();
