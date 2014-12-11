@@ -9,10 +9,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.FileUtils;
+import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,20 +26,19 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Utlatande;
-import se.inera.certificate.model.common.MinimalUtlatande;
+import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.registry.IntygModuleRegistry;
 import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
+import se.inera.certificate.web.service.dto.UtlatandeStatusType;
+import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
-import se.inera.certificate.web.util.UtlatandeMetaBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,7 +50,7 @@ public class ModuleApiControllerTest {
     private static final String CERTIFICATE_TYPE = "fk7263";
 
     private static UtlatandeWithMeta utlatandeHolder;
-    private static ExternalModelHolder externalModelHolder;
+    private static InternalModelHolder internalModelHolder;
     private static String certificateData;
 
     @Mock
@@ -73,12 +75,12 @@ public class ModuleApiControllerTest {
     public static void setupCertificateData() throws IOException {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
 
-        Utlatande commonUtlatande = new CustomObjectMapper().readValue(certificateData, MinimalUtlatande.class);
-        UtlatandeMetaBuilder builder = UtlatandeMetaBuilder.fromUtlatande(commonUtlatande);
+        Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
+        List<UtlatandeStatusType> status = new ArrayList<UtlatandeStatusType>();
+        status.add(new UtlatandeStatusType(StatusType.SENT, "FK", LocalDateTime.now()));
+        utlatandeHolder = new UtlatandeWithMeta(utlatande, certificateData, status);
 
-        utlatandeHolder = new UtlatandeWithMeta(certificateData, builder.build());
-
-        externalModelHolder = new ExternalModelHolder(certificateData);
+        internalModelHolder = new InternalModelHolder(certificateData);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class ModuleApiControllerTest {
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
        
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdf(refEq(externalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+        when(moduleApi.pdf(refEq(internalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -108,7 +110,7 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
-        when(moduleApi.pdf(refEq(externalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
+        when(moduleApi.pdf(refEq(internalModelHolder), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);

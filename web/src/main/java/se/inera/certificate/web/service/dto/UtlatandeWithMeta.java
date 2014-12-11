@@ -3,29 +3,39 @@ package se.inera.certificate.web.service.dto;
 import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notNull;
 
+import java.util.List;
+
+import se.inera.certificate.model.common.internal.Utlatande;
+
 /**
  * Object returned by services containing a utlatande and meta data describing the utlatande.
  */
 public class UtlatandeWithMeta {
 
-    /** An utlatande in the external model. */
-    private final String utlatande;
+    private final Utlatande utlatande;
+    private final String document;
 
-    /** Meta data for the utlatande. */
-    private final UtlatandeMetaData meta;
+    private final List<UtlatandeStatusType> statuses;
 
-    public UtlatandeWithMeta(String utlatande, UtlatandeMetaData meta) {
-        hasText(utlatande, "'utlatande' must not be empty");
-        notNull(meta, "'meta' must not be null");
+    public UtlatandeWithMeta(Utlatande utlatande, String document, List<UtlatandeStatusType> statuses) {
+        notNull(utlatande, "'utlatande' must not be null");
+        hasText(document, "'document' must not be empty");
+        notNull(statuses, "'statuses' must not be null");
         this.utlatande = utlatande;
-        this.meta = meta;
+        this.document = document;
+        this.statuses = statuses;
     }
 
-    public String getUtlatande() {
+    public Utlatande getUtlatande() {
         return utlatande;
     }
 
-    public UtlatandeMetaData getMeta() {
-        return meta;
+    public String getDocument() {
+        return document;
     }
+
+    public List<UtlatandeStatusType> getStatuses() {
+        return statuses;
+    }
+
 }

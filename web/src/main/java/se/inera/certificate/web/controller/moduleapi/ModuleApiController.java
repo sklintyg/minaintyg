@@ -35,22 +35,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.api.Certificate;
-import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.CertificateStatus;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.registry.ModuleNotFoundException;
 import se.inera.certificate.modules.registry.IntygModuleRegistry;
+import se.inera.certificate.modules.registry.ModuleNotFoundException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
-import se.inera.certificate.web.util.CertificateMetaConverter;
+import se.inera.certificate.web.util.CertificateStatusConverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,24 +100,10 @@ public class ModuleApiController {
 
         UtlatandeWithMeta utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
 
-        LOG.debug("getCertificate - type is: {}", utlatande.getMeta().getType());
-
         try {
-            InternalModelResponse response = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).convertExternalToInternal(
-                    new ExternalModelHolder(utlatande.getUtlatande()));
-
-            JsonNode utlatandeJson = objectMapper.readTree(response.getInternalModel());
-            CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(utlatande.getMeta());
+            JsonNode utlatandeJson = objectMapper.readTree(utlatande.getDocument());
+            CertificateStatus meta = CertificateStatusConverter.toCertificateStatus(utlatande.getStatuses());
             return Response.ok(new Certificate(utlatandeJson, meta)).build();
-
-        } catch (ModuleNotFoundException e) {
-            LOG.error("Module " + id + " not found. Not loaded in application. Error was: " + e.getMessage());
-            return Response.serverError().build();
-
-        } catch (ModuleException e) {
-            LOG.error("Failed to get module-internal representation of certificate " + id + " from module '"
-                    + utlatande.getMeta().getType() + "'.");
-            return Response.serverError().build();
 
         } catch (IOException e) {
             LOG.error("Failed to serialize module-internal representation of certificate " + id);
@@ -167,8 +152,7 @@ public class ModuleApiController {
         }
 
         try {
-            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getMeta().getType()).pdf(new ExternalModelHolder(utlatande.getUtlatande()),
-                    ApplicationOrigin.MINA_INTYG);
+            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getUtlatande().getTyp()).pdf(new InternalModelHolder(utlatande.getDocument()), ApplicationOrigin.MINA_INTYG);
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)

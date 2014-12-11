@@ -4,9 +4,9 @@ public class Certificate {
 
     private final Object utlatande;
 
-    private final CertificateMeta meta;
+    private final CertificateStatus meta;
 
-    public Certificate(Object utlatande, CertificateMeta meta) {
+    public Certificate(Object utlatande, CertificateStatus meta) {
         this.utlatande = utlatande;
         this.meta = meta;
     }
@@ -15,7 +15,7 @@ public class Certificate {
         return utlatande;
     }
 
-    public CertificateMeta getMeta() {
+    public CertificateStatus getMeta() {
         return meta;
     }
 }

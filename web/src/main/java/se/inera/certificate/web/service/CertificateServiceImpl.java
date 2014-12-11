@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.web.service;
 
-import iso.v21090.dt.v1.II;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +41,12 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Utlatande;
-import se.inera.certificate.model.common.MinimalUtlatande;
+import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
+import se.inera.certificate.web.service.dto.UtlatandeStatusType;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
-import se.inera.certificate.web.util.UtlatandeMetaBuilder;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
@@ -63,11 +59,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificaterespo
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.util.ModelConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.webcert.medcertqa.v1.LakarutlatandeEnkelType;
 import se.inera.webcert.medcertqa.v1.VardAdresseringsType;
 
@@ -111,39 +104,17 @@ public class CertificateServiceImpl implements CertificateService {
         LOG.debug("sendCertificate {} to {}", id, target);
         SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
 
-        Utlatande utlatande;
-
-        try {
-            utlatande = objectMapper.readValue(getUtlatande(civicRegistrationNumber, id).getUtlatande(),
-                    MinimalUtlatande.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, id);
 
         SendType sendType = new SendType();
-        VardAdresseringsType vardAdresseringsType = new VardAdresseringsType();
-
-        // Enhet
-        EnhetType enhet = buildEnhetFromUtlatande(utlatande);
-
-        HosPersonalType hosPersonal = new HosPersonalType();
-        hosPersonal.setEnhet(enhet);
-        hosPersonal.setFullstandigtNamn(utlatande.getSkapadAv().getNamn());
-
-        II personalId = new II();
-        Id personalIdSource = utlatande.getSkapadAv().getId();
-        personalId.setRoot(personalIdSource.getRoot());
-        personalId.setExtension(personalIdSource.getExtension());
-        hosPersonal.setPersonalId(personalId);
-
-        vardAdresseringsType.setHosPersonal(hosPersonal);
+        VardAdresseringsType vardAdresseringsType = ModelConverter.toVardAdresseringsType(utlatande.getUtlatande().getGrundData());
 
         sendType.setAdressVard(vardAdresseringsType);
         sendType.setAvsantTidpunkt(new LocalDateTime());
         sendType.setVardReferensId("MI");
 
         // Lakarutlatande
-        LakarutlatandeEnkelType lakarutlatande = buildLakarutlatandeTypeFromUtlatande(utlatande);
+        LakarutlatandeEnkelType lakarutlatande = ModelConverter.toLakarutlatandeEnkelType(utlatande.getUtlatande());
 
         sendType.setLakarutlatande(lakarutlatande);
         req.setSend(sendType);
@@ -158,73 +129,6 @@ public class CertificateServiceImpl implements CertificateService {
         } else {
             return new ModuleAPIResponse("sent", "");
         }
-    }
-
-    /**
-     * Build a {@link LakarutlatandeEnkelType} from the source {@link Utlatande}.
-     *
-     * @param utlatande
-     *            a {@link Utlatande}
-     * @return {@link LakarutlatandeEnkelType}
-     */
-    private LakarutlatandeEnkelType buildLakarutlatandeTypeFromUtlatande(Utlatande utlatande) {
-        LakarutlatandeEnkelType lakarutlatande = new LakarutlatandeEnkelType();
-
-        lakarutlatande.setLakarutlatandeId((utlatande.getId().getExtension() != null ? utlatande.getId().getExtension()
-                : utlatande.getId().getRoot()));
-
-        lakarutlatande.setSigneringsTidpunkt(utlatande.getSigneringsdatum());
-
-        PatientType patient = new PatientType();
-
-        II patientIdHolder = new II();
-        patientIdHolder.setRoot(utlatande.getPatient().getId().getRoot());
-        patientIdHolder.setExtension(utlatande.getPatient().getId().getExtension());
-        patient.setPersonId(patientIdHolder);
-
-        patient.setFullstandigtNamn(utlatande.getPatient().getFullstandigtNamn());
-        lakarutlatande.setPatient(patient);
-
-        return lakarutlatande;
-    }
-
-    /**
-     * Build an EnhetType object from an Utlatande.
-     *
-     * @param utlatande
-     *            the source {@link Utlatande}
-     * @return {@link EnhetType}
-     */
-    private EnhetType buildEnhetFromUtlatande(Utlatande utlatande) {
-        EnhetType enhet = new EnhetType();
-        enhet.setEnhetsnamn(utlatande.getSkapadAv().getVardenhet().getNamn());
-
-        II enhetsId = new II();
-        Id sourceEnhetsId = utlatande.getSkapadAv().getVardenhet().getId();
-        enhetsId.setRoot(sourceEnhetsId.getRoot());
-        enhetsId.setExtension(sourceEnhetsId.getExtension());
-        enhet.setEnhetsId(enhetsId);
-
-        if (utlatande.getSkapadAv().getVardenhet().getArbetsplatskod() != null) {
-            II arbetsplatsKod = new II();
-            Id arbetsplatskodSource = utlatande.getSkapadAv().getVardenhet().getArbetsplatskod();
-            arbetsplatsKod.setRoot(arbetsplatskodSource.getRoot());
-            arbetsplatsKod.setExtension(arbetsplatskodSource.getExtension());
-            enhet.setArbetsplatskod(arbetsplatsKod);
-        }
-
-        VardgivareType vardGivare = new VardgivareType();
-
-        II vardGivarId = new II();
-        Id vardgivarIdSource = utlatande.getSkapadAv().getVardenhet().getVardgivare().getId();
-        vardGivarId.setRoot(vardgivarIdSource.getRoot());
-        vardGivarId.setExtension(vardgivarIdSource.getExtension());
-        vardGivare.setVardgivareId(vardGivarId);
-
-        vardGivare.setVardgivarnamn(utlatande.getSkapadAv().getVardenhet().getVardgivare().getNamn());
-        enhet.setVardgivare(vardGivare);
-
-        return enhet;
     }
 
     @Override
@@ -270,23 +174,23 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private UtlatandeWithMeta convert(final GetCertificateContentResponseType response) {
-        // Deserialize certificate Json to get common properties
-        Utlatande commonUtlatande;
+        Utlatande utlatande;
+        String document = response.getCertificate();
+
         try {
-            commonUtlatande = objectMapper.readValue(response.getCertificate(), MinimalUtlatande.class);
+            utlatande = objectMapper.readValue(document, Utlatande.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        UtlatandeMetaBuilder builder = UtlatandeMetaBuilder.fromUtlatande(commonUtlatande);
+        List<UtlatandeStatusType> statuses = new ArrayList<UtlatandeStatusType>();
         for (CertificateStatusType status : response.getStatuses()) {
             if (status.getType().equals(StatusType.SENT) || status.getType().equals(StatusType.CANCELLED)) {
-                builder.addStatus(se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType.valueOf(status.getType().name()),
-                        status.getTarget(), status.getTimestamp());
+                statuses.add(new UtlatandeStatusType(se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType.valueOf(status.getType().name()),
+                        status.getTarget(), status.getTimestamp()));
             }
         }
-
-        return new UtlatandeWithMeta(response.getCertificate(), builder.build());
+        return new UtlatandeWithMeta(utlatande, document, statuses);
     }
 
     @Override
@@ -327,4 +231,5 @@ public class CertificateServiceImpl implements CertificateService {
             throw new ResultTypeErrorException(response.getResult());
         }
     }
+
 }

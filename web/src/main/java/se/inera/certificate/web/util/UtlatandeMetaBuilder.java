@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.model.Utlatande;
+import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
@@ -27,12 +27,12 @@ public class UtlatandeMetaBuilder {
 
     private String available;
 
-    private String complemantaryInfo;
+    private String additionalInfo;
 
     private List<UtlatandeStatusType> statuses = new ArrayList<>();
 
     public UtlatandeMetaData build() {
-        return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, complemantaryInfo, statuses);
+        return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, additionalInfo, statuses);
     }
 
     public UtlatandeMetaBuilder id(String id) {
@@ -71,8 +71,8 @@ public class UtlatandeMetaBuilder {
         return this;
     }
 
-    public UtlatandeMetaBuilder complementaryInfo(String complemantaryInfo) {
-        this.complemantaryInfo = complemantaryInfo;
+    public UtlatandeMetaBuilder additionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
 
         return this;
     }
@@ -105,12 +105,12 @@ public class UtlatandeMetaBuilder {
      */
     public static UtlatandeMetaBuilder fromUtlatande(Utlatande utlatande) {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
-        String id = utlatande.getId().getExtension() == null ? utlatande.getId().getRoot() : utlatande.getId().getExtension();
+        String id = utlatande.getId();
         builder.id(id)
-                .type(utlatande.getTyp().getCode().toLowerCase())
-                .issuerName(utlatande.getSkapadAv().getNamn())
-                .facilityName(utlatande.getSkapadAv().getVardenhet().getNamn())
-                .signDate(utlatande.getSigneringsdatum());
+                .type(utlatande.getTyp())
+                .issuerName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn())
+                .facilityName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn())
+                .signDate(utlatande.getGrundData().getSigneringsdatum());
 
         return builder;
     }

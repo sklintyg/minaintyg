@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.CertificateStatus;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
@@ -44,7 +45,7 @@ public class CertificateMetaConverterTest {
                 .facilityName(FACILITY_NAME)
                 .signDate(new LocalDateTime())
                 .available(AVAILABLE)
-                .complementaryInfo("2013-01-01 till 2014-01-01");
+                .additionalInfo("2013-01-01 till 2014-01-01");
     }
 
     @Test
