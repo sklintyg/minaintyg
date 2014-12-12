@@ -2,6 +2,7 @@
 # file: group_vars/all
 profile: test
 inera_root: /opt/inera
+releases_folder: "{{ inera_root }}/releases"
 config_folder: "{{ inera_root }}/minaintyg-konfiguration"
 tomcat_service: inera-tomcat
 inera_tomcat_folder: "/var/lib/{{ tomcat_service }}"

@@ -1,6 +1,6 @@
 ---
 
-- name: Create certificate-env.sh file
+- name: Create minaintyg-env.sh file
   template: src=minaintyg-env.sh.j2 dest="{{ inera_tomcat_folder }}/minaintyg-env.sh" mode=755
 
 - name: configure setenv.sh

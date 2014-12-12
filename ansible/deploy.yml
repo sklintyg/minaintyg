@@ -5,6 +5,7 @@
   sudo: yes 
   vars: 
     version: 2.1.0-b6
+    config_version: master
 
   roles:
     - minaintyg
