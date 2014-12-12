@@ -1,0 +1,9 @@
+---
+# This playbook provisions the environment for Mina Intyg 
+
+- hosts: all
+  sudo: yes 
+
+  roles:
+    - minaintyg-systemvariabler
+    - minaintyg-jarfiler    

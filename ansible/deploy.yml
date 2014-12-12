@@ -1,0 +1,10 @@
+---
+# This playbook deploys Mina Intyg 
+
+- hosts: all
+  sudo: yes 
+  vars: 
+    version: 2.1.0-b6
+
+  roles:
+    - minaintyg

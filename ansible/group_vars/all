@@ -1,0 +1,9 @@
+---
+# file: group_vars/all
+profile: test
+inera_root: /opt/inera
+config_folder: "{{ inera_root }}/minaintyg-konfiguration"
+tomcat_service: inera-tomcat
+inera_tomcat_folder: "/var/lib/{{ tomcat_service }}"
+etc_folder: "{{ inera_tomcat_folder }}/etc"
+webapps_folder: "{{ inera_tomcat_folder }}/webapps"

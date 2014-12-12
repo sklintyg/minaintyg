@@ -1,0 +1,6 @@
+ENV_CFG="-Dspring.profiles.active={{ profile }} -Dfile.encoding=UTF-8"
+MEM_CFG="-Xms1024m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=512m"
+DEBUG_CFG="-XX:-HeapDumpOnOutOfMemoryError -XX:HeapDumpPath={{ inera_tomcat_folder }}"
+CREDENTIALS_CFG="-Dcredentials.file={{ etc_folder }}/credentials.properties"
+MINAINTYG_CFG="-Dminaintyg.config.file={{ etc_folder }}/minaintyg.properties -Dminaintyg.logback.file={{ etc_folder }}/minaintyg-logback.xml"
+export JAVA_OPTS="$JAVA_OPTS $ENV_CFG $MEM_CFG $DEBUG_CFG $CREDENTIALS_CFG $MINAINTYG_CFG"
