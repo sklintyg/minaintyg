@@ -21,10 +21,10 @@
 |intygetsDiagnosklartext1Innehåller|Klartext1|
 |note|Testa bi-diagnos 1|
 |intygetsDiagnoskod2Innehåller|Z233|
-|intygetsDiagnosklartext2Innehåller|Klartext2|
+|intygetsDiagnosklartext2Innehåller|Vaccination avseende pest|
 |note|Testa bi-diagnos 2|
 |intygetsDiagnoskod3Innehåller|Z233|
-|intygetsDiagnosklartext3Innehåller|Klartext3|
+|intygetsDiagnosklartext3Innehåller|Vaccination avseende pest|
 
 
 !3 Verifiera att fält 6a innehåller korrekt information. 
