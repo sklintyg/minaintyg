@@ -6,4 +6,5 @@
 
   roles:
     - minaintyg-systemvariabler
-    - minaintyg-jarfiler    
+    - minaintyg-jarfiler
+    - config-folder  
