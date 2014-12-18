@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.api.ModuleAPIResponse;
@@ -119,8 +118,14 @@ public class CertificateServiceImpl implements CertificateService {
         sendType.setLakarutlatande(lakarutlatande);
         req.setSend(sendType);
 
+        //Do lookup to get logical adress
+        String logicalAdress = findLogicalAdressForRecipientId(target, utlatande.getUtlatande().getTyp());
+        if (logicalAdress == null) {
+            LOG.error("SendCertificate failed while looking up logical address for recipient: {}", target);
+            return new ModuleAPIResponse("error", "");
+        }
         AttributedURIType uri = new AttributedURIType();
-        uri.setValue(target);
+        uri.setValue(logicalAdress);
 
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
@@ -129,6 +134,22 @@ public class CertificateServiceImpl implements CertificateService {
         } else {
             return new ModuleAPIResponse("sent", "");
         }
+    }
+
+    private String findLogicalAdressForRecipientId(String target, String intygsType) {
+        GetRecipientsForCertificateType params = new GetRecipientsForCertificateType();
+        params.setCertificateType(intygsType);
+
+        String logicalAdress = null;
+
+        GetRecipientsForCertificateResponseType recipientResponse = getRecipientsForCertificateService.getRecipientsForCertificate(target, params);
+        for (RecipientType recipientType : recipientResponse.getRecipient()) {
+            if (recipientType.getId().equalsIgnoreCase(target)) {
+                logicalAdress = recipientType.getLogicalAdress();
+            }
+        }
+        LOG.debug("Got logical adress {} for {} in Mina intyg", logicalAdress, target);
+        return logicalAdress;
     }
 
     @Override
