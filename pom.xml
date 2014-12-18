@@ -40,7 +40,7 @@
     <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
 
     <!-- Dependency to Netcare's MVK integration -->
-    <mvkintegration.version>1.2.2</mvkintegration.version>
+    <mvkintegration.version>1.2.3</mvkintegration.version>
   </properties>
 
   <modules>
