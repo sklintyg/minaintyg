@@ -1,5 +1,5 @@
 ---
-# This playbook provisions the environment for Mina Intyg 
+# This playbook provisions the environment for tomcat hosts of Mina Intyg 
 
 - hosts: all
   sudo: yes 
