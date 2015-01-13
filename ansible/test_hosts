@@ -1,0 +1,5 @@
+[demo]
+minaintyg-demo ansible_ssh_host=10.250.35.50 ansible_ssh_user=miwebapp1 ansible_ssh_private_key_file=~/.ssh/inera_rsa
+
+[test]
+minaintyg-test ansible_ssh_host=minaintyg.inera.nordicmedtest.se ansible_ssh_user=inera ansible_ssh_port=22022 ansible_ssh_private_key_file=~/.ssh/inera_rsa
