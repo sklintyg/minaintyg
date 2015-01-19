@@ -1,5 +1,2 @@
 ---
 # file: host_vars/minaintyg-test
-tomcat_conf: /opt/inera/tomcat7/conf
-tomcat_bin: /opt/inera/tomcat7/bin
-tomcat_lib: /opt/inera/tomcat7/lib
