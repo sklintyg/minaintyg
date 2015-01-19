@@ -31,7 +31,7 @@ public class UtlatandeMetaData {
     private final LocalDateTime signDate;
 
     /** Tells if the utlatande is available or not. */
-    private final String available;
+    private String available;
 
     /** A short text describing the content of the utlatande. */
     private final String complemantaryInfo;
@@ -96,6 +96,10 @@ public class UtlatandeMetaData {
 
     public String getAvailable() {
         return available;
+    }
+
+    public void setAvailable(String available) {
+        this.available = available;
     }
 
     public String getComplemantaryInfo() {

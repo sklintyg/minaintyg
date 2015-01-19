@@ -28,6 +28,10 @@
                 serviceClass="se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface"
                 address="${certificates.setstatus.url}"/>
 
+  <jaxws:client id="setCertificateArchivedClient"
+                serviceClass="se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchived.v1.rivtabp20.SetCertificateArchivedResponderInterface"
+                address="${certificates.setarchived.url}"/>
+
   <jaxws:client id="sendCertificateClient"
                 serviceClass="se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.rivtabp20.SendMedicalCertificateResponderInterface"
                 address="${certificates.sendcertificate.url}" />

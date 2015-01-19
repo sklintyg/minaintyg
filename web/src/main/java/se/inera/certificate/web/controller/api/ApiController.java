@@ -77,8 +77,7 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
-                "MI", StatusType.DELETED));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setArchived(id, citizen.getUsername(), "true"));
     }
 
     @PUT
@@ -87,8 +86,7 @@ public class ApiController {
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
-                "MI", StatusType.RESTORED));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setArchived(id, citizen.getUsername(), "false"));
     }
 
     @PUT

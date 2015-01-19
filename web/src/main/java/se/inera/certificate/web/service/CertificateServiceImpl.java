@@ -55,6 +55,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificate.v1.r
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.sendmedicalcertificateresponder.v1.SendType;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchived.v1.rivtabp20.SetCertificateArchivedResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
@@ -85,6 +88,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private GetRecipientsForCertificateResponderInterface getRecipientsForCertificateService;
 
+    @Autowired
+    private SetCertificateArchivedResponderInterface setCertificateArchivedService;
+    
     /**
      * Mapper to serialize/deserialize Utlatanden.
      */
@@ -251,6 +257,28 @@ public class CertificateServiceImpl implements CertificateService {
                     + response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
+    }
+
+    @Override
+    public UtlatandeMetaData setArchived(String id, String civicRegistrationNumber, String archivedState) {
+        SetCertificateArchivedRequestType parameters = new SetCertificateArchivedRequestType();
+        parameters.setArchivedState(archivedState);
+        parameters.setCertificateId(id);
+        parameters.setNationalIdentityNumber(civicRegistrationNumber);
+
+        UtlatandeMetaData result = null;
+        SetCertificateArchivedResponseType response = setCertificateArchivedService.setCertificateArchived(null, parameters);
+        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+            List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
+            for (UtlatandeMetaData meta : updatedList) {
+                if (meta.getId().equals(id)) {
+                    meta.setAvailable(archivedState.equalsIgnoreCase("true") ? "false" : "true");
+                    result = meta;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
 }

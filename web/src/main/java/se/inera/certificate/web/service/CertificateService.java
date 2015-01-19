@@ -19,6 +19,7 @@
 package se.inera.certificate.web.service;
 
 import org.joda.time.LocalDateTime;
+
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
@@ -68,4 +69,13 @@ public interface CertificateService {
      * @return a List of {@link UtlatandeRecipient}
      */
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
+
+    /**
+     * Set archived stat for a certificate
+     * @param id
+     * @param civicRegistrationNumber
+     * @param archivedState
+     * @param timestamp
+     */
+    UtlatandeMetaData setArchived(String id, String civicRegistrationNumber, String archivedState);
 }
