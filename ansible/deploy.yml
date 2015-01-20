@@ -4,7 +4,7 @@
 - hosts: all
   sudo: yes 
   vars: 
-    version: 2.1.0-b11
+    version: 2.1.0-b12
     config_version: master
 
   roles:
