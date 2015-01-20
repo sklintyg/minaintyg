@@ -2,6 +2,7 @@
 
 |script|!-HttpSakerhet-!|
 |logga på som|19121212-1212|
+|geSamtycke|
 |inkorgsidan visas|
 | api svar ska ej kunna cachas |
 | modul api svar ska ej kunna cachas |

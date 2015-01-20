@@ -2,12 +2,23 @@ package se.inera.certificate.web.spec
 
 import groovyx.net.http.HttpResponseDecorator
 import groovyx.net.http.RESTClient
+import se.inera.certificate.web.pages.ConsentPage
 import se.inera.certificate.web.pages.InboxPage
 
 class HttpSakerhet {
     void loggaPåSom(String pnr) {
         Browser.drive {
             go "sso?guid=${pnr}"
+        }
+    }
+
+    public void geSamtycke() {
+        Browser.drive {
+            go "/web/visa-ge-samtycke#/consent"
+            waitFor {
+                at ConsentPage
+                page.giveConsent()
+            }
         }
     }
 
@@ -32,7 +43,7 @@ class HttpSakerhet {
     }
 
     boolean modulApiSvarSkaEjKunnaCachas() {
-        hamtaHeader("/moduleapi/certificate/fit-intyg-1", "Cache-Control") == "no-cache, no-store, max-age=0, must-revalidate"
+        hamtaHeader("/moduleapi/certificate/intyg-1", "Cache-Control") == "no-cache, no-store, max-age=0, must-revalidate"
     }
 
     boolean enSidaSkaInteKunnaSattasIFrame() {
