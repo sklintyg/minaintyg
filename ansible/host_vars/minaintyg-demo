@@ -1,3 +1,5 @@
 ---
 # file: host_vars/minaintyg-demo
+
+# Configuration repository
 config_etc_folder: "{{ config_folder }}/demo"

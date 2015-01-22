@@ -1,4 +1,5 @@
 ---
+# file: roles/minaintyg-systemvariabler/tasks/main.yml
 
 - name: Create minaintyg-env.sh file
   template: src=minaintyg-env.sh.j2 dest="{{ inera_tomcat_folder }}/minaintyg-env.sh" mode=755
