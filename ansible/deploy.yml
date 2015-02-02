@@ -4,7 +4,7 @@
 - hosts: tomcat
   sudo: yes 
   vars: 
-    version: 2.1.0-b14
+    version: 2.1.0-b16
     config_version: master
 
   roles:
