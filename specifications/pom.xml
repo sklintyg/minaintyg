@@ -185,20 +185,27 @@
         </properties>
     </profile>
     <profile>
-      <id>test-server</id>
+      <id>demo</id>
         <properties>
-          <certificate.baseUrl>http://test.minaintyg.se/inera-certificate/</certificate.baseUrl>
-          <certificate.web.baseUrl>https://test.minaintyg.se/web/</certificate.web.baseUrl>
+          <certificate.baseUrl>http://10.250.34.20:8080/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://test.minaintyg.intygstjanster.se/web/</certificate.web.baseUrl>
         </properties>
     </profile>
     <profile>
-      <id>qa-server</id>
+      <id>nmt</id>
+        <properties>
+          <certificate.baseUrl>https://intygstjanst.inera.nordicmedtest.se:23443/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://minaintyg.inera.nordicmedtest.se/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
+      <id>qa</id>
         <properties>
           <certificate.web.baseUrl>https://qa.minaintyg.se/web/</certificate.web.baseUrl>
         </properties>
     </profile>
     <profile>
-      <id>ssh-tunnel-server</id>
+      <id>ssh-tunnel</id>
         <properties>
           <certificate.baseUrl>http://localhost:18080/inera-certificate/</certificate.baseUrl>
         </properties>
