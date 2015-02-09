@@ -22,7 +22,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
@@ -56,29 +56,29 @@ public class CertificateServiceImplTest {
     private LocalDateTime firstTimeStamp = new LocalDateTime(2013, 1, 2, 20, 0);
     private LocalDateTime laterTimeStamp = new LocalDateTime(2013, 1, 3, 20, 0);
 
-    private CertificateStatusType unhandledStatus;
-    private CertificateStatusType deletedStatus;
-    private CertificateStatusType sentStatus;
-    private CertificateStatusType cancelledStatus;
+    private UtlatandeStatus unhandledStatus;
+    private UtlatandeStatus deletedStatus;
+    private UtlatandeStatus sentStatus;
+    private UtlatandeStatus cancelledStatus;
 
     @Before
     public void setup() {
-        unhandledStatus = new CertificateStatusType();
+        unhandledStatus = new UtlatandeStatus();
         unhandledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.UNHANDLED);
         unhandledStatus.setTarget("FK");
         unhandledStatus.setTimestamp(firstTimeStamp);
 
-        deletedStatus = new CertificateStatusType();
+        deletedStatus = new UtlatandeStatus();
         deletedStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.DELETED);
         deletedStatus.setTarget("FK");
         deletedStatus.setTimestamp(laterTimeStamp);
 
-        sentStatus = new CertificateStatusType();
+        sentStatus = new UtlatandeStatus();
         sentStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.SENT);
         sentStatus.setTarget("FK");
         sentStatus.setTimestamp(firstTimeStamp);
 
-        cancelledStatus = new CertificateStatusType();
+        cancelledStatus = new UtlatandeStatus();
         cancelledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
         cancelledStatus.setTarget("FK");
         cancelledStatus.setTimestamp(firstTimeStamp);
@@ -123,7 +123,7 @@ public class CertificateServiceImplTest {
     }
     @Test
     public void testGetCertificatesStatusOrder() {
-        CertificateStatusType cancelledStatus = new CertificateStatusType();
+        UtlatandeStatus cancelledStatus = new UtlatandeStatus();
         cancelledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
         cancelledStatus.setTarget("FK");
         cancelledStatus.setTimestamp(new LocalDateTime(2015, 1, 1, 12, 0));

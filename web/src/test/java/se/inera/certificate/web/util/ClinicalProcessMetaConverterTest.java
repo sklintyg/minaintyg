@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
@@ -25,31 +25,31 @@ public class ClinicalProcessMetaConverterTest {
     private static final LocalDateTime LATER_TIMESTAMP = new LocalDateTime(2013, 1, 3, 20, 0);
     private static final String TARGET = "FK";
 
-    private static CertificateStatusType unhandledStatus;
-    private static CertificateStatusType deletedStatus;
-    private static CertificateStatusType sentStatus;
-    private static CertificateStatusType cancelledStatus;
+    private static UtlatandeStatus unhandledStatus;
+    private static UtlatandeStatus deletedStatus;
+    private static UtlatandeStatus sentStatus;
+    private static UtlatandeStatus cancelledStatus;
 
     private ClinicalProcessCertificateMetaTypeBuilder builder;
 
     @BeforeClass
     public static void setup() {
-        unhandledStatus = new CertificateStatusType();
+        unhandledStatus = new UtlatandeStatus();
         unhandledStatus.setType(StatusType.UNHANDLED);
         unhandledStatus.setTarget(TARGET);
         unhandledStatus.setTimestamp(FIRST_TIMESTAMP);
 
-        deletedStatus = new CertificateStatusType();
+        deletedStatus = new UtlatandeStatus();
         deletedStatus.setType(StatusType.DELETED);
         deletedStatus.setTarget(TARGET);
         deletedStatus.setTimestamp(LATER_TIMESTAMP);
 
-        sentStatus = new CertificateStatusType();
+        sentStatus = new UtlatandeStatus();
         sentStatus.setType(StatusType.SENT);
         sentStatus.setTarget(TARGET);
         sentStatus.setTimestamp(FIRST_TIMESTAMP);
 
-        cancelledStatus = new CertificateStatusType();
+        cancelledStatus = new UtlatandeStatus();
         cancelledStatus.setType(StatusType.CANCELLED);
         cancelledStatus.setTarget(TARGET);
         cancelledStatus.setTimestamp(LATER_TIMESTAMP);

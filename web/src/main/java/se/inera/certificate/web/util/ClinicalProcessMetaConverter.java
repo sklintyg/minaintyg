@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateStatusType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
@@ -37,7 +37,7 @@ public final class ClinicalProcessMetaConverter {
                 .additionalInfo(meta.getAdditionalInfo());
 
         if (meta.getStatus() != null) {
-            for (CertificateStatusType statusType : meta.getStatus()) {
+            for (UtlatandeStatus statusType : meta.getStatus()) {
                 try {
                     StatusType internalStatusType = StatusType.valueOf(statusType.getType().name());
                     builder.addStatus(internalStatusType, statusType.getTarget(), statusType.getTimestamp());

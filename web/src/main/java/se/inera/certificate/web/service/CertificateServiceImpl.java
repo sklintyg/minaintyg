@@ -223,7 +223,7 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public List<UtlatandeMetaData> getCertificates(String civicRegistrationNumber) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
-        params.setNationalIdentityNumber(civicRegistrationNumber);
+        params.setPersonId(civicRegistrationNumber);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
