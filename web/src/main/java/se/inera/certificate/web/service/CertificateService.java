@@ -44,28 +44,30 @@ public interface CertificateService {
     /**
      * Sets a new status for the certificate.
      *
-     * @param id
-     * @param target
+     * @param civicRegistrationNumber
+     * @param certificateId
+     * @param timestamp
+     * @param recipientId
      * @param type
      * @return Partially populated CertificateMeta object with id and new status and status description
      */
-    UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type);
+    UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String certificateId, LocalDateTime timestamp, String recipientId, StatusType type);
 
     /**
      * Request to send a specific certificate to a specific recipient.
      *
      * @param civicRegistrationNumber
-     * @param id
-     * @param target
+     * @param certificateId
+     * @param recipientId
      * @return
      */
-    ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target);
+    ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId);
 
     /**
      * Retrieves a list of possible recipients for the given certificate type.
      *
      * @param certificateType
-     *            the type of certificate to check
+     *            the type of certificate
      * @return a List of {@link UtlatandeRecipient}
      */
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
@@ -75,7 +77,6 @@ public interface CertificateService {
      * @param id
      * @param civicRegistrationNumber
      * @param archivedState
-     * @param timestamp
      */
     UtlatandeMetaData setArchived(String id, String civicRegistrationNumber, String archivedState);
 }

@@ -30,10 +30,10 @@ import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.RecipientType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
@@ -86,7 +86,7 @@ public class CertificateServiceImpl implements CertificateService {
     private GetCertificateContentResponderInterface getCertificateContentService;
 
     @Autowired
-    private GetRecipientsForCertificateResponderInterface getRecipientsForCertificateService;
+    private GetRecipientsForCitizenResponderInterface getRecipientsForCertificateService;
 
     @Autowired
     private SetCertificateArchivedResponderInterface setCertificateArchivedService;
@@ -105,23 +105,24 @@ public class CertificateServiceImpl implements CertificateService {
      *      java.lang.String)
      */
     @Override
-    public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String id, String target) {
-        LOG.debug("sendCertificate {} to {}", id, target);
-        SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
+    public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId) {
+        LOG.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, id);
-
-        SendType sendType = new SendType();
         VardAdresseringsType vardAdresseringsType = ModelConverter.toVardAdresseringsType(utlatande.getUtlatande().getGrundData());
 
-        sendType.setAdressVard(vardAdresseringsType);
-        sendType.setAvsantTidpunkt(new LocalDateTime());
-        sendType.setVardReferensId("MI");
-
-        // Lakarutlatande
+        // Läkarutlatande
         LakarutlatandeEnkelType lakarutlatande = ModelConverter.toLakarutlatandeEnkelType(utlatande.getUtlatande());
 
+        SendType sendType = new SendType();
+        sendType.setAdressVard(vardAdresseringsType);
+        sendType.setAvsantTidpunkt(new LocalDateTime());
+
+        // FIXME: WTF - hårdkodat värde
+        sendType.setVardReferensId("MI");
         sendType.setLakarutlatande(lakarutlatande);
+
+        SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
         req.setSend(sendType);
 
         //Do lookup to get logical adress
@@ -130,10 +131,12 @@ public class CertificateServiceImpl implements CertificateService {
             LOG.error("SendCertificate failed while looking up logical address for recipient: {}", target);
             return new ModuleAPIResponse("error", "");
         }
+
         AttributedURIType uri = new AttributedURIType();
         uri.setValue(logicalAdress);
 
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
+
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
             LOG.warn("SendCertificate error: {}", response.getResult().getErrorText());
             return new ModuleAPIResponse("error", "");
@@ -143,12 +146,12 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private String findLogicalAdressForRecipientId(String target, String intygsType) {
-        GetRecipientsForCertificateType params = new GetRecipientsForCertificateType();
+        GetRecipientsForCitizenType params = new GetRecipientsForCitizenType();
         params.setCertificateType(intygsType);
 
         String logicalAdress = null;
 
-        GetRecipientsForCertificateResponseType recipientResponse = getRecipientsForCertificateService.getRecipientsForCertificate(target, params);
+        GetRecipientsForCitizenResponseType recipientResponse = getRecipientsForCertificateService.getRecipientsForCitizen(params);
         for (RecipientType recipientType : recipientResponse.getRecipient()) {
             if (recipientType.getId().equalsIgnoreCase(target)) {
                 logicalAdress = recipientType.getLogicalAdress();
