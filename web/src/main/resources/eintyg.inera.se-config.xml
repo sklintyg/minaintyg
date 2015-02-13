@@ -27,6 +27,7 @@
       location="file:${credentials.file}, file:${minaintyg.config.file}" order="1"
       ignore-resource-not-found="false" ignore-unresolvable="true" />
   </beans>
+
   <beans profile="dev,test">
     <!-- Config file could be missing in dev and test -->
     <context:property-placeholder
@@ -35,7 +36,6 @@
   </beans>
 
   <beans>
-
     <import resource="classpath*:module-config.xml" />
     <import resource="classpath*:mi-module-cxf-servlet.xml" />
 
@@ -50,6 +50,7 @@
         <bean class="se.inera.certificate.integration.json.CustomObjectMapper"/>
       </property>
     </bean>
+
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basenames">
         <list>
@@ -57,15 +58,16 @@
           <value>version</value>
         </list>
       </property>
-
     </bean>
-        <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+
+    <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
       <property name="attributes">
         <map>
           <entry key="healthcheck" value-ref="healthcheck"/>
         </map>
       </property>
     </bean>
+
     <bean id="healthcheck" class="se.inera.certificate.web.overvakning.HealthCheck"/>
 
     <bean id="moduleRegistry" class="se.inera.certificate.modules.registry.IntygModuleRegistryImpl">

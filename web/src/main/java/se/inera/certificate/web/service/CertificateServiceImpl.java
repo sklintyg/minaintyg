@@ -18,22 +18,19 @@
  */
 package se.inera.certificate.web.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.GetRecipientsForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcitizen.v1.RecipientType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
@@ -66,7 +63,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.webcert.medcertqa.v1.LakarutlatandeEnkelType;
 import se.inera.webcert.medcertqa.v1.VardAdresseringsType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -77,20 +76,26 @@ public class CertificateServiceImpl implements CertificateService {
     private ListCertificatesForCitizenResponderInterface listService;
 
     @Autowired
-    private SetCertificateStatusResponderInterface statusService;
+    private SetCertificateStatusResponderInterface setStatusService;
 
     @Autowired
     private SendMedicalCertificateResponderInterface sendService;
 
     @Autowired
-    private GetCertificateContentResponderInterface getCertificateContentService;
+    private GetCertificateContentResponderInterface getContentService;
 
     @Autowired
-    private GetRecipientsForCitizenResponderInterface getRecipientsForCertificateService;
+    private GetRecipientsForCertificateResponderInterface getRecipientsService;
 
     @Autowired
-    private SetCertificateArchivedResponderInterface setCertificateArchivedService;
-    
+    private SetCertificateArchivedResponderInterface setArchivedService;
+
+    @Value("${application.ID}")
+    private String vardReferensId;
+
+    @Value("${intygstjanst.logicaladdress}")
+    private String logicalAddress;
+
     /**
      * Mapper to serialize/deserialize Utlatanden.
      */
@@ -108,7 +113,7 @@ public class CertificateServiceImpl implements CertificateService {
     public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId) {
         LOG.debug("sendCertificate {} to {}", certificateId, recipientId);
 
-        UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, id);
+        UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, certificateId);
         VardAdresseringsType vardAdresseringsType = ModelConverter.toVardAdresseringsType(utlatande.getUtlatande().getGrundData());
 
         // Läkarutlatande
@@ -117,23 +122,14 @@ public class CertificateServiceImpl implements CertificateService {
         SendType sendType = new SendType();
         sendType.setAdressVard(vardAdresseringsType);
         sendType.setAvsantTidpunkt(new LocalDateTime());
-
-        // FIXME: WTF - hårdkodat värde
-        sendType.setVardReferensId("MI");
+        sendType.setVardReferensId(vardReferensId);
         sendType.setLakarutlatande(lakarutlatande);
 
         SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
         req.setSend(sendType);
 
-        //Do lookup to get logical adress
-        String logicalAdress = findLogicalAdressForRecipientId(target, utlatande.getUtlatande().getTyp());
-        if (logicalAdress == null) {
-            LOG.error("SendCertificate failed while looking up logical address for recipient: {}", target);
-            return new ModuleAPIResponse("error", "");
-        }
-
         AttributedURIType uri = new AttributedURIType();
-        uri.setValue(logicalAdress);
+        uri.setValue(logicalAddress);
 
         final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
 
@@ -145,34 +141,18 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private String findLogicalAdressForRecipientId(String target, String intygsType) {
-        GetRecipientsForCitizenType params = new GetRecipientsForCitizenType();
-        params.setCertificateType(intygsType);
-
-        String logicalAdress = null;
-
-        GetRecipientsForCitizenResponseType recipientResponse = getRecipientsForCertificateService.getRecipientsForCitizen(params);
-        for (RecipientType recipientType : recipientResponse.getRecipient()) {
-            if (recipientType.getId().equalsIgnoreCase(target)) {
-                logicalAdress = recipientType.getLogicalAdress();
-            }
-        }
-        LOG.debug("Got logical adress {} for {} in Mina intyg", logicalAdress, target);
-        return logicalAdress;
-    }
-
     @Override
-    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String target, StatusType type) {
+    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId, StatusType type) {
         UtlatandeMetaData result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
         req.setNationalIdentityNumber(civicRegistrationNumber);
         req.setStatus(type);
-        req.setTarget(target);
-
+        req.setTarget(recipientId);
         req.setTimestamp(new LocalDateTime(timestamp));
 
-        final SetCertificateStatusResponseType response = statusService.setCertificateStatus(null, req);
+        final SetCertificateStatusResponseType response = setStatusService.setCertificateStatus(null, req);
+
         if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
             List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
             for (UtlatandeMetaData meta : updatedList) {
@@ -188,11 +168,15 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) {
+
+        AttributedURIType uri = new AttributedURIType();
+        uri.setValue(logicalAddress);
+
         GetCertificateContentRequestType request = new GetCertificateContentRequestType();
         request.setCertificateId(certificateId);
         request.setNationalIdentityNumber(civicRegistrationNumber);
 
-        GetCertificateContentResponseType response = getCertificateContentService.getCertificateContent(null, request);
+        GetCertificateContentResponseType response = getContentService.getCertificateContent(uri, request);
 
         switch (response.getResult().getResultCode()) {
         case OK:
@@ -241,11 +225,14 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<UtlatandeRecipient> getRecipientsForCertificate(String type) {
-        GetRecipientsForCertificateType params = new GetRecipientsForCertificateType();
-        params.setCertificateType(type);
+    public List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType) {
+        // Setup request
+        GetRecipientsForCertificateType request = new GetRecipientsForCertificateType();
+        request.setCertificateType(certificateType);
 
-        GetRecipientsForCertificateResponseType response = getRecipientsForCertificateService.getRecipientsForCertificate(null, params);
+        // Call service and get recipients
+        GetRecipientsForCertificateResponseType response = getRecipientsService.getRecipientsForCertificate(logicalAddress, request);
+
         switch (response.getResult().getResultCode()) {
         case OK:
             List<UtlatandeRecipient> recipientList = new ArrayList<UtlatandeRecipient>();
@@ -256,8 +243,7 @@ public class CertificateServiceImpl implements CertificateService {
             return recipientList;
 
         default:
-            LOG.error("Failed to fetch recipient list for cert type: " + type + " from Intygstjänsten. WS call result is "
-                    + response.getResult());
+            LOG.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType, response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
     }
@@ -270,7 +256,7 @@ public class CertificateServiceImpl implements CertificateService {
         parameters.setNationalIdentityNumber(civicRegistrationNumber);
 
         UtlatandeMetaData result = null;
-        SetCertificateArchivedResponseType response = setCertificateArchivedService.setCertificateArchived(null, parameters);
+        SetCertificateArchivedResponseType response = setArchivedService.setCertificateArchived(null, parameters);
         if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
             List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
             for (UtlatandeMetaData meta : updatedList) {
@@ -281,6 +267,7 @@ public class CertificateServiceImpl implements CertificateService {
                 }
             }
         }
+
         return result;
     }
 
