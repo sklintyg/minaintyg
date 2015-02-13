@@ -15,6 +15,7 @@ class IntygPage extends AbstractPage {
         confirmArchiveBtn(required: false) { $("#archive-button") }
         diagnosKod1(required: false) { $("#diagnosKod1").text() }
         diagnosKlartext1(required: false) { $("#diagnosKlartext1").text() }
+        falt2Ovrigt(required: false) { $("#diagnosBeskrivning").text() }
         falt6aArbetsformedlingen(required: false) { $("span", text: contains("Kontakt med Arbetsförmedlingen")).text() }
         falt6aForetagshalsovarden(required: false) { $("span", text: contains("Kontakt med företagshälsovården")).text() }
         falt6aOvrigt(required: false) { $("span", text: contains("Övrigt:")).text() }

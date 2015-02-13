@@ -74,28 +74,28 @@ public class VisaIntyg {
     public boolean intygetsDiagnoskod2Innehåller(String kod) {
         def kod1
         Browser.drive {
-            kod1 = page.falt13Kommentar
+            kod1 = page.falt2Ovrigt
         }
         return kod1?.contains(kod)
     }
     public boolean intygetsDiagnosklartext2Innehåller(String text) {
         def text1
         Browser.drive {
-            text1 = page.falt13Kommentar
+            text1 = page.falt2Ovrigt
         }
         return text1?.contains(text)
     }
     public boolean intygetsDiagnoskod3Innehåller(String kod) {
         def kod1
         Browser.drive {
-            kod1 = page.falt13Kommentar
+            kod1 = page.falt2Ovrigt
         }
         return kod1?.contains(kod)
     }
     public boolean intygetsDiagnosklartext3Innehåller(String text) {
         def text1
         Browser.drive {
-            text1 = page.falt13Kommentar
+            text1 = page.falt2Ovrigt
         }
         return text1?.contains(text)
     }
