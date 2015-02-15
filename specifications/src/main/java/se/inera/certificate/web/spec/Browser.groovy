@@ -24,8 +24,4 @@ public class Browser {
         script()
         browser
     }
-
-    static String getJSession() {
-        browser.getDriver().manage().getCookieNamed("JSESSIONID").getValue()
-    }
 }

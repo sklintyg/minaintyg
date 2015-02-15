@@ -1,40 +1,25 @@
 package se.inera.certificate.web.spec
 
 import groovyx.net.http.HttpResponseDecorator
-import groovyx.net.http.RESTClient
-import se.inera.certificate.web.pages.ConsentPage
-import se.inera.certificate.web.pages.InboxPage
+import se.inera.certificate.web.spec.util.RestClientFixture
 
-class HttpSakerhet {
+import static groovyx.net.http.ContentType.JSON
+
+class HttpSakerhet  extends RestClientFixture {
+
+    def client
+
     void loggaPåSom(String pnr) {
-        Browser.drive {
-            go "sso?guid=${pnr}"
-        }
+        client = createRestClient()
+        client.get(path: "/web/sso", query: [guid : pnr] )
     }
 
     public void geSamtycke() {
-        Browser.drive {
-            go "/web/visa-ge-samtycke#/consent"
-            waitFor {
-                at ConsentPage
-                page.giveConsent()
-            }
-        }
-    }
-
-    boolean inkorgsidanVisas() {
-        Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-        }
+        client.post(path: "/api/certificates/consent/give", body: "{}", requestContentType: JSON, headers: [Accept:"application/json"])
     }
 
     String hamtaHeader(url, header) {
-        def client = new RESTClient("http://localhost:8088/")
-        def headers = new HashMap<String,String>()
-        headers.put("Cookie","JSESSIONID=" + Browser.getJSession())
-        HttpResponseDecorator response = client.get(path: url, headers:headers)
+        HttpResponseDecorator response = client.get(path: url)
         response.getHeaders(header)[0].value
     }
 
