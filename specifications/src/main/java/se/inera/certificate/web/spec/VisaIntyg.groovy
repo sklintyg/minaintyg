@@ -72,32 +72,32 @@ public class VisaIntyg {
         return text1?.contains(text)
     }
     public boolean intygetsDiagnoskod2Innehåller(String kod) {
-        def kod1
+        def kod2
         Browser.drive {
-            kod1 = page.falt2Ovrigt
+            kod2 = page.diagnosKod2
         }
-        return kod1?.contains(kod)
+        return kod2?.contains(kod)
     }
     public boolean intygetsDiagnosklartext2Innehåller(String text) {
-        def text1
+        def text2
         Browser.drive {
-            text1 = page.falt2Ovrigt
+            text2 = page.diagnosKlartext2
         }
-        return text1?.contains(text)
+        return text2?.contains(text)
     }
     public boolean intygetsDiagnoskod3Innehåller(String kod) {
-        def kod1
+        def kod3
         Browser.drive {
-            kod1 = page.falt2Ovrigt
+            kod3 = page.diagnosKod3
         }
-        return kod1?.contains(kod)
+        return kod3?.contains(kod)
     }
     public boolean intygetsDiagnosklartext3Innehåller(String text) {
-        def text1
+        def text3
         Browser.drive {
-            text1 = page.falt2Ovrigt
+            text3 = page.diagnosKlartext3
         }
-        return text1?.contains(text)
+        return text3?.contains(text)
     }
         
     public boolean intygetsFält6aInnehållerKontaktMedArbetsförmedlingen() {

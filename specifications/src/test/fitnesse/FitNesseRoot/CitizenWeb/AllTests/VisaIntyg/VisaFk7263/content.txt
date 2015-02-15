@@ -18,13 +18,13 @@
 |intygssidan visas|
 |note|Testa huvud-diagnos|
 |intygetsDiagnoskod1Innehåller|S47|
-|intygetsDiagnosklartext1Innehåller|Klartext1|
+|intygetsDiagnosklartext1Innehåller|Klämskada på skuldra och överarm|
 |note|Testa bi-diagnos 1|
 |intygetsDiagnoskod2Innehåller|Z233|
 |intygetsDiagnosklartext2Innehåller|Vaccination avseende pest|
 |note|Testa bi-diagnos 2|
-|intygetsDiagnoskod3Innehåller|Z233|
-|intygetsDiagnosklartext3Innehåller|Vaccination avseende pest|
+|intygetsDiagnoskod3Innehåller|Z600|
+|intygetsDiagnosklartext3Innehåller|Problem med anpassning till övergångar i livscykeln|
 
 
 !3 Verifiera att fält 6a innehåller korrekt information. 
