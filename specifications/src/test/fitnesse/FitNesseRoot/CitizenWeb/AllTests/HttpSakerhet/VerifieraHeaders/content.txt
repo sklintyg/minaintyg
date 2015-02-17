@@ -2,7 +2,6 @@
 
 |script|!-HttpSakerhet-!|
 |logga på som|19121212-1212|
-|geSamtycke|
 | api svar ska ej kunna cachas |
 | modul api svar ska ej kunna cachas |
 | en sida ska inte kunna sattas i frame |
