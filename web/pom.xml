@@ -312,8 +312,12 @@
               <value>${project.build.directory}/catalina.base</value>
             </systemProperty>
             <systemProperty>
+              <name>credentials.file</name>
+              <value>${project.basedir}/minaintyg-credentials.properties</value>
+            </systemProperty>
+            <systemProperty>
               <name>minaintyg.config.file</name>
-              <value>${project.basedir}/minaintyg.properties</value>
+              <value>${project.basedir}/minaintyg-dev.properties</value>
             </systemProperty>
             <systemProperty>
               <name>minaintyg.logback.file</name>
