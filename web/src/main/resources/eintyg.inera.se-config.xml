@@ -24,15 +24,15 @@
   <beans profile="qa,prod">
     <!-- Config file must be present in qa and prod -->  
     <context:property-placeholder
-      location="file:${credentials.file}, file:${minaintyg.config.file}" order="1"
-      ignore-resource-not-found="false" ignore-unresolvable="true" />
+      location="file:${credentials.file}, file:${minaintyg.config.file}"
+      order="1" ignore-resource-not-found="false" ignore-unresolvable="true" />
   </beans>
 
   <beans profile="dev,test">
     <!-- Config file could be missing in dev and test -->
     <context:property-placeholder
-      location="file:${credentials.file}, file:${minaintyg.config.file}" order="1"
-      ignore-resource-not-found="true" ignore-unresolvable="true" />
+      location="file:${credentials.file}, file:${minaintyg.config.file}"
+      order="1" ignore-resource-not-found="true" ignore-unresolvable="true" />
   </beans>
 
   <beans>
@@ -40,8 +40,8 @@
     <import resource="classpath*:mi-module-cxf-servlet.xml" />
 
     <context:property-placeholder
-      location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties" order="2"
-      ignore-resource-not-found="true" ignore-unresolvable="true"/>
+      location="classpath:default.properties, classpath:version.properties"
+      order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
     <context:component-scan base-package="se.inera.certificate.web.security, se.inera.certificate.web.service, se.inera.certificate.integration.module" />
 
