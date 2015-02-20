@@ -106,7 +106,7 @@ var miMessages = {
             ]},
             {title:'Frågor och svar om säkerhet',questions:[
                 {question:'Är det säkert att använda Mina intyg?',answer:'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du använder din e-legitimation för att logga in och det går enbart att se sin egen information. All data i Mina intyg lagras på ett säkert sätt.'},
-                {question:'Hur skyddas mina uppgifter?',answer:'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PUL)), Patientdatalagen (PDL) och Datainspektionen.'},
+                {question:'Hur skyddas mina uppgifter?',answer:'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PuL), Patientdatalagen (PDL) och av Datainspektionen.'},
                 {question:'Kan andra komma åt mina uppgifter?',answer:'Nej, med hjälp av e-legitimationen utförs en identifiering av den som loggar in och ett behörighetsbeslut tas baserat på personnumret i e-legitimationen. Enbart information hänförbar till den person som loggar in kommer att visas.'},
                 {question:'Varför kan jag inte logga in med lösenord och sms?',answer:'Lösenord och SMS uppfyller inte de krav som gäller för hantering av medicinsk information, som till exempel kan finnas i ett läkarintyg.'},
                 {question:'Är det säkert med e-legitimation?',answer:'Ja, en e-legitimation är ett säkert sätt att identifiera sig i Sverige, men glöm inte att även skydda din dator.'},
