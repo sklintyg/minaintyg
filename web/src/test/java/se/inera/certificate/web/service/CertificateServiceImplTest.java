@@ -31,8 +31,8 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.utils.ResultT
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.exception.ResultTypeErrorException;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
 
 import java.io.IOException;
@@ -129,7 +129,7 @@ public class CertificateServiceImplTest {
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getIssuerName().equals(ISSUER_NAME));
         assertTrue(certificates.get(0).getFacilityName().equals(FACILITY_NAME));
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.SENT));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(CertificateState.SENT));
     }
     
     @Test(expected=ResultTypeErrorException.class)
@@ -161,7 +161,7 @@ public class CertificateServiceImplTest {
         List<UtlatandeMetaData> certificates = service.getCertificates("19121212-1212");
 
         assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(StatusType.CANCELLED));
+        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(CertificateState.CANCELLED));
     }
 
     @Test

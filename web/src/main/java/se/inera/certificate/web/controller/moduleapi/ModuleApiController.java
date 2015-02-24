@@ -152,7 +152,7 @@ public class ModuleApiController {
         }
 
         try {
-            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getUtlatande().getTyp()).pdf(new InternalModelHolder(utlatande.getDocument()), null, ApplicationOrigin.MINA_INTYG);
+            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getUtlatande().getTyp()).pdf(new InternalModelHolder(utlatande.getDocument()), utlatande.getStatuses(), ApplicationOrigin.MINA_INTYG);
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)

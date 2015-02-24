@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.api.StatusMeta;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
 /**
  * Converts meta data from the internal {@link UtlatandeMetaData} to the REST service model {@link CertificateMeta}.
@@ -31,14 +30,10 @@ public final class CertificateMetaConverter {
 
         boolean cancelled = false;
         if (meta.getStatuses() != null) {
-            for (UtlatandeStatusType statusType : meta.getStatuses()) {
-                StatusMeta statusMeta = new StatusMeta();
-                statusMeta.setType(statusType.getType().name());
-                statusMeta.setTarget(statusType.getTarget());
-                statusMeta.setTimestamp(statusType.getTimestamp());
-                result.getStatuses().add(statusMeta);
+            for (Status statusType : meta.getStatuses()) {
+                result.getStatuses().add(statusType);
 
-                if (statusType.getType().equals(StatusType.CANCELLED)) {
+                if (statusType.getType().equals(CertificateState.CANCELLED)) {
                     cancelled = true;
                 }
             }

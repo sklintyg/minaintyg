@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
 /**
  * Builder object for creating immutable {@link UtlatandeMetaData} objects.
@@ -29,7 +29,7 @@ public class UtlatandeMetaBuilder {
 
     private String additionalInfo;
 
-    private List<UtlatandeStatusType> statuses = new ArrayList<>();
+    private List<Status> statuses = new ArrayList<>();
 
     public UtlatandeMetaData build() {
         return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, additionalInfo, statuses);
@@ -77,11 +77,11 @@ public class UtlatandeMetaBuilder {
         return this;
     }
 
-    public UtlatandeMetaBuilder addStatus(StatusType type, String target, LocalDateTime timestamp) {
-        return addStatus(new UtlatandeStatusType(type, target, timestamp));
+    public UtlatandeMetaBuilder addStatus(CertificateState type, String target, LocalDateTime timestamp) {
+        return addStatus(new Status(type, target, timestamp));
     }
 
-    public UtlatandeMetaBuilder addStatus(UtlatandeStatusType status) {
+    public UtlatandeMetaBuilder addStatus(Status status) {
         this.statuses.add(status);
 
         return this;

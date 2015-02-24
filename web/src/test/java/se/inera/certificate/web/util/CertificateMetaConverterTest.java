@@ -9,9 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.api.CertificateStatus;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Status;
 
 public class CertificateMetaConverterTest {
 
@@ -25,15 +24,15 @@ public class CertificateMetaConverterTest {
     private static final LocalDateTime LATER_TIMESTAMP = new LocalDateTime(2013, 1, 3, 20, 0);
     private static final String TARGET = "FK";
 
-    private static UtlatandeStatusType sentStatus;
-    private static UtlatandeStatusType cancelledStatus;
+    private static Status sentStatus;
+    private static Status cancelledStatus;
 
     private UtlatandeMetaBuilder builder;
 
     @BeforeClass
     public static void setup() {
-        sentStatus = new UtlatandeStatusType(StatusType.SENT, TARGET, FIRST_TIMESTAMP);
-        cancelledStatus = new UtlatandeStatusType(StatusType.CANCELLED, TARGET, LATER_TIMESTAMP);
+        sentStatus = new Status(CertificateState.SENT, TARGET, FIRST_TIMESTAMP);
+        cancelledStatus = new Status(CertificateState.CANCELLED, TARGET, LATER_TIMESTAMP);
     }
 
     @Before

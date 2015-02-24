@@ -1,5 +1,7 @@
 package se.inera.certificate.api;
 
+import se.inera.certificate.model.Status;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class CertificateMeta implements Serializable {
     private Boolean archived;
     private Boolean cancelled;
     private String complementaryInfo;
-    private List<StatusMeta> statuses = new ArrayList<>();
+    private List<Status> statuses = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -90,11 +92,11 @@ public class CertificateMeta implements Serializable {
         this.selected = selected;
     }
 
-    public List<StatusMeta> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<StatusMeta> statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 }

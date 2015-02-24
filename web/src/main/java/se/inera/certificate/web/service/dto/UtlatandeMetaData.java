@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.Status;
 
 /**
  * Meta data describing a utlatande.
@@ -37,10 +38,10 @@ public class UtlatandeMetaData {
     private final String complemantaryInfo;
 
     /** A list of statuses of the utlatande. */
-    private final List<UtlatandeStatusType> statuses;
+    private final List<Status> statuses;
 
     public UtlatandeMetaData(String id, String type, String issuerName, String facilityName, LocalDateTime signDate, String available,
-            String complemantaryInfo, List<UtlatandeStatusType> statuses) {
+            String complemantaryInfo, List<Status> statuses) {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");
         hasText(issuerName, "'issuerName' must not be empty");
@@ -67,9 +68,9 @@ public class UtlatandeMetaData {
     /**
      * Compare status newest first.
      */
-    private static final Comparator<UtlatandeStatusType> STATUS_COMPARATOR = new Comparator<UtlatandeStatusType>() {
+    private static final Comparator<Status> STATUS_COMPARATOR = new Comparator<Status>() {
         @Override
-        public int compare(UtlatandeStatusType o1, UtlatandeStatusType o2) {
+        public int compare(Status o1, Status o2) {
             return o2.getTimestamp().compareTo(o1.getTimestamp());
         }
     };
@@ -106,7 +107,7 @@ public class UtlatandeMetaData {
         return complemantaryInfo;
     }
 
-    public List<UtlatandeStatusType> getStatuses() {
+    public List<Status> getStatuses() {
         return Collections.unmodifiableList(statuses);
     }
 }

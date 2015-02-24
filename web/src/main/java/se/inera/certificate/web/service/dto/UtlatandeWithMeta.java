@@ -5,6 +5,7 @@ import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
 
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.Utlatande;
 
 /**
@@ -15,9 +16,9 @@ public class UtlatandeWithMeta {
     private final Utlatande utlatande;
     private final String document;
 
-    private final List<UtlatandeStatusType> statuses;
+    private final List<Status> statuses;
 
-    public UtlatandeWithMeta(Utlatande utlatande, String document, List<UtlatandeStatusType> statuses) {
+    public UtlatandeWithMeta(Utlatande utlatande, String document, List<Status> statuses) {
         notNull(utlatande, "'utlatande' must not be null");
         hasText(document, "'document' must not be empty");
         notNull(statuses, "'statuses' must not be null");
@@ -34,7 +35,7 @@ public class UtlatandeWithMeta {
         return document;
     }
 
-    public List<UtlatandeStatusType> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 

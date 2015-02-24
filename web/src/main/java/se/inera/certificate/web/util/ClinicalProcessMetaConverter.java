@@ -6,9 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 
 /**
  * Converts meta data from {@link CertificateMetaType} to the internal {@link UtlatandeMetaData} type.
@@ -38,10 +39,9 @@ public final class ClinicalProcessMetaConverter {
 
         if (meta.getStatus() != null) {
             for (UtlatandeStatus statusType : meta.getStatus()) {
-                try {
-                    StatusType internalStatusType = StatusType.valueOf(statusType.getType().name());
+                if (statusType.getType() == StatusType.SENT || statusType.getType() == StatusType.CANCELLED) {
+                    CertificateState internalStatusType = CertificateState.valueOf(statusType.getType().name());
                     builder.addStatus(internalStatusType, statusType.getTarget(), statusType.getTimestamp());
-                } catch (IllegalArgumentException ignore) {
                 }
             }
         }

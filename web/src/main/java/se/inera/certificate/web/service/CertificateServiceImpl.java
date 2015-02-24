@@ -40,10 +40,11 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertifica
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
@@ -281,11 +282,11 @@ public class CertificateServiceImpl implements CertificateService {
             throw new RuntimeException(e);
         }
 
-        List<UtlatandeStatusType> statuses = new ArrayList<UtlatandeStatusType>();
+        List<Status> statuses = new ArrayList<Status>();
         for (CertificateStatusType status : response.getStatuses()) {
             if (status.getType().equals(StatusType.SENT) || status.getType().equals(StatusType.CANCELLED)) {
-                statuses.add(new UtlatandeStatusType(se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType.valueOf(status.getType().name()),
-                        status.getTarget(), status.getTimestamp()));
+                statuses.add(new Status(CertificateState.valueOf(status.getType().name()), status.getTarget(),
+                        status.getTimestamp()));
             }
         }
         return new UtlatandeWithMeta(utlatande, document, statuses);

@@ -1,5 +1,7 @@
 package se.inera.certificate.api;
 
+import se.inera.certificate.model.Status;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 public class CertificateStatus implements Serializable {
 
     private Boolean cancelled;
-    private List<StatusMeta> statuses = new ArrayList<>();
+    private List<Status> statuses = new ArrayList<>();
 
     public Boolean getCancelled() {
         return cancelled;
@@ -18,11 +20,11 @@ public class CertificateStatus implements Serializable {
         this.cancelled = cancelled;
     }
 
-    public List<StatusMeta> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<StatusMeta> statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 }

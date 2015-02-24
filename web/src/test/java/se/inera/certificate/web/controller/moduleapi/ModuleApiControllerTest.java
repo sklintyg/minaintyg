@@ -27,6 +27,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.registry.IntygModuleRegistry;
@@ -38,8 +39,6 @@ import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType;
-import se.inera.certificate.web.service.dto.UtlatandeStatusType.StatusType;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,8 +77,8 @@ public class ModuleApiControllerTest {
         certificateData = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
 
         Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
-        List<UtlatandeStatusType> status = new ArrayList<UtlatandeStatusType>();
-        status.add(new UtlatandeStatusType(StatusType.SENT, "FK", LocalDateTime.now()));
+        List<Status> status = new ArrayList<Status>();
+        status.add(new Status(CertificateState.SENT, "FK", LocalDateTime.now()));
         utlatandeHolder = new UtlatandeWithMeta(utlatande, certificateData, status);
 
         internalModelHolder = new InternalModelHolder(certificateData);
