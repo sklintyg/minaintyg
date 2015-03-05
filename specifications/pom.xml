@@ -38,11 +38,11 @@
 
   <dependencies>
 
-    <!--  Intygstjanst -->
+    <!-- Tools -->
     <dependency>
-      <groupId>se.inera.intyg.intygstjanst</groupId>
-      <artifactId>intygstjanst-specifications</artifactId>
-      <version>${intygstjanst.version}</version>
+      <groupId>se.inera.intyg.tools</groupId>
+      <artifactId>tools-specifications</artifactId>
+      <version>${tools.version}</version>
     </dependency>
 
     <dependency>
