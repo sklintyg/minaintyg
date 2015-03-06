@@ -20,13 +20,13 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             keepInboxTabActive: false
         }).
         state('arkiverade', {
-            url : '/arkiverade'
+            url : '/arkiverade',
             templateUrl: '/views/list-archived.html',
             controller: 'minaintyg.ListArchivedCtrl',
             data:{title: 'Arkiverade intyg'},
             keepInboxTabActive: false
         }).
-        state('omminaintyg', {
+        state('om-minaintyg', {
             url :'/omminaintyg',
             templateUrl: '/views/om-mina-intyg.html',
             controller: 'minaintyg.AboutCtrl',
