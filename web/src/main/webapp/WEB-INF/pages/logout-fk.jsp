@@ -98,7 +98,8 @@
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
       <script type="text/javascript" src="/js/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
@@ -108,7 +109,8 @@
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
       <script type="text/javascript" src="/js/base/app.js"></script>
     </c:otherwise>

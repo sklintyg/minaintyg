@@ -12,10 +12,10 @@
  */
 angular.module('minaintyg').controller('minaintyg.ErrorViewCtrl',
 
-    function($scope, $routeParams) {
+    function($scope, $stateParams) {
         'use strict';
 
         // set a default if no errorCode is given in routeparams
-        $scope.errorCode = $routeParams.errorCode || 'generic';
+        $scope.errorCode = $stateParams.errorCode || 'generic';
         $scope.pagefocus = true;
     });
