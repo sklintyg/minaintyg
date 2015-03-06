@@ -1,7 +1,7 @@
 /* global MI_CONFIG, miMessages */
 window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
-var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
 
 app.run([ '$rootScope', '$window', 'common.messageService', function($rootScope, $window, messageService) {
     'use strict';
