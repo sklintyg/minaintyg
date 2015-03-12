@@ -29,12 +29,12 @@ app.run([ '$rootScope', '$route', '$window', 'common.messageService',
         // Update page title
         $rootScope.page_title = 'Titel';
         $rootScope.$on('$routeChangeSuccess', function() {
-            if ($route.current.$$route) {
+            if ($state.current.$$route) {
 
-                if ($route.current.$$route.keepInboxTabActive === false) {
+                if ($state.current.$$route.keepInboxTabActive === false) {
                     $rootScope.keepInboxTab = false;
                 }
-                $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+                $rootScope.page_title = $state.current.$$route.title + ' | Mina intyg';
             }
         });
 
