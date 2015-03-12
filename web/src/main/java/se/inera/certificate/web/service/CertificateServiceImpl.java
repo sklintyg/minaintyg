@@ -19,6 +19,7 @@
 package se.inera.certificate.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
@@ -34,9 +36,9 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipients
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -79,7 +81,7 @@ public class CertificateServiceImpl implements CertificateService {
     private SetCertificateStatusResponderInterface setStatusService;
 
     @Autowired
-    private SendCertificateForCitizenResponderInterface sendService;
+    private SendCertificateToRecipientResponderInterface sendService;
 
     @Autowired
     private GetCertificateContentResponderInterface getContentService;
@@ -93,7 +95,6 @@ public class CertificateServiceImpl implements CertificateService {
     // These values are injected by their setter methods
     private String vardReferensId;
     private String logicalAddress;
-
 
     // - - - - - Public methods - - - - - //
 
@@ -109,34 +110,12 @@ public class CertificateServiceImpl implements CertificateService {
     public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId) {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
-        /*
-        UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, certificateId);
-        VardAdresseringsType vardAdresseringsType = ModelConverter.toVardAdresseringsType(utlatande.getUtlatande().getGrundData());
-
-        // Läkarutlatande
-        LakarutlatandeEnkelType lakarutlatande = ModelConverter.toLakarutlatandeEnkelType(utlatande.getUtlatande());
-
-        SendType sendType = new SendType();
-        sendType.setAdressVard(vardAdresseringsType);
-        sendType.setAvsantTidpunkt(new LocalDateTime());
-        sendType.setVardReferensId(vardReferensId);
-        sendType.setLakarutlatande(lakarutlatande);
-
-        SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
-        req.setSend(sendType);
-
-        AttributedURIType uri = new AttributedURIType();
-        uri.setValue(logicalAddress);
-
-        //final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
-        */
-
-        SendCertificateForCitizenType request = new SendCertificateForCitizenType();
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setPersonId(civicRegistrationNumber);
         request.setUtlatandeId(certificateId);
         request.setMottagareId(recipientId);
 
-        final SendCertificateForCitizenResponseType response = sendService.sendCertificateForCitizen(logicalAddress, request);
+        final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
         if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
             LOGGER.warn("SendCertificate error: {}", response.getResult().getResultText());
@@ -147,7 +126,8 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId, StatusType type) {
+    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId,
+            StatusType type) {
         UtlatandeMetaData result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
@@ -228,7 +208,8 @@ public class CertificateServiceImpl implements CertificateService {
             return recipientList;
 
         default:
-            LOGGER.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType, response.getResult());
+            LOGGER.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType,
+                    response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
     }
@@ -256,7 +237,6 @@ public class CertificateServiceImpl implements CertificateService {
         return result;
     }
 
-
     // - - - - - Package methods - - - - - //
 
     @Value("${application.ID}")
@@ -268,7 +248,6 @@ public class CertificateServiceImpl implements CertificateService {
     void setLogicalAddress(final String logicalAddress) {
         this.logicalAddress = logicalAddress;
     }
-
 
     // - - - - - Private methods - - - - - //
 
