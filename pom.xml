@@ -39,6 +39,10 @@
     <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
     <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
 
+    <se-intygstjanster-ts-services.version>0-SNAPSHOT</se-intygstjanster-ts-services.version>
+    <se-intygstjanster-ts-services.version.range>(,1.0.0]</se-intygstjanster-ts-services.version.range>
+
+
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
   </properties>
@@ -90,11 +94,12 @@
         <artifactId>fk7263</artifactId>
         <version>${intygstyper.version}</version>
       </dependency>
-      <!-- <dependency>
+      <dependency>
          <groupId>se.inera.intyg.intygstyper</groupId>
          <artifactId>ts-bas</artifactId>
          <version>${intygstyper.version}</version>
-       </dependency>--><!--<dependency>
+       </dependency>
+       <!--<dependency>
         <groupId>se.inera.intyg.intygstyper</groupId>
         <artifactId>ts-diabetes</artifactId>
         <version>${intygstyper.version}</version>
@@ -111,6 +116,11 @@
         <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
         <version>${insuranceprocess-healthreporting.version}</version>
       </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+        <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
+        <version>${se-intygstjanster-ts-services.version}</version>
+      </dependency> 
 
       <!-- Dependency to Netcare's MVK integration -->
       <dependency>
