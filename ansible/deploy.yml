@@ -7,10 +7,10 @@
     # repo - values: snapshot or release
     repo: release
 
-    # latest release: 2.1.0-b27
+    # latest release: 2.1.0-RC1
     # latest snapshot: 2.1.0-a664
-    version: 2.1.0-b27
-    config_version: release/v2.1.0
+    version: 2.1.0-RC1
+    config_version: origin/release/v2.1.0
 
   roles:
     - minaintyg
