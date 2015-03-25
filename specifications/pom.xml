@@ -38,6 +38,16 @@
 
   <dependencies>
 
+	<!-- Schemas -->
+	<dependency>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+	  <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
+	  <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
+	</dependency>
+
     <!-- Tools -->
     <dependency>
       <groupId>se.inera.intyg.tools</groupId>
