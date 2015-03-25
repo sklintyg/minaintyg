@@ -98,11 +98,11 @@
          <artifactId>ts-bas</artifactId>
          <version>${intygstyper.version}</version>
        </dependency>
-       <!--<dependency>
+       <dependency>
         <groupId>se.inera.intyg.intygstyper</groupId>
         <artifactId>ts-diabetes</artifactId>
         <version>${intygstyper.version}</version>
-      </dependency>-->
+      </dependency>
 
       <!-- Schemas -->
       <dependency>
@@ -119,7 +119,7 @@
         <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
         <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
         <version>${se-intygstjanster-ts-services.version}</version>
-      </dependency> 
+      </dependency>
 
       <!-- Dependency to Netcare's MVK integration -->
       <dependency>
