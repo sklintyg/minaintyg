@@ -18,7 +18,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
             $scope.openRestoreDialog = function(cert) {
                 $scope.certToRestore = cert;
                 $scope.dialog.focus = true;
-                restoreDialog = dialogService.showDialog($scope, {
+                restoreDialog = dialogService.showDialog({
                     dialogId: 'restore-confirmation-dialog',
                     titleId: 'archived.restoremodal.header',
                     bodyTextId: 'archived.restoremodal.text',
