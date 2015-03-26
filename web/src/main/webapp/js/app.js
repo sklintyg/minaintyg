@@ -70,8 +70,8 @@ app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     }]);
 
 
-app.run([ '$rootScope', '$route', '$window', 'common.messageService',
-    function($rootScope, $route, $window, messageService) {
+app.run([ '$rootScope', '$state', '$window', 'common.messageService',
+    function($rootScope, $state, $window, messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';
