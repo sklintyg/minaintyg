@@ -40,7 +40,7 @@ angular.module('minaintyg').controller('minaintyg.AboutCtrl',
 
             $scope.openRevokeDialog = function() {
                 $scope.dialog.focus = true;
-                revokeDialog = dialogService.showDialog($scope, {
+                revokeDialog = dialogService.showDialog({
                     dialogId: 'revoke-consent-confirmation-dialog',
                     titleId: 'about.revokemodal.header',
                     bodyTextId: 'about.revokemodal.text',
