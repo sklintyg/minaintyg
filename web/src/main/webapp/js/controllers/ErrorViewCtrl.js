@@ -1,5 +1,5 @@
 /**
- * Generic controller that exposes an errorCode extracted from routeparams to
+ * Generic controller that exposes an errorCode extracted from stateParams to
  * the scope. used by the modules as a common component. Make a dependency to
  * 'controllers.util' in the app: and ha this as a controller for your error
  * page routing e.g: ... }).when('/fel/:errorCode', { templateUrl :
@@ -12,10 +12,10 @@
  */
 angular.module('minaintyg').controller('minaintyg.ErrorViewCtrl',
 
-    function($scope, $routeParams) {
+    function($scope, $stateParams) {
         'use strict';
 
-        // set a default if no errorCode is given in routeparams
-        $scope.errorCode = $routeParams.errorCode || 'generic';
+        // set a default if no errorCode is given in stateParams
+        $scope.errorCode = $stateParams.errorCode || 'generic';
         $scope.pagefocus = true;
     });

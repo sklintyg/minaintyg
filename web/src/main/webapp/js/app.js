@@ -1,52 +1,8 @@
 /* global MI_CONFIG, miMessages */
+// defers bootstrapping until all modules have been loaded, further down ...
 window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
-var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'ngAnimate', 'common' ]);
-
-app.config(function($routeProvider) {
-    'use strict';
-
-    $routeProvider.
-        when('/consent', {
-            templateUrl: '/views/consent/consent-start.html',
-            controller: 'minaintyg.ConsentCtrl',
-            title: 'Ditt samtycke',
-            keepInboxTabActive: false
-        }).
-        when('/lista', {
-            templateUrl: '/views/list.html',
-            controller: 'minaintyg.ListCtrl',
-            title: 'Inkorgen',
-            keepInboxTabActive: false
-        }).
-        when('/arkiverade', {
-            templateUrl: '/views/list-archived.html',
-            controller: 'minaintyg.ListArchivedCtrl',
-            title: 'Arkiverade intyg',
-            keepInboxTabActive: false
-        }).
-        when('/omminaintyg', {
-            templateUrl: '/views/om-mina-intyg.html',
-            controller: 'minaintyg.AboutCtrl',
-            title: 'Om mina intyg',
-            keepInboxTabActive: false
-        }).
-        when('/hjalp', {
-            templateUrl: '/views/hjalp.html',
-            controller: 'minaintyg.HelpCtrl',
-            title: 'Hjälp',
-            keepInboxTabActive: false
-        }).
-        when('/fel/:errorCode', {
-            templateUrl: '/views/error.html',
-            controller: 'minaintyg.ErrorViewCtrl',
-            title: 'Fel',
-            keepInboxTabActive: false
-        }).
-        otherwise({
-            redirectTo: '/lista'
-        });
-});
+var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
 
 app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     function($httpProvider, http403ResponseInterceptorProvider) {
@@ -61,8 +17,8 @@ app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     }]);
 
 
-app.run([ '$rootScope', '$route', '$window', 'common.messageService',
-    function($rootScope, $route, $window, messageService) {
+app.run([ '$rootScope', '$state', '$window', 'common.messageService',
+    function($rootScope, $state, $window, messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';
@@ -73,12 +29,12 @@ app.run([ '$rootScope', '$route', '$window', 'common.messageService',
         // Update page title
         $rootScope.page_title = 'Titel';
         $rootScope.$on('$routeChangeSuccess', function() {
-            if ($route.current.$$route) {
+            if ($state.current.$$route) {
 
-                if ($route.current.$$route.keepInboxTabActive === false) {
+                if ($state.current.$$route.keepInboxTabActive === false) {
                     $rootScope.keepInboxTab = false;
                 }
-                $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+                $rootScope.page_title = $state.current.$$route.title + ' | Mina intyg';
             }
         });
 
