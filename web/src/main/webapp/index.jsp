@@ -60,6 +60,7 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
 </script>
 
 </head>
+
 <body ng-app="minaintyg">
 
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
@@ -154,7 +155,6 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
@@ -165,7 +165,6 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
