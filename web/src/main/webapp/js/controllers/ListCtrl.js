@@ -55,7 +55,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;
                 $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog({
+                archiveDialog = dialogService.showDialog( $scope, {
                     dialogId: 'archive-confirmation-dialog',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
@@ -72,7 +72,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             // FK dialog
             var fromConsentPage = $cookies.RedirectFromConsent;
             if (fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === 'FK')) {
-                dialogService.showDialog({
+                dialogService.showDialog($scope, {
                     dialogId: 'fk-login-consent-dialog',
                     titleId: 'fkdialog.head',
                     bodyTextId: 'fkdialog.text',
