@@ -92,7 +92,7 @@
               </div>
             </noscript>
             <%-- ng-view that holds dynamic content managed by angular app --%>
-            <div id="view" ng-view></div>
+            <div id="view" ui-view></div>
           </div>
         </div>
       </div>
