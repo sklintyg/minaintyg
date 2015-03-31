@@ -10,7 +10,7 @@ class HttpSakerhet  extends RestClientFixture {
     def client
 
     void loggaPåSom(String pnr) {
-        client = createRestClient()
+        client = createRestClient(baseUrl)
         client.get(path: "/web/sso", query: [guid : pnr] )
     }
 
