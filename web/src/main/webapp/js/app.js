@@ -41,12 +41,24 @@ app.run([ '$rootScope', '$state', '$window', 'common.messageService',
         $window.doneLoading = false;
         $window.dialogDoneLoading = true;
 
-        $rootScope.$on('$routeChangeStart', function() {
-            $window.doneLoading = false;
-        });
-        $rootScope.$on('$routeChangeSuccess', function() {
-            $window.doneLoading = true;
-        });
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                $window.doneLoading = false;
+            });
+
+        $rootScope.$on('$stateNotFound',
+            function(event, unfoundState, fromState, fromParams){
+            })
+        $rootScope.$on('$stateChangeSuccess',
+            function(event, toState, toParams, fromState, fromParams){
+                $window.doneLoading = true;
+            })
+
+        $rootScope.$on('$stateChangeError',
+            function(event, toState, toParams, fromState, fromParams, error){
+                $log.log("$stateChangeError");
+                $log.log(toState);
+            })
 
         $window.onbeforeunload = function() {
             var request = new XMLHttpRequest();
