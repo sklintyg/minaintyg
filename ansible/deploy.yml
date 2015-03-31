@@ -7,8 +7,11 @@
     # repo - values: snapshot or release
     repo: release
 
-    version: 2.1.0
-    config_version: origin/release/v2.1.0
+    # latest release: 2.2.0-b30
+    # latest snapshot: 2.2.0-aNNN
+    version: 2.2.0-b30
+    config_version: master
 
   roles:
     - minaintyg
+
