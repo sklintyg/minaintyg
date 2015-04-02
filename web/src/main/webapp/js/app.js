@@ -44,7 +44,16 @@ app.config(function($routeProvider) {
             keepInboxTabActive: false
         }).
         otherwise({
-            redirectTo: '/lista'
+            redirectTo: function() {
+                // When running IE in QA the VerifyConsentInterceptor doesnt give us the #/consent after the redirect.
+                // This is a workaround to add it back.
+                if (window.location.href.indexOf('/web/visa-ge-samtycke') > -1) {
+                    return '/consent';
+                }
+                else {
+                    return '/lista';
+                }
+            }
         });
 });
 
