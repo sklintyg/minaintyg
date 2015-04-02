@@ -35,7 +35,7 @@ public final class ClinicalProcessMetaConverter {
                 .facilityName(meta.getFacilityName())
                 .signDate(meta.getSignDate())
                 .available(meta.getAvailable())
-                .additionalInfo(meta.getAdditionalInfo());
+                .additionalInfo(meta.getComplemantaryInfo());
 
         if (meta.getStatus() != null) {
             for (UtlatandeStatus statusType : meta.getStatus()) {
