@@ -48,5 +48,14 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             keepInboxTabActive: false
         });
 
-        $urlRouterProvider.otherwise('/lista');
+        $urlRouterProvider.otherwise(function() {
+            // When running IE in QA the VerifyConsentInterceptor doesnt give us the #/consent after the redirect.
+            // This is a workaround to add it back.
+            if (window.location.href.indexOf('/web/visa-ge-samtycke') > -1) {
+                return '/consent';
+            }
+            else {
+                return '/lista';
+            }
+        });
 });
