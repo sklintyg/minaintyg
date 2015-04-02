@@ -3,6 +3,7 @@ package se.inera.certificate.web.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -27,7 +29,7 @@ import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
+import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
@@ -184,7 +186,13 @@ public class CertificateServiceImplTest {
         /* Verify */
         assertEquals("sent", apiResponse.getResultCode());
 
-        verify(sendServiceMock).sendCertificateToRecipient("FKORG", request);
+        ArgumentCaptor<SendCertificateToRecipientType> argument = ArgumentCaptor.forClass(SendCertificateToRecipientType.class);
+        verify(sendServiceMock).sendCertificateToRecipient(eq("FKORG"), argument.capture());
+
+        SendCertificateToRecipientType actualRequest = argument.getValue();
+        assertEquals(request.getPersonId(), actualRequest.getPersonId());
+        assertEquals(request.getUtlatandeId(), actualRequest.getUtlatandeId());
+        assertEquals(request.getMottagareId(), actualRequest.getMottagareId());
     }
 
     private ClinicalProcessCertificateMetaTypeBuilder getClinicalProcessCertificateMetaTypeBuilder(
