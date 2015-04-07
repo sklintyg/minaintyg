@@ -7,9 +7,7 @@
     # repo - values: snapshot or release
     repo: release
 
-    # latest release: 2.1.0-RC3
-    # latest snapshot: 2.1.0-a664
-    version: 2.1.0-RC3
+    version: 2.1.0
     config_version: origin/release/v2.1.0
 
   roles:
