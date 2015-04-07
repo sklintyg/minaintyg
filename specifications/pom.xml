@@ -16,6 +16,7 @@
   <name>Mina intyg (FitNesse)</name>
 
   <properties>
+    <groovy.httpBuilder.version>0.7.1</groovy.httpBuilder.version>
 
     <!-- URL to Intygstjansten -->
     <certificate.baseUrl>http://localhost:8080/inera-certificate/</certificate.baseUrl>
