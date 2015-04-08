@@ -44,6 +44,11 @@
                   serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface"
                   address="${certificates.getrecipientforcertificate.url}" />
 
+  <!-- Client for the PingForConfiguration service on Intygstjanst -->
+  <jaxws:client id="pingIntygstjanstForConfigurationClient" 
+                  serviceClass="se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface"
+                  address="${certificates.pingforconfiguration.url}" />
+
   <cxf:bus>
     <cxf:features>
       <cxf:logging/>

@@ -12,14 +12,13 @@
 
   <context:annotation-config />
 
-  <context:property-placeholder location="classpath:version.properties" order="3" ignore-resource-not-found="false" />
-
   <cxf:bus>
     <cxf:features>
       <cxf:logging />
     </cxf:features>
   </cxf:bus>
 
+  <!-- Monitoring WS-service -->
   <jaxws:endpoint address="/ping-for-configuration/v1.0" implementor="se.inera.certificate.monitoring.PingForConfigurationResponderImpl" />
 
 </beans>

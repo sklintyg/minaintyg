@@ -3,13 +3,12 @@ package se.inera.certificate.monitoring;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.web.service.MonitoringService;
+import se.inera.certificate.web.service.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.ConfigurationType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
@@ -18,39 +17,44 @@ import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 public class PingForConfigurationResponderImpl implements PingForConfigurationResponderInterface {
 
     private static final Logger LOG = LoggerFactory.getLogger(PingForConfigurationResponderImpl.class);
-    
-    @Value("${project.version}")
-    private String projectVersion;
 
-    @Value("${buildNumber}")
-    private String buildNumberString;
+    private static final String INTYGTJANST = "intygstjanst";
+    private static final String BUILD_NUMBER = "buildNumber";
+    private static final String BUILD_TIME = "buildTime";
 
-    @Value("${buildTime}")
-    private String buildTimeString;
+    @Autowired
+    private MonitoringService monitoringService;
 
     @Override
     public PingForConfigurationResponseType pingForConfiguration(String logicalAddress, PingForConfigurationType parameters) {
 
+        LOG.debug("Calling pingForConfiguration");
+
         PingForConfigurationResponseType response = new PingForConfigurationResponseType();
         response.setPingDateTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-        response.setVersion(projectVersion);
-        
-        addConfiguration(response, "buildNumber", buildNumberString);
-        addConfiguration(response, "buildTime", buildTimeString);
+        response.setVersion(monitoringService.getApplicationVersion());
+
+        addConfiguration(response, BUILD_NUMBER, monitoringService.getApplicationBuildNumber());
+        addConfiguration(response, BUILD_TIME, monitoringService.getApplicationBuildTime());
+
+        HealthStatus checkIntygstjanst = monitoringService.checkIntygstjanst();
+        addConfiguration(response, INTYGTJANST, checkIntygstjanst);
 
         return response;
     }
-    
+
+    private void addConfiguration(PingForConfigurationResponseType response, String name, HealthStatus status) {
+        ConfigurationType conf = new ConfigurationType();
+        conf.setName(name);
+        conf.setValue(Long.toString(status.getMeasurement()));
+        response.getConfiguration().add(conf);
+    }
+
     private void addConfiguration(PingForConfigurationResponseType response, String name, String value) {
         ConfigurationType conf = new ConfigurationType();
         conf.setName(name);
         conf.setValue(value);
         response.getConfiguration().add(conf);
-    }
-
-    @PostConstruct
-    public void init() {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
 }
