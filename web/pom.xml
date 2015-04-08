@@ -58,6 +58,10 @@
       <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
       <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
     </dependency>
+    <dependency>
+      <groupId>se.riv.itintegration.monitoring</groupId>
+      <artifactId>itintegration-monitoring-interactions</artifactId>
+    </dependency>
     <!-- Dependency to Netcare's MVK integration -->
     <dependency>
       <groupId>org.callistasoftware.netcare.commons</groupId>
