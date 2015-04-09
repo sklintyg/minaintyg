@@ -41,6 +41,8 @@
     <se-intygstjanster-ts-services.version>0-SNAPSHOT</se-intygstjanster-ts-services.version>
     <se-intygstjanster-ts-services.version.range>(,1.0.0]</se-intygstjanster-ts-services.version.range>
 
+    <itintegration-monitoring.version>0-SNAPSHOT</itintegration-monitoring.version>
+    <itintegration-monitoring.version.range>(,1.0.0]</itintegration-monitoring.version.range>
 
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
@@ -119,6 +121,11 @@
         <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
         <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
         <version>${se-intygstjanster-ts-services.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.riv.itintegration.monitoring</groupId>
+        <artifactId>itintegration-monitoring-interactions</artifactId>
+        <version>${itintegration-monitoring.version}</version>
       </dependency>
 
       <!-- Dependency to Netcare's MVK integration -->

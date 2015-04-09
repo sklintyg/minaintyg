@@ -1,61 +1,8 @@
 /* global MI_CONFIG, miMessages */
+// defers bootstrapping until all modules have been loaded, further down ...
 window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
-var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'ngAnimate', 'common' ]);
-
-app.config(function($routeProvider) {
-    'use strict';
-
-    $routeProvider.
-        when('/consent', {
-            templateUrl: '/views/consent/consent-start.html',
-            controller: 'minaintyg.ConsentCtrl',
-            title: 'Ditt samtycke',
-            keepInboxTabActive: false
-        }).
-        when('/lista', {
-            templateUrl: '/views/list.html',
-            controller: 'minaintyg.ListCtrl',
-            title: 'Inkorgen',
-            keepInboxTabActive: false
-        }).
-        when('/arkiverade', {
-            templateUrl: '/views/list-archived.html',
-            controller: 'minaintyg.ListArchivedCtrl',
-            title: 'Arkiverade intyg',
-            keepInboxTabActive: false
-        }).
-        when('/omminaintyg', {
-            templateUrl: '/views/om-mina-intyg.html',
-            controller: 'minaintyg.AboutCtrl',
-            title: 'Om mina intyg',
-            keepInboxTabActive: false
-        }).
-        when('/hjalp', {
-            templateUrl: '/views/hjalp.html',
-            controller: 'minaintyg.HelpCtrl',
-            title: 'Hjälp',
-            keepInboxTabActive: false
-        }).
-        when('/fel/:errorCode', {
-            templateUrl: '/views/error.html',
-            controller: 'minaintyg.ErrorViewCtrl',
-            title: 'Fel',
-            keepInboxTabActive: false
-        }).
-        otherwise({
-            redirectTo: function() {
-                // When running IE in QA the VerifyConsentInterceptor doesnt give us the #/consent after the redirect.
-                // This is a workaround to add it back.
-                if (window.location.href.indexOf('/web/visa-ge-samtycke') > -1) {
-                    return '/consent';
-                }
-                else {
-                    return '/lista';
-                }
-            }
-        });
-});
+var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
 
 app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     function($httpProvider, http403ResponseInterceptorProvider) {

@@ -94,12 +94,14 @@
       </security:headers>
     </security:http>
     <security:http security="none" pattern="/ws/**" />
-    <!-- Allow access to webjars without beeing logged in -->
+    <!-- Allow access to webjars without being logged in -->
     <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
       <security:headers>
         <security:frame-options />
       </security:headers>
     </security:http>
+    <!-- Allow access to the monitoring services without being logged in -->
+    <security:http security="none" pattern="/monitoring/**" />
 
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
