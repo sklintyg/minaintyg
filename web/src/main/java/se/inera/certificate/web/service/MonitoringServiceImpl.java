@@ -1,11 +1,13 @@
 package se.inera.certificate.web.service;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.web.service.dto.HealthStatus;
@@ -15,9 +17,9 @@ import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 
 @Service
 public class MonitoringServiceImpl implements MonitoringService {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(MonitoringServiceImpl.class);
-    
+
     @Value("${project.version}")
     private String applicationVersion;
 
@@ -29,12 +31,17 @@ public class MonitoringServiceImpl implements MonitoringService {
 
     @Value("${intygstjanst.logicaladdress}")
     private String intygstjanstLogicalAddress;
-    
+
     @Autowired
     @Qualifier("pingIntygstjanstForConfigurationClient")
     private PingForConfigurationResponderInterface intygstjanstPingForConfiguration;
 
-    /* (non-Javadoc)
+    @Autowired
+    private SessionRegistry sessionRegistry;
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see se.inera.certificate.monitoring.MonitoringService#checkIntygstjanst()
      */
     @Override
@@ -47,18 +54,19 @@ public class MonitoringServiceImpl implements MonitoringService {
         logStatus("pingIntygstjanst", status);
         return status;
     }
-    
+
     public boolean pingIntygstjanst() {
         try {
             PingForConfigurationType parameters = new PingForConfigurationType();
-            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(intygstjanstLogicalAddress, parameters);
+            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(intygstjanstLogicalAddress,
+                    parameters);
             return (pingResponse != null);
         } catch (Exception e) {
             LOG.error("pingIntygstjanst failed with exception: " + e.getMessage());
             return false;
         }
     }
-    
+
     public String getApplicationVersion() {
         return applicationVersion;
     }
@@ -70,7 +78,13 @@ public class MonitoringServiceImpl implements MonitoringService {
     public String getApplicationBuildTime() {
         return buildTimeString;
     }
-    
+
+    public HealthStatus getNbrOfLoggedInUsers() {
+        int nbrOfPrincipals = sessionRegistry.getAllPrincipals().size();
+        LOG.debug("{} users are currently logged in", nbrOfPrincipals);
+        return new HealthStatus(nbrOfPrincipals, true);
+    }
+
     private void logStatus(String operation, HealthStatus status) {
         String result = status.isOk() ? "OK" : "FAIL";
         LOG.info("Operation {} completed with result {} in {} ms", new Object[] { operation, result, status.getMeasurement() });
@@ -80,7 +94,8 @@ public class MonitoringServiceImpl implements MonitoringService {
         if (!ok) {
             return new HealthStatus(-1, ok);
         }
-        
+
         return new HealthStatus(stopWatch.getTime(), ok);
     }
+
 }

@@ -11,5 +11,7 @@ public interface MonitoringService {
     String getApplicationBuildNumber();
 
     String getApplicationBuildTime();
+    
+    HealthStatus getNbrOfLoggedInUsers();
 
 }
