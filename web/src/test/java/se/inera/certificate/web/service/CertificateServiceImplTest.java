@@ -8,9 +8,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -24,22 +21,24 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+
+import java.io.IOException;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
