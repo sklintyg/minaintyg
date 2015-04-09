@@ -1,7 +1,7 @@
 !3 Först logga in och lista alla befintliga intyg.
 
 |script|!-ListaIntyg-!|
-|logga på som|19121212-1212|
+|logga på som|19010101-0101|
 |inkorgsidan visas|
 |lista med intyg visas|
 |visa intyg|fit-intyg-3|

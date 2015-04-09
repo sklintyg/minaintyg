@@ -2,4 +2,4 @@
 
 |Samtycke|
 |personnr|samtycke|
-|19121212-1212|nej|
+|19010101-0101|nej|

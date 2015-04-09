@@ -1,6 +1,6 @@
 !3 Givet att användare har befintliga intyg så skall dessa visas i listan
 
 |script|!-ListaIntyg-!|
-|logga på som|19121212-1212|
+|logga på som|19010101-0101|
 |inkorgsidan visas|
 |lista med intyg visas|

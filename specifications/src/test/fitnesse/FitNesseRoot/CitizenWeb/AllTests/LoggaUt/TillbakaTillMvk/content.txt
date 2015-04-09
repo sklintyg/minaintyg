@@ -3,7 +3,7 @@
 Logga på med användare och välj "Tillbaka till Mina Vårdkontakter" i headern.
 
 |script|!-GeSamtycke-!|
-|logga på som|19121212-1212|
+|logga på som|19010101-0101|
 |ge samtycke sidan visas|
 
 Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inloggade i MVK.

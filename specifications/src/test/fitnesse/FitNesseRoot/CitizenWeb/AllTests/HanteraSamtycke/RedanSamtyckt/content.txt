@@ -2,10 +2,10 @@
 
 |Samtycke|
 |personnr|samtycke|
-|19121212-1212|ja|
+|19010101-0101|ja|
 
 !3 Samtyckes-sida visas nu ej
 
 |script|!-GeSamtycke-!|
-|logga på som|19121212-1212|
+|logga på som|19010101-0101|
 |inkorg sidan visas|
