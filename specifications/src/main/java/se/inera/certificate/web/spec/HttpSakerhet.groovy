@@ -7,10 +7,9 @@ import static groovyx.net.http.ContentType.JSON
 
 class HttpSakerhet  extends RestClientFixture {
 
-    def client
+    def client = createRestClient(baseUrl)
 
     void loggaPåSom(String pnr) {
-        client = createRestClient()
         client.get(path: "/web/sso", query: [guid : pnr] )
     }
 
