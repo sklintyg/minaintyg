@@ -3,7 +3,7 @@
 Logga på med användare och välj "Logga ut" i headern.
 
 |script|!-GeSamtycke-!|
-|logga på som|19121212-1212|
+|logga på som|19010101-0101|
 |ge samtycke sidan visas|
 
 |script|!-LoggaUt-!|
