@@ -200,16 +200,16 @@ public class CertificateServiceImplTest {
     @Test
     public void testSendCertificateReturnsValidationError() {
         /* Given */
-        SendCertificateForCitizenType request = new SendCertificateForCitizenType();
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setPersonId("19121212-1212");
         request.setUtlatandeId("1234567890");
         request.setMottagareId("FK");
 
-        SendCertificateForCitizenResponseType response = new SendCertificateForCitizenResponseType();
+        SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "validation error"));
 
         /* When */
-        when(sendServiceMock.sendCertificateForCitizen(any(String.class), any(SendCertificateForCitizenType.class))).thenReturn(response);
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
 
         /* Then */
         ModuleAPIResponse apiResponse = service.sendCertificate("19121212-1212", "1234567890", "FK");
@@ -221,13 +221,13 @@ public class CertificateServiceImplTest {
     @Test(expected = SoapFault.class)
     public void testSendCertificateThrowsSoapFault() {
         /* Given */
-        SendCertificateForCitizenType request = new SendCertificateForCitizenType();
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setPersonId("19121212-1212");
         request.setUtlatandeId("1234567890");
         request.setMottagareId("FK");
 
         /* When */
-        when(sendServiceMock.sendCertificateForCitizen(any(String.class), any(SendCertificateForCitizenType.class))).thenThrow(new SoapFault("server error", new QName("")));
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenThrow(new SoapFault("server error", new QName("")));
 
         /* Then */
         service.sendCertificate("19121212-1212", "1234567890", "FK");
