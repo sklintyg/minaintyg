@@ -209,15 +209,16 @@
         </properties>
     </profile>
     <profile>
-      <id>qa</id>
-        <properties>
-          <certificate.web.baseUrl>https://qa.minaintyg.se/web/</certificate.web.baseUrl>
-        </properties>
-    </profile>
-    <profile>
       <id>ssh-tunnel</id>
         <properties>
           <certificate.baseUrl>http://localhost:18080/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>http://localhost:18088/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
+      <id>qa</id>
+        <properties>
+          <certificate.web.baseUrl>https://qa.minaintyg.se/web/</certificate.web.baseUrl>
         </properties>
     </profile>
     <profile>

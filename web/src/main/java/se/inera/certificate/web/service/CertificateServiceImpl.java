@@ -39,6 +39,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertifica
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -117,7 +118,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
-        if (response.getResult().getResultCode().equals(ResultCodeEnum.ERROR)) {
+        if (response.getResult().getResultCode().equals(ResultCodeType.ERROR)) {
             LOGGER.warn("SendCertificate error: {}", response.getResult().getResultText());
             return new ModuleAPIResponse("error", "");
         } else {

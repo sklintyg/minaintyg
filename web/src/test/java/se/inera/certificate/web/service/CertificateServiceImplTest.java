@@ -8,7 +8,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.xml.namespace.QName;
+
 import org.apache.commons.io.FileUtils;
+import org.apache.cxf.binding.soap.SoapFault;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
@@ -192,6 +195,42 @@ public class CertificateServiceImplTest {
         assertEquals(request.getPersonId(), actualRequest.getPersonId());
         assertEquals(request.getUtlatandeId(), actualRequest.getUtlatandeId());
         assertEquals(request.getMottagareId(), actualRequest.getMottagareId());
+    }
+
+    @Test
+    public void testSendCertificateReturnsValidationError() {
+        /* Given */
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
+        request.setPersonId("19121212-1212");
+        request.setUtlatandeId("1234567890");
+        request.setMottagareId("FK");
+
+        SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
+        response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "validation error"));
+
+        /* When */
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
+
+        /* Then */
+        ModuleAPIResponse apiResponse = service.sendCertificate("19121212-1212", "1234567890", "FK");
+
+        /* Verify */
+        assertEquals("error", apiResponse.getResultCode());
+    }
+
+    @Test(expected = SoapFault.class)
+    public void testSendCertificateThrowsSoapFault() {
+        /* Given */
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
+        request.setPersonId("19121212-1212");
+        request.setUtlatandeId("1234567890");
+        request.setMottagareId("FK");
+
+        /* When */
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenThrow(new SoapFault("server error", new QName("")));
+
+        /* Then */
+        service.sendCertificate("19121212-1212", "1234567890", "FK");
     }
 
     private ClinicalProcessCertificateMetaTypeBuilder getClinicalProcessCertificateMetaTypeBuilder(
