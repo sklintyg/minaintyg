@@ -32,23 +32,23 @@
     <intygstyper.version.range>(,2.2.0]</intygstyper.version.range>
 
     <!-- Schemas -->
-    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
-    <clinicalprocess-healthcond-certificate.version.range>(,1.1.0]</clinicalprocess-healthcond-certificate.version.range>
+    <rivta-clinicalprocess.version>0-SNAPSHOT</rivta-clinicalprocess.version>
+    <rivta-clinicalprocess.version.range>(,1.1.0]</rivta-clinicalprocess.version.range>
 
-    <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
-    <insuranceprocess-healthreporting.version.range>(,1.1.0]</insuranceprocess-healthreporting.version.range>
+    <intyg-insuranceprocess.version>0-SNAPSHOT</intyg-insuranceprocess.version>
+    <intyg-insuranceprocess.version.range>(,1.1.0]</intyg-insuranceprocess.version.range>
 
-    <itintegration-monitoring.version>0-SNAPSHOT</itintegration-monitoring.version>
-    <itintegration-monitoring.version.range>(,1.0.0]</itintegration-monitoring.version.range>
+    <rivta-itintegration-monitoring.version>0-SNAPSHOT</rivta-itintegration-monitoring.version>
+    <rivta-itintegration-monitoring.version.range>(,1.0.0]</rivta-itintegration-monitoring.version.range>
 
-    <intygstjansten-clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</intygstjansten-clinicalprocess-healthcond-certificate.version>
-    <intygstjansten-clinicalprocess-healthcond-certificate.version.range>(,1.1.0]</intygstjansten-clinicalprocess-healthcond-certificate.version.range>
+    <intyg-clinicalprocess.version>0-SNAPSHOT</intyg-clinicalprocess.version>
+    <intyg-clinicalprocess.version.range>(,1.1.0]</intyg-clinicalprocess.version.range>
 
-    <intygstjansten-insuranceprocess-healthreporting.version>0-SNAPSHOT</intygstjansten-insuranceprocess-healthreporting.version>
-    <intygstjansten-insuranceprocess-healthreporting.version.range>(,1.1.0]</intygstjansten-insuranceprocess-healthreporting.version.range>
+    <intyg-insuranceprocess.version>0-SNAPSHOT</intyg-insuranceprocess.version>
+    <intyg-insuranceprocess.version.range>(,1.1.0]</intyg-insuranceprocess.version.range>
 
-    <intygstjansten-transportstyrelsen.version>0-SNAPSHOT</intygstjansten-transportstyrelsen.version>
-    <intygstjansten-transportstyrelsen.version.range>(,1.0.0]</intygstjansten-transportstyrelsen.version.range>
+    <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
+    <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
@@ -116,34 +116,34 @@
       <dependency>
         <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
         <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
-        <version>${clinicalprocess-healthcond-certificate.version}</version>
+        <version>${rivta-clinicalprocess.version}</version>
       </dependency>
       <dependency>
         <groupId>se.riv.insuranceprocess.healthreporting</groupId>
         <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
-        <version>${insuranceprocess-healthreporting.version}</version>
+        <version>${intyg-insuranceprocess.version}</version>
       </dependency>
       <dependency>
         <groupId>se.riv.itintegration.monitoring</groupId>
         <artifactId>itintegration-monitoring-schemas</artifactId>
-        <version>${itintegration-monitoring.version}</version>
+        <version>${rivta-itintegration-monitoring.version}</version>
       </dependency>
 
       <!-- Intyg Schemas -->
       <dependency>
         <groupId>se.inera.intyg.clinicalprocess.healthcond.certificate</groupId>
         <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
-        <version>${intygstjansten-clinicalprocess-healthcond-certificate.version}</version>
+        <version>${intyg-clinicalprocess.version}</version>
       </dependency>
       <dependency>
         <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
         <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
-        <version>${intygstjansten-insuranceprocess-healthreporting.version}</version>
+        <version>${intyg-insuranceprocess.version}</version>
       </dependency>
       <dependency>
         <groupId>se.inera.intyg.transportstyrelsen</groupId>
         <artifactId>transportstyrelsen-schemas</artifactId>
-        <version>${intygstjansten-transportstyrelsen.version}</version>
+        <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
       <!-- Dependency to Netcare's MVK integration -->
@@ -267,12 +267,12 @@
           <includeProperties>
             common.version,
             intygstyper.version,
-            clinicalprocess-healthcond-certificate.version,
-            insuranceprocess-healthreporting.version,
-            itintegration-monitoring.version,
-            intygstjansten-clinicalprocess-healthcond-certificate.version,
-            intygstjansten-insuranceprocess-healthreporting.version,
-            intygstjansten-transportstyrelsen.version,
+            rivta-clinicalprocess.version,
+            intyg-insuranceprocess.version,
+            rivta-itintegration-monitoring.version,
+            intyg-clinicalprocess.version,
+            intyg-insuranceprocess.version,
+            intyg-transportstyrelsen.version,
             tools.version
           </includeProperties>
           <properties>
@@ -285,28 +285,28 @@
               <version>${intygstyper.version.range}</version>
             </property>
             <property>
-              <name>clinicalprocess-healthcond-certificate.version</name>
-              <version>${clinicalprocess-healthcond-certificate.version.range}</version>
+              <name>rivta-clinicalprocess.version</name>
+              <version>${rivta-clinicalprocess.version.range}</version>
             </property>
             <property>
-              <name>insuranceprocess-healthreporting.version</name>
-              <version>${insuranceprocess-healthreporting.version.range}</version>
+              <name>intyg-insuranceprocess.version</name>
+              <version>${intyg-insuranceprocess.version.range}</version>
             </property>
             <property>
-              <name>itintegration-monitoring.version</name>
-              <version>${itintegration-monitoring.version.range}</version>
+              <name>rivta-itintegration-monitoring.version</name>
+              <version>${rivta-itintegration-monitoring.version.range}</version>
             </property>
             <property>
-              <name>intygstjansten-clinicalprocess-healthcond-certificate.version</name>
-              <version>${intygstjansten-clinicalprocess-healthcond-certificate.version.range}</version>
+              <name>intyg-clinicalprocess.version</name>
+              <version>${intyg-clinicalprocess.version.range}</version>
             </property>
             <property>
-              <name>intygstjansten-insuranceprocess-healthreporting.version</name>
-              <version>${intygstjansten-insuranceprocess-healthreporting.version.range}</version>
+              <name>intyg-insuranceprocess.version</name>
+              <version>${intyg-insuranceprocess.version.range}</version>
             </property>
             <property>
-              <name>intygstjansten-transportstyrelsen.version</name>
-              <version>${intygstjansten-transportstyrelsen.version.range}</version>
+              <name>intyg-transportstyrelsen.version</name>
+              <version>${intyg-transportstyrelsen.version.range}</version>
             </property>
             <property>
               <name>tools.version</name>
