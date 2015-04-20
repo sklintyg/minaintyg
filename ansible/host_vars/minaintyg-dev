@@ -6,6 +6,4 @@ profiles: dev
 
 # Configuration repository
 environment_name: "dev"
-
-# Configuration repository
 config_etc_folder: "{{ config_folder }}/dev"
