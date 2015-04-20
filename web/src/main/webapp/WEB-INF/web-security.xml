@@ -159,7 +159,7 @@
     <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
 
     <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users) -->
-    <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+    <bean id="sessionRegistry" class="se.inera.certificate.web.security.LoggingSessionRegistryImpl" />
 
     <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
     <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
