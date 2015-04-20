@@ -1,15 +1,16 @@
 package se.inera.certificate.web.util;
 
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.riv.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.StatusType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
 /**
  * Converts meta data from {@link CertificateMetaType} to the internal {@link UtlatandeMetaData} type.

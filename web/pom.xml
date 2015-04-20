@@ -45,23 +45,35 @@
       <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>ts-diabetes</artifactId>
     </dependency>
-    <!-- Schemas -->
+
+    <!-- RIVTA Schemas -->
     <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate</artifactId>
+      <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting</groupId>
-      <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.schemas.intygstjanster.ts</groupId>
-      <artifactId>intygstjansten-ts</artifactId>
+      <groupId>se.riv.insuranceprocess.healthreporting</groupId>
+      <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
     </dependency>
     <dependency>
       <groupId>se.riv.itintegration.monitoring</groupId>
-      <artifactId>itintegration-monitoring-interactions</artifactId>
+      <artifactId>itintegration-monitoring-schemas</artifactId>
     </dependency>
+
+    <!-- Intyg Schemas -->
+    <dependency>
+      <groupId>se.inera.intyg.clinicalprocess.healthcond.certificate</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
+      <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.transportstyrelsen</groupId>
+      <artifactId>transportstyrelsen-schemas</artifactId>
+    </dependency>
+
     <!-- Dependency to Netcare's MVK integration -->
     <dependency>
       <groupId>org.callistasoftware.netcare.commons</groupId>

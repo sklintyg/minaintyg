@@ -1,6 +1,7 @@
 package se.inera.certificate.exception;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ResultType;
+
 
 public class ResultTypeErrorException extends RuntimeException {
 
