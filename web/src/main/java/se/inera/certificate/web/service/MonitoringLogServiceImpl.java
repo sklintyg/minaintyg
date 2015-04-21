@@ -24,8 +24,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private MessageDigest msgDigest;
 
-    private boolean hashSensitiveValues = true;
-
     @PostConstruct
     public void initMessageDigest() {
         try {
@@ -35,20 +33,44 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         }
     }
 
-    /* (non-Javadoc)
-     * @see se.inera.certificate.web.service.MonitoringLogService#logCitizenLogin(java.lang.String, java.lang.String)
-     */
     @Override
     public void logCitizenLogin(String userId, String loginMethod) {
         logEvent(MonitoringEvent.CITIZEN_LOGIN, hash(userId), loginMethod);
     }
 
-    /* (non-Javadoc)
-     * @see se.inera.certificate.web.service.MonitoringLogService#logCitizenLogout(java.lang.String, java.lang.String)
-     */
     @Override
     public void logCitizenLogout(String userId, String loginMethod) {
         logEvent(MonitoringEvent.CITIZEN_LOGOUT, hash(userId), loginMethod);
+    }
+
+    @Override
+    public void logCitizenConsentGiven(String userId) {
+        logEvent(MonitoringEvent.CONSENT_GIVEN, hash(userId));
+    }
+
+    @Override
+    public void logCitizenConsentRevoked(String userId) {
+        logEvent(MonitoringEvent.CONSENT_REVOKED, hash(userId));
+    }
+
+    @Override
+    public void logCertificateRead(String certificateId, String certificateType) {
+        logEvent(MonitoringEvent.CERTIFICATE_READ, certificateId, certificateType);
+    }
+
+    @Override
+    public void logCertificateSend(String certificateId, String recipientId) {
+        logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, recipientId);
+    }
+
+    @Override
+    public void logCertificateArchived(String certificateId) {
+        logEvent(MonitoringEvent.CERTIFICATE_ARCHIVED, certificateId);
+    }
+
+    @Override
+    public void logCertificateRestored(String certificateId) {
+        logEvent(MonitoringEvent.CERTIFICATE_RESTORED, certificateId);
     }
 
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
@@ -61,9 +83,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private String hash(String payload) {
         try {
-            if (!hashSensitiveValues) {
-                return payload;
-            }
             msgDigest.update(payload.getBytes("UTF-8"));
             byte[] digest = msgDigest.digest();
             return new String(Hex.encodeHex(digest));
@@ -74,7 +93,13 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private enum MonitoringEvent {
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
-        CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'");
+        CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
+        CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
+        CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
+        CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
+        CERTIFICATE_RESTORED("Certificate '{}' restored"),
+        CONSENT_GIVEN("Consent given by citizen '{}'"),
+        CONSENT_REVOKED("Consent revoked by citizen '{}'");
 
         private String msg;
 

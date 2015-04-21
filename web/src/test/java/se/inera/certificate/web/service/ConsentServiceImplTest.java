@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +32,9 @@ public class ConsentServiceImplTest {
     @Mock
     private SetConsentResponderInterface setConsent = mock(SetConsentResponderInterface.class);
 
+    @Mock
+    private MonitoringLogService monitoringServiceMock;
+    
     @InjectMocks
     private ConsentService service = new ConsentServiceImpl();
 
@@ -45,7 +49,6 @@ public class ConsentServiceImplTest {
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
         boolean result = service.fetchConsent("1234567890");
         assertTrue(result);
-
     }
 
     @Test
@@ -70,9 +73,9 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
 
         when(setConsent.setConsent(Mockito.any(AttributedURIType.class), Mockito.any(SetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.setConsent("1234567890", true);
+        boolean result = service.setConsent("1234567890");
         assertTrue(result);
-
+        verify(monitoringServiceMock).logCitizenConsentGiven("1234567890");
     }
 
     @Test
@@ -83,7 +86,7 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
 
         when(setConsent.setConsent(Mockito.any(AttributedURIType.class), Mockito.any(SetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.setConsent("1234567890", true);
+        boolean result = service.setConsent("1234567890");
         assertFalse(result);
 
     }

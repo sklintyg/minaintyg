@@ -6,4 +6,16 @@ public interface MonitoringLogService {
 
     void logCitizenLogout(String userId, String loginMethod);
 
+    void logCitizenConsentGiven(String userId);
+
+    void logCitizenConsentRevoked(String userId);
+
+    void logCertificateRead(String id, String typ);
+
+    void logCertificateSend(String certificateId, String recipientId);
+
+    void logCertificateArchived(String certificateId);
+
+    void logCertificateRestored(String certificateId);
+
 }

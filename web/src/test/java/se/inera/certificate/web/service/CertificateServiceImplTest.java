@@ -63,6 +63,9 @@ public class CertificateServiceImplTest {
 
     @Mock
     private GetCertificateContentResponderInterface getContentServiceMock = mock(GetCertificateContentResponderInterface.class);
+    
+    @Mock
+    private MonitoringLogService monitoringServiceMock;
 
     @InjectMocks
     private CertificateServiceImpl service = new CertificateServiceImpl();
@@ -168,11 +171,16 @@ public class CertificateServiceImplTest {
 
     @Test
     public void testSendCertificate() {
+        
+        String personId = "19121212-1212";
+        String utlatandeId = "1234567890";
+        String mottagare = "FK";
+        
         /* Given */
         SendCertificateToRecipientType request = new SendCertificateToRecipientType();
-        request.setPersonId("19121212-1212");
-        request.setUtlatandeId("1234567890");
-        request.setMottagareId("FK");
+        request.setPersonId(personId);
+        request.setUtlatandeId(utlatandeId);
+        request.setMottagareId(mottagare);
 
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
         response.setResult(ResultTypeUtil.okResult());
@@ -181,13 +189,14 @@ public class CertificateServiceImplTest {
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
 
         /* Then */
-        ModuleAPIResponse apiResponse = service.sendCertificate("19121212-1212", "1234567890", "FK");
+        ModuleAPIResponse apiResponse = service.sendCertificate(personId, utlatandeId, mottagare);
 
         /* Verify */
         assertEquals("sent", apiResponse.getResultCode());
 
         ArgumentCaptor<SendCertificateToRecipientType> argument = ArgumentCaptor.forClass(SendCertificateToRecipientType.class);
         verify(sendServiceMock).sendCertificateToRecipient(eq("FKORG"), argument.capture());
+        verify(monitoringServiceMock).logCertificateSend(utlatandeId, mottagare);
 
         SendCertificateToRecipientType actualRequest = argument.getValue();
         assertEquals(request.getPersonId(), actualRequest.getPersonId());
