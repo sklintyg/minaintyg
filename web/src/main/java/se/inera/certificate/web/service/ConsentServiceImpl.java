@@ -42,17 +42,21 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Autowired
     private SetConsentResponderInterface setConsent;
+    
+    @Autowired
+    private MonitoringLogService monitoringService;
 
     @Override
-    public boolean fetchConsent(String username) {
+    public boolean fetchConsent(String civicRegistrationNumber) {
         LOG.debug("About to fetch consent...");
         GetConsentRequestType parameters = new GetConsentRequestType();
-        parameters.setPersonnummer(username);
+        parameters.setPersonnummer(civicRegistrationNumber);
 
         GetConsentResponseType consent = getConsent.getConsent(null, parameters);
-        //When resultcode is error we cannot trust what the isConsentGiven says, since always have a value...
+        // When resultcode is error we cannot trust what the isConsentGiven says, since always have a value...
         if (consent.getResult().getResultCode() == ResultCodeEnum.ERROR) {
-            throw new IllegalStateException("Cant determine consentStatus - ERROR result from GetConsentResponderInterface: " + consent.getResult().getErrorText());
+            throw new IllegalStateException("Cant determine consentStatus - ERROR result from GetConsentResponderInterface: "
+                    + consent.getResult().getErrorText());
         }
         boolean consentResult = consent.isConsentGiven();
         LOG.debug("Consent result is {}", consentResult);
@@ -60,10 +64,24 @@ public class ConsentServiceImpl implements ConsentService {
     }
 
     @Override
-    public boolean setConsent(String username, boolean consent) {
+    public boolean setConsent(String civicRegistrationNumber) {
         LOG.debug("About to set consent...");
+        boolean consentResult = setConsent(civicRegistrationNumber, true);
+        monitoringService.logCitizenConsentGiven(civicRegistrationNumber);
+        return consentResult;
+    }
+
+    @Override
+    public boolean revokeConsent(String civicRegistrationNumber) {
+        LOG.debug("About to revoke consent...");
+        boolean consentResult = setConsent(civicRegistrationNumber, false);
+        monitoringService.logCitizenConsentRevoked(civicRegistrationNumber);
+        return consentResult;
+    }
+
+    private boolean setConsent(String civicRegistrationNumber, boolean consent) {
         SetConsentRequestType parameters = new SetConsentRequestType();
-        parameters.setPersonnummer(username);
+        parameters.setPersonnummer(civicRegistrationNumber);
         parameters.setConsentGiven(consent);
         SetConsentResponseType consentResponse = setConsent.setConsent(null, parameters);
         ResultCodeEnum result = consentResponse.getResult().getResultCode();
