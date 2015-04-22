@@ -151,15 +151,17 @@ public class ModuleApiController {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
 
+        String typ = utlatande.getUtlatande().getTyp();
+
         try {
-            PdfResponse pdf = moduleRegistry.getModuleApi(utlatande.getUtlatande().getTyp()).pdf(new InternalModelHolder(utlatande.getDocument()), utlatande.getStatuses(), ApplicationOrigin.MINA_INTYG);
+            PdfResponse pdf = moduleRegistry.getModuleApi(typ).pdf(new InternalModelHolder(utlatande.getDocument()), utlatande.getStatuses(), ApplicationOrigin.MINA_INTYG);
             String filename = pdf.getFilename();
             return Response.ok(pdf.getPdfData())
                     .header(CONTENT_DISPOSITION, "attachment; filename=" + filename)
                     .build();
 
         } catch (ModuleNotFoundException e) {
-            LOG.error("Module " + id + " not found. Not loaded in application.");
+            LOG.error("Module " + typ + " not found. Not loaded in application.");
             return Response.serverError().build();
         } catch (ModuleException e) {
             LOG.error("Failed to get PDF for certificate " + id + " from inera-certificate.");
