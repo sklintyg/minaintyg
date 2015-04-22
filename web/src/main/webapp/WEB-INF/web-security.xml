@@ -65,6 +65,7 @@
       <security:headers>
         <security:frame-options />
       </security:headers>
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
   </beans>
 
@@ -75,7 +76,6 @@
         <security:frame-options />
       </security:headers>
     </security:http>
-    <security:http security="none" pattern="/health-check/health-check.jsp" />
     <security:http security="none" pattern="/favicon.ico" />
     <security:http security="none" pattern="/web/resources/**" />
     <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="mvkEntryPoint">
@@ -100,8 +100,10 @@
         <security:frame-options />
       </security:headers>
     </security:http>
-    <!-- Allow access to the monitoring services without being logged in -->
+    
+    <!-- Allow access to healthcheck and monitoring services without being logged in -->
     <security:http security="none" pattern="/monitoring/**" />
+    <security:http security="none" pattern="/health-check/health-check.jsp" />
 
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
@@ -118,6 +120,7 @@
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
       <security:headers>
         <security:frame-options />
       </security:headers>
@@ -154,6 +157,14 @@
 
     <!--  Reuse of springs "logout" handler that clear the context -->
     <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+
+    <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users) -->
+    <bean id="sessionRegistry" class="se.inera.certificate.web.security.LoggingSessionRegistryImpl" />
+
+    <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
+    <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+      <constructor-arg ref="sessionRegistry" />
+    </bean>
 
   </beans>
 

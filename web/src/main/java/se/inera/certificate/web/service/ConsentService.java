@@ -32,9 +32,17 @@ public interface ConsentService {
     boolean fetchConsent(String username);
 
     /**
+     * Sets a given consent
+     * 
      * @param username
-     * @param consent
      */
-    boolean setConsent(String username, boolean consent);
+    boolean setConsent(String username);
+    
+    /**
+     * Revokes a given consent
+     * 
+     * @param username
+     */
+    boolean revokeConsent(String username);
 
 }

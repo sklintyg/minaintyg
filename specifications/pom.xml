@@ -39,15 +39,15 @@
 
   <dependencies>
 
-	<!-- Schemas -->
-	<dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-	  <artifactId>clinicalprocess-healthcond-certificate</artifactId>
-	</dependency>
-	<dependency>
-	  <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
-	  <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
-	</dependency>
+    <!-- RIVTA Schemas -->
+    <dependency>
+      <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.riv.insuranceprocess.healthreporting</groupId>
+      <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+    </dependency>
 
     <!-- Tools -->
     <dependency>

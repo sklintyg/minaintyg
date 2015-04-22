@@ -19,6 +19,7 @@ public class PingForConfigurationResponderImpl implements PingForConfigurationRe
     private static final Logger LOG = LoggerFactory.getLogger(PingForConfigurationResponderImpl.class);
 
     private static final String INTYGTJANST = "intygstjanst";
+    private static final String NBR_OF_USERS = "nbrOfUsers";
     private static final String BUILD_NUMBER = "buildNumber";
     private static final String BUILD_TIME = "buildTime";
 
@@ -39,6 +40,9 @@ public class PingForConfigurationResponderImpl implements PingForConfigurationRe
 
         HealthStatus checkIntygstjanst = monitoringService.checkIntygstjanst();
         addConfiguration(response, INTYGTJANST, checkIntygstjanst);
+        
+        HealthStatus nbrOfUsers = monitoringService.getNbrOfLoggedInUsers();
+        addConfiguration(response, NBR_OF_USERS, nbrOfUsers);
 
         return response;
     }

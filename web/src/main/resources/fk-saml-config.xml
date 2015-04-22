@@ -117,12 +117,14 @@
 
     <!-- Processing filter for WebSSO profile messages -->
     <bean id="samlWebSSOProcessingFilter" class="org.springframework.security.saml.SAMLProcessingFilter">
+        <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
         <property name="authenticationManager" ref="samlAuthenticationManager"/>
         <property name="authenticationSuccessHandler" ref="successRedirectHandler"/>
     </bean>
 
     <!-- Processing filter for WebSSO Holder-of-Key profile -->
     <bean id="samlWebSSOHoKProcessingFilter" class="org.springframework.security.saml.SAMLWebSSOHoKProcessingFilter">
+        <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
         <property name="authenticationManager" ref="samlAuthenticationManager"/>
         <property name="authenticationSuccessHandler" ref="successRedirectHandler"/>
     </bean>

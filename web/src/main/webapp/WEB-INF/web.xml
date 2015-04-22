@@ -42,6 +42,14 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <!-- Event publisher for keeping track of when session ends and removing them from the sessionRegistry -->
+  <listener>
+     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  </listener>
+  <!-- Makes attributes in the request available -->
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
 
   <servlet>
     <servlet-name>web</servlet-name>
