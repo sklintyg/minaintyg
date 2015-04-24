@@ -6,7 +6,7 @@
   vars: 
     # repo - values: snapshot or release
     repo: release
-    version: 2.2.0-b44
+    version: 2.2.0-b45
     config_version: master
 
   roles:
