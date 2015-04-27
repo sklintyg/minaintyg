@@ -49,12 +49,13 @@
       <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
     </dependency>
 
-    <!-- Tools -->
+    <!-- Common -->
     <dependency>
-      <groupId>se.inera.intyg.tools</groupId>
-      <artifactId>tools-specifications</artifactId>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-specifications</artifactId>
     </dependency>
 
+    <!-- Misc -->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
