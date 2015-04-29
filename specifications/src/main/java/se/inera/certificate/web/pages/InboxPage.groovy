@@ -18,6 +18,7 @@ class InboxPage extends AbstractPage {
         certificate(required: false) { id -> $("#certificate-${id}") }
         archiveCertificateButton(required: false) { id -> $("#archiveCertificateBtn-${id}") }
         viewCertificateButton(required: false) { id -> $("#viewCertificateBtn-${id}") }
+        complementaryInfoText(required: false) { id -> $("#certificate-period-${id}")}
     }
 
     def archiveCertificate(String id) {
@@ -52,4 +53,8 @@ class InboxPage extends AbstractPage {
         def viewCertButton = viewCertificateButton(id)
         !viewCertButton.isDisplayed() || viewCertButton.isDisabled();
     }
+
+    def String complementaryInfoIsSet(String id) {
+        complementaryInfoText(id).text()
+    } 
 }

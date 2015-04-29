@@ -1,0 +1,9 @@
+!3 Intyg avser innehåller information för ett TS-intyg
+
+|script|!-ListaIntyg-!|
+|logga på som|19010101-0101|
+|inkorgsidan visas|
+|lista med intyg visas|
+|complementaryInfoArSatt|fit-intyg-6|
+
+

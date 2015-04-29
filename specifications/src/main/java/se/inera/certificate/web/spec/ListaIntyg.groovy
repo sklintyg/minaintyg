@@ -149,4 +149,13 @@ public class ListaIntyg {
             page.viewCertificate(id)
         }
     }
+
+    public boolean complementaryInfoArSatt(String id) {
+        Browser.drive {
+            waitFor {
+                at InboxPage
+            }
+            return !page.complementaryInfoIsSet(id).isEmpty()
+        }
+    }
 }
