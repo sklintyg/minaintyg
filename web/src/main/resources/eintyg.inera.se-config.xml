@@ -63,12 +63,15 @@
     <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
       <property name="attributes">
         <map>
-          <entry key="healthcheck" value-ref="healthcheck"/>
+          <entry key="healthcheck">
+            <bean class="se.inera.certificate.web.overvakning.HealthCheck"/>
+          </entry>
+          <entry key="pageAttributes">
+            <bean class="se.inera.certificate.web.util.JspPageAttributes"/>
+          </entry>
         </map>
       </property>
     </bean>
-
-    <bean id="healthcheck" class="se.inera.certificate.web.overvakning.HealthCheck"/>
 
     <bean id="moduleRegistry" class="se.inera.certificate.modules.registry.IntygModuleRegistryImpl">
       <property name="origin" value="MINA_INTYG"/>

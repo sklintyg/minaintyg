@@ -23,13 +23,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<%
-String useMinifiedJavaScript = System.getProperty("minaintyg.useMinifiedJavaScript");
-if (useMinifiedJavaScript == null) {
-useMinifiedJavaScript = "true";
-}
-pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
-%>
+<c:set var="useMinifiedJavaScript" value="${pageAttributes.useMinifiedJavaScript}"/>
+<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="minaintyg">
@@ -55,7 +50,7 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
    **/
   var MI_CONFIG = {
     BUILD_NUMBER: '<spring:message code="buildNumber" />',
-    USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
+    USE_MINIFIED_JAVASCRIPT: '${useMinifiedJavaScript}'
   }
 </script>
 
@@ -96,7 +91,7 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
             </p>
             <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
             <div class="btn-row">
-              <a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
+              <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
             </div>
 
             <div style="padding-top: 50px">
