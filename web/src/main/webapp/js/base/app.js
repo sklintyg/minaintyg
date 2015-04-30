@@ -12,6 +12,7 @@ app.run([ '$rootScope', '$window', 'common.messageService', function($rootScope,
 
     $window.doneLoading = true;
     $window.dialogDoneLoading = true;
+    $window.rendered = true;
 } ]);
 
 var modulePromises = [];
