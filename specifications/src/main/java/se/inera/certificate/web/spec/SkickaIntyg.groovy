@@ -1,7 +1,8 @@
 package se.inera.certificate.web.spec
 
-import se.inera.certificate.web.pages.SendCertificateSentPage
+import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.SendCertificateChooseRecipientPage
+import se.inera.certificate.web.pages.SendCertificateSentPage
 import se.inera.certificate.web.pages.SendCertificateSummaryPage
 
 public class SkickaIntyg {
