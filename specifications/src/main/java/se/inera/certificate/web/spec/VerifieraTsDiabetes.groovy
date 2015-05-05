@@ -3,11 +3,7 @@ package se.inera.certificate.web.spec
 import org.codehaus.groovy.runtime.StackTraceUtils
 import se.inera.certificate.spec.Browser
 
-class VerifieraTsBas {
-
-    public VerifieraTsBas() {
-
-    }
+class VerifieraTsDiabetes {
 
     String getCurrentMethodName(){
         def marker = new Throwable()
@@ -50,103 +46,15 @@ class VerifieraTsBas {
         getStringResult(getCurrentMethodName())
     }
 
-    String synfaltsdefekter() {
+    String observationsperiod() {
         getStringResult(getCurrentMethodName())
     }
 
-    String nattblindhet() {
+    String diabetestyp() {
         getStringResult(getCurrentMethodName())
     }
 
-    String diplopi() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String nystagmus() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String hogerOgautanKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String hogerOgamedKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String hogerOgakontaktlins() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vansterOgautanKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vansterOgamedKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vansterOgakontaktlins() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String binokulartutanKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String binokulartmedKorrektion() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String korrektionsglasensStyrka() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String horselBalansbalansrubbningar() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String horselBalanssvartUppfattaSamtal4Meter() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String funktionsnedsattning() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String funktionsnedsattningbeskrivning() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String funktionsnedsattningotillrackligRorelseformaga() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String hjartKarlSjukdom() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String hjarnskadaEfterTrauma() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String riskfaktorerStroke() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String beskrivningRiskfaktorer() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String harDiabetes() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String diabetesTyp() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String kost() {
+    String endastKost() {
         getStringResult(getCurrentMethodName())
     }
 
@@ -158,75 +66,95 @@ class VerifieraTsBas {
         getStringResult(getCurrentMethodName())
     }
 
-    String neurologiskSjukdom() {
+    String insulinBehandlingsperiod() {
         getStringResult(getCurrentMethodName())
     }
 
-    String medvetandestorning() {
+    String annanBehandlingBeskrivning() {
         getStringResult(getCurrentMethodName())
     }
 
-    String medvetandestorningbeskrivning() {
+    String kunskapOmAtgarder() {
         getStringResult(getCurrentMethodName())
     }
 
-    String nedsattNjurfunktion() {
+    String teckenNedsattHjarnfunktion() {
         getStringResult(getCurrentMethodName())
     }
 
-    String sviktandeKognitivFunktion() {
+    String saknarFormagaKannaVarningstecken() {
         getStringResult(getCurrentMethodName())
     }
 
-    String teckenSomnstorningar() {
+    String allvarligForekomst() {
         getStringResult(getCurrentMethodName())
     }
 
-    String teckenMissbruk() {
+    String allvarligForekomstBeskrivning() {
         getStringResult(getCurrentMethodName())
     }
 
-    String foremalForVardinsats() {
+    String allvarligForekomstTrafiken() {
         getStringResult(getCurrentMethodName())
     }
 
-    String provtagningBehovs() {
+    String allvarligForekomstTrafikBeskrivning() {
         getStringResult(getCurrentMethodName())
     }
 
-    String lakarordineratLakemedelsbruk() {
+    String egenkontrollBlodsocker() {
         getStringResult(getCurrentMethodName())
     }
 
-    String lakemedelOchDos() {
+    String allvarligForekomstVakenTid() {
         getStringResult(getCurrentMethodName())
     }
 
-    String psykiskSjukdom() {
+    String allvarligForekomstVakenTidObservationstid() {
         getStringResult(getCurrentMethodName())
     }
 
-    String psykiskUtvecklingsstorning() {
+    String separatOgonlakarintyg() {
         getStringResult(getCurrentMethodName())
     }
 
-    String harSyndrom() {
+    String synfaltsprovningUtanAnmarkning() {
         getStringResult(getCurrentMethodName())
     }
 
-    String stadigvarandeMedicinering() {
+    String hogerutanKorrektion() {
         getStringResult(getCurrentMethodName())
     }
 
-    String medicineringbeskrivning() {
+    String hogermedKorrektion() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String vansterutanKorrektion() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String vanstermedKorrektion() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String binokulartutanKorrektion() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String binokulartmedKorrektion() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String diplopi() {
+        getStringResult(getCurrentMethodName())
+    }
+
+    String lamplighetInnehaBehorighet() {
         getStringResult(getCurrentMethodName())
     }
 
     String kommentar() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String kommentarEjAngivet() {
         getStringResult(getCurrentMethodName())
     }
 

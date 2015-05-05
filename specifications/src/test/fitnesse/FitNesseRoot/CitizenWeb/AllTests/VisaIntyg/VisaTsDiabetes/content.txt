@@ -9,7 +9,12 @@
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
 |script|!-VisaIntyg-!|
-|intygssidan visas|
+|intygssidan visas|ts-diabetes|
 |intygets typ är|TS_DIABETES_U06_V02|
 |intygets id är|fit-intyg-6|
 
+!3 Verifiera att fälten i intyget syns och innehåller korrekt data
+
+| Verifiera Ts Diabetes |
+| patientnamn? | patientpersonnummer? | intygAvser? | identitet? | observationsperiod? | diabetestyp? | endastKost? | tabletter? | insulin? | insulinBehandlingsperiod? | annanBehandlingBeskrivning? | kunskapOmAtgarder? | teckenNedsattHjarnfunktion? | saknarFormagaKannaVarningstecken? | allvarligForekomst? | allvarligForekomstBeskrivning? | allvarligForekomstTrafiken? | allvarligForekomstTrafikBeskrivning? | egenkontrollBlodsocker? | allvarligForekomstVakenTid? | allvarligForekomstVakenTidObservationstid? | separatOgonlakarintyg? | synfaltsprovningUtanAnmarkning? | hogerutanKorrektion? | hogermedKorrektion? | vansterutanKorrektion? | vanstermedKorrektion? | binokulartutanKorrektion? | binokulartmedKorrektion? | diplopi? | lamplighetInnehaBehorighet? | kommentar? | bedomning? | bedomningKanInteTaStallning? | lakareSpecialKompetens? | signeringsdatum? | vardperson_namn? | vardperson_enhetsnamn? | vardenhet_postadress? | vardenhet_postnummer? | vardenhet_postort? | vardenhet_telefonnummer? |
+| Herr Dundersjuk | 19010101-0101 | !-AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI-! | Pass | 2012 | Typ 2 | Ja | Ja | Ja | 2012 | Hypnos | Ja | Ja | Ja | Ja | Beskrivning | Ja | Beskrivning |Ja | Ja |2012-12-12 | Nej | Ja | 0,0 | 0,0 | 0,0 | 0,0 | 0,0 | 0,0 | Ja | Ja | Kommentarer av det viktiga slaget | !-AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI-! | | Kronologisk bastuberedning | 1 april 2013 | läkare1 | enhet1 | Enhetsvägen 12 | 54321 | Tumba | 08-1337 |

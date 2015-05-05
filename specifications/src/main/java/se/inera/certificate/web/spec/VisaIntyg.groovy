@@ -3,6 +3,7 @@ package se.inera.certificate.web.spec
 import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.IntygPage
 import se.inera.certificate.web.pages.IntygTsBasPage
+import se.inera.certificate.web.pages.IntygTsDiabetesPage
 
 public class VisaIntyg {
 
@@ -11,6 +12,8 @@ public class VisaIntyg {
             waitFor {
                 if (typ == "ts-bas")
                     at IntygTsBasPage
+                else if (typ == "ts-diabetes")
+                    at IntygTsDiabetesPage
                 else
                     at IntygPage
             }
