@@ -17,8 +17,8 @@ app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     }]);
 
 
-app.run([ '$rootScope', '$state', '$window', 'common.messageService',
-    function($rootScope, $state, $window, messageService) {
+app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
+    function($log, $rootScope, $state, $window, messageService) {
         'use strict';
 
         $rootScope.lang = 'sv';
@@ -26,17 +26,7 @@ app.run([ '$rootScope', '$state', '$window', 'common.messageService',
         $rootScope.MI_CONFIG = MI_CONFIG;
         messageService.addResources(miMessages);
 
-        // Update page title
         $rootScope.page_title = 'Titel';
-        $rootScope.$on('$routeChangeSuccess', function() {
-            if ($state.current.$$route) {
-
-                if ($state.current.$$route.keepInboxTabActive === false) {
-                    $rootScope.keepInboxTab = false;
-                }
-                $rootScope.page_title = $state.current.$$route.title + ' | Mina intyg';
-            }
-        });
 
         $window.doneLoading = false;
         $window.dialogDoneLoading = true;
@@ -49,17 +39,21 @@ app.run([ '$rootScope', '$state', '$window', 'common.messageService',
 
         $rootScope.$on('$stateNotFound',
             function(event, unfoundState, fromState, fromParams){
-            })
+            });
         $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams){
                 $window.doneLoading = true;
-            })
+                if (toState.data.keepInboxTabActive === false) {
+                    $rootScope.keepInboxTab = false;
+                }
+                $rootScope.page_title = toState.data.title + ' | Mina intyg';
+            });
 
         $rootScope.$on('$stateChangeError',
             function(event, toState, toParams, fromState, fromParams, error){
-                $log.log("$stateChangeError");
+                $log.log('$stateChangeError');
                 $log.log(toState);
-            })
+            });
 
         $window.onbeforeunload = function() {
             var request = new XMLHttpRequest();

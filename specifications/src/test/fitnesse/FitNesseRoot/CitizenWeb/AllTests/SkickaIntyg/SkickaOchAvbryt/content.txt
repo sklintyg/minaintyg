@@ -1,0 +1,45 @@
+INTYG-1431 regressionstest
+Verifierar testfall där "Inkorgen" i menyn ska vara markerad i skicka flödet men inte om man avbryter genom att gå till ett annat menyalternativ.
+Verifierar att sidtitel är rätt satt.
+
+!3 Först logga in och lista alla befintliga intyg.
+
+|script|!-ListaIntyg-!|
+|logga på som|19010101-0101|
+|inkorgsidan visas|
+|lista med intyg visas|
+
+|script|!-Navigering-!|
+|sid titel är| !-Inkorgen | Mina intyg-! |
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
+
+|script|!-ListaIntyg-!|
+|visa intyg|fit-intyg-1|
+
+|script|!-VisaIntyg-!|
+|intygssidan visas|
+|intygets typ är|fk7263|
+|intygets id är|fit-intyg-1|
+
+|script|!-Navigering-!|
+|sid titel är| !-Läkarintyg FK7263 | Mina intyg-! |
+
+!3 Skicka intyg
+
+|script|!-VisaIntyg-!|
+|välj skicka intyg|
+
+|script|!-SkickaIntyg-!|
+|välj mottagare vyn visas|
+|välj mottagare|FK|
+|bekräfta vald mottagare|
+|summerings vyn visas|
+
+!3 Avbryt skicka och verifiera att rätt menyflik blir markerad
+
+|script|!-Navigering-!|
+|sid titel är| !-Kontrollera och skicka intyget | Mina intyg-! |
+|vald menyflik är|inboxTab|
+|gå till arkiverade intyg|
+|vald menyflik är|archivedTab|
