@@ -56,4 +56,11 @@ public class VisaIntyg {
         }
     }
 
+    public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
+        boolean result
+        Browser.drive {
+            result = $("#latest-certificate-event", text: contains(textFragment)).size() == 1
+        }
+        result
+    }
 }
