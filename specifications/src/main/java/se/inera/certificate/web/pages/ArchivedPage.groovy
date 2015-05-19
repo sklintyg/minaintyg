@@ -4,7 +4,7 @@ import se.inera.certificate.page.AbstractPage
 
 class ArchivedPage extends AbstractPage {
 
-	static url = "start#/arkiverade"
+	static url = "start/#/arkiverade"
 
 	static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
 
