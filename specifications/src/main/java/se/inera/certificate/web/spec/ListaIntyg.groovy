@@ -87,12 +87,18 @@ public class ListaIntyg {
 
     public void gåTillArkiveradeIntyg() {
         Browser.drive {
+            waitFor {
+                at InboxPage
+            }
             page.goToArchivedTab()
         }
     }
 
     public void gåTillInkorgen() {
         Browser.drive {
+            waitFor {
+                at ArchivedPage
+            }
             page.goToInboxPage()
         }
     }

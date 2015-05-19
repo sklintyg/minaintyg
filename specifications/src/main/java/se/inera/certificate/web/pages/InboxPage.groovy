@@ -41,11 +41,18 @@ class InboxPage extends AbstractPage {
     }
 
     def goToArchivedTab() {
-        archivedTab.click()
+        AbstractPage.scrollIntoView("archivedTab")
+        println("archivedTab scroll into view");
+        waitFor {
+            archivedTab.click()
+        }
     }
 
     def goToAboutMinaIntyg() {
-        aboutTab.click()
+        AbstractPage.scrollIntoView("aboutTab")
+        waitFor {
+            aboutTab.click()
+        }
     }
 
     def boolean cancelledCertificateDisplayed(String id) {

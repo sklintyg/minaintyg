@@ -35,6 +35,9 @@ class ArchivedPage extends AbstractPage {
     }
 
     def goToInboxPage() {
-        inboxTab.click()
+        AbstractPage.scrollIntoView("inboxTab")
+        waitFor {
+            inboxTab.click()
+        }
     }
 }
