@@ -95,7 +95,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
         CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
         CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
-        CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
+        CERTIFICATE_SEND("Certificate '{}' sent to '{}'"),
         CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
         CERTIFICATE_RESTORED("Certificate '{}' restored"),
         CONSENT_GIVEN("Consent given by citizen '{}'"),
