@@ -4,7 +4,7 @@ import se.inera.certificate.page.AbstractPage
 
 class InboxPage extends AbstractPage {
 
-    static url = "start#/lista"
+    static url = "start/#/lista"
 
     static at = { doneLoading() && $("#inboxHeader").isDisplayed() }
 
@@ -41,7 +41,6 @@ class InboxPage extends AbstractPage {
     }
 
     def goToArchivedTab() {
-
         archivedTab.click()
     }
 

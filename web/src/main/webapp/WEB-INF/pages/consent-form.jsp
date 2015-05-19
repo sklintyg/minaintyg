@@ -60,7 +60,7 @@
     <div class="content-container">
       <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
-          <a href="/web/start/" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
+          <a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
           <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
