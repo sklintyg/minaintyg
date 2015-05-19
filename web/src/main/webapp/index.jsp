@@ -61,7 +61,7 @@
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
   <div class="container" id="mi-logo-header">
     <div class="content-container">
-      <a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
+      <a href="/web/start/" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
     </div>
   </div>
 
