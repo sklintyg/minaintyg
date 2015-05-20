@@ -6,8 +6,8 @@
   vars: 
     # repo - values: snapshot or release
     repo: release
-    version: 2.2.0-b48
-    config_version: master
+    version: 2.2.0-RC2
+    config_version: release/v2.2.0
 
   roles:
     - minaintyg
