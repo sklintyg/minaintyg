@@ -10,6 +10,6 @@ angular.module('minaintyg').directive('miField',
                 fieldLabel: '@',
                 filled: '=?'
             },
-            templateUrl: '/js/directives/miField.html'
+            templateUrl: '/app/directives/miField.html'
         };
     });

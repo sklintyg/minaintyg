@@ -103,7 +103,7 @@
   <script>
     window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField', 'miSpinner', 'ngLocale' ]; // optional
   </script>
-  <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/app/ie/ie-angular-shiv.js"/>"></script>
   <script type = "text/javascript" src = "<c:url value="/web/webjars/respond/1.4.2/src/matchmedia.polyfill.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/respond.js"/>"></script>
   <![endif]-->
@@ -119,7 +119,7 @@
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
-      <script type="text/javascript" src="/js/app.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/app/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.js"></script>
@@ -131,7 +131,7 @@
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
-      <script type="text/javascript" src="/js/app.js"></script>
+      <script type="text/javascript" src="/app/app.js"></script>
     </c:otherwise>
   </c:choose>
 

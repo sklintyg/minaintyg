@@ -8,6 +8,6 @@ angular.module('minaintyg').directive('mvkTopBar',
             scope: {
                 hideLogout: '@'
             },
-            templateUrl: '/js/directives/mvkTopBar.html'
+            templateUrl: '/app/directives/mvkTopBar.html'
         };
     });

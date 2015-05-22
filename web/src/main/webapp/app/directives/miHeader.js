@@ -8,6 +8,6 @@ angular.module('minaintyg').directive('miHeader',
             scope: {
                 userName: '@'
             },
-            templateUrl: '/js/directives/miHeader.html'
+            templateUrl: '/app/directives/miHeader.html'
         };
     });

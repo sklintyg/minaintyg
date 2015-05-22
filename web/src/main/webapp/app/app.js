@@ -80,7 +80,7 @@ $.get('/api/certificates/map').then(function(modules) {
     } else {
         modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/js/module.js'));
         modulePromises.push($.get('/web/webjars/common/minaintyg/js/module-deps.json'));
-        modulePromises.push($.get('/js/app-deps.json'));
+        modulePromises.push($.get('/app/app-deps.json'));
 
         // Prevent jQuery from appending cache buster to the url to make it easier to debug.
         $.ajaxSetup({

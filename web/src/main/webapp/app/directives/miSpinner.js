@@ -11,6 +11,6 @@ angular.module('minaintyg').directive('miSpinner',
                 showSpinner: '=',
                 showContent: '='
             },
-            templateUrl: '/js/directives/miSpinner.html'
+            templateUrl: '/app/directives/miSpinner.html'
         };
     });

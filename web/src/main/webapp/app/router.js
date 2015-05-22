@@ -7,37 +7,37 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
     $stateProvider.
         state('consent', {
             url :'/consent',
-            templateUrl: '/views/consent/consent-start.html',
+            templateUrl: '/app/views/consent/consent-start.html',
             controller: 'minaintyg.ConsentCtrl',
             data:{title: 'Ditt samtycke',keepInboxTabActive: false}
         }).
         state('lista', {
             url : '/lista',
-            templateUrl: '/views/list.html',
+            templateUrl: '/app/views/list/list.html',
             controller: 'minaintyg.ListCtrl',
             data:{title: 'Inkorgen',keepInboxTabActive: false}
         }).
         state('arkiverade', {
             url : '/arkiverade',
-            templateUrl: '/views/list-archived.html',
+            templateUrl: '/app/views/list/archive/list-archived.html',
             controller: 'minaintyg.ListArchivedCtrl',
             data:{title: 'Arkiverade intyg',keepInboxTabActive: false}
         }).
-        state('om-minaintyg', {
+        state('omminaintyg', {
             url :'/omminaintyg',
-            templateUrl: '/views/om-mina-intyg.html',
+            templateUrl: '/app/views/about/about-mina-intyg.html',
             controller: 'minaintyg.AboutCtrl',
             data:{title: 'Om mina intyg',keepInboxTabActive: false}
         }).
         state('hjalp', {
             url : '/hjalp',
-            templateUrl: '/views/hjalp.html',
+            templateUrl: '/app/views/help/help.html',
             controller: 'minaintyg.HelpCtrl',
             data:{title: 'Hjälp',keepInboxTabActive: false}
         }).
         state('fel', {
             url :'/fel/:errorCode',
-            templateUrl: '/views/error.html',
+            templateUrl: '/app/views/error/error.html',
             controller: 'minaintyg.ErrorViewCtrl',
             data:{title: 'Fel',keepInboxTabActive: false}
         });
