@@ -210,6 +210,20 @@
         </properties>
     </profile>
     <profile>
+      <id>ip20</id>
+        <properties>
+          <certificate.baseUrl>https://intyg.ip20.nordicmedtest.sjunet.org/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://mvk.ip20.nordicmedtest.sjunet.org/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
+      <id>ip40</id>
+        <properties>
+          <certificate.baseUrl>https://intygstjanst.ip40.nordicmedtest.sjunet.org/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://minaintyg.ip40.nordicmedtest.sjunet.org/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
       <id>ssh-tunnel</id>
         <properties>
           <certificate.baseUrl>http://localhost:18080/inera-certificate/</certificate.baseUrl>
