@@ -72,7 +72,7 @@
   </div>
   <div class="container" id="mi-navigation">
     <div class="content-container">
-      <mi-main-navigation></mi-main-navigation>
+      <mi-main-navigation link-prefix="/web/start"></mi-main-navigation>
     </div>
   </div>
 
