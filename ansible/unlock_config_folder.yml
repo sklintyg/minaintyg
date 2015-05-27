@@ -1,7 +1,7 @@
 ---
 # This playbook unlocks the config repo folder
 
-- hosts: tomcat
+- hosts: minaintyg-tomcat
   sudo: yes 
   
   roles:
