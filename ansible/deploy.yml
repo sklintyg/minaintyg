@@ -1,7 +1,7 @@
 ---
 # This playbook deploys Mina Intyg 
 
-- hosts: tomcat
+- hosts: minaintyg-tomcat
   sudo: yes 
   vars: 
     # repo - values: snapshot or release
