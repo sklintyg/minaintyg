@@ -1,4 +1,7 @@
-!-FitNesse-!-baserade specifikationer för Intygstjänsten.
+!-FitNesse-!-baserade specifikationer för Mina Intyg.
+
+!define person1.personnummer {19010101-0101}
+!define person2.personnummer {19121212-9999}
 
 !contents -R2
 
