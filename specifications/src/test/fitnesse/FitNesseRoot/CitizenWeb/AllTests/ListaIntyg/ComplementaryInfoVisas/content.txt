@@ -1,7 +1,7 @@
 !3 Intyg avser innehåller information för ett TS-intyg
 
 |script|!-ListaIntyg-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
 |complementaryInfoArSatt|fit-intyg-6|

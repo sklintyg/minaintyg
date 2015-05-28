@@ -3,7 +3,7 @@
 Automatisk utloggning ska ske vid: vidarenavigering och flik-stängning
 
 |script|!-GeSamtycke-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |ge samtycke sidan visas|
 
 

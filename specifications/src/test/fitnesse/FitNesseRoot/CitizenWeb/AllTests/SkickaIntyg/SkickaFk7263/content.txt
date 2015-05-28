@@ -2,7 +2,7 @@
 !3 Först logga in och lista alla befintliga intyg.
 
 |script|!-ListaIntyg-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
 |visa intyg|fit-intyg-1|
@@ -45,7 +45,7 @@
 !3 Först logga in och lista alla befintliga intyg.
 
 |script|!-ListaIntyg-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
 |visa intyg|fit-intyg-5|

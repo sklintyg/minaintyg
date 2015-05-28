@@ -2,12 +2,12 @@
 Givet 
 |Samtycke|
 |personnr|samtycke|
-|19010101-0101|ja|
+|${person1.personnummer}|ja|
 
 !3 Logga på som användare som har samtycke.
 
 |script|!-ListaIntyg-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 
 !3 Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas

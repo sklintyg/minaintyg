@@ -1,7 +1,7 @@
 !3 Först logga in och lista alla befintliga intyg.
 
 |script|!-ListaIntyg-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
 |visa intyg|fit-intyg-1|
@@ -17,7 +17,7 @@
 
 | Verifiera Fk7263 |
 | patientnamn? | personnummer? | vardenhet? | vardgivare? |
-| Test Testorsson | 19010101-0101 | enhet1 | Landstinget Norrland |
+| Test Testorsson | ${person1.personnummer} | enhet1 | Landstinget Norrland |
 
 !3 Verifiera fält 1: Smittskydd
 

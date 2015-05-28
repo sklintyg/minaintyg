@@ -1,6 +1,6 @@
 !3 Givet att användaren EJ har intyg så skall det ej visas något.
 
 |script|!-ListaIntyg-!|
-|logga på som|19121212-9999|
+|logga på som|${person2.personnummer}|
 |inkorgsidan visas|
 |finns inga intyg |

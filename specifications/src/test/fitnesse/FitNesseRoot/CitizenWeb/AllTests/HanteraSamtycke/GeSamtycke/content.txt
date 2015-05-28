@@ -3,9 +3,9 @@
 Logga på som ny användare och ge samtycke och verifiera att samtycke givet-sidan visas. Därefter klicka fortsätt och gå till inkorgssidan. Efter detta - logga sedan på igen med samma användare och verifiera att man då hamnar direkt på inkorgssidan.
 
 |script|!-GeSamtycke-!|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |ge samtycke sidan visas|
 |ge samtycke|
 |inkorg sidan visas|
-|logga på som|19010101-0101|
+|logga på som|${person1.personnummer}|
 |inkorg sidan visas|

@@ -2,4 +2,4 @@
 
 |Samtycke|
 |personnr|samtycke|
-|19010101-0101|nej|
+|${person1.personnummer}|nej|

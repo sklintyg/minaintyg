@@ -1,7 +1,7 @@
 !3 Givet att användaren har rättat intyg så skall detta visas på specifikt sätt i listan.
 
 |script      |!-ListaIntyg-!|
-|logga på som|19010101-0101 |
+|logga på som|${person1.personnummer} |
 |inkorgsidan visas          |
 |lista med intyg visas      |
 
