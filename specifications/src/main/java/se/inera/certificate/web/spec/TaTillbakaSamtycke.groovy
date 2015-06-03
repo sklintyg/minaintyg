@@ -4,23 +4,15 @@ import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.AboutMinaIntygPage
 import se.inera.certificate.web.pages.ConsentPage
 
-public class TaTillbakaSamtycke {
+public class TaTillbakaSamtycke extends AbstractWebFixture {
 
-    public void gåTillOmMinaIntygSidan() {
+    public void gåTillOmMinaIntygsidan() {
         Browser.drive {
             page.goToAboutMinaIntyg()
         }
     }
 
-    public boolean omMinaIntygSidanVisas() {
-        Browser.drive {
-            waitFor {
-                at AboutMinaIntygPage
-            }
-        }
-    }
-
-    public void gåTillOmSamtyckeSidan() {
+    public void gåTillOmSamtyckesidan() {
         Browser.drive {
             page.gotoAboutConsentSection()
         }
@@ -44,14 +36,6 @@ public class TaTillbakaSamtycke {
     public void bekräftaÅtertaSamtycke() {
         Browser.drive {
             page.revokeConsent()
-        }
-    }
-
-    public boolean samtyckeSidanVisas() {
-        Browser.drive {
-            waitFor {
-                at ConsentPage
-            }
         }
     }
 

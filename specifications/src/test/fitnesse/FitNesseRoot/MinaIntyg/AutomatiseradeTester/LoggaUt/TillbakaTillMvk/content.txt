@@ -1,0 +1,15 @@
+!3 Gå tillbaka till MVK
+
+Logga på med användare och välj "Tillbaka till Mina Vårdkontakter" i headern.
+
+|script|logga in|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+
+Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inloggade i MVK.
+
+|script|logga ut|
+|tillbaka till mvk|
+|mvks inloggningssida visas|
+|gå till startsida|
+|access denied visas|

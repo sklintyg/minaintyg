@@ -50,7 +50,7 @@ public class VisaIntyg {
     public void konfirmeraArkiveraIntyg() {
         Browser.drive {
             waitFor {
-                confirmArchiveBtn.displayed
+                page.doneLoading()
             }
             page.confirmArchiveCertificate()
         }

@@ -1,0 +1,17 @@
+!3 Går igenom flöde för att ge samtycke.
+
+!3 Givet att samtycke inte registrerats:
+
+|Samtycke|
+|personnr|samtycke|
+|${person1.personnummer}|nej|
+
+Logga på som ny användare och ge samtycke och verifiera att samtycke givet-sidan visas. Därefter klicka fortsätt och gå till inkorgssidan. Efter detta - logga sedan på igen med samma användare och verifiera att man då hamnar direkt på inkorgssidan.
+
+|script|!-GeSamtycke-!|
+|logga på som|${person1.personnummer}|
+|ge samtyckesidan visas|
+|ge samtycke|
+|inkorgsidan visas|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|

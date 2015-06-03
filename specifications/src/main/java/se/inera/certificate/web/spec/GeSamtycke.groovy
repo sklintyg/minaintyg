@@ -6,13 +6,7 @@ import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentPage
 import se.inera.certificate.web.pages.InboxPage
 
-public class GeSamtycke {
-
-    public void loggaPåSom(String pnr) {
-        Browser.drive {
-            go "sso?guid=${pnr}"
-        }
-    }
+public class GeSamtycke extends AbstractWebFixture {
 
     public void geSamtycke() {
         Browser.drive {
@@ -24,22 +18,6 @@ public class GeSamtycke {
     public void nekaSamtycke() {
         Browser.drive {
             page.denyConsent()
-        }
-    }
-
-    public boolean inkorgSidanVisas() {
-        Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-        }
-    }
-
-    public boolean geSamtyckeSidanVisas() {
-        Browser.drive {
-            waitFor {
-                at ConsentPage
-            }
         }
     }
 

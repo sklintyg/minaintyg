@@ -1,4 +1,0 @@
-!include -c .CitizenWeb.SuiteSetUp
-
-|script|Browser|
-|öppna|

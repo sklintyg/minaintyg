@@ -2,7 +2,7 @@ package se.inera.certificate.web.pages
 
 import se.inera.certificate.page.AbstractPage
 
-class InboxPage extends AbstractPage {
+class InboxPage extends AbstractLoggedInPage {
 
     static url = "start/#/lista"
 
