@@ -6,7 +6,7 @@
   vars: 
     # repo - values: snapshot or release
     repo: release
-    version: 2.2.0-RC4
+    version: 2.2.0-RC6
     config_version: release/v2.2.0
 
   roles:
