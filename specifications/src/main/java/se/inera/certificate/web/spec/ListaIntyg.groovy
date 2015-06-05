@@ -4,29 +4,7 @@ import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.ArchivedPage
 import se.inera.certificate.web.pages.InboxPage
 
-public class ListaIntyg {
-
-    public void loggaPåSom(String pnr) {
-        Browser.drive {
-            go "sso?guid=${pnr}"
-        }
-    }
-
-    public boolean inkorgsidanVisas() {
-        Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-        }
-    }
-
-    public boolean arkiveradesidanVisas() {
-        Browser.drive {
-            waitFor {
-                at ArchivedPage
-            }
-        }
-    }
+public class ListaIntyg extends AbstractWebFixture {
 
     public boolean listaMedIntygVisas() {
         Browser.drive {

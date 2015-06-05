@@ -1,8 +1,7 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
 
-class ConsentPage extends AbstractPage {
+class ConsentPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && consentTerms.isDisplayed() }
 
@@ -11,8 +10,6 @@ class ConsentPage extends AbstractPage {
         giveConsentButton { $("#giveConsentButton") }
         consentGivenView(required: false) { $("#consent-given") }
         continueToMIButton(required: false) { $("#continueToMI") }
-        backToMvkLink { $("#backToMvkLink") }
-        logoutLink { $("#mvklogoutLink") }
     }
 
     def giveConsent() {
@@ -21,13 +18,5 @@ class ConsentPage extends AbstractPage {
 
     def continueToMI() {
         continueToMIButton.click()
-    }
-
-    def goBackToMvk() {
-        backToMvkLink.click()
-    }
-
-    def logout() {
-        logoutLink.click()
     }
 }

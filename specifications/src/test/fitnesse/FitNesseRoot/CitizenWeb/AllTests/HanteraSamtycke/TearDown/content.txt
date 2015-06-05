@@ -1,5 +1,0 @@
-!3 Återta samtycken:
-
-|Samtycke|
-|personnr|samtycke|
-|${person1.personnummer}|nej|

@@ -2,7 +2,7 @@ package se.inera.certificate.web.pages
 
 import se.inera.certificate.page.AbstractPage
 
-class ArchivedPage extends AbstractPage {
+class ArchivedPage extends AbstractLoggedInPage {
 
 	static url = "start/#/arkiverade"
 

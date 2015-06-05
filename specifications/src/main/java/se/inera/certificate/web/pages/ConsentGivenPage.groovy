@@ -1,8 +1,7 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
 
-class ConsentGivenPage extends AbstractPage {
+class ConsentGivenPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && $("#consent-given").isDisplayed() }
 

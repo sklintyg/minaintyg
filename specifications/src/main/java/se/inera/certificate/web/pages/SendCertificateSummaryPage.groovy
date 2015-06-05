@@ -1,8 +1,7 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
 
-class SendCertificateSummaryPage extends AbstractPage {
+class SendCertificateSummaryPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && $("#send-certificate-flow-root-summary").isDisplayed() }
 

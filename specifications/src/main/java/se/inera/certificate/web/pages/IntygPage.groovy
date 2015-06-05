@@ -1,8 +1,7 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
 
-class IntygPage extends AbstractPage {
+class IntygPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && $("#certificate").isDisplayed() }
 
