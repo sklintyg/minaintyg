@@ -8,9 +8,9 @@ class SendCertificateChooseRecipientPage extends AbstractPage {
 
     static content = {
         chooseRecipientBtn(required: false)  { id -> $("recipient-${id}") }
-        confirmRecipientSelectionBtn(required: false)  { $("#confirmRecipientSelectionBtn") }
+        confirmRecipientSelectionBtn(required: false,wait: true) { displayed($("#confirmRecipientSelectionBtn")) }
         cancelRecipientSelectionBtn(required: false)  { $("#cancelRecipientSelectionBtn") }
-        alreadySentWarningMessage(required: false)  { $("#already-sent-to-recipient-message") }
+        alreadySentWarningMessage(required: false,wait: true) { displayed($("#already-sent-to-recipient-message")) }
     }
 
     def chooseRecipient(String id) {

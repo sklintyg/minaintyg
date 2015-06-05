@@ -9,8 +9,8 @@ class InboxPage extends AbstractPage {
     static at = { doneLoading() && $("#inboxHeader").isDisplayed() }
 
     static content = {
-        certificateTable(required: false) { $("#certTable") }
-        noCertificates(required: false) { $("#noCerts") }
+        certificateTable(required: false,wait: true) { displayed($("#certTable")) }
+        noCertificates(required: false,wait: true) { displayed($("#noCerts")) }
         inboxTab(required: false) { $("#inboxTab") }
         archivedTab(required: false) { $("#archivedTab") }
         aboutTab(required: false) { $("#aboutTab") }

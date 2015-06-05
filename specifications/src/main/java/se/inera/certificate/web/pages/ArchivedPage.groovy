@@ -9,7 +9,7 @@ class ArchivedPage extends AbstractPage {
 	static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
 
     static content = {
-        certificateTable(required: false) { $("#certTable") }
+        certificateTable(required: false,wait: true) { displayed($("#certTable")) }
         noCertificates(required: false) { $("#noCerts") }
         archiveCertificateButton(required: false) { $("#archiveCertificateBtn") }
         viewCertificateButton(required: false) { $("#viewCertificateBtn") }

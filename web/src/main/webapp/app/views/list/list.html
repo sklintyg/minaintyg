@@ -28,15 +28,15 @@
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div id="certificate-{{cert.id}}" class="cert">
                   <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
-                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" /></a>
-                    <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
+                    <a wc-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" /></a>
+                    <img wc-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
-                          <button class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                          <button class="btn-link btn-link-link" ng-click="sendSelected(cert)" wc-show="!cert.cancelled">
                           	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           </button>
-                          <span ng-show="cert.cancelled">
+                          <span wc-show="cert.cancelled">
                             <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span> - <span message key="certificates.status.cancelledlc"></span>
                           </span>
                         </h2>
@@ -52,7 +52,7 @@
                     </div>
                   </div>
                   <div class="cert-header">
-                    <div class="row" ng-show="cert.cancelled">
+                    <div class="row" wc-show="cert.cancelled">
                       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 header-row">
                         <div class="alert alert-info">
                           <span message key="inbox.revoked"></span>
@@ -74,27 +74,27 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8 header-row">
                         <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3>
-                        <div ng-show="cert.statuses.length>0">
+                        <div wc-show="cert.statuses.length>0">
                           {{cert.statuses[0].timestamp | date:'short'}}
                           <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                          <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
+                          <span wc-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
                           <div collapse="isCollapsed">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 {{status.timestamp | date:'short'}}
                                 <span message key="certificates.status.{{status.type}}"></span>
-                                <span ng-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span>s system</span><br>
+                                <span wc-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span>s system</span><br>
                               </div>
                             </div>
                           </div>
                           <p>
-                            <button class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsed = !isCollapsed"><span message key="label.status.{{ !isCollapsed }}"></span></button>
+                            <button class="btn-link btn-link-link" wc-show="cert.statuses.length>1" href="#status" ng-click="isCollapsed = !isCollapsed"><span message key="label.status.{{ !isCollapsed }}"></span></button>
                           </p>
                         </div>
-                        <span ng-show="cert.statuses.length==0">Ingen</span>
+                        <span wc-show="cert.statuses.length==0">Ingen</span>
                       </div>
                       <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-left">
-                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><span message key="button.show"></span></button>
+                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" wc-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><span message key="button.show"></span></button>
                       </div>
                       <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
                       	<button class="btn btn-primary pull-right" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
@@ -108,14 +108,14 @@
               </div>
             </div>
             </div>
-          <div class="table-bottom" ng-show="(certificates | unarchived).length>0"></div>
+          <div class="table-bottom" wc-show="(certificates | unarchived).length>0"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-	<div id="noCerts" ng-show="doneLoading && (certificates | unarchived).length<1" class="alert alert-info">
+	<div id="noCerts" wc-show="doneLoading && (certificates | unarchived).length<1" class="alert alert-info">
 		<span message key="error.nocerts"></span>
 	</div>
 </div>

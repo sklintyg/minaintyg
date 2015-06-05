@@ -7,7 +7,7 @@ class SendCertificateSentPage extends AbstractPage {
     static at = { doneLoading() && $("#send-certificate-flow-root-sent").isDisplayed() }
 
     static content = {
-        resultMessageContainer(required: false)  { $("#send-certificate-flow-result") }
+        resultMessageContainer(required: false,wait: true) { displayed($("#send-certificate-flow-result")) }
         backToViewCertificateBtn(required: false)  { $("#backToViewCertificateBtn") }
     }
 
