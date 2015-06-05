@@ -6,7 +6,7 @@ class AboutMinaIntygPage extends AbstractLoggedInPage {
 
     static content = {
         aboutSamtyckeLink(required: false) { $("#link-about-samtycke") }
-        aboutSamtyckeSection(required: false) { $("#about-content-samtycke") }
+        aboutSamtyckeSection(required: false,wait: true) { displayed($("#about-content-samtycke")) }
         openRevokeConsentDialogLink(required: false) { $("#revokeConsentBtn") }
 
 
