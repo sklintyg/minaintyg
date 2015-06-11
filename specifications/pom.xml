@@ -217,6 +217,13 @@
         </properties>
     </profile>
     <profile>
+      <id>ip30</id>
+        <properties>
+          <certificate.baseUrl>https://intyg.ip30.nordicmedtest.sjunet.org/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://mvk.ip30.nordicmedtest.sjunet.org/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
       <id>ip40</id>
         <properties>
           <certificate.baseUrl>https://intygstjanst.ip40.nordicmedtest.sjunet.org/inera-certificate/</certificate.baseUrl>
