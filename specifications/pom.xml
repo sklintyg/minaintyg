@@ -28,8 +28,8 @@
     <fitnesse.port>9124</fitnesse.port>
     <fitnesse.working>${project.basedir}/src/test/fitnesse</fitnesse.working>
     <fitnesse.root>FitNesseRoot</fitnesse.root>
-    <fitnesse.project.root>CitizenWeb</fitnesse.project.root>
-    <fitnesse.suite>${fitnesse.project.root}.AllBrowsers</fitnesse.suite>
+    <fitnesse.project.root>MinaIntyg</fitnesse.project.root>
+    <fitnesse.suite>${fitnesse.project.root}.AutomatiseradeTester</fitnesse.suite>
 
     <!-- This example has no unit tests, just integration tests -->
     <skipTests>true</skipTests>
@@ -289,29 +289,6 @@
             </executions>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>selenium-server</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <configuration>
-                <mainClass>org.openqa.grid.selenium.GridLauncher</mainClass>
-                <arguments>
-                  <argument>-timeout</argument>
-                  <argument>600</argument>
-                </arguments>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
   </profiles>
