@@ -6,7 +6,7 @@ class AboutMinaIntygPage extends AbstractLoggedInPage {
 
     static content = {
         aboutSamtyckeLink(required: false) { $("#link-about-samtycke") }
-        aboutSamtyckeSection(required: false,wait: true) { displayed($("#about-content-samtycke")) }
+        aboutSamtyckeSection(required: false) { $("#about-content-samtycke") }
         openRevokeConsentDialogLink(required: false) { $("#revokeConsentBtn") }
 
 
@@ -16,16 +16,22 @@ class AboutMinaIntygPage extends AbstractLoggedInPage {
 
     def gotoAboutConsentSection() {
         aboutSamtyckeLink.click()
+        waitFor {
+            doneLoading()
+        }
     }
 
     def openRevokeConsentDialog() {
         openRevokeConsentDialogLink.click()
-    }
-
-    def revokeConsent() {
         waitFor {
             doneLoading()
         }
+    }
+
+    def revokeConsent() {
         revokeConsentButton.click()
+        waitFor {
+            doneLoading()
+        }
     }
 }

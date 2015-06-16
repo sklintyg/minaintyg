@@ -1,254 +1,231 @@
 package se.inera.certificate.web.spec
 
-import org.codehaus.groovy.runtime.StackTraceUtils
-import se.inera.certificate.spec.Browser
 
-class VerifieraFk7263 {
-
-    public VerifieraFk7263() {
-
-    }
-
-    String getCurrentMethodName(){
-        def marker = new Throwable()
-        return StackTraceUtils.sanitize(marker).stackTrace[1].methodName
-    }
-
-    String getStringResult(field) {
-        def result = ''
-        Browser.drive {
-            if (!page."$field".isDisplayed()) {
-                result = "notshown"
-            } else {
-                result = page."$field".text().trim()
-            }
-        }
-        result
-    }
+class VerifieraFk7263 extends VerifieraIntyg {
 
     // Patient
     String patientnamn() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("patientnamn")
     }
 
     String personnummer() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("personnummer")
     }
 
     // Utfärdare
     String vardenhet() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardenhet")
     }
 
     String vardgivare() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardgivare")
     }
 
     // Fält 1
     String smittskyddJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("smittskyddJa")
     }
 
     String smittskyddNej() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("smittskyddNej")
     }
 
     // Fält 2
     String diagnosKod() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("diagnosKod")
     }
 
     String diagnosBeskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("diagnosBeskrivning")
     }
 
     // Fält 3
     String sjukdomsforlopp() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("sjukdomsforlopp")
     }
 
     // Fält 4
     String funktionsnedsattning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("funktionsnedsattning")
     }
 
     // Fält 4b
     String undersokningAvPatienten() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("undersokningAvPatienten")
     }
 
     String telefonkontaktMedPatienten() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("telefonkontaktMedPatienten")
     }
 
     String journaluppgifter() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("journaluppgifter")
     }
 
     String annanReferens() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("annanReferens")
     }
 
     // Fält 5
     String aktivitetsbegransning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("aktivitetsbegransning")
     }
 
     // Fält 6a
     String rekommendationKontaktArbetsformedlingen() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rekommendationKontaktArbetsformedlingen")
     }
 
     String rekommendationKontaktForetagshalsovarden() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rekommendationKontaktForetagshalsovarden")
     }
 
     String rekommendationOvrigt() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rekommendationOvrigt")
     }
 
     // Fält 6b
     String atgardSjukvard() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("atgardSjukvard")
     }
 
     String atgardAnnan() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("atgardAnnan")
     }
 
     // Fält 7
     String rehabiliteringJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rehabiliteringJa")
     }
 
     String rehabiliteringNej() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rehabiliteringNej")
     }
 
     String rehabiliteringGarInteAttBedoma() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("rehabiliteringGarInteAttBedoma")
     }
 
     // Fält 8a
     String nuvarandeArbetsuppgifter() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nuvarandeArbetsuppgifter")
     }
 
     String arbetslos() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetslos")
     }
 
     String foraldraledig() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("foraldraledig")
     }
 
     // Fält 8b
     String nedsattMed25() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed25")
     }
 
     String nedsattMed25Beskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed25Beskrivning")
     }
 
     String nedsattMed50() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed50")
     }
 
     String nedsattMed50Beskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed50Beskrivning")
     }
 
     String nedsattMed75() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed75")
     }
 
     String nedsattMed75Beskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed75Beskrivning")
     }
 
     String nedsattMed100() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed100")
     }
 
     String nedsattMed100Beskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("nedsattMed100Beskrivning")
     }
 
     // Fält 9
     String arbetsformagaPrognos() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetsformagaPrognos")
     }
 
     // Fält 10
     String arbetsformagaPrognosJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetsformagaPrognosJa")
     }
 
     String arbetsformagaPrognosDelvisJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetsformagaPrognosDelvisJa")
     }
 
     String arbetsformagaPrognosNej() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetsformagaPrognosNej")
     }
 
     String arbetsformagaPrognosGarInteAttBedoma() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("arbetsformagaPrognosGarInteAttBedoma")
     }
 
     // Fält 11
     String resaTillArbetetJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("resaTillArbetetJa")
     }
 
     String resaTillArbetetNej() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("resaTillArbetetNej")
     }
 
     // Fält 12
     String kontaktFkJa() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("kontaktFkJa")
     }
 
     String kontaktFkNej() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("kontaktFkNej")
     }
 
     // Fält 13
     String kommentar() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("kommentar")
     }
 
     // Fält 14
     String signeringsdatum() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("signeringsdatum")
     }
 
     // Fält 15
     String vardpersonNamn() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardpersonNamn")
     }
 
     String vardpersonEnhet() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardpersonEnhet")
     }
 
     String vardpersonPostadress() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardpersonPostadress")
     }
 
     String vardpersonPostnummerOrt() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardpersonPostnummerOrt")
     }
 
     String vardpersonTelefonnummer() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vardpersonTelefonnummer")
     }
 
     // Fält 17
     String forskrivarkodOchArbetsplatskod() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("forskrivarkodOchArbetsplatskod")
     }
 
 }

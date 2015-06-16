@@ -8,13 +8,13 @@
 
 !3 Logga på som användare som har samtycke.
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 
 !3 Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas
 
-|script|!-TaTillbakaSamtycke-!|
+|skript|ta tillbaka samtycke|
 |gå till om mina intygsidan|
 |om mina intygsidan visas|
 |gå till om samtyckesidan|

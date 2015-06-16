@@ -3,13 +3,6 @@ package se.inera.certificate.web.pages
 class IntygFk7263Page extends IntygPage {
 
     static content = {
-        certificateId { $("#certId") }
-        certificateType { $("#certType") }
-        sendCertificateBtn { $("#sendCertificateBtn") }
-        latestCertificateEvent { $("#latest-certificate-event") }
-        archiveBtn { $("#archiveBtn") }
-        confirmArchiveBtn(required: false) { $("#archive-button") }
-
         // Patient
         patientnamn { $("#patient-name") }
         personnummer { $("#patient-crn") }
@@ -105,21 +98,6 @@ class IntygFk7263Page extends IntygPage {
         // Fält 17
         forskrivarkodOchArbetsplatskod { $("#forskrivarkodOchArbetsplatskod") }
 
-    }
-
-    def startSendFlow() {
-        sendCertificateBtn.click()
-    }
-
-    def archive() {
-        archiveBtn.click()
-    }
-
-    def confirmArchiveCertificate() {
-        waitFor {
-            doneLoading()
-        }
-        confirmArchiveBtn.click()
     }
 
 }

@@ -7,14 +7,12 @@ import se.inera.certificate.web.pages.SendCertificateSummaryPage
 
 public class SkickaIntyg {
 
-
     public boolean väljMottagareVynVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at SendCertificateChooseRecipientPage
-            }
-            return page.confirmRecipientSelectionBtn.isDisplayed()
+            result = page.confirmRecipientSelectionBtn.isDisplayed()
         }
+        return result
     }
 
     public void väljMottagare(String mottagare) {
@@ -30,21 +28,19 @@ public class SkickaIntyg {
     }
 
     public boolean summeringsVynVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at SendCertificateSummaryPage
-            }
-            return page.confirmAndSendBtn.isDisplayed()
+            result = page.confirmAndSendBtn.isDisplayed()
         }
+        return result
     }
     
     public boolean valdMottagareÄr(String mottagare) {
+        boolean result
         Browser.drive {
-            waitFor {
-                at SendCertificateSummaryPage
-            }
-            return page.selectedRecipientMessage.text() == mottagare
+            result = page.selectedRecipientMessage.text() == mottagare
         }
+        return result
     }
 
     public void bekräftaSkickaIntyg() {
@@ -54,26 +50,21 @@ public class SkickaIntyg {
     }
 
     public boolean resultatSidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at SendCertificateSentPage
-            }
-            return page.resultMessageContainer.isDisplayed()
+            result = page.resultMessageContainer?.isDisplayed()
         }
+        return result
     }
 
     public boolean redanSkickatVarningVisas() {
+        boolean result
         Browser.drive {
-            return page.alreadySentWarningMessage.isDisplayed()
+            result = page.alreadySentWarningMessage?.isDisplayed()
         }
+        return result
     }
     
-    public boolean redanSkickatVarningVisasInte() {
-        Browser.drive {
-            return !page.alreadySentWarningMessage.isDisplayed()
-        }
-    }
-
     public void gåTillbakaTillIntyget() {
         Browser.drive {
             page.backToCertificateView()

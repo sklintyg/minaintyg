@@ -6,9 +6,9 @@ class SendCertificateSummaryPage extends AbstractLoggedInPage {
     static at = { doneLoading() && $("#send-certificate-flow-root-summary").isDisplayed() }
 
     static content = {
-        confirmAndSendBtn(required: false,wait: true) { displayed($("#confirmAndSendBtn")) }
-        backToViewRecipentsBtn(required: false)  { $("#backToViewRecipentsBtn") }
-        cancelSendBtn(required: false)  { $("#cancelSendBtn") }
+        confirmAndSendBtn(required: false, to: SendCertificateSentPage, toWait: true) { $("#confirmAndSendBtn") }
+        backToViewRecipentsBtn(required: false, to: SendCertificateChooseRecipientPage, toWait: true)  { $("#backToViewRecipentsBtn") }
+        cancelSendBtn(required: false, to: IntygPage, toWait: true)  { $("#cancelSendBtn") }
         selectedRecipientMessage(required: false)  { $("#selected-recipient-message") }
         alreadySentWarningMessage(required: false)  { $("#already-sent-to-recipient-message") }
     }

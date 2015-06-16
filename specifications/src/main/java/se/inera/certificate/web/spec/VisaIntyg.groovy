@@ -1,28 +1,36 @@
 package se.inera.certificate.web.spec
 import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.IntygFk7263Page
+import se.inera.certificate.web.pages.IntygPage
 import se.inera.certificate.web.pages.IntygTsBasPage
 import se.inera.certificate.web.pages.IntygTsDiabetesPage
 
 public class VisaIntyg {
 
-    public boolean intygssidanVisas(typ="") {
+    public boolean intygssidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                if (typ == "ts-bas")
-                    at IntygTsBasPage
-                else if (typ == "ts-diabetes")
-                    at IntygTsDiabetesPage
-                else
-                    at IntygFk7263Page
-            }
+            result = at IntygPage
         }
+        return result
     }
 
     public boolean intygetsTypÄr(String typ) {
         boolean result
         Browser.drive {
-           result = $("#certType", title: typ).size() == 1
+            switch (typ) {
+            case "fk7263":
+                result = at IntygFk7263Page
+                break 
+            case "ts-bas":
+                result = at IntygTsBasPage
+                break 
+            case "ts-diabetes":
+                result = at IntygTsDiabetesPage
+                break
+            default:
+                result = false
+            }
         }
         result
     }
@@ -49,9 +57,6 @@ public class VisaIntyg {
 
     public void konfirmeraArkiveraIntyg() {
         Browser.drive {
-            waitFor {
-                page.doneLoading()
-            }
             page.confirmArchiveCertificate()
         }
     }
@@ -59,7 +64,7 @@ public class VisaIntyg {
     public boolean intygetHarEnStatusTextInnehållande(String textFragment) {
         boolean result
         Browser.drive {
-            result = $("#latest-certificate-event", text: contains(textFragment)).size() == 1
+            result = page.hasStatus(textFragment)
         }
         result
     }

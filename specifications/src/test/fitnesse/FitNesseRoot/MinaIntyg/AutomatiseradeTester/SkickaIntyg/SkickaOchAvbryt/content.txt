@@ -4,33 +4,33 @@ Verifierar att sidtitel är rätt satt.
 
 !3 Först logga in och lista alla befintliga intyg.
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
 
-|script|!-Navigering-!|
+|skript|!-Navigering-!|
 |sid titel är| !-Inkorgen | Mina intyg-! |
 
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |visa intyg|fit-intyg-1|
 
-|script|!-VisaIntyg-!|
+|skript|visa intyg|
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-1|
 
-|script|!-Navigering-!|
+|skript|!-Navigering-!|
 |sid titel är| !-Läkarintyg FK7263 | Mina intyg-! |
 
 !3 Skicka intyg
 
-|script|!-VisaIntyg-!|
+|skript|visa intyg|
 |välj skicka intyg|
 
-|script|!-SkickaIntyg-!|
+|skript|skicka intyg|
 |välj mottagare vyn visas|
 |välj mottagare|FK|
 |bekräfta vald mottagare|
@@ -38,7 +38,7 @@ Verifierar att sidtitel är rätt satt.
 
 !3 Avbryt skicka och verifiera att rätt menyflik blir markerad
 
-|script|!-Navigering-!|
+|skript|!-Navigering-!|
 |sid titel är| !-Kontrollera och skicka intyget | Mina intyg-! |
 |vald menyflik är|inboxTab|
 |gå till arkiverade intyg|

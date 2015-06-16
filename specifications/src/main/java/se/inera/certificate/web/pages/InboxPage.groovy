@@ -9,27 +9,29 @@ class InboxPage extends AbstractLoggedInPage {
     static at = { doneLoading() && $("#inboxHeader").isDisplayed() }
 
     static content = {
-        certificateTable(required: false,wait: true) { displayed($("#certTable")) }
-        noCertificates(required: false,wait: true) { displayed($("#noCerts")) }
-        inboxTab(required: false) { $("#inboxTab") }
-        archivedTab(required: false) { $("#archivedTab") }
-        aboutTab(required: false) { $("#aboutTab") }
+        certificateTable(required: false) { $("#certTable") }
+        noCertificates(required: false) { $("#noCerts") }
         confirmArchiveButton(required: false) { $("#archive-button") }
         certificate(required: false) { id -> $("#certificate-${id}") }
         archiveCertificateButton(required: false) { id -> $("#archiveCertificateBtn-${id}") }
-        viewCertificateButton(required: false) { id -> $("#viewCertificateBtn-${id}") }
+        viewCertificateButton(required: false, to: IntygPage, toWait: true) { id -> $("#viewCertificateBtn-${id}") }
         complementaryInfoText(required: false) { id -> $("#certificate-period-${id}")}
     }
 
     def archiveCertificate(String id) {
         archiveCertificateButton(id).click()
-    }
-
-    def confirmArchiveCertificate() {
         waitFor {
             doneLoading()
         }
+    }
+
+    def confirmArchiveCertificate() {
         confirmArchiveButton.click()
+        // TODO: FIX!! The animation on InboxPage requires delay, otherwise doneLoading() returns true immediately
+        Thread.sleep(1000)
+        waitFor {
+            doneLoading()
+        }
     }
 
     def boolean certificateExists(String id) {
@@ -38,21 +40,6 @@ class InboxPage extends AbstractLoggedInPage {
 
     def viewCertificate(String id) {
         viewCertificateButton(id).click()
-    }
-
-    def goToArchivedTab() {
-        AbstractPage.scrollIntoView("archivedTab")
-        println("archivedTab scroll into view");
-        waitFor {
-            archivedTab.click()
-        }
-    }
-
-    def goToAboutMinaIntyg() {
-        AbstractPage.scrollIntoView("aboutTab")
-        waitFor {
-            aboutTab.click()
-        }
     }
 
     def boolean cancelledCertificateDisplayed(String id) {

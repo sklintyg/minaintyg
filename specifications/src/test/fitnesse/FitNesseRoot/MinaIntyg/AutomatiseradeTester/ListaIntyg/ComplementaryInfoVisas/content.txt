@@ -1,6 +1,6 @@
 !3 Intyg avser innehåller information för ett TS-intyg
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|

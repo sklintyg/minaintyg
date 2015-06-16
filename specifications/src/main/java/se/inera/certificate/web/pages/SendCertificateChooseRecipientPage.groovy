@@ -7,9 +7,9 @@ class SendCertificateChooseRecipientPage extends AbstractLoggedInPage {
 
     static content = {
         chooseRecipientBtn(required: false)  { id -> $("recipient-${id}") }
-        confirmRecipientSelectionBtn(required: false,wait: true) { displayed($("#confirmRecipientSelectionBtn")) }
-        cancelRecipientSelectionBtn(required: false)  { $("#cancelRecipientSelectionBtn") }
-        alreadySentWarningMessage(required: false,wait: true) { displayed($("#already-sent-to-recipient-message")) }
+        confirmRecipientSelectionBtn(required: false, to: SendCertificateSummaryPage, toWait: true) { $("#confirmRecipientSelectionBtn") }
+        cancelRecipientSelectionBtn(required: false, to: IntygPage, toWait: true)  { $("#cancelRecipientSelectionBtn") }
+        alreadySentWarningMessage(required: false) { $("#already-sent-to-recipient-message") }
     }
 
     def chooseRecipient(String id) {

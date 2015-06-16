@@ -2,11 +2,11 @@
 
 Logga på med användare och välj "Logga ut" i headern.
 
-|script|!-GeSamtycke-!|
+|skript|ge samtycke|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 
-|script|!-LoggaUt-!|
+|skript|logga ut|
 |logga ut|
 |mvks utloggningssida visas|
 |gå till startsida|

@@ -1,2 +1,2 @@
-|script|Browser|
+|skript|Browser|
 |stäng|

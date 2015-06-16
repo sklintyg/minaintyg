@@ -6,7 +6,7 @@ class ConsentGivenPage extends AbstractLoggedInPage {
     static at = { doneLoading() && $("#consent-given").isDisplayed() }
 
     static content = {
-        continueToMIButton(required: false) { $("#continueToMI") }
+        continueToMIButton(to: InboxPage, toWait: true) { $("#continueToMI") }
     }
 
     def continueToMI() {

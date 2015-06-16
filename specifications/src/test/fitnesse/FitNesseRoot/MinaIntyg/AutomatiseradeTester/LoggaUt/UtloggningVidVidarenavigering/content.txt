@@ -2,11 +2,11 @@
 
 Automatisk utloggning ska ske vid: vidarenavigering och flik-stängning
 
-|script|logga in|
+|skript|logga in|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 
-|script|logga ut|
+|skript|logga ut|
 |besök extern sida|
 |gå till startsida|
 |ladda om|

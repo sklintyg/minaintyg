@@ -8,7 +8,7 @@
 
 Logga på som ny användare och ge samtycke och verifiera att samtycke givet-sidan visas. Därefter klicka fortsätt och gå till inkorgssidan. Efter detta - logga sedan på igen med samma användare och verifiera att man då hamnar direkt på inkorgssidan.
 
-|script|!-GeSamtycke-!|
+|skript|ge samtycke|
 |logga på som|${person1.personnummer}|
 |ge samtyckesidan visas|
 |ge samtycke|

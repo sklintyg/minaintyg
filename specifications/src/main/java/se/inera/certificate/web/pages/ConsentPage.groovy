@@ -9,14 +9,9 @@ class ConsentPage extends AbstractLoggedInPage {
         consentTerms { $("#consentTerms") }
         giveConsentButton { $("#giveConsentButton") }
         consentGivenView(required: false) { $("#consent-given") }
-        continueToMIButton(required: false) { $("#continueToMI") }
     }
 
     def giveConsent() {
         giveConsentButton.click()
-    }
-
-    def continueToMI() {
-        continueToMIButton.click()
     }
 }

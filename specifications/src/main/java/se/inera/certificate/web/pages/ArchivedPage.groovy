@@ -9,35 +9,29 @@ class ArchivedPage extends AbstractLoggedInPage {
 	static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
 
     static content = {
-        certificateTable(required: false,wait: true) { displayed($("#certTable")) }
+        certificateTable(required: false) { $("#certTable") }
         noCertificates(required: false) { $("#noCerts") }
         archiveCertificateButton(required: false) { $("#archiveCertificateBtn") }
         viewCertificateButton(required: false) { $("#viewCertificateBtn") }
-        inboxTab(required: false) { $("#inboxTab") }
-        archivedTab(required: false) { $("#archivedTab") }
         confirmRestoreButton(required: false) { $("#restore-button") }
         restoreCertificateButton(required: false) { id -> $("#restoreCertificate-${id}") }
     }
 
     def restoreCertificate(String id) {
         restoreCertificateButton(id).click()
-    }
-
-    def confirmRestoreCertificate() {
         waitFor {
             doneLoading()
         }
+    }
+
+    def confirmRestoreCertificate() {
         confirmRestoreButton.click()
+        waitFor {
+            doneLoading()
+        }
     }
 
     def boolean certificateExists(String id) {
         restoreCertificateButton(id).isDisplayed()
-    }
-
-    def goToInboxPage() {
-        AbstractPage.scrollIntoView("inboxTab")
-        waitFor {
-            inboxTab.click()
-        }
     }
 }

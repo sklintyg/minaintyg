@@ -11,7 +11,6 @@ public class GeSamtycke extends AbstractWebFixture {
     public void geSamtycke() {
         Browser.drive {
             page.giveConsent()
-
         }
     }
 
@@ -22,11 +21,11 @@ public class GeSamtycke extends AbstractWebFixture {
     }
 
     public boolean samtyckeGivetSidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at ConsentGivenPage
-            }
+            result = at ConsentGivenPage
         }
+        return result
     }
 
     public void gåVidareTillMinaIntyg() {
@@ -36,9 +35,11 @@ public class GeSamtycke extends AbstractWebFixture {
     }
 
     public boolean samtyckeNekatSidanVisas() {
+        boolean result
         Browser.drive {
-            at ConsentDeniedPage
+            result = at ConsentDeniedPage
         }
+        return result
     }
 
 }

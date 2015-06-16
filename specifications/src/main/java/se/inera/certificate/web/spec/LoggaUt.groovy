@@ -20,18 +20,18 @@ public class LoggaUt extends AbstractWebFixture {
     }
 
     public boolean mvksInloggningssidaVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at MvkLoginPage
-            }
+            result = at MvkLoginPage
         }
+        return result
     }
 
     public boolean mvksUtloggningssidaVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at MvkLogoutPage
-            }
+            result = at MvkLogoutPage
         }
+        return result
     }
 }

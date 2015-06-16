@@ -6,10 +6,10 @@ Testet arkiverar först ett intyg och verifierar att det finns med i listan med 
 
 Därefter återställs detta och verifiering sker att intyget ej längre listas bland de arkiverade utan istället i inkorgen.
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |återställ intyg|fit-intyg-1|
 |konfirmera återställ intyg|
-|arkiverat intyg finns ej i listan | fit-intyg-1 |
+|säkerställ att inte|arkiverat intyg|fit-intyg-1|finns i listan|
 |gå till inkorgen|
 |inkorgsidan visas|
-|intyg finns i listan | fit-intyg-1 |
+|säkerställ att|intyg|fit-intyg-1|finns i listan|

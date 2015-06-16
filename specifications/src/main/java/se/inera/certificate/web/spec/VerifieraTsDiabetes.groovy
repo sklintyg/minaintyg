@@ -1,204 +1,117 @@
 package se.inera.certificate.web.spec
 
-import org.codehaus.groovy.runtime.StackTraceUtils
-import se.inera.certificate.spec.Browser
-
-class VerifieraTsDiabetes {
-
-    String getCurrentMethodName(){
-        def marker = new Throwable()
-        return StackTraceUtils.sanitize(marker).stackTrace[1].methodName
-    }
-
-    boolean getBooleanResult(field) {
-        def result = false
-        Browser.drive {
-            result = page."$field".isDisplayed()
-        }
-        result
-    }
-
-    String getStringResult(field) {
-        def result = ''
-        Browser.drive {
-            if (!page."$field".isDisplayed()) {
-                result = "notshown"
-            } else {
-                result = page."$field".text()
-            }
-        }
-        result
-    }
-
-    String patientnamn() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String patientpersonnummer() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String intygAvser() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String identitet() {
-        getStringResult(getCurrentMethodName())
-    }
+class VerifieraTsDiabetes extends VerifieraTsIntyg {
 
     String observationsperiod() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("observationsperiod")
     }
 
     String diabetestyp() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("diabetestyp")
     }
 
     String endastKost() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("endastKost")
     }
 
     String tabletter() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("tabletter")
     }
 
     String insulin() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("insulin")
     }
 
     String insulinBehandlingsperiod() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("insulinBehandlingsperiod")
     }
 
     String annanBehandlingBeskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("annanBehandlingBeskrivning")
     }
 
     String kunskapOmAtgarder() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("kunskapOmAtgarder")
     }
 
     String teckenNedsattHjarnfunktion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("teckenNedsattHjarnfunktion")
     }
 
     String saknarFormagaKannaVarningstecken() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("saknarFormagaKannaVarningstecken")
     }
 
     String allvarligForekomst() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomst")
     }
 
     String allvarligForekomstBeskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomstBeskrivning")
     }
 
     String allvarligForekomstTrafiken() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomstTrafiken")
     }
 
     String allvarligForekomstTrafikBeskrivning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomstTrafikBeskrivning")
     }
 
     String egenkontrollBlodsocker() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("egenkontrollBlodsocker")
     }
 
     String allvarligForekomstVakenTid() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomstVakenTid")
     }
 
     String allvarligForekomstVakenTidObservationstid() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("allvarligForekomstVakenTidObservationstid")
     }
 
     String separatOgonlakarintyg() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("separatOgonlakarintyg")
     }
 
     String synfaltsprovningUtanAnmarkning() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("synfaltsprovningUtanAnmarkning")
     }
 
     String hogerutanKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("hogerutanKorrektion")
     }
 
     String hogermedKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("hogermedKorrektion")
     }
 
     String vansterutanKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vansterutanKorrektion")
     }
 
     String vanstermedKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("vanstermedKorrektion")
     }
 
     String binokulartutanKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("binokulartutanKorrektion")
     }
 
     String binokulartmedKorrektion() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("binokulartmedKorrektion")
     }
 
     String diplopi() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("diplopi")
     }
 
     String lamplighetInnehaBehorighet() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("lamplighetInnehaBehorighet")
     }
 
     String kommentar() {
-        getStringResult(getCurrentMethodName())
+        getStringResult("kommentar")
     }
 
-    String bedomning() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String bedomningKanInteTaStallning() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String lakareSpecialKompetens() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String lakareSpecialKompetensEjAngivet() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String signeringsdatum() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardperson_namn() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardperson_enhetsnamn() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardenhet_postadress() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardenhet_postnummer() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardenhet_postort() {
-        getStringResult(getCurrentMethodName())
-    }
-
-    String vardenhet_telefonnummer() {
-        getStringResult(getCurrentMethodName())
-    }
 }

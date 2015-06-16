@@ -1,4 +1,4 @@
 !include -c .MinaIntyg.SuiteSetUp
 
-|script|Browser|
+|skript|Browser|
 |öppna|

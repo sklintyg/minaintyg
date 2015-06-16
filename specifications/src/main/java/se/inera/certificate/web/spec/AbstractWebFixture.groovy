@@ -1,5 +1,6 @@
 package se.inera.certificate.web.spec
 
+import se.inera.certificate.page.AbstractPage
 import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.AboutMinaIntygPage
 import se.inera.certificate.web.pages.AccessDeniedPage
@@ -12,58 +13,66 @@ public class AbstractWebFixture {
     public void loggaPåSom(String pnr) {
         Browser.drive {
             go "sso?guid=${pnr}"
+            waitFor {
+                AbstractPage.doneLoading()
+            }
         }
     }
 
     public boolean inkorgsidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at InboxPage
-            }
+            result = at InboxPage
         }
+        return result
     }
 
     public boolean arkiveradesidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at ArchivedPage
-            }
+            result = at ArchivedPage
         }
+        return result
     }
 
     public boolean geSamtyckesidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at ConsentPage
-            }
+            result = at ConsentPage
         }
     }
 
     public boolean omMinaIntygsidanVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at AboutMinaIntygPage
-            }
+            result = at AboutMinaIntygPage
         }
+        return result
     }
 
     public void gåTillStartsida() {
         Browser.drive {
             go "/web/start"
+            waitFor {
+                AbstractPage.doneLoading()
+            }
         }
     }
 
     public boolean accessDeniedVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at AccessDeniedPage
-            }
+            result = at AccessDeniedPage
         }
+        return result
     }
 
     public void laddaOm() {
         Browser.drive {
             getJs().exec([], "window.location.reload()")
+            waitFor {
+                AbstractPage.doneLoading()
+            }
         }
     }
     

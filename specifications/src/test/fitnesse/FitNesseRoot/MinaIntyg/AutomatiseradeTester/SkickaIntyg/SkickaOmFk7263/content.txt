@@ -6,12 +6,12 @@
 
 !3 Skicka igen
 
-|script|!-VisaIntyg-!|
+|skript|visa intyg|
 |välj skicka intyg|
 
 !3 Bekräfta och skicka intyget igen och verifiera att varningsmeddelandet visas.
 
-|script|!-SkickaIntyg-!|
+|skript|skicka intyg|
 |välj mottagare vyn visas|
 |välj mottagare|FK|
 |redan skickat varning visas|
@@ -25,7 +25,7 @@
 
 !3 Verifiera att intyget nu har status 'skickat'. 
 
-|script|!-VisaIntyg-!|
+|skript|visa intyg|
 |intygssidan visas|
 |intygets typ är|fk7263|
 |intygets id är|fit-intyg-5|

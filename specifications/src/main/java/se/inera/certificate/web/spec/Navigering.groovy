@@ -7,10 +7,7 @@ class Navigering {
 
     public def gåTillArkiveradeIntyg() {
         Browser.drive {
-            page.$("#archivedTab").click()
-            waitFor {
-                at ArchivedPage
-            }
+            page.goToArchivedPage()
         }
     }
 
@@ -21,7 +18,7 @@ class Navigering {
     public boolean valdMenyflikÄr(id) {
         def result
         Browser.drive {
-            result = (page.$('.navbar-nav li.active > a').getAt(0).getAttribute('id') == id)
+            result = (page.activeTab() == id)
         }
         result
     }

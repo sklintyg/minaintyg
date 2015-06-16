@@ -1,6 +1,6 @@
 !3 Först logga in och lista alla befintliga intyg.
 
-|script|!-ListaIntyg-!|
+|skript|lista intyg|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 |lista med intyg visas|
@@ -8,9 +8,9 @@
 
 !3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
 
-|script|!-VisaIntyg-!|
-|intygssidan visas|ts-diabetes|
-|intygets typ är|TS_DIABETES_U06_V02|
+|skript|visa intyg|
+|intygssidan visas|
+|intygets typ är|ts-diabetes|
 |intygets id är|fit-intyg-7|
 
 !3 Verifiera att fälten i intyget syns och innehåller korrekt data

@@ -2,13 +2,13 @@ package se.inera.certificate.web.spec;
 
 import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.AboutMinaIntygPage
-import se.inera.certificate.web.pages.ConsentPage
+import se.inera.certificate.web.pages.InboxPage
 
 public class TaTillbakaSamtycke extends AbstractWebFixture {
 
     public void gåTillOmMinaIntygsidan() {
         Browser.drive {
-            page.goToAboutMinaIntyg()
+            page.goToAboutPage()
         }
     }
 
@@ -19,12 +19,11 @@ public class TaTillbakaSamtycke extends AbstractWebFixture {
     }
 
     public boolean omSamtyckeAvsnittVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at AboutMinaIntygPage
-            }
-            return page.aboutSamtyckeSection.isDisplayed()
+            result = page.aboutSamtyckeSection.isDisplayed()
         }
+        return result
     }
 
     public void väljÅtertaSamtycke() {
