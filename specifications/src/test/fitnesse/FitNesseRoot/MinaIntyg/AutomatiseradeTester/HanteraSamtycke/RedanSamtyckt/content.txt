@@ -6,6 +6,6 @@
 
 !3 Samtyckes-sida visas nu ej
 
-|skript|ge samtycke|
+|skript|hantera samtycke|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|

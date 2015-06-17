@@ -6,7 +6,7 @@ import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentPage
 import se.inera.certificate.web.pages.InboxPage
 
-public class GeSamtycke extends AbstractWebFixture {
+public class HanteraSamtycke extends AbstractWebFixture {
 
     public void geSamtycke() {
         Browser.drive {

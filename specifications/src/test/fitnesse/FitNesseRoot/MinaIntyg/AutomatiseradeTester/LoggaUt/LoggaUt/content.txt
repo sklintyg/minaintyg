@@ -2,7 +2,7 @@
 
 Logga på med användare och välj "Logga ut" i headern.
 
-|skript|ge samtycke|
+|skript|hantera samtycke|
 |logga på som|${person1.personnummer}|
 |inkorgsidan visas|
 
