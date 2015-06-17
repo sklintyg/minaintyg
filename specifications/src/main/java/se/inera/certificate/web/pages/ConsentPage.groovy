@@ -7,7 +7,7 @@ class ConsentPage extends AbstractLoggedInPage {
 
     static content = {
         consentTerms { $("#consentTerms") }
-        giveConsentButton { $("#giveConsentButton") }
+        giveConsentButton(to: InboxPage, toWait: true) { $("#giveConsentButton") }
         consentGivenView(required: false) { $("#consent-given") }
     }
 
