@@ -46,6 +46,9 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
                 if (toState.data.keepInboxTabActive === false) {
                     $rootScope.keepInboxTab = false;
                 }
+                if (toState.data.keepInboxTabActive === true) {
+                    $rootScope.keepInboxTab = true;
+                }
                 $rootScope.page_title = toState.data.title + ' | Mina intyg';
             });
 
