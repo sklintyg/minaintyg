@@ -1,5 +1,0 @@
-!3 Återta samtycken:
-
-|Samtycke|
-|personnr|samtycke|
-|19010101-0101|nej|
