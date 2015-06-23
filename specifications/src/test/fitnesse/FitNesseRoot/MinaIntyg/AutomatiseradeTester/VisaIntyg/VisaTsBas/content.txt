@@ -1,0 +1,20 @@
+!3 Först logga in och lista alla befintliga intyg.
+
+|skript|lista intyg|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+|lista med intyg visas|
+|visa intyg|fit-intyg-3|
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
+
+|skript|visa intyg|
+|intygssidan visas|
+|intygets typ är|ts-bas|
+|intygets id är|fit-intyg-3|
+
+!3 Verifiera att fälten i intyget syns och innehåller korrekt data
+
+| Verifiera Ts Bas |
+| patientnamn? | patientpersonnummer? | intygAvser? | identitet? | synfaltsdefekter? | nattblindhet? | diplopi? | nystagmus? | hogerOgautanKorrektion? | hogerOgamedKorrektion? | hogerOgakontaktlins? | vansterOgautanKorrektion? | vansterOgamedKorrektion? | vansterOgakontaktlins? | binokulartutanKorrektion? | binokulartmedKorrektion? | korrektionsglasensStyrka? | horselBalansbalansrubbningar? | horselBalanssvartUppfattaSamtal4Meter? | funktionsnedsattning? | funktionsnedsattningbeskrivning? | funktionsnedsattningotillrackligRorelseformaga? | hjartKarlSjukdom? | hjarnskadaEfterTrauma? | riskfaktorerStroke? | beskrivningRiskfaktorer? | harDiabetes? | diabetesTyp? | kost? | tabletter? | insulin? | neurologiskSjukdom? | medvetandestorning? | medvetandestorningbeskrivning? | nedsattNjurfunktion? | sviktandeKognitivFunktion? | teckenSomnstorningar? | teckenMissbruk? | foremalForVardinsats? | provtagningBehovs? | lakarordineratLakemedelsbruk? | lakemedelOchDos? | psykiskSjukdom? | psykiskUtvecklingsstorning? | harSyndrom? | stadigvarandeMedicinering? | medicineringbeskrivning? | kommentar? | kommentarEjAngivet? | bedomning? | bedomningKanInteTaStallning? | lakareSpecialKompetens? | signeringsdatum? | vardperson_namn? | vardperson_enhetsnamn? | vardenhet_postadress? | vardenhet_postnummer? | vardenhet_postort? | vardenhet_telefonnummer? |
+| Herr Dundersjuk |  ${person1.personnummer} | !-C1, C1E, C, CE, D1, D1E, D, DE, TAXI, ANNAT-! | Pass | Ja | Ja | Ja | Ja | 0,0 | 0,0 | Ja | 0,0 | 0,0 | Ja | 0,0 | 0,0 | Ja | Ja | Ja | Ja | Spik i foten |Ja | Ja | Ja | Ja | Förkärlek för Elvismackor | Ja | Typ 2 | Kost | | | Ja | Ja | Beskrivning | Ja | Ja | Ja | Ja | Ja | Ja | Ja | Läkemedel och dos | Ja | Ja | Ja | Ja | Alvedon | Här kommer en övrig kommentar | | !-C1, C1E, C, CE, D1, D1E, D, DE, TAXI, ANNAT-! | | Spektralanalys | 3 april 2013 | läkare1 | enhet1 | Enhetsvägen 12 | 54321 | Tumba | 08-1337 |

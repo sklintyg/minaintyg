@@ -25,7 +25,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/eintyg.inera.se-config.xml, classpath:/eintyg.inera.se-cxf-config.xml,
+    <param-value>classpath:/minaintyg-config.xml, classpath:/minaintyg-cxf-config.xml,
       /WEB-INF/web-security.xml
     </param-value>
   </context-param>
@@ -41,6 +41,14 @@
   <!-- Start spring context -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- Event publisher for keeping track of when session ends and removing them from the sessionRegistry -->
+  <listener>
+     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  </listener>
+  <!-- Makes attributes in the request available -->
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
   <servlet>
@@ -66,6 +74,15 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>monitoring</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/monitoring-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>web</servlet-name>
@@ -78,6 +95,10 @@
   <servlet-mapping>
     <servlet-name>moduleapi</servlet-name>
     <url-pattern>/moduleapi/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>monitoring</servlet-name>
+    <url-pattern>/monitoring/*</url-pattern>
   </servlet-mapping>
 
   <filter>

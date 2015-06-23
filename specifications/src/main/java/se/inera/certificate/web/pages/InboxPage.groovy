@@ -2,33 +2,36 @@ package se.inera.certificate.web.pages
 
 import se.inera.certificate.page.AbstractPage
 
-class InboxPage extends AbstractPage {
+class InboxPage extends AbstractLoggedInPage {
 
-    static url = "start#/lista"
+    static url = "start/#/lista"
 
     static at = { doneLoading() && $("#inboxHeader").isDisplayed() }
 
     static content = {
         certificateTable(required: false) { $("#certTable") }
         noCertificates(required: false) { $("#noCerts") }
-        inboxTab(required: false) { $("#inboxTab") }
-        archivedTab(required: false) { $("#archivedTab") }
-        aboutTab(required: false) { $("#aboutTab") }
         confirmArchiveButton(required: false) { $("#archive-button") }
         certificate(required: false) { id -> $("#certificate-${id}") }
         archiveCertificateButton(required: false) { id -> $("#archiveCertificateBtn-${id}") }
-        viewCertificateButton(required: false) { id -> $("#viewCertificateBtn-${id}") }
+        viewCertificateButton(required: false, to: IntygPage, toWait: true) { id -> $("#viewCertificateBtn-${id}") }
+        complementaryInfoText(required: false) { id -> $("#certificate-period-${id}")}
     }
 
     def archiveCertificate(String id) {
         archiveCertificateButton(id).click()
-    }
-
-    def confirmArchiveCertificate() {
         waitFor {
             doneLoading()
         }
+    }
+
+    def confirmArchiveCertificate() {
         confirmArchiveButton.click()
+        // TODO: FIX!! The animation on InboxPage requires delay, otherwise doneLoading() returns true immediately
+        Thread.sleep(1000)
+        waitFor {
+            doneLoading()
+        }
     }
 
     def boolean certificateExists(String id) {
@@ -39,17 +42,12 @@ class InboxPage extends AbstractPage {
         viewCertificateButton(id).click()
     }
 
-    def goToArchivedTab() {
-
-        archivedTab.click()
-    }
-
-    def goToAboutMinaIntyg() {
-        aboutTab.click()
-    }
-
     def boolean cancelledCertificateDisplayed(String id) {
         def viewCertButton = viewCertificateButton(id)
         !viewCertButton.isDisplayed() || viewCertButton.isDisabled();
     }
+
+    def String complementaryInfoIsSet(String id) {
+        complementaryInfoText(id).text()
+    } 
 }

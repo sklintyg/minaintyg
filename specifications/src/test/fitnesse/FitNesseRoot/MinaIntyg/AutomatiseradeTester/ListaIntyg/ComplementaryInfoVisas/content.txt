@@ -1,0 +1,9 @@
+!3 Intyg avser innehåller information för ett TS-intyg
+
+|skript|lista intyg|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+|lista med intyg visas|
+|complementaryInfoArSatt|fit-intyg-6|
+
+

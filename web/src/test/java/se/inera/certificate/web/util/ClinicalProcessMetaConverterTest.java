@@ -8,10 +8,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
+import se.riv.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.StatusType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
+
 
 public class ClinicalProcessMetaConverterTest {
 
@@ -64,7 +66,8 @@ public class ClinicalProcessMetaConverterTest {
                 .facilityName(FACILITY_NAME)
                 .issuerName(ISSUER_NAME)
                 .signDate(new LocalDateTime())
-                .validity(new LocalDate(), new LocalDate());
+                .validity(new LocalDate(), new LocalDate())
+                .complemantaryInfo("Test");
     }
 
     @Test
@@ -103,4 +106,14 @@ public class ClinicalProcessMetaConverterTest {
         // Early timestamp should be second
         assertEquals(sentStatus.getType().name(), meta.getStatuses().get(1).getType().name());
     }
+
+    @Test
+    public void testAdditionalInfo() {
+        UtlatandeMetaData meta = ClinicalProcessMetaConverter.toUtlatandeMetaData(builder.build());
+        CertificateMetaType certMeta = builder.build();
+
+        assertEquals("Test", meta.getComplemantaryInfo());
+        assertEquals("Test", certMeta.getComplemantaryInfo());
+    }
+
 }

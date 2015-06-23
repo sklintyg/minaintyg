@@ -1,0 +1,24 @@
+!3 Går igenom flöde för att ta tillbaka samtycke.
+
+!3 Givet ett redan registrerat samtycke:
+
+|Samtycke|
+|personnr|samtycke|
+|${person1.personnummer}|ja|
+
+!3 Logga på som användare som har samtycke.
+
+|skript|lista intyg|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+
+!3 Navigera till Om Mina Intyg / Saamtycke och välj att återta samtycket. Bekräfta återtagandet. Visa Samtycke sida skall visas
+
+|skript|ta tillbaka samtycke|
+|gå till om mina intygsidan|
+|om mina intygsidan visas|
+|gå till om samtyckesidan|
+|om samtycke avsnitt visas|
+|välj återta samtycke|
+|bekräfta återta samtycke|
+|ge samtyckesidan visas|

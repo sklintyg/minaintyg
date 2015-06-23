@@ -1,57 +1,33 @@
 package se.inera.certificate.web.spec
 
+import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.ArchivedPage
 import se.inera.certificate.web.pages.InboxPage
 
-public class ListaIntyg {
-
-    public void loggaPåSom(String pnr) {
-        Browser.drive {
-            go "sso?guid=${pnr}"
-        }
-    }
-
-    public boolean inkorgsidanVisas() {
-        Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-        }
-    }
-
-    public boolean arkiveradesidanVisas() {
-        Browser.drive {
-            waitFor {
-                at ArchivedPage
-            }
-        }
-    }
+public class ListaIntyg extends AbstractWebFixture {
 
     public boolean listaMedIntygVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-            return page.certificateTable.isDisplayed()
+            result = page.certificateTable.isDisplayed()
         }
+        return result
     }
 
     public boolean listaMedArkiveradeIntygVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at ArchivedPage
-            }
-            return page.certificateTable.isDisplayed()
+            result = page.certificateTable.isDisplayed()
         }
+        return result
     }
 
     public boolean finnsIngaIntyg() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-            return page.noCertificates.isDisplayed()
+            result = page.noCertificates.isDisplayed()
         }
+        return result
     }
 
     public void arkiveraIntyg(String id) {
@@ -62,9 +38,6 @@ public class ListaIntyg {
 
     public void konfirmeraArkiveraIntyg() {
         Browser.drive {
-            waitFor (message: "no button") {
-                confirmArchiveButton.displayed
-            }
             page.confirmArchiveCertificate()
         }
     }
@@ -77,16 +50,13 @@ public class ListaIntyg {
 
     public void konfirmeraÅterställIntyg() {
         Browser.drive {
-            waitFor {
-                confirmRestoreButton.displayed
-            }
             page.confirmRestoreCertificate()
         }
     }
 
     public void gåTillArkiveradeIntyg() {
         Browser.drive {
-            page.goToArchivedTab()
+            page.goToArchivedPage()
         }
     }
 
@@ -97,56 +67,40 @@ public class ListaIntyg {
     }
 
     public boolean arkiveratIntygFinnsIListan(String id) {
+        boolean result
         Browser.drive {
-            waitFor {
-                at ArchivedPage
-            }
-            return page.certificateExists(id)
+            result = page.certificateExists(id)
         }
-    }
-
-    public boolean arkiveratIntygFinnsEjIListan(String id) {
-        Browser.drive {
-            waitFor {
-                at ArchivedPage
-                !page.certificateExists(id)
-            }
-            return !page.certificateExists(id)
-        }
+        return result
     }
 
     public boolean intygFinnsIListan(String id) {
+        boolean result
         Browser.drive {
-            waitFor {
-                at InboxPage
-                page.certificateExists(id)
-            }
-            return page.certificateExists(id)
+            result = page.certificateExists(id)
         }
-    }
-
-    public boolean intygFinnsEjIListan(String id) {
-        Browser.drive {
-            waitFor {
-                at InboxPage
-                !page.certificateExists(id)
-            }
-            return !page.certificateExists(id)
-        }
+        return result
     }
 
     public boolean rättatIntygVisasKorrekt(String id) {
+        boolean result
         Browser.drive {
-            waitFor {
-                at InboxPage
-            }
-            return page.cancelledCertificateDisplayed(id);
+            result = page.cancelledCertificateDisplayed(id);
         }
+        return result
     }
 
     public void visaIntyg(String id) {
         Browser.drive {
             page.viewCertificate(id)
         }
+    }
+
+    public boolean complementaryInfoArSatt(String id) {
+        boolean result
+        Browser.drive {
+            result = !page.complementaryInfoIsSet(id).isEmpty()
+        }
+        return result
     }
 }

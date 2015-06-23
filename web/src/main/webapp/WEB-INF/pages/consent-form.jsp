@@ -86,7 +86,7 @@
               </div>
             </noscript>
             <%-- ng-view that holds dynamic content managed by angular app --%>
-            <div id="view" ng-view></div>
+            <div id="view" ui-view></div>
           </div>
         </div>
       </div>
@@ -109,8 +109,9 @@
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-animate.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
-      <script type="text/javascript" src="/js/app.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/app/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.js"></script>
@@ -120,8 +121,9 @@
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-animate.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
-      <script type="text/javascript" src="/js/app.js"></script>
+      <script type="text/javascript" src="/app/app.js"></script>
     </c:otherwise>
   </c:choose>
 

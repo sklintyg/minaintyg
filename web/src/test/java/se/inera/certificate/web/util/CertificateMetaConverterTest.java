@@ -1,5 +1,6 @@
 package se.inera.certificate.web.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +12,7 @@ import org.junit.Test;
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Status;
+import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
 public class CertificateMetaConverterTest {
 
@@ -68,5 +70,14 @@ public class CertificateMetaConverterTest {
 
         CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
         assertTrue(meta.getCancelled());
+    }
+
+    @Test
+    public void testAdditionalInfo() {
+        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
+        UtlatandeMetaData utlatandeMeta = builder.build();
+
+        assertEquals("2013-01-01 till 2014-01-01", utlatandeMeta.getComplemantaryInfo());
+        assertEquals("2013-01-01 till 2014-01-01", meta.getComplementaryInfo());
     }
 }

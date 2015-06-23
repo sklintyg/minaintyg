@@ -2,7 +2,8 @@ package se.inera.certificate.web.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.any;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,29 +18,32 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.meta.ClinicalProcessCertificateMetaTypeBuilder;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 
+import javax.xml.namespace.QName;
 import java.io.IOException;
 import java.util.List;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
@@ -59,11 +63,13 @@ public class CertificateServiceImplTest {
     private ListCertificatesForCitizenResponderInterface listServiceMock = mock(ListCertificatesForCitizenResponderInterface.class);
 
     @Mock
-    //private SendMedicalCertificateResponderInterface sendServiceMock = mock(SendMedicalCertificateResponderInterface.class);
-    private SendCertificateForCitizenResponderInterface sendServiceMock = mock(SendCertificateForCitizenResponderInterface.class);
+    private SendCertificateToRecipientResponderInterface sendServiceMock = mock(SendCertificateToRecipientResponderInterface.class);
 
     @Mock
     private GetCertificateContentResponderInterface getContentServiceMock = mock(GetCertificateContentResponderInterface.class);
+    
+    @Mock
+    private MonitoringLogService monitoringServiceMock;
 
     @InjectMocks
     private CertificateServiceImpl service = new CertificateServiceImpl();
@@ -93,22 +99,22 @@ public class CertificateServiceImplTest {
     @Before
     public void inject_status() {
         unhandledStatus = new UtlatandeStatus();
-        unhandledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.UNHANDLED);
+        unhandledStatus.setType(se.riv.clinicalprocess.healthcond.certificate.v1.StatusType.UNHANDLED);
         unhandledStatus.setTarget("FK");
         unhandledStatus.setTimestamp(firstTimeStamp);
 
         deletedStatus = new UtlatandeStatus();
-        deletedStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.DELETED);
+        deletedStatus.setType(se.riv.clinicalprocess.healthcond.certificate.v1.StatusType.DELETED);
         deletedStatus.setTarget("FK");
         deletedStatus.setTimestamp(laterTimeStamp);
 
         sentStatus = new UtlatandeStatus();
-        sentStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.SENT);
+        sentStatus.setType(se.riv.clinicalprocess.healthcond.certificate.v1.StatusType.SENT);
         sentStatus.setTarget("FK");
         sentStatus.setTimestamp(firstTimeStamp);
 
         cancelledStatus = new UtlatandeStatus();
-        cancelledStatus.setType(se.inera.certificate.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
+        cancelledStatus.setType(se.riv.clinicalprocess.healthcond.certificate.v1.StatusType.CANCELLED);
         cancelledStatus.setTarget("FK");
         cancelledStatus.setTimestamp(firstTimeStamp);
     }
@@ -169,25 +175,73 @@ public class CertificateServiceImplTest {
 
     @Test
     public void testSendCertificate() {
+
+        String personId = "19121212-1212";
+        String utlatandeId = "1234567890";
+        String mottagare = "FK";
+        
         /* Given */
-        SendCertificateForCitizenType request = new SendCertificateForCitizenType();
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
+        request.setPersonId(personId);
+        request.setUtlatandeId(utlatandeId);
+        request.setMottagareId(mottagare);
+
+        SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
+        response.setResult(ResultTypeUtil.okResult());
+
+        /* When */
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
+
+        /* Then */
+        ModuleAPIResponse apiResponse = service.sendCertificate(personId, utlatandeId, mottagare);
+
+        /* Verify */
+        assertEquals("sent", apiResponse.getResultCode());
+
+        ArgumentCaptor<SendCertificateToRecipientType> argument = ArgumentCaptor.forClass(SendCertificateToRecipientType.class);
+        verify(sendServiceMock).sendCertificateToRecipient(eq("FKORG"), argument.capture());
+        verify(monitoringServiceMock).logCertificateSend(utlatandeId, mottagare);
+
+        SendCertificateToRecipientType actualRequest = argument.getValue();
+        assertEquals(request.getPersonId(), actualRequest.getPersonId());
+        assertEquals(request.getUtlatandeId(), actualRequest.getUtlatandeId());
+        assertEquals(request.getMottagareId(), actualRequest.getMottagareId());
+    }
+
+    @Test
+    public void testSendCertificateReturnsValidationError() {
+        /* Given */
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setPersonId("19121212-1212");
         request.setUtlatandeId("1234567890");
         request.setMottagareId("FK");
 
-        SendCertificateForCitizenResponseType response = new SendCertificateForCitizenResponseType();
-        response.setResult(ResultTypeUtil.okResult());
+        SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
+        response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "validation error"));
 
         /* When */
-        when(sendServiceMock.sendCertificateForCitizen(any(String.class), any(SendCertificateForCitizenType.class))).thenReturn(response);
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
 
         /* Then */
         ModuleAPIResponse apiResponse = service.sendCertificate("19121212-1212", "1234567890", "FK");
 
         /* Verify */
-        assertEquals("sent", apiResponse.getResultCode());
+        assertEquals("error", apiResponse.getResultCode());
+    }
 
-        verify(sendServiceMock).sendCertificateForCitizen("FKORG", request);
+    @Test(expected = SoapFault.class)
+    public void testSendCertificateThrowsSoapFault() {
+        /* Given */
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
+        request.setPersonId("19121212-1212");
+        request.setUtlatandeId("1234567890");
+        request.setMottagareId("FK");
+
+        /* When */
+        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenThrow(new SoapFault("server error", new QName("")));
+
+        /* Then */
+        service.sendCertificate("19121212-1212", "1234567890", "FK");
     }
 
     @Test

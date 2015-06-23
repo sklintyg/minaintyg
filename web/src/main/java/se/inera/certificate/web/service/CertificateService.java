@@ -71,12 +71,20 @@ public interface CertificateService {
      * @return a List of {@link UtlatandeRecipient}
      */
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
-
+    
     /**
-     * Set archived stat for a certificate
-     * @param id
+     * Set a certificate as archived
+     * @param certificateId
      * @param civicRegistrationNumber
-     * @param archivedState
      */
-    UtlatandeMetaData setArchived(String id, String civicRegistrationNumber, String archivedState);
+    UtlatandeMetaData archiveCertificate(String certificateId, String civicRegistrationNumber);
+    
+    /**
+     * Restore a certificate from an archived state.
+     * @param certificateId
+     * @param civicRegistrationNumber
+     */
+    UtlatandeMetaData restoreCertificate(String certificateId, String civicRegistrationNumber);
+    
+    
 }

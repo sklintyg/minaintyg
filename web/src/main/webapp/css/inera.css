@@ -38,25 +38,25 @@
   font-family: 'Noticia Text';
   font-style: normal;
   font-weight: 700;
-  src: local('Noticia Text Bold'), local('NoticiaText-Bold'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/pEko-RqEtp45bE2P80AAKXl4twXkwp3_u9ZoePkT564.woff) format('woff');
+  src: local('Noticia Text Bold'), local('NoticiaText-Bold'), url(//themes.googleusercontent.com/static/fonts/noticiatext/v3/pEko-RqEtp45bE2P80AAKXl4twXkwp3_u9ZoePkT564.woff) format('woff');
 }
 @font-face {
   font-family: 'Noticia Text';
   font-style: italic;
   font-weight: 400;
-  src: local('Noticia Text Italic'), local('NoticiaText-Italic'), url(http://themes.googleusercontent.com/static/fonts/noticiatext/v3/dAuxVpkYE_Q_IwIm6elsKHpumDtkw9GHrrDfd7ZnWpU.woff) format('woff');
+  src: local('Noticia Text Italic'), local('NoticiaText-Italic'), url(//themes.googleusercontent.com/static/fonts/noticiatext/v3/dAuxVpkYE_Q_IwIm6elsKHpumDtkw9GHrrDfd7ZnWpU.woff) format('woff');
 }
 @font-face {
   font-family: 'Sanchez';
   font-style: normal;
   font-weight: 400;
-  src: local('Sanchez'), local('Sanchez-Regular'), url(http://themes.googleusercontent.com/static/fonts/sanchez/v1/mx466fsxfR1AA3OwUm3waQ.woff) format('woff');
+  src: local('Sanchez'), local('Sanchez-Regular'), url(//themes.googleusercontent.com/static/fonts/sanchez/v1/mx466fsxfR1AA3OwUm3waQ.woff) format('woff');
 }
 @font-face {
   font-family: 'Sanchez';
   font-style: italic;
   font-weight: 400;
-  src: local('Sanchez Italic'), local('Sanchez-Italic'), url(http://themes.googleusercontent.com/static/fonts/sanchez/v1/HsmMg_Kwn-sTuZvQJORnlz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+  src: local('Sanchez Italic'), local('Sanchez-Italic'), url(//themes.googleusercontent.com/static/fonts/sanchez/v1/HsmMg_Kwn-sTuZvQJORnlz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
 }
 
 body {

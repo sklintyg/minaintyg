@@ -1,8 +1,6 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
-
-class AboutMinaIntygPage extends AbstractPage {
+class AboutMinaIntygPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && $("#about-mina-intyg-root").isDisplayed() }
 
@@ -18,16 +16,22 @@ class AboutMinaIntygPage extends AbstractPage {
 
     def gotoAboutConsentSection() {
         aboutSamtyckeLink.click()
+        waitFor {
+            doneLoading()
+        }
     }
 
     def openRevokeConsentDialog() {
         openRevokeConsentDialogLink.click()
-    }
-
-    def revokeConsent() {
         waitFor {
             doneLoading()
         }
+    }
+
+    def revokeConsent() {
         revokeConsentButton.click()
+        waitFor {
+            doneLoading()
+        }
     }
 }

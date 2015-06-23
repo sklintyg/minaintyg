@@ -27,17 +27,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.sendcertificateforcitizen.v1.SendCertificateForCitizenType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -50,20 +39,32 @@ import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchived.v1.rivtabp20.SetCertificateArchivedResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.v1.rivtabp20.SetCertificateStatusResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
+import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
+import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
+import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponseType;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchived.rivtabp20.v1.SetCertificateArchivedResponderInterface;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedRequestType;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -80,7 +81,7 @@ public class CertificateServiceImpl implements CertificateService {
     private SetCertificateStatusResponderInterface setStatusService;
 
     @Autowired
-    private SendCertificateForCitizenResponderInterface sendService;
+    private SendCertificateToRecipientResponderInterface sendService;
 
     @Autowired
     private GetCertificateContentResponderInterface getContentService;
@@ -91,10 +92,26 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private SetCertificateArchivedResponderInterface setArchivedService;
 
+    @Autowired
+    private MonitoringLogService monitoringService;
+
     // These values are injected by their setter methods
     private String vardReferensId;
     private String logicalAddress;
 
+    private enum ArchivedState {
+        ARCHIVED("true"),
+        RESTORED("false");
+        private ArchivedState(String state) {
+            this.state = state;
+        }
+
+        private String state;
+
+        public String getState() {
+            return state;
+        }
+    }
 
     // - - - - - Public methods - - - - - //
 
@@ -110,45 +127,25 @@ public class CertificateServiceImpl implements CertificateService {
     public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId) {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
-        /*
-        UtlatandeWithMeta utlatande = getUtlatande(civicRegistrationNumber, certificateId);
-        VardAdresseringsType vardAdresseringsType = ModelConverter.toVardAdresseringsType(utlatande.getUtlatande().getGrundData());
-
-        // Läkarutlatande
-        LakarutlatandeEnkelType lakarutlatande = ModelConverter.toLakarutlatandeEnkelType(utlatande.getUtlatande());
-
-        SendType sendType = new SendType();
-        sendType.setAdressVard(vardAdresseringsType);
-        sendType.setAvsantTidpunkt(new LocalDateTime());
-        sendType.setVardReferensId(vardReferensId);
-        sendType.setLakarutlatande(lakarutlatande);
-
-        SendMedicalCertificateRequestType req = new SendMedicalCertificateRequestType();
-        req.setSend(sendType);
-
-        AttributedURIType uri = new AttributedURIType();
-        uri.setValue(logicalAddress);
-
-        //final SendMedicalCertificateResponseType response = sendService.sendMedicalCertificate(uri, req);
-        */
-
-        SendCertificateForCitizenType request = new SendCertificateForCitizenType();
+        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setPersonId(civicRegistrationNumber);
         request.setUtlatandeId(certificateId);
         request.setMottagareId(recipientId);
 
-        final SendCertificateForCitizenResponseType response = sendService.sendCertificateForCitizen(logicalAddress, request);
+        final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
         if (response.getResult().getResultCode().equals(ResultCodeType.ERROR)) {
             LOGGER.warn("SendCertificate error: {}", response.getResult().getResultText());
             return new ModuleAPIResponse("error", "");
-        } else {
-            return new ModuleAPIResponse("sent", "");
         }
+
+        monitoringService.logCertificateSend(certificateId, recipientId);
+        return new ModuleAPIResponse("sent", "");
     }
 
     @Override
-    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId, StatusType type) {
+    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId,
+            StatusType type) {
         UtlatandeMetaData result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
@@ -186,7 +183,9 @@ public class CertificateServiceImpl implements CertificateService {
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return convert(response);
+            UtlatandeWithMeta utlatandeWithMeta = convert(response);
+            monitoringService.logCertificateRead(utlatandeWithMeta.getUtlatande().getId(), utlatandeWithMeta.getUtlatande().getTyp());
+            return utlatandeWithMeta;
         default:
             LOGGER.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
             throw new ExternalWebServiceCallFailedException(response.getResult());
@@ -229,34 +228,52 @@ public class CertificateServiceImpl implements CertificateService {
             return recipientList;
 
         default:
-            LOGGER.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType, response.getResult());
+            LOGGER.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType,
+                    response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
     }
 
     @Override
-    public UtlatandeMetaData setArchived(String id, String civicRegistrationNumber, String archivedState) {
+    public UtlatandeMetaData archiveCertificate(String certificateId, String civicRegistrationNumber) {
+        UtlatandeMetaData result = setArchived(certificateId, civicRegistrationNumber, ArchivedState.ARCHIVED);
+        monitoringService.logCertificateArchived(certificateId);
+        return result;
+    }
+
+    @Override
+    public UtlatandeMetaData restoreCertificate(String certificateId, String civicRegistrationNumber) {
+        UtlatandeMetaData result = setArchived(certificateId, civicRegistrationNumber, ArchivedState.RESTORED);
+        monitoringService.logCertificateRestored(certificateId);
+        return result;
+    }
+
+    private UtlatandeMetaData setArchived(String certificateId, String civicRegistrationNumber, ArchivedState archivedState) {
         SetCertificateArchivedRequestType parameters = new SetCertificateArchivedRequestType();
-        parameters.setArchivedState(archivedState);
-        parameters.setCertificateId(id);
+        parameters.setArchivedState(archivedState.getState());
+        parameters.setCertificateId(certificateId);
         parameters.setNationalIdentityNumber(civicRegistrationNumber);
 
         UtlatandeMetaData result = null;
         SetCertificateArchivedResponseType response = setArchivedService.setCertificateArchived(null, parameters);
-        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+
+        switch (response.getResult().getResultCode()) {
+        case ERROR:
+            LOGGER.error("Failed to set certifiate '{}' as {}. WS call result is {}", new Object[] { certificateId, archivedState,
+                    response.getResult().getErrorText() });
+            throw new ExternalWebServiceCallFailedException(response.getResult());
+        default:
             List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
             for (UtlatandeMetaData meta : updatedList) {
-                if (meta.getId().equals(id)) {
-                    meta.setAvailable(archivedState.equalsIgnoreCase("true") ? "false" : "true");
+                if (meta.getId().equals(certificateId)) {
                     result = meta;
                     break;
                 }
             }
         }
-
+        
         return result;
     }
-
 
     // - - - - - Package methods - - - - - //
 
@@ -269,7 +286,6 @@ public class CertificateServiceImpl implements CertificateService {
     void setLogicalAddress(final String logicalAddress) {
         this.logicalAddress = logicalAddress;
     }
-
 
     // - - - - - Private methods - - - - - //
 

@@ -1,7 +1,4 @@
 package se.inera.certificate.web.spec.util
-
-import groovyx.net.http.RESTClient
-
 /**
  *
  * @author andreaskaltenbach

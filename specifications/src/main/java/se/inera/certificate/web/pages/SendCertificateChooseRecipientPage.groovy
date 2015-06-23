@@ -1,16 +1,15 @@
 package se.inera.certificate.web.pages
 
-import se.inera.certificate.page.AbstractPage
 
-class SendCertificateChooseRecipientPage extends AbstractPage {
+class SendCertificateChooseRecipientPage extends AbstractLoggedInPage {
 
     static at = { doneLoading() && $("#send-certificate-flow-root-recipients").isDisplayed() }
 
     static content = {
         chooseRecipientBtn(required: false)  { id -> $("recipient-${id}") }
-        confirmRecipientSelectionBtn(required: false)  { $("#confirmRecipientSelectionBtn") }
-        cancelRecipientSelectionBtn(required: false)  { $("#cancelRecipientSelectionBtn") }
-        alreadySentWarningMessage(required: false)  { $("#already-sent-to-recipient-message") }
+        confirmRecipientSelectionBtn(required: false, to: SendCertificateSummaryPage, toWait: true) { $("#confirmRecipientSelectionBtn") }
+        cancelRecipientSelectionBtn(required: false, to: IntygPage, toWait: true)  { $("#cancelRecipientSelectionBtn") }
+        alreadySentWarningMessage(required: false) { $("#already-sent-to-recipient-message") }
     }
 
     def chooseRecipient(String id) {

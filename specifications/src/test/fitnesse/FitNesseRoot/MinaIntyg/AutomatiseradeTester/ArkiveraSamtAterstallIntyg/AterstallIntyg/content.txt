@@ -1,0 +1,15 @@
+!3 Verifiera möjligheten att återställa arkiverat intyg.
+
+Testet arkiverar först ett intyg och verifierar att det finns med i listan med arkiverade intyg.
+
+!include .MinaIntyg.AutomatiseradeTester.ArkiveraSamtAterstallIntyg.ArkiveraIntyg
+
+Därefter återställs detta och verifiering sker att intyget ej längre listas bland de arkiverade utan istället i inkorgen.
+
+|skript|lista intyg|
+|återställ intyg|fit-intyg-1|
+|konfirmera återställ intyg|
+|säkerställ att inte|arkiverat intyg|fit-intyg-1|finns i listan|
+|gå till inkorgen|
+|inkorgsidan visas|
+|säkerställ att|intyg|fit-intyg-1|finns i listan|

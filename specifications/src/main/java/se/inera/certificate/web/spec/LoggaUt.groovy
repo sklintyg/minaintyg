@@ -1,10 +1,11 @@
 package se.inera.certificate.web.spec
 
+import se.inera.certificate.spec.Browser
 import se.inera.certificate.web.pages.AccessDeniedPage
 import se.inera.certificate.web.pages.MvkLoginPage
 import se.inera.certificate.web.pages.MvkLogoutPage
 
-public class LoggaUt {
+public class LoggaUt extends AbstractWebFixture {
 
     public void tillbakaTillMvk() {
         Browser.drive {
@@ -19,43 +20,18 @@ public class LoggaUt {
     }
 
     public boolean mvksInloggningssidaVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at MvkLoginPage
-            }
+            result = at MvkLoginPage
         }
+        return result
     }
 
     public boolean mvksUtloggningssidaVisas() {
+        boolean result
         Browser.drive {
-            waitFor {
-                at MvkLogoutPage
-            }
+            result = at MvkLogoutPage
         }
-    }
-
-    public void gåTillStartsida() {
-        Browser.drive {
-            go "/web/start"
-        }
-    }
-
-    public boolean accessDeniedVisas() {
-        Browser.drive {
-            waitFor {
-                at AccessDeniedPage
-            }
-        }
-    }
-    public void besökExternSida(int sekunder) {
-        Browser.drive {
-            go "http://www.google.com"
-        }
-        Thread.sleep(sekunder * 1000)
-    }
-    public void laddaOm() {
-        Browser.drive {
-            getJs().exec([], "window.location.reload()")
-        }
+        return result
     }
 }

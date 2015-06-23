@@ -1,0 +1,32 @@
+!3 Först logga in och lista alla befintliga intyg.
+
+|skript|lista intyg|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+|lista med intyg visas|
+|visa intyg|fit-intyg-3|
+
+!3 Visa ett intyg och verifiera att det är rätt intyg och av rätt typ. 
+
+|skript|visa intyg|
+|intygssidan visas|
+|intygets typ är|ts-bas|
+|intygets id är|fit-intyg-3|
+
+!3 Arkivera intyget 
+
+|skript|visa intyg|
+|välj arkivera intyg|
+|konfirmera arkivera intyg|
+
+!3 Verifera att intyget inte längre finns i listan men att det finns i listan med arkiverade intyg.
+
+|skript|lista intyg|
+|inkorgsidan visas|
+|lista med intyg visas|
+|säkerställ att inte|intyg|fit-intyg-3|finns i listan|
+|gå till arkiverade intyg|
+|arkiveradesidan visas|
+|lista med arkiverade intyg visas|
+|säkerställ att|arkiverat intyg|fit-intyg-3|finns i listan|
+

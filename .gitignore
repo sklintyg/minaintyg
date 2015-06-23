@@ -13,3 +13,4 @@ rebel.xml
 .idea
 *.iml
 app.min.js
+web/src/main/webapp/app/templates.js

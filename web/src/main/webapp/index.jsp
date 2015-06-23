@@ -23,13 +23,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<%
-String useMinifiedJavaScript = System.getProperty("minaintyg.useMinifiedJavaScript");
-if (useMinifiedJavaScript == null) {
-useMinifiedJavaScript = "true";
-}
-pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
-%>
+<c:set var="useMinifiedJavaScript" value="${pageAttributes.useMinifiedJavaScript}"/>
+<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="minaintyg">
@@ -55,11 +50,12 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
    **/
   var MI_CONFIG = {
     BUILD_NUMBER: '<spring:message code="buildNumber" />',
-    USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
+    USE_MINIFIED_JAVASCRIPT: '${useMinifiedJavaScript}'
   }
 </script>
 
 </head>
+
 <body ng-app="minaintyg">
 
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
@@ -95,7 +91,7 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
             </p>
             <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
             <div class="btn-row">
-              <a class="btn btn-success" href="http://www.minavardkontakter.se">Logga in</a>
+              <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
             </div>
 
             <div style="padding-top: 50px">
@@ -144,7 +140,7 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
   <script>
     window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField', 'miSpinner', 'ngLocale' ]; // optional
   </script>
-  <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/app/ie/ie-angular-shiv.js"/>"></script>
   <script type = "text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/matchmedia.polyfill.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/web/webjars/respond/1.4.2/src/respond.js"/>"></script>
   <![endif]-->
@@ -154,21 +150,21 @@ pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
-      <script type="text/javascript" src="/js/base/app.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-cookies.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-route.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.2.27/angular-sanitize.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
       <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
-      <script type="text/javascript" src="/js/base/app.js"></script>
+      <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>
   </c:choose>
 

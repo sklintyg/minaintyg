@@ -1,0 +1,13 @@
+!3 Logga ut
+
+Logga på med användare och välj "Logga ut" i headern.
+
+|skript|hantera samtycke|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
+
+|skript|logga ut|
+|logga ut|
+|mvks utloggningssida visas|
+|gå till startsida|
+|access denied visas|

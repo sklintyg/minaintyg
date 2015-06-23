@@ -1,0 +1,11 @@
+!3 Givet ett redan registrerat samtycke:
+
+|Samtycke|
+|personnr|samtycke|
+|${person1.personnummer}|ja|
+
+!3 Samtyckes-sida visas nu ej
+
+|skript|hantera samtycke|
+|logga på som|${person1.personnummer}|
+|inkorgsidan visas|
