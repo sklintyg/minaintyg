@@ -870,7 +870,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      *
      * @return URL to use for IDP discovery request
      */
-    private String getDiscoveryURL(String entityBaseURL, String entityAlias) {
+    protected String getDiscoveryURL(String entityBaseURL, String entityAlias) {
         if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryURL() != null && extendedMetadata.getIdpDiscoveryURL().length() > 0) {
             return extendedMetadata.getIdpDiscoveryURL();
         } else if (customDiscoveryURL != null && customDiscoveryURL.length() > 0) {
@@ -886,7 +886,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      *
      * @return URL to use for IDP discovery response
      */
-    private String getDiscoveryResponseURL(String entityBaseURL, String entityAlias) {
+    protected String getDiscoveryResponseURL(String entityBaseURL, String entityAlias) {
         if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryResponseURL() != null && extendedMetadata.getIdpDiscoveryResponseURL().length() > 0) {
             return extendedMetadata.getIdpDiscoveryResponseURL();
         } else if (customDiscoveryResponseURL != null && customDiscoveryResponseURL.length() > 0) {
