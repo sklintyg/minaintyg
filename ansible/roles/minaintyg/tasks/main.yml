@@ -6,10 +6,11 @@
 
 - name: create release directory
   file: path={{ releases_folder }} state=directory
-  
+
 - name: Download minaintyg-web-{{ version }}.war
-  get_url: url=http://repository-callistasoftware.forge.cloudbees.com/{{ repo }}/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
-           dest={{ releases_folder }}//minaintyg-web-{{ version }}.war
+  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
+           dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
+           validate_certs=no
 
 - name: remove old version of unpacked war
   file: state=absent

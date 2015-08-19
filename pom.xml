@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
   </parent>
 
   <groupId>se.inera.intyg.minaintyg</groupId>
@@ -289,6 +289,46 @@
 
   <repositories>
     <repository>
+      <id>inera-release</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>inera-nightly</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/nightly/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>inera-snapshot</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>thirdparty</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/thirdparty/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
       <id>callista-release</id>
       <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
       <releases>
@@ -299,17 +339,7 @@
       </snapshots>
     </repository>
     <repository>
-      <id>callista-snapshot</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/snapshot/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>thirdparty</id>
+      <id>callista-thirdparty</id>
       <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>
