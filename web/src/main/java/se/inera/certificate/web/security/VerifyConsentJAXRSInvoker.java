@@ -1,6 +1,7 @@
 package se.inera.certificate.web.security;
 
 import com.google.common.collect.ImmutableSet;
+
 import org.apache.cxf.jaxrs.JAXRSInvoker;
 import org.apache.cxf.jaxrs.model.OperationResourceInfo;
 import org.apache.cxf.message.Exchange;
@@ -8,10 +9,13 @@ import org.apache.cxf.message.MessageContentsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.logging.HashUtility;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 
 import javax.ws.rs.core.Response;
+
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -58,7 +62,7 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
         // Check consent state of citizen
         if (!citizen.hasConsent()) {
-            LOG.warn("User: {} does not have consent", citizen.getUsername());
+            LOG.warn("User: {} does not have consent", HashUtility.hash(citizen.getUsername()));
             final String methodName;
             if (exchange != null) {
                 OperationResourceInfo ori = exchange.get(OperationResourceInfo.class);
