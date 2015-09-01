@@ -4,9 +4,9 @@
 - hosts: minaintyg-tomcat
   sudo: yes 
   vars: 
-    # repo - values: snapshot or release
-    repo: release
-    version: 2.3.0-RC1
+    # repo - values: snapshots or releases
+    repo: releases
+    version: 2.4.0-b2
     config_version: master
 
   roles:
