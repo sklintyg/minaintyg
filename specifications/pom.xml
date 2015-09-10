@@ -209,6 +209,13 @@
         </properties>
     </profile>
     <profile>
+      <id>build-server</id>
+        <properties>
+          <certificate.baseUrl>https://intygstjanst.inera.nordicmedtest.se/inera-certificate/</certificate.baseUrl>
+          <certificate.web.baseUrl>https://minaintyg.inera.nordicmedtest.se/web/</certificate.web.baseUrl>
+        </properties>
+    </profile>
+    <profile>
       <id>ip20</id>
         <properties>
           <certificate.baseUrl>https://intyg.ip20.nordicmedtest.sjunet.org/inera-certificate/</certificate.baseUrl>
