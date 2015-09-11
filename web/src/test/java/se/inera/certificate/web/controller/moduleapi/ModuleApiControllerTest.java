@@ -88,9 +88,10 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
-       
+
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(Boolean.class))).thenReturn(
+                new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -111,7 +112,8 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
-        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
+        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(Boolean.class))).thenThrow(
+                new ModuleSystemException());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
