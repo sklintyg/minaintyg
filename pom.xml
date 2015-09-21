@@ -43,6 +43,8 @@
 
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
+
+    <skip-jacoco>true</skip-jacoco>
   </properties>
 
   <modules>
@@ -251,6 +253,9 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+            <skip>${skip-jacoco}</skip>
+        </configuration>
         <executions>
           <execution>
             <id>prepare-unit-test-agent</id>
