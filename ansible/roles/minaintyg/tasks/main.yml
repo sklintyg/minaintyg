@@ -11,6 +11,11 @@
   get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
            dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
            validate_certs=no
+  when: deploy_from_repo
+
+- name: copy minaintyg-web-{{ version }}.war
+  copy: src={{ inventory_dir }}/../web/target/minaintyg.war dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
+  when: not deploy_from_repo
 
 - name: remove old version of unpacked war
   file: state=absent
