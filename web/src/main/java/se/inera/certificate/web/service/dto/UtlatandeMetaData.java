@@ -40,6 +40,7 @@ public class UtlatandeMetaData {
     /** A list of statuses of the utlatande. */
     private final List<Status> statuses;
 
+    // CHECKSTYLE:OFF ParameterNumber
     public UtlatandeMetaData(String id, String type, String issuerName, String facilityName, LocalDateTime signDate, String available,
             String complemantaryInfo, List<Status> statuses) {
         hasText(id, "'id' must not be empty");
@@ -64,6 +65,7 @@ public class UtlatandeMetaData {
             this.statuses = Collections.emptyList();
         }
     }
+    // CHECKSTYLE:ON ParameterNumber
 
     /**
      * Compare status newest first.
