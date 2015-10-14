@@ -1,5 +1,17 @@
 package se.inera.certificate.web.controller.api;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -15,22 +27,9 @@ import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
-import se.inera.certificate.web.service.MonitoringLogService;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.util.CertificateMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
-import java.util.List;
 
 public class ApiController {
 
@@ -78,7 +77,7 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id,citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, citizen.getUsername()));
     }
 
     @PUT

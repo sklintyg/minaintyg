@@ -102,7 +102,7 @@ public class CertificateServiceImpl implements CertificateService {
     private enum ArchivedState {
         ARCHIVED("true"),
         RESTORED("false");
-        private ArchivedState(String state) {
+        ArchivedState(String state) {
             this.state = state;
         }
 
@@ -271,7 +271,7 @@ public class CertificateServiceImpl implements CertificateService {
                 }
             }
         }
-        
+
         return result;
     }
 

@@ -42,7 +42,7 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Autowired
     private SetConsentResponderInterface setConsent;
-    
+
     @Autowired
     private MonitoringLogService monitoringService;
 

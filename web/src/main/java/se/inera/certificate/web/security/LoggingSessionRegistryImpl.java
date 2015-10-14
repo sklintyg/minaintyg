@@ -14,7 +14,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
     @Autowired
     private MonitoringLogService monitoringService;
-    
+
     @Override
     public void registerNewSession(String sessionId, Object principal) {
 

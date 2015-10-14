@@ -40,7 +40,7 @@ public class PingForConfigurationResponderImpl implements PingForConfigurationRe
 
         HealthStatus checkIntygstjanst = monitoringService.checkIntygstjanst();
         addConfiguration(response, INTYGTJANST, checkIntygstjanst);
-        
+
         HealthStatus nbrOfUsers = monitoringService.getNbrOfLoggedInUsers();
         addConfiguration(response, NBR_OF_USERS, nbrOfUsers);
 
