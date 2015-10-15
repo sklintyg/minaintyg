@@ -95,7 +95,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {0}", id);
 
-        // TODO: no hardcoding of targets
+        // no hardcoding of targets (handled in INTYG-1458)
         return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
                 "FK", StatusType.SENT));
     }
