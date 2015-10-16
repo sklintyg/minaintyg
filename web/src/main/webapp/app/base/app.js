@@ -60,7 +60,9 @@ $.when.apply(this, modulePromises).then(function() {
             angular.resumeBootstrap([app.name, 'common']);
         });
     }).fail(function(error) {
-        console.log(error);
+        if (window.console) {
+            console.log(error);
+        }
     });
 });
 

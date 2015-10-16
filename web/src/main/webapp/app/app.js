@@ -26,14 +26,14 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
         $rootScope.MI_CONFIG = MI_CONFIG;
         messageService.addResources(miMessages);
 
-        $rootScope.page_title = 'Titel';
+        $rootScope.page_title = 'Titel'; // jshint ignore:line
 
         $window.doneLoading = false;
         $window.dialogDoneLoading = true;
         $window.rendered = true;
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){
+            function(/*event, toState, toParams, fromState, fromParams*/){
                 $window.doneLoading = false;
             });
 
@@ -41,7 +41,7 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
             function(event, unfoundState, fromState, fromParams){
             });
         $rootScope.$on('$stateChangeSuccess',
-            function(event, toState, toParams, fromState, fromParams){
+            function(event, toState/*, toParams, fromState, fromParams*/){
                 $window.doneLoading = true;
                 if (toState.data.keepInboxTabActive === false) {
                     $rootScope.keepInboxTab = false;
@@ -49,11 +49,11 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
                 if (toState.data.keepInboxTabActive === true) {
                     $rootScope.keepInboxTab = true;
                 }
-                $rootScope.page_title = toState.data.title + ' | Mina intyg';
+                $rootScope.page_title = toState.data.title + ' | Mina intyg'; // jshint ignore:line
             });
 
         $rootScope.$on('$stateChangeError',
-            function(event, toState, toParams, fromState, fromParams, error){
+            function(event, toState/*, toParams, fromState, fromParams, error*/){
                 $log.log('$stateChangeError');
                 $log.log(toState);
             });
