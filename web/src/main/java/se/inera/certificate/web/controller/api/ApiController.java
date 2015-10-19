@@ -22,6 +22,7 @@ import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
 import se.inera.certificate.modules.registry.IntygModule;
 import se.inera.certificate.modules.registry.IntygModuleRegistry;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.security.BrowserClosedInterceptor;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
@@ -105,7 +106,7 @@ public class ApiController {
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'giveConsent' for citizen {0}", citizen.getUsername());
-        citizen.setConsent(consentService.setConsent(citizen.getUsername()));
+        citizen.setConsent(consentService.setConsent(new Personnummer(citizen.getUsername())));
         return new ConsentResponse(true);
     }
 
@@ -114,7 +115,7 @@ public class ApiController {
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'revokeConsent' for citizen {0}", citizen.getUsername());
-        boolean revokedSuccessfully = consentService.revokeConsent(citizen.getUsername());
+        boolean revokedSuccessfully = consentService.revokeConsent(new Personnummer(citizen.getUsername()));
         if (revokedSuccessfully) {
             citizen.setConsent(false);
         }

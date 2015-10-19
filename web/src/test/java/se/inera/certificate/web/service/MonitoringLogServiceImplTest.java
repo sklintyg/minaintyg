@@ -19,11 +19,12 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.Appender;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
 
-    private static final String USER_ID = "USER_ID";
+    private static final Personnummer USER_ID = new Personnummer("USER_ID");
     private static final String LOGIN_METHOD = "LOGIN_METHOD";
     private static final String CERTIFICATE_ID = "CERTIFICATE_ID";
     private static final String CERTIFICATE_TYPE = "CERTIFICATE_TYPE";

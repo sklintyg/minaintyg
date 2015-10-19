@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 import se.inera.intyg.insuranceprocess.healthreporting.getconsent.rivtabp20.v1.GetConsentResponderInterface;
@@ -48,7 +49,7 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
         
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.fetchConsent("1234567890");
+        boolean result = service.fetchConsent(new Personnummer("1234567890"));
         assertTrue(result);
     }
 
@@ -61,7 +62,7 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
         
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.fetchConsent("1234567890");
+        boolean result = service.fetchConsent(new Personnummer("1234567890"));
         assertFalse(result);
 
     }
@@ -74,9 +75,9 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
 
         when(setConsent.setConsent(Mockito.any(AttributedURIType.class), Mockito.any(SetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.setConsent("1234567890");
+        boolean result = service.setConsent(new Personnummer("1234567890"));
         assertTrue(result);
-        verify(monitoringServiceMock).logCitizenConsentGiven("1234567890");
+        verify(monitoringServiceMock).logCitizenConsentGiven(new Personnummer("1234567890"));
     }
 
     @Test
@@ -87,7 +88,7 @@ public class ConsentServiceImplTest {
         consentResponse.setResult(resultOfCall);
 
         when(setConsent.setConsent(Mockito.any(AttributedURIType.class), Mockito.any(SetConsentRequestType.class))).thenReturn(consentResponse);
-        boolean result = service.setConsent("1234567890");
+        boolean result = service.setConsent(new Personnummer("1234567890"));
         assertFalse(result);
 
     }
@@ -101,7 +102,7 @@ public class ConsentServiceImplTest {
         consentResponse.setConsentGiven(false);
 
         when(getConsent.getConsent(Mockito.any(AttributedURIType.class), Mockito.any(GetConsentRequestType.class))).thenReturn(consentResponse);
-        service.fetchConsent("1234567890");
+        service.fetchConsent(new Personnummer("1234567890"));
 
     }
 

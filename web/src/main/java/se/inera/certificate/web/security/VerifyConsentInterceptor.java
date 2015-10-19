@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 
@@ -55,7 +56,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
         LOG.debug("Login from " + citizen.getLoginMethod().toString());
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
-            boolean consentResult = consentService.fetchConsent(citizen.getUsername());
+            boolean consentResult = consentService.fetchConsent(new Personnummer(citizen.getUsername()));
             LOG.debug("Consent result is {}", consentResult);
             // set the consent result so that we don't have to fetch it next time around
             citizen.setConsent(consentResult);
