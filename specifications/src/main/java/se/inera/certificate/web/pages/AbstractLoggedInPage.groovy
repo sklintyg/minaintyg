@@ -5,7 +5,7 @@ import se.inera.certificate.page.AbstractPage
 class AbstractLoggedInPage extends AbstractPage {
 
     static at = { doneLoading() && $("#mvklogoutLink").isDisplayed() }
-    
+
     static content = {
         backToMvkLink(to: MvkLoginPage, toWait: true) { $("#backToMvkLink") }
         logoutLink(to: MvkLogoutPage, toWait: true) { $("#mvklogoutLink") }
@@ -14,7 +14,7 @@ class AbstractLoggedInPage extends AbstractPage {
         aboutTab(to: AboutMinaIntygPage, toWait: true) { $("#aboutTab") }
         helpAndSupportTab(to: HelpAndSupportPage, toWait: true) { $("#helpTab") }
     }
-    
+
     def goBackToMvk() {
         backToMvkLink.click()
     }
@@ -27,7 +27,7 @@ class AbstractLoggedInPage extends AbstractPage {
         AbstractPage.scrollIntoView("inboxTab")
         inboxTab.click()
     }
-    
+
     def goToArchivedPage() {
         AbstractPage.scrollIntoView("archivedTab")
         archivedTab.click()
@@ -42,7 +42,7 @@ class AbstractLoggedInPage extends AbstractPage {
         AbstractPage.scrollIntoView("helpTab")
         helpAndSupportTab.click()
     }
-    
+
     def activeTab() {
         $('.navbar-nav li.active > a').getAt(0).getAttribute('id')
     }
