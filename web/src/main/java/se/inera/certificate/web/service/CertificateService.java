@@ -22,6 +22,7 @@ import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
@@ -31,37 +32,23 @@ import java.util.List;
 
 public interface CertificateService {
 
-    UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+    UtlatandeWithMeta getUtlatande(Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
-     *
-     * @param civicRegistrationNumber
-     * @return
      */
-    List<UtlatandeMetaData> getCertificates(String civicRegistrationNumber);
+    List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber);
 
     /**
      * Sets a new status for the certificate.
-     *
-     * @param civicRegistrationNumber
-     * @param certificateId
-     * @param timestamp
-     * @param recipientId
-     * @param type
      * @return Partially populated CertificateMeta object with id and new status and status description
      */
-    UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String certificateId, LocalDateTime timestamp, String recipientId, StatusType type);
+    UtlatandeMetaData setCertificateStatus(Personnummer civicRegistrationNumber, String certificateId, LocalDateTime timestamp, String recipientId, StatusType type);
 
     /**
      * Request to send a specific certificate to a specific recipient.
-     *
-     * @param civicRegistrationNumber
-     * @param certificateId
-     * @param recipientId
-     * @return
      */
-    ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId);
+    ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId);
 
     /**
      * Retrieves a list of possible recipients for the given certificate type.
@@ -75,11 +62,11 @@ public interface CertificateService {
     /**
      * Set a certificate as archived.
      */
-    UtlatandeMetaData archiveCertificate(String certificateId, String civicRegistrationNumber);
+    UtlatandeMetaData archiveCertificate(String certificateId, Personnummer civicRegistrationNumber);
 
     /**
      * Restore a certificate from an archived state.
      */
-    UtlatandeMetaData restoreCertificate(String certificateId, String civicRegistrationNumber);
+    UtlatandeMetaData restoreCertificate(String certificateId, Personnummer civicRegistrationNumber);
 
 }

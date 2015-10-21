@@ -44,6 +44,7 @@ import se.inera.certificate.modules.registry.ModuleNotFoundException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
@@ -98,7 +99,7 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        UtlatandeWithMeta utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+        UtlatandeWithMeta utlatande = certificateService.getUtlatande(new Personnummer(citizenService.getCitizen().getUsername()), id);
 
         try {
             JsonNode utlatandeJson = objectMapper.readTree(utlatande.getDocument());
@@ -126,7 +127,7 @@ public class ModuleApiController {
     public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
-        ModuleAPIResponse response = certificateService.sendCertificate(citizen.getUsername(), id, target);
+        ModuleAPIResponse response = certificateService.sendCertificate(new Personnummer(citizen.getUsername()), id, target);
         return Response.ok(response).build();
     }
 
@@ -146,7 +147,7 @@ public class ModuleApiController {
         UtlatandeWithMeta utlatande;
 
         try {
-            utlatande = certificateService.getUtlatande(citizenService.getCitizen().getUsername(), id);
+            utlatande = certificateService.getUtlatande(new Personnummer(citizenService.getCitizen().getUsername()), id);
         } catch (ExternalWebServiceCallFailedException ex) {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }

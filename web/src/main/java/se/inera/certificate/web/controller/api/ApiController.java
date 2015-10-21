@@ -61,7 +61,7 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername())));
     }
 
     @GET
@@ -78,7 +78,7 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -87,7 +87,7 @@ public class ApiController {
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -97,7 +97,7 @@ public class ApiController {
         LOG.debug("Requesting 'send' for certificate {0}", id);
 
         // no hardcoding of targets (handled in INTYG-1458)
-        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(new Personnummer(citizen.getUsername()), id, new LocalDateTime(),
                 "FK", StatusType.SENT));
     }
 

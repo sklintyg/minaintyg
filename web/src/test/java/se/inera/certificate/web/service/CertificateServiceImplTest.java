@@ -25,6 +25,7 @@ import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
@@ -131,7 +132,7 @@ public class CertificateServiceImplTest {
         when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
         /* Then */
-        List<UtlatandeMetaData> certificates = service.getCertificates("19121212-1212");
+        List<UtlatandeMetaData> certificates = service.getCertificates(new Personnummer("19121212-1212"));
 
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getIssuerName().equals(ISSUER_NAME));
@@ -146,7 +147,7 @@ public class CertificateServiceImplTest {
 
         when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
-        service.getCertificates("19121212-1212");
+        service.getCertificates(new Personnummer("19121212-1212"));
     }
 
     @Test
@@ -165,7 +166,7 @@ public class CertificateServiceImplTest {
         when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
         /* Then */
-        List<UtlatandeMetaData> certificates = service.getCertificates("19121212-1212");
+        List<UtlatandeMetaData> certificates = service.getCertificates(new Personnummer("19121212-1212"));
 
         assertTrue(certificates.size() == 1);
         assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(CertificateState.CANCELLED));
@@ -191,7 +192,7 @@ public class CertificateServiceImplTest {
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
 
         /* Then */
-        ModuleAPIResponse apiResponse = service.sendCertificate(personId, utlatandeId, mottagare);
+        ModuleAPIResponse apiResponse = service.sendCertificate(new Personnummer(personId), utlatandeId, mottagare);
 
         /* Verify */
         assertEquals("sent", apiResponse.getResultCode());
@@ -221,7 +222,7 @@ public class CertificateServiceImplTest {
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
 
         /* Then */
-        ModuleAPIResponse apiResponse = service.sendCertificate("19121212-1212", "1234567890", "FK");
+        ModuleAPIResponse apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", "FK");
 
         /* Verify */
         assertEquals("error", apiResponse.getResultCode());
@@ -239,7 +240,7 @@ public class CertificateServiceImplTest {
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenThrow(new SoapFault("server error", new QName("")));
 
         /* Then */
-        service.sendCertificate("19121212-1212", "1234567890", "FK");
+        service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", "FK");
     }
 
     private ClinicalProcessCertificateMetaTypeBuilder getClinicalProcessCertificateMetaTypeBuilder(
