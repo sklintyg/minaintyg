@@ -44,7 +44,7 @@
     <!-- Dependency to Netcare's MVK integration -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
 
-    <skip-jacoco>true</skip-jacoco>
+    <skip-coverage>true</skip-coverage>
   </properties>
 
   <modules>
@@ -254,7 +254,7 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
-            <skip>${skip-jacoco}</skip>
+            <skip>${skip-coverage}</skip>
         </configuration>
         <executions>
           <execution>
