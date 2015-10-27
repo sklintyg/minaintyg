@@ -89,7 +89,7 @@
               <a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
                 hur du skaffar en e-legitimation</a>
             </p>
-            <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
+            <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
             <div class="btn-row">
               <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
             </div>
