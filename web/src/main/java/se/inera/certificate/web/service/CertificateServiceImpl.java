@@ -185,7 +185,9 @@ public class CertificateServiceImpl implements CertificateService {
         switch (response.getResult().getResultCode()) {
         case OK:
             UtlatandeWithMeta utlatandeWithMeta = convert(response);
-            monitoringService.logCertificateRead(utlatandeWithMeta.getUtlatande().getId(), utlatandeWithMeta.getUtlatande().getTyp());
+            if (utlatandeWithMeta != null && utlatandeWithMeta.getUtlatande() != null) {
+                monitoringService.logCertificateRead(utlatandeWithMeta.getUtlatande().getId(), utlatandeWithMeta.getUtlatande().getTyp());
+            }
             return utlatandeWithMeta;
         default:
             LOGGER.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
