@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         csslint: {
             minaintyg: {
                 options: {
-                    csslintrc: '../target/build-tools/csslint/.csslintrc',
+                    csslintrc: 'target/build-tools/csslint/.csslintrc',
                     force: true
                 },
                 src: [ SRC_DIR + '../**/*.css' ]
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         jshint: {
             minaintyg: {
                 options: {
-                    jshintrc: '../target/build-tools/jshint/.jshintrc',
+                    jshintrc: 'target/build-tools/jshint/.jshintrc',
                     force: false,
                     ignores: ['**/templates.js', '**/*.min.js', '**/vendor/*.js']
                 },
