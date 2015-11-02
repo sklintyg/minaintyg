@@ -1,3 +1,6 @@
+Ignorerat i väntan på INTYG-1461
+
+
 !3 Först logga in och lista alla befintliga intyg.
 
 |skript|lista intyg|
