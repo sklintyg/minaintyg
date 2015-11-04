@@ -22,7 +22,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xmlns:aop="http://www.springframework.org/schema/aop"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <aop:aspectj-autoproxy />
@@ -96,6 +96,7 @@
     <security:http security="none" pattern="/ws/**" />
     <!-- Allow access to webjars without being logged in -->
     <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:headers>
         <security:frame-options />
       </security:headers>
@@ -118,6 +119,7 @@
     <!-- Enable the MVK Auth filter for our mvk entry point url -->
     <!-- We always clear the context before logging in -->
     <security:http pattern="/web/sso**" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="mvkPreAuthFilter" />
       <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
@@ -129,6 +131,7 @@
     <!-- set up protection of the needed url's in the app-->
     <!-- prevent caching on /api and /moduleapi -->
     <security:http pattern="/api/**" use-expressions="true" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
       <security:headers>
         <security:frame-options />
@@ -136,6 +139,7 @@
       </security:headers>
     </security:http>
     <security:http pattern="/moduleapi/**" use-expressions="true" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:intercept-url pattern="/moduleapi/**" access="hasRole('ROLE_CITIZEN')" />
       <security:headers>
         <security:frame-options />
@@ -143,6 +147,7 @@
       </security:headers>
     </security:http>
     <security:http use-expressions="true" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
       <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
       <security:headers>

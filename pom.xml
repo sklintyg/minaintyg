@@ -37,7 +37,7 @@
     <intyg-transportstyrelsen.version>1.0.0</intyg-transportstyrelsen.version>
 
     <!-- Dependency to Netcare's MVK integration -->
-    <mvkintegration.version>1.2.3</mvkintegration.version>
+    <mvkintegration.version>1.3.0</mvkintegration.version>
 
     <skip-coverage>true</skip-coverage>
   </properties>
