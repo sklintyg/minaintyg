@@ -13,7 +13,7 @@
   	<p>
   		<div message key="inbox.description.archive" class="mi-text"></div>
   		<a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedArchive = !isCollapsedArchive" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-      	<div collapse="!isCollapsedArchive" class="mi-text well well-sm margin-top-5px"><span message key="mi.helptext.arkivera"></span></div>
+      	<div uib-collapse="!isCollapsedArchive" class="mi-text well well-sm margin-top-5px"><span message key="mi.helptext.arkivera"></span></div>
   	</p>
   </div>
 </div>
@@ -58,7 +58,7 @@
                           <span message key="inbox.revoked"></span>
                           <span message key="inbox.revoked.archive"></span>
                           <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedRevoked = !isCollapsedRevoked" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-                          <div collapse="!isCollapsedRevoked" class="mi-text well well-sm margin-top-5px"><span message key="inbox.revoked.helptext"></span></div>
+                          <div uib-collapse="!isCollapsedRevoked" class="mi-text well well-sm margin-top-5px"><span message key="inbox.revoked.helptext"></span></div>
                         </div>
                       </div>
                     </div>
@@ -78,7 +78,7 @@
                           {{cert.statuses[0].timestamp | date:'short'}}
                           <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
                           <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
-                          <div collapse="isCollapsed">
+                          <div uib-collapse="isCollapsed">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 {{status.timestamp | date:'short'}}
@@ -126,7 +126,7 @@
 	  <div>
 	    Mina intyg använder kakor. <a ng-click="isCollapsedCookieInfo = !isCollapsedCookieInfo">Om Kakor (Cookies)</a>
 	  </div>
-	  <div collapse="!isCollapsedCookieInfo" class="margin-top-5px">
+	  <div uib-collapse="!isCollapsedCookieInfo" class="margin-top-5px">
 	  	<div class="mi-text well well-sm">
 	  		<span message key="about.cookies"></span>
 		</div>

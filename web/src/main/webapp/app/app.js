@@ -13,7 +13,7 @@ app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
 
         // Configure 403 interceptor provider
         http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
-        $httpProvider.responseInterceptors.push('common.http403ResponseInterceptor');
+        $httpProvider.interceptors.push('common.http403ResponseInterceptor');
     }]);
 
 

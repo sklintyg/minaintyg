@@ -15,7 +15,7 @@
 		    <li ng-class="navClass('hjalp')"><a role="menuitem" ui-sref="hjalp" id="helpTab"><message key="nav.label.help"></message></a></li>
 		</ul>
 	</div>
-	<div class="collapse" collapse="!isCollapsed">
+	<div class="collapse" uib-collapse="!isCollapsed">
 		<ul class="nav navbar-nav">
 			<li ng-class="navClass('lista')"><a role="menuitem" ui-sref="lista" id="inboxTab" ng-click="isCollapsed = !isCollapsed"><message key="nav.label.inbox"></message></a></li>
 		    <li class="divider-vertical" aria-hidden="true"></li>
