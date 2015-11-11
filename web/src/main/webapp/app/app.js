@@ -16,6 +16,46 @@ app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
         $httpProvider.interceptors.push('common.http403ResponseInterceptor');
     }]);
 
+app.config(function($provide) {
+    'use strict';
+    $provide.decorator('$$rAF', function($delegate, $window, $timeout, $browser) {
+        var requestAnimationFrame = $window.requestAnimationFrame ||
+                                    $window.webkitRequestAnimationFrame;
+
+        var cancelAnimationFrame = $window.cancelAnimationFrame ||
+            $window.webkitCancelAnimationFrame ||
+            $window.webkitCancelRequestAnimationFrame;
+
+        var rafSupported = !!requestAnimationFrame;
+
+        var raf = rafSupported ? function(fn) {
+            var fn2 = function() {
+                $browser.$$completeOutstandingRequest(fn);
+            };
+            $browser.$$incOutstandingRequestCount();
+            var id = requestAnimationFrame(fn2);
+            return function() {
+                $browser.$$completeOutstandingRequest(angular.noop);
+                cancelAnimationFrame(id);
+            };
+        }
+            : function(fn) {
+            var fn2 = function() {
+                $browser.$$completeOutstandingRequest(fn);
+            };
+            $browser.$$incOutstandingRequestCount();
+            var timer = $timeout(fn2, 16.66, false); // 1000 / 60 = 16.666
+            return function() {
+                $browser.$$completeOutstandingRequest(angular.noop);
+                $timeout.cancel(timer);
+            };
+        };
+
+        raf.supported = rafSupported;
+
+        return raf;
+    });
+});
 
 app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
     function($log, $rootScope, $state, $window, messageService) {
