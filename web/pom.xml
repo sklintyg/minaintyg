@@ -442,7 +442,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/main/resources/karma.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
         </executions>
