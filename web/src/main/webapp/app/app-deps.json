@@ -15,9 +15,7 @@
     "/app/directives/miSpinner.js",
     "/app/directives/mvkTopBar.js",
     "/app/directives/ngFocus.js",
-    "/app/filters/archivedFilter.js",
-    "/app/filters/unarchivedFilter.js",
-    "/app/services/consentService.js",
-    "/app/services/listCertService.js",
-    "/app/services/sendCertService.js"
+    "/app/filters/archived.filter.js",
+    "/app/filters/unarchived.filter.js",
+    "/app/services/consentService.js"
 ]

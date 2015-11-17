@@ -1,6 +1,6 @@
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$location', '$log', '$scope', 'common.dialogService', 'minaintyg.listCertService',
-        function($location, $log, $scope, dialogService, listCertService) {
+    [ '$location', '$log', '$scope', 'common.dialogService', 'common.IntygListService',
+        function($location, $log, $scope, dialogService, IntygListService) {
             'use strict';
 
             $scope.certificates = [];
@@ -54,12 +54,12 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                 for (var i = 0; i < $scope.certificates.length; i++) {
                     if ($scope.certificates[i].id === certId) {
 
-                        listCertService.restoreCertificate($scope.certificates[i], statusCallback);
+                        IntygListService.restoreCertificate($scope.certificates[i], statusCallback);
                     }
                 }
             };
 
-            listCertService.getCertificates(function(list) {
+            IntygListService.getCertificates(function(list) {
                 // filtering of deleted certs is done in view template
                 $scope.certificates = list;
                 $scope.doneLoading = true;

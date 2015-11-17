@@ -1,7 +1,7 @@
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'minaintyg.listCertService',
+    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'common.IntygListService',
         'common.dialogService', 'common.messageService',
-        function($cookies, $location, $log, $rootScope, $scope, $window, listCertService, dialogService,
+        function($cookies, $location, $log, $rootScope, $scope, $window, IntygListService, dialogService,
             messageService) {
             'use strict';
 
@@ -24,7 +24,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
 
             $scope.sendSelected = function(item) {
                 $log.debug('send ' + item.id);
-                listCertService.selectedCertificate = item;
+                IntygListService.selectedCertificate = item;
                 $rootScope.keepInboxTab = true;
                 $location.path('/' + item.type.toLowerCase() + '/view/' + item.id);
             };
@@ -33,7 +33,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 var item = $scope.certToArchive;
                 $log.debug('archive ' + item.id);
                 $scope.dialog.acceptprogressdone = false;
-                listCertService.archiveCertificate(item, function(fromServer, oldItem) {
+                IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
                     $log.debug('statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
                         // Better way to update the object?
@@ -101,7 +101,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             };
 
             // fetch list of certs initially
-            listCertService.getCertificates(function(list) {
+            IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
                 if (list !== null) {
                     $scope.certificates = list;

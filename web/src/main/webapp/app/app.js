@@ -115,14 +115,14 @@ $.get('/api/certificates/map').then(function(modules) {
     var modulePromises = [];
 
     if (MI_CONFIG.USE_MINIFIED_JAVASCRIPT === 'true') {
-        modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/js/module.min.js?' +
+        modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.min.js?' +
             MI_CONFIG.BUILD_NUMBER));
         // All dependencies in module-deps.json are included in module.min.js
         // All dependencies in app-deps.json are included in app.min.js
 
     } else {
-        modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/js/module.js'));
-        modulePromises.push($.get('/web/webjars/common/minaintyg/js/module-deps.json'));
+        modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.js'));
+        modulePromises.push($.get('/web/webjars/common/minaintyg/module-deps.json'));
         modulePromises.push($.get('/app/app-deps.json'));
 
         // Prevent jQuery from appending cache buster to the url to make it easier to debug.
