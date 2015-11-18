@@ -5,17 +5,14 @@
     "/app/views/about/about.controller.js",
     "/app/views/consent/consent.controller.js",
     "/app/views/consent/consent-given.controller.js",
+    "/app/views/consent.service.js",
     "/app/views/error/error-view.controller.js",
     "/app/views/help/help.controller.js",
     "/app/views/list/archive/list-archived.controller.js",
+    "/app/views/list/archived.filter.js",
     "/app/views/list/list.controller.js",
-    "/app/directives/miField.js",
-    "/app/directives/miHeader.js",
-    "/app/directives/miMainNavigation.js",
-    "/app/directives/miSpinner.js",
-    "/app/directives/mvkTopBar.js",
-    "/app/directives/ngFocus.js",
-    "/app/filters/archived.filter.js",
-    "/app/filters/unarchived.filter.js",
-    "/app/services/consentService.js"
+    "/app/views/list/unarchived.filter.js",
+    "/app/views/miHeader.directive.js",
+    "/app/views/miMainNavigation.directive.js",
+    "/app/views/mvkTopBar.directive.js"
 ]

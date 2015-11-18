@@ -25,6 +25,6 @@ angular.module('minaintyg').directive('miMainNavigation',
                     return page === currentRoute ? 'active' : '';
                 };
             },
-            templateUrl: '/app/directives/miMainNavigation.html'
+            templateUrl: '/app/views/miMainNavigation.directive.html'
         };
     });
