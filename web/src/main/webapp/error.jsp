@@ -92,7 +92,7 @@
           <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
             <c:choose>
-              <c:when test="${param.reason eq \"logout\"}">
+              <c:when test="${param.reason eq 'logout'}">
                 <h1>
                   <spring:message code="info.loggedout.title" />
                 </h1>
@@ -106,7 +106,7 @@
                 </div>
               </c:when>
 
-              <c:when test="${param.reason eq \"denied\"}">
+              <c:when test="${param.reason eq 'denied'}">
                 <h1>
                   <spring:message code="error.noauth.title" />
                 </h1>
@@ -120,7 +120,7 @@
                 </div>
               </c:when>
 
-              <c:when test="${param.reason eq \"notfound\"}">
+              <c:when test="${param.reason eq 'notfound'}">
                 <h1>
                   <spring:message code="error.notfound.title" />
                 </h1>
