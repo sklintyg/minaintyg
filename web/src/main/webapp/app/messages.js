@@ -148,8 +148,6 @@ var miMessages = {
 
         'certificatetypes.fk7263.commonname': 'Läkarintyg',
         'certificatetypes.fk7263.typename': ' FK 7263',
-        'certificatetypes.rli.commonname': 'Intyg vid avbeställd resa',
-        'certificatetypes.rli.typename': ' RLI',
         'certificatetypes.ts-bas.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-bas.typename': '',
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',
