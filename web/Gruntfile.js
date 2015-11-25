@@ -98,7 +98,7 @@ module.exports = function(grunt) {
                 options: {
                     module: 'minaintyg',
                     url: function(url) {
-                        return url.replace('../', '/');
+                        return '/' + url.replace('../', '/');
                     }
                 }
             }
