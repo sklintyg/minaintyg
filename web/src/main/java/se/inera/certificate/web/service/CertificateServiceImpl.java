@@ -29,7 +29,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
-import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;

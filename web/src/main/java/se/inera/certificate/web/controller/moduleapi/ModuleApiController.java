@@ -38,7 +38,7 @@ import se.inera.certificate.api.Certificate;
 import se.inera.certificate.api.CertificateStatus;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
