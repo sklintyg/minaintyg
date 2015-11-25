@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.Status;
+import se.inera.intyg.common.support.model.Status;
 
 /**
  * Meta data describing a utlatande.

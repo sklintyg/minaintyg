@@ -5,8 +5,8 @@ import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
 
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 /**
  * Object returned by services containing a utlatande and meta data describing the utlatande.

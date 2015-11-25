@@ -10,8 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Status;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.Status;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 
 public class CertificateMetaConverterTest {

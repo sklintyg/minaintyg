@@ -3,8 +3,8 @@ package se.inera.certificate.web.util;
 import java.util.List;
 
 import se.inera.certificate.api.CertificateStatus;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.model.Status;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.Status;
 
 /**
  * Converts meta data to the REST service model {@link CertificateStatus}.

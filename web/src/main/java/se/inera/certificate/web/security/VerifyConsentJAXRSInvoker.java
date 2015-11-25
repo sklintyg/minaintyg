@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 

@@ -22,7 +22,7 @@ import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
