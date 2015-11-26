@@ -93,13 +93,6 @@
     </div>
   </div>
 
-  <!--[if lte IE 8]>
-  <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message', 'miField', 'miSpinner', 'ngLocale' ]; // optional
-  </script>
-  <script type="text/javascript" src="<c:url value="/js/ie/ie-angular-shiv.js"/>"></script>
-  <![endif]-->
-
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular.min.js"></script>
