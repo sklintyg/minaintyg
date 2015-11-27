@@ -1,11 +1,11 @@
 package se.inera.certificate.api;
 
 
-import se.inera.certificate.model.Status;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import se.inera.intyg.common.support.model.Status;
 
 @SuppressWarnings("serial")
 public class CertificateStatus implements Serializable {

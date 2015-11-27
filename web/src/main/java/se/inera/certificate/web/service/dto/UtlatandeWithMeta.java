@@ -1,7 +1,7 @@
 package se.inera.certificate.web.service.dto;
 
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 import java.util.List;
 

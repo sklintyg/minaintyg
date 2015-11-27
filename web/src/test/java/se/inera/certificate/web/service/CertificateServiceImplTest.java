@@ -24,8 +24,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ResultTypeErrorException;
-import se.inera.certificate.model.CertificateState;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
@@ -35,6 +33,8 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetore
 import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;

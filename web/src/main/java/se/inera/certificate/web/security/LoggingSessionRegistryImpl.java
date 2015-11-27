@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
-import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.MonitoringLogService;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
