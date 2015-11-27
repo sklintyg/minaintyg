@@ -1,12 +1,12 @@
 package se.inera.certificate.web.service.dto;
 
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
 
 import java.util.List;
 
-import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.notNull;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 
 /**

@@ -18,7 +18,9 @@
  */
 package se.inera.certificate.web.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
@@ -64,9 +67,7 @@ import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedres
 import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Service

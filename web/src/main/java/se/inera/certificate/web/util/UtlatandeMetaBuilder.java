@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 /**
  * Builder object for creating immutable {@link UtlatandeMetaData} objects.

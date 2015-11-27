@@ -6,6 +6,8 @@ import se.inera.intyg.common.support.model.Status;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * Converts meta data to the REST service model {@link CertificateStatus}.
  */

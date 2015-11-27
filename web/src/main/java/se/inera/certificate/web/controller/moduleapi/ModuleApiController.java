@@ -39,9 +39,6 @@ import se.inera.certificate.web.service.CertificateService;
 import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
 import se.inera.certificate.web.util.CertificateStatusConverter;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -50,6 +47,9 @@ import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send

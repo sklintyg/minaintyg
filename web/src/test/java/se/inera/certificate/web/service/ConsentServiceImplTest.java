@@ -2,9 +2,7 @@ package se.inera.certificate.web.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

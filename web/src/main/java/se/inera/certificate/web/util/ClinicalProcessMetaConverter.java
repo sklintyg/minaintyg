@@ -1,15 +1,15 @@
 package se.inera.certificate.web.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.riv.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 
 /**

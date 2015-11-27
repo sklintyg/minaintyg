@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.cxf.binding.soap.SoapFault;
@@ -22,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ResultTypeErrorException;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
@@ -38,10 +42,6 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
-
-import javax.xml.namespace.QName;
-import java.io.IOException;
-import java.util.List;
 
 
 @RunWith(MockitoJUnitRunner.class)
