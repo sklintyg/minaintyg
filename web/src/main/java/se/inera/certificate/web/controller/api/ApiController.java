@@ -13,7 +13,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ import se.inera.certificate.web.service.CitizenService;
 import se.inera.certificate.web.service.ConsentService;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.util.CertificateMetaConverter;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public class ApiController {
 
@@ -88,17 +86,6 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
         return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
-    }
-
-    @PUT
-    @Path("/{id}/send")
-    public CertificateMeta send(@PathParam("id") final String id) {
-        Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'send' for certificate {0}", id);
-
-        // no hardcoding of targets (handled in INTYG-1458)
-        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(new Personnummer(citizen.getUsername()), id, new LocalDateTime(),
-                "FK", StatusType.SENT));
     }
 
     @POST
