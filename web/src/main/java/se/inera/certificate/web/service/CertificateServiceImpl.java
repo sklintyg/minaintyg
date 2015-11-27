@@ -29,11 +29,13 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.api.ModuleAPIResponse;
 import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
 import se.inera.certificate.exception.ResultTypeErrorException;
-import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.CertificateState;
+import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.internal.Utlatande;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
+import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
@@ -96,6 +98,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private MonitoringLogService monitoringService;
 
+    @Autowired
+    private IntygModuleRegistry moduleRegistry;
+
     // These values are injected by their setter methods
     private String vardReferensId;
     private String logicalAddress;
@@ -121,7 +126,7 @@ public class CertificateServiceImpl implements CertificateService {
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
      *
-     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
+     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(se.inera.certificate.modules.support.api.dto.Personnummer, java.lang.String,
      *      java.lang.String)
      */
     @Override
@@ -297,8 +302,9 @@ public class CertificateServiceImpl implements CertificateService {
         String document = response.getCertificate();
 
         try {
-            utlatande = objectMapper.readValue(document, Utlatande.class);
-        } catch (IOException e) {
+            ModuleApi moduleApi = moduleRegistry.getModuleApi(response.getType());
+            utlatande = objectMapper.readValue(document, moduleApi.getImplementationClass());
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

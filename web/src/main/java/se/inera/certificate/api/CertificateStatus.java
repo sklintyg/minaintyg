@@ -1,6 +1,7 @@
 package se.inera.certificate.api;
 
-import se.inera.intyg.common.support.model.Status;
+
+import se.inera.certificate.model.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;

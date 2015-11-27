@@ -19,9 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.api.CertificateMeta;
 import se.inera.certificate.api.ConsentResponse;
-import se.inera.intyg.common.support.modules.registry.IntygModule;
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.certificate.modules.registry.IntygModule;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.security.BrowserClosedInterceptor;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;

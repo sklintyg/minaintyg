@@ -1,12 +1,13 @@
 package se.inera.certificate.web.service.dto;
 
-import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.notNull;
+import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.internal.Utlatande;
 
 import java.util.List;
 
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
+
 
 /**
  * Object returned by services containing a utlatande and meta data describing the utlatande.

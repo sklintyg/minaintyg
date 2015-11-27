@@ -18,7 +18,8 @@
  */
 package se.inera.certificate.web.service;
 
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 /**
  */
