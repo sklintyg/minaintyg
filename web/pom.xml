@@ -47,6 +47,10 @@
       <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>ts-diabetes</artifactId>
     </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>sjukersattning</artifactId>
+    </dependency>
 
     <!-- RIVTA Schemas -->
     <dependency>
