@@ -1,4 +1,4 @@
-package se.inera.certificate.exception;
+package se.inera.intyg.minaintyg.web.exception;
 
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 

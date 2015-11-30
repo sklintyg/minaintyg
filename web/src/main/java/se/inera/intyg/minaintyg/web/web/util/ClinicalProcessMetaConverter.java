@@ -1,7 +1,7 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.StatusType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;

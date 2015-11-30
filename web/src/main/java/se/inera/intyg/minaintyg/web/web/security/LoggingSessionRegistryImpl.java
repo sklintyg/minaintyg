@@ -1,4 +1,4 @@
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.web.web.service.MonitoringLogService;
 
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 

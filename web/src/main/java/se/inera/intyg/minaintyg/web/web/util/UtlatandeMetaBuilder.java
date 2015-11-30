@@ -1,4 +1,4 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.joda.time.LocalDateTime;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 
 /**
  * Builder object for creating immutable {@link UtlatandeMetaData} objects.

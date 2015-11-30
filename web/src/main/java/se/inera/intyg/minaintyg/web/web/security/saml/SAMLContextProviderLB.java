@@ -1,4 +1,4 @@
-package se.inera.certificate.web.security.saml;
+package se.inera.intyg.minaintyg.web.web.security.saml;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

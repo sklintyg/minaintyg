@@ -1,4 +1,4 @@
-package se.inera.certificate.logging;
+package se.inera.intyg.minaintyg.web.logging;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;

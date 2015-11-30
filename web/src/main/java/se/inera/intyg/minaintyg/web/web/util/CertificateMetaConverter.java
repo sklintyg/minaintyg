@@ -1,12 +1,12 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 
 /**
  * Converts meta data from the internal {@link UtlatandeMetaData} to the REST service model {@link CertificateMeta}.

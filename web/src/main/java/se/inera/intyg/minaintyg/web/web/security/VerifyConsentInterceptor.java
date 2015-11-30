@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import java.io.IOException;
 
@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.ConsentService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 
 /**
  */

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 

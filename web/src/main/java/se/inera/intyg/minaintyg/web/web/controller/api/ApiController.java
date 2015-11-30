@@ -1,4 +1,4 @@
-package se.inera.certificate.web.controller.api;
+package se.inera.intyg.minaintyg.web.web.controller.api;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.api.ConsentResponse;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.security.BrowserClosedInterceptor;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.ConsentService;
-import se.inera.certificate.web.service.dto.UtlatandeRecipient;
-import se.inera.certificate.web.util.CertificateMetaConverter;
+import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.ConsentService;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.util.CertificateMetaConverter;
 
 public class ApiController {
 

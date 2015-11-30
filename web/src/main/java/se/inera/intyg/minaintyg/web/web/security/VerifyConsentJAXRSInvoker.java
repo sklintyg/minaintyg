@@ -1,4 +1,4 @@
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.ConsentService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 
 import com.google.common.collect.ImmutableSet;
 

@@ -33,17 +33,17 @@
     <mvc:interceptor>
       <mvc:mapping path="/**"/>
       <mvc:exclude-mapping path="/certificates/consent/**"/>
-      <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
       </bean>
     </mvc:interceptor>
   </mvc:interceptors>
 
   <context:annotation-config/>
-  <context:component-scan base-package="se.inera.certificate.web.controller.api"/>
+  <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller.api"/>
 
   <jaxrs:server address="/certificates">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.certificate.web.controller.api.ApiController"/>
+      <bean class="se.inera.intyg.minaintyg.web.web.controller.api.ApiController"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
@@ -52,7 +52,7 @@
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
     <jaxrs:invoker>
-      <bean class="se.inera.certificate.web.security.VerifyConsentJAXRSInvoker"/>
+      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentJAXRSInvoker"/>
     </jaxrs:invoker>
   </jaxrs:server>
 

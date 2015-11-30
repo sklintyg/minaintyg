@@ -1,4 +1,4 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import org.apache.commons.httpclient.HttpClient;
 

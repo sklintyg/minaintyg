@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.controller.moduleapi;
+package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
@@ -34,10 +34,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.api.Certificate;
-import se.inera.certificate.api.CertificateStatus;
-import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
+import se.inera.intyg.minaintyg.web.api.Certificate;
+import se.inera.intyg.minaintyg.web.api.CertificateStatus;
+import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
@@ -46,11 +46,11 @@ import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
-import se.inera.certificate.web.util.CertificateStatusConverter;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.util.CertificateStatusConverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

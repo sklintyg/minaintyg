@@ -1,4 +1,4 @@
-package se.inera.certificate.monitoring;
+package se.inera.intyg.minaintyg.web.monitoring;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.web.service.MonitoringService;
-import se.inera.certificate.web.service.dto.HealthStatus;
+import se.inera.intyg.minaintyg.web.web.service.MonitoringService;
+import se.inera.intyg.minaintyg.web.web.service.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.ConfigurationType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;

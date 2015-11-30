@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDateTime;
@@ -26,18 +26,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
-import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
-import se.inera.certificate.exception.ResultTypeErrorException;
+import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
+import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeRecipient;
-import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
-import se.inera.certificate.web.util.ClinicalProcessMetaConverter;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.util.ClinicalProcessMetaConverter;
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface;
@@ -121,7 +121,7 @@ public class CertificateServiceImpl implements CertificateService {
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
      *
-     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
+     * @see se.inera.intyg.minaintyg.web.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
      *      java.lang.String)
      */
     @Override

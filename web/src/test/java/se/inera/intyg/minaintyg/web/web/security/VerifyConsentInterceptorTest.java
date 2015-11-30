@@ -1,4 +1,4 @@
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.certificate.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VerifyConsentInterceptorTest {

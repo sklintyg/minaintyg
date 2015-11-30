@@ -1,4 +1,4 @@
-package se.inera.certificate.api;
+package se.inera.intyg.minaintyg.web.api;
 
 public class Certificate {
 

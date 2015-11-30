@@ -1,6 +1,6 @@
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
-import se.inera.certificate.web.service.dto.HealthStatus;
+import se.inera.intyg.minaintyg.web.web.service.dto.HealthStatus;
 
 public interface MonitoringService {
 

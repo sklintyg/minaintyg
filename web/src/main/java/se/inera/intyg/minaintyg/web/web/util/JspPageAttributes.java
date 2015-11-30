@@ -1,4 +1,4 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

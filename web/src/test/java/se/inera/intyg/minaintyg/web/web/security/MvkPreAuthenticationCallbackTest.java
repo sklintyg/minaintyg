@@ -1,4 +1,4 @@
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

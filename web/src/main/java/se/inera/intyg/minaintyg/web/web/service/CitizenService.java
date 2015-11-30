@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import se.inera.certificate.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
 
 @Service
 public class CitizenService {

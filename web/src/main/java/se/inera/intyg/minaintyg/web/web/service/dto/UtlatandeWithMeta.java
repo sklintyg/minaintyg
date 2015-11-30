@@ -1,4 +1,4 @@
-package se.inera.certificate.web.service.dto;
+package se.inera.intyg.minaintyg.web.web.service.dto;
 
 import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notNull;

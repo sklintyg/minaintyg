@@ -16,16 +16,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.api.ModuleAPIResponse;
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
+import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
-import se.inera.certificate.web.service.dto.UtlatandeRecipient;
-import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 import java.util.List;

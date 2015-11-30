@@ -1,8 +1,8 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import java.util.List;
 
-import se.inera.certificate.api.CertificateStatus;
+import se.inera.intyg.minaintyg.web.api.CertificateStatus;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 

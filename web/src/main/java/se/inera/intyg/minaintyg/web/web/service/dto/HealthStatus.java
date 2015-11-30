@@ -1,4 +1,4 @@
-package se.inera.certificate.web.service.dto;
+package se.inera.intyg.minaintyg.web.web.service.dto;
 
 public class HealthStatus {
 

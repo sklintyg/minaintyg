@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.inera.certificate.web.security.saml;
+package se.inera.intyg.minaintyg.web.web.security.saml;
 // CHECKSTYLE:OFF
 import org.opensaml.Configuration;
 import org.opensaml.common.SAMLObject;

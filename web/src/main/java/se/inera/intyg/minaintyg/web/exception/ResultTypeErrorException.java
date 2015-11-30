@@ -1,4 +1,4 @@
-package se.inera.certificate.exception;
+package se.inera.intyg.minaintyg.web.exception;
 
 import se.riv.clinicalprocess.healthcond.certificate.v1.ResultType;
 

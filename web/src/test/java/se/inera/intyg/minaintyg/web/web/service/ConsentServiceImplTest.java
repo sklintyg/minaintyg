@@ -1,4 +1,4 @@
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

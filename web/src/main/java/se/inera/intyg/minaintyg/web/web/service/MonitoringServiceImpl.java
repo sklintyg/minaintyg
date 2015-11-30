@@ -1,4 +1,4 @@
-package se.inera.certificate.web.service;
+package se.inera.intyg.minaintyg.web.web.service;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
-import se.inera.certificate.web.service.dto.HealthStatus;
+import se.inera.intyg.minaintyg.web.web.service.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
@@ -41,7 +41,7 @@ public class MonitoringServiceImpl implements MonitoringService {
     /*
      * (non-Javadoc)
      *
-     * @see se.inera.certificate.monitoring.MonitoringService#checkIntygstjanst()
+     * @see se.inera.intyg.minaintyg.web.monitoring.MonitoringService#checkIntygstjanst()
      */
     @Override
     public HealthStatus checkIntygstjanst() {

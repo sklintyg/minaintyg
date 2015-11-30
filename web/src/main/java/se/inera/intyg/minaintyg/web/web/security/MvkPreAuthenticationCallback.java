@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.web.security;
+package se.inera.intyg.minaintyg.web.web.security;
 
 import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
 import org.callistasoftware.netcare.mvk.authentication.service.api.PreAuthenticationCallback;

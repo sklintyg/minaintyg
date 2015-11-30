@@ -1,4 +1,4 @@
-package se.inera.certificate.web.overvakning;
+package se.inera.intyg.minaintyg.web.web.overvakning;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;

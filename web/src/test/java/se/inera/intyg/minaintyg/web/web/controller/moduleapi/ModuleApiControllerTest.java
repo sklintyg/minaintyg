@@ -1,4 +1,4 @@
-package se.inera.certificate.web.controller.moduleapi;
+package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -25,7 +25,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.certificate.exception.ExternalWebServiceCallFailedException;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
@@ -37,10 +37,10 @@ import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

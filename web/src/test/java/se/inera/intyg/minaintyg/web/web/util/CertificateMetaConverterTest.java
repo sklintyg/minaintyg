@@ -1,4 +1,4 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 
 public class CertificateMetaConverterTest {
 

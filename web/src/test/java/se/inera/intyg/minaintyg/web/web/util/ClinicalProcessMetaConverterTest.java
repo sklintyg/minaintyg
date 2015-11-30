@@ -1,4 +1,4 @@
-package se.inera.certificate.web.util;
+package se.inera.intyg.minaintyg.web.web.util;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
 import se.riv.clinicalprocess.healthcond.certificate.v1.CertificateMetaType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.StatusType;
