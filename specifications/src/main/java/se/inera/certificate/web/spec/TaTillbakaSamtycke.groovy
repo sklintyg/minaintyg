@@ -1,6 +1,6 @@
 package se.inera.certificate.web.spec;
 
-import se.inera.certificate.spec.Browser
+import se.inera.intyg.common.specifications.spec.Browser
 import se.inera.certificate.web.pages.AboutMinaIntygPage
 import se.inera.certificate.web.pages.InboxPage
 

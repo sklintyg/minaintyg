@@ -1,6 +1,6 @@
 package se.inera.certificate.web.spec;
 
-import se.inera.certificate.spec.Browser
+import se.inera.intyg.common.specifications.spec.Browser
 import se.inera.certificate.web.pages.ConsentDeniedPage
 import se.inera.certificate.web.pages.ConsentGivenPage
 import se.inera.certificate.web.pages.ConsentPage

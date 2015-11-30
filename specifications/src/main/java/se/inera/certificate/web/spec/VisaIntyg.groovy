@@ -1,5 +1,5 @@
 package se.inera.certificate.web.spec
-import se.inera.certificate.spec.Browser
+import se.inera.intyg.common.specifications.spec.Browser
 import se.inera.certificate.web.pages.IntygFk7263Page
 import se.inera.certificate.web.pages.IntygPage
 import se.inera.certificate.web.pages.IntygTsBasPage

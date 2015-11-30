@@ -1,6 +1,6 @@
 |Import|
-|se.inera.certificate.spec|
-|se.inera.certificate.spec.util|
+|se.inera.intyg.common.specifications.spec|
+|se.inera.intyg.common.specifications.spec.util|
 |se.inera.certificate.web.spec|
 
 !|Config|
