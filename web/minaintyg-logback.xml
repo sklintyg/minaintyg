@@ -52,7 +52,7 @@
       </fileNamePattern>
     </rollingPolicy>
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="se.inera.certificate.logging.PatternLayoutWithSessionContext">
+      <layout class="se.inera.intyg.minaintyg.web.logging.PatternLayoutWithSessionContext">
         <param name="Pattern" value="%date{ISO8601} %session - %msg%n"/>
       </layout>
     </encoder>
@@ -66,7 +66,7 @@
 
   <logger name="org.apache.cxf" level="error" />
 
-  <logger name="se.inera.certificate.web" level="debug" />
+  <logger name="se.inera.intyg.minaintyg.web.web" level="debug" />
 
   <logger name="se.inera.intyg.intygstyper.fk7263" level="debug" />
 
@@ -75,7 +75,7 @@
   <logger name="se.inera.intyg.intygstyper.ts_diabetes" level="debug" />
   
   <!-- Monitoring logger -->
-  <logger name="se.inera.certificate.web.service.MonitoringLogService" level="INFO" />
+  <logger name="se.inera.intyg.minaintyg.web.web.service.MonitoringLogService" level="INFO" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />
