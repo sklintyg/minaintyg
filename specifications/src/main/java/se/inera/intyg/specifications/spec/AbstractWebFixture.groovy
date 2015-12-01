@@ -1,12 +1,12 @@
-package se.inera.certificate.web.spec
+package se.inera.intyg.specifications.spec
 
 import se.inera.intyg.common.specifications.page.AbstractPage
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.AboutMinaIntygPage
-import se.inera.certificate.web.pages.AccessDeniedPage
-import se.inera.certificate.web.pages.ArchivedPage
-import se.inera.certificate.web.pages.ConsentPage
-import se.inera.certificate.web.pages.InboxPage
+import se.inera.intyg.specifications.pages.AboutMinaIntygPage
+import se.inera.intyg.specifications.pages.AccessDeniedPage
+import se.inera.intyg.specifications.pages.ArchivedPage
+import se.inera.intyg.specifications.pages.ConsentPage
+import se.inera.intyg.specifications.pages.InboxPage
 
 public class AbstractWebFixture {
 

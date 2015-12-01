@@ -1,7 +1,7 @@
-package se.inera.certificate.web.spec
+package se.inera.intyg.specifications.spec
 
 import groovyx.net.http.HttpResponseDecorator
-import se.inera.certificate.web.spec.util.RestClientFixture
+import se.inera.intyg.specifications.spec.util.RestClientFixture
 
 import static groovyx.net.http.ContentType.JSON
 

@@ -1,10 +1,10 @@
-package se.inera.certificate.web.spec;
+package se.inera.intyg.specifications.spec;
 
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.ConsentDeniedPage
-import se.inera.certificate.web.pages.ConsentGivenPage
-import se.inera.certificate.web.pages.ConsentPage
-import se.inera.certificate.web.pages.InboxPage
+import se.inera.intyg.specifications.pages.ConsentDeniedPage
+import se.inera.intyg.specifications.pages.ConsentGivenPage
+import se.inera.intyg.specifications.pages.ConsentPage
+import se.inera.intyg.specifications.pages.InboxPage
 
 public class HanteraSamtycke extends AbstractWebFixture {
 

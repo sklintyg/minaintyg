@@ -1,4 +1,4 @@
-package se.inera.certificate.web.spec.util
+package se.inera.intyg.specifications.spec.util
 /**
  *
  * @author andreaskaltenbach

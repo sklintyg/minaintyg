@@ -1,4 +1,4 @@
-package se.inera.certificate.web.spec
+package se.inera.intyg.specifications.spec
 
 class VerifieraTsIntyg extends VerifieraIntyg {
 

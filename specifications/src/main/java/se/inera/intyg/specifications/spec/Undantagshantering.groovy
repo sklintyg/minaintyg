@@ -1,7 +1,7 @@
-package se.inera.certificate.web.spec;
+package se.inera.intyg.specifications.spec;
 
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.NotFoundPage
+import se.inera.intyg.specifications.pages.NotFoundPage
 
 public class Undantagshantering {
 

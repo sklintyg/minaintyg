@@ -1,9 +1,9 @@
-package se.inera.certificate.web.spec
+package se.inera.intyg.specifications.spec
 
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.AccessDeniedPage
-import se.inera.certificate.web.pages.MvkLoginPage
-import se.inera.certificate.web.pages.MvkLogoutPage
+import se.inera.intyg.specifications.pages.AccessDeniedPage
+import se.inera.intyg.specifications.pages.MvkLoginPage
+import se.inera.intyg.specifications.pages.MvkLogoutPage
 
 public class LoggaUt extends AbstractWebFixture {
 

@@ -1,8 +1,8 @@
-package se.inera.certificate.web.spec;
+package se.inera.intyg.specifications.spec;
 
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.AboutMinaIntygPage
-import se.inera.certificate.web.pages.InboxPage
+import se.inera.intyg.specifications.pages.AboutMinaIntygPage
+import se.inera.intyg.specifications.pages.InboxPage
 
 public class TaTillbakaSamtycke extends AbstractWebFixture {
 

@@ -1,9 +1,9 @@
-package se.inera.certificate.web.spec
+package se.inera.intyg.specifications.spec
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.certificate.web.pages.IntygFk7263Page
-import se.inera.certificate.web.pages.IntygPage
-import se.inera.certificate.web.pages.IntygTsBasPage
-import se.inera.certificate.web.pages.IntygTsDiabetesPage
+import se.inera.intyg.specifications.pages.IntygFk7263Page
+import se.inera.intyg.specifications.pages.IntygPage
+import se.inera.intyg.specifications.pages.IntygTsBasPage
+import se.inera.intyg.specifications.pages.IntygTsDiabetesPage
 
 public class VisaIntyg {
 

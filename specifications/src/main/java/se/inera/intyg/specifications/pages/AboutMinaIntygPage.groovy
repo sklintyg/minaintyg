@@ -1,4 +1,4 @@
-package se.inera.certificate.web.pages
+package se.inera.intyg.specifications.pages
 
 class AboutMinaIntygPage extends AbstractLoggedInPage {
 
