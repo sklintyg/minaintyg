@@ -1,7 +1,7 @@
-package se.inera.intyg.specifications.spec
+package se.inera.intyg.minaintyg.specifications.spec
 
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.intyg.specifications.pages.ArchivedPage
+import se.inera.intyg.minaintyg.specifications.pages.ArchivedPage
 
 class Navigering {
 

@@ -1,4 +1,4 @@
-package se.inera.intyg.specifications.spec
+package se.inera.intyg.minaintyg.specifications.spec
 import se.inera.intyg.common.specifications.spec.Browser
 
 public class SkickaIntyg {

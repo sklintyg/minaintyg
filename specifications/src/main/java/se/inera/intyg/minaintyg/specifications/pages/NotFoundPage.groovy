@@ -1,4 +1,4 @@
-package se.inera.intyg.specifications.pages
+package se.inera.intyg.minaintyg.specifications.pages
 
 import se.inera.intyg.common.specifications.page.AbstractPage
 

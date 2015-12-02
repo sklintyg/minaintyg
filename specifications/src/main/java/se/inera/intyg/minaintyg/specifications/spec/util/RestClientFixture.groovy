@@ -1,4 +1,4 @@
-package se.inera.intyg.specifications.spec.util
+package se.inera.intyg.minaintyg.specifications.spec.util
 /**
  *
  * @author andreaskaltenbach

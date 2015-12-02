@@ -1,7 +1,7 @@
 |Import|
 |se.inera.intyg.common.specifications.spec|
 |se.inera.intyg.common.specifications.spec.util|
-|se.inera.intyg.specifications.spec|
+|se.inera.intyg.minaintyg.specifications.spec|
 
 !|Config|
 |property|value|

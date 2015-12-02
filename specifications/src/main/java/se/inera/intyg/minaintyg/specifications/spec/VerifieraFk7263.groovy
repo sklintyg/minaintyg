@@ -1,4 +1,4 @@
-package se.inera.intyg.specifications.spec
+package se.inera.intyg.minaintyg.specifications.spec
 
 
 class VerifieraFk7263 extends VerifieraIntyg {

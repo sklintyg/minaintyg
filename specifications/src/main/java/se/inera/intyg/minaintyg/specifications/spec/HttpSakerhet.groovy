@@ -1,7 +1,7 @@
-package se.inera.intyg.specifications.spec
+package se.inera.intyg.minaintyg.specifications.spec
 
 import groovyx.net.http.HttpResponseDecorator
-import se.inera.intyg.specifications.spec.util.RestClientFixture
+import se.inera.intyg.minaintyg.specifications.spec.util.RestClientFixture
 
 import static groovyx.net.http.ContentType.JSON
 

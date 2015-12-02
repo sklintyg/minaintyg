@@ -1,9 +1,9 @@
-package se.inera.intyg.specifications.spec
+package se.inera.intyg.minaintyg.specifications.spec
 import se.inera.intyg.common.specifications.spec.Browser
-import se.inera.intyg.specifications.pages.IntygFk7263Page
-import se.inera.intyg.specifications.pages.IntygPage
-import se.inera.intyg.specifications.pages.IntygTsBasPage
-import se.inera.intyg.specifications.pages.IntygTsDiabetesPage
+import se.inera.intyg.minaintyg.specifications.pages.IntygFk7263Page
+import se.inera.intyg.minaintyg.specifications.pages.IntygPage
+import se.inera.intyg.minaintyg.specifications.pages.IntygTsBasPage
+import se.inera.intyg.minaintyg.specifications.pages.IntygTsDiabetesPage
 
 public class VisaIntyg {
 
