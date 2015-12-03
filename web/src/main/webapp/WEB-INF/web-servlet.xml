@@ -32,7 +32,7 @@
       <mvc:exclude-mapping path="/logga-ut-fk"/>
       <!-- Since we load webjars resources via require we need to allow this without a given consent -->
       <mvc:exclude-mapping path="/webjars/**"/>
-      <bean class="se.inera.certificate.web.security.VerifyConsentInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
       </bean>
     </mvc:interceptor>
     <mvc:interceptor>
@@ -43,7 +43,7 @@
       <mvc:exclude-mapping path="/tillbaka-till-mvk"/>
       <mvc:exclude-mapping path="/logga-ut"/>
       <mvc:exclude-mapping path="/logga-ut-fk"/>
-      <bean class="se.inera.certificate.web.security.BrowserClosedInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor">
         <property name="timeoutSeconds" value="5"/>
         <property name="redirectLocation" value="/web/start"/>
         <property name="logoutHandler" ref="securityContextLogoutHandler" />
@@ -69,7 +69,7 @@
       location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties"  order="2"
       ignore-resource-not-found="true" ignore-unresolvable="true"/>
     <context:annotation-config/>
-    <context:component-scan base-package="se.inera.certificate.web.controller"/>
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller"/>
   </beans>
 
   <beans>

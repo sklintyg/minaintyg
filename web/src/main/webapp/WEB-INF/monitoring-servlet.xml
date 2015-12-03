@@ -19,6 +19,6 @@
   </cxf:bus>
 
   <!-- Monitoring WS-service -->
-  <jaxws:endpoint address="/ping-for-configuration/v1.0" implementor="se.inera.certificate.monitoring.PingForConfigurationResponderImpl" />
+  <jaxws:endpoint address="/ping-for-configuration/v1.0" implementor="se.inera.intyg.minaintyg.web.monitoring.PingForConfigurationResponderImpl" />
 
 </beans>

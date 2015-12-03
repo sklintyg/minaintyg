@@ -32,7 +32,7 @@
         If it matches the advice will return a successful Auth Result with the guid as id - if no match, the service will try the mvk 
         auth ws call as normal. So, use something like .../sso?guid=19900101-2122 to fake a login and otherwise a full mvk auth will 
         be executed -->
-    <bean class="se.inera.certificate.web.security.MvkValidationServiceAdvice">
+    <bean class="se.inera.intyg.minaintyg.web.web.security.MvkValidationServiceAdvice">
       <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-[0-9]{4}" />
     </bean>
   </beans>
@@ -155,7 +155,7 @@
     </security:http>
 
     <!-- Filter that resets the security context -->
-    <bean id="clearSecurityContextFilter" class="se.inera.certificate.web.security.ClearSecurityContextFilter">
+    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.web.security.ClearSecurityContextFilter">
       <property name="handler" ref="securityContextLogoutHandler" />
     </bean>
 
@@ -163,7 +163,7 @@
     <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
 
     <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users) -->
-    <bean id="sessionRegistry" class="se.inera.certificate.web.security.LoggingSessionRegistryImpl" />
+    <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.web.security.LoggingSessionRegistryImpl" />
 
     <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
     <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">

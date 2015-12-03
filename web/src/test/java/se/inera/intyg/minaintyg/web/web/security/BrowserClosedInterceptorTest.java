@@ -1,0 +1,96 @@
+package se.inera.intyg.minaintyg.web.web.security;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
+import org.joda.time.DurationFieldType;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+@RunWith(MockitoJUnitRunner.class)
+public class BrowserClosedInterceptorTest {
+
+	private static final String REDIRECT_LOCATION = "/home/login";
+	
+    @Mock
+    private LogoutHandler logoutHandler = mock(LogoutHandler.class);
+
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private HttpSession session;
+
+    @InjectMocks
+    private BrowserClosedInterceptor interceptor = new BrowserClosedInterceptor();
+
+    @Before
+    public void init() {
+        DateTimeUtils.setCurrentMillisFixed(0);
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+        session = mock(HttpSession.class);
+        
+        when(request.getSession()).thenReturn(session);
+        
+        interceptor.setRedirectLocation(REDIRECT_LOCATION);
+        interceptor.setTimeoutSeconds(5);
+    }
+    @After
+    public void after() {
+        DateTimeUtils.setCurrentMillisSystem();
+    }
+
+    @Test
+    public void testValidRefresh() throws Exception {
+
+        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(-1));
+
+        boolean preHandle = interceptor.preHandle(request, response, null);
+
+        Mockito.verifyZeroInteractions(logoutHandler);
+        assertTrue(preHandle);
+
+    }
+
+    @Test
+    public void testNormalRequest() throws Exception {
+
+        boolean preHandle = interceptor.preHandle(request, response, null);
+
+        Mockito.verifyZeroInteractions(logoutHandler);
+        assertTrue(preHandle);
+
+    }
+    
+    @Test
+    public void testOldInvalidRequest() throws Exception {
+
+        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(-10));
+
+        boolean preHandle = interceptor.preHandle(request, response, null);
+
+        Mockito.verify(logoutHandler).logout(request, response, null);
+        Mockito.verify(response).sendRedirect(REDIRECT_LOCATION);
+        assertFalse(preHandle);
+
+    }
+
+    public DateTime getOffsetTime(int secondOffset) {
+        return DateTime.now().withFieldAdded(DurationFieldType.seconds(), secondOffset);
+    }
+
+}
