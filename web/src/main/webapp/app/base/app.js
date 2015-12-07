@@ -11,7 +11,6 @@ app.run([ '$rootScope', '$window', 'common.messageService', function($rootScope,
     messageService.addResources(miMessages);
 
     $window.doneLoading = true;
-    $window.dialogDoneLoading = true;
     $window.rendered = true;
 } ]);
 

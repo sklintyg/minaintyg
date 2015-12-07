@@ -69,7 +69,6 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
         $rootScope.page_title = 'Titel'; // jshint ignore:line
 
         $window.doneLoading = false;
-        $window.dialogDoneLoading = true;
         $window.rendered = true;
 
         $rootScope.$on('$stateChangeStart',
