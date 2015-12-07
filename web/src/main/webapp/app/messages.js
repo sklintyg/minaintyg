@@ -148,6 +148,8 @@ var miMessages = {
 
         'certificatetypes.fk7263.commonname': 'Läkarintyg',
         'certificatetypes.fk7263.typename': ' FK 7263',
+        'certificatetypes.sjukersattning.commonname': 'Läkarintyg',
+        'certificatetypes.sjukersattning.typename': ' Sjukersättning',
         'certificatetypes.ts-bas.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-bas.typename': '',
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',
