@@ -310,7 +310,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         try {
             ModuleApi moduleApi = moduleRegistry.getModuleApi(response.getType());
-            utlatande = objectMapper.readValue(document, moduleApi.getImplementationClass());
+            utlatande = moduleApi.getUtlatandeFromJson(document);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
