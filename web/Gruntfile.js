@@ -12,13 +12,14 @@ module.exports = function(grunt) {
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
+    var DEST_DIR = 'target/webapp/app/';
 
     var minaintyg = grunt.file.readJSON(SRC_DIR + 'app-deps.json').map(function(file) {
         return file.replace(/\/app\//g, SRC_DIR);
     });
 
     var minaintygBase = [SRC_DIR + 'base/app.js'].concat(minaintyg);
-    minaintyg = [SRC_DIR + 'app.js'].concat(minaintyg);
+    minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg);
 
     grunt.initConfig({
 
@@ -35,11 +36,11 @@ module.exports = function(grunt) {
         concat: {
             minaintyg: {
                 src: minaintyg,
-                dest: SRC_DIR + 'app.min.js'
+                dest: DEST_DIR + 'app.min.js'
             },
             minaintygBase: {
                 src: minaintygBase,
-                dest: SRC_DIR + 'base/app.min.js'
+                dest: DEST_DIR + 'base/app.min.js'
             }
         },
 
@@ -50,8 +51,8 @@ module.exports = function(grunt) {
                     force: false,
                     ignores: ['**/templates.js', '**/*.min.js', '**/vendor/*.js']
                 },
-                src: [ 'Gruntfile.js', SRC_DIR + '**/*.js', TEST_DIR + '**/*.js', '!' + SRC_DIR + '/app.min.js',
-                        '!' + SRC_DIR + '/base/app.min.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + '**/*.js', TEST_DIR + '**/*.js', '!' + DEST_DIR + '/app.min.js',
+                        '!' + DEST_DIR + '/base/app.min.js' ]
             }
         },
 
@@ -67,12 +68,12 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             minaintyg: {
-                src: SRC_DIR + 'app.min.js',
-                dest: SRC_DIR + 'app.min.js'
+                src: DEST_DIR + 'app.min.js',
+                dest: DEST_DIR + 'app.min.js'
             },
             minaintygBase: {
-                src: SRC_DIR + 'base/app.min.js',
-                dest: SRC_DIR + 'base/app.min.js'
+                src: DEST_DIR + 'base/app.min.js',
+                dest: DEST_DIR + 'base/app.min.js'
             }
         },
 
@@ -81,12 +82,12 @@ module.exports = function(grunt) {
                 mangle: false
             },
             minaintyg: {
-                src: SRC_DIR + 'app.min.js',
-                dest: SRC_DIR + 'app.min.js'
+                src: DEST_DIR + 'app.min.js',
+                dest: DEST_DIR + 'app.min.js'
             },
             minaintygBase: {
-                src: SRC_DIR + 'base/app.min.js',
-                dest: SRC_DIR + 'base/app.min.js'
+                src: DEST_DIR + 'base/app.min.js',
+                dest: DEST_DIR + 'base/app.min.js'
             }
         },
 
@@ -94,7 +95,7 @@ module.exports = function(grunt) {
             minaintyg: {
                 cwd: __dirname + '/src/main/webapp',
                 src: ['app/**/*.html'],
-                dest: __dirname + '/src/main/webapp/app/templates.js',
+                dest: __dirname + '/target/webapp/app/templates.js',
                 options: {
                     module: 'minaintyg',
                     url: function(url) {
