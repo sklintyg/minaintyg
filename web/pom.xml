@@ -296,6 +296,17 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>target/webapp</directory>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
         <executions>
@@ -318,6 +329,10 @@
         <configuration>
           <webAppConfig>
             <contextPath>/</contextPath>
+            <resourceBases>
+              <resourceBase>${basedir}/src/main/webapp</resourceBase>
+              <resourceBase>${basedir}/target/webapp/</resourceBase>
+            </resourceBases>
           </webAppConfig>
           <contextXml>${basedir}/src/main/webapp/WEB-INF/jetty-context.xml</contextXml>
           <systemProperties>
