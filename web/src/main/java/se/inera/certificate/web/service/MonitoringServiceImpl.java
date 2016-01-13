@@ -1,6 +1,5 @@
 package se.inera.certificate.web.service;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +40,7 @@ public class MonitoringServiceImpl implements MonitoringService {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see se.inera.certificate.monitoring.MonitoringService#checkIntygstjanst()
      */
     @Override

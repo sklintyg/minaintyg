@@ -35,6 +35,7 @@ import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.web.security.Citizen;
 import se.inera.certificate.web.service.CertificateService;
@@ -46,7 +47,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(MockitoJUnitRunner.class)
 public class ModuleApiControllerTest {
 
-    private static final String PERSONNUMMER = "19121212-1212";
+    private static final Personnummer PERSONNUMMER = new Personnummer("19121212-1212");
     private static final String CERTIFICATE_ID = "123456";
     private static final String CERTIFICATE_TYPE = "fk7263";
 
@@ -88,9 +89,10 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
-       
+
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenReturn(
+                new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -103,7 +105,7 @@ public class ModuleApiControllerTest {
 
     private Citizen mockCitizen() {
         Citizen citizen = mock(Citizen.class);
-        when(citizen.getUsername()).thenReturn(PERSONNUMMER);
+        when(citizen.getUsername()).thenReturn(PERSONNUMMER.getPersonnummer());
         return citizen;
     }
 
@@ -111,7 +113,8 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
-        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
+        when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(
+                new ModuleSystemException());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);

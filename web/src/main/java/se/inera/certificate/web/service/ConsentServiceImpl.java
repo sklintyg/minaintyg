@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.insuranceprocess.healthreporting.getconsent.rivtabp20.v1.GetConsentResponderInterface;
 import se.inera.intyg.insuranceprocess.healthreporting.getconsentresponder.v1.GetConsentRequestType;
@@ -42,15 +43,15 @@ public class ConsentServiceImpl implements ConsentService {
 
     @Autowired
     private SetConsentResponderInterface setConsent;
-    
+
     @Autowired
     private MonitoringLogService monitoringService;
 
     @Override
-    public boolean fetchConsent(String civicRegistrationNumber) {
+    public boolean fetchConsent(Personnummer civicRegistrationNumber) {
         LOG.debug("About to fetch consent...");
         GetConsentRequestType parameters = new GetConsentRequestType();
-        parameters.setPersonnummer(civicRegistrationNumber);
+        parameters.setPersonnummer(civicRegistrationNumber.getPersonnummer());
 
         GetConsentResponseType consent = getConsent.getConsent(null, parameters);
         // When resultcode is error we cannot trust what the isConsentGiven says, since always have a value...
@@ -64,7 +65,7 @@ public class ConsentServiceImpl implements ConsentService {
     }
 
     @Override
-    public boolean setConsent(String civicRegistrationNumber) {
+    public boolean setConsent(Personnummer civicRegistrationNumber) {
         LOG.debug("About to set consent...");
         boolean consentResult = setConsent(civicRegistrationNumber, true);
         monitoringService.logCitizenConsentGiven(civicRegistrationNumber);
@@ -72,16 +73,16 @@ public class ConsentServiceImpl implements ConsentService {
     }
 
     @Override
-    public boolean revokeConsent(String civicRegistrationNumber) {
+    public boolean revokeConsent(Personnummer civicRegistrationNumber) {
         LOG.debug("About to revoke consent...");
         boolean consentResult = setConsent(civicRegistrationNumber, false);
         monitoringService.logCitizenConsentRevoked(civicRegistrationNumber);
         return consentResult;
     }
 
-    private boolean setConsent(String civicRegistrationNumber, boolean consent) {
+    private boolean setConsent(Personnummer civicRegistrationNumber, boolean consent) {
         SetConsentRequestType parameters = new SetConsentRequestType();
-        parameters.setPersonnummer(civicRegistrationNumber);
+        parameters.setPersonnummer(civicRegistrationNumber.getPersonnummer());
         parameters.setConsentGiven(consent);
         SetConsentResponseType consentResponse = setConsent.setConsent(null, parameters);
         ResultCodeEnum result = consentResponse.getResult().getResultCode();

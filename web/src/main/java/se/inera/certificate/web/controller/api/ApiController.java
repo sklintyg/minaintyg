@@ -1,24 +1,6 @@
 package se.inera.certificate.web.controller.api;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import se.inera.certificate.api.CertificateMeta;
-import se.inera.certificate.api.ConsentResponse;
-import se.inera.certificate.modules.registry.IntygModule;
-import se.inera.certificate.modules.registry.IntygModuleRegistry;
-import se.inera.certificate.web.security.BrowserClosedInterceptor;
-import se.inera.certificate.web.security.Citizen;
-import se.inera.certificate.web.service.CertificateService;
-import se.inera.certificate.web.service.CitizenService;
-import se.inera.certificate.web.service.ConsentService;
-import se.inera.certificate.web.service.MonitoringLogService;
-import se.inera.certificate.web.service.dto.UtlatandeRecipient;
-import se.inera.certificate.web.util.CertificateMetaConverter;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -30,7 +12,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.api.CertificateMeta;
+import se.inera.certificate.api.ConsentResponse;
+import se.inera.certificate.modules.registry.IntygModule;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.certificate.web.security.BrowserClosedInterceptor;
+import se.inera.certificate.web.security.Citizen;
+import se.inera.certificate.web.service.CertificateService;
+import se.inera.certificate.web.service.CitizenService;
+import se.inera.certificate.web.service.ConsentService;
+import se.inera.certificate.web.service.dto.UtlatandeRecipient;
+import se.inera.certificate.web.util.CertificateMetaConverter;
+import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 
 public class ApiController {
 
@@ -61,7 +61,7 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername())));
     }
 
     @GET
@@ -78,7 +78,7 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id,citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -87,7 +87,7 @@ public class ApiController {
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {0}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, citizen.getUsername()));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -96,8 +96,8 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {0}", id);
 
-        // TODO: no hardcoding of targets
-        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(citizen.getUsername(), id, new LocalDateTime(),
+        // no hardcoding of targets (handled in INTYG-1458)
+        return CertificateMetaConverter.toCertificateMeta(certificateService.setCertificateStatus(new Personnummer(citizen.getUsername()), id, new LocalDateTime(),
                 "FK", StatusType.SENT));
     }
 
@@ -106,7 +106,7 @@ public class ApiController {
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'giveConsent' for citizen {0}", citizen.getUsername());
-        citizen.setConsent(consentService.setConsent(citizen.getUsername()));
+        citizen.setConsent(consentService.setConsent(new Personnummer(citizen.getUsername())));
         return new ConsentResponse(true);
     }
 
@@ -115,7 +115,7 @@ public class ApiController {
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'revokeConsent' for citizen {0}", citizen.getUsername());
-        boolean revokedSuccessfully = consentService.revokeConsent(citizen.getUsername());
+        boolean revokedSuccessfully = consentService.revokeConsent(new Personnummer(citizen.getUsername()));
         if (revokedSuccessfully) {
             citizen.setConsent(false);
         }

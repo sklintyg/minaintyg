@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.MonitoringLogService;
 
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
@@ -14,7 +15,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
     @Autowired
     private MonitoringLogService monitoringService;
-    
+
     @Override
     public void registerNewSession(String sessionId, Object principal) {
 
@@ -22,7 +23,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
         if (principal != null && principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
-            monitoringService.logCitizenLogin(user.getUsername(), user.getLoginMethod().name());
+            monitoringService.logCitizenLogin(new Personnummer(user.getUsername()), user.getLoginMethod().name());
         }
         super.registerNewSession(sessionId, principal);
     }
@@ -43,7 +44,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
         if (principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
-            monitoringService.logCitizenLogout(user.getUsername(), user.getLoginMethod().name());
+            monitoringService.logCitizenLogout(new Personnummer(user.getUsername()), user.getLoginMethod().name());
         }
 
         super.removeSessionInformation(sessionId);

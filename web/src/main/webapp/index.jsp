@@ -89,7 +89,7 @@
               <a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
                 hur du skaffar en e-legitimation</a>
             </p>
-            <p class="btn-row-desc">Inloggningen sker via Mina vårdkontakter</p>
+            <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
             <div class="btn-row">
               <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
             </div>
@@ -109,7 +109,7 @@
                 Om du stänger av kakor i din webbläsare kan du inte logga in i Mina Intyg.</p><p>Allmän information om
                 kakor (cookies) och lagen om elektronisk kommunikation finns på Post- och telestyrelsens webbplats.</p>
                 <p>
-                  <a href='http://www.pts.se/sv/Bransch/Regler/Lagar/Lag-om-elektronisk-kommunikation/Cookies-kakor/'
+                  <a href='http://www.pts.se/sv/Privat/Internet/Integritet1/Fragor-och-svar-om-kakor-for-anvandare/'
                      target='_blank'>Mer om kakor (cookies) på Post- och telestyrelsens webbplats</a>
                 </p>
               </div>

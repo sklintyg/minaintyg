@@ -1,16 +1,12 @@
 package se.inera.certificate.web.spec
-
 import se.inera.certificate.spec.Browser
-import se.inera.certificate.web.pages.SendCertificateChooseRecipientPage
-import se.inera.certificate.web.pages.SendCertificateSentPage
-import se.inera.certificate.web.pages.SendCertificateSummaryPage
 
 public class SkickaIntyg {
 
     public boolean väljMottagareVynVisas() {
         boolean result
         Browser.drive {
-            result = page.confirmRecipientSelectionBtn.isDisplayed()
+            result = page.confirmRecipientSelectionBtn?.isDisplayed()
         }
         return result
     }
@@ -30,7 +26,7 @@ public class SkickaIntyg {
     public boolean summeringsVynVisas() {
         boolean result
         Browser.drive {
-            result = page.confirmAndSendBtn.isDisplayed()
+            result = page.confirmAndSendBtn?.isDisplayed()
         }
         return result
     }

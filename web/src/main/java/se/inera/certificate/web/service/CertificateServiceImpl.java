@@ -33,6 +33,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.Utlatande;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.web.service.dto.UtlatandeMetaData;
 import se.inera.certificate.web.service.dto.UtlatandeRecipient;
 import se.inera.certificate.web.service.dto.UtlatandeWithMeta;
@@ -102,7 +103,7 @@ public class CertificateServiceImpl implements CertificateService {
     private enum ArchivedState {
         ARCHIVED("true"),
         RESTORED("false");
-        private ArchivedState(String state) {
+        ArchivedState(String state) {
             this.state = state;
         }
 
@@ -124,11 +125,11 @@ public class CertificateServiceImpl implements CertificateService {
      *      java.lang.String)
      */
     @Override
-    public ModuleAPIResponse sendCertificate(String civicRegistrationNumber, String certificateId, String recipientId) {
+    public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         SendCertificateToRecipientType request = new SendCertificateToRecipientType();
-        request.setPersonId(civicRegistrationNumber);
+        request.setPersonId(civicRegistrationNumber.getPersonnummer());
         request.setUtlatandeId(certificateId);
         request.setMottagareId(recipientId);
 
@@ -144,12 +145,12 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public UtlatandeMetaData setCertificateStatus(String civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId,
+    public UtlatandeMetaData setCertificateStatus(Personnummer civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId,
             StatusType type) {
         UtlatandeMetaData result = null;
         SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
         req.setCertificateId(id);
-        req.setNationalIdentityNumber(civicRegistrationNumber);
+        req.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
         req.setStatus(type);
         req.setTarget(recipientId);
         req.setTimestamp(new LocalDateTime(timestamp));
@@ -170,14 +171,14 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public UtlatandeWithMeta getUtlatande(String civicRegistrationNumber, String certificateId) {
+    public UtlatandeWithMeta getUtlatande(Personnummer civicRegistrationNumber, String certificateId) {
 
         AttributedURIType uri = new AttributedURIType();
         uri.setValue(logicalAddress);
 
         GetCertificateContentRequestType request = new GetCertificateContentRequestType();
         request.setCertificateId(certificateId);
-        request.setNationalIdentityNumber(civicRegistrationNumber);
+        request.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
 
         GetCertificateContentResponseType response = getContentService.getCertificateContent(uri, request);
 
@@ -193,9 +194,9 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<UtlatandeMetaData> getCertificates(String civicRegistrationNumber) {
+    public List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
-        params.setPersonId(civicRegistrationNumber);
+        params.setPersonId(civicRegistrationNumber.getPersonnummer());
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
@@ -203,7 +204,7 @@ public class CertificateServiceImpl implements CertificateService {
         case OK:
             return ClinicalProcessMetaConverter.toUtlatandeMetaData(response.getMeta());
         default:
-            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber + " from Intygstjänsten. WS call result is "
+            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash() + " from Intygstjänsten. WS call result is "
                     + response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
@@ -235,24 +236,24 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public UtlatandeMetaData archiveCertificate(String certificateId, String civicRegistrationNumber) {
+    public UtlatandeMetaData archiveCertificate(String certificateId, Personnummer civicRegistrationNumber) {
         UtlatandeMetaData result = setArchived(certificateId, civicRegistrationNumber, ArchivedState.ARCHIVED);
         monitoringService.logCertificateArchived(certificateId);
         return result;
     }
 
     @Override
-    public UtlatandeMetaData restoreCertificate(String certificateId, String civicRegistrationNumber) {
+    public UtlatandeMetaData restoreCertificate(String certificateId, Personnummer civicRegistrationNumber) {
         UtlatandeMetaData result = setArchived(certificateId, civicRegistrationNumber, ArchivedState.RESTORED);
         monitoringService.logCertificateRestored(certificateId);
         return result;
     }
 
-    private UtlatandeMetaData setArchived(String certificateId, String civicRegistrationNumber, ArchivedState archivedState) {
+    private UtlatandeMetaData setArchived(String certificateId, Personnummer civicRegistrationNumber, ArchivedState archivedState) {
         SetCertificateArchivedRequestType parameters = new SetCertificateArchivedRequestType();
         parameters.setArchivedState(archivedState.getState());
         parameters.setCertificateId(certificateId);
-        parameters.setNationalIdentityNumber(civicRegistrationNumber);
+        parameters.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
 
         UtlatandeMetaData result = null;
         SetCertificateArchivedResponseType response = setArchivedService.setCertificateArchived(null, parameters);
@@ -271,7 +272,7 @@ public class CertificateServiceImpl implements CertificateService {
                 }
             }
         }
-        
+
         return result;
     }
 

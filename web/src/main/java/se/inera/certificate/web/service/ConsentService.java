@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.web.service;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
+
 /**
  */
 public interface ConsentService {
@@ -29,20 +31,16 @@ public interface ConsentService {
      * @param username
      * @return
      */
-    boolean fetchConsent(String username);
+    boolean fetchConsent(Personnummer username);
 
     /**
-     * Sets a given consent
-     * 
-     * @param username
+     * Sets a given consent.
      */
-    boolean setConsent(String username);
-    
+    boolean setConsent(Personnummer username);
+
     /**
-     * Revokes a given consent
-     * 
-     * @param username
+     * Revokes a given consent.
      */
-    boolean revokeConsent(String username);
+    boolean revokeConsent(Personnummer username);
 
 }

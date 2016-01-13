@@ -1,14 +1,16 @@
 package se.inera.certificate.web.service;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
+
 public interface MonitoringLogService {
 
-    void logCitizenLogin(String userId, String loginMethod);
+    void logCitizenLogin(Personnummer userId, String loginMethod);
 
-    void logCitizenLogout(String userId, String loginMethod);
+    void logCitizenLogout(Personnummer userId, String loginMethod);
 
-    void logCitizenConsentGiven(String userId);
+    void logCitizenConsentGiven(Personnummer userId);
 
-    void logCitizenConsentRevoked(String userId);
+    void logCitizenConsentRevoked(Personnummer userId);
 
     void logCertificateRead(String id, String typ);
 

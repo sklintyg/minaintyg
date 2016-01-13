@@ -1,56 +1,37 @@
 package se.inera.certificate.web.service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import se.inera.certificate.logging.LogMarkers;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 @Service
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     private static final String SPACE = " ";
 
-    private static final String DIGEST = "SHA-256";
-
     private static final Logger LOG = LoggerFactory.getLogger(MonitoringLogService.class);
 
-    private MessageDigest msgDigest;
-
-    @PostConstruct
-    public void initMessageDigest() {
-        try {
-            msgDigest = MessageDigest.getInstance(DIGEST);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e);
-        }
+    @Override
+    public void logCitizenLogin(Personnummer userId, String loginMethod) {
+        logEvent(MonitoringEvent.CITIZEN_LOGIN, Personnummer.getPnrHashSafe(userId), loginMethod);
     }
 
     @Override
-    public void logCitizenLogin(String userId, String loginMethod) {
-        logEvent(MonitoringEvent.CITIZEN_LOGIN, hash(userId), loginMethod);
+    public void logCitizenLogout(Personnummer userId, String loginMethod) {
+        logEvent(MonitoringEvent.CITIZEN_LOGOUT, Personnummer.getPnrHashSafe(userId), loginMethod);
     }
 
     @Override
-    public void logCitizenLogout(String userId, String loginMethod) {
-        logEvent(MonitoringEvent.CITIZEN_LOGOUT, hash(userId), loginMethod);
+    public void logCitizenConsentGiven(Personnummer userId) {
+        logEvent(MonitoringEvent.CONSENT_GIVEN, Personnummer.getPnrHashSafe(userId));
     }
 
     @Override
-    public void logCitizenConsentGiven(String userId) {
-        logEvent(MonitoringEvent.CONSENT_GIVEN, hash(userId));
-    }
-
-    @Override
-    public void logCitizenConsentRevoked(String userId) {
-        logEvent(MonitoringEvent.CONSENT_REVOKED, hash(userId));
+    public void logCitizenConsentRevoked(Personnummer userId) {
+        logEvent(MonitoringEvent.CONSENT_REVOKED, Personnummer.getPnrHashSafe(userId));
     }
 
     @Override
@@ -81,16 +62,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         LOG.info(LogMarkers.MONITORING, logMsg.toString(), logMsgArgs);
     }
 
-    private String hash(String payload) {
-        try {
-            msgDigest.update(payload.getBytes("UTF-8"));
-            byte[] digest = msgDigest.digest();
-            return new String(Hex.encodeHex(digest));
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     private enum MonitoringEvent {
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
         CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
@@ -103,7 +74,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
         private String msg;
 
-        private MonitoringEvent(String msg) {
+        MonitoringEvent(String msg) {
             this.msg = msg;
         }
 
