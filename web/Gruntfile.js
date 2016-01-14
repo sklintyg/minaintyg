@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                 options: {
                     jshintrc: 'target/build-tools/jshint/.jshintrc',
                     force: false,
-                    ignores: ['**/templates.js', '**/*.min.js', '**/vendor/*.js']
+                    ignores: ['**/*.min.js', '**/vendor/*.js']
                 },
                 src: [ 'Gruntfile.js', SRC_DIR + '**/*.js', TEST_DIR + '**/*.js', '!' + DEST_DIR + '/app.min.js',
                         '!' + DEST_DIR + '/base/app.min.js' ]
