@@ -31,7 +31,7 @@
 
   <groupId>se.inera.intyg.minaintyg</groupId>
   <artifactId>minaintyg</artifactId>
-  <version>2.5.0-b14</version>
+  <version>0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Mina intyg</name>
@@ -39,11 +39,11 @@
   <properties>
 
     <!-- Common -->
-    <common.version>2.5.0-b50</common.version>
+    <common.version>0-SNAPSHOT</common.version>
     <common.version.range>(,2.5.0]</common.version.range>
 
     <!-- Intygstyper -->
-    <intygstyper.version>2.5.0-b30</intygstyper.version>
+    <intygstyper.version>0-SNAPSHOT</intygstyper.version>
     <intygstyper.version.range>(,2.5.0]</intygstyper.version.range>
 
     <!-- Schemas -->
