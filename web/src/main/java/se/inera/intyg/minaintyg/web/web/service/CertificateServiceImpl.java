@@ -127,14 +127,8 @@ public class CertificateServiceImpl implements CertificateService {
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
      *
-<<<<<<< HEAD:web/src/main/java/se/inera/certificate/web/service/CertificateServiceImpl.java
-||||||| merged common ancestors
-     * @see se.inera.certificate.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
-     *      java.lang.String)
-=======
      * @see se.inera.intyg.minaintyg.web.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
      *      java.lang.String)
->>>>>>> develop:web/src/main/java/se/inera/intyg/minaintyg/web/web/service/CertificateServiceImpl.java
      */
     @Override
     public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
