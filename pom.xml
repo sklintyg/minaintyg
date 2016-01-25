@@ -294,6 +294,7 @@
                 <artifactItem>
                   <groupId>se.inera.intyg.common</groupId>
                   <artifactId>common-build-tools</artifactId>
+                  <version>${common.version}</version>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/build-tools</outputDirectory>
@@ -339,8 +340,7 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version,
-            intygstyper.version
+            common.version,intygstyper.version
           </includeProperties>
           <properties>
             <property>
@@ -391,26 +391,6 @@
     <repository>
       <id>thirdparty</id>
       <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/thirdparty/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-release</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-thirdparty</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>
       </releases>
