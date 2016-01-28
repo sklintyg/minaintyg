@@ -33,12 +33,17 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/webapp/app/';
 
-    var minaintyg = grunt.file.readJSON(SRC_DIR + 'app-deps.json').map(function(file) {
-        return file.replace(/\/app\//g, SRC_DIR);
-    });
+    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
+    grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(minaintyg.
+        map(function(file){ return '/app/'+file; }).
+        concat('/app/templates.js'), null, 4));
 
-    var minaintygBase = [SRC_DIR + 'base/app.js'].concat(minaintyg);
-    minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg);
+    var minaintygBase = [SRC_DIR + 'base/app.js'].concat(minaintyg.map(function(file){
+        return SRC_DIR + file;
+    }));
+    minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg.map(function(file){
+        return SRC_DIR + file;
+    }));
 
     grunt.initConfig({
 
