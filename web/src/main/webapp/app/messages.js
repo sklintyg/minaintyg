@@ -167,8 +167,10 @@ var miMessages = {
 
         'certificatetypes.fk7263.commonname': 'Läkarintyg',
         'certificatetypes.fk7263.typename': ' FK 7263',
-        'certificatetypes.sjukersattning.commonname': 'Läkarintyg',
-        'certificatetypes.sjukersattning.typename': ' Sjukersättning',
+        'certificatetypes.luse.commonname': 'Läkarintyg',
+        'certificatetypes.luse.typename': ' Sjukersättning',
+        'certificatetypes.lisu.commonname': 'Läkarintyg',
+        'certificatetypes.lisu.typename': ' Sjukpenning utökad',
         'certificatetypes.ts-bas.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-bas.typename': '',
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',

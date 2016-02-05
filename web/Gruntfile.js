@@ -21,6 +21,8 @@
 module.exports = function(grunt) {
     'use strict';
 
+    grunt.loadNpmTasks('grunt-connect-proxy');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -44,6 +46,24 @@ module.exports = function(grunt) {
     minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
+
+    var modules = {
+        'common':             { base: 'common/web' },
+        'fk7263':             { base: 'intygstyper/fk7263' },
+        'ts-bas':             { base: 'intygstyper/ts-bas' },
+        'ts-diabetes':        { base: 'intygstyper/ts-diabetes' },
+        'sjukersattning':     { base: 'intygstyper/fk/sjukersattning', angularModule:'luse' },
+        'sjukpenning-utokad': { base: 'intygstyper/fk/sjukpenning-utokad', angularModule:'lisu' }
+    };
+    Object.keys(modules).forEach(function(moduleName) {
+        var module = modules[moduleName];
+        module.name = moduleName;
+        if (!module.angularModule) {
+            module.angularModule = moduleName;
+        }
+        module.src = '/../../'+module.base+'/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.dest = '/../../'+module.base+'/target/classes/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+    });
 
     grunt.initConfig({
 
@@ -127,10 +147,73 @@ module.exports = function(grunt) {
                     }
                 }
             }
+        },
+
+        connect: {
+            server: {
+                options: {
+                    port: 8089,
+                    base: 'src/main/webapp',
+                    hostname: '*',
+                    keepalive: true,
+                    middleware: function(connect/*, options*/) {
+                        var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+                        var middlewares = [];
+                        middlewares.push(
+                            connect().use(
+                                '/web',
+                                connect.static(__dirname + '/src/main/webapp') // jshint ignore:line
+                            ));
+                        middlewares.push(
+                            connect().use(
+                                '/app',
+                                connect.static(__dirname + '/src/main/webapp/app') // jshint ignore:line
+                            ));
+                        middlewares.push(
+                            connect().use(
+                                '/app/app-deps.js',
+                                connect.static(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
+                            ));
+                        Object.keys(modules).forEach(function(moduleName) {
+                            var module = modules[moduleName];
+                            middlewares.push(
+                                connect().use(
+                                        '/web/webjars/'+module.name+'/minaintyg',
+                                    connect.static(__dirname + module.src) //jshint ignore:line
+                                ));
+                            middlewares.push(
+                                connect().use(
+                                        '/web/webjars/'+module.name+'/minaintyg/templates.js',
+                                    connect.static(__dirname + module.dest + '/templates.js') //jshint ignore:line
+                                ));
+                            middlewares.push(
+                                connect().use(
+                                        '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
+                                    connect.static(__dirname + module.dest + '/module-deps.json') //jshint ignore:line
+                                ));
+                            middlewares.push(
+                                connect().use(
+                                        '/web/webjars/'+module.name+'/minaintyg/css',
+                                    connect.static(__dirname + module.dest + '/css')//jshint ignore:line
+                                ));
+                        });
+                        middlewares.push(proxy);
+                        return middlewares;
+                    }
+                },
+                proxies: [
+                    {
+                        context: '/',
+                        host: 'localhost',
+                        port: 8088
+                    }
+                ]
+            }
         }
     });
 
     grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);
 };
