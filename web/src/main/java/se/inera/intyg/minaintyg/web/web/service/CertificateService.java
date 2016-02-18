@@ -33,7 +33,7 @@ import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 
 public interface CertificateService {
 
-    UtlatandeWithMeta getUtlatande(Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+    UtlatandeWithMeta getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.

@@ -94,12 +94,12 @@ public class ModuleApiController {
      * @return The certificate in JSON format
      */
     @GET
-    @Path("/{id}")
+    @Path("/{type}/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public final Response getCertificate(@PathParam("id") final String id) {
+    public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        UtlatandeWithMeta utlatande = certificateService.getUtlatande(new Personnummer(citizenService.getCitizen().getUsername()), id);
+        UtlatandeWithMeta utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
 
         try {
             JsonNode utlatandeJson = objectMapper.readTree(utlatande.getDocument());
@@ -139,15 +139,15 @@ public class ModuleApiController {
      * @return The certificate in PDF format
      */
     @GET
-    @Path("/{id}/pdf")
+    @Path("/{type}/{id}/pdf")
     @Produces("application/pdf")
-    public final Response getCertificatePdf(@PathParam(value = "id") final String id) {
+    public final Response getCertificatePdf(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
         UtlatandeWithMeta utlatande;
 
         try {
-            utlatande = certificateService.getUtlatande(new Personnummer(citizenService.getCitizen().getUsername()), id);
+            utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
         } catch (ExternalWebServiceCallFailedException ex) {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }

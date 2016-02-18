@@ -46,7 +46,7 @@ class HttpSakerhet  extends RestClientFixture {
     }
 
     boolean modulApiSvarSkaEjKunnaCachas() {
-        hamtaHeader("/moduleapi/certificate/fit-intyg-1", "Cache-Control") == "no-cache, no-store, max-age=0, must-revalidate"
+        hamtaHeader("/moduleapi/certificate/fk7263/fit-intyg-1", "Cache-Control") == "no-cache, no-store, max-age=0, must-revalidate"
     }
 
     boolean enSidaSkaInteKunnaSattasIFrame() {

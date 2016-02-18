@@ -106,7 +106,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdf() throws Exception {
-        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
@@ -116,7 +116,7 @@ public class ModuleApiControllerTest {
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
+        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_TYPE, CERTIFICATE_ID);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals(bytes, response.getEntity());
@@ -130,7 +130,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
-        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
         when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(
                 new ModuleSystemException());
@@ -138,7 +138,7 @@ public class ModuleApiControllerTest {
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
+        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_TYPE, CERTIFICATE_ID);
 
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
@@ -148,12 +148,12 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingIntygstjanst() {
         Response certificateResponse = mock(Response.class);
         when(certificateResponse.getStatus()).thenReturn(Response.Status.FORBIDDEN.getStatusCode());
-        when(certificateService.getUtlatande(PERSONNUMMER, CERTIFICATE_ID)).thenThrow(ExternalWebServiceCallFailedException.class);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenThrow(ExternalWebServiceCallFailedException.class);
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_ID);
+        Response response = moduleApiController.getCertificatePdf(CERTIFICATE_TYPE, CERTIFICATE_ID);
 
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
