@@ -33,7 +33,7 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
-                          <button class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                          <button type="button" class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
                           	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
                           </button>
                           <span ng-show="cert.cancelled">
@@ -45,7 +45,7 @@
                         <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>&nbsp;<span message key="listtable.headers.issued"></span>
                       </div>
                       <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
-                        <button class="archive-only btn-link" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                        <button type="button" class="archive-only btn-link" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
                         	<span class="glyphicon glyphicon-folder-close white"></span>
                         </button>
                       </div>
@@ -88,16 +88,16 @@
                             </div>
                           </div>
                           <p>
-                            <button class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsed = !isCollapsed"><span message key="label.status.{{ !isCollapsed }}"></span></button>
+                            <button type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsed = !isCollapsed"><span message key="label.status.{{ !isCollapsed }}"></span></button>
                           </p>
                         </div>
                         <span ng-show="cert.statuses.length==0">Ingen</span>
                       </div>
                       <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-left">
-                        <button id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><span message key="button.show"></span></button>
+                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)"><span message key="button.show"></span></button>
                       </div>
                       <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
-                      	<button class="btn btn-primary pull-right" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                      	<button type="button" class="btn btn-primary pull-right" id="archiveCertificateBtn-{{cert.id}}" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
                       		<span class="glyphicon glyphicon-folder-close white"></span>
                       	</button>
                       </div>
