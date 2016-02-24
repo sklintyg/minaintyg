@@ -347,9 +347,7 @@ public class CertificateServiceImpl implements CertificateService {
         Utlatande utlatande;
         try {
             ModuleApi moduleApi = moduleRegistry.getModuleApi(response.getIntyg().getTyp().getCode().toLowerCase());
-            StringWriter sw = new StringWriter();
-            JAXB.marshal(intyg, sw);
-            utlatande = moduleApi.getUtlatandeFromIntyg(intyg, sw.toString());
+            utlatande = moduleApi.getUtlatandeFromIntyg(intyg);
             json = objectMapper.writeValueAsString(utlatande);
         } catch (Exception e) {
             throw new RuntimeException(e);
