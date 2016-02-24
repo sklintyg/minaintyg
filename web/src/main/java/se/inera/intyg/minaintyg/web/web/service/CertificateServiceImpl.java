@@ -18,12 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.bind.JAXB;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
