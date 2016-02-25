@@ -371,3 +371,7 @@ div.infobox h4 {
     font-weight: bold;
     white-space: pre-line;
 }
+
+.mi-category h2.title {
+    margin-bottom: 20px;
+}
