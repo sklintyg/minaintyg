@@ -72,7 +72,7 @@ public interface CertificateService {
 
 
     /**
-     * Get all labels for intyg as json
+     * Get all labels for intyg as json.
      * @param intygsTyp
      * @param version
      * @return
