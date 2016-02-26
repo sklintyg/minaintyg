@@ -156,4 +156,15 @@ public class ApiController {
         }
         return "ok";
     }
+
+    @GET
+    @Path("/questions/{intygsTyp}/{version}")
+    public String getQuestions(@PathParam("intygsTyp") String intygsTyp, @PathParam("version") String version) {
+
+        LOG.debug("Requesting questions for '{}' with version '{}'.", intygsTyp, version);
+
+        String questions = certificateService.getQuestions(intygsTyp, version);
+
+        return questions;
+    }
 }

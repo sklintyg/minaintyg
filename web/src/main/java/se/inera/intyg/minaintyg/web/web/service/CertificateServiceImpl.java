@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesfor
 import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -112,6 +114,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;
+
+    @Autowired
+    private IntygTextsService intygTextsService;
 
     // These values are injected by their setter methods
     private String vardReferensId;
@@ -381,4 +386,16 @@ public class CertificateServiceImpl implements CertificateService {
         return new UtlatandeWithMeta(utlatande, document, statuses);
     }
 
+    @Override
+    public String getQuestions(String intygsTyp, String version) {
+        String questionsAsJson = intygTextsService.getIntygTexts(intygsTyp, version);
+
+        LOGGER.debug("Got questions of {} chars from module '{}'", getSafeLength(questionsAsJson), intygsTyp);
+
+        return questionsAsJson;
+    }
+
+    private int getSafeLength(String str) {
+        return (StringUtils.isNotBlank(str)) ? str.length() : 0;
+    }
 }

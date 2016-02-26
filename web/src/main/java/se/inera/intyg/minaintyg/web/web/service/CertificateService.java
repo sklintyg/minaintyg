@@ -70,4 +70,12 @@ public interface CertificateService {
      */
     UtlatandeMetaData restoreCertificate(String certificateId, Personnummer civicRegistrationNumber);
 
+
+    /**
+     * Get all labels for intyg as json
+     * @param intygsTyp
+     * @param version
+     * @return
+     */
+    String getQuestions(String intygsTyp, String version);
 }

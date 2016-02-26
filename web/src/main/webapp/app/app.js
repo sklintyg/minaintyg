@@ -23,6 +23,10 @@ window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
 var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
 
+app.value('networkConfig', {
+    defaultTimeout: 30000 // test: 1000
+});
+
 app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider',
     function($httpProvider, http403ResponseInterceptorProvider) {
         'use strict';

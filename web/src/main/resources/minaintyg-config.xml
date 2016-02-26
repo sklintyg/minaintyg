@@ -84,6 +84,10 @@
       <property name="origin" value="MINA_INTYG"/>
     </bean>
 
+    <bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper" />
+    <bean id="intygTextsService" class="se.inera.intyg.common.services.texts.IntygTextsServiceImpl" />
+    <bean id="intygTextsRepository" class="se.inera.intyg.common.services.texts.repo.IntygTextsRepositoryImpl" />
+
   </beans>
 
 </beans>

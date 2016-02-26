@@ -368,6 +368,10 @@
               <value>${system.mode}</value>
             </systemProperty>
             <systemProperty>
+              <name>minaintyg.resources.folder</name>
+              <value>${basedir}/../src/main/resources</value>
+            </systemProperty>
+            <systemProperty>
               <name>jetty.port</name>
               <value>8088</value>
             </systemProperty>
