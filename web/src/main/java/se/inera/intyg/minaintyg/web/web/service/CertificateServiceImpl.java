@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.web.service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
@@ -29,6 +30,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface;
@@ -38,8 +41,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.*;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -62,9 +64,7 @@ import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -72,7 +72,7 @@ public class CertificateServiceImpl implements CertificateService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
     /* Mapper to serialize/deserialize Utlatanden. */
-    private static ObjectMapper objectMapper = new CustomObjectMapper();
+    protected static ObjectMapper objectMapper = new CustomObjectMapper();
 
     private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String MOTTAGARE_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
@@ -112,7 +112,7 @@ public class CertificateServiceImpl implements CertificateService {
     private String logicalAddress;
 
     private String[] useLegacyGetCertificate = { CertificateTypes.FK7263.toString(), CertificateTypes.TSBAS.toString(),
-            CertificateTypes.TSDIABETES.toString()};
+            CertificateTypes.TSDIABETES.toString() };
 
     private enum ArchivedState {
         ARCHIVED("true"),
@@ -133,8 +133,8 @@ public class CertificateServiceImpl implements CertificateService {
      * implementation. (The responserinterface used here now should be replaced with a custom
      * interface for this type of sendCertificate that is initiated by the citizen from MI)
      *
-     * @see se.inera.intyg.minaintyg.web.web.service.CertificateService#sendCertificate(java.lang.String, java.lang.String,
-     *      java.lang.String)
+     * @see se.inera.intyg.minaintyg.web.web.service.CertificateService#sendCertificate(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     @Override
     public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
@@ -277,7 +277,7 @@ public class CertificateServiceImpl implements CertificateService {
     private UtlatandeWithMeta getUtlatande(Personnummer civicRegistrationNumber, String certificateId, String logicalAddress) {
         GetCertificateType getCertificateType = new GetCertificateType();
         IntygId intygId = new IntygId();
-        intygId .setExtension(certificateId);
+        intygId.setExtension(certificateId);
         getCertificateType.setIntygsId(intygId);
         GetCertificateResponseType response = getCertificateService.getCertificate(logicalAddress, getCertificateType);
 
@@ -352,14 +352,16 @@ public class CertificateServiceImpl implements CertificateService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        List<Status> statuses = new ArrayList<Status>();
-        for (IntygsStatus status : response.getIntyg().getStatus()) {
-            if (status.getStatus().equals(StatusType.SENT) || status.getStatus().equals(StatusType.CANCELLED)) {
-                // TODO What should target be populated with since it is not present in the new IntygsStatus-object?
-                statuses.add(new Status(CertificateState.valueOf(status.getStatus().getCode()), null,
-                        status.getTidpunkt()));
-            }
-        }
+        List<Status> statuses = response.getIntyg().getStatus().stream()
+                .filter(status -> StatusKod.fromString(status.getStatus().getCode())
+                        .map(StatusKod::toCertificateState)
+                        .filter(ct -> ct.isPresent() && (ct.get().equals(CertificateState.SENT) || ct.get().equals(CertificateState.CANCELLED)))
+                        .isPresent())
+                .map(status -> new Status(
+                        StatusKod.fromString(status.getStatus().getCode()).get().toCertificateState().get(),
+                        status.getPart().getCode(),
+                        status.getTidpunkt()))
+                .collect(Collectors.toList());
         return new UtlatandeWithMeta(utlatande, json, statuses);
     }
 
