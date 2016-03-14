@@ -18,9 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
@@ -31,24 +29,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.*;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
@@ -66,19 +54,17 @@ import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedres
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.service.dto.*;
 import se.inera.intyg.minaintyg.web.web.util.CertificateTypes;
 import se.inera.intyg.minaintyg.web.web.util.ClinicalProcessMetaConverter;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -87,6 +73,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     /* Mapper to serialize/deserialize Utlatanden. */
     private static ObjectMapper objectMapper = new CustomObjectMapper();
+
+    private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.1";
+    private static final String MOTTAGARE_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
 
     @Autowired
     private ListCertificatesForCitizenResponderInterface listService;
@@ -152,13 +141,22 @@ public class CertificateServiceImpl implements CertificateService {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         SendCertificateToRecipientType request = new SendCertificateToRecipientType();
-        request.setPersonId(civicRegistrationNumber.getPersonnummer());
-        request.setUtlatandeId(certificateId);
-        request.setMottagareId(recipientId);
+        se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId personId = new se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId();
+        personId.setRoot(PERSON_ID_ROOT);
+        personId.setExtension(civicRegistrationNumber.getPersonnummer());
+        request.setPatientPersonId(personId);
+        IntygId intygId = new IntygId();
+        intygId.setRoot("SE5565594230-B31");  // IT:s root since unit hsaId is not available
+        intygId.setExtension(certificateId);
+        request.setIntygsId(intygId);
+        Part part = new Part();
+        part.setCode(recipientId);
+        part.setCodeSystem(MOTTAGARE_CODE_SYSTEM);
+        request.setMottagare(part);
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
-        if (response.getResult().getResultCode().equals(ResultCodeType.ERROR)) {
+        if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType.ERROR)) {
             LOGGER.warn("SendCertificate error: {}", response.getResult().getResultText());
             return new ModuleAPIResponse("error", "");
         }

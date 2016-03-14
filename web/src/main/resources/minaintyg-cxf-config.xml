@@ -47,7 +47,7 @@
       address="${certificates.setarchived.url}"/>
 
   <jaxws:client id="sendCertificateToRecipientClient"
-      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.sendcertificatetorecipient.v1.SendCertificateToRecipientResponderInterface"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface"
       address="${certificates.sendcertificatetorecipient.url}" />
 
   <jaxws:client id="getCertificateContentClient"
