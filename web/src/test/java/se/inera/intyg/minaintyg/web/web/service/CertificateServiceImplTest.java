@@ -26,37 +26,30 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.cxf.binding.soap.SoapFault;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
-import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.*;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenType;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
-import se.inera.intyg.common.support.model.*;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -65,12 +58,13 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -85,19 +79,17 @@ public class CertificateServiceImplTest {
     private static final String CERTIFIED_ID = "certifiedId";
     private static final String AVAILABLE = "available";
 
-    private static String document;
+    @Mock
+    private MessageSource messageSource;
 
     @Mock
-    private MessageSource messageSource = mock(MessageSource.class);
+    private ListCertificatesForCitizenResponderInterface listServiceMock;
 
     @Mock
-    private ListCertificatesForCitizenResponderInterface listServiceMock = mock(ListCertificatesForCitizenResponderInterface.class);
+    private SendCertificateToRecipientResponderInterface sendServiceMock;
 
     @Mock
-    private SendCertificateToRecipientResponderInterface sendServiceMock = mock(SendCertificateToRecipientResponderInterface.class);
-
-    @Mock
-    private GetCertificateContentResponderInterface getContentServiceMock = mock(GetCertificateContentResponderInterface.class);
+    private GetCertificateContentResponderInterface getContentServiceMock;
 
     @Mock
     private MonitoringLogService monitoringServiceMock;
@@ -108,8 +100,11 @@ public class CertificateServiceImplTest {
     @Mock
     private GetCertificateResponderInterface getCertificateService;
 
+    @Mock
+    private CitizenService citizenService;
+
     @InjectMocks
-    private CertificateServiceImpl service = new CertificateServiceImpl();
+    private CertificateServiceImpl service;
 
     private LocalDateTime signDateTime = new LocalDateTime();
     private LocalDate validFromDate = new LocalDate();
@@ -121,11 +116,6 @@ public class CertificateServiceImplTest {
     private UtlatandeStatus deletedStatus;
     private UtlatandeStatus sentStatus;
     private UtlatandeStatus cancelledStatus;
-
-    @BeforeClass
-    public static void setupCertificateData() throws IOException {
-        document = FileUtils.readFileToString(new ClassPathResource("lakarutlatande/maximalt-fk7263.json").getFile());
-    }
 
     @Before
     public void inject_fields() {
@@ -274,23 +264,18 @@ public class CertificateServiceImplTest {
     public void testSendCertificate() {
 
         String personId = "19121212-1212";
+        String citizenUsername = "19121212-1212";
         String utlatandeId = "1234567890";
         String mottagare = "FK";
 
-        /* Given */
-        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
-        request.setPatientPersonId(new PersonId());
-        request.getPatientPersonId().setExtension(personId);
-        request.setIntygsId(new IntygId());
-        request.getIntygsId().setExtension(utlatandeId);
-        request.setMottagare(new Part());
-        request.getMottagare().setCode(mottagare);
-
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
         response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        Citizen citizen = mock(Citizen.class);
 
         /* When */
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
+        when(citizen.getUsername()).thenReturn(citizenUsername);
+        when(citizenService.getCitizen()).thenReturn(citizen);
 
         /* Then */
         ModuleAPIResponse apiResponse = service.sendCertificate(new Personnummer(personId), utlatandeId, mottagare);
@@ -303,19 +288,27 @@ public class CertificateServiceImplTest {
         verify(monitoringServiceMock).logCertificateSend(utlatandeId, mottagare);
 
         SendCertificateToRecipientType actualRequest = argument.getValue();
-        assertEquals(request.getPatientPersonId().getExtension(), actualRequest.getPatientPersonId().getExtension());
-        assertEquals(request.getIntygsId().getExtension(), actualRequest.getIntygsId().getExtension());
-        assertEquals(request.getMottagare().getCode(), actualRequest.getMottagare().getCode());
+        assertNotNull(actualRequest.getSkickatTidpunkt());
+        assertNotNull(actualRequest.getPatientPersonId().getRoot());
+        assertEquals(personId, actualRequest.getPatientPersonId().getExtension());
+        assertNotNull(actualRequest.getIntygsId().getRoot());
+        assertEquals(utlatandeId, actualRequest.getIntygsId().getExtension());
+        assertNotNull(actualRequest.getMottagare().getCodeSystem());
+        assertEquals(mottagare, actualRequest.getMottagare().getCode());
+        assertNotNull(actualRequest.getSkickatAv().getPersonId().getRoot());
+        assertEquals(citizenUsername, actualRequest.getSkickatAv().getPersonId().getExtension());
     }
 
     @Test
     public void testSendCertificateReturnsValidationError() {
         /* Given */
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.errorResult(se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType.VALIDATION_ERROR, "validation error"));
+        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.errorResult(
+                se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType.VALIDATION_ERROR, "validation error"));
 
         /* When */
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
+        when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
         /* Then */
         ModuleAPIResponse apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", "FK");
@@ -330,6 +323,7 @@ public class CertificateServiceImplTest {
         /* When */
         when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class)))
                 .thenThrow(new SoapFault("server error", new QName("")));
+        when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
         /* Then */
         service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", "FK");

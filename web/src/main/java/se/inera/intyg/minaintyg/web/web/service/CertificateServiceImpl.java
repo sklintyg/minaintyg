@@ -57,12 +57,10 @@ import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.minaintyg.web.web.service.dto.*;
-import se.inera.intyg.minaintyg.web.web.util.CertificateTypes;
-import se.inera.intyg.minaintyg.web.web.util.ClinicalProcessMetaConverter;
+import se.inera.intyg.minaintyg.web.web.util.*;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 
@@ -73,9 +71,6 @@ public class CertificateServiceImpl implements CertificateService {
 
     /* Mapper to serialize/deserialize Utlatanden. */
     protected static ObjectMapper objectMapper = new CustomObjectMapper();
-
-    private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.1";
-    private static final String MOTTAGARE_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
 
     @Autowired
     private ListCertificatesForCitizenResponderInterface listService;
@@ -106,6 +101,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private IntygTextsService intygTextsService;
+
+    @Autowired
+    private CitizenService citizenService;
 
     // These values are injected by their setter methods
     private String vardReferensId;
@@ -140,19 +138,8 @@ public class CertificateServiceImpl implements CertificateService {
     public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
-        SendCertificateToRecipientType request = new SendCertificateToRecipientType();
-        se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId personId = new se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId();
-        personId.setRoot(PERSON_ID_ROOT);
-        personId.setExtension(civicRegistrationNumber.getPersonnummer());
-        request.setPatientPersonId(personId);
-        IntygId intygId = new IntygId();
-        intygId.setRoot("SE5565594230-B31");  // IT:s root since unit hsaId is not available
-        intygId.setExtension(certificateId);
-        request.setIntygsId(intygId);
-        Part part = new Part();
-        part.setCode(recipientId);
-        part.setCodeSystem(MOTTAGARE_CODE_SYSTEM);
-        request.setMottagare(part);
+        SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
+                civicRegistrationNumber.getPersonnummer(), citizenService.getCitizen().getUsername(), recipientId);
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
