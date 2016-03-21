@@ -85,7 +85,7 @@ public class CertificateServiceImpl implements CertificateService {
     private GetCertificateContentResponderInterface getContentService;
 
     @Autowired
-    private GetCertificateResponderInterface getCertificateService;
+    private GetCertificateResponderInterface getCertificateClient;
 
     @Autowired
     private GetRecipientsForCertificateResponderInterface getRecipientsService;
@@ -266,7 +266,7 @@ public class CertificateServiceImpl implements CertificateService {
         IntygId intygId = new IntygId();
         intygId.setExtension(certificateId);
         getCertificateType.setIntygsId(intygId);
-        GetCertificateResponseType response = getCertificateService.getCertificate(logicalAddress, getCertificateType);
+        GetCertificateResponseType response = getCertificateClient.getCertificate(logicalAddress, getCertificateType);
 
         switch (response.getResult().getResultCode()) {
         case OK:
