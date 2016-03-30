@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.web.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.joda.time.LocalDateTime;
 
@@ -26,14 +27,12 @@ import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.service.dto.*;
 
 
 public interface CertificateService {
 
-    UtlatandeWithMeta getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+    Optional<UtlatandeWithMeta> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.

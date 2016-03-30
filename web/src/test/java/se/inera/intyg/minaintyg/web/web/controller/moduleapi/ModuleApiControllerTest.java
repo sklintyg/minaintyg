@@ -29,8 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.ws.rs.core.Response;
 
@@ -106,7 +105,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdf() throws Exception {
-        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
@@ -130,7 +129,7 @@ public class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
-        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(utlatandeHolder);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(moduleApi);
         when(moduleApi.pdf(refEq(internalModelHolder), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(
                 new ModuleSystemException());
@@ -148,7 +147,7 @@ public class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingIntygstjanst() {
         Response certificateResponse = mock(Response.class);
         when(certificateResponse.getStatus()).thenReturn(Response.Status.FORBIDDEN.getStatusCode());
-        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenThrow(ExternalWebServiceCallFailedException.class);
+        when(certificateService.getUtlatande(CERTIFICATE_TYPE, PERSONNUMMER, CERTIFICATE_ID)).thenReturn(Optional.empty());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);

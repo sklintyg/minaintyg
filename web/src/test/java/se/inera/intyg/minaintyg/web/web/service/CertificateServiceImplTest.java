@@ -30,8 +30,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.namespace.QName;
 
@@ -164,28 +163,26 @@ public class CertificateServiceImplTest {
         when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part));
         when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
 
-        UtlatandeWithMeta res = service.getUtlatande(id, new Personnummer("19121212-1212"), CERTIFIED_ID);
+        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer("19121212-1212"), CERTIFIED_ID);
 
         assertNotNull(res);
-        // We sort the result because the order which the statuses comes in does not matter
-        Collections.sort(res.getStatuses(), (a, b) -> a.getType().name().compareTo(b.getType().name()));
+        assertTrue(res.isPresent());
+        // We sort the result for testing purposes because the order which the statuses comes in does not matter
+        Collections.sort(res.get().getStatuses(), (a, b) -> a.getType().name().compareTo(b.getType().name()));
 
-        assertEquals(2, res.getStatuses().size());
-        assertEquals(CertificateState.CANCELLED, res.getStatuses().get(0).getType());
-        assertEquals(CertificateState.SENT, res.getStatuses().get(1).getType());
-        assertEquals(part, res.getStatuses().get(0).getTarget());
-        assertEquals(document, res.getDocument());
+        assertEquals(1, res.get().getStatuses().size());
+        assertEquals(CertificateState.SENT, res.get().getStatuses().get(0).getType());
+        assertEquals(part, res.get().getStatuses().get(0).getTarget());
+        assertEquals(document, res.get().getDocument());
 
         verify(getCertificateService, times(1)).getCertificate(anyString(), any());
     }
 
     private GetCertificateResponseType createGetCertificateResponseType(final String part) {
         GetCertificateResponseType response = new GetCertificateResponseType();
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
         Intyg intyg = new Intyg();
 
         intyg.getStatus().add(createStatus(StatusKod.SENTTO.name(), part));
-        intyg.getStatus().add(createStatus(StatusKod.CANCEL.name(), part));
         intyg.getStatus().add(createStatus(StatusKod.RECEIV.name(), part));
 
         TypAvIntyg typ = new TypAvIntyg();
