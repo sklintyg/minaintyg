@@ -63,6 +63,8 @@
     </div>
   </div>
 
+  <mi-cookie-banner></mi-cookie-banner>
+
   <div class="container">
 
     <div id="content-container">
@@ -92,38 +94,6 @@
               <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
             </div>
 
-            <div style="padding-top: 50px">
-              <p>Mina intyg använder cookies. <a href="#" onclick="toggle(); return false;">Läs mer om Kakor
-                (cookies)</a></p>
-              <div class="bluebox" id="cookiejar">
-                <h3>Om Kakor (cookies)</h3>
-                <p>Så kallade kakor (cookies) används för att underlätta för besökaren på webbplatsen. En kaka är en
-                  textfil som lagras på din dator och som innehåller information. Denna webbplats använder så kallade
-                  sessionskakor. Sessionskakor lagras temporärt i din dators minne under tiden du är inne på en
-                  webbsida. Sessionskakor försvinner när du stänger din webbläsare. Ingen personlig information om dig
-                  sparas vid användning av sessionskakor. Om du inte accepterar användandet av kakor kan du stänga av
-                  det via din webbläsares säkerhetsinställningar. Du kan även ställa in webbläsaren så att du får en
-                  varning varje gång webbplatsen försöker sätta en kaka på din dator. </p><p><strong>Observera!</strong>
-                Om du stänger av kakor i din webbläsare kan du inte logga in i Mina Intyg.</p><p>Allmän information om
-                kakor (cookies) och lagen om elektronisk kommunikation finns på Post- och telestyrelsens webbplats.</p>
-                <p>
-                  <a href='https://www.pts.se/sv/Privat/Internet/Integritet1/Fragor-och-svar-om-kakor-for-anvandare2/'
-                     target='_blank'>Mer om kakor (cookies) på Post- och telestyrelsens webbplats</a>
-                </p>
-              </div>
-            </div>
-
-            <script>
-              var cookiejar = document.getElementById('cookiejar');
-              cookiejar.style.display = 'none';
-
-              function toggle() {
-                if (cookiejar.style.display == 'none')
-                  cookiejar.style.display = 'block';
-                else
-                  cookiejar.style.display = 'none';
-              }
-            </script>
           </div>
           <div class="hidden-xs col-sm-5 col-md-5 col-lg-5">
             <img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
@@ -136,23 +106,25 @@
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-cookies.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-sanitize.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-animate.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-cookies.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-sanitize.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-animate.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>
   </c:choose>
