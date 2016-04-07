@@ -19,6 +19,7 @@
 
 package se.inera.intyg.minaintyg.specifications.spec
 
+import se.inera.intyg.common.specifications.page.AbstractPage
 import se.inera.intyg.common.specifications.spec.Browser
 import se.inera.intyg.minaintyg.specifications.pages.ArchivedPage
 
@@ -41,4 +42,18 @@ class Navigering {
         }
         result
     }
+
+    public def gåTillWelcomesida() {
+        Browser.drive {
+            go "/welcome.jsp"
+            waitFor {
+                AbstractPage.doneLoading()
+            }
+        }
+    }
+    public def godkännKakor() {
+        Browser.setLocalStorageValue("mi-cookie-consent-given", "1");
+    }
+
+
 }

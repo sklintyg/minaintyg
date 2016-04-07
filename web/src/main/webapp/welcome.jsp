@@ -65,7 +65,7 @@ if ("prod".equals(profile)) {
 
   <mvk-top-bar></mvk-top-bar>
 
-  <div class="container">
+  <div class="container welcomepage">
 
     <div id="content-container">
       <div class="content">

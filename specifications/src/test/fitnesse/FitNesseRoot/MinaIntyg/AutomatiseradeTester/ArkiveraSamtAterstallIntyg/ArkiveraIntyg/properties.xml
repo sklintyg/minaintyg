@@ -25,7 +25,6 @@
 	<RecentChanges>true</RecentChanges>
 	<Refactor>true</Refactor>
 	<Search>true</Search>
-	<Prune/>
 	<Test/>
 	<Versions>true</Versions>
 	<WhereUsed>true</WhereUsed>

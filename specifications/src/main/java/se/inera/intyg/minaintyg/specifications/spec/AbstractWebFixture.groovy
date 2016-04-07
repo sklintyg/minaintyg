@@ -26,6 +26,7 @@ import se.inera.intyg.minaintyg.specifications.pages.AccessDeniedPage
 import se.inera.intyg.minaintyg.specifications.pages.ArchivedPage
 import se.inera.intyg.minaintyg.specifications.pages.ConsentPage
 import se.inera.intyg.minaintyg.specifications.pages.InboxPage
+import se.inera.intyg.minaintyg.specifications.pages.WelcomePage
 
 public class AbstractWebFixture {
 
@@ -33,10 +34,17 @@ public class AbstractWebFixture {
         Browser.drive {
             go "sso?guid=${pnr}"
             waitFor {
-                Browser.setLocalStorageValue("mi-cookie-consent-given", "1");
                 AbstractPage.doneLoading()
             }
         }
+    }
+
+    public boolean welcomesidanVisas() {
+        boolean result
+        Browser.drive {
+            result = at WelcomePage
+        }
+        return result
     }
 
    public boolean inkorgsidanVisas() {
