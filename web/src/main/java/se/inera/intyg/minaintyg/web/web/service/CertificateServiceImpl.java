@@ -19,7 +19,6 @@
 package se.inera.intyg.minaintyg.web.web.service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -56,13 +55,15 @@ import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchived.ri
 import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedRequestType;
 import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
-import se.inera.intyg.minaintyg.web.exception.*;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
+import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.minaintyg.web.web.service.dto.*;
 import se.inera.intyg.minaintyg.web.web.util.*;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -342,17 +343,19 @@ public class CertificateServiceImpl implements CertificateService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        List<Status> statuses = response.getIntyg().getStatus().stream()
-                .filter(status -> StatusKod.fromString(status.getStatus().getCode())
-                        .map(StatusKod::toCertificateState)
-                        .filter(ct -> ct.isPresent() && (ct.get().equals(CertificateState.SENT) || ct.get().equals(CertificateState.CANCELLED)))
-                        .isPresent())
-                .map(status -> new Status(
-                        StatusKod.fromString(status.getStatus().getCode()).get().toCertificateState().get(),
-                        status.getPart().getCode(),
-                        status.getTidpunkt()))
-                .collect(Collectors.toList());
-        return new UtlatandeWithMeta(utlatande, json, statuses);
+
+        List<Status> statusList = new ArrayList<>();
+        for (IntygsStatus intygStatus : response.getIntyg().getStatus()) {
+            StatusKod sk = StatusKod.valueOf(intygStatus.getStatus().getCode());
+            if (sk == null) {
+                continue;
+            }
+            CertificateState certificateState = sk.toCertificateState();
+            if (CertificateState.CANCELLED.equals(certificateState) || CertificateState.SENT.equals(certificateState)) {
+                statusList.add(new Status(certificateState, intygStatus.getPart().getCode(), intygStatus.getTidpunkt()));
+            }
+        }
+        return new UtlatandeWithMeta(utlatande, json, statusList);
     }
 
     private UtlatandeWithMeta convertLegacy(final GetCertificateContentResponseType response) {
