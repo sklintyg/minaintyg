@@ -34,11 +34,13 @@ angular.module('minaintyg').directive('miCookieBanner',
                     return $window.localStorage && $window.localStorage.getItem('mi-cookie-consent-given') === '1';
                 }
 
-                if (!cookieConsentGiven()) {
-                    $timeout(function() {
+
+                $timeout(function() {
+                    if (!cookieConsentGiven()) {
                         $scope.isOpen = true;
-                    }, 500);
-                }
+                    }
+                }, 500);
+
 
                 $scope.onCookieConsentClick = function() {
                     $scope.isOpen = false;

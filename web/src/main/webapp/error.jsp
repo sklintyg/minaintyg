@@ -145,25 +145,27 @@
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-cookies.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-route.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-sanitize.min.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-animate.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
+      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/i18n/angular-locale_sv-se.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-cookies.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-route.js"></script>
       <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-sanitize.js"></script>
+      <script type="text/javascript" src="/web/webjars/angularjs/1.4.7/angular-animate.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>
   </c:choose>

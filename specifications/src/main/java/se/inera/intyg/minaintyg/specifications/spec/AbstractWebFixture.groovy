@@ -33,12 +33,13 @@ public class AbstractWebFixture {
         Browser.drive {
             go "sso?guid=${pnr}"
             waitFor {
+                Browser.setLocalStorageValue("mi-cookie-consent-given", "1");
                 AbstractPage.doneLoading()
             }
         }
     }
 
-    public boolean inkorgsidanVisas() {
+   public boolean inkorgsidanVisas() {
         boolean result
         Browser.drive {
             result = at InboxPage
