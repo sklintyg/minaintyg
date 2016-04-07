@@ -1,4 +1,4 @@
-!3 Arkivera ett intyg. 
+!3 Arkivera ett intyg. Avaktiverat i väntan på INTYG-2190
 
 * Verifiera att intyget ej längre är med i listan.
 * Verifiera att intyget finns i listan med arkiverade intyg.
