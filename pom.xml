@@ -131,6 +131,11 @@
         <artifactId>sjukpenning-utokad</artifactId>
         <version>${intygstyper.version}</version>
       </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.intygstyper</groupId>
+        <artifactId>luae-fs</artifactId>
+        <version>${intygstyper.version}</version>
+      </dependency>
 
       <!-- RIVTA Schemas -->
       <dependency>
