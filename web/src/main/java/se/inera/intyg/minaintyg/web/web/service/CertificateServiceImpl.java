@@ -23,7 +23,6 @@ import java.util.*;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
 import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatusresponder.v1.SetCertificateStatusResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.*;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -60,8 +54,10 @@ import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.minaintyg.web.web.service.dto.*;
 import se.inera.intyg.minaintyg.web.web.util.*;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
@@ -70,14 +66,13 @@ public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateServiceImpl.class);
 
+    private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.3";
+
     /* Mapper to serialize/deserialize Utlatanden. */
     protected static ObjectMapper objectMapper = new CustomObjectMapper();
 
     @Autowired
     private ListCertificatesForCitizenResponderInterface listService;
-
-    @Autowired
-    private SetCertificateStatusResponderInterface setStatusService;
 
     @Autowired
     private SendCertificateToRecipientResponderInterface sendService;
@@ -106,6 +101,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private CitizenService citizenService;
 
+    @Autowired
+    private UtlatandeMetaDataConverter utlatandeMetaDataConverter;
+
     // These values are injected by their setter methods
     private String vardReferensId;
     private String logicalAddress;
@@ -114,15 +112,15 @@ public class CertificateServiceImpl implements CertificateService {
             CertificateTypes.TSDIABETES.toString() };
 
     private enum ArchivedState {
-        ARCHIVED("true"),
-        RESTORED("false");
-        ArchivedState(String state) {
+        ARCHIVED(true),
+        RESTORED(false);
+        ArchivedState(boolean state) {
             this.state = state;
         }
 
-        private String state;
+        private boolean state;
 
-        public String getState() {
+        public boolean getState() {
             return state;
         }
     }
@@ -154,32 +152,6 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public UtlatandeMetaData setCertificateStatus(Personnummer civicRegistrationNumber, String id, LocalDateTime timestamp, String recipientId,
-            StatusType type) {
-        UtlatandeMetaData result = null;
-        SetCertificateStatusRequestType req = new SetCertificateStatusRequestType();
-        req.setCertificateId(id);
-        req.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
-        req.setStatus(type);
-        req.setTarget(recipientId);
-        req.setTimestamp(new LocalDateTime(timestamp));
-
-        final SetCertificateStatusResponseType response = setStatusService.setCertificateStatus(null, req);
-
-        if (response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
-            List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
-            for (UtlatandeMetaData meta : updatedList) {
-                if (meta.getId().equals(id)) {
-                    result = meta;
-                    break;
-                }
-            }
-
-        }
-        return result;
-    }
-
-    @Override
     public Optional<UtlatandeWithMeta> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
         if (!moduleRegistry.moduleExists(type)) {
             LOGGER.error("The specified module {} does not exist", type);
@@ -197,19 +169,22 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber) {
+    public List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber, boolean arkiverade) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
-        params.setPersonId(civicRegistrationNumber.getPersonnummer());
+        params.setPersonId(new PersonId());
+        params.getPersonId().setRoot(PERSON_ID_ROOT);
+        params.getPersonId().setExtension(civicRegistrationNumber.getPersonnummer());
+        params.setArkiverade(arkiverade);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return ClinicalProcessMetaConverter.toUtlatandeMetaData(response.getMeta());
+            return utlatandeMetaDataConverter.convert(response.getIntygsLista().getIntyg(), arkiverade);
         default:
             LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash() + " from Intygstjänsten. WS call result is "
                     + response.getResult());
-            throw new ResultTypeErrorException(response.getResult());
+            throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(), response.getResult().getErrorId().name());
         }
     }
 
@@ -307,7 +282,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     private UtlatandeMetaData setArchived(String certificateId, Personnummer civicRegistrationNumber, ArchivedState archivedState) {
         SetCertificateArchivedRequestType parameters = new SetCertificateArchivedRequestType();
-        parameters.setArchivedState(archivedState.getState());
+        parameters.setArchivedState(String.valueOf(archivedState.getState()));
         parameters.setCertificateId(certificateId);
         parameters.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
 
@@ -320,7 +295,7 @@ public class CertificateServiceImpl implements CertificateService {
                     response.getResult().getErrorText() });
             throw new ExternalWebServiceCallFailedException(response.getResult().getInfoText(), response.getResult().getErrorId().name());
         default:
-            List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber);
+            List<UtlatandeMetaData> updatedList = this.getCertificates(civicRegistrationNumber, archivedState.getState());
             for (UtlatandeMetaData meta : updatedList) {
                 if (meta.getId().equals(certificateId)) {
                     result = meta;

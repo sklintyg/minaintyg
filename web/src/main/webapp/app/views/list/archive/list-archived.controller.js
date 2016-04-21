@@ -22,9 +22,8 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
         function($location, $log, $scope, dialogService, IntygListService) {
             'use strict';
 
-            $scope.certificates = [];
+            $scope.archivedCertificates = [];
             $scope.doneLoading = false;
-
             $scope.dialog = {
                 acceptprogressdone: true,
                 focus: false
@@ -51,11 +50,11 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
             };
 
             $scope.restoreCert = function() {
-                var certId = $scope.certToRestore;
-                $log.debug('Restore requested for cert:' + certId);
+                var item = $scope.certToRestore;
+                $log.debug('Restore requested for cert:' + item.id);
                 $scope.dialog.acceptprogressdone = false;
 
-                var statusCallback = function(fromServer, oldItem) {
+                IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
                     $log.debug('(restore) statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
                         // Better way to update the object?
@@ -68,20 +67,18 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                         // show error view
                         $location.path('/fel/couldnotrestorecert');
                     }
-                };
-
-                for (var i = 0; i < $scope.certificates.length; i++) {
-                    if ($scope.certificates[i].id === certId) {
-
-                        IntygListService.restoreCertificate($scope.certificates[i], statusCallback);
-                    }
-                }
+                });
             };
 
-            IntygListService.getCertificates(function(list) {
-                // filtering of deleted certs is done in view template
-                $scope.certificates = list;
+            // fetch list of archived certs initially
+            IntygListService.getArchivedCertificates(function(list) {
                 $scope.doneLoading = true;
+                if (list !== null) {
+                    $scope.archivedCertificates = list;
+                } else {
+                    // show error view
+                    $location.path('/fel/couldnotloadcertlist');
+                }
             });
 
             $scope.pagefocus = true;

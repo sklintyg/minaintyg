@@ -22,12 +22,7 @@ package se.inera.intyg.minaintyg.web.web.controller.api;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -43,9 +38,7 @@ import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
-import se.inera.intyg.minaintyg.web.web.service.CertificateService;
-import se.inera.intyg.minaintyg.web.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.web.service.ConsentService;
+import se.inera.intyg.minaintyg.web.web.service.*;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.web.util.CertificateMetaConverter;
 
@@ -78,7 +71,15 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername())));
+        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
+    }
+
+    @GET
+    @Path("/archived")
+    @Produces(JSON_UTF8)
+    public List<CertificateMeta> listArchivedCertificates() {
+        Citizen citizen = citizenService.getCitizen();
+        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
     }
 
     @GET
