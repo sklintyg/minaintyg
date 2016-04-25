@@ -230,7 +230,7 @@ public class CertificateServiceImplTest {
         verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
         assertFalse(paramCaptor.getValue().isArkiverade());
         assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
-        assertEquals(pnr, paramCaptor.getValue().getPersonId().getExtension());
+        assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -256,7 +256,7 @@ public class CertificateServiceImplTest {
         verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
         assertTrue(paramCaptor.getValue().isArkiverade());
         assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
-        assertEquals(pnr, paramCaptor.getValue().getPersonId().getExtension());
+        assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
     }
 
     @Test(expected = ExternalWebServiceCallFailedException.class)
@@ -366,7 +366,7 @@ public class CertificateServiceImplTest {
         SendCertificateToRecipientType actualRequest = argument.getValue();
         assertNotNull(actualRequest.getSkickatTidpunkt());
         assertNotNull(actualRequest.getPatientPersonId().getRoot());
-        assertEquals(personId, actualRequest.getPatientPersonId().getExtension());
+        assertEquals(personId.replace("-", ""), actualRequest.getPatientPersonId().getExtension());
         assertNotNull(actualRequest.getIntygsId().getRoot());
         assertEquals(utlatandeId, actualRequest.getIntygsId().getExtension());
         assertNotNull(actualRequest.getMottagare().getCodeSystem());

@@ -138,7 +138,7 @@ public class CertificateServiceImpl implements CertificateService {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
-                civicRegistrationNumber.getPersonnummer(), citizenService.getCitizen().getUsername(), recipientId);
+                civicRegistrationNumber.getPersonnummerWithoutDash(), citizenService.getCitizen().getUsername(), recipientId);
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
@@ -173,7 +173,7 @@ public class CertificateServiceImpl implements CertificateService {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setPersonId(new PersonId());
         params.getPersonId().setRoot(PERSON_ID_ROOT);
-        params.getPersonId().setExtension(civicRegistrationNumber.getPersonnummer());
+        params.getPersonId().setExtension(civicRegistrationNumber.getPersonnummerWithoutDash());
         params.setArkiverade(arkiverade);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
@@ -184,7 +184,8 @@ public class CertificateServiceImpl implements CertificateService {
         default:
             LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash() + " from Intygstjänsten. WS call result is "
                     + response.getResult());
-            throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(), response.getResult().getErrorId().name());
+            throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
+                    response.getResult().getErrorId() != null ? response.getResult().getErrorId().name() : "");
         }
     }
 
