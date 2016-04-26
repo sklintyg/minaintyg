@@ -372,7 +372,7 @@ public class CertificateServiceImplTest {
         assertNotNull(actualRequest.getMottagare().getCodeSystem());
         assertEquals(mottagare, actualRequest.getMottagare().getCode());
         assertNotNull(actualRequest.getSkickatAv().getPersonId().getRoot());
-        assertEquals(citizenUsername, actualRequest.getSkickatAv().getPersonId().getExtension());
+        assertEquals(citizenUsername.replace("-", ""), actualRequest.getSkickatAv().getPersonId().getExtension());
     }
 
     @Test

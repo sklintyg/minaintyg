@@ -138,7 +138,8 @@ public class CertificateServiceImpl implements CertificateService {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
-                civicRegistrationNumber.getPersonnummerWithoutDash(), citizenService.getCitizen().getUsername(), recipientId);
+                civicRegistrationNumber.getPersonnummerWithoutDash(),
+                new Personnummer(citizenService.getCitizen().getUsername()).getPersonnummerWithoutDash(), recipientId);
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
