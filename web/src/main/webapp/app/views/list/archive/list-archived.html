@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading"
-         show-content="doneLoading && (certificates | archived).length>0">
+         show-content="doneLoading && (archivedCertificates | archived).length>0">
       <div class="table-responsive">
         <table id="certTable" class="table expandable archived-table" aria-labelledby="archivedHeader">
           <thead>
@@ -24,7 +24,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="cert in certificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
+          <tr ng-repeat="cert in archivedCertificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
             <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
             <td headers="type">
               <span message key="certificatetypes.{{cert.type}}.commonname"></span>
@@ -42,7 +42,7 @@
               <span ng-show="!cert.statuses">Ingen</span>
             </td>
             <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href
-                                     ng-click="openRestoreDialog(cert.id)"><span message key="label.restore"></span></a>
+                                     ng-click="openRestoreDialog(cert)"><span message key="label.restore"></span></a>
             </td>
           </tr>
           </tbody>
@@ -50,9 +50,9 @@
       </div>
     </div>
     <!-- eof spinner -->
-    <div class="table-bottom" ng-hide="(certificates | archived).length<1"></div>
+    <div class="table-bottom" ng-hide="(archivedCertificates | archived).length<1"></div>
 
-    <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (certificates | archived).length<1">
+    <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (archivedCertificates | archived).length<1">
       <span message key="error.noarchivedcerts"></span>
     </div>
   </div>

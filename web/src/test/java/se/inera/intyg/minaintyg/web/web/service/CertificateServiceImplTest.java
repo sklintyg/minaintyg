@@ -20,6 +20,7 @@
 package se.inera.intyg.minaintyg.web.web.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -35,7 +36,6 @@ import java.util.*;
 import javax.xml.namespace.QName;
 
 import org.apache.cxf.binding.soap.SoapFault;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,10 +43,10 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
+import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.*;
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.builder.ClinicalProcessCertificateMetaTypeBuilder;
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultOfCall;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -55,28 +55,29 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchived.rivtabp20.v1.SetCertificateArchivedResponderInterface;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedRequestType;
+import se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchivedresponder.v1.SetCertificateArchivedResponseType;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
-import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
+import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
+import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.UtlatandeStatus;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
+import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
 
     private static final String ISSUER_NAME = "issuerName";
     private static final String FACILITY_NAME = "facilityName";
-    private static final String TYPE = "type";
-    private static final String CERTIFIED_ID = "certifiedId";
-    private static final String AVAILABLE = "available";
+    private static final String CERTIFICATE_ID = "certificateId";
 
     @Mock
     private MessageSource messageSource;
@@ -102,12 +103,15 @@ public class CertificateServiceImplTest {
     @Mock
     private CitizenService citizenService;
 
+    @Mock
+    private SetCertificateArchivedResponderInterface setArchivedService;
+
+    @Mock
+    private UtlatandeMetaDataConverter utlatandeMetaDataConverter;
+
     @InjectMocks
     private CertificateServiceImpl service;
 
-    private LocalDateTime signDateTime = new LocalDateTime();
-    private LocalDate validFromDate = new LocalDate();
-    private LocalDate validToDate = new LocalDate();
     private LocalDateTime firstTimeStamp = new LocalDateTime(2013, 1, 2, 20, 0);
     private LocalDateTime laterTimeStamp = new LocalDateTime(2013, 1, 3, 20, 0);
 
@@ -163,7 +167,7 @@ public class CertificateServiceImplTest {
         when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part));
         when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
 
-        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer("19121212-1212"), CERTIFIED_ID);
+        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer("19121212-1212"), CERTIFICATE_ID);
 
         assertNotNull(res);
         assertTrue(res.isPresent());
@@ -203,58 +207,133 @@ public class CertificateServiceImplTest {
         return intygsStatus;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testGetCertificates() {
-        /* Given */
-        ClinicalProcessCertificateMetaTypeBuilder builder = getClinicalProcessCertificateMetaTypeBuilder(
-                unhandledStatus, deletedStatus, null, sentStatus);
-
+        final String pnr = "19121212-1212";
         ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
-        response.getMeta().add(builder.build());
-        response.setResult(ResultTypeUtil.okResult());
+        response.setIntygsLista(new ListaType());
+        response.getIntygsLista().getIntyg().add(buildIntyg());
+        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
 
-        /* When */
-        when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
-        /* Then */
-        List<UtlatandeMetaData> certificates = service.getCertificates(new Personnummer("19121212-1212"));
+        service.getCertificates(new Personnummer(pnr), false);
 
-        assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getIssuerName().equals(ISSUER_NAME));
-        assertTrue(certificates.get(0).getFacilityName().equals(FACILITY_NAME));
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(CertificateState.SENT));
+        ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
+        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), eq(false));
+
+        assertEquals(1, listCaptor.getValue().size());
+        assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
+
+        ArgumentCaptor<ListCertificatesForCitizenType> paramCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
+        verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
+        assertFalse(paramCaptor.getValue().isArkiverade());
+        assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
+        assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
     }
 
-    @Test(expected = ResultTypeErrorException.class)
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void testGetCertificatesArkiveradTrue() {
+        final String pnr = "19121212-1212";
+        ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
+        response.setIntygsLista(new ListaType());
+        response.getIntygsLista().getIntyg().add(buildIntyg());
+        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+
+        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+
+        service.getCertificates(new Personnummer(pnr), true);
+
+        ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
+        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), eq(true));
+
+        assertEquals(1, listCaptor.getValue().size());
+        assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
+
+        ArgumentCaptor<ListCertificatesForCitizenType> paramCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
+        verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
+        assertTrue(paramCaptor.getValue().isArkiverade());
+        assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
+        assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
+    }
+
+    @Test(expected = ExternalWebServiceCallFailedException.class)
     public void testGetCertificatesFailureHandling() {
         ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
-        response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "an error"));
+        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil
+                .errorResult(se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType.APPLICATION_ERROR, "an error"));
 
         when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
-        service.getCertificates(new Personnummer("19121212-1212"));
+        service.getCertificates(new Personnummer("19121212-1212"), false);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
-    public void testGetCertificatesStatusOrder() {
-        /* Given */
-        cancelledStatus.setTimestamp(new LocalDateTime(2015, 1, 1, 12, 0));
+    public void testArchiveCertificate() {
+        final String pnr = "19121212-1212";
 
-        ClinicalProcessCertificateMetaTypeBuilder builder = getClinicalProcessCertificateMetaTypeBuilder(
-                unhandledStatus, deletedStatus, cancelledStatus, sentStatus);
+        SetCertificateArchivedResponseType response = new SetCertificateArchivedResponseType();
+        response.setResult(new ResultOfCall());
+        response.getResult().setResultCode(ResultCodeEnum.OK);
+        when(setArchivedService.setCertificateArchived(any(AttributedURIType.class), any(SetCertificateArchivedRequestType.class)))
+                .thenReturn(response);
+        ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
+        response2.setIntygsLista(new ListaType());
+        response2.getIntygsLista().getIntyg().add(buildIntyg());
+        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
 
-        ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
-        response.getMeta().add(builder.build());
-        response.setResult(ResultTypeUtil.okResult());
+        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, "type", ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
+        when(utlatandeMetaDataConverter.convert(any(List.class), eq(true))).thenReturn(Arrays.asList(umd));
 
-        /* When */
-        when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+        UtlatandeMetaData result = service.archiveCertificate(CERTIFICATE_ID, new Personnummer(pnr));
+        assertEquals(CERTIFICATE_ID, result.getId());
 
-        /* Then */
-        List<UtlatandeMetaData> certificates = service.getCertificates(new Personnummer("19121212-1212"));
+        ArgumentCaptor<SetCertificateArchivedRequestType> archiveParamCaptor = ArgumentCaptor.forClass(SetCertificateArchivedRequestType.class);
+        verify(setArchivedService).setCertificateArchived(any(AttributedURIType.class), archiveParamCaptor.capture());
+        assertEquals(CERTIFICATE_ID, archiveParamCaptor.getValue().getCertificateId());
+        assertEquals(pnr, archiveParamCaptor.getValue().getNationalIdentityNumber());
+        assertEquals("true", archiveParamCaptor.getValue().getArchivedState());
 
-        assertTrue(certificates.size() == 1);
-        assertTrue(certificates.get(0).getStatuses().get(0).getType().equals(CertificateState.CANCELLED));
+        ArgumentCaptor<ListCertificatesForCitizenType> listParamCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
+        verify(listServiceMock).listCertificatesForCitizen(anyString(), listParamCaptor.capture());
+        assertTrue(listParamCaptor.getValue().isArkiverade());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testRestoreCertificate() {
+        final String pnr = "19121212-1212";
+
+        SetCertificateArchivedResponseType response = new SetCertificateArchivedResponseType();
+        response.setResult(new ResultOfCall());
+        response.getResult().setResultCode(ResultCodeEnum.OK);
+        when(setArchivedService.setCertificateArchived(any(AttributedURIType.class), any(SetCertificateArchivedRequestType.class)))
+                .thenReturn(response);
+        ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
+        response2.setIntygsLista(new ListaType());
+        response2.getIntygsLista().getIntyg().add(buildIntyg());
+        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+
+        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, "type", ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
+        when(utlatandeMetaDataConverter.convert(any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
+
+        UtlatandeMetaData result = service.restoreCertificate(CERTIFICATE_ID, new Personnummer(pnr));
+        assertEquals(CERTIFICATE_ID, result.getId());
+
+        ArgumentCaptor<SetCertificateArchivedRequestType> archiveParamCaptor = ArgumentCaptor.forClass(SetCertificateArchivedRequestType.class);
+        verify(setArchivedService).setCertificateArchived(any(AttributedURIType.class), archiveParamCaptor.capture());
+        assertEquals(CERTIFICATE_ID, archiveParamCaptor.getValue().getCertificateId());
+        assertEquals(pnr, archiveParamCaptor.getValue().getNationalIdentityNumber());
+        assertEquals("false", archiveParamCaptor.getValue().getArchivedState());
+
+        ArgumentCaptor<ListCertificatesForCitizenType> listParamCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
+        verify(listServiceMock).listCertificatesForCitizen(anyString(), listParamCaptor.capture());
+        assertFalse(listParamCaptor.getValue().isArkiverade());
     }
 
     @Test
@@ -287,7 +366,7 @@ public class CertificateServiceImplTest {
         SendCertificateToRecipientType actualRequest = argument.getValue();
         assertNotNull(actualRequest.getSkickatTidpunkt());
         assertNotNull(actualRequest.getPatientPersonId().getRoot());
-        assertEquals(personId, actualRequest.getPatientPersonId().getExtension());
+        assertEquals(personId.replace("-", ""), actualRequest.getPatientPersonId().getExtension());
         assertNotNull(actualRequest.getIntygsId().getRoot());
         assertEquals(utlatandeId, actualRequest.getIntygsId().getExtension());
         assertNotNull(actualRequest.getMottagare().getCodeSystem());
@@ -326,34 +405,17 @@ public class CertificateServiceImplTest {
         service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", "FK");
     }
 
-    private ClinicalProcessCertificateMetaTypeBuilder getClinicalProcessCertificateMetaTypeBuilder(
-            UtlatandeStatus unhandled,
-            UtlatandeStatus deleted,
-            UtlatandeStatus cancelled,
-            UtlatandeStatus sent) {
-        ClinicalProcessCertificateMetaTypeBuilder builder = new ClinicalProcessCertificateMetaTypeBuilder();
-        builder.available(AVAILABLE)
-                .certificateId(CERTIFIED_ID)
-                .certificateType(TYPE)
-                .facilityName(FACILITY_NAME)
-                .issuerName(ISSUER_NAME)
-                .signDate(signDateTime)
-                .validity(validFromDate, validToDate);
-
-        if (unhandled != null) {
-            builder.status(unhandled);
-        }
-        if (deleted != null) {
-            builder.status(deleted);
-        }
-        if (cancelled != null) {
-            builder.status(cancelled);
-        }
-        if (sent != null) {
-            builder.status(sent);
-        }
-
-        return builder;
+    private Intyg buildIntyg() {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension(CERTIFICATE_ID);
+        intyg.setTyp(new TypAvIntyg());
+        intyg.getTyp().setCode("luse");
+        intyg.setSkapadAv(new HosPersonal());
+        intyg.getSkapadAv().setFullstandigtNamn(ISSUER_NAME);
+        intyg.getSkapadAv().setEnhet(new Enhet());
+        intyg.getSkapadAv().getEnhet().setEnhetsnamn(FACILITY_NAME);
+        intyg.setSigneringstidpunkt(LocalDateTime.now());
+        return intyg;
     }
-
 }

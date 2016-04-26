@@ -21,9 +21,6 @@ package se.inera.intyg.minaintyg.web.web.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.joda.time.LocalDateTime;
-
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
@@ -37,13 +34,7 @@ public interface CertificateService {
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
      */
-    List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber);
-
-    /**
-     * Sets a new status for the certificate.
-     * @return Partially populated CertificateMeta object with id and new status and status description
-     */
-    UtlatandeMetaData setCertificateStatus(Personnummer civicRegistrationNumber, String certificateId, LocalDateTime timestamp, String recipientId, StatusType type);
+    List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber, boolean arkiverade);
 
     /**
      * Request to send a specific certificate to a specific recipient.
