@@ -159,15 +159,16 @@ public class CertificateServiceImplTest {
         final String document = "document";
         final String id = "lisu";
         final String part = "part";
+        final String pnr = "19121212-1212";
 
         when(moduleRegistry.moduleExists(id)).thenReturn(true);
         ModuleApi api = mock(ModuleApi.class);
         when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
         when(moduleRegistry.getModuleApi(id)).thenReturn(api);
-        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part));
+        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, pnr));
         when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
 
-        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer("19121212-1212"), CERTIFICATE_ID);
+        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertNotNull(res);
         assertTrue(res.isPresent());
@@ -182,7 +183,53 @@ public class CertificateServiceImplTest {
         verify(getCertificateService, times(1)).getCertificate(anyString(), any());
     }
 
-    private GetCertificateResponseType createGetCertificateResponseType(final String part) {
+    @Test
+    public void testGetUtlatandeCivicRegistrationNumberWithoutDash() throws Exception {
+        final String document = "document";
+        final String id = "lisu";
+        final String part = "part";
+        final String pnr = "19121212-1212";
+        final String pnrWithoutDash = "191212121212";
+
+        when(moduleRegistry.moduleExists(id)).thenReturn(true);
+        ModuleApi api = mock(ModuleApi.class);
+        when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
+        when(moduleRegistry.getModuleApi(id)).thenReturn(api);
+        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, pnrWithoutDash));
+        when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
+
+        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer(pnr), CERTIFICATE_ID);
+
+        assertNotNull(res);
+        assertTrue(res.isPresent());
+
+        verify(getCertificateService, times(1)).getCertificate(anyString(), any());
+    }
+
+    @Test
+    public void testGetUtlatandeWrongCivicRegistrationNumber() throws Exception {
+        final String document = "document";
+        final String id = "lisu";
+        final String part = "part";
+        final String pnr = "19121212-1212";
+        final String anotherPnr = "19101010-1010";
+
+        when(moduleRegistry.moduleExists(id)).thenReturn(true);
+        ModuleApi api = mock(ModuleApi.class);
+        when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
+        when(moduleRegistry.getModuleApi(id)).thenReturn(api);
+        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, anotherPnr));
+        when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
+
+        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer(pnr), CERTIFICATE_ID);
+
+        assertNotNull(res);
+        assertFalse(res.isPresent());
+
+        verify(getCertificateService, times(1)).getCertificate(anyString(), any());
+    }
+
+    private GetCertificateResponseType createGetCertificateResponseType(final String part, final String pnr) {
         GetCertificateResponseType response = new GetCertificateResponseType();
         Intyg intyg = new Intyg();
 
@@ -192,6 +239,10 @@ public class CertificateServiceImplTest {
         TypAvIntyg typ = new TypAvIntyg();
         typ.setCode("lisu");
         intyg.setTyp(typ);
+
+        intyg.setPatient(new Patient());
+        intyg.getPatient().setPersonId(new PersonId());
+        intyg.getPatient().getPersonId().setExtension(pnr);
         response.setIntyg(intyg);
         return response;
     }

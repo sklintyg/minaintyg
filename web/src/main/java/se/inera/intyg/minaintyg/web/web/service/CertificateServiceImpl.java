@@ -247,6 +247,11 @@ public class CertificateServiceImpl implements CertificateService {
         getCertificateType.setIntygsId(intygId);
         try {
             GetCertificateResponseType response = getCertificateClient.getCertificate(logicalAddress, getCertificateType);
+            Personnummer certificateCivicRegistrationNumber = new Personnummer(response.getIntyg().getPatient().getPersonId().getExtension());
+            if (!civicRegistrationNumber.equals(certificateCivicRegistrationNumber)) {
+                LOGGER.warn("Certificate {} does not match user {}", certificateId, civicRegistrationNumber.getPnrHash());
+                return Optional.empty();
+            }
             if (response.getIntyg().getStatus().stream().anyMatch(status -> StatusKod.CANCEL.name().equals(status.getStatus().getCode()))) {
                 LOGGER.info("Certificate {} is revoked", certificateId);
                 return Optional.empty();
