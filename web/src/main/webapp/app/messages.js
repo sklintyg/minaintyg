@@ -171,6 +171,8 @@ var miMessages = {
         'certificatetypes.luse.typename': ' Sjukersättning',
         'certificatetypes.lisu.commonname': 'Läkarintyg',
         'certificatetypes.lisu.typename': ' Sjukpenning utökad',
+        'certificatetypes.luae_fs.commonname': 'Läkarintyg',
+        'certificatetypes.luae_fs.typename': ' Aktivitetsersättning vid förlängd skolgång',
         'certificatetypes.ts-bas.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-bas.typename': '',
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',
