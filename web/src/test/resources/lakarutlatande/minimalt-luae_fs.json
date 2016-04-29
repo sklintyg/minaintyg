@@ -1,0 +1,54 @@
+{
+    "id": "7a76891d-32ca-41ac-b580-38ac17a75986",
+    "typ": "luae_fs",
+    "grundData": {
+      "signeringsdatum": "2016-04-29T10:01:29.000",
+      "skapadAv": {
+        "personId": "IFV1239877878-1049",
+        "fullstandigtNamn": "Jan Nilsson",
+        "forskrivarKod": "0000000",
+        "befattningar": [],
+        "specialiteter": [],
+        "vardenhet": {
+          "enhetsid": "IFV1239877878-1042",
+          "enhetsnamn": "WebCert-Enhet1",
+          "postadress": "Storgatan 1",
+          "postnummer": "12345",
+          "postort": "Småmåla",
+          "telefonnummer": "0101234567890",
+          "epost": "enhet1@webcert.invalid.se",
+          "vardgivare": {
+            "vardgivarid": "IFV1239877878-1041",
+            "vardgivarnamn": "WebCert-Vårdgivare1"
+          },
+          "arbetsplatsKod": "1234567890"
+        }
+      },
+      "patient": {
+        "personId": "191212121212",
+        "fullstandigtNamn": "Tolvan Tolvansson",
+        "fornamn": "Tolvan",
+        "efternamn": "Tolvansson",
+        "postadress": "Svensson, Storgatan 1, PL 1234",
+        "postnummer": "12345",
+        "postort": "Småmåla",
+        "samordningsNummer": false
+      }
+    },
+    "textVersion": "1.0",
+    "journaluppgifter": "2016-04-29",
+    "kannedomOmPatient": "2016-04-27",
+    "underlagFinns": false,
+    "underlag": [],
+    "diagnoser": [{
+      "diagnosKod": "J22",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosBeskrivning": "Icke specificerad akut infektion i nedre luftvägarna",
+      "diagnosDisplayName": ""
+    }
+    ],
+    "funktionsnedsattningDebut": "Debut och utveckling",
+    "funktionsnedsattningPaverkan": "Påverkan",
+    "kontaktMedFk": false,
+    "tillaggsfragor": []
+}

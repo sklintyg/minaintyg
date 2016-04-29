@@ -1,0 +1,68 @@
+{
+  "id": "d466db33-9f33-4bdc-884d-715d1cd301f9",
+  "typ": "luae_fs",
+  "grundData": {
+    "signeringsdatum": "2016-04-29T15:53:40.000",
+    "skapadAv": {
+      "personId": "IFV1239877878-1049",
+      "fullstandigtNamn": "Jan Nilsson",
+      "forskrivarKod": "0000000",
+      "befattningar": [],
+      "specialiteter": [],
+      "vardenhet": {
+        "enhetsid": "IFV1239877878-1042",
+        "enhetsnamn": "WebCert-Enhet1",
+        "postadress": "Storgatan 1",
+        "postnummer": "12345",
+        "postort": "Småmåla",
+        "telefonnummer": "0101234567890",
+        "epost": "enhet1@webcert.invalid.se",
+        "vardgivare": {
+          "vardgivarid": "IFV1239877878-1041",
+          "vardgivarnamn": "WebCert-Vårdgivare1"
+        },
+        "arbetsplatsKod": "1234567890"
+      }
+    },
+    "patient": {
+      "personId": "191212121212",
+      "fullstandigtNamn": "Tolvan Tolvansson",
+      "fornamn": "Tolvan",
+      "efternamn": "Tolvansson",
+      "postadress": "Svensson, Storgatan 1, PL 1234",
+      "postnummer": "12345",
+      "postort": "Småmåla",
+      "samordningsNummer": false
+    }
+  },
+  "textVersion": "1.0",
+  "undersokningAvPatienten": "2016-04-29",
+  "kannedomOmPatient": "2016-04-29",
+  "underlagFinns": true,
+  "underlag": [{
+    "typ": 5,
+    "datum": "2016-04-27",
+    "hamtasFran": "VGVG"
+  }
+  ],
+  "diagnoser": [{
+    "diagnosKod": "A33",
+    "diagnosKodSystem": "ICD_10_SE",
+    "diagnosBeskrivning": "Stelkramp hos nyfödd",
+    "diagnosDisplayName": ""
+  }
+  ],
+  "funktionsnedsattningDebut": "F",
+  "funktionsnedsattningPaverkan": "S",
+  "ovrigt": "Ö",
+  "kontaktMedFk": true,
+  "anledningTillKontakt": "K",
+  "tillaggsfragor": [{
+    "id": "9001",
+    "svar": "T"
+  }, {
+    "id": "9002",
+    "svar": "8m"
+  }
+  ]
+}
