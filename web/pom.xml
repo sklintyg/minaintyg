@@ -76,6 +76,10 @@
     </dependency>
     <dependency>
       <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>luae_na</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>luae_fs</artifactId>
     </dependency>
 

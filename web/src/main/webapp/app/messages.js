@@ -177,6 +177,8 @@ var miMessages = {
         'certificatetypes.ts-bas.typename': '',
         'certificatetypes.ts-diabetes.commonname': 'Transportstyrelsens läkarintyg',
         'certificatetypes.ts-diabetes.typename': ', diabetes',
+        'certificatetypes.luae_na.commonname': 'Läkarintyg',
+        'certificatetypes.luae_na.typename': ' Aktivitetsersättning nedsatt arbetsförmåga',
 
         'certificates.status.cancelled': 'Makulerat',
         'certificates.status.cancelledlc': 'Makulerat',
