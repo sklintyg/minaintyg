@@ -33,7 +33,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String intygsId = "intygsId";
         final String personnummer = "personnummer";
         final String skickatAvPersonId = "skickatavpid";
-        final String recipient = "recipient";
+        final String recipient = "TS";
 
         SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, personnummer, skickatAvPersonId, recipient);
 
@@ -44,7 +44,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         assertEquals(personnummer, result.getPatientPersonId().getExtension());
         assertNotNull(result.getSkickatAv().getPersonId().getRoot());
         assertEquals(skickatAvPersonId, result.getSkickatAv().getPersonId().getExtension());
-        assertEquals(recipient, result.getMottagare().getCode());
+        assertEquals("TRANSP", result.getMottagare().getCode());
         assertNotNull(result.getMottagare().getCodeSystem());
     }
 }

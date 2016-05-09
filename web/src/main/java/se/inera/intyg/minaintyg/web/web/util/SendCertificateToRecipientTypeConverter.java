@@ -21,6 +21,7 @@ package se.inera.intyg.minaintyg.web.web.util;
 
 import org.joda.time.LocalDateTime;
 
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType.SkickatAv;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
@@ -59,9 +60,11 @@ public final class SendCertificateToRecipientTypeConverter {
     }
 
     private static Part buildPart(String recipient) {
+        PartKod partKod = PartKod.fromValue(recipient);
         Part part = new Part();
-        part.setCode(recipient);
+        part.setCode(partKod.name());
         part.setCodeSystem(MOTTAGARE_CODE_SYSTEM);
+        part.setDisplayName(partKod.getDisplayName());
         return part;
     }
 
