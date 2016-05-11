@@ -22,24 +22,26 @@ package se.inera.intyg.minaintyg.web.web.util;
 import org.joda.time.LocalDateTime;
 
 import se.inera.intyg.common.support.common.enumerations.PartKod;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType.SkickatAv;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
 
 public final class SendCertificateToRecipientTypeConverter {
 
-    private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String MOTTAGARE_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
 
     private SendCertificateToRecipientTypeConverter() {
     }
 
-    public static SendCertificateToRecipientType convert(String intygsId, String personnummer,
-            String skickatAvPersonId, String recipient) {
+    public static SendCertificateToRecipientType convert(String intygsId, Personnummer personnummer,
+            Personnummer skickatAvPersonId, String recipient) {
         SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setSkickatTidpunkt(LocalDateTime.now());
         request.setIntygsId(buildIntygId(intygsId));
-        request.setPatientPersonId(buildPersonId(personnummer));
+        request.setPatientPersonId(InternalConverterUtil.getPersonId(personnummer));
         request.setMottagare(buildPart(recipient));
         request.setSkickatAv(buildSkickatAv(skickatAvPersonId));
         return request;
@@ -52,13 +54,6 @@ public final class SendCertificateToRecipientTypeConverter {
         return intygId;
     }
 
-    private static PersonId buildPersonId(String personnummer) {
-        PersonId personId = new PersonId();
-        personId.setRoot(PERSON_ID_ROOT);
-        personId.setExtension(personnummer);
-        return personId;
-    }
-
     private static Part buildPart(String recipient) {
         PartKod partKod = PartKod.fromValue(recipient);
         Part part = new Part();
@@ -68,9 +63,9 @@ public final class SendCertificateToRecipientTypeConverter {
         return part;
     }
 
-    private static SkickatAv buildSkickatAv(String skickatAvPersonId) {
+    private static SkickatAv buildSkickatAv(Personnummer skickatAvPersonId) {
         SkickatAv skickatAv = new SkickatAv();
-        skickatAv.setPersonId(buildPersonId(skickatAvPersonId));
+        skickatAv.setPersonId(InternalConverterUtil.getPersonId(skickatAvPersonId));
         return skickatAv;
     }
 

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
 
 public class SendCertificateToRecipientTypeConverterTest {
@@ -35,7 +36,8 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String skickatAvPersonId = "skickatavpid";
         final String recipient = "TS";
 
-        SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, personnummer, skickatAvPersonId, recipient);
+        SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
+                new Personnummer(skickatAvPersonId), recipient);
 
         assertNotNull(result.getSkickatTidpunkt());
         assertNotNull(result.getIntygsId().getRoot());
@@ -46,5 +48,19 @@ public class SendCertificateToRecipientTypeConverterTest {
         assertEquals(skickatAvPersonId, result.getSkickatAv().getPersonId().getExtension());
         assertEquals("TRANSP", result.getMottagare().getCode());
         assertNotNull(result.getMottagare().getCodeSystem());
+    }
+
+    @Test
+    public void testConvertRemovesDash() {
+        final String intygsId = "intygsId";
+        final String personnummer = "19121212-1212";
+        final String skickatAvPersonId = "19101010-1010";
+        final String recipient = "TS";
+
+        SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
+                new Personnummer(skickatAvPersonId), recipient);
+
+        assertEquals("191212121212", result.getPatientPersonId().getExtension());
+        assertEquals("191010101010", result.getSkickatAv().getPersonId().getExtension());
     }
 }

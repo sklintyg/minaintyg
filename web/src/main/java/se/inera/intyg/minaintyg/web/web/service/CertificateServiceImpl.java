@@ -38,6 +38,7 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -57,7 +58,6 @@ import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
@@ -65,8 +65,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateServiceImpl.class);
-
-    private static final String PERSON_ID_ROOT = "1.2.752.129.2.1.3.3";
 
     /* Mapper to serialize/deserialize Utlatanden. */
     protected static ObjectMapper objectMapper = new CustomObjectMapper();
@@ -138,8 +136,7 @@ public class CertificateServiceImpl implements CertificateService {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
 
         SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
-                civicRegistrationNumber.getPersonnummerWithoutDash(),
-                new Personnummer(citizenService.getCitizen().getUsername()).getPersonnummerWithoutDash(), recipientId);
+                civicRegistrationNumber, new Personnummer(citizenService.getCitizen().getUsername()), recipientId);
 
         final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
@@ -172,9 +169,7 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber, boolean arkiverade) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
-        params.setPersonId(new PersonId());
-        params.getPersonId().setRoot(PERSON_ID_ROOT);
-        params.getPersonId().setExtension(civicRegistrationNumber.getPersonnummerWithoutDash());
+        params.setPersonId(InternalConverterUtil.getPersonId(civicRegistrationNumber));
         params.setArkiverade(arkiverade);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
