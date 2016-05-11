@@ -34,10 +34,6 @@
       serviceClass="se.inera.intyg.insuranceprocess.healthreporting.setconsent.rivtabp20.v1.SetConsentResponderInterface"
       address="${consent.set.url}"/>
 
-  <jaxws:client id="listCertificatesClient"
-      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.listcertificatesforcitizen.v1.ListCertificatesForCitizenResponderInterface"
-      address="${certificates.list.url}"/>
-
   <jaxws:client id="listCertificatesClientV2"
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponderInterface"
       address="${certificates.list.v2.url}"/>
