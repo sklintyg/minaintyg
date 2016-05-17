@@ -53,9 +53,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
                     $log.debug('statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
-                        // Better way to update the object?
                         oldItem.archived = fromServer.archived;
-                        oldItem.status = fromServer.status;
                         oldItem.selected = false;
                         archiveDialog.close();
                         $scope.dialog.acceptprogressdone = true;

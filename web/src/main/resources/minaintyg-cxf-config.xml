@@ -38,13 +38,9 @@
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponderInterface"
       address="${certificates.list.v2.url}"/>
 
-  <jaxws:client id="setCertificateStatusClient"
-      serviceClass="se.inera.ifv.insuranceprocess.healthreporting.setcertificatestatus.rivtabp20.v1.SetCertificateStatusResponderInterface"
-      address="${certificates.setstatus.url}"/>
-
-  <jaxws:client id="setCertificateArchivedClient"
-      serviceClass="se.inera.intyg.insuranceprocess.healthreporting.setcertificatearchived.rivtabp20.v1.SetCertificateArchivedResponderInterface"
-      address="${certificates.setarchived.url}"/>
+  <jaxws:client id="setCertificateStatusRivtaClient"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponderInterface"
+      address="${certificates.setcertificatestatus-rivta.url}"/>
 
   <jaxws:client id="sendCertificateToRecipientClient"
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface"

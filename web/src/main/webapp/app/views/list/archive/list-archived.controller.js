@@ -57,9 +57,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                 IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
                     $log.debug('(restore) statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
-                        // Better way to update the object?
                         oldItem.archived = fromServer.archived;
-                        oldItem.status = fromServer.status;
                         oldItem.selected = false;
                         restoreDialog.close();
                         $scope.dialog.acceptprogressdone = true;
