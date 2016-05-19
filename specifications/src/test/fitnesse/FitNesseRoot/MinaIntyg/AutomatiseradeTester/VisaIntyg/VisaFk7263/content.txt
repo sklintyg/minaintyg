@@ -29,7 +29,7 @@
 
 | Verifiera Fk7263 |
 | diagnosKod? | diagnosBeskrivning? |
-| S47 | Här förtydligar vi våra diagnoser ytterligare och skriver litegrann för att göra saker tydligare för andra som ska läsa på tex Försäkringskassan. |
+| S47 | Klämskada på skuldra och överarm. Samsjuklighet föreligger. Z233 Vaccination avseende pest. Z600 Problem med anpassning till övergångar i livscykeln. Här förtydligar vi våra diagnoser ytterligare och skriver litegrann för att göra saker tydligare för andra som ska läsa på tex Försäkringskassan. |
 
 !3 Verifiera fält 3: Aktuell sjukdomsförlopp
 
@@ -135,4 +135,4 @@
 
 | Verifiera Fk7263 |
 | forskrivarkodOchArbetsplatskod? |
-| notshown |
+| 123456789011 |

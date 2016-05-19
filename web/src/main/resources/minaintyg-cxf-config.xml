@@ -46,10 +46,6 @@
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface"
       address="${certificates.sendcertificatetorecipient.url}" />
 
-  <jaxws:client id="getCertificateContentClient"
-      serviceClass="se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface"
-      address="${certificates.getcertificatecontent.url}" />
-
   <jaxws:client id="getCertificateClient"
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface"
       address="${certificates.getcertificate.url}" />

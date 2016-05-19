@@ -19,6 +19,7 @@
 
 package se.inera.intyg.minaintyg.web.web.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 import se.inera.intyg.common.support.model.CertificateState;
@@ -30,6 +31,8 @@ import se.inera.intyg.minaintyg.web.api.CertificateStatus;
  */
 public final class CertificateStatusConverter {
 
+    public static final List<CertificateState> RELEVANT_STATUSES = Arrays.asList(CertificateState.SENT, CertificateState.CANCELLED);
+
     private CertificateStatusConverter() {
     }
 
@@ -39,6 +42,9 @@ public final class CertificateStatusConverter {
         boolean cancelled = false;
         if (statuses != null) {
             for (Status statusType : statuses) {
+                if (!RELEVANT_STATUSES.contains(statusType.getType())) {
+                    continue;
+                }
                 result.getStatuses().add(statusType);
 
                 if (statusType.getType().equals(CertificateState.CANCELLED)) {

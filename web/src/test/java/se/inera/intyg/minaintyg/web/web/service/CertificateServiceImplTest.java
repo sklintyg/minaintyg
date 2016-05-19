@@ -39,25 +39,23 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.StatusKod;
+import se.inera.intyg.common.support.model.*;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.*;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -79,9 +77,6 @@ public class CertificateServiceImplTest {
 
     @Mock
     private IntygModuleRegistry moduleRegistry;
-
-    @Mock
-    private GetCertificateResponderInterface getCertificateService;
 
     @Mock
     private CitizenService citizenService;
@@ -111,26 +106,24 @@ public class CertificateServiceImplTest {
         final String part = "part";
         final String pnr = "19121212-1212";
 
-        when(moduleRegistry.moduleExists(CERTIFICATE_TYPE)).thenReturn(true);
+        Utlatande utl = buildUtlatande(pnr);
+        CertificateMetaData meta = new CertificateMetaData();
+        meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
+        CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
-        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE.toLowerCase())).thenReturn(api);
-        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, pnr));
-        when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<UtlatandeWithMeta> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
-        assertNotNull(res);
         assertTrue(res.isPresent());
-        // We sort the result for testing purposes because the order which the statuses comes in does not matter
-        Collections.sort(res.get().getStatuses(), (a, b) -> a.getType().name().compareTo(b.getType().name()));
 
-        assertEquals(1, res.get().getStatuses().size());
-        assertEquals(CertificateState.SENT, res.get().getStatuses().get(0).getType());
-        assertEquals(part, res.get().getStatuses().get(0).getTarget());
-        assertEquals(document, res.get().getDocument());
+        assertEquals(1, res.get().getMetaData().getStatus().size());
+        assertEquals(CertificateState.SENT, res.get().getMetaData().getStatus().get(0).getType());
+        assertEquals(part, res.get().getMetaData().getStatus().get(0).getTarget());
+        assertEquals(document, res.get().getInternalModel());
 
-        verify(getCertificateService, times(1)).getCertificate(anyString(), any());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
     }
 
     @Test
@@ -140,69 +133,62 @@ public class CertificateServiceImplTest {
         final String pnr = "19121212-1212";
         final String pnrWithoutDash = "191212121212";
 
-        when(moduleRegistry.moduleExists(CERTIFICATE_TYPE)).thenReturn(true);
+        Utlatande utl = buildUtlatande(pnrWithoutDash);
+        CertificateMetaData meta = new CertificateMetaData();
+        meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
+        CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
-        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE.toLowerCase())).thenReturn(api);
-        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, pnrWithoutDash));
-        when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<UtlatandeWithMeta> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
-        assertNotNull(res);
         assertTrue(res.isPresent());
 
-        verify(getCertificateService, times(1)).getCertificate(anyString(), any());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
     }
 
     @Test
     public void testGetUtlatandeWrongCivicRegistrationNumber() throws Exception {
         final String document = "document";
-        final String id = "lisu";
         final String part = "part";
         final String pnr = "19121212-1212";
         final String anotherPnr = "19101010-1010";
 
-        when(moduleRegistry.moduleExists(id)).thenReturn(true);
+        Utlatande utl = buildUtlatande(anotherPnr);
+        CertificateMetaData meta = new CertificateMetaData();
+        meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
+        CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getUtlatandeFromIntyg(any())).thenReturn(mock(Utlatande.class));
-        when(moduleRegistry.getModuleApi(id)).thenReturn(api);
-        when(getCertificateService.getCertificate(anyString(), any())).thenReturn(createGetCertificateResponseType(part, anotherPnr));
-        when(CertificateServiceImpl.objectMapper.writeValueAsString(any())).thenReturn(document);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<UtlatandeWithMeta> res = service.getUtlatande(id, new Personnummer(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
-        assertNotNull(res);
         assertFalse(res.isPresent());
 
-        verify(getCertificateService, times(1)).getCertificate(anyString(), any());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
     }
 
-    private GetCertificateResponseType createGetCertificateResponseType(final String part, final String pnr) {
-        GetCertificateResponseType response = new GetCertificateResponseType();
-        Intyg intyg = buildIntyg();
+    @Test
+    public void testGetUtlatandeRevoked() throws Exception {
+        final String document = "document";
+        final String part = "part";
+        final String pnr = "19121212-1212";
 
-        intyg.getStatus().add(createStatus(StatusKod.SENTTO.name(), part));
-        intyg.getStatus().add(createStatus(StatusKod.RECEIV.name(), part));
+        Utlatande utl = buildUtlatande(pnr);
+        CertificateMetaData meta = new CertificateMetaData();
+        meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
+        CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
+        ModuleApi api = mock(ModuleApi.class);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        intyg.getTyp().setCode(CERTIFICATE_TYPE);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
-        intyg.setPatient(new Patient());
-        intyg.getPatient().setPersonId(new PersonId());
-        intyg.getPatient().getPersonId().setExtension(pnr);
-        response.setIntyg(intyg);
-        return response;
-    }
+        assertFalse(res.isPresent()); // don't return revoked certificate
 
-    private IntygsStatus createStatus(String statuskod, String partkod) {
-        IntygsStatus intygsStatus = new IntygsStatus();
-        Statuskod sk = new Statuskod();
-        sk.setCode(statuskod);
-        intygsStatus.setStatus(sk);
-        Part part = new Part();
-        part.setCode(partkod);
-        intygsStatus.setPart(part);
-        return intygsStatus;
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -464,6 +450,17 @@ public class CertificateServiceImplTest {
         intyg.getSkapadAv().getEnhet().setEnhetsnamn(FACILITY_NAME);
         intyg.setSigneringstidpunkt(LocalDateTime.now());
         return intyg;
+    }
+
+    private Utlatande buildUtlatande(String pnr) {
+        Utlatande utlatande = mock(Utlatande.class);
+        GrundData grunddata = new GrundData();
+        grunddata.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
+        grunddata.getPatient().setPersonId(new Personnummer(pnr));
+        when(utlatande.getTyp()).thenReturn(CERTIFICATE_TYPE);
+        when(utlatande.getId()).thenReturn(CERTIFICATE_ID);
+        when(utlatande.getGrundData()).thenReturn(grunddata);
+        return utlatande;
     }
 
 }

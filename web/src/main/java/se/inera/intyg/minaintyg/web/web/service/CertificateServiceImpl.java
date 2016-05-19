@@ -23,8 +23,6 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 
 import java.util.*;
 
-import javax.xml.ws.soap.SOAPFaultException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -32,37 +30,32 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.w3.wsaddressing10.AttributedURIType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.ifv.insuranceprocess.certificate.v1.CertificateStatusType;
-import se.inera.ifv.insuranceprocess.certificate.v1.StatusType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
-import se.inera.intyg.common.support.model.*;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontent.rivtabp20.v1.GetCertificateContentResponderInterface;
-import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentRequestType;
-import se.inera.intyg.insuranceprocess.healthreporting.getcertificatecontentresponder.v1.GetCertificateContentResponseType;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
-import se.inera.intyg.minaintyg.web.web.service.dto.*;
-import se.inera.intyg.minaintyg.web.web.util.*;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.util.SendCertificateToRecipientTypeConverter;
+import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
 import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -77,12 +70,6 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private SendCertificateToRecipientResponderInterface sendService;
-
-    @Autowired
-    private GetCertificateContentResponderInterface getContentService;
-
-    @Autowired
-    private GetCertificateResponderInterface getCertificateClient;
 
     @Autowired
     private GetRecipientsForCertificateResponderInterface getRecipientsService;
@@ -108,9 +95,6 @@ public class CertificateServiceImpl implements CertificateService {
     // These values are injected by their setter methods
     private String vardReferensId;
     private String logicalAddress;
-
-    private String[] useLegacyGetCertificate = { CertificateTypes.FK7263.toString(), CertificateTypes.TSBAS.toString(),
-            CertificateTypes.TSDIABETES.toString() };
 
     /**
      * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface
@@ -139,20 +123,26 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Optional<UtlatandeWithMeta> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
-        if (!moduleRegistry.moduleExists(type)) {
-            LOGGER.error("The specified module {} does not exist", type);
-            throw new RuntimeException(String.format("The specified module %s does not exist", type));
-        }
-        // Handle legacy get requests to Intygstjänsten
-        if (Arrays.asList(useLegacyGetCertificate).contains(type)) {
-            AttributedURIType uri = new AttributedURIType();
-            uri.setValue(logicalAddress);
-            return Optional.of(getUtlatandeLegacy(civicRegistrationNumber, certificateId, uri));
-        } else {
-            return getUtlatande(civicRegistrationNumber, certificateId, logicalAddress);
+    public Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
+        CertificateResponse certificate;
+        try {
+            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress);
+        } catch (ModuleException | ModuleNotFoundException e) {
+            LOGGER.error("Failed to fetch utlatande '{}' from Intygstjänsten: {}", certificateId, e.getMessage());
+            throw new ExternalWebServiceCallFailedException(e.getMessage(), null);
         }
 
+        Personnummer certificateCivicRegistrationNumber = certificate.getUtlatande().getGrundData().getPatient().getPersonId();
+        if (!civicRegistrationNumber.equals(certificateCivicRegistrationNumber)) {
+            LOGGER.warn("Certificate {} does not match user {}", certificateId, civicRegistrationNumber.getPnrHash());
+            return Optional.empty();
+        }
+        if (certificate.getMetaData().getStatus().stream().anyMatch(status -> CertificateState.CANCELLED.equals(status.getType()))) {
+            LOGGER.info("Certificate {} is revoked", certificateId);
+            return Optional.empty();
+        }
+        monitoringService.logCertificateRead(certificate.getUtlatande().getId(), certificate.getUtlatande().getTyp());
+        return Optional.of(certificate);
     }
 
     @Override
@@ -223,56 +213,11 @@ public class CertificateServiceImpl implements CertificateService {
         this.logicalAddress = logicalAddress;
     }
 
-    private Optional<UtlatandeWithMeta> getUtlatande(Personnummer civicRegistrationNumber, String certificateId, String logicalAddress) {
-        GetCertificateType getCertificateType = new GetCertificateType();
-        getCertificateType.setIntygsId(toIntygsId(certificateId));
-        try {
-            GetCertificateResponseType response = getCertificateClient.getCertificate(logicalAddress, getCertificateType);
-            Personnummer certificateCivicRegistrationNumber = new Personnummer(response.getIntyg().getPatient().getPersonId().getExtension());
-            if (!civicRegistrationNumber.equals(certificateCivicRegistrationNumber)) {
-                LOGGER.warn("Certificate {} does not match user {}", certificateId, civicRegistrationNumber.getPnrHash());
-                return Optional.empty();
-            }
-            if (response.getIntyg().getStatus().stream().anyMatch(status -> StatusKod.CANCEL.name().equals(status.getStatus().getCode()))) {
-                LOGGER.info("Certificate {} is revoked", certificateId);
-                return Optional.empty();
-            }
-            UtlatandeWithMeta utlatandeWithMeta = convert(response);
-            if (utlatandeWithMeta != null && utlatandeWithMeta.getUtlatande() != null) {
-                monitoringService.logCertificateRead(utlatandeWithMeta.getUtlatande().getId(), utlatandeWithMeta.getUtlatande().getTyp());
-            }
-            return Optional.of(utlatandeWithMeta);
-        } catch (SOAPFaultException e) {
-            LOGGER.warn("Failed to fetch utlatande #{} from Intygstjänsten. WS call result is {}", certificateId, e.getMessage());
-            return Optional.empty();
-        }
-    }
-
     private IntygId toIntygsId(String certificateId) {
         IntygId intygId = new IntygId();
         intygId.setRoot("SE5565594230-B31");
         intygId.setExtension(certificateId);
         return intygId;
-    }
-
-    private UtlatandeWithMeta getUtlatandeLegacy(Personnummer civicRegistrationNumber, String certificateId, AttributedURIType uri) {
-        GetCertificateContentRequestType request = new GetCertificateContentRequestType();
-        request.setCertificateId(certificateId);
-        request.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
-
-        GetCertificateContentResponseType response = getContentService.getCertificateContent(uri, request);
-
-        switch (response.getResult().getResultCode()) {
-        case OK:
-            UtlatandeWithMeta utlatandeWithMeta = convertLegacy(response);
-            if (utlatandeWithMeta != null && utlatandeWithMeta.getUtlatande() != null) {
-                monitoringService.logCertificateRead(utlatandeWithMeta.getUtlatande().getId(), utlatandeWithMeta.getUtlatande().getTyp());
-            }
-            return utlatandeWithMeta;
-        default:
-            LOGGER.error("Failed to fetch utlatande #" + certificateId + " from Intygstjänsten. WS call result is " + response.getResult());
-            throw new ExternalWebServiceCallFailedException(response.getResult().getInfoText(), response.getResult().getErrorId().name());
-        }
     }
 
     private UtlatandeMetaData setCertificateState(String certificateId, Personnummer civicRegistrationNumber, StatusKod status) {
@@ -314,53 +259,6 @@ public class CertificateServiceImpl implements CertificateService {
         status.setCodeSystem(STATUS_KOD_CODE_SYSTEM);
         status.setDisplayName(statuskod.getDisplayName());
         return status;
-    }
-
-    private UtlatandeWithMeta convert(final GetCertificateResponseType response) {
-        Intyg intyg = response.getIntyg();
-        String json;
-        Utlatande utlatande;
-        try {
-            ModuleApi moduleApi = moduleRegistry.getModuleApi(intyg.getTyp().getCode().toLowerCase());
-            utlatande = moduleApi.getUtlatandeFromIntyg(intyg);
-            json = objectMapper.writeValueAsString(utlatande);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        List<Status> statusList = new ArrayList<>();
-        for (IntygsStatus intygStatus : response.getIntyg().getStatus()) {
-            StatusKod sk = StatusKod.valueOf(intygStatus.getStatus().getCode());
-            if (sk == null) {
-                continue;
-            }
-            CertificateState certificateState = sk.toCertificateState();
-            if (CertificateState.CANCELLED.equals(certificateState) || CertificateState.SENT.equals(certificateState)) {
-                statusList.add(new Status(certificateState, intygStatus.getPart().getCode(), intygStatus.getTidpunkt()));
-            }
-        }
-        return new UtlatandeWithMeta(utlatande, json, statusList);
-    }
-
-    private UtlatandeWithMeta convertLegacy(final GetCertificateContentResponseType response) {
-        Utlatande utlatande;
-        String document = response.getCertificate();
-
-        try {
-            ModuleApi moduleApi = moduleRegistry.getModuleApi(response.getType());
-            utlatande = moduleApi.getUtlatandeFromJson(document);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        List<Status> statuses = new ArrayList<Status>();
-        for (CertificateStatusType status : response.getStatuses()) {
-            if (status.getType().equals(StatusType.SENT) || status.getType().equals(StatusType.CANCELLED)) {
-                statuses.add(new Status(CertificateState.valueOf(status.getType().name()), status.getTarget(),
-                        status.getTimestamp()));
-            }
-        }
-        return new UtlatandeWithMeta(utlatande, document, statuses);
     }
 
     @Override
