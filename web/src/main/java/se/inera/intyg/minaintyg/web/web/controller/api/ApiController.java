@@ -61,13 +61,6 @@ public class ApiController {
     private IntygModuleRegistry moduleRegistry;
 
     @GET
-    @Path("/test")
-    public String test() {
-        LOG.debug("api.test");
-        return "test";
-    }
-
-    @GET
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
