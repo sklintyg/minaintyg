@@ -54,6 +54,7 @@
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet>
     <servlet-name>moduleapi</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -63,6 +64,7 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet>
     <servlet-name>api</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -72,6 +74,18 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
+  <!-- Mina intyg testability services -->
+  <servlet>
+    <servlet-name>testability</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/testability-cxf-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
   <servlet>
     <servlet-name>monitoring</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -87,12 +101,16 @@
     <url-pattern>/web/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>moduleapi</servlet-name>
+    <url-pattern>/moduleapi/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>api</servlet-name>
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>moduleapi</servlet-name>
-    <url-pattern>/moduleapi/*</url-pattern>
+    <servlet-name>testability</servlet-name>
+    <url-pattern>/testability/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>monitoring</servlet-name>
