@@ -1,0 +1,6 @@
+{
+    "dev": {
+        "MINAINTYG_URL": "http://localhost:8088/",
+        "INTYGTJANST_URL": "http://localhost:8080/inera-certificate"
+    }
+}

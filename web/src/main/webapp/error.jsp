@@ -54,7 +54,6 @@
   /**
    Global JS config/constants for this app, to be used by scripts
    **/
-
   var MI_CONFIG = {
     BUILD_NUMBER: '<spring:message code="buildNumber" />',
     USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
@@ -62,8 +61,7 @@
 </script>
 </head>
 
-
-<body ng-app="BaseApp">
+<body ng-app="minaintyg">
 
   <mvk-top-bar></mvk-top-bar>
   <div class="container" id="mi-logo-header">

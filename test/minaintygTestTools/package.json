@@ -1,0 +1,11 @@
+{
+    "name": "minaintyg-testtools",
+    "version": "1.0.47",
+    "description": "",
+    "main": "minaintygTestTools.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "dependencies": {}
+}

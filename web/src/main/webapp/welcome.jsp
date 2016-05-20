@@ -33,8 +33,9 @@ if ("prod".equals(profile)) {
   response.sendError(HttpServletResponse.SC_NOT_FOUND);
 } else {
 %>
+
 <!DOCTYPE html>
-<html lang="sv" id="ng-app" ng-app="minaintyg">
+<html lang="sv" id="ng-app" ng-app="minaintygWelcomeApp">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,12 +59,32 @@ if ("prod".equals(profile)) {
   var MI_CONFIG = {
     BUILD_NUMBER: '<spring:message code="buildNumber" />',
     USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
-  }
+  };
+</script>
+
+<script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.min.js"></script>
+<script type="text/javascript">
+  angular.module('minaintygWelcomeApp', []).
+    controller('welcomeController', function($scope) {});
 </script>
 </head>
-<body ng-app="minaintyg">
 
-  <mvk-top-bar></mvk-top-bar>
+<body ng-controller="welcomeController">
+
+  <!--
+    The MVK top bar header is copied here from mvkTopBar.directive.html file.
+    The purpose is to get Protractor to work with Angular when testing.
+  -->
+  <div id="headerContainer" role="banner" class="affix">
+    <div id="header">
+      <div class="container-fluid">
+        <a href="/web/tillbaka-till-mvk1177 Vårdguiden" class="backButton" id="backToMvkLink">
+          <message>1177 Vårdguiden</message>
+        </a>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
 
   <div class="container welcomepage">
 
@@ -78,7 +99,7 @@ if ("prod".equals(profile)) {
             <h1>Testinloggningar</h1>
 
             <p>
-              <a href="/web/sso?guid=19121212-1212">19121212-1212</a>
+              <a id="loggaInSomTolvan" href="/web/sso?guid=19121212-1212">19121212-1212</a>
             </p>
 
             <p>
@@ -100,9 +121,8 @@ if ("prod".equals(profile)) {
             <h2>Logga in med annat guid</h2>
 
             <form id="customguidform" class="navbar-form pull-left">
-              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid"> <input
-                type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;"
-                value="logga in">
+              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid">
+              <input id="loginBtn" type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;" value="logga in">
             </form>
           </div>
         </div>
@@ -110,33 +130,6 @@ if ("prod".equals(profile)) {
 
     </div>
   </div>
-
-  <c:choose>
-    <c:when test="${useMinifiedJavaScript == 'true'}">
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/i18n/angular-locale_sv-se.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-cookies.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-route.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-sanitize.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-animate.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-      <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
-    </c:when>
-    <c:otherwise>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/i18n/angular-locale_sv-se.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-cookies.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-route.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-sanitize.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-animate.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/app/base/app.js"></script>
-    </c:otherwise>
-  </c:choose>
 
 </body>
 </html>

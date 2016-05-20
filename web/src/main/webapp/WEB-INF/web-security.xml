@@ -23,7 +23,7 @@
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <aop:aspectj-autoproxy />
-  
+
   <beans profile="dev, test, qa">
     <!-- Note:  In dev and test profile there is an AOP Advice that shortcuts the 
         org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate call if the 
