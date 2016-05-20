@@ -26,6 +26,7 @@ import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
 
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.minaintyg.web.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
 
@@ -37,7 +38,7 @@ public class CitizenAuthenticationService implements SAMLUserDetailsService {
     @Override
     public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
         String userid = credential.getNameID().getValue();
-        LOG.debug("SAML user: " + userid);
+        LOG.debug("SAML user: " + new Personnummer(userid).getPnrHash());
         // CHECKSTYLE:OFF MagicNumber
         return new CitizenImpl(userid.substring(0, 8) + "-" + userid.substring(8), LoginMethodEnum.FK);
         // CHECKSTYLE:ON MagicNumber
