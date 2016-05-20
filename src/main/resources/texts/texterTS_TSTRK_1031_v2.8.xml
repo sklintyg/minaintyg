@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texter typ="TS-DIABETES" giltigFrom="2016-04-01" version="2.8" pdf="pdf/TSTRK1031-V02U08.pdf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!--
+	===============================================
+	KATEGORI: Intyg avser
+	===============================================
+	-->
+	<text id="KAT_99.RBK">Intyg avser</text>
+
+	<!--
+	===============================================
+	KATEGORI: Identitet styrkt genom
+	===============================================
+	-->
+	<text id="KAT_100.RBK">Identitet styrkt genom</text>
+
+	<text id="FRM_1.RBK">* SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.
+** SIS-märkt företagskort eller tjänstekort.
+*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.
+	**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>
+
+	<text id="FRM_2.RBK">Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.
+	Se: http://www.transportstyrelsen.se.</text>
+
+	<!--
+	===============================================
+	KATEGORI 1: Allmänt
+	===============================================
+	-->
+	<text id="KAT_1.RBK">Allmänt</text>
+
+	<text id="FRG_35.RBK">Vilket år ställdes diagnosen diabetes?</text>
+	<text id="FRG_18.RBK">Patienten har diabetes</text>
+	<text id="FRG_19.RBK">Behandling</text>
+	<text id="DFR_19.1.RBK">Endast kost</text>
+	<text id="DFR_19.2.RBK">Tabletter</text>
+	<text id="DFR_19.3.RBK">Insulin</text>
+	<text id="DFR_19.4.RBK">Insulin sedan år</text>
+	<text id="DFR_19.5.RBK">Annan behandling, vilken?</text>
+
+	<!--
+	===============================================
+	KATEGORI 2: Hypoglykemier (lågt blodsocker)
+	===============================================
+	-->
+	<text id="KAT_1.RBK">Allmänt</text>
+
+	<text id="FRG_36.RBK">a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</text>
+	<text id="FRG_37.RBK">"b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) som bedöms kunna innebära en trafiksäkerhetsrisk?</text>
+	<text id="FRG_38.RBK">c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?</text>
+	<text id="FRG_39.RBK">d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</text>
+	<text id="DFR_39.2">Hur många sådana episoder?</text>
+	<text id="FRG_40.RBK">e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</text>
+	<text id="DFR_40.2">Hur många sådana episoder och när inträffade de?</text>
+	<text id="FRG_41.RBK">f) Genomför patienten egenkontroller av blodsocker?</text>
+	<text id="FRD_42.RBK">g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</text>
+
+	<!--
+	===============================================
+	KATEGORI 3: Synintyg
+	===============================================
+	-->
+	<text id="KAT_1.RBK">Synintyg</text>
+
+	<text id="FRG_43.RBK">a) Ögonläkarintyg kommer att skickas in separat</text>
+	<text id="FRG_44.RBK">b) Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</text>
+	<text id="FRG_8.RBK">c) Värden för synskärpa</text>
+	<text id="FRG_6.RBK">d) Förekommer dubbelseende?</text>
+
+	<!--
+	===============================================
+	KATEGORI 4: Bedömning
+	===============================================
+	-->
+	<text id="KAT_1.RBK">Bedömning</text>
+
+	<text id="FRG_33.RBK">Någon av följande behörighetstyper</text>
+	<text id="FRG_45.RBK">Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</text>
+
+	<text id="FRG_32.RBK">Övriga kommentarer och upplysningar</text>
+	<text id="FRG_34.RBK">Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</text>
+
+</texter>
