@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
@@ -25,17 +29,13 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Magnus Ekstrand on 2016-04-29.
@@ -56,8 +56,10 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
 
         List<Status> status = new ArrayList<>();
         status.add(new Status(CertificateState.SENT, TARGET, LocalDateTime.now()));
+        CertificateMetaData meta = new CertificateMetaData();
+        meta.setStatus(status);
 
-        utlatandeHolder = new UtlatandeWithMeta(utlatande, certificateData, status);
+        utlatandeHolder = new CertificateResponse(certificateData, utlatande, meta, false);
         internalModelHolder = new InternalModelHolder(certificateData);
     }
 

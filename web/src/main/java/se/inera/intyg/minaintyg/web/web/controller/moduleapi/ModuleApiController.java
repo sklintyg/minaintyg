@@ -20,40 +20,36 @@ package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.minaintyg.web.api.Certificate;
-import se.inera.intyg.minaintyg.web.api.CertificateStatus;
-import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.api.*;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeWithMeta;
 import se.inera.intyg.minaintyg.web.web.util.CertificateStatusConverter;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
@@ -99,12 +95,12 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Optional<UtlatandeWithMeta> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()),
+        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()),
                 id);
         if (utlatande.isPresent()) {
             try {
-                JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getDocument());
-                CertificateStatus meta = CertificateStatusConverter.toCertificateStatus(utlatande.get().getStatuses());
+                JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
+                CertificateStatus meta = CertificateStatusConverter.toCertificateStatus(utlatande.get().getMetaData().getStatus());
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {
@@ -148,13 +144,13 @@ public class ModuleApiController {
     public final Response getCertificatePdf(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
 
-        Optional<UtlatandeWithMeta> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
+        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
         if (utlatande.isPresent()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);
-                InternalModelHolder internalModelHolder = new InternalModelHolder(utlatande.get().getDocument());
-                List<Status> statusList = utlatande.get().getStatuses();
+                InternalModelHolder internalModelHolder = new InternalModelHolder(utlatande.get().getInternalModel());
+                List<Status> statusList = utlatande.get().getMetaData().getStatus().stream().filter(s -> CertificateState.SENT.equals(s.getType())).collect(Collectors.toList());
 
                 PdfResponse pdf = moduleApi.pdf(internalModelHolder, statusList, ApplicationOrigin.MINA_INTYG);
 

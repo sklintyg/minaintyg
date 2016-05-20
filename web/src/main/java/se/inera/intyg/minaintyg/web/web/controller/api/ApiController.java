@@ -61,13 +61,6 @@ public class ApiController {
     private IntygModuleRegistry moduleRegistry;
 
     @GET
-    @Path("/test")
-    public String test() {
-        LOG.debug("api.test");
-        return "test";
-    }
-
-    @GET
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
@@ -95,7 +88,7 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'archive' for certificate {0}", id);
+        LOG.debug("Requesting 'archive' for certificate {}", id);
         return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
@@ -104,7 +97,7 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'restore' for certificate {0}", id);
+        LOG.debug("Requesting 'restore' for certificate {}", id);
         return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
@@ -112,7 +105,7 @@ public class ApiController {
     @Path("/consent/give")
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'giveConsent' for citizen {0}", citizen.getUsername());
+        LOG.debug("Requesting 'giveConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
         citizen.setConsent(consentService.setConsent(new Personnummer(citizen.getUsername())));
         return new ConsentResponse(true);
     }
@@ -121,7 +114,7 @@ public class ApiController {
     @Path("/consent/revoke")
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'revokeConsent' for citizen {0}", citizen.getUsername());
+        LOG.debug("Requesting 'revokeConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
         boolean revokedSuccessfully = consentService.revokeConsent(new Personnummer(citizen.getUsername()));
         if (revokedSuccessfully) {
             citizen.setConsent(false);
