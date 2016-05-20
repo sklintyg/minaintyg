@@ -23,7 +23,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.cxf.message.MessageContentsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +32,9 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 
-/**
- */
 public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
-
-
 
     @Autowired
     private ConsentService consentService;
