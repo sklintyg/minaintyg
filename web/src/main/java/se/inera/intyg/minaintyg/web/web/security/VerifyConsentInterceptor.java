@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.cxf.message.MessageContentsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
         // Get Citizen instance from context
         Citizen citizen = citizenService.getCitizen();
+        if (citizen == null) {
+            LOG.error("State of consent not known -citizen was null");
+            return false;
+        }
+
         LOG.debug("Login from " + citizen.getLoginMethod().toString());
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
