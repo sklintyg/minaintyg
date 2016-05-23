@@ -50,16 +50,19 @@ describe('Logga in som medborgare', function() {
         });
 
         it('Ge samtycke', function() {
+            specHelper.waitForAngularTestability();
             expect(consentPage.isAt()).toBeTruthy();
             consentPage.clickGiveConsent();
         });
 
         it('Header ska var Inkorgen', function() {
+            specHelper.waitForAngularTestability();
             expect(startPage.isAt()).toBeTruthy();
             expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
         });
 
         it('Acceptera cookie', function() {
+            specHelper.waitForAngularTestability();
             element(by.id('cookie-usage-consent-btn')).click();
         });
 
