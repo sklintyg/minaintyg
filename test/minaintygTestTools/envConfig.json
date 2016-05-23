@@ -1,6 +1,6 @@
 {
     "build-server": {
-        "MINAINTYG_URL": "https://minaintyg.inera.nordicmedtest.se",
+        "MINAINTYG_URL": "https://minaintyg.inera.nordicmedtest.se/",
         "INTYGTJANST_URL": "https://intygstjanst.inera.nordicmedtest.se/inera-certificate"
     },
     "dev": {
