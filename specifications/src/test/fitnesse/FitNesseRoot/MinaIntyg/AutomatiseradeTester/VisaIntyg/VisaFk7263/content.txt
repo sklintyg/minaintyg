@@ -135,4 +135,4 @@
 
 | Verifiera Fk7263 |
 | forskrivarkodOchArbetsplatskod? |
-| 123456789011 |
+| 1234567 - 123456789011 |
