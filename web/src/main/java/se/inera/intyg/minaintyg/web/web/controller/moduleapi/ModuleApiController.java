@@ -149,10 +149,9 @@ public class ModuleApiController {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);
-                InternalModelHolder internalModelHolder = new InternalModelHolder(utlatande.get().getInternalModel());
                 List<Status> statusList = utlatande.get().getMetaData().getStatus().stream().filter(s -> CertificateState.SENT.equals(s.getType())).collect(Collectors.toList());
 
-                PdfResponse pdf = moduleApi.pdf(internalModelHolder, statusList, ApplicationOrigin.MINA_INTYG);
+                PdfResponse pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG);
 
                 return Response.ok(pdf.getPdfData())
                         .header(CONTENT_DISPOSITION, "attachment; filename=" + pdf.getFilename())

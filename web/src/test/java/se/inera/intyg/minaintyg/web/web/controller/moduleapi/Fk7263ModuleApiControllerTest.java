@@ -32,7 +32,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
@@ -59,7 +60,6 @@ public class Fk7263ModuleApiControllerTest extends ModuleApiControllerTest {
         meta.setStatus(status);
 
         utlatandeHolder = new CertificateResponse(certificateData, utlatande, meta, false);
-        internalModelHolder = new InternalModelHolder(certificateData);
     }
 
     @Before
