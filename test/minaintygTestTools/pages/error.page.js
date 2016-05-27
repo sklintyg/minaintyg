@@ -23,9 +23,11 @@
  * Created by eriklupander on 08/03/16.
  */
 'use strict';
+var specHelper = require('./../helpers/specHelper.js')
 
 module.exports = {
     isAt: function isAt() {
+        specHelper.waitForAngularTestability();
         return element(by.id('miErrorApp')).isPresent();
         //return true;
     },

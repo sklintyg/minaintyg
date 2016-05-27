@@ -50,6 +50,11 @@ var MinaIntygBasePage = Class._extend({
     },
     navbarAbout: function() {
         return element(by.id('aboutTab'));
+    },
+
+    //Locates the dynamic text based on text-key
+    getDynamicLabelText: function(textKey) {
+        return element(by.xpath('//span[@key="' + textKey + '"]')).getText();
     }
 });
 

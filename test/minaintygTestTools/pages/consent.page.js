@@ -25,6 +25,7 @@
 
 'use strict';
 
+var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygConsentPage = MinaintygBasePage._extend({
@@ -34,15 +35,13 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
         this.at = element(by.id('consentTerms'));
         this.giveConsent = element(by.id('giveConsentButton'));
     },
-
     get: function () {
         this.getPage('consent');
     },
-
     isAt: function isAt() {
+        specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-
     clickGiveConsent: function() {
         this.giveConsent.click();
     }

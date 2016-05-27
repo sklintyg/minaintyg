@@ -25,22 +25,18 @@
 
 var minaintygBase = require('./minaintyg.base.page.js');
 var welcomePage = require('./welcome.page.js');
-var startPage = require('./start.page.js');
 var consentPage = require('./consent.page.js');
+var inboxPage = require('./inbox.page.js');
+var viewPage = require('./view.page.js');
 var aboutPage = require('./about.page.js');
 var errorPage = require('./error.page.js');
-
-var intygPath = './intyg/'; // should point to intyg folder
-//var luae_fs = require(intygPath + 'luae_fs.intyg.page.js')
 
 module.exports = {
     'minaintygBase': minaintygBase,
     'welcomePage': welcomePage,
-    'startPage': startPage,
     'consentPage': consentPage,
+    'inboxPage': inboxPage,
+    'viewPage': viewPage,
     'aboutPage': aboutPage,
     'errorPage': errorPage
-//    'intyg': {
-//        'luae_fs': luae_fs
-//    }
 };

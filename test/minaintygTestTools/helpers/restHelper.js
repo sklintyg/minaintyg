@@ -23,13 +23,17 @@
 'use strict';
 
 var restUtil = require('./../util/rest.util.js');
-//var intygTemplates = require('./../testdata/intygTemplates.js');
-//var intygGenerator = require('./../util/intygGenerator.util.js');
 
 module.exports = {
 
+    createIntyg: function(createJson) {
+        return restUtil.createIntyg(createJson);
+    },
     deleteConsent: function(userId) {
         return restUtil.deleteConsent(userId || '191212121212');
+    },
+    deleteIntyg: function(id) {
+        return restUtil.deleteIntyg(id);
     }
 
 };

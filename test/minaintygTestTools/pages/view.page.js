@@ -17,30 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*globals browser */
-/*globals pages */
-/*globals describe,it,helpers */
+/* globals browser */
+
+/**
+ * Created by erik
+ */
+
 'use strict';
+var specHelper = require('./../helpers/specHelper.js')
+var MinaintygBasePage = require('./minaintyg.base.page.js');
 
-var specHelper = miTestTools.helpers.spec;
+var MinaintygStartPageBase = MinaintygBasePage._extend({
 
-var welcomePage = miTestTools.pages.welcomePage;
-var errorPage = miTestTools.pages.errorPage;
-
-describe('Logga in med felaktigt personnummer', function() {
-
-    beforeEach(function() {
-        browser.ignoreSynchronization = false;
-    });
-
-    // Logga in
-    it('Logga in', function() {
-        welcomePage.get();
+    init: function init() {
+        init._super.call(this);
+        this.at = element(by.id('viewCertificateHeader'));
+    },
+    isAt: function isAt() {
         specHelper.waitForAngularTestability();
-        welcomePage.login('2012121212');
-        //specHelper.waitForAngularTestability();
-        expect(errorPage.isAt()).toBeTruthy();
-        expect(errorPage.isTeknisktFelShowing()).toBeTruthy();
-    });
-
+        return isAt._super.call(this);
+    }
 });
+
+module.exports = new MinaintygStartPageBase();

@@ -24,7 +24,7 @@
  */
 
 'use strict';
-
+var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
@@ -36,6 +36,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         this.getPage('about');
     },
     isAt: function isAt() {
+        specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     }
 });

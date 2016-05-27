@@ -24,7 +24,7 @@
  */
 
 'use strict';
-
+var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
@@ -33,13 +33,15 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         init._super.call(this);
         this.at = element(by.id('inboxHeader'));
     },
-
     get: function () {
         this.getPage('start');
     },
-
     isAt: function isAt() {
+        specHelper.waitForAngularTestability();
         return isAt._super.call(this);
+    },
+    viewCertificate: function(buttonId) {
+        element(by.id(buttonId)).click();
     }
 });
 

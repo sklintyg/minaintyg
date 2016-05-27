@@ -32,5 +32,23 @@ module.exports = {
             method: 'GET'
         };
         return restClient.run(options, 'json');
+    },
+
+    // Intygstjänst - intyg
+
+    createIntyg: function(createJson) {
+        var options = {
+            url: 'certificate/',
+            method: 'POST',
+            body: createJson
+        };
+        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+    },
+    deleteIntyg: function(intygId) {
+        var options = {
+            url: 'certificate/' + intygId,
+            method: 'DELETE'
+        };
+        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
     }
 };

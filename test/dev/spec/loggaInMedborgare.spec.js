@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*globals browser */
+/*globals browser,protractor */
 /*globals pages */
 /*globals describe,it,helpers */
 'use strict';
@@ -27,11 +27,14 @@ var restHelper = miTestTools.helpers.rest;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var consentPage = miTestTools.pages.consentPage;
-var startPage = miTestTools.pages.startPage;
+var inboxPage = miTestTools.pages.inboxPage;
+
+var EC = protractor.ExpectedConditions;
 
 describe('Logga in som medborgare', function() {
 
-    it ('Ta bort tidigare samtycken', function() {
+    beforeAll(function() {
+        // Ta bort tidigare samtycken
         restHelper.deleteConsent();
     });
 
@@ -45,25 +48,24 @@ describe('Logga in som medborgare', function() {
         it('Logga in', function() {
             welcomePage.get();
             specHelper.waitForAngularTestability();
-            welcomePage.login();
+            welcomePage.login('19121212-1212', true);
             specHelper.waitForAngularTestability();
         });
 
+        it('Acceptera cookie', function() {
+            browser.wait(EC.elementToBeClickable(element(by.id('cookie-usage-consent-btn'))), 5000);
+            element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
+            browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
+        });
+
         it('Ge samtycke', function() {
-            specHelper.waitForAngularTestability();
             expect(consentPage.isAt()).toBeTruthy();
             consentPage.clickGiveConsent();
         });
 
         it('Header ska var Inkorgen', function() {
-            specHelper.waitForAngularTestability();
-            expect(startPage.isAt()).toBeTruthy();
+            expect(inboxPage.isAt()).toBeTruthy();
             expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
-        });
-
-        it('Acceptera cookie', function() {
-            specHelper.waitForAngularTestability();
-            element(by.id('cookie-usage-consent-btn')).click();
         });
 
     });

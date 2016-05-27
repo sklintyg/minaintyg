@@ -25,6 +25,7 @@
  * Created by stephenwhite on 09/06/15.
  */
 'use strict';
+var specHelper = require('./../helpers/specHelper.js')
 
 module.exports = {
 
@@ -36,7 +37,24 @@ module.exports = {
         return element(by.id('customguidform')).isDisplayed();
     },
 
-    login: function(userId) {
+    disableCookieConsentBanner: function() {
+        //Having this flag in localStorage will suppress the cookieBanner.(This is what will be set
+        //when a user gives consent). We pre-set this before logging in to avoid having to click on that button
+        //for every test.
+        browser.executeScript('window.localStorage.setItem("wc-cookie-consent-given","1");');
+    },
+
+    enableCookieConsentBanner: function() {
+        browser.executeScript('window.localStorage.setItem("wc-cookie-consent-given","0");');
+    },
+
+    login: function(userId, showCookieBanner) {
+        if (!showCookieBanner) {
+            this.disableCookieConsentBanner();
+        } else {
+            this.enableCookieConsentBanner();
+        }
+
         element(by.id('guid')).sendKeys(userId || '19121212-1212');
         element(by.id('loginBtn')).click();
     }

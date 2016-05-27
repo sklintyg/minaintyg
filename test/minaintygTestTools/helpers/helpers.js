@@ -26,7 +26,8 @@ module.exports = {
     'rest': require('./restHelper.js'),
     'testdata': require('./testdataHelper.js'),
     'navigation': require('./navigationHelper.js'),
-    'fktext': require('./fkTextHelper.js')
+    'page': require('./pageHelper.js'),
+    'text': require('./textHelper.js')
 };
 
 

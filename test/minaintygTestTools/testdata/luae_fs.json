@@ -1,0 +1,86 @@
+{
+  "id": "7727811e-42a2-41d9-9cc4-892cb681afce",
+  "grundData": {
+    "signeringsdatum": "2016-05-26T09:26:24.585",
+    "skapadAv": {
+      "personId": "IFV1239877878-1049",
+      "fullstandigtNamn": "Jan Nilsson",
+      "forskrivarKod": "0000000",
+      "befattningar": [],
+      "specialiteter": [],
+      "vardenhet": {
+        "enhetsid": "IFV1239877878-1042",
+        "enhetsnamn": "WebCert-Enhet1",
+        "postadress": "Storgatan 1",
+        "postnummer": "12345",
+        "postort": "Småmåla",
+        "telefonnummer": "0101234567890",
+        "epost": "enhet1@webcert.invalid.se",
+        "vardgivare": {
+          "vardgivarid": "IFV1239877878-1041",
+          "vardgivarnamn": "WebCert-Vårdgivare1"
+        },
+        "arbetsplatsKod": "1234567890"
+      }
+    },
+    "patient": {
+      "personId": "19121212-1212",
+      "fullstandigtNamn": "Tolvan Tolvansson",
+      "fornamn": "Tolvan",
+      "efternamn": "Tolvansson",
+      "postadress": "Svensson, Storgatan 1, PL 1234",
+      "postnummer": "12345",
+      "postort": "Småmåla",
+      "samordningsNummer": false
+    },
+    "relation": {}
+  },
+  "textVersion": "1.0",
+  "undersokningAvPatienten": "2016-05-26",
+  "journaluppgifter": "2016-05-26",
+  "anhorigsBeskrivningAvPatienten": "2016-05-26",
+  "annatGrundForMU": "2016-05-26",
+  "annatGrundForMUBeskrivning": "Uppgifter från habiliteringscentrum.",
+  "kannedomOmPatient": "2016-05-26",
+  "underlagFinns": true,
+  "underlag": [
+    {
+      "typ": "HABILITERING",
+      "datum": "2016-05-17",
+      "hamtasFran": "Förste Vårdgivare"
+    },
+    {
+      "typ": "ARBETSTERAPEUT",
+      "datum": "2016-05-02",
+      "hamtasFran": "Andre Vårdgivare"
+    }
+  ],
+  "diagnoser": [
+    {
+      "diagnosKod": "M45",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosBeskrivning": "Pelvospondylit [Bechterews sjukdom]"
+    },
+    {
+      "diagnosKod": "C113",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosBeskrivning": "Malign tumör i främre väggen av rinofarynx"
+    }
+  ],
+  "funktionsnedsattningDebut": "Tidig debut och snabb utveckling.",
+  "funktionsnedsattningPaverkan": "Stor påverkan på skolgång.",
+  "ovrigt": "Övriga upplysningar kan var viktiga.",
+  "kontaktMedFk": true,
+  "anledningTillKontakt": "För att diskutera sjukdomens förlopp.",
+  "tillaggsfragor": [
+    {
+      "id": "9001",
+      "svar": "Alltid väldigt skoltröst."
+    },
+    {
+      "id": "9002",
+      "svar": "Snören är både korta och långa."
+    }
+  ],
+  "typ": "luae_fs"
+}
