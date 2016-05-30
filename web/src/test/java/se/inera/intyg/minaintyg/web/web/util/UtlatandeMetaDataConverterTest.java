@@ -123,7 +123,7 @@ public class UtlatandeMetaDataConverterTest {
     @Test
     public void convertStatusSentTest() {
         final LocalDateTime statusTidpunkt = LocalDateTime.now().minusDays(4);
-        final String recipient = "recipient";
+        final String recipient = "FKASSA";
         Intyg intyg = buildIntyg("intygId", "intygstyp", "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
         IntygsStatus intygsstatus = new IntygsStatus();
         intygsstatus.setStatus(new Statuskod());
@@ -138,14 +138,14 @@ public class UtlatandeMetaDataConverterTest {
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
         assertEquals(CertificateState.SENT, result.getStatuses().get(0).getType());
-        assertEquals(recipient, result.getStatuses().get(0).getTarget());
+        assertEquals("FK", result.getStatuses().get(0).getTarget());
         assertEquals(statusTidpunkt, result.getStatuses().get(0).getTimestamp());
     }
 
     @Test
     public void convertStatusCancelledTest() {
         final LocalDateTime statusTidpunkt = LocalDateTime.now().minusDays(4);
-        final String recipient = "recipient";
+        final String recipient = "TRANSP";
         Intyg intyg = buildIntyg("intygId", "intygstyp", "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
         IntygsStatus intygsstatus = new IntygsStatus();
         intygsstatus.setStatus(new Statuskod());
@@ -160,7 +160,7 @@ public class UtlatandeMetaDataConverterTest {
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
         assertEquals(CertificateState.CANCELLED, result.getStatuses().get(0).getType());
-        assertEquals(recipient, result.getStatuses().get(0).getTarget());
+        assertEquals("TS", result.getStatuses().get(0).getTarget());
         assertEquals(statusTidpunkt, result.getStatuses().get(0).getTimestamp());
     }
 

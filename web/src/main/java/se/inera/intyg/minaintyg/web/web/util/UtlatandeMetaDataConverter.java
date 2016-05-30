@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
+import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -61,8 +61,7 @@ public class UtlatandeMetaDataConverter {
             for (IntygsStatus statusType : intyg.getStatus()) {
                 StatusKod statuskod = StatusKod.valueOf(statusType.getStatus().getCode());
                 if (StatusKod.SENTTO.equals(statuskod) || StatusKod.CANCEL.equals(statuskod)) {
-                    CertificateState internalStatusType = CertificateState.valueOf(statuskod.getDisplayName());
-                    builder.addStatus(internalStatusType, statusType.getPart().getCode(), statusType.getTidpunkt());
+                    builder.addStatus(TransportConverterUtil.getStatus(statusType));
                 }
             }
         }

@@ -185,9 +185,7 @@ var miMessages = {
         'certificates.status.sent': 'Mottaget av',
 
         'certificates.target.fk': 'Försäkringskassan',
-        'certificates.target.fkassa': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',
-        'certificates.target.transp': 'Transportstyrelsen',
 
         'certificates.send.label.patientname': 'Patientens namn:',
         'certificates.send.label.issued': 'Utfärdat:',

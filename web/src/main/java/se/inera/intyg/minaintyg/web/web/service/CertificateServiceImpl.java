@@ -96,14 +96,6 @@ public class CertificateServiceImpl implements CertificateService {
     private String vardReferensId;
     private String logicalAddress;
 
-    /**
-     * NOTE: This implementation only correctly the fields used by the SendMedicalCertificateResponderInterface
-     * implementation. (The responserinterface used here now should be replaced with a custom
-     * interface for this type of sendCertificate that is initiated by the citizen from MI)
-     *
-     * @see se.inera.intyg.minaintyg.web.web.service.CertificateService#sendCertificate(java.lang.String,
-     *      java.lang.String, java.lang.String)
-     */
     @Override
     public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
         LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
