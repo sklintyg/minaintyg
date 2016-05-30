@@ -25,6 +25,7 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var xml2js = require('xml2js');
 
 module.exports = {
@@ -36,9 +37,12 @@ module.exports = {
      */
     readTextsFromFkTextFile: function(textXmlFile) {
         var deferred = protractor.promise.defer();
-
         var parser = new xml2js.Parser();
-        fs.readFile(__dirname + '/../../../src/main/resources/texts/' + textXmlFile, function(err, data) {
+
+        //cwd is expected to be webcert/test
+        var fullPath = path.join(process.cwd(), '../src/main/resources/texts/' + textXmlFile);
+        console.log('About to load FK xml text file:' + fullPath);
+        fs.readFile(fullPath, function(err, data) {
 
             if (err) {
                 console.error('Error while reading file ' + err);

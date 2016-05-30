@@ -3,7 +3,6 @@
 
 var testdataHelper = require('./../helpers/testdataHelper.js');
 
-// These are pushed to intygstjänsten using restHelper.createIntyg
 var templateJsonObjLuaefs = require('./luae_fs.json');
 
 module.exports = {
