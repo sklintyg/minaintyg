@@ -1,7 +1,7 @@
 /*globals JSON*/
 'use strict';
 
-var testdataHelper = require('./../helpers/testDataHelper.js');
+var testdataHelper = require('./../helpers/testdataHelper.js');
 
 // These are pushed to intygstjänsten using restHelper.createIntyg
 var templateJsonObjLuaefs = require('./luae_fs.json');
