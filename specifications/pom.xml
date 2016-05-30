@@ -26,7 +26,7 @@
   <parent>
     <groupId>se.inera.intyg.minaintyg</groupId>
     <artifactId>minaintyg</artifactId>
-    <version>3.0.0-b25</version>
+    <version>0-SNAPSHOT</version>
   </parent>
 
   <artifactId>minaintyg-specifications</artifactId>
