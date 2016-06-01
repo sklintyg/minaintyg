@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;

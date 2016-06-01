@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PART_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.STATUS_KOD_CODE_SYSTEM;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.PART_CODE_SYSTEM;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.STATUS_KOD_CODE_SYSTEM;
 
 import java.util.*;
 
