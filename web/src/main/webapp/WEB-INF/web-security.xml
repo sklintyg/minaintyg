@@ -32,7 +32,7 @@
         auth ws call as normal. So, use something like .../sso?guid=19900101-2122 to fake a login and otherwise a full mvk auth will 
         be executed -->
     <bean class="se.inera.intyg.minaintyg.web.web.security.MvkValidationServiceAdvice">
-      <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-[0-9]{4}" />
+      <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-?[0-9]{4}" />
     </bean>
     <security:http security="none" pattern="/anvandare/consent/**"/>
   </beans>
