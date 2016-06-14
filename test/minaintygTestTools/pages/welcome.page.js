@@ -25,7 +25,6 @@
  * Created by stephenwhite on 09/06/15.
  */
 'use strict';
-var specHelper = require('./../helpers/specHelper.js')
 
 module.exports = {
 

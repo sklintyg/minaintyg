@@ -1,0 +1,177 @@
+<ns2:RegisterCertificate xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2" xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:2" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:2">
+  <ns2:intyg>
+    <ns4:intygs-id>
+      <ns3:root>TSTNMT2321000156-1039</ns3:root>
+      <ns3:extension>CERTIFICATE_ID</ns3:extension>
+    </ns4:intygs-id>
+    <ns4:typ>
+      <ns3:code>LUAE_FS</ns3:code>
+      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
+      <ns3:displayName>Läkarutlåtande för aktivitetsersättning vid förlängd skolgång</ns3:displayName>
+    </ns4:typ>
+    <ns4:version>1.0</ns4:version>
+    <ns4:signeringstidpunkt>SIGNED_DATE</ns4:signeringstidpunkt>
+    <ns4:skickatTidpunkt>SENT_DATE</ns4:skickatTidpunkt>
+    <ns4:patient>
+      <ns4:person-id>
+        <ns3:root>1.2.752.129.2.1.3.3</ns3:root>
+        <ns3:extension>PATIENT_CRN</ns3:extension>
+      </ns4:person-id>
+      <ns4:fornamn>Tolvan</ns4:fornamn>
+      <ns4:efternamn>Tolvansson</ns4:efternamn>
+      <ns4:postadress>Pgatan 2</ns4:postadress>
+      <ns4:postnummer>100 20</ns4:postnummer>
+      <ns4:postort>Stadby gärde</ns4:postort>
+    </ns4:patient>
+    <ns4:skapadAv>
+      <ns4:personal-id>
+        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+        <ns3:extension>TSTNMT2321000156-103F</ns3:extension>
+      </ns4:personal-id>
+      <ns4:fullstandigtNamn>DOCTOR_NAME</ns4:fullstandigtNamn>
+      <ns4:forskrivarkod>2481632</ns4:forskrivarkod>
+      <ns4:befattning>
+        <ns3:code>Klinikchef</ns3:code>
+        <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
+        <ns3:displayName></ns3:displayName>
+      </ns4:befattning>
+      <ns4:befattning>
+        <ns3:code>Forskningsledare</ns3:code>
+        <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
+        <ns3:displayName></ns3:displayName>
+      </ns4:befattning>
+      <ns4:enhet>
+        <ns4:enhets-id>
+          <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+          <ns3:extension>CAREUNIT_ID</ns3:extension>
+        </ns4:enhets-id>
+        <ns4:arbetsplatskod>
+          <ns3:root>1.2.752.29.4.71</ns3:root>
+          <ns3:extension>45312</ns3:extension>
+        </ns4:arbetsplatskod>
+        <ns4:enhetsnamn>CAREUNIT_NAME</ns4:enhetsnamn>
+        <ns4:postadress>Enhetsg. 1</ns4:postadress>
+        <ns4:postnummer>100 10</ns4:postnummer>
+        <ns4:postort>Stadby</ns4:postort>
+        <ns4:telefonnummer>0812341234</ns4:telefonnummer>
+        <ns4:epost>ve1@vg1.se</ns4:epost>
+        <ns4:vardgivare>
+          <ns4:vardgivare-id>
+            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+            <ns3:extension>CAREGIVER_ID</ns3:extension>
+          </ns4:vardgivare-id>
+          <ns4:vardgivarnamn>CAREGIVER_NAME</ns4:vardgivarnamn>
+        </ns4:vardgivare>
+      </ns4:enhet>
+      <ns4:specialistkompetens>
+        <ns3:code>Kirurg</ns3:code>
+      </ns4:specialistkompetens>
+    </ns4:skapadAv>
+    <ns4:svar id="1">
+      <ns4:delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>UNDERSOKNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min undersökning av patienten</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="1.2">UNDERSOKNING_DATE</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="1">
+      <ns4:delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>JOURNALUPPGIFTER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Journaluppgifter från den</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="1.2">JOURNALUPPGIFTER_DATE</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="1">
+      <ns4:delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>ANHORIG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Anhörigs beskrivning av patienten</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="1.2">ANHORIG_DATE</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="1">
+      <ns4:delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>ANNAT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Annat</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="1.2">ANNAT_DATE</ns4:delsvar>
+      <ns4:delsvar id="1.3">ANNAT_BESKRIVNING</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="2">
+      <ns4:delsvar id="2.1">KANNEDOMPATIENT_DATE</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="3">
+      <ns4:delsvar id="3.1">true</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="4">
+      <ns4:delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>PSYKOLOG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från psykolog</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="4.2">2015-09-03</ns4:delsvar>
+      <ns4:delsvar id="4.3">Skickas med posten</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="4">
+      <ns4:delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>HABILITERING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från habiliteringen</ns3:displayName>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="4.2">2015-11-04</ns4:delsvar>
+      <ns4:delsvar id="4.3">Arkivet</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="6">
+      <ns4:delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>S47</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="6.1">Klämskada skuldra</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="6">
+      <ns4:delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>J22</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </ns4:delsvar>
+      <ns4:delsvar id="6.1">Icke specificerad akut infektion i nedre luftvägarna</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="15">
+      <ns4:delsvar id="15.1">Skoldansen</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="16">
+      <ns4:delsvar id="16.1">Haltar när han dansar</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="25">
+      <ns4:delsvar id="25.1">Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="26">
+      <ns4:delsvar id="26.1">true</ns4:delsvar>
+      <ns4:delsvar id="26.2">Vill stämma av ersättningen</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="9001">
+      <ns4:delsvar id="9001.1">Tämligen påverkad</ns4:delsvar>
+    </ns4:svar>
+    <ns4:svar id="9002">
+      <ns4:delsvar id="9002.1">Minst 3 fot</ns4:delsvar>
+    </ns4:svar>
+  </ns2:intyg>
+</ns2:RegisterCertificate>

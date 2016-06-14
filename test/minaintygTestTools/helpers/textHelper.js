@@ -39,7 +39,7 @@ module.exports = {
         var deferred = protractor.promise.defer();
         var parser = new xml2js.Parser();
 
-        //cwd is expected to be webcert/test
+        //cwd is expected to be minaintyg/test
         var fullPath = path.join(process.cwd(), '../src/main/resources/texts/' + textXmlFile);
         console.log('About to load FK xml text file:' + fullPath);
         fs.readFile(fullPath, function(err, data) {
