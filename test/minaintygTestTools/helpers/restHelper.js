@@ -27,6 +27,7 @@ var restUtil = require('./../util/rest.util.js');
 module.exports = {
 
     createIntyg: function(createJson) {
+        console.log(createJson);
         return restUtil.createIntyg(createJson);
     },
     deleteConsent: function(userId) {

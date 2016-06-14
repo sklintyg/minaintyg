@@ -19,15 +19,15 @@
 
 'use strict';
 var environment = require('./environment.js');
-var testdata = require('./testdata/testdata.js');
 var pages = require('./pages/pages.js');
-var helpers = require('./helpers/helpers.js'); // The order is important. Helpers requires pages.
+var helpers = require('./helpers/helpers.js');      // The order is important. Helpers requires pages.
+var testdata = require('./testdata/testdata.js');   // The order is important. Testdata requires helpers.
 var restUtil = require('./util/rest.util.js');
 
 module.exports = {
     envConfig: environment.envConfig,
-    testdata: testdata,
     pages: pages,
     helpers: helpers,
+    testdata: testdata,
     restUtil: restUtil
 };

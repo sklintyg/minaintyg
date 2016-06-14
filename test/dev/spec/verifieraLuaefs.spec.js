@@ -31,7 +31,7 @@ var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
-var luaefs = miTestTools.testdata.luaefs;
+var luae_fs = miTestTools.testdata.luae_fs;
 
 describe('Verifiera LUAE_FS intyg', function() {
 
@@ -49,8 +49,9 @@ describe('Verifiera LUAE_FS intyg', function() {
         // Ta bort tidigare samtycken
         restHelper.deleteConsent();
 
-        var intyg = luaefs.getIntyg();
+        var intyg = luae_fs.getIntyg();
         intygsId = intyg.id;
+        console.log(intyg);
         restHelper.createIntyg(intyg);
     });
 
@@ -93,7 +94,10 @@ describe('Verifiera LUAE_FS intyg', function() {
         });
 
         it('Verifiera intygshuvud', function() {
-            //startPage.viewCertificate('viewCertificateBtn-' + intygsId);
+            expect(element(by.id('patient-name')).getText()).toBe('Tolvan Tolvansson');
+            expect(element(by.id('patient-crn')).getText()).toBe('191212121212');
+            expect(element(by.id('careunit')).getText()).toBe('WebCert Enhet 1');
+            expect(element(by.id('caregiver')).getText()).toBe('WebCert Vårdgivare 1');
         });
 
         it('Verifiera grund för medicinskt underlag', function() {
@@ -105,29 +109,62 @@ describe('Verifiera LUAE_FS intyg', function() {
             expect(viewPage.getDynamicLabelText('KV_FKMU_0001.ANNAT.RBK')).toBe(texts['KV_FKMU_0001.ANNAT.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_2.RBK')).toBe(texts['FRG_2.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_3.RBK')).toBe(texts['FRG_3.RBK']);
+
+            // Utlåtande baserat på
+            expect(element(by.id('undersokningAvPatienten')).element(by.binding('cert.undersokningAvPatienten')).getText()).toBe('| 26 maj 2016');
+            expect(element(by.id('journaluppgifter')).element(by.binding('cert.journaluppgifter')).getText()).toBe('| 26 maj 2016');
+            expect(element(by.id('anhorigsBeskrivningAvPatienten')).element(by.binding('cert.anhorigsBeskrivningAvPatienten')).getText()).toBe('| 26 maj 2016');
+            expect(element(by.id('annatGrundForMU')).element(by.binding('cert.annatGrundForMU')).getText()).toBe('| 26 maj 2016');
+            expect(element(by.binding('cert.annatGrundForMUBeskrivning')).getText()).toBe('Uppgifter från habiliteringscentrum.');
+
+            // Känt patienten sedan
+            expect(element(by.binding('cert.kannedomOmPatient')).getText()).toBe('20 maj 2016');
+
+            // Andra medicinska underlag
+            expect(element(by.id('underlagFinns-yes')).getText()).toBe('Ja');
+
+            expect(element(by.id('underlag_0_typ')).getText()).toBe('Underlag från psykolog');
+            expect(element(by.id('underlag_0_datum')).getText()).toBe('3 september 2015');
+            expect(element(by.id('underlag_0_hamtasFran')).getText()).toBe('Skickas med posten');
+            expect(element(by.id('underlag_1_typ')).getText()).toBe('Underlag från habiliteringen');
+            expect(element(by.id('underlag_1_datum')).getText()).toBe('4 november 2015');
+            expect(element(by.id('underlag_1_hamtasFran')).getText()).toBe('Arkivet');
         });
 
         it('Verifiera diagnos', function() {
             expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_3.RBK')).toBe(texts['FRG_3.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_6.2.RBK')).toBe(texts['DFR_6.2.RBK']);
+
+            expect(element(by.id('diagnosKod0')).getText()).toBe('S47');
+            expect(element(by.id('diagnosBeskrivning0')).getText()).toBe('Klämskada skuldra');
+            expect(element(by.id('diagnosKod1')).getText()).toBe('J22');
+            expect(element(by.id('diagnosBeskrivning1')).getText()).toBe('Icke specificerad akut infektion i nedre luftvägarna');
         });
 
         it('Verifiera funktionsnedsättning', function() {
             expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_15.RBK')).toBe(texts['FRG_15.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_16.RBK')).toBe(texts['FRG_16.RBK']);
+
+            expect(element(by.binding('cert.funktionsnedsattningDebut')).getText()).toBe('Skoldansen');
+            expect(element(by.binding('cert.funktionsnedsattningPaverkan')).getText()).toBe('Haltar när han dansar');
         });
 
         it('Verifiera övrigt', function() {
             expect(viewPage.getDynamicLabelText('KAT_5.RBK')).toBe(texts['KAT_5.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
+
+            expect(element(by.binding('cert.ovrigt')).getText()).toBe('Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar');
         });
 
         it('Verifiera kontakt', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
+
+            expect(element(by.id('kontaktFk-yes')).getText()).toBe('Ja');
+            expect(element(by.binding('cert.anledningTillKontakt')).getText()).toBe('Vill stämma av ersättningen');
         });
 
         it('Verifiera tilläggsfrågor', function() {
@@ -135,6 +172,18 @@ describe('Verifiera LUAE_FS intyg', function() {
             // These test should work when the internal transport format changes
             //expect(viewPage.getDynamicLabelText('DFR_9001.1.RBK')).toBe(texts['DFR_9001.1.RBK']);
             //expect(viewPage.getDynamicLabelText('DFR_9002.1.RBK')).toBe(texts['DFR_9002.1.RBK']);
+
+            expect(element(by.id('tillaggsfraga_0')).getText()).toBe('Tämligen påverkad');
+            expect(element(by.id('tillaggsfraga_1')).getText()).toBe('Minst 3 fot');
+        });
+
+        it('Verifiera intygsfot', function() {
+            expect(element(by.binding('cert.grundData.signeringsdatum')).getText()).toBe('2016-05-26');
+            expect(element(by.binding('cert.grundData.skapadAv.fullstandigtNamn')).getText()).toBe('Jan Nilsson');
+            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.enhetsnamn')).getText()).toBe('WebCert Enhet 1');
+            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.postadress')).getText()).toBe('Enhetsg. 1');
+            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.postnummer')).getText()).toBe('100 10 Stadby');
+            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.telefonnummer')).getText()).toBe('0812341234');
         });
 
     });
