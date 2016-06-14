@@ -34,11 +34,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.collect.ImmutableSet;
+
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
-
-import com.google.common.collect.ImmutableSet;
 
 /**
  * Created by orjan on 14-08-19(34).
@@ -82,7 +82,6 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
         // Check consent state of citizen
         if (!citizen.hasConsent()) {
-            LOG.warn("User: {} does not have consent", citizenPersonnummer.getPnrHash());
             final String methodName;
             if (exchange != null) {
                 OperationResourceInfo ori = exchange.get(OperationResourceInfo.class);
@@ -94,8 +93,9 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
             }
 
             if (ALLOWED_METHODS.contains(methodName)) {
-                LOG.debug("Allowing method {}", methodName);
+                LOG.debug("Allowing method {} without consent", methodName);
             } else {
+                LOG.error("User: {} does not have consent", citizenPersonnummer.getPnrHash());
                 try {
                     return new MessageContentsList(Response.status(Response.Status.FORBIDDEN)
                             .contentLocation(new URI("\\web\\visa-ge-samtycke#\\consent")).build());

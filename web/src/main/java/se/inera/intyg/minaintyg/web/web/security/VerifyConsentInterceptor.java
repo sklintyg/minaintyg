@@ -65,6 +65,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
         // Check consent state of citizen
         if (!citizen.hasConsent()) {
+            LOG.warn("User: {} does not have consent", new Personnummer(citizen.getUsername()).getPnrHash());
             response.sendRedirect("/web/visa-ge-samtycke#/consent");
             // return false to indicate that the request/filter chain should stop here.
             // We have already taken care of a respone to the client.
