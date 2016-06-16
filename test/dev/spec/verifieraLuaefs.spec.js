@@ -51,7 +51,6 @@ describe('Verifiera LUAE_FS intyg', function() {
 
         var intyg = luae_fs.getIntyg();
         intygsId = intyg.id;
-        console.log(intyg);
         restHelper.createIntyg(intyg);
     });
 
