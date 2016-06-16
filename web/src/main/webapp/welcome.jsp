@@ -127,6 +127,7 @@ if ("prod".equals(profile)) {
           </div>
         </div>
       </div>
+      <a href="/showcase/index.html" target="_blank">Komponentbilbiotek (kräver inloggning först)</a><br/>
 
     </div>
   </div>

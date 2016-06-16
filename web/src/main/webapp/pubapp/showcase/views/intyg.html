@@ -1,0 +1,56 @@
+<h2>Komponenter för intyg</h2>
+
+<h3>Intygets huvudfält</h3>
+<div id="certificate" class="certificate">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="cert">
+        <div mi-intyg-main-field cert="cert">
+          Här kan det stå extra information beroende på intygstyp
+        </div>
+
+        <div class="cert-body">
+          <h3>Intygsfält ifyllt</h3>
+          <div mi-field field-label="test.fraga.label" filled="true">
+            Här står ett svar som läkaren skrivit
+          </div>
+
+          <h3>Intygsfält ej ifyllt</h3>
+          <div mi-field field-label="test.fraga.label" filled="false">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Wizard vid skicka intyg</h3>
+<div class="row-fluid">
+  <div class="wizard">
+    <ul class="steps">
+      <li class="active" data-target="#step1"><span message key="luse.fishbone.label.valj-mottagare"></span><span class="chevron"></span></li>
+      <li data-target="#step2"><span message key="luse.fishbone.label.granska-skicka"></span><span class="chevron"></span></li>
+      <li data-target="#step3"><span message key="luse.fishbone.label.bekraftelse"></span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="wizard">
+    <ul class="steps">
+      <li class="wstep-completed" data-target="#step1"><a><span message key="luse.fishbone.label.valj-mottagare"></span></a><span class="chevron"></span></li>
+      <li class="active" data-target="#step2"><span message key="luse.fishbone.label.granska-skicka"></span><span class="chevron"></span></li>
+      <li data-target="#step3"><span message key="luse.fishbone.label.bekraftelse"></span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="wizard">
+    <ul class="steps">
+      <li class="wstep-completed" data-target="#step1"><span message key="luse.fishbone.label.valj-mottagare"></span><span class="chevron"></span></li>
+      <li class="wstep-completed" data-target="#step2"><span message key="luse.fishbone.label.granska-skicka"></span><span class="chevron"></span></li>
+      <li class="active" data-target="#step3"><span message key="luse.fishbone.label.bekraftelse"></span></li>
+    </ul>
+  </div>
+</div>
