@@ -86,7 +86,7 @@
               i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen
               person.</p>
             <p>
-              <a href="http://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
+              <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
                 hur du skaffar en e-legitimation</a>
             </p>
             <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>

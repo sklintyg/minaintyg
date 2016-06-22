@@ -22,6 +22,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="minaintyg">
@@ -73,7 +74,7 @@
           </div>
           <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
           <div class="btn-row">
-            <a class="btn btn-success" href="http://www.minavardkontakter.se"><spring:message
+            <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
                 code="info.loggedout.fk.loginagain" /></a>
           </div>
         </div>
