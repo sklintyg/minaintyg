@@ -1,0 +1,17 @@
+description = 'Mina intyg (FitNesse)'
+
+dependencies {
+    compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
+    compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
+    compile 'se.inera.intyg.common:common-specifications:0-SNAPSHOT'
+    compile 'org.codehaus.groovy:groovy-all:2.4.3'
+    compile 'org.fitnesse:fitnesse:20131110'
+    compile 'org.gebish:geb-core:0.10.0'
+    compile 'org.seleniumhq.selenium:selenium-server:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-firefox-driver:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-support:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-chrome-driver:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-safari-driver:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-remote-driver:2.48.2'
+    compile 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.48.2'
+}

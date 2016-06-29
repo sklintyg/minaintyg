@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
-    var DEST_DIR = 'target/webapp/app/';
+    var DEST_DIR = 'build/apps/app/';
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
     grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(minaintyg.
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
             minaintyg: {
                 cwd: __dirname + '/src/main/webapp',
                 src: ['app/**/*.html'],
-                dest: __dirname + '/target/webapp/app/templates.js',
+                dest: __dirname + '/build/apps/app/templates.js',
                 options: {
                     module: 'minaintyg',
                     url: function(url) {
