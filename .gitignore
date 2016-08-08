@@ -12,3 +12,5 @@ rebel.xml
 
 .idea
 *.iml
+build
+.gradle
