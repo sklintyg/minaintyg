@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.PART_CODE_SYSTEM;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.STATUS_KOD_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 
 import java.util.*;
 
@@ -167,7 +167,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            List<UtlatandeRecipient> recipientList = new ArrayList<UtlatandeRecipient>();
+            List<UtlatandeRecipient> recipientList = new ArrayList<>();
             for (RecipientType recipientType : response.getRecipient()) {
                 UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(recipientType.getId(), recipientType.getName());
                 recipientList.add(utlatandeRecipient);
@@ -240,7 +240,7 @@ public class CertificateServiceImpl implements CertificateService {
     private Part toPart(PartKod partkod) {
         Part part = new Part();
         part.setCode(partkod.name());
-        part.setCodeSystem(PART_CODE_SYSTEM);
+        part.setCodeSystem(KV_PART_CODE_SYSTEM);
         part.setDisplayName(partkod.getDisplayName());
         return part;
     }
@@ -248,7 +248,7 @@ public class CertificateServiceImpl implements CertificateService {
     private Statuskod toStatus(StatusKod statuskod) {
         Statuskod status = new Statuskod();
         status.setCode(statuskod.name());
-        status.setCodeSystem(STATUS_KOD_CODE_SYSTEM);
+        status.setCodeSystem(KV_STATUS_CODE_SYSTEM);
         status.setDisplayName(statuskod.getDisplayName());
         return status;
     }
