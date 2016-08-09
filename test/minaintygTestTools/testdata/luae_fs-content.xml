@@ -6,7 +6,7 @@
     </ns4:intygs-id>
     <ns4:typ>
       <ns3:code>LUAE_FS</ns3:code>
-      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
       <ns3:displayName>Läkarutlåtande för aktivitetsersättning vid förlängd skolgång</ns3:displayName>
     </ns4:typ>
     <ns4:version>1.0</ns4:version>
@@ -68,6 +68,7 @@
       </ns4:specialistkompetens>
     </ns4:skapadAv>
     <ns4:svar id="1">
+      <ns4:instans>1</ns4:instans>
       <ns4:delsvar id="1.1">
         <ns3:cv>
           <ns3:code>UNDERSOKNING</ns3:code>
@@ -78,6 +79,7 @@
       <ns4:delsvar id="1.2">UNDERSOKNING_DATE</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="1">
+      <ns4:instans>2</ns4:instans>
       <ns4:delsvar id="1.1">
         <ns3:cv>
           <ns3:code>JOURNALUPPGIFTER</ns3:code>
@@ -88,6 +90,7 @@
       <ns4:delsvar id="1.2">JOURNALUPPGIFTER_DATE</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="1">
+      <ns4:instans>3</ns4:instans>
       <ns4:delsvar id="1.1">
         <ns3:cv>
           <ns3:code>ANHORIG</ns3:code>
@@ -98,6 +101,7 @@
       <ns4:delsvar id="1.2">ANHORIG_DATE</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="1">
+      <ns4:instans>4</ns4:instans>
       <ns4:delsvar id="1.1">
         <ns3:cv>
           <ns3:code>ANNAT</ns3:code>
@@ -115,6 +119,7 @@
       <ns4:delsvar id="3.1">true</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="4">
+      <ns4:instans>1</ns4:instans>
       <ns4:delsvar id="4.1">
         <ns3:cv>
           <ns3:code>PSYKOLOG</ns3:code>
@@ -126,6 +131,7 @@
       <ns4:delsvar id="4.3">Skickas med posten</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="4">
+      <ns4:instans>2</ns4:instans>
       <ns4:delsvar id="4.1">
         <ns3:cv>
           <ns3:code>HABILITERING</ns3:code>
@@ -137,6 +143,7 @@
       <ns4:delsvar id="4.3">Arkivet</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="6">
+      <ns4:instans>1</ns4:instans>
       <ns4:delsvar id="6.2">
         <ns3:cv>
           <ns3:code>S47</ns3:code>
@@ -146,6 +153,7 @@
       <ns4:delsvar id="6.1">Klämskada skuldra</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="6">
+      <ns4:instans>2</ns4:instans>
       <ns4:delsvar id="6.2">
         <ns3:cv>
           <ns3:code>J22</ns3:code>
