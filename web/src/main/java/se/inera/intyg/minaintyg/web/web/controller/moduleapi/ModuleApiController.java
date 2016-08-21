@@ -25,7 +25,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -42,10 +48,14 @@ import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.minaintyg.web.api.*;
+import se.inera.intyg.minaintyg.web.api.Certificate;
+import se.inera.intyg.minaintyg.web.api.CertificateStatus;
+import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
@@ -143,15 +153,43 @@ public class ModuleApiController {
     @Produces("application/pdf")
     public final Response getCertificatePdf(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
+        return getPdfInternal(type, id, null, false);
+    }
 
+    /**
+     * Return the certificate identified by the given id as customized employer copy PDF rendition.
+     *
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @return The certificate in PDF format
+     */
+    @POST
+    @Path("/{type}/{id}/pdf/arbetsgivarutskrift")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/pdf")
+    public final Response getCertificatePdfEmployerCopy(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id,
+            List<String> selectedOptionalFields) {
+        LOG.debug("getCertificatePdfEmployerCopy: {}", id);
+        return getPdfInternal(type, id, selectedOptionalFields, true);
+
+    }
+
+    private Response getPdfInternal(String type, String id, List<String> optionalFields, boolean isEmployerCopy) {
         Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
         if (utlatande.isPresent()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);
-                List<Status> statusList = utlatande.get().getMetaData().getStatus().stream().filter(s -> CertificateState.SENT.equals(s.getType())).collect(Collectors.toList());
+                List<Status> statusList = utlatande.get().getMetaData().getStatus().stream().filter(s -> CertificateState.SENT.equals(s.getType()))
+                        .collect(Collectors.toList());
 
-                PdfResponse pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG);
+                PdfResponse pdf;
+
+                if (isEmployerCopy) {
+                    pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, optionalFields);
+                } else {
+                    pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG);
+                }
 
                 return Response.ok(pdf.getPdfData())
                         .header(CONTENT_DISPOSITION, "attachment; filename=" + pdf.getFilename())
