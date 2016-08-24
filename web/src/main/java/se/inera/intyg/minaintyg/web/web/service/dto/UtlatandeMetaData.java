@@ -22,12 +22,9 @@ package se.inera.intyg.minaintyg.web.web.service.dto;
 import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import org.joda.time.LocalDateTime;
 import se.inera.intyg.common.support.model.Status;
 
 /**

@@ -21,10 +21,10 @@ package se.inera.intyg.minaintyg.web.web.service;
 import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
 import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
