@@ -28,6 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import se.inera.intyg.common.support.modules.support.api.dto.InvalidPersonNummerException;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+
 /**
  * AOP Advice that optionally overrides the WS call that {@link org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate} executes against MVK. The result
  * is overridden if you try to use a civic registration number as token.
@@ -39,6 +42,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class MvkValidationServiceAdvice {
 
     private static final Logger LOG = LoggerFactory.getLogger(MvkValidationServiceAdvice.class);
+    private static final int PNR_GROUP_LENGTH = 8;
 
     @Value(value = "fakeMatcherRegExp")
     private String fakeMatcherRegExp;
@@ -55,7 +59,14 @@ public class MvkValidationServiceAdvice {
         String guid = req.getAuthenticationToken();
         if (guid != null && guid.matches(fakeMatcherRegExp)) {
             LOG.debug("'Fake' mvk token parameter detected - Mocking validation against MVK as {}...", guid);
-            return AuthenticationResultImpl.newPatient(req.getAuthenticationToken());
+            try {
+                // try to format token
+                final String normalizedPnr = new Personnummer(req.getAuthenticationToken()).getNormalizedPnr();
+                guid = normalizedPnr.substring(0, PNR_GROUP_LENGTH) + "-" + normalizedPnr.substring(PNR_GROUP_LENGTH);
+            } catch (InvalidPersonNummerException e) {
+                // Continue without formatting
+            }
+            return AuthenticationResultImpl.newPatient(guid);
         } else {
             LOG.debug("'Real' mvk token parameter detected - validating against MVK with token {}...", guid);
             return joinPoint.proceed();
