@@ -41,6 +41,11 @@ environments {
     firefox {
         driver = { new FirefoxDriver() }
     }
+    firefoxRemote {
+        driver = {
+            new RemoteWebDriver(new URL("http://selenium1.nordicmedtest.se:4444/wd/hub"), DesiredCapabilities.firefox())
+        }
+    }
     headless {
         driver = { new HtmlUnitDriver() }
     }

@@ -232,6 +232,7 @@
         <properties>
           <certificate.baseUrl>https://intygstjanst.inera.nordicmedtest.se/inera-certificate/</certificate.baseUrl>
           <certificate.web.baseUrl>https://minaintyg.inera.nordicmedtest.se/web/</certificate.web.baseUrl>
+          <geb.env>firefoxRemote</geb.env>
         </properties>
     </profile>
     <profile>
