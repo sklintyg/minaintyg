@@ -3,7 +3,9 @@ description = 'Mina intyg (FitNesse)'
 dependencies {
     compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
     compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
-    compile 'se.inera.intyg.common:common-specifications:0-SNAPSHOT'
+
+    compile "se.inera.intyg.common:common-specifications:${commonVersion}"
+
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile 'org.fitnesse:fitnesse:20131110'
     compile 'org.gebish:geb-core:0.10.0'
