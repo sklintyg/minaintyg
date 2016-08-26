@@ -41,6 +41,7 @@ subprojects {
       entry(key: 'gitCommit', default: "${grgit.head().id}")
       entry(key: 'gitBranch', default: "${grgit.branch.getCurrent().getName()}")
       entry(key: 'commonVersion', default: "${resolvedCommonVersion}")
+      entry(key: 'typerVersion', default: "${resolvedTyperVersion}")
     }
   }
 
