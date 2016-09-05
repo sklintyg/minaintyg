@@ -20,27 +20,35 @@
 /* globals browser */
 
 /**
- * Created by erik
+ * Created by Magnus Ekstrand 2016-05-09
  */
 
 'use strict';
+
 var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
-var MinaintygStartPageBase = MinaintygBasePage._extend({
+var MinaintygConsentPage = MinaintygBasePage._extend({
 
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('viewCertificateHeader'));
-        this.customize = element(by.id('customizeCertificateBtn'));
+        this.at = element(by.id('customize-certificate'));
+        this.next = element(by.id('confirmCertificateCustomizationBtn'));
+        this.cancel = element(by.id('cancelCertificateCustomizationBtn'));
+    },
+    get: function () {
+        this.getPage('custom');
     },
     isAt: function isAt() {
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    clickCustomizeCertificate: function() {
-        this.customize.click();
+    clickNext: function() {
+        this.next.click();
+    },
+    clickCancel: function() {
+        this.cancel.click();
     }
 });
 
-module.exports = new MinaintygStartPageBase();
+module.exports = new MinaintygConsentPage();
