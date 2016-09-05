@@ -35,7 +35,7 @@ var fk7263 = miTestTools.testdata.fk7263;
 
 var EC = protractor.ExpectedConditions;
 
-fdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
+xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     var intygsId = null;
 
@@ -49,11 +49,7 @@ fdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     });
 
-    fdescribe('Logga in och gå till anpassat intyg', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
+    xdescribe('Logga in och gå till anpassat intyg', function() {
 
         // Logga in
         it('Logga in', function() {
@@ -97,7 +93,9 @@ fdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     });
 
-    fdescribe('Verifiera anpassat intyg', function() {
+    xdescribe('Verifiera anpassat intyg', function() {
+        expect(customPage.isAt()).toBeTruthy();
+
         expect(element(by.id('options.2')).isSelected()).toBe(true);
         expect(element(by.id('options.3')).isSelected()).toBe(true);
         expect(element(by.id('options.4')).isSelected()).toBe(true);
