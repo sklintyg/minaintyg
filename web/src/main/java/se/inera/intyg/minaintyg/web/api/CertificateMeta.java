@@ -20,6 +20,7 @@
 package se.inera.intyg.minaintyg.web.api;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CertificateMeta implements Serializable {
     private String type;
     private String caregiverName;
     private String careunitName;
-    private String sentDate;
+    private LocalDateTime sentDate;
     private Boolean archived;
     private Boolean cancelled;
     private String complementaryInfo;
@@ -71,11 +72,11 @@ public class CertificateMeta implements Serializable {
         this.careunitName = careunitName;
     }
 
-    public String getSentDate() {
+    public LocalDateTime getSentDate() {
         return sentDate;
     }
 
-    public void setSentDate(String sentDate) {
+    public void setSentDate(LocalDateTime sentDate) {
         this.sentDate = sentDate;
     }
 
