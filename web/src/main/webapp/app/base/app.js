@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global MI_CONFIG, miMessages */
+/* global MI_CONFIG */
 window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
 var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
 
-app.run([ '$rootScope', '$window', 'common.messageService', function($rootScope, $window, messageService) {
+app.run([ '$rootScope', '$window', 'common.messageService', 'minaintyg.messages', function($rootScope, $window, messageService, miMessages) {
     'use strict';
 
     $rootScope.lang = 'sv';

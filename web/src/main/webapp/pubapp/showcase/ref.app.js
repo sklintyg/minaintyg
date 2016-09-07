@@ -17,8 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global MODULE_CONFIG, wcMessages, console */
-
 (function() {
     'use strict';
 
@@ -65,8 +63,8 @@
 
 
     // Inject language resources
-    app.run(['$log', '$rootScope', '$window', '$location', '$state', '$q', 'common.messageService', '$httpBackend',
-        function($log, $rootScope, $window, $location, $state, $q, messageService, $httpBackend) {
+    app.run(['$log', '$rootScope', '$window', '$location', '$state', '$q', 'common.messageService', '$httpBackend', 'minaintyg.messages',
+        function($log, $rootScope, $window, $location, $state, $q, messageService, $httpBackend, miMessages) {
 
             $rootScope.lang = 'sv';
             $rootScope.DEFAULT_LANG = 'sv';

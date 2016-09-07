@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var miMessages = {
+/* jshint maxlen: false */
+angular.module('minaintyg').constant('minaintyg.messages', {
     'sv': {
         'label.showall': 'Visa alla',
         'label.showfewer': 'Visa färre',
@@ -210,4 +210,4 @@ var miMessages = {
         'label.inbox': 'The INBOX',
         'label.archived': 'Archived'
     }
-};
+});

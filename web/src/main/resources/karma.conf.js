@@ -48,7 +48,6 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'jquery/jquery.js',
 
             // Load these first
-                SRC_DIR + 'messages.js',
                 TEST_DIR + 'app.test.js',
 
             { pattern: SRC_DIR + '**/*' },
