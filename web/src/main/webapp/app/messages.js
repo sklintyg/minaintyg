@@ -168,7 +168,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'certificatetypes.fk7263.commonname': 'Läkarintyg',
         'certificatetypes.fk7263.typename': ' FK 7263',
         'certificatetypes.luse.commonname': 'Läkarutlåtande',
-        'certificatetypes.luse.typename': ' Sjukersättning',
+        'certificatetypes.luse.typename': ' för sjukersättning',
         'certificatetypes.lisu.commonname': 'Läkarintyg',
         'certificatetypes.lisu.typename': ' Sjukpenning utökad',
         'certificatetypes.luae_fs.commonname': 'Läkarutlåtande',
