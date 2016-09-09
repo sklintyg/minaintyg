@@ -9,12 +9,12 @@
 </div>
 <div class="modal-footer">
   <button type="button" id="{{button1id}}" class="btn btn-success" ng-disabled="!dialog.acceptprogressdone" ng-click="button1click()">
-    <img ng-hide="dialog.acceptprogressdone" ng-src="/img/ajax-loader-small-green.gif" /> <span message key="{{button1text}}"></span>
+    <img ng-if="!dialog.acceptprogressdone" ng-src="/img/ajax-loader-small-green.gif" /> <span message key="{{button1text}}"></span>
   </button>
   <button type="button" id="{{button2id}}" class="btn btn-info" ng-click="button2click()">
     <span message key="{{button2text}}"></span>
   </button>
-  <button type="button" id="{{button3id}}" ng-show="button3Visible" class="btn btn-info" ng-click="button3click()">
+  <button type="button" id="{{button3id}}" ng-if="button3Visible" class="btn btn-info" ng-click="button3click()">
     <span message key="{{button3text}}"></span>
   </button>
 </div>
