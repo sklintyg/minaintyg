@@ -32,8 +32,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'button.send': 'Skicka',
         'button.show': 'Visa intyget',
 
-        'view.label.blank': '- ej ifyllt',
-
         'consent.consentpage.title': 'Ditt samtycke',
         'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Det gör du genom att klicka i rutan längst ner på sidan efter att du läst igenom texten. Sedan kan du direkt börja använda Mina intyg.',
         'consent.aboutheader': 'Om tjänsten Mina intyg',

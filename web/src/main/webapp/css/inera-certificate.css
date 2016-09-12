@@ -225,6 +225,9 @@
 	-moz-border-radius: 8px 8px 8px 8px;
 	border-radius: 8px 8px 8px 8px;	
 }
+.body-row.unfilled {
+	background-color: #fff;
+}
 
 .cert-body .body-row .title {
 	color: #333333;
@@ -237,11 +240,21 @@
 	border-radius: 8px 8px 0px 0px;	
 }
 
+.cert-body .body-row .title h3 {
+	padding-top: 0;
+	color: #333;
+}
+.cert-body .body-row .title h4 {
+	color: #333;
+	font-size: 14px;
+	font-weight: normal;
+}
+
 .cert-body .body-row .unfilled {
-	color: #888;
-    -webkit-border-radius: 8px 8px 8px 8px;
-    -moz-border-radius: 8px 8px 8px 8px;
-    border-radius: 8px 8px 8px 8px;
+	/*color: #888;*/
+	-webkit-border-radius: 8px 8px 0px 0px;
+	-moz-border-radius: 8px 8px 0px 0px;
+	border-radius: 8px 8px 0px 0px;
 }
 
 .cert-body .body-row .text {
