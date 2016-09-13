@@ -5,6 +5,11 @@ plugins {
 ext.nexusUsername = System.properties['nexusUsername']
 ext.nexusPassword = System.properties['nexusPassword']
 
+ext {
+  springVersion = "4.2.2.RELEASE"
+  springSecurityVersion = "4.0.3.RELEASE"
+}
+  
 allprojects  {
   apply plugin: 'maven'
 
@@ -32,6 +37,11 @@ subprojects {
     maven { url "http://repo.maven.apache.org/maven2" }
   }
 
+  dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.9.0'
+  }
+  
   task createVersionPropertyFile(dependsOn: processResources) << {
     def propertyFile = "${buildDir}/resources/main/version.properties"
     ant.touch(file: propertyFile, mkdirs: "true")
