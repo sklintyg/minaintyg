@@ -70,7 +70,15 @@ task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
 
 test.dependsOn(jsTests)
 
-task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
+task unzipBuildTools(type: Copy) {
+  description 'Extracts common-build-tools'
+  into "$buildDir/build-tools/"
+  from {
+    configurations.buildtools.collect { zipTree(it) }
+  }
+}
+
+task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
   script = file('node_modules/grunt-cli/bin/grunt')
   args = ['default']
 }
@@ -112,6 +120,10 @@ gretty {
 
 war.dependsOn createVersionPropertyFile
 
+configurations {
+  buildtools
+}
+
 buildscript {
   repositories {
     jcenter()
@@ -129,6 +141,8 @@ buildscript {
 }
 
 dependencies {
+  buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
+
   compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.1"
 
   compile "se.inera.intyg.intygstyper:ts-bas:${typerVersion}"

@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         csslint: {
             minaintyg: {
                 options: {
-                    csslintrc: 'target/build-tools/csslint/.csslintrc',
+                    csslintrc: 'build/build-tools/csslint/.csslintrc',
                     force: true
                 },
                 src: [ SRC_DIR + '../**/*.css' ]
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
         jshint: {
             minaintyg: {
                 options: {
-                    jshintrc: 'target/build-tools/jshint/.jshintrc',
+                    jshintrc: 'build/build-tools/jshint/.jshintrc',
                     force: false,
                     ignores: ['**/*.min.js', '**/vendor/**']
                 },
@@ -214,7 +214,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' /* TODO: reactivate , 'jshint' */ ]);
+    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify', 'jshint' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);
