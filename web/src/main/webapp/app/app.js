@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global MI_CONFIG, miMessages */
+/* global MI_CONFIG */
 // defers bootstrapping until all modules have been loaded, further down ...
 window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
@@ -80,8 +80,8 @@ app.config(function($provide) {
     });
 });
 
-app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService',
-    function($log, $rootScope, $state, $window, messageService) {
+app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService', 'minaintyg.messages',
+    function($log, $rootScope, $state, $window, messageService, miMessages) {
         'use strict';
 
         $rootScope.lang = 'sv';

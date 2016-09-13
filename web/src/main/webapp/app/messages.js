@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var miMessages = {
+/* jshint maxlen: false */
+angular.module('minaintyg').constant('minaintyg.messages', {
     'sv': {
         'label.showall': 'Visa alla',
         'label.showfewer': 'Visa färre',
@@ -31,8 +31,6 @@ var miMessages = {
         'button.alt.archive': 'Arkivera intyget. Flyttar intyget till Arkiverade intyg',
         'button.send': 'Skicka',
         'button.show': 'Visa intyget',
-
-        'view.label.blank': '- ej ifyllt',
 
         'consent.consentpage.title': 'Ditt samtycke',
         'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Det gör du genom att klicka i rutan längst ner på sidan efter att du läst igenom texten. Sedan kan du direkt börja använda Mina intyg.',
@@ -88,7 +86,7 @@ var miMessages = {
         'about.consentheader': 'Samtycke',
         'about.consenttext': '<h3>Om tjänsten Mina intyg</h3><p>Mina intyg är en webbtjänst där du enkelt kan hantera olika vårdintyg som är utfärdade till dig. Du kan läsa intygen, spara ner dem på din dator och skriva ut dem. Du kan också skicka intygen vidare till Försäkringskassan och Transportstyrelsen. Det är du själv som styr över allt som händer med intygen.</p><h3>Personuppgifterna i Mina intyg</h3><p>Din vårdgivare är enligt patientdatalagen skyldig att föra patientjournal. De intyg som vårdgivaren utfärdar innehåller uppgifter från patientjournalen. När du ger ditt samtycke kommer din vårdgivare att lämna ut kopior av dina intyg till dig som du därefter kan hantera i Mina intyg. Personuppgifterna som finns i intygen är samma personuppgifter som hanteras i tjänsten Mina intyg. Det är:<ul><li>namn</li><li>personnummer</li><li>adress</li><li>diagnos</li><li>sjukdomsförlopp</li><li>funktionsnedsättning</li><li>aktivitetsbegränsning</li><li>rekommendationer</li><li>planerad eller pågående behandling</li><li>arbetsförmåga</li><li>prognos</li><li>vårdbesök</li></ul></p><p>Personuppgifterna finns i Mina intyg för att underlätta för dig. Du ska enkelt kunna hantera dina intyg och välja när och till vem du vill skicka dem.</p><h3>Ansvarig för Mina intyg</h3><p>Tjänsten Mina intyg drivs av Inera AB som är personuppgiftsansvarig för den behandling av personuppgifter om enskilda personer som sker i tjänsten.</p><h3>Dina rättigheter</h3><p>Som användare av tjänsten Mina intyg har du bland annat rätt att:</p><ul><li>varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB</li><li>när som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system med stöd av patientdatalagen)</li><li>begära att tredje man till vilka personuppgifter lämnats ut underrättas om personuppgifter som rättats, blockerats eller utplånats</li><li>kräva skadestånd enligt <a href="http://www.riksdagen.se/sv/Dokument-Lagar/Lagar/Svenskforfattningssamling/Personuppgiftslag-1998204_sfs-1998-204/?bet=1998:204" target="_blank">48 § PUL</a> vid behandling av personuppgifter i strid med lag.</li></ul></p><i>Kontaktuppgifter</i><p><a href="http://www.inera.se/" target="_blank">Inera AB</a><br>Postadress: Box 17703, 118 93 Stockholm<br>Telefon: 0771-25 10 10 (nationell kundservice)<br>E-post: nationellkundservice@inera.se<br>Organisationsnummer: 556559-4230</p><h3>Ge och återta samtycke</h3><p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att uppgifterna om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
         'about.revokeconsentheader': 'Återta samtycke',
-        'about.revokeconsenttext': '<p>Du kan när som helst återta ditt samtycke.</p><p>Om du återtar ditt samtycke upphör Inera att behandla dina personuppgifter, inklusive intyg, i Mina intyg. Om du därefter lämnar ett nytt samtycke kan du återigen se dina intyg.</p><p>Även om du lämnar ett nytt samtycke kan det i vissa fall finnas intyg som inte går att visa i Mina intyg igen. Det beror på att den vårdgivare som har utfärdat intygen upphört med sin verksamhet, eller slutat att använda tjänsten av annan anledning, under den tid som du har återtagit ditt samtycke. De intyg som inte längre kan visas i Mina intyg finns alltid hos vårdgivaren eller hos den vårdgivare eller myndighet som övertagit verksamheten.</p> <p>Om du vill behålla intygen så kan du skriva ut eller spara dem på din dator innan du återtar ditt samtycke. Gå till inkorgen och välj "Visa intyget", klicka sen på "Ladda ner/Skriv ut".<br/><br/>Om du inte återtar ditt samtycke finns dina intyg kvar i tjänsten.',
+        'about.revokeconsenttext': '<p>Du kan när som helst återta ditt samtycke.</p><p>Om du återtar ditt samtycke upphör Inera att behandla dina personuppgifter, inklusive intyg, i Mina intyg. Om du därefter lämnar ett nytt samtycke kan du återigen se dina intyg.</p><p>Även om du lämnar ett nytt samtycke kan det i vissa fall finnas intyg som inte går att visa i Mina intyg igen. Det beror på att den vårdgivare som har utfärdat intygen upphört med sin verksamhet, eller slutat att använda tjänsten av annan anledning, under den tid som du har återtagit ditt samtycke. De intyg som inte längre kan visas i Mina intyg finns alltid hos vårdgivaren eller hos den vårdgivare eller myndighet som övertagit verksamheten.</p> <p>Om du vill behålla intygen så kan du skriva ut eller spara dem på din dator innan du återtar ditt samtycke. Gå till inkorgen och välj "Visa intyget", klicka sen på "Spara som PDF".<br/><br/>Om du inte återtar ditt samtycke finns dina intyg kvar i tjänsten.',
         'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
         'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
         'about.juridikhead': 'Lagring av personuppgifter, sekretess och lagar',
@@ -168,7 +166,7 @@ var miMessages = {
         'certificatetypes.fk7263.commonname': 'Läkarintyg',
         'certificatetypes.fk7263.typename': ' FK 7263',
         'certificatetypes.luse.commonname': 'Läkarutlåtande',
-        'certificatetypes.luse.typename': ' Sjukersättning',
+        'certificatetypes.luse.typename': ' för sjukersättning',
         'certificatetypes.lisu.commonname': 'Läkarintyg',
         'certificatetypes.lisu.typename': ' Sjukpenning utökad',
         'certificatetypes.luae_fs.commonname': 'Läkarutlåtande',
@@ -210,4 +208,4 @@ var miMessages = {
         'label.inbox': 'The INBOX',
         'label.archived': 'Archived'
     }
-};
+});

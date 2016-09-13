@@ -19,11 +19,11 @@
 package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;

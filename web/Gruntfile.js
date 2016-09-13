@@ -95,7 +95,7 @@ module.exports = function(grunt) {
                 options: {
                     jshintrc: 'target/build-tools/jshint/.jshintrc',
                     force: false,
-                    ignores: ['**/*.min.js', '**/vendor/*.js']
+                    ignores: ['**/*.min.js', '**/vendor/**']
                 },
                 src: [ 'Gruntfile.js', SRC_DIR + '**/*.js', TEST_DIR + '**/*.js', '!' + DEST_DIR + '/app.min.js',
                         '!' + DEST_DIR + '/base/app.min.js' ]
@@ -214,7 +214,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify', 'jshint' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);

@@ -28,6 +28,7 @@ var welcomePage = require('./welcome.page.js');
 var consentPage = require('./consent.page.js');
 var inboxPage = require('./inbox.page.js');
 var viewPage = require('./view.page.js');
+var customPage = require('./custom.page.js');
 var aboutPage = require('./about.page.js');
 var errorPage = require('./error.page.js');
 
@@ -37,6 +38,7 @@ module.exports = {
     'consentPage': consentPage,
     'inboxPage': inboxPage,
     'viewPage': viewPage,
+    'customPage': customPage,
     'aboutPage': aboutPage,
     'errorPage': errorPage
 };

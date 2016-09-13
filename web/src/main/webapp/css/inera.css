@@ -637,18 +637,22 @@ button#archiveCertificateBtn {
 	padding: 10px 35px;
 	font-weight: bold;
 }
+
 .btn:focus {
 	color: #fff;
 	text-decoration: none;
 }
+
 .btn-default {
 	color: #333;
 	background-color: #fff;
 	border-color: #ccc;
 }
+
 .btn-default:focus {
 	color: #333;
 }
+
 .btn-success {
 	background: none;
 	background-color: #42a341;
@@ -656,6 +660,16 @@ button#archiveCertificateBtn {
 }
 
 .btn-success:hover {
+	background-color: #52ab51;
+}
+
+.btn-customize {
+	background: none;
+	background-color: #42a341;
+	cursor: pointer;
+}
+
+.btn-customize:hover {
 	background-color: #52ab51;
 }
 

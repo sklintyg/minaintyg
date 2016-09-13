@@ -24,20 +24,14 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
-import org.joda.time.DurationFieldType;
-import org.junit.After;
+import javax.servlet.http.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
@@ -45,7 +39,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class BrowserClosedInterceptorTest {
 
 	private static final String REDIRECT_LOCATION = "/home/login";
-	
+
     @Mock
     private LogoutHandler logoutHandler = mock(LogoutHandler.class);
 
@@ -58,25 +52,20 @@ public class BrowserClosedInterceptorTest {
 
     @Before
     public void init() {
-        DateTimeUtils.setCurrentMillisFixed(0);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
-        
+
         when(request.getSession()).thenReturn(session);
-        
+
         interceptor.setRedirectLocation(REDIRECT_LOCATION);
         interceptor.setTimeoutSeconds(5);
-    }
-    @After
-    public void after() {
-        DateTimeUtils.setCurrentMillisSystem();
     }
 
     @Test
     public void testValidRefresh() throws Exception {
 
-        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(-1));
+        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(1));
 
         boolean preHandle = interceptor.preHandle(request, response, null);
 
@@ -94,11 +83,11 @@ public class BrowserClosedInterceptorTest {
         assertTrue(preHandle);
 
     }
-    
+
     @Test
     public void testOldInvalidRequest() throws Exception {
 
-        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(-10));
+        when(session.getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP)).thenReturn(getOffsetTime(10));
 
         boolean preHandle = interceptor.preHandle(request, response, null);
 
@@ -108,8 +97,8 @@ public class BrowserClosedInterceptorTest {
 
     }
 
-    public DateTime getOffsetTime(int secondOffset) {
-        return DateTime.now().withFieldAdded(DurationFieldType.seconds(), secondOffset);
+    public LocalDateTime getOffsetTime(int secondOffset) {
+        return LocalDateTime.now().minusSeconds(secondOffset);
     }
 
 }

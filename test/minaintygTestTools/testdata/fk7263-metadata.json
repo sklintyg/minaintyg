@@ -1,0 +1,18 @@
+{
+  "id": "-",
+  "civicRegistrationNumber": "191212121212",
+  "careUnitId": "IFV1239877878-1042",
+  "careUnitName": "WebCert Enhet 1",
+  "careGiverId": "IFV1239877878-1041d",
+  "careGiverName": "WebCert Vårdgivare 1",
+  "signedDate": "2013-03-17T00:00:00",
+  "sentDate": "2013-03-17T00:00:00",
+  "signingDoctorName": "Jan Nilsson",
+  "states": [
+    {
+      "target": "HV",
+      "state": "RECEIVED",
+      "timestamp": "2013-03-17T00:00:01.234"
+    }
+  ]
+}

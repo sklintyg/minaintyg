@@ -29,6 +29,7 @@ import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
@@ -76,7 +79,6 @@ public abstract class ModuleApiControllerTest {
     @InjectMocks
     private ModuleApiController moduleApiController = new ModuleApiController();
 
-
     // - - - Setters - - -
 
     public void setPersonnummer(String personnummer) {
@@ -90,7 +92,6 @@ public abstract class ModuleApiControllerTest {
     public void setCertificateType(String certificateType) {
         this.certificateType = certificateType;
     }
-
 
     // - - - Test cases - - -
 
@@ -106,6 +107,24 @@ public abstract class ModuleApiControllerTest {
         when(citizenService.getCitizen()).thenReturn(citizen);
 
         Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+
+        assertEquals(OK.getStatusCode(), response.getStatus());
+        assertEquals(bytes, response.getEntity());
+    }
+
+    @Test
+    public void testGetCertificateEmployerPdf() throws Exception {
+        when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+
+        byte[] bytes = "<pdf-file>".getBytes();
+        when(moduleApi.pdfEmployer(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(List.class)))
+                .thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+
+        Citizen citizen = mockCitizen();
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        Response response = moduleApiController.getCertificatePdfEmployerCopy(certificateType, certificateId, new ArrayList<>());
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals(bytes, response.getEntity());
@@ -140,7 +159,6 @@ public abstract class ModuleApiControllerTest {
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
     }
-
 
     private Citizen mockCitizen() {
         Citizen citizen = mock(Citizen.class);
