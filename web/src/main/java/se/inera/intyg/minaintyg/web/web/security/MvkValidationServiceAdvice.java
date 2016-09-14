@@ -59,6 +59,7 @@ public class MvkValidationServiceAdvice {
         String guid = req.getAuthenticationToken();
         if (guid != null && guid.matches(fakeMatcherRegExp)) {
             LOG.debug("'Fake' mvk token parameter detected - Mocking validation against MVK as {}...", guid);
+            // CHECKSTYLE:OFF EmptyBlock
             try {
                 // try to format token
                 final String normalizedPnr = new Personnummer(req.getAuthenticationToken()).getNormalizedPnr();
@@ -66,6 +67,7 @@ public class MvkValidationServiceAdvice {
             } catch (InvalidPersonNummerException e) {
                 // Continue without formatting
             }
+            // CHECKSTYLE:ON EmptyBlock
             return AuthenticationResultImpl.newPatient(guid);
         } else {
             LOG.debug("'Real' mvk token parameter detected - validating against MVK with token {}...", guid);

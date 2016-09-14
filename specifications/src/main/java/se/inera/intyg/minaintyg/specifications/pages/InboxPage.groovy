@@ -46,7 +46,6 @@ class InboxPage extends AbstractLoggedInPage {
 
     def confirmArchiveCertificate() {
         confirmArchiveButton.click()
-        // TODO: FIX!! The animation on InboxPage requires delay, otherwise doneLoading() returns true immediately
         Thread.sleep(1000)
         waitFor {
             doneLoading()
@@ -68,5 +67,5 @@ class InboxPage extends AbstractLoggedInPage {
 
     def String complementaryInfoIsSet(String id) {
         complementaryInfoText(id).text()
-    } 
+    }
 }

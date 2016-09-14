@@ -25,3 +25,4 @@ class WelcomePage extends AbstractPage {
 
     static at = { $("div", class: "welcomepage").isDisplayed() }
 }
+

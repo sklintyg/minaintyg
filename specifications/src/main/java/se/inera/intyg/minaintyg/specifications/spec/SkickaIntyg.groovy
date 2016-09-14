@@ -49,7 +49,7 @@ public class SkickaIntyg {
         }
         return result
     }
-    
+
     public boolean valdMottagareÄr(String mottagare) {
         boolean result
         Browser.drive {
@@ -79,7 +79,7 @@ public class SkickaIntyg {
         }
         return result
     }
-    
+
     public void gåTillbakaTillIntyget() {
         Browser.drive {
             page.backToCertificateView()
