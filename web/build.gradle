@@ -5,6 +5,9 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.moowork.node'
 
+def webappOutputDir = 'build/apps/';
+def webappTestOutputDir = 'build/karma/';
+
 grunt {
   colors = true
 }
@@ -44,28 +47,28 @@ List webjars = [[group: 'org.webjars', name: 'angularjs', version: '1.4.10'],
                 [group: 'org.webjars', name: 'jquery', version: '1.9.0'],
                 [group: 'se.inera.intyg.common', name: 'common-web']]
 
-                task unzipWebjars(type: Copy) {
-                  description 'Copies anything that is a webjar from the classpath and expands it so that we can use their static resources with karma'
-                  into "$buildDir/webjars/"
-                  from {
-                    configurations.compile.filter{file ->
-                      webjars.any{jar -> file.name.startsWith(jar.name) }
-                    }.collect{zipTree(it)}
-                  }
-                }
+task unzipWebjars(type: Copy) {
+  description 'Copies anything that is a webjar from the classpath and expands it so that we can use their static resources with karma'
+  into "$buildDir/webjars/"
+  from {
+    configurations.compile.filter{file ->
+      webjars.any{jar -> file.name.startsWith(jar.name) }
+    }.collect{zipTree(it)}
+  }
+}
 
-                task moveJsFiles(type: Copy, dependsOn: unzipWebjars) {
-                  description 'Moves everything up one level, which gets rid of version directory (angular/1.2.4/* -> angular/)'
-                  from { "${buildDir}/webjars/META-INF/resources/webjars/" }
-                  eachFile {details ->
-                    details.path = details.path.replaceAll('([^/]+)/[0-9.]+(/.*)', '$1$2')
-                  }
-                  into "${buildDir}/webjars"
-                }
+task moveJsFiles(type: Copy, dependsOn: unzipWebjars) {
+  description 'Moves everything up one level, which gets rid of version directory (angular/1.2.4/* -> angular/)'
+  from { "${buildDir}/webjars/META-INF/resources/webjars/" }
+  eachFile {details ->
+    details.path = details.path.replaceAll('([^/]+)/[0-9.]+(/.*)', '$1$2')
+  }
+  into "${buildDir}/webjars"
+}
 
 task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
   script = file('node_modules/grunt-cli/bin/grunt')
-  args = ['test']
+  args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar'))]
 }
 
 test.dependsOn(jsTests)
@@ -80,7 +83,7 @@ task unzipBuildTools(type: Copy) {
 
 task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
   script = file('node_modules/grunt-cli/bin/grunt')
-  args = ['default']
+  args = ['default', '--outputDir=' + webappOutputDir]
 }
 
 war.dependsOn(jsInclude)
@@ -95,6 +98,11 @@ gretty {
 
   contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
 
+  def useMinifiedJavaScript = false;
+  if (System.properties['minaintyg.useMinifiedJavaScript'] != null) {
+    useMinifiedJavaScript = System.properties['minaintyg.useMinifiedJavaScript'];
+  }
+
   jvmArgs = [
     "-Dcatalina.base=${buildDir}/catalina.base",
     "-Dspring.profiles.active=dev",
@@ -103,12 +111,10 @@ gretty {
     "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
     "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
     "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-    "-Dminaintyg.useMinifiedJavaScript=false"
+    "-Dminaintyg.useMinifiedJavaScript=" + useMinifiedJavaScript
   ]
 
-  
-  // TODO: bättre namn. Synka med gruntfilen.
-  extraResourceBase 'build/apps/'
+  extraResourceBase webappOutputDir
 
   // TODO: use?
   //   debugSuspend = false

@@ -33,7 +33,9 @@ module.exports = function(grunt) {
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
-    var DEST_DIR = 'build/apps/app/';
+    var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
+    var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
+    var SKIP_COVERAGE = grunt.option('skip-coverage') !== undefined ? grunt.option('skip-coverage') : true;
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
     grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(minaintyg.
@@ -105,7 +107,14 @@ module.exports = function(grunt) {
         karma: {
             minaintyg: {
                 configFile: 'src/main/resources/karma.conf.ci.js',
-                reporters: [ 'mocha' ]
+                client: {
+                    args: ['--skip-coverage=' + SKIP_COVERAGE]
+                },
+                coverageReporter: {
+                    type : 'lcovonly',
+                    dir : TEST_OUTPUT_DIR,
+                    subdir: '.'
+                }
             }
         },
 
