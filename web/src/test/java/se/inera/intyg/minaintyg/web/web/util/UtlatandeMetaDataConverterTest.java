@@ -62,12 +62,13 @@ public class UtlatandeMetaDataConverterTest {
     @Before
     public void setup() throws ModuleNotFoundException {
         when(moduleRegistry.getModuleApi(anyString())).thenReturn(moduleApi);
+        when(moduleRegistry.getModuleIdFromExternalId(anyString())).thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
     }
 
     @Test
     public void convertTest() throws Exception {
         final String intygId = "intygsid";
-        final String intygstyp = "luse";
+        final String intygstyp = "LUSE";
         final String fullstandigtNamn = "fullständigt namn";
         final String enhetsnamn = "enhetsnamn";
         final String additionalInfo = "additionalInfo";
@@ -78,27 +79,27 @@ public class UtlatandeMetaDataConverterTest {
         UtlatandeMetaData result = converter.convert(intyg, arkiverade);
         assertNotNull(result);
         assertEquals(intygId, result.getId());
-        assertEquals(intygstyp, result.getType());
+        assertEquals(intygstyp.toLowerCase(), result.getType());
         assertEquals(fullstandigtNamn, result.getIssuerName());
         assertEquals(enhetsnamn, result.getFacilityName());
         assertEquals(signeringstidpunkt, result.getSignDate());
         assertEquals("true", result.getAvailable());
         assertEquals(additionalInfo, result.getComplemantaryInfo());
 
-        verify(moduleRegistry).getModuleApi(intygstyp);
+        verify(moduleRegistry).getModuleApi(intygstyp.toLowerCase());
         verify(moduleApi).getAdditionalInfo(any(Intyg.class));
     }
 
     @Test
     public void convertMultipleSortsTest() throws Exception {
         final String intygId1 = "intygsid1";
-        final String intygstyp1 = "fk7263";
+        final String intygstyp1 = "FK7263";
         final LocalDateTime signeringstidpunkt1 = LocalDateTime.now();
         final String intygId2 = "intygsid2";
-        final String intygstyp2 = "luse";
+        final String intygstyp2 = "LUSE";
         final LocalDateTime signeringstidpunkt2 = signeringstidpunkt1.minusDays(4);
         final String intygId3 = "intygsid3";
-        final String intygstyp3 = "lisu";
+        final String intygstyp3 = "LISU";
         final LocalDateTime signeringstidpunkt3 = signeringstidpunkt1.plusDays(3);
         final boolean arkiverade = false;
         Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
@@ -108,15 +109,18 @@ public class UtlatandeMetaDataConverterTest {
         assertNotNull(result);
         assertEquals(3, result.size());
         assertEquals(intygId3, result.get(0).getId());
+        assertEquals(intygstyp3.toLowerCase(), result.get(0).getType());
         assertEquals(signeringstidpunkt3, result.get(0).getSignDate());
         assertEquals(intygId1, result.get(1).getId());
+        assertEquals(intygstyp1.toLowerCase(), result.get(1).getType());
         assertEquals(signeringstidpunkt1, result.get(1).getSignDate());
         assertEquals(intygId2, result.get(2).getId());
+        assertEquals(intygstyp2.toLowerCase(), result.get(2).getType());
         assertEquals(signeringstidpunkt2, result.get(2).getSignDate());
 
-        verify(moduleRegistry).getModuleApi(intygstyp1);
-        verify(moduleRegistry).getModuleApi(intygstyp2);
-        verify(moduleRegistry).getModuleApi(intygstyp3);
+        verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase());
+        verify(moduleRegistry).getModuleApi(intygstyp2.toLowerCase());
+        verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase());
         verify(moduleApi, times(3)).getAdditionalInfo(any(Intyg.class));
     }
 

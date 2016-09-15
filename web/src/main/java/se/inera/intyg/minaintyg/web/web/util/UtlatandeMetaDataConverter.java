@@ -50,7 +50,7 @@ public class UtlatandeMetaDataConverter {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
 
         builder.id(intyg.getIntygsId().getExtension())
-                .type(intyg.getTyp().getCode().toLowerCase())
+                .type(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()))
                 .issuerName(intyg.getSkapadAv().getFullstandigtNamn())
                 .facilityName(intyg.getSkapadAv().getEnhet().getEnhetsnamn())
                 .signDate(intyg.getSigneringstidpunkt())
@@ -71,7 +71,7 @@ public class UtlatandeMetaDataConverter {
 
     private String getAdditionalInfo(Intyg intyg) {
         try {
-            ModuleApi moduleApi = moduleRegistry.getModuleApi(intyg.getTyp().getCode().toLowerCase());
+            ModuleApi moduleApi = moduleRegistry.getModuleApi(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()));
             return moduleApi.getAdditionalInfo(intyg);
         } catch (ModuleNotFoundException | ModuleException e) {
             LOGGER.error("Error retrieving additional info from module registry: {}", e.getMessage());
