@@ -87,7 +87,8 @@ war {
 gretty {
   contextPath = '/'
   httpPort = 8088
-
+  scanInterval = 0
+  
   contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
 
   def useMinifiedJavaScript = false;
