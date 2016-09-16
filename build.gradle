@@ -1,5 +1,6 @@
 plugins {
   id 'org.ajoberstar.grgit' version '1.5.1'
+  id 'org.sonarqube' version '2.1-rc3'
 }
 
 ext.nexusUsername = System.properties['nexusUsername']
@@ -19,6 +20,14 @@ allprojects  {
   version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
   rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
   rootProject.ext.typerVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
+
+  buildscript {
+    repositories {
+      mavenLocal()
+      maven { url "https://plugins.gradle.org/m2/" }
+      jcenter()
+    }
+  }
 }
 
 subprojects {
@@ -62,9 +71,7 @@ subprojects {
     testCompile 'org.mockito:mockito-core:1.9.0'
     buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
   }
-}
 
-subprojects {
   uploadArchives {
     repositories.mavenDeployer {
       pom.whenConfigured {pom ->
@@ -106,6 +113,18 @@ subprojects {
     checkstyleMain.source = "src/main/java"
     checkstyleTest.enabled = false
   }
+
+  if (project.hasProperty('runSonar')) {
+    apply plugin: 'jacoco'
+    jacoco {
+      toolVersion = "0.7.6.201602180812"
+    }
+    test {
+      jacoco {
+        destinationFile = file("$buildDir/jacoco/test.exec")
+      }
+    }
+  }
 }
 
 project(':minaintyg-common') {
@@ -135,5 +154,34 @@ task tagRelease {
       message = "Release of ${version}"
     }
     //grgit.push(tags: true)
+  }
+}
+
+if (project.hasProperty('runSonar')) {
+  apply plugin: "org.sonarqube"
+  sonarqube {
+    properties {
+      property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
+      property "sonar.projectName", projectName
+      property "sonar.projectKey", projectId
+
+      // Address of SonarQube server
+      property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
+
+      //Exclusions
+      property "sonar.test.exclusions", "src/test/**"
+
+      property "sonar.exclusions", [
+        "**/stub/**",
+        "**/exception/**",
+        "**/*Exception*.java"
+      ]
+
+      project(":minaintyg-specifications") {
+        sonarqube {
+          skipProject = true
+        }
+      }
+    }
   }
 }
