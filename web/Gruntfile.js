@@ -21,6 +21,8 @@
 module.exports = function(grunt) {
     'use strict';
 
+    require('time-grunt')(grunt);
+    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -30,6 +32,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-wiredep');
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
@@ -71,6 +74,49 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
+        bower: {
+            install: {
+                options: {
+                    copy: false
+                }
+            }
+        },
+
+        wiredep: {
+            webcert: {
+                directory: 'src/main/webapp/bower_components',
+                src: [
+                    SRC_DIR + '../pubapp/**/index.html',
+                    SRC_DIR + '../**/*.jsp',
+                    'karma.conf.js'
+                ],
+                ignorePath: '../..',
+                fileTypes: {
+                    jsp: {
+                        block: /(([ \t]*)<!--\s*bower:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbower\s*-->)/gi,
+                        detect: {
+                            js: /<script.*src=['"]([^'"]+)/gi,
+                            css: /<link.*href=['"]([^'"]+)/gi
+                        },
+                        replace: {
+                            js: function(filePath) {
+                                if (filePath[0] !== '/') {
+                                    filePath = '/' + filePath;
+                                }
+                                return '<script type="text/javascript" src="'+filePath+'"></script>';
+                            },
+                            css: function(filePath) {
+                                if (filePath[0] !== '/') {
+                                    filePath = '/' + filePath;
+                                }
+                                return '<link rel="stylesheet" href="'+filePath+'" />';
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
         csslint: {
             minaintyg: {
                 options: {
@@ -106,7 +152,7 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/karma.conf.ci.js',
+                configFile: 'karma.conf.ci.js',
                 client: {
                     args: ['--skip-coverage=' + SKIP_COVERAGE]
                 },
@@ -223,7 +269,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify', 'jshint' ]);
+    grunt.registerTask('default', ['jshint', 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);

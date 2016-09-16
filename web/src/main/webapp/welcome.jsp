@@ -48,7 +48,9 @@ if ("prod".equals(profile)) {
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
-<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
+<!-- bower:css -->
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+<!-- endbower -->
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
 
@@ -62,7 +64,7 @@ if ("prod".equals(profile)) {
   };
 </script>
 
-<script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
 <script type="text/javascript">
   angular.module('minaintygWelcomeApp', []).
     controller('welcomeController', function($scope) {});

@@ -92,6 +92,13 @@
       </security:headers>
     </security:http>
     <security:http security="none" pattern="/ws/**" />
+    <!-- Allow access to bower_componentes without being logged in -->
+    <security:http pattern="/bower_componentes/**" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
     <!-- Allow access to webjars without being logged in -->
     <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
       <security:csrf disabled="true"/>
