@@ -36,7 +36,9 @@
 
 
 <link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
-<link rel="stylesheet" href="<c:url value="/web/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>">
+<!-- bower:css -->
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+<!-- endbower -->
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
 
@@ -85,25 +87,29 @@
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/i18n/angular-locale_sv-se.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-cookies.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-route.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-sanitize.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.min.js"></script>
+      <script type="text/javascript" src="/bower_components/jquery/jquery.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular/angular.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-i18n/angular-locale_sv-se.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/i18n/angular-locale_sv-se.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-cookies.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-route.js"></script>
-      <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-sanitize.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.js"></script>
-      <script type="text/javascript" src="/web/webjars/angular-ui-router/0.2.15/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/web/webjars/jquery/1.9.0/jquery.js"></script>
+      <!-- bower:js -->
+      <script type="text/javascript" src="/bower_components/jquery/jquery.js"></script>
+      <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-i18n/angular-locale_sv-se.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+      <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+      <!-- endbower -->
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>
   </c:choose>

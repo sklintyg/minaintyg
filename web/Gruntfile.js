@@ -21,6 +21,8 @@
 module.exports = function(grunt) {
     'use strict';
 
+    require('time-grunt')(grunt);
+    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -30,10 +32,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-wiredep');
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
-    var DEST_DIR = 'target/webapp/app/';
+    var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
+    var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
+    var SKIP_COVERAGE = grunt.option('skip-coverage') !== undefined ? grunt.option('skip-coverage') : true;
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
     grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(minaintyg.
@@ -69,10 +74,53 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
+        bower: {
+            install: {
+                options: {
+                    copy: false
+                }
+            }
+        },
+
+        wiredep: {
+            webcert: {
+                directory: 'src/main/webapp/bower_components',
+                src: [
+                    SRC_DIR + '../pubapp/**/index.html',
+                    SRC_DIR + '../**/*.jsp',
+                    'karma.conf.js'
+                ],
+                ignorePath: '../..',
+                fileTypes: {
+                    jsp: {
+                        block: /(([ \t]*)<!--\s*bower:*(\S*)\s*-->)(\n|\r|.)*?(<!--\s*endbower\s*-->)/gi,
+                        detect: {
+                            js: /<script.*src=['"]([^'"]+)/gi,
+                            css: /<link.*href=['"]([^'"]+)/gi
+                        },
+                        replace: {
+                            js: function(filePath) {
+                                if (filePath[0] !== '/') {
+                                    filePath = '/' + filePath;
+                                }
+                                return '<script type="text/javascript" src="'+filePath+'"></script>';
+                            },
+                            css: function(filePath) {
+                                if (filePath[0] !== '/') {
+                                    filePath = '/' + filePath;
+                                }
+                                return '<link rel="stylesheet" href="'+filePath+'" />';
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
         csslint: {
             minaintyg: {
                 options: {
-                    csslintrc: 'target/build-tools/csslint/.csslintrc',
+                    csslintrc: 'build/build-tools/csslint/.csslintrc',
                     force: true
                 },
                 src: [ SRC_DIR + '../**/*.css' ]
@@ -93,7 +141,7 @@ module.exports = function(grunt) {
         jshint: {
             minaintyg: {
                 options: {
-                    jshintrc: 'target/build-tools/jshint/.jshintrc',
+                    jshintrc: 'build/build-tools/jshint/.jshintrc',
                     force: false,
                     ignores: ['**/*.min.js', '**/vendor/**']
                 },
@@ -104,8 +152,15 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/karma.conf.ci.js',
-                reporters: [ 'mocha' ]
+                configFile: 'karma.conf.ci.js',
+                client: {
+                    args: ['--skip-coverage=' + SKIP_COVERAGE]
+                },
+                coverageReporter: {
+                    type : 'lcovonly',
+                    dir : TEST_OUTPUT_DIR,
+                    subdir: '.'
+                }
             }
         },
 
@@ -141,7 +196,7 @@ module.exports = function(grunt) {
             minaintyg: {
                 cwd: __dirname + '/src/main/webapp',
                 src: ['app/**/*.html'],
-                dest: __dirname + '/target/webapp/app/templates.js',
+                dest: __dirname + '/build/apps/app/templates.js',
                 options: {
                     module: 'minaintyg',
                     url: function(url) {
@@ -214,7 +269,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify', 'jshint' ]);
+    grunt.registerTask('default', ['jshint', 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);

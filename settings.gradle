@@ -1,0 +1,9 @@
+rootProject.name = 'minaintyg'
+
+include ':minaintyg-common'
+include ':minaintyg-web'
+include ':minaintyg-specifications'
+
+project(':minaintyg-common').projectDir = "$rootDir/common" as File
+project(':minaintyg-web').projectDir = "$rootDir/web" as File
+project(':minaintyg-specifications').projectDir = "$rootDir/specifications" as File

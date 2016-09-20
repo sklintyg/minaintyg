@@ -40,10 +40,10 @@ public class VisaIntyg {
             switch (typ) {
             case "fk7263":
                 result = at IntygFk7263Page
-                break 
+                break
             case "ts-bas":
                 result = at IntygTsBasPage
-                break 
+                break
             case "ts-diabetes":
                 result = at IntygTsDiabetesPage
                 break

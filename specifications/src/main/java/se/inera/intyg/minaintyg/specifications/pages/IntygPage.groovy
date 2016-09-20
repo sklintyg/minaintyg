@@ -46,13 +46,12 @@ class IntygPage extends AbstractLoggedInPage {
 
     def confirmArchiveCertificate() {
         confirmArchiveBtn.click()
-        // TODO: FIX!! The animation on InboxPage requires delay, otherwise doneLoading() returns true immediately
         Thread.sleep(1000)
         waitFor {
             doneLoading()
         }
     }
-    
+
     boolean hasStatus(String status) {
         latestCertificateEvent.any { it.text().contains(status) }
     }

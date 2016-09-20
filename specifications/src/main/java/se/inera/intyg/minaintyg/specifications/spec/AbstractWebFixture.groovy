@@ -103,7 +103,7 @@ public class AbstractWebFixture {
             }
         }
     }
-    
+
     public void besökExternSida() {
         Browser.drive {
             go "http://www.google.com"

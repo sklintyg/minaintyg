@@ -23,9 +23,9 @@ import se.inera.intyg.common.specifications.page.AbstractPage
 
 class ArchivedPage extends AbstractLoggedInPage {
 
-	static url = "start/#/arkiverade"
+    static url = "start/#/arkiverade"
 
-	static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
+    static at = {doneLoading() && $("#archivedHeader").isDisplayed() }
 
     static content = {
         certificateTable(required: false) { $("#certTable") }
