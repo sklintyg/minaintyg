@@ -11,6 +11,7 @@
   get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
            dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
            validate_certs=no
+           timeout=60
   when: deploy_from_repo
 
 - name: copy minaintyg-web-{{ version }}.war
