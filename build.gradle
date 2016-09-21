@@ -14,7 +14,7 @@ ext {
 allprojects  {
   apply plugin: 'maven'
 
-  def baseVersion = '0.0.'
+  def baseVersion = '3.0.'
 
   group = 'se.inera.intyg.minaintyg'
   version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
