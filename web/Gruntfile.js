@@ -68,8 +68,8 @@ module.exports = function(grunt) {
         if (!module.angularModule) {
             module.angularModule = moduleName;
         }
-        module.src = '/../../'+module.base+'/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
-        module.dest = '/../../'+module.base+'/target/classes/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.dest = '/../../' + module.base + '/build/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
     });
 
     grunt.initConfig({
@@ -230,6 +230,11 @@ module.exports = function(grunt) {
                             connect().use(
                                 '/app/app-deps.js',
                                 connect.static(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
+                            ));
+                        middlewares.push(
+                            connect().use(
+                                '/css',
+                                connect.static(__dirname + '/src/main/webapp/css') // jshint ignore:line
                             ));
                         Object.keys(modules).forEach(function(moduleName) {
                             var module = modules[moduleName];
