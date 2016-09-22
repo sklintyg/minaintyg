@@ -251,7 +251,7 @@
 }
 
 .intyg-body .body-row .unfilled {
-	/*color: #888;*/
+	color: #888;
 	-webkit-border-radius: 8px 8px 0px 0px;
 	-moz-border-radius: 8px 8px 0px 0px;
 	border-radius: 8px 8px 0px 0px;
