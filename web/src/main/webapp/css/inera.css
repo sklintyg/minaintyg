@@ -981,6 +981,16 @@ div.inera-box .box-body {
 	background: #e5e5e5;
 }
 .wizard ul li.wstep-completed span.chevron { border-left: 8px solid #e5e5e5 !important; }
+.wizard ul li span.chevron, .wizard ul li.wstep-completed span.chevron {
+	position: absolute;
+	top: 0;
+	right: -8px;
+	display: block;
+	border: 17px solid transparent;
+	border-right: 0;
+	border-left: 8px solid #F9F9F9;
+}
+.wizard ul li.active span.chevron { border-left: 8px solid #008391; }
 .wizard ul li:nth-child(1) {
 	z-index: 10;
 	padding-left: 13px;
@@ -993,13 +1003,11 @@ div.inera-box .box-body {
 	z-index: 8;
 	border-radius: 0px 4px 4px 0px;
 }
-.wizard ul li span.chevron, .wizard ul li.wstep-completed span.chevron {
-	position: absolute;
-	top: 0;
-	right: -8px;
-	display: block;
-	border: 17px solid transparent;
-	border-right: 0;
-	border-left: 8px solid #F9F9F9;
+.wizard ul li:last-child {
+	padding-right: 13px;
+	border-radius: 0 4px 4px 0;
 }
-.wizard ul li.active span.chevron { border-left: 8px solid #008391; }
+.wizard ul li:last-child span.chevron {
+	border-radius: 0 4px 4px 0;
+	border-left: 8px solid transparent;
+}
