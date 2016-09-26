@@ -984,7 +984,7 @@ div.inera-box .box-body {
 .wizard ul li span.chevron, .wizard ul li.wstep-completed span.chevron {
 	position: absolute;
 	top: 0;
-	right: -8px;
+	right: -7px;
 	display: block;
 	border: 17px solid transparent;
 	border-right: 0;
