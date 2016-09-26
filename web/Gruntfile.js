@@ -69,7 +69,7 @@ module.exports = function(grunt) {
             module.angularModule = moduleName;
         }
         module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
-        module.dest = '/../../' + module.base + '/build/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName + '/minaintyg';
     });
 
     grunt.initConfig({
@@ -251,7 +251,7 @@ module.exports = function(grunt) {
                             middlewares.push(
                                 connect().use(
                                         '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
-                                    connect.static(__dirname + module.dest + '/module-deps.json') //jshint ignore:line
+                                    connect.static(__dirname + module.dest + '/js/module-deps.json') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
