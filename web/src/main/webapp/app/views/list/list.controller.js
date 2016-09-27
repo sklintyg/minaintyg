@@ -35,7 +35,8 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
 
             $scope.messageService = messageService;
             $scope.pageTitle = 'Inkorgen';
-            $scope.isCollapsed = true;
+            $scope.isCollapsedArchive = true;
+            $scope.isCollapsedRevoke = true;
 
             $scope.sendSelected = function(item) {
                 $log.debug('send ' + item.id);

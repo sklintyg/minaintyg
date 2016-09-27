@@ -199,6 +199,43 @@ legend {
     white-space: pre-line;
 }
 
+/* Center vertical only */
+.absolute-vertical-center {
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-align:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-align:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-align:center;
+
+	/* W3C */
+	display:box;
+	box-align:center;
+}
+
+/* Center horizontal only */
+.absolute-horizontal-center {
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-pack:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-pack:center;
+
+	/* W3C */
+	display:box;
+	box-pack:center;
+}
 
 /*
    Navigation

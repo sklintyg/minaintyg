@@ -10,11 +10,30 @@
     </p>
   </div>
   <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-  	<p>
-  		<div message key="inbox.description.archive" class="mi-text"></div>
-  		<a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedArchive = !isCollapsedArchive" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-      	<div uib-collapse="!isCollapsedArchive" class="mi-text well well-sm margin-top-5px"><span message key="mi.helptext.arkivera"></span></div>
-  	</p>
+    <p>
+      <div message key="inbox.description.archive" class="mi-text"></div>
+      <div class="mi-text margin-top-5px">
+        <a ng-show="isCollapsedArchive" ng-click="isCollapsedArchive = !isCollapsedArchive">
+          <span style="vertical-align: text-bottom;">
+            <span message key="common.title.helptext.moreinfo"></span>
+            <span message key="inbox.title.helptext.arkivera"></span>
+          </span>
+          <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <a ng-show="!isCollapsedArchive" ng-click="isCollapsedArchive = !isCollapsedArchive">
+          <span style="vertical-align: text-bottom;">
+            <span message key="common.title.helptext.lessinfo"></span>
+            <span message key="inbox.title.helptext.arkivera"></span>
+          </span>
+          <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+      </div>
+      <div uib-collapse="isCollapsedArchive">
+        <div class="mi-text well well-sm margin-top-5px">
+          <span message key="inbox.helptext.arkivera"></span>
+        </div>
+      </div>
+    </p>
   </div>
 </div>
 <div class="row">
@@ -55,10 +74,29 @@
                     <div class="row" ng-show="cert.cancelled">
                       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 header-row">
                         <div class="alert alert-info">
-                          <span message key="inbox.revoked"></span>
-                          <span message key="inbox.revoked.archive"></span>
-                          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedRevoked = !isCollapsedRevoked" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-                          <div uib-collapse="!isCollapsedRevoked" class="mi-text well well-sm margin-top-5px"><span message key="inbox.revoked.helptext"></span></div>
+                          <div message key="inbox.revoked"></div>
+                          <div message key="inbox.revoked.archive" class="margin-top-5px"></div>
+                          <div class="margin-top-5px">
+                            <a ng-show="isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
+                              <span style="vertical-align: text-bottom;">
+                                <span message key="common.title.helptext.moreinfo"></span>
+                                <span message key="inbox.title.helptext.makulera"></span>
+                              </span>
+                              <span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                            <a ng-show="!isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
+                              <span style="vertical-align: text-bottom;">
+                                <span message key="common.title.helptext.lessinfo"></span>
+                                <span message key="inbox.title.helptext.makulera"></span>
+                              </span>
+                              <span class="glyphicon glyphicon-chevron-up"></span>
+                            </a>
+                          </div>
+                        </div>
+                        <div uib-collapse="isCollapsedRevoke">
+                          <div class="mi-text well well-sm margin-top-5px">
+                            <span message key="inbox.revoked.helptext"></span>
+                          </div>
                         </div>
                       </div>
                     </div>
