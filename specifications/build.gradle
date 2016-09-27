@@ -3,8 +3,8 @@ description = 'Mina intyg (FitNesse)'
 apply plugin: 'inera-fitnesse'
 
 dependencies {
-  compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
-  compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
+  compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC6.1'
+  compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.3'
 
   compile "se.inera.intyg.common:common-specifications:${commonVersion}"
 
