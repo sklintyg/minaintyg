@@ -22,17 +22,11 @@ module.exports = function(grunt) {
     'use strict';
 
     require('time-grunt')(grunt);
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-connect-proxy');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-ng-annotate');
-    grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-wiredep');
+    require('jit-grunt')(grunt, {
+        bower: 'grunt-bower-task',
+        configureProxies: 'grunt-connect-proxy',
+        ngtemplates: 'grunt-angular-templates'
+    });
 
     var SRC_DIR = 'src/main/webapp/app/';
     var TEST_DIR = 'src/test/js/';
@@ -142,6 +136,7 @@ module.exports = function(grunt) {
             minaintyg: {
                 options: {
                     jshintrc: 'build/build-tools/jshint/.jshintrc',
+                    reporterOutput: '',
                     force: false,
                     ignores: ['**/*.min.js', '**/vendor/**']
                 },
@@ -215,48 +210,49 @@ module.exports = function(grunt) {
                     keepalive: true,
                     middleware: function(connect/*, options*/) {
                         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+                        var serveStatic = require('serve-static');
                         var middlewares = [];
                         middlewares.push(
                             connect().use(
                                 '/web',
-                                connect.static(__dirname + '/src/main/webapp') // jshint ignore:line
+                                serveStatic(__dirname + '/src/main/webapp') // jshint ignore:line
                             ));
                         middlewares.push(
                             connect().use(
                                 '/app',
-                                connect.static(__dirname + '/src/main/webapp/app') // jshint ignore:line
+                                serveStatic(__dirname + '/src/main/webapp/app') // jshint ignore:line
                             ));
                         middlewares.push(
                             connect().use(
                                 '/app/app-deps.js',
-                                connect.static(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
+                                serveStatic(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
                             ));
                         middlewares.push(
                             connect().use(
                                 '/css',
-                                connect.static(__dirname + '/src/main/webapp/css') // jshint ignore:line
+                                serveStatic(__dirname + '/src/main/webapp/css') // jshint ignore:line
                             ));
                         Object.keys(modules).forEach(function(moduleName) {
                             var module = modules[moduleName];
                             middlewares.push(
                                 connect().use(
-                                        '/web/webjars/'+module.name+'/minaintyg',
-                                    connect.static(__dirname + module.src) //jshint ignore:line
+                                    '/web/webjars/'+module.name+'/minaintyg',
+                                    serveStatic(__dirname + module.src) //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
-                                        '/web/webjars/'+module.name+'/minaintyg/templates.js',
-                                    connect.static(__dirname + module.dest + '/templates.js') //jshint ignore:line
+                                    '/web/webjars/'+module.name+'/minaintyg/templates.js',
+                                    serveStatic(__dirname + module.dest + '/templates.js') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
-                                        '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
-                                    connect.static(__dirname + module.dest + '/js/module-deps.json') //jshint ignore:line
+                                    '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
+                                    serveStatic(__dirname + module.dest + '/js/module-deps.json') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
-                                        '/web/webjars/'+module.name+'/minaintyg/css',
-                                    connect.static(__dirname + module.dest + '/css')//jshint ignore:line
+                                    '/web/webjars/'+module.name+'/minaintyg/css',
+                                    serveStatic(__dirname + module.dest + '/css')//jshint ignore:line
                                 ));
                         });
                         middlewares.push(proxy);

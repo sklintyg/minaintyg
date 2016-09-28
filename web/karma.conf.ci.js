@@ -61,10 +61,19 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        preprocessors: {
-            'src/main/webapp/app/**/*.js': ['coverage']
-        },
+        preprocessors: (function() {
+            if (runCoverage) {
+                return {'src/main/webapp/app/**/*.js': ['coverage']};
+            }
+            return {};
+        })(),
 
-        reporters : [ 'dots', 'coverage' ]
+        reporters: (function() {
+            var reporters = [ 'dots' ];
+            if (runCoverage) {
+                reporters.push('coverage');
+            }
+            return reporters;
+        })()
     });
 };
