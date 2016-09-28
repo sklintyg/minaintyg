@@ -5,8 +5,8 @@ apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.moowork.node'
 
-def webappOutputDir = 'build/apps/';
-def webappTestOutputDir = 'build/karma/';
+def webappOutputDir = 'build/apps/'
+def webappTestOutputDir = 'build/karma/'
 
 grunt {
   colors = true
@@ -67,13 +67,10 @@ gretty {
   contextPath = '/'
   httpPort = 8088
   scanInterval = 0
-  
+
   contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
 
-  def useMinifiedJavaScript = false;
-  if (System.properties['minaintyg.useMinifiedJavaScript'] != null) {
-    useMinifiedJavaScript = System.properties['minaintyg.useMinifiedJavaScript'];
-  }
+  def minified = System.properties['minaintyg.useMinifiedJavaScript'] != null ? System.properties['minaintyg.useMinifiedJavaScript'] : false
 
   jvmArgs = [
     "-Dcatalina.base=${buildDir}/catalina.base",
@@ -83,17 +80,10 @@ gretty {
     "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
     "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
     "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-    "-Dminaintyg.useMinifiedJavaScript=" + useMinifiedJavaScript
+    "-Dminaintyg.useMinifiedJavaScript=" + minified
   ]
 
   extraResourceBase webappOutputDir
-
-  // TODO: use?
-  //   debugSuspend = false
-  //   recompileOnSourceChange = false
-  //   reloadOnClassChange = false
-  //   reloadOnConfigChange = false
-  //   reloadOnLibChange = false
 }
 
 war.dependsOn createVersionPropertyFile
