@@ -66,6 +66,47 @@ module.exports = function(grunt) {
         module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName + '/minaintyg';
     });
 
+    function buildListForAllModules(callback) {
+        var list = [];
+        Object.keys(modules).forEach(function(moduleName) {
+            var module = modules[moduleName];
+            list.push(callback(module));
+        });
+        return list;
+    }
+
+    function buildObjectForAllModules(callback) {
+        var obj = {};
+        Object.keys(modules).forEach(function(moduleName) {
+            var module = modules[moduleName];
+            obj[module.name] = callback(module);
+        });
+        return obj;
+    }
+
+    grunt.registerTask('generateModuleDeps', function() {
+        // Generate minaintyg app-deps.json
+        var files = grunt.file.expand({cwd: SRC_DIR},
+            ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
+        grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(files.
+        map(function(file) {
+            return '/app/' + file;
+        }).
+        concat('/app/templates.js'), null, 4));
+
+        // Generate all module-deps.json
+        Object.keys(modules).forEach(function(moduleName) {
+            var module = modules[moduleName];
+            var files = grunt.file.expand({cwd: __dirname + module.src},
+                ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+            grunt.file.write(__dirname + module.dest + '/module-deps.json', JSON.stringify(files.
+            map(function(file) {
+                return '/web/webjars/' + module.name + '/minaintyg/' + file;
+            }).
+            concat('/web/webjars/' + module.name + '/minaintyg/templates.js'), null, 4));
+        });
+    });
+
     grunt.initConfig({
 
         bower: {
@@ -77,7 +118,7 @@ module.exports = function(grunt) {
         },
 
         wiredep: {
-            webcert: {
+            minaintyg: {
                 directory: 'src/main/webapp/bower_components',
                 src: [
                     SRC_DIR + '../pubapp/**/index.html',
@@ -187,7 +228,19 @@ module.exports = function(grunt) {
             }
         },
 
-        ngtemplates : {
+        ngtemplates : grunt.util._.extend(buildObjectForAllModules(function(module) {
+            return {
+                cwd: __dirname + module.src,
+                src: ['**/*.html'],
+                dest: __dirname + module.dest + '/templates.js',
+                options: {
+                    module: module.angularModule,
+                    url: function(url) {
+                        return '/web/webjars/' + module.name + '/webcert/' + url;
+                    }
+                }
+            };
+        }),{
             minaintyg: {
                 cwd: __dirname + '/src/main/webapp',
                 src: ['app/**/*.html'],
@@ -199,7 +252,7 @@ module.exports = function(grunt) {
                     }
                 }
             }
-        },
+        }),
 
         connect: {
             server: {
@@ -207,7 +260,6 @@ module.exports = function(grunt) {
                     port: 8089,
                     base: 'src/main/webapp',
                     hostname: '*',
-                    keepalive: true,
                     middleware: function(connect/*, options*/) {
                         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
                         var serveStatic = require('serve-static');
@@ -267,11 +319,29 @@ module.exports = function(grunt) {
                     }
                 ]
             }
+        },
+
+        watch: {
+            js: {
+                files: buildListForAllModules(function(module) {
+                    return module.src.substring(1) + '/**/*.js';
+                }).concat([SRC_DIR + '/**/*.js']),
+                tasks: ['generateModuleDeps'],
+                options: {
+                    event: ['added', 'deleted']
+                }
+            },
+            html: {
+                files: buildListForAllModules(function(module) {
+                    return __dirname + module.src + '/**/*.html';
+                }).concat([ SRC_DIR + '/**/*.html' ]),
+                tasks: ['ngtemplates']
+            }
         }
     });
 
     grunt.registerTask('default', ['jshint', 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
     grunt.registerTask('test', [ 'karma' ]);
-    grunt.registerTask('server', [ 'configureProxies:server', 'connect:server' ]);
+    grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
 };

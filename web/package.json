@@ -11,6 +11,7 @@
         "grunt-contrib-csslint": "^2.0.0",
         "grunt-contrib-jshint": "^1.0.0",
         "grunt-contrib-uglify": "^2.0.0",
+        "grunt-contrib-watch": "^1.0.0",
         "grunt-connect-proxy": "^0.2.0",
         "grunt-karma": "^1.0.0",
         "grunt-lcov-merge": "^1.2.3",
