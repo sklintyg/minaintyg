@@ -199,6 +199,30 @@ legend {
     white-space: pre-line;
 }
 
+/* Center vertical and horizontal */
+.absolute-center {
+
+	/* Internet Explorer 10 */
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+	-ms-flex-align:center;
+
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+
+	/* Safari, Opera, and Chrome */
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+
+	/* W3C */
+	display:box;
+	box-pack:center;
+	box-align:center;
+}
+
 /* Center vertical only */
 .absolute-vertical-center {
 	/* Internet Explorer 10 */
