@@ -4,7 +4,7 @@ stage 'build'
 node {
   git url: 'https://github.com/sklintyg/minaintyg.git'
   checkout scm
-  sh 'gradlew clean install'
+  sh './gradlew clean install'
 }
 
 stage 'test'
