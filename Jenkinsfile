@@ -1,8 +1,5 @@
 #!groovy
 
-env.JAVA_HOME="${tool 'JDK8u66'}"
-env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-
 stage 'checkout'
 
 node {
@@ -13,6 +10,8 @@ node {
 stage 'build'
 
 node {
+  env.JAVA_HOME="${tool 'JDK8u66'}"
+  env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
   sh './gradlew clean install'
 }
 
