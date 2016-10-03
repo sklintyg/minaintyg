@@ -10,7 +10,7 @@ fitnesse {
     wikiStartPage = "MinaIntyg.AutomatiseradeTester.SkickaIntyg"
 
     //    if (project.hasProperty('fileOutput')) {
-        outputFormat = "xml&includehtml"
+        //outputFormat = "xml&includehtml"
         //}
 
     extraProperties = [
