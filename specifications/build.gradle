@@ -14,10 +14,10 @@ fitnesse {
     }
 
     extraProperties = [
-            'geb.env'                : "chrome",
             'fitnesse.working'       : "src/test/fitnesse",
-            'certificate.baseUrl'    : "http://localhost:8080/inera-certificate/",
-            'certificate.web.baseUrl': "http://localhost:8088/web/"
+            'geb.env'                : System.properties['geb.env'] ?: "chrome",
+            'certificate.baseUrl'    : System.properties['certificat.baseUrl'] ?: "http://localhost:8080/inera-certificate/",
+            'certificate.web.baseUrl': System.properties['web.baseUrl'] ?: "http://localhost:8088/web/"
     ]
 }
 
