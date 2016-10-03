@@ -7,7 +7,7 @@ fitnesse {
     port = 9124
     root = "FitNesseRoot"
     workingDir = "src/test/fitnesse"
-    wikiStartPage = "MinaIntyg.AutomatiseradeTester"
+    wikiStartPage = "MinaIntyg.AutomatiseradeTester.SkickaIntyg"
 
     //    if (project.hasProperty('fileOutput')) {
         outputFormat = "xml&includehtml"
