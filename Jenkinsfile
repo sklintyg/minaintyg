@@ -1,29 +1,44 @@
 #!groovy
 
 def javaEnv() {
-  def javaHome = tool 'JDK8u66'
-  ["PATH=${env.PATH}:${javaHome}/bin", "JAVA_HOME=${javaHome}"]
+    def javaHome = tool 'JDK8u66'
+    ["PATH=${env.PATH}:${javaHome}/bin", "JAVA_HOME=${javaHome}"]
 }
 
-stage 'checkout'
-
-node {
-  git url: 'https://github.com/sklintyg/minaintyg.git'
-  checkout scm
+stage('checkout') {
+    node {
+        checkout scm
+    }
 }
 
-stage 'build'
-
-node {
-  withEnv(javaEnv()) {
-    sh './gradlew clean install'
-  }
+stage('build') {
+    node {
+        withEnv(javaEnv()) {
+            sh './gradlew clean uploadArchives -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD'
+        }
+    }
 }
 
-stage 'test'
+stage('deploy') {
+    node {
+        ansiblePlaybook extraVars: [version: "3.0.$BUILD_NUMBER", ansible_ssh_port: "22" ], \
+            installation: 'ansible-yum', \
+            inventory: 'ansible/hosts_test', \
+            playbook: 'ansible/deploy.yml', \
+            sudoUser: null
+    }
+}
 
-node {
-// withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
-//     sh "mvn clean verify"
-// }
+stage('test') {
+    node {
+        withEnv(javaEnv()) {
+            sh './gradlew restAssuredTest -DbaseUrl=http://intygstjanst.inera.nordicmedtest.se/'
+        }
+    }
+
+    node {
+        withEnv(javaEnv()) {
+            sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+        }
+    }
 }
