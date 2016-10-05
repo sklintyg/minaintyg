@@ -16,7 +16,7 @@ fitnesse {
     extraProperties = [
             'fitnesse.working'       : "src/test/fitnesse",
             'geb.env'                : System.properties['geb.env'] ?: "chrome",
-            'certificate.baseUrl'    : System.properties['certificat.baseUrl'] ?: "http://localhost:8080/inera-certificate/",
+            'certificate.baseUrl'    : System.properties['certificate.baseUrl'] ?: "http://localhost:8080/inera-certificate/",
             'certificate.web.baseUrl': System.properties['web.baseUrl'] ?: "http://localhost:8088/web/"
     ]
 }
