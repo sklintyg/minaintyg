@@ -29,7 +29,11 @@ task jsTests(type: NodeTask, dependsOn: npmInstall) {
     outputs.dir(webappTestOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['test', "--outputDir=${webappTestOutputDir}", '--skip-coverage=' + (!project.hasProperty('runSonar'))]
+    doFirst {
+        args = ['test',
+                "--outputDir=${webappTestOutputDir}",
+                '--skip-coverage=' + !gradle.taskGraph.allTasks.any{it.name == 'sonarcube'}]
+    }
 }
 
 test.dependsOn(jsTests)
@@ -66,15 +70,15 @@ gretty {
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
     jvmArgs = [
-            "-Dcatalina.base=${buildDir}/catalina.base",
-            "-Dspring.profiles.active=dev",
-            "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
-            "-Djetty.port=8088",
-            "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
-            "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
-            "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-            "-Dminaintyg.useMinifiedJavaScript=${minified}"
-    ]
+        "-Dcatalina.base=${buildDir}/catalina.base",
+        "-Dspring.profiles.active=dev",
+        "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
+        "-Djetty.port=8088",
+        "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
+        "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
+        "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
+        "-Dminaintyg.useMinifiedJavaScript=${minified}"
+        ]
 
     extraResourceBase webappOutputDir
 }

@@ -10,7 +10,7 @@ allprojects {
     def baseVersion = '3.0.'
 
     group = 'se.inera.intyg.minaintyg'
-    version = System.env.BUILD_NUMBER != null ? "${baseVersion}${System.env.BUILD_NUMBER}" : '0-SNAPSHOT'
+    version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
     rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : "${baseVersion}+"
     rootProject.ext.typerVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : "${baseVersion}+"
 }
@@ -69,15 +69,13 @@ subprojects {
         checkstyleTest.enabled = false
     }
 
-    if (project.hasProperty('runSonar')) {
-        apply plugin: 'jacoco'
+    apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = "0.7.6.201602180812"
+    }
+    test {
         jacoco {
-            toolVersion = "0.7.6.201602180812"
-        }
-        test {
-            jacoco {
-                destinationFile = file("$buildDir/jacoco/test.exec")
-            }
+            destinationFile = file("$buildDir/jacoco/test.exec")
         }
     }
 
@@ -153,36 +151,28 @@ task tagRelease {
     }
 }
 
-if (project.hasProperty('runSonar')) {
-    apply plugin: "org.sonarqube"
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
+        property "sonar.projectName", "Mina intyg"
+        property "sonar.projectKey", "mina-intyg"
+        property "sonar.host.url", System.properties['sonarUrl'] ?: "https://build-inera.nordicmedtest.se/sonar"
+        property "sonar.test.exclusions", "src/test/**"
+        property "sonar.exclusions", [
+            "**/stub/**",
+            "**/exception/**",
+            "**/*Exception*.java",
+            "**/templates.js",
+            "**/vendor/**"
+            ]
+        property "sonar.javascript.lcov.reportPath", "build/karma/lcov.info"
+    }
+}
+project(":minaintyg-specifications") {
     sonarqube {
-        properties {
-            property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
-            property "sonar.projectName", "Mina intyg"
-            property "sonar.projectKey", "mina-intyg"
-
-            // Address of SonarQube server
-            property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
-
-            //Exclusions
-            property "sonar.test.exclusions", "src/test/**"
-
-            property "sonar.exclusions", [
-                "**/stub/**",
-                "**/exception/**",
-                "**/*Exception*.java",
-                "**/templates.js",
-                "**/vendor/**"
-                ]
-
-            property "sonar.javascript.lcov.reportPath", "build/karma/lcov.info"
-
-            project(":minaintyg-specifications") {
-                sonarqube {
-                    skipProject = true
-                }
-            }
-        }
+        skipProject = true
     }
 }
 
