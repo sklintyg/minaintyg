@@ -29,7 +29,7 @@ task jsTests(type: NodeTask, dependsOn: npmInstall) {
     outputs.dir(webappTestOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage=' + (!project.hasProperty('runSonar'))]
+    args = ['test', "--outputDir=${webappTestOutputDir}", '--skip-coverage=' + (!project.hasProperty('runSonar'))]
 }
 
 test.dependsOn(jsTests)
@@ -43,7 +43,7 @@ task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
     outputs.dir(webappOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['default', '--outputDir=' + webappOutputDir]
+    args = ['default', "--outputDir=${webappOutputDir}"]
 }
 
 war.dependsOn(jsInclude)
@@ -63,7 +63,7 @@ gretty {
 
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
 
-    def minified = System.properties['minaintyg.useMinifiedJavaScript'] != null ? System.properties['minaintyg.useMinifiedJavaScript'] : false
+    def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
     jvmArgs = [
             "-Dcatalina.base=${buildDir}/catalina.base",
@@ -73,7 +73,7 @@ gretty {
             "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
             "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
             "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-            "-Dminaintyg.useMinifiedJavaScript=" + minified
+            "-Dminaintyg.useMinifiedJavaScript=${minified}"
     ]
 
     extraResourceBase webappOutputDir

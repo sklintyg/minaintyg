@@ -10,9 +10,9 @@ allprojects {
     def baseVersion = '3.0.'
 
     group = 'se.inera.intyg.minaintyg'
-    version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
-    rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
-    rootProject.ext.typerVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
+    version = System.env.BUILD_NUMBER != null ? "${baseVersion}${System.env.BUILD_NUMBER}" : '0-SNAPSHOT'
+    rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : "${baseVersion}+"
+    rootProject.ext.typerVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : "${baseVersion}+"
 }
 
 subprojects {
