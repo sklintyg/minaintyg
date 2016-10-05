@@ -9,9 +9,9 @@ fitnesse {
     workingDir = "src/test/fitnesse"
     wikiStartPage = "MinaIntyg.AutomatiseradeTester.SkickaIntyg"
 
-    //    if (project.hasProperty('fileOutput')) {
-        //outputFormat = "xml&includehtml"
-        //}
+    if (project.hasProperty('fileOutput')) {
+        outputFormat = "xml&includehtml"
+    }
 
     extraProperties = [
             'fitnesse.working'       : "src/test/fitnesse",
