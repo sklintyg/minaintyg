@@ -85,10 +85,10 @@ subprojects {
         repositories.mavenDeployer {
             pom.whenConfigured { pom ->
                 pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = rootProject.resolvedCommonVersion
+                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
                 }
                 pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.intygstyper' }.each {
-                    it.version = rootProject.resolvedTyperVersion
+                    it.version = findResolvedVersion(project, 'se.inera.intyg.intygstyper')
                 }
             }
             repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
@@ -101,10 +101,10 @@ subprojects {
         repositories.mavenInstaller {
             pom.whenConfigured { pom ->
                 pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = rootProject.resolvedCommonVersion
+                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
                 }
                 pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.intygstyper' }.each {
-                    it.version = rootProject.resolvedTyperVersion
+                    it.version = findResolvedVersion(project, 'se.inera.intyg.intygstyper')
                 }
             }
         }
@@ -128,27 +128,18 @@ subprojects {
     }
 }
 
-project(':minaintyg-common') {
-    afterEvaluate { project ->
-        project.configurations.find {
-            it.name == 'compile'
-        }.resolvedConfiguration.getFirstLevelModuleDependencies().find {
-            if (it.moduleGroup == 'se.inera.intyg.common') {
-                rootProject.ext.resolvedCommonVersion = it.moduleVersion
-                return true
-            }
-            return false
+String findResolvedVersion(Project project, String groupName) {
+    String version
+    project.configurations.find {
+        it.name == 'compile'
+    }.resolvedConfiguration.getFirstLevelModuleDependencies().find {
+        if (it.moduleGroup == groupName) {
+            version = it.moduleVersion
+            return true
         }
-        project.configurations.find {
-            it.name == 'compile'
-        }.resolvedConfiguration.getFirstLevelModuleDependencies().find {
-            if (it.moduleGroup == 'se.inera.intyg.intygstyper') {
-                rootProject.ext.resolvedTyperVersion = it.moduleVersion
-                return true
-            }
-            return false
-        }
+        return false
     }
+    return version
 }
 
 task tagRelease {
@@ -177,12 +168,12 @@ if (project.hasProperty('runSonar')) {
             property "sonar.test.exclusions", "src/test/**"
 
             property "sonar.exclusions", [
-                    "**/stub/**",
-                    "**/exception/**",
-                    "**/*Exception*.java",
-                    "**/templates.js",
-                    "**/vendor/**"
-            ]
+                "**/stub/**",
+                "**/exception/**",
+                "**/*Exception*.java",
+                "**/templates.js",
+                "**/vendor/**"
+                ]
 
             property "sonar.javascript.lcov.reportPath", "build/karma/lcov.info"
 
