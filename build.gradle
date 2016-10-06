@@ -172,11 +172,6 @@ sonarqube {
         property "sonar.javascript.lcov.reportPath", "build/karma/lcov.info"
     }
 }
-project(":minaintyg-specifications") {
-    sonarqube {
-        skipProject = true
-    }
-}
 
 buildscript {
     dependencies {
