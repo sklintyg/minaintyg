@@ -94,20 +94,22 @@ xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
     });
 
     xdescribe('Verifiera anpassat intyg', function() {
-        expect(customPage.isAt()).toBeTruthy();
+        it('options', function() {
+            expect(customPage.isAt()).toBeTruthy();
 
-        expect(element(by.id('options.2')).isSelected()).toBe(true);
-        expect(element(by.id('options.3')).isSelected()).toBe(true);
-        expect(element(by.id('options.4')).isSelected()).toBe(true);
-        expect(element(by.id('options.4b')).isSelected()).toBe(true);
-        expect(element(by.id('options.5')).isSelected()).toBe(true);
-        expect(element(by.id('options.6a')).isSelected()).toBe(true);
-        expect(element(by.id('options.7')).isSelected()).toBe(true);
-        expect(element(by.id('options.8a')).isSelected()).toBe(true);
-        expect(element(by.id('options.9')).isSelected()).toBe(true);
-        expect(element(by.id('options.10')).isSelected()).toBe(true);
-        expect(element(by.id('options.12')).isSelected()).toBe(true);
-        expect(element(by.id('options.13')).isSelected()).toBe(true);
+            expect(element(by.id('options.2')).isSelected()).toBe(true);
+            expect(element(by.id('options.3')).isSelected()).toBe(true);
+            expect(element(by.id('options.4')).isSelected()).toBe(true);
+            expect(element(by.id('options.4b')).isSelected()).toBe(true);
+            expect(element(by.id('options.5')).isSelected()).toBe(true);
+            expect(element(by.id('options.6a')).isSelected()).toBe(true);
+            expect(element(by.id('options.7')).isSelected()).toBe(true);
+            expect(element(by.id('options.8a')).isSelected()).toBe(true);
+            expect(element(by.id('options.9')).isSelected()).toBe(true);
+            expect(element(by.id('options.10')).isSelected()).toBe(true);
+            expect(element(by.id('options.12')).isSelected()).toBe(true);
+            expect(element(by.id('options.13')).isSelected()).toBe(true);
+        });
     });
 
     afterAll(function() {
