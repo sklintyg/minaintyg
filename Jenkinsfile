@@ -37,11 +37,19 @@ stage('test') {
     //     }
     // }
 
+    // node {
+    //     wrap([$class: 'Xvfb']) {
+    //         withEnv(javaEnv()) {
+    //             sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
+    //                 -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+    //         }
+    //     }
+    // }
+
     node {
         wrap([$class: 'Xvfb']) {
             withEnv(javaEnv()) {
-                sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
-                    -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+                sh './gradlew protractorTests -Dprotractor.env=build-server'
             }
         }
     }
