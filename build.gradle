@@ -144,12 +144,13 @@ String findResolvedVersion(Project project, String groupName) {
 
 task tagRelease {
     description = 'Tags the current head with the projects version.'
+    def grgit = org.ajoberstar.grgit.Grgit.open(creds: new org.ajoberstar.grgit.Credentials(System.properties['githubUser'], System.properties['githubPassword']))
     doLast {
         grgit.tag.add {
             name = version
             message = "Release of ${version}"
         }
-        //grgit.push(tags: true)
+        grgit.push(tags: true)
     }
 }
 

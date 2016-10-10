@@ -11,13 +11,13 @@ stage('checkout') {
     }
 }
 
-stage('build') {
-    node {
-        withEnv(javaEnv()) {
-            sh './gradlew clean uploadArchives -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD'
-        }
-    }
-}
+// stage('build') {
+//     node {
+//         withEnv(javaEnv()) {
+//             sh './gradlew clean build uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD --stacktrace'
+//         }
+//     }
+// }
 
 stage('deploy') {
     node {
@@ -37,8 +37,11 @@ stage('test') {
     }
 
     node {
-        withEnv(javaEnv()) {
-            sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+        wrap([$class: 'Xvfb']) {
+            withEnv(javaEnv()) {
+                sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
+                    -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+            }
         }
     }
 }
