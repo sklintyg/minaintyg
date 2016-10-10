@@ -21,7 +21,7 @@ stage('build') {
     try {
         node {
             withEnv(javaEnv()) {
-                sh './gradlew --refresh-dependencies clea build sonarqube -PcodeQuality'
+                sh './gradlew --refresh-dependencies goffa clean build sonarqube -PcodeQuality'
             }
         }
     } catch (e) {
