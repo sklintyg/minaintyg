@@ -54,19 +54,7 @@ stage('integration tests') {
                 withEnv(javaEnv()) {
                     sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
                         -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
-                }
-            }
-        } catch (e) {
-            currentBuild.result = "FAILED"
-            notifyFailed()
-            throw e
-        }
-    }
 
-    node {
-        try {
-            wrap([$class: 'Xvfb']) {
-                withEnv(javaEnv()) {
                     sh './gradlew protractorTests -Dprotractor.env=build-server'
                 }
             }
