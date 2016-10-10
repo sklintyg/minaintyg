@@ -11,13 +11,14 @@ stage('checkout') {
     }
 }
 
-// stage('build') {
-//     node {
-//         withEnv(javaEnv()) {
-//             sh './gradlew clean build uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD --stacktrace'
-//         }
-//     }
-// }
+stage('build') {
+    node {
+        withEnv(javaEnv()) {
+            sh './gradlew clean build uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
+                -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD --stacktrace'
+        }
+    }
+}
 
 stage('deploy') {
     node {
