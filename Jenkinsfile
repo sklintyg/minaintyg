@@ -14,15 +14,14 @@ stage('checkout') {
 stage('build') {
     node {
         withEnv(javaEnv()) {
-            sh './gradlew clean build uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
-                -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD --stacktrace'
+            sh './gradlew --refresh-dependencies clean build sonarqube -PcodeQuality'
         }
     }
 }
 
 stage('deploy') {
     node {
-        ansiblePlaybook extraVars: [version: "3.0.$BUILD_NUMBER", ansible_ssh_port: "22" ], \
+        ansiblePlaybook extraVars: [version: "3.0.$BUILD_NUMBER", ansible_ssh_port: "22", deploy_from_repo: false ], \
             installation: 'ansible-yum', \
             inventory: 'ansible/hosts_test', \
             playbook: 'ansible/deploy.yml', \
@@ -30,27 +29,30 @@ stage('deploy') {
     }
 }
 
-stage('test') {
-    // node {
-    //     withEnv(javaEnv()) {
-    //         sh './gradlew restAssuredTest -DbaseUrl=http://intygstjanst.inera.nordicmedtest.se/'
-    //     }
-    // }
+// stage('integrationtests') {
+//     node {
+//         wrap([$class: 'Xvfb']) {
+//             withEnv(javaEnv()) {
+//                 sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
+//                     -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
+//             }
+//         }
+//     }
 
-    // node {
-    //     wrap([$class: 'Xvfb']) {
-    //         withEnv(javaEnv()) {
-    //             sh './gradlew fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
-    //                 -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput'
-    //         }
-    //     }
-    // }
+//     node {
+//         wrap([$class: 'Xvfb']) {
+//             withEnv(javaEnv()) {
+//                 sh './gradlew protractorTests -Dprotractor.env=build-server'
+//             }
+//         }
+//     }
+// }
 
-    node {
-        wrap([$class: 'Xvfb']) {
-            withEnv(javaEnv()) {
-                sh './gradlew protractorTests -Dprotractor.env=build-server'
-            }
-        }
-    }
-}
+// stage('tag and upload') {
+//     node {
+//         withEnv(javaEnv()) {
+//             sh './gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
+//                 -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD'
+//         }
+//     }
+// }
