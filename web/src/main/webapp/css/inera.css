@@ -852,6 +852,7 @@ opacity: 1;
 
 .well {
     padding: 10px;
+	margin: 0.5em 0 0.5em 0;
 }
 
 /* special styles */

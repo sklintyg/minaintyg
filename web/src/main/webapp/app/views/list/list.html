@@ -10,9 +10,14 @@
     </p>
   </div>
   <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-    <p>
-      <div message key="inbox.description.archive" class="mi-text"></div>
-      <div class="mi-text margin-top-5px">
+    <p class="mi-text">
+      <div message key="inbox.description.archive"></div>
+      <div uib-collapse="isCollapsedArchive">
+        <div class="well well-sm">
+          <span message key="inbox.helptext.arkivera"></span>
+        </div>
+      </div>
+      <div style="padding-top: 0.5em">
         <a ng-show="isCollapsedArchive" ng-click="isCollapsedArchive = !isCollapsedArchive">
           <span style="vertical-align: text-bottom;">
             <span message key="common.title.helptext.moreinfo"></span>
@@ -27,11 +32,6 @@
           </span>
           <span class="glyphicon glyphicon-chevron-up"></span>
         </a>
-      </div>
-      <div uib-collapse="isCollapsedArchive">
-        <div class="mi-text well well-sm margin-top-5px">
-          <span message key="inbox.helptext.arkivera"></span>
-        </div>
       </div>
     </p>
   </div>
@@ -73,10 +73,13 @@
                   <div class="cert-header">
                     <div class="row" ng-show="cert.cancelled">
                       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 header-row">
-                        <div class="alert alert-info">
-                          <div message key="inbox.revoked"></div>
-                          <div message key="inbox.revoked.archive" class="margin-top-5px"></div>
-                          <div class="margin-top-5px">
+                        <div class="alert alert-info mi-text">
+                          <div message key="inbox.revoked" style="display: inline-block"></div>
+                          <div message key="inbox.revoked.archive" style="display: inline-block; margin-top: 0.5em;"></div>
+                          <div uib-collapse="isCollapsedRevoke"  style="margin-top: 0.5em;">
+                              <span message key="inbox.revoked.helptext"></span>
+                          </div>
+                          <div style="display: inline-block; margin-top: 0.5em;">
                             <a ng-show="isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
                               <span style="vertical-align: text-bottom;">
                                 <span message key="common.title.helptext.moreinfo"></span>
@@ -91,11 +94,6 @@
                               </span>
                               <span class="glyphicon glyphicon-chevron-up"></span>
                             </a>
-                          </div>
-                        </div>
-                        <div uib-collapse="isCollapsedRevoke">
-                          <div class="mi-text well well-sm margin-top-5px">
-                            <span message key="inbox.revoked.helptext"></span>
                           </div>
                         </div>
                       </div>
@@ -116,7 +114,7 @@
                           {{cert.statuses[0].timestamp | date:'short'}}
                           <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
                           <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
-                          <div uib-collapse="isCollapsed">
+                          <div uib-collapse="isCollapsedArchive">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 {{status.timestamp | date:'short'}}
@@ -126,7 +124,7 @@
                             </div>
                           </div>
                           <p>
-                            <button type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsed = !isCollapsed"><span message key="label.status.{{ !isCollapsed }}"></span></button>
+                            <button type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsedArchive = !isCollapsedArchive"><span message key="label.status.{{ !isCollapsedArchive }}"></span></button>
                           </p>
                         </div>
                         <span ng-show="cert.statuses.length==0">Ingen</span>
