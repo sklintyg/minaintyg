@@ -21,7 +21,7 @@ stage('build') {
     node {
         try {
             withEnv(javaEnv()) {
-                sh './gradlew --refresh-dependencies goffa clean build sonarqube -PcodeQuality'
+                sh './gradlew --refresh-dependencies clean build sonarqube -PcodeQuality'
             }
         } catch (e) {
             currentBuild.result = "FAILED"
@@ -95,6 +95,6 @@ stage('tag and upload') {
 
 def notifyFailed() {
     emailext (subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-              body: """FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\nCheck console output at ${env.BUILD_URL}""",
+              body: """FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\n\nCheck console output at ${env.BUILD_URL}""",
               recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'DevelopersRecipientProvider']])
 }
