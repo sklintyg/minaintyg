@@ -31,11 +31,11 @@ stage('deploy') {
 }
 
 stage('test') {
-    node {
-        withEnv(javaEnv()) {
-            sh './gradlew restAssuredTest -DbaseUrl=http://intygstjanst.inera.nordicmedtest.se/'
-        }
-    }
+    // node {
+    //     withEnv(javaEnv()) {
+    //         sh './gradlew restAssuredTest -DbaseUrl=http://intygstjanst.inera.nordicmedtest.se/'
+    //     }
+    // }
 
     node {
         wrap([$class: 'Xvfb']) {
