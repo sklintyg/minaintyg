@@ -15,7 +15,7 @@
   when: deploy_from_repo|bool
 
 - name: copy minaintyg-web-{{ version }}.war
-  copy: src={{ inventory_dir }}/../web/target/minaintyg.war dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
+  copy: src={{ inventory_dir }}/../web/build/minaintyg-web-{{ version }}.war dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
   when: not deploy_from_repo|bool
 
 - name: remove old version of unpacked war
