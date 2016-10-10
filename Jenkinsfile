@@ -95,7 +95,6 @@ stage('tag and upload') {
 
 def notifyFailed() {
     emailext (subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-              body: """FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\n \
-                       Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;""",
+              body: """FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':\nCheck console output at ${env.BUILD_URL}""",
               recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'DevelopersRecipientProvider']])
 }
