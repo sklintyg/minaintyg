@@ -21,7 +21,7 @@ stage('build') {
     node {
         try {
             withEnv(javaEnv()) {
-                sh './gradlew --refresh-dependencies clean build sonarqube -PcodeQuality'
+                sh './gradlew --refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false'
             }
         } catch (e) {
             currentBuild.result = "FAILED"
