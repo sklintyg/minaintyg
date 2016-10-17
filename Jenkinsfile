@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion  = "3.0.${BUILD_NUMBER}"
+def buildVersion = "3.0.${BUILD_NUMBER}"
 def commonVersion = "3.0.+"
-def typerVersion  = "3.0.+"
+def typerVersion = "3.0.+"
 
 stage('checkout') {
     node {
@@ -20,22 +20,28 @@ stage('build') {
 stage('deploy') {
     node {
         util.run {
-            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
-                installation: 'ansible-yum', \
-                inventory: 'ansible/hosts_test', \
-                playbook: 'ansible/deploy.yml', \
-                sudoUser: null
+            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"],  \
+                 installation: 'ansible-yum',  \
+                 inventory: 'ansible/hosts_test',  \
+                 playbook: 'ansible/deploy.yml',  \
+                 sudoUser: null
         }
     }
 }
 
-stage('integration tests') {
+stage('fitnesse') {
     node {
         wrap([$class: 'Xvfb']) {
             shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
                       -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput \
                       -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
+        }
+    }
+}
 
+stage('protractor') {
+    node {
+        wrap([$class: 'Xvfb']) {
             shgradle "protractorTests -Dprotractor.env=build-server \
                       -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
         }
