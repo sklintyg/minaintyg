@@ -65,7 +65,7 @@ stage('publish html reports') {
 		     reportDir: 'test/dev/report',
 		     reportFiles: 'index.html',
 		     reportName: 'Protractor results'
-		    ]])
+		    ])
     }
 }
 
