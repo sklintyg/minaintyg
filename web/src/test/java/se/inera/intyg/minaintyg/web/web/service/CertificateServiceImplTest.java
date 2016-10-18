@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
+import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
@@ -198,7 +198,7 @@ public class CertificateServiceImplTest {
         ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
         response.setIntygsLista(new ListaType());
         response.getIntygsLista().getIntyg().add(buildIntyg());
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
 
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
@@ -224,7 +224,7 @@ public class CertificateServiceImplTest {
         ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
         response.setIntygsLista(new ListaType());
         response.getIntygsLista().getIntyg().add(buildIntyg());
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
 
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
 
@@ -246,7 +246,7 @@ public class CertificateServiceImplTest {
     @Test(expected = ExternalWebServiceCallFailedException.class)
     public void testGetCertificatesFailureHandling() {
         ListCertificatesForCitizenResponseType response = new ListCertificatesForCitizenResponseType();
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil
+        response.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil
                 .errorResult(se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType.APPLICATION_ERROR, "an error"));
 
         when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
@@ -267,7 +267,7 @@ public class CertificateServiceImplTest {
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType());
         response2.getIntygsLista().getIntyg().add(buildIntyg());
-        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response2.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
         UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
         when(utlatandeMetaDataConverter.convert(any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
@@ -299,7 +299,7 @@ public class CertificateServiceImplTest {
         .thenReturn(response);
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType()); // no certificates
-        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response2.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
 
         try {
@@ -324,7 +324,7 @@ public class CertificateServiceImplTest {
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType());
         response2.getIntygsLista().getIntyg().add(buildIntyg());
-        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response2.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
         UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
         when(utlatandeMetaDataConverter.convert(any(List.class), eq(true))).thenReturn(Arrays.asList(umd));
@@ -356,7 +356,7 @@ public class CertificateServiceImplTest {
         .thenReturn(response);
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType()); // no certificates
-        response2.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response2.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
 
         try {
@@ -378,7 +378,7 @@ public class CertificateServiceImplTest {
         String mottagare = "FK";
 
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.okResult());
+        response.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.okResult());
         Citizen citizen = mock(Citizen.class);
 
         /* When */
@@ -412,7 +412,7 @@ public class CertificateServiceImplTest {
     public void testSendCertificateReturnsValidationError() {
         /* Given */
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
-        response.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil.errorResult(
+        response.setResult(se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil.errorResult(
                 se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType.VALIDATION_ERROR, "validation error"));
 
         /* When */

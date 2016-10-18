@@ -92,6 +92,7 @@ configurations {
 dependencies {
     buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
 
+    compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.3"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.3"
 
     compile "se.inera.intyg.intygstyper:ts-bas:${typerVersion}"

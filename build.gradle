@@ -114,9 +114,10 @@ subprojects {
     }
 
     dependencies {
+        buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
+
         testCompile 'junit:junit:4.12'
         testCompile 'org.mockito:mockito-core:1.9.0'
-        buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
     }
 
     repositories {
