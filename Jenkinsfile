@@ -49,14 +49,16 @@ stage('fitnesse') {
 }
 
 stage('publish html reports') {
-    publishHTML([
-		 allowMissing: false,
-		 alwaysLinkToLastBuild: false,
-		 keepAll: true,
-		 reportDir: 'specifications/',
-		 reportFiles: 'fitnesse-results.html',
-		 reportName: 'Fitnesse results'
-    ])
+    node { 
+	publishHTML([
+		     allowMissing: false,
+		     alwaysLinkToLastBuild: false,
+		     keepAll: true,
+		     reportDir: 'specifications/',
+		     reportFiles: 'fitnesse-results.html',
+		     reportName: 'Fitnesse results'
+		    ])
+    }
 }
 
 stage('tag and upload') {
