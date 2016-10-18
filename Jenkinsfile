@@ -29,20 +29,20 @@ stage('deploy') {
     }
 }
 
-stage('fitnesse') {
+stage('protractor') {
     node {
         wrap([$class: 'Xvfb']) {
-            shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
-                      -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput \
+            shgradle "protractorTests -Dprotractor.env=build-server \
                       -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
         }
     }
 }
 
-stage('protractor') {
+stage('fitnesse') {
     node {
         wrap([$class: 'Xvfb']) {
-            shgradle "protractorTests -Dprotractor.env=build-server \
+            shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
+                      -Dcertificate.baseUrl=https://intygstjanst.inera.nordicmedtest.se/inera-certificate/ -PfileOutput \
                       -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
         }
     }
