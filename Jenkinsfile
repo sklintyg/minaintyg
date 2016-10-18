@@ -48,6 +48,17 @@ stage('fitnesse') {
     }
 }
 
+stage('publish html reports') {
+    publishHTML([
+		 allowMissing: false,
+		 alwaysLinkToLastBuild: false,
+		 keepAll: true,
+		 reportDir: 'specifications/',
+		 reportFiles: 'fitnesse-results.html',
+		 reportName: 'Fitnesse results'
+    ])
+}
+
 stage('tag and upload') {
     node {
         shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
