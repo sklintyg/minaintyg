@@ -59,7 +59,7 @@ describe('Logga in som medborgare', function() {
         });
 
         it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
+            expect(consentPage.isAt()).toBeFalsy();
             consentPage.clickGiveConsent();
         });
 
