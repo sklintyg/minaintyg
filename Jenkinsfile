@@ -32,10 +32,10 @@ stage('protractor') {
             wrap([$class: 'Xvfb']) {
                 shgradle "protractorTests -Dprotractor.env=build-server \
                       -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
-            } finally {
-                publishHTML allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'test/dev/report', \
-                      reportFiles: 'index.html', reportName: 'Protractor results'
             }
+        } finally {
+            publishHTML allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'test/dev/report', \
+                reportFiles: 'index.html', reportName: 'Protractor results'
         }
     }
 }
@@ -50,7 +50,7 @@ stage('fitnesse') {
             }
         } finally {
             publishHTML allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'specifications/', \
-                  reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
+                reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
         }
     }
 }
