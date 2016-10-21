@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
-    var SKIP_COVERAGE = grunt.option('skip-coverage') !== undefined ? grunt.option('skip-coverage') : true;
+    var RUN_COVERAGE = grunt.option('run-coverage') !== undefined ? grunt.option('run-coverage') : false;
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/app.js']).sort();
     grunt.file.write(DEST_DIR + 'app-deps.json', JSON.stringify(minaintyg.
@@ -152,16 +152,6 @@ module.exports = function(grunt) {
             }
         },
 
-        csslint: {
-            minaintyg: {
-                options: {
-                    csslintrc: 'build/build-tools/csslint/.csslintrc',
-                    force: true
-                },
-                src: [ SRC_DIR + '../**/*.css' ]
-            }
-        },
-
         concat: {
             minaintyg: {
                 src: minaintyg,
@@ -190,7 +180,7 @@ module.exports = function(grunt) {
             minaintyg: {
                 configFile: 'karma.conf.ci.js',
                 client: {
-                    args: ['--skip-coverage=' + SKIP_COVERAGE]
+                    args: ['--run-coverage=' + RUN_COVERAGE]
                 },
                 coverageReporter: {
                     type : 'lcovonly',
@@ -340,8 +330,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
-    grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
+    grunt.registerTask('default', [ 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('lint', [ 'jshint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
 };
