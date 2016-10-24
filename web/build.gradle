@@ -98,8 +98,8 @@ configurations {
 dependencies {
     buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
 
-    compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.3"
-    compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:1.0.0.3"
+    compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:${intygHealthreportingSchemasVersion}"
+    compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${itintegrationMonitoringSchemasVersion}"
 
     compile "se.inera.intyg.intygstyper:ts-bas:${typerVersion}"
     compile "se.inera.intyg.intygstyper:ts-diabetes:${typerVersion}"
@@ -115,20 +115,20 @@ dependencies {
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
     compile "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
-    compile "org.springframework.security.extensions:spring-security-saml2-core:1.0.1.RELEASE"
-    compile "org.opensaml:openws:1.4.2-1"
-    compile "org.aspectj:aspectjweaver:1.7.1"
-    compile "org.owasp.esapi:esapi:2.0.1"
-    compile "org.opensaml:xmltooling:1.3.2"
-    compile("io.swagger:swagger-jaxrs:1.5.4") {
+    compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
+    compile "org.opensaml:openws:${openWsVersion}"
+    compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
+    compile "org.owasp.esapi:esapi:${esapiVersion}"
+    compile "org.opensaml:xmltooling:${xmlToolingVersion}"
+    compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")
     }
-    compile("org.callistasoftware.netcare.commons:mvk-integration:1.3.0") {
+    compile("org.callistasoftware.netcare.commons:mvk-integration:${mvkIntegrationVersion}") {
         exclude(module: "geronimo-servlet_3.0_spec")
     }
 
-    compileOnly "javax.servlet:servlet-api:2.5"
-    compileOnly "org.eclipse.jetty:apache-jstl:9.3.6.v20151106"
+    compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
+    compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
 
-    testCompile "commons-io:commons-io:2.4"
+    testCompile "commons-io:commons-io:${commonsIoVersion}"
 }
