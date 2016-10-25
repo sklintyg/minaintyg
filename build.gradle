@@ -23,7 +23,7 @@ ext {
     rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
     
-    
+    mockitoVersion = "1.9.0"
 }
 
 allprojects {
@@ -136,8 +136,8 @@ subprojects {
     dependencies {
         buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
 
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.mockito:mockito-core:1.9.0'
+        testCompile 'junit:junit:4.+'
+        testCompile "org.mockito:mockito-core:${mockitoVersion}"
     }
 
     repositories {
