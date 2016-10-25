@@ -120,11 +120,9 @@ dependencies {
     compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
     compile "org.opensaml:xmltooling:${xmlToolingVersion}"
+    compile "org.callistasoftware.netcare.commons:mvk-integration:${mvkIntegrationVersion}"
     compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")
-    }
-    compile("org.callistasoftware.netcare.commons:mvk-integration:${mvkIntegrationVersion}") {
-        exclude(module: "geronimo-servlet_3.0_spec")
     }
 
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
