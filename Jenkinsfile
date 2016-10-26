@@ -6,7 +6,7 @@ def typerVersion = "3.1.+"
 
 stage('checkout') {
     node {
-        git url: "https://github.com/sklintyg/minaintyg.git"
+        git url: "https://github.com/sklintyg/minaintyg.git", branch: 'develop'
         util.run { checkout scm }
     }
 }
