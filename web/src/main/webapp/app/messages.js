@@ -173,7 +173,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'certificatetypes.luse.commonname': 'Läkarutlåtande',
         'certificatetypes.luse.typename': ' för sjukersättning',
         'certificatetypes.lisu.commonname': 'Läkarintyg',
-        'certificatetypes.lisu.typename': ' Sjukpenning utökad',
+        'certificatetypes.lisu.typename': ' för sjukpenning',
         'certificatetypes.luae_fs.commonname': 'Läkarutlåtande',
         'certificatetypes.luae_fs.typename': ' Aktivitetsersättning vid förlängd skolgång',
         'certificatetypes.ts-bas.commonname': 'Transportstyrelsens läkarintyg',
