@@ -52,10 +52,10 @@ describe('Logga in som medborgare', function() {
             specHelper.waitForAngularTestability();
         });
 
-        xit('Acceptera cookie', function() {
+        it('Acceptera cookie', function() {
             browser.wait(EC.elementToBeClickable(element(by.id('cookie-usage-consent-btn'))), 5000);
             element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
-            browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
+            //browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
         });
 
         it('Ge samtycke', function() {
