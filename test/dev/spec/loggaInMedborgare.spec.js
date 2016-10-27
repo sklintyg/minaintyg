@@ -39,7 +39,6 @@ describe('Logga in som medborgare', function() {
     });
 
     describe('Logga in och hamna på startsidan', function() {
-        var cookieOKBtn = element(by.id('cookie-usage-consent-btn'));
 
         beforeEach(function() {
             browser.ignoreSynchronization = false;
@@ -54,9 +53,9 @@ describe('Logga in som medborgare', function() {
         });
 
         it('Acceptera cookie', function() {
-            browser.wait(EC.elementToBeClickable(cookieOKBtn), 5000);
-            cookieOKBtn.sendKeys(protractor.Key.SPACE);
-            browser.wait(EC.invisibilityOf(cookieOKBtn), 5000);
+            browser.wait(EC.elementToBeClickable(element(by.id('cookie-usage-consent-btn'))), 5000);
+            element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
+            browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
         });
 
         it('Ge samtycke', function() {
