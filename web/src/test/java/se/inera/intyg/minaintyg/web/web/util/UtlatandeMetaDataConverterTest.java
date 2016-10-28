@@ -99,7 +99,7 @@ public class UtlatandeMetaDataConverterTest {
         final String intygstyp2 = "LUSE";
         final LocalDateTime signeringstidpunkt2 = signeringstidpunkt1.minusDays(4);
         final String intygId3 = "intygsid3";
-        final String intygstyp3 = "LISU";
+        final String intygstyp3 = "LISJP";
         final LocalDateTime signeringstidpunkt3 = signeringstidpunkt1.plusDays(3);
         final boolean arkiverade = false;
         Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
