@@ -53,10 +53,10 @@
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
                           <button type="button" class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
-                          	<span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span class="text-nowrap" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
+                            <span message key="{{cert.type}}.label.certtitle"></span>
                           </button>
                           <span ng-show="cert.cancelled">
-                            <span message key="certificatetypes.{{cert.type | lowercase}}.commonname"></span><span message key="certificatetypes.{{cert.type | lowercase}}.typename"></span> - <span message key="certificates.status.cancelledlc"></span>
+                  	        <span message key="{{cert.type}}.label.certtitle"></span> - <span message key="certificates.status.cancelledlc"></span>
                           </span>
                         </h2>
                       </div>

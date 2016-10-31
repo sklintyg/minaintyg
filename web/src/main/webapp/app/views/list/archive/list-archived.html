@@ -27,8 +27,7 @@
           <tr ng-repeat="cert in archivedCertificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
             <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
             <td headers="type">
-              <span message key="certificatetypes.{{cert.type}}.commonname"></span>
-              <span class="cert-titlebar-type" message key="certificatetypes.{{cert.type | lowercase}}.typename"></span>
+              <span message key="{{cert.type}}.label.certtitle"></span>
             </td>
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}</td>
@@ -36,8 +35,7 @@
               <div ng-show="cert.statuses.length>0">
                 {{cert.statuses[0].timestamp | date:'short'}}
                 <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                <span ng-show="cert.statuses[0].type == 'SENT'"><span message
-                                                                      key="certificates.target.{{cert.statuses[0].target}}"></span></span>
+                <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
               </div>
               <span ng-show="!cert.statuses">Ingen</span>
             </td>
