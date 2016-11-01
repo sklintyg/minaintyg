@@ -76,32 +76,18 @@ subprojects {
         }
     }
 
-    uploadArchives {
-        repositories.mavenDeployer {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.intygstyper' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.intygstyper')
-                }
-            }
-            repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
-                authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
-            }
+    uploadArchives.repositories.mavenDeployer {
+        repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+            authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
         }
     }
 
-    install {
-        repositories.mavenInstaller {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.intygstyper' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.intygstyper')
-                }
-            }
+    [install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
+        pom.dependencies.findAll {dep -> dep.groupId == 'se.inera.intyg.common'}.each {
+            it.version = findResolvedVersion(project, 'se.inera.intyg.common')
+        }
+        pom.dependencies.findAll {dep -> dep.groupId == 'se.inera.intyg.intygstyper'}.each {
+            it.version = findResolvedVersion(project, 'se.inera.intyg.intygstyper')
         }
     }
 
@@ -119,7 +105,6 @@ subprojects {
     repositories {
         mavenLocal()
         maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
-        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
 }
@@ -156,7 +141,6 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
-        maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
 }
