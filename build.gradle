@@ -2,24 +2,21 @@ ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
     typerVersion = System.properties['typerVersion'] ?: '0-SNAPSHOT'
 
-    rivtaCertificateSchemasVersion = "2.0.RC6.2"
-    rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
+    intygInsuranceprocessSchemasVersion = "1.0.4"
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
-    springVersion = "4.2.2.RELEASE"
-    springSecurityVersion = "4.0.3.RELEASE"
-    itintegrationMonitoringSchemasVersion = "1.0.0.4"
-    intygHealthreportingSchemasVersion = "1.0.4"
-    springSecuritySaml2CoreVersion = "1.0.1.RELEASE"
-    openWsVersion = "1.4.2-1"
+
+    apacheJstlVersion = "9.3.6.v20151106"
     aspectJWeaverVersion = "1.7.1"
     esapiVersion = "2.0.1"
-    xmlToolingVersion = "1.3.2"
     jaxrsVersion = "1.5.4"
     mvkIntegrationVersion = "1.3.0"
-    apacheJstlVersion = "9.3.6.v20151106"
-    servletApiVersion = "2.5"
-    commonsIoVersion = "2.4"
+    openWsVersion = "1.4.2-1"
     seleniumVersion = "2.52.0"
+    servletApiVersion = "2.5"
+    springSecuritySaml2CoreVersion = "1.0.1.RELEASE"
+    springSecurityVersion = "4.0.3.RELEASE"
+    springVersion = "4.2.2.RELEASE"
+    xmlToolingVersion = "1.3.2"
     
     mockitoVersion = "1.9.0"
 }
