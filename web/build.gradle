@@ -54,7 +54,7 @@ task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall]) {
     args = ['lint']
 }
 
-checkstyleMain.dependsOn(jsCodeQuality)
+checkstyleMain.dependsOn jsCodeQuality
 jsCodeQuality.onlyIf { project.hasProperty('codeQuality') }
 
 war {
