@@ -11,18 +11,6 @@ stage('checkout') {
     }
 }
 
-stage('deployit') {
-    node {
-    sh git clone https://github.com/sklintyg/intygstjanst.git 
-    
-    util.run {
-            ansiblePlaybook extraVars: [version: INTYGSTJANST_VERSION, ansible_ssh_port: "22", deploy_from_repo: "true"],  \
-                 installation: 'ansible-yum', inventory: 'intygstjanst/ansible/hosts_test_minaintyg', playbook: 'intygstjanst/ansible/deploy.yml'
-            util.waitForServer('http://172.16.1.15:8080/inera-certificate/version.jsp')
-        }
-    }
-}
-
 stage('build') {
     node {
         try {
