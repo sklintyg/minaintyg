@@ -36,9 +36,7 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    task createVersionPropertyFile(type: VersionPropertyFileTask) {
-        useBuildTime = true
-    }
+    task createVersionPropertyFile(type: VersionPropertyFileTask)
 
     uploadArchives.repositories.mavenDeployer {
         repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
