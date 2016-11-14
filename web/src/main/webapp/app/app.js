@@ -18,8 +18,6 @@
  */
 
 /* global MI_CONFIG */
-// defers bootstrapping until all modules have been loaded, further down ...
-window.name = 'NG_DEFER_BOOTSTRAP!'; // jshint ignore:line
 
 var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
 
@@ -185,8 +183,12 @@ $.get('/api/certificates/map').then(function(modules) {
         $.when.apply(this, dependencyPromises).then(function() {
             angular.element().ready(function() {
 
+                var allModules = [app.name, 'common'].concat(Array.prototype.slice.call(modulesIds, 0));
+
                 // Everything is loaded, bootstrap the application with all dependencies.
-                angular.resumeBootstrap([app.name, 'common'].concat(Array.prototype.slice.call(modulesIds, 0)));
+                document.documentElement.setAttribute('ng-app', 'webcert');
+                angular.bootstrap(document, allModules);
+
             });
         }).fail(function(error) {
             if (window.console) {

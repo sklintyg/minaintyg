@@ -29,8 +29,6 @@ var welcomePage = miTestTools.pages.welcomePage;
 var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 
-var EC = protractor.ExpectedConditions;
-
 describe('Logga in som medborgare', function() {
 
     beforeAll(function() {
@@ -53,9 +51,10 @@ describe('Logga in som medborgare', function() {
         });
 
         it('Acceptera cookie', function() {
-            browser.wait(EC.elementToBeClickable(element(by.id('cookie-usage-consent-btn'))), 5000);
+            consentPage.get();
+            expect(element(by.id('cookie-usage-consent-btn')).isDisplayed()).toBeTruthy();
             element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
-            //browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
+            expect(element(by.id('cookie-usage-consent-btn')).isPresent()).toBeFalsy();
         });
 
         it('Ge samtycke', function() {

@@ -36,7 +36,7 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
         this.giveConsent = element(by.id('giveConsentButton'));
     },
     get: function () {
-        this.getPage('consent');
+        return browser.get('web/start');
     },
     isAt: function isAt() {
         specHelper.waitForAngularTestability();
