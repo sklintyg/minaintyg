@@ -143,24 +143,20 @@
       <ns4:delsvar id="4.3">Arkivet</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="6">
-      <ns4:instans>1</ns4:instans>
+      <ns4:delsvar id="6.1">Klämskada skuldra</ns4:delsvar>
       <ns4:delsvar id="6.2">
         <ns3:cv>
           <ns3:code>S47</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </ns4:delsvar>
-      <ns4:delsvar id="6.1">Klämskada skuldra</ns4:delsvar>
-    </ns4:svar>
-    <ns4:svar id="6">
-      <ns4:instans>2</ns4:instans>
-      <ns4:delsvar id="6.2">
+      <ns4:delsvar id="6.3">Icke specificerad akut infektion i nedre luftvägarna</ns4:delsvar>
+      <ns4:delsvar id="6.4">
         <ns3:cv>
           <ns3:code>J22</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </ns4:delsvar>
-      <ns4:delsvar id="6.1">Icke specificerad akut infektion i nedre luftvägarna</ns4:delsvar>
     </ns4:svar>
     <ns4:svar id="15">
       <ns4:delsvar id="15.1">Skoldansen</ns4:delsvar>
