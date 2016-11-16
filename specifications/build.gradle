@@ -4,7 +4,7 @@ apply plugin: 'groovy'
 apply plugin: 'inera-fitnesse'
 
 fitnesse {
-    port = 9124
+    port = 9113
     root = "FitNesseRoot"
     workingDir = "src/test/fitnesse"
     wikiStartPage = "MinaIntyg.AutomatiseradeTester"
