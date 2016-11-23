@@ -94,7 +94,7 @@ describe('Verifiera LUAE_FS intyg', function() {
 
         it('Verifiera intygshuvud', function() {
             expect(element(by.id('patient-name')).getText()).toBe('Tolvan Tolvansson');
-            expect(element(by.id('patient-crn')).getText()).toBe('191212121212');
+            expect(element(by.id('patient-crn')).getText()).toBe('19121212-1212');
             expect(element(by.id('careunit')).getText()).toBe('WebCert Enhet 1');
             expect(element(by.id('caregiver')).getText()).toBe('WebCert Vårdgivare 1');
         });
