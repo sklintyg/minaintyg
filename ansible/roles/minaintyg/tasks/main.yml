@@ -1,28 +1,27 @@
 ---
-# file: roles/minaintyg/tasks/main.yml
 
-- name: stop tomcat
+- name: Stop tomcat
   service: name={{ tomcat_service }} state=stopped pattern={{ tomcat_service }}
 
-- name: create release directory
+- name: Create release directory
   file: path={{ releases_folder }} state=directory
 
 - name: Download minaintyg-web-{{ version }}.war
-  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/{{ repo }}/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
+  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
            dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
            validate_certs=no
            timeout=60
   when: deploy_from_repo|bool
 
-- name: copy minaintyg-web-{{ version }}.war
+- name: Copy minaintyg-web-{{ version }}.war
   copy: src={{ inventory_dir }}/../web/build/libs/minaintyg-web-{{ version }}.war dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
   when: not deploy_from_repo|bool
 
-- name: remove old version of unpacked war
+- name: Remove old version of unpacked war
   file: state=absent
       path={{ webapps_folder }}/ROOT
 
-- name: remove old version of war
+- name: Remove old version of war
   file: state=absent
       path={{ webapps_folder }}/ROOT.war
 
@@ -32,13 +31,13 @@
 - name: Create version file
   template: src=version.txt.j2 dest={{ webapps_folder }}/version.txt
 
-- name: fetch configuration repo to get new branches
+- name: Fetch configuration repo to get new branches
   command: chdir={{ config_folder }} git fetch origin
 
-- name: update configuration to {{ config_version }}
+- name: Update configuration to {{ config_version }}
   git: repo={{ config_repository }}
        dest={{ config_folder }}
        version={{ config_version }}
 
-- name: start tomcat
+- name: Start tomcat
   service: name={{ tomcat_service }} state=started pattern={{ tomcat_service }}

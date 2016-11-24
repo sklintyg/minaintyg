@@ -2,7 +2,7 @@
 # This playbook provisions the environment for tomcat hosts of Mina Intyg 
 
 - hosts: minaintyg-tomcat
-  sudo: yes 
+  become: yes 
 
   roles:
     - minaintyg-systemvariabler

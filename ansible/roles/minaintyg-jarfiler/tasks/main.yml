@@ -1,5 +1,4 @@
 ---
-# file: roles/minaintyg-jarfiler/tasks/main.yml
 
 - name: Download javax.servlet.jsp.jstl-api-1.2.1.jar
   get_url: url=http://repo1.maven.org/maven2/javax/servlet/jsp/jstl/javax.servlet.jsp.jstl-api/1.2.1/javax.servlet.jsp.jstl-api-1.2.1.jar

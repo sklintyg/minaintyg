@@ -2,10 +2,8 @@
 # This playbook deploys Mina Intyg 
 
 - hosts: minaintyg-tomcat
-  sudo: yes 
+  become: yes 
   vars: 
-    # repo - values: snapshots or releases
-    repo: releases
     version: 3.0.0-b39  
     config_version: master
 

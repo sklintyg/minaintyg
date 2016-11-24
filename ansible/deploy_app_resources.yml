@@ -2,7 +2,7 @@
 # This playbook provisions application resources for MinaIntyg, such as texts for dunam,i files 
 
 - hosts: minaintyg-tomcat
-  sudo: yes 
+  become: yes 
 
   roles:
     - app-resources
