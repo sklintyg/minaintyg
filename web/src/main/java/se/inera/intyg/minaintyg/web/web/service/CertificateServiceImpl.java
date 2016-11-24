@@ -92,8 +92,7 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private UtlatandeMetaDataConverter utlatandeMetaDataConverter;
 
-    // These values are injected by their setter methods
-    private String vardReferensId;
+    // This value is injected by the setter method
     private String logicalAddress;
 
     @Override
@@ -193,11 +192,6 @@ public class CertificateServiceImpl implements CertificateService {
         UtlatandeMetaData result = setCertificateState(certificateId, civicRegistrationNumber, StatusKod.RESTOR);
         monitoringService.logCertificateRestored(certificateId);
         return result;
-    }
-
-    @Value("${application.ID}")
-    void setVardReferensId(final String vardReferensId) {
-        this.vardReferensId = vardReferensId;
     }
 
     @Value("${intygstjanst.logicaladdress}")

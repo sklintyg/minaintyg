@@ -21,7 +21,6 @@ package se.inera.intyg.minaintyg.web.web.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
 public class JspPageAttributes {
 
@@ -30,9 +29,6 @@ public class JspPageAttributes {
     @Autowired
     @Value("${mvk.url.main}")
     private String mvkMainUrl;
-
-    @Autowired
-    private Environment environment;
 
     public String getMvkMainUrl() {
         return mvkMainUrl;
