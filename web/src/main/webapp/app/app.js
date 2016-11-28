@@ -125,7 +125,8 @@ app.run([ '$log', '$rootScope', '$state', '$window', 'common.messageService', 'm
             request.send(null);
         };
 
-    } ]);
+    }
+]);
 
 // Get a list of all modules to find all files to load.
 $.get('/api/certificates/map').then(function(modules) {
@@ -186,7 +187,7 @@ $.get('/api/certificates/map').then(function(modules) {
                 var allModules = [app.name, 'common'].concat(Array.prototype.slice.call(modulesIds, 0));
 
                 // Everything is loaded, bootstrap the application with all dependencies.
-                document.documentElement.setAttribute('ng-app', 'webcert');
+                document.documentElement.setAttribute('ng-app', 'minaintyg');
                 angular.bootstrap(document, allModules);
 
             });
