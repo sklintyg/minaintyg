@@ -22,9 +22,7 @@ package se.inera.intyg.minaintyg.web.web.service;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
@@ -78,25 +76,29 @@ public class MonitoringServiceImpl implements MonitoringService {
             PingForConfigurationType parameters = new PingForConfigurationType();
             PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(intygstjanstLogicalAddress,
                     parameters);
-            return (pingResponse != null);
+            return pingResponse != null;
         } catch (Exception e) {
             LOG.error("pingIntygstjanst failed with exception: " + e.getMessage());
             return false;
         }
     }
 
+    @Override
     public String getApplicationVersion() {
         return applicationVersion;
     }
 
+    @Override
     public String getApplicationBuildNumber() {
         return buildNumberString;
     }
 
+    @Override
     public String getApplicationBuildTime() {
         return buildTimeString;
     }
 
+    @Override
     public HealthStatus getNbrOfLoggedInUsers() {
         int nbrOfPrincipals = sessionRegistry.getAllPrincipals().size();
         LOG.debug("{} users are currently logged in", nbrOfPrincipals);

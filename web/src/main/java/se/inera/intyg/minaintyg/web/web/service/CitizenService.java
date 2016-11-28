@@ -28,6 +28,6 @@ public class CitizenService {
 
     public Citizen getCitizen() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return (principal instanceof Citizen) ? (Citizen) principal : null;
+        return principal instanceof Citizen ? (Citizen) principal : null;
     }
 }

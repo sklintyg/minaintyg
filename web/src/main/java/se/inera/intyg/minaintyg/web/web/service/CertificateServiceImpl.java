@@ -257,6 +257,6 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     private int getSafeLength(String str) {
-        return (StringUtils.isNotBlank(str)) ? str.length() : 0;
+        return StringUtils.isNotBlank(str) ? str.length() : 0;
     }
 }

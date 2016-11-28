@@ -19,15 +19,13 @@
 
 package se.inera.intyg.minaintyg.web.api;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import se.inera.intyg.common.support.model.Status;
 
-@SuppressWarnings("serial")
-public class CertificateMeta implements Serializable {
+public class CertificateMeta {
 
     private String id;
     private Boolean selected;
