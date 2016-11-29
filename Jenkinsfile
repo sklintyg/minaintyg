@@ -33,18 +33,6 @@ stage('deploy') {
     }
 }
 
-stage('restAssured') {
-    node {
-        try {
-            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ \
-                  -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DtyperVersion=${typerVersion}"
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
-                reportFiles: 'index.html', reportName: 'RestAssured results'
-        }
-    }
-}
-
 stage('protractor') {
     node {
         try {
