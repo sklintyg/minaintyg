@@ -21,6 +21,8 @@ package se.inera.intyg.minaintyg.web.integrationtest;
 
 import static com.jayway.restassured.RestAssured.given;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -52,7 +54,8 @@ public abstract class BaseIntegrationTest {
     }
 
     protected static void createAuthSession(String pnr) {
-        RestAssured.sessionId = given().redirects().follow(false).when().get("web/sso?guid=" + pnr).sessionId();
+        RestAssured.sessionId = given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
+                .when().get("web/sso?guid=" + pnr).sessionId();
     }
 
     protected static void createAuthSession() {
