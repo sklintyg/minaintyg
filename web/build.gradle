@@ -65,7 +65,18 @@ war {
     exclude '**/*.test.js'
 }
 
+test {
+    exclude '**/*IT*'
+}
+
+task restAssuredTest(type: Test) {
+    outputs.upToDateWhen { false }
+    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: "http://localhost:8088/"
+    include '**/*IT*'
+}
+
 gretty {
+    integrationTestTask = null
     contextPath = '/'
     httpPort = 8088
     scanInterval = 0
@@ -123,6 +134,9 @@ dependencies {
     compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")
     }
+
+    testCompile "com.jayway.restassured:rest-assured:${restassuredVersion}"
+    testCompile "com.jayway.restassured:json-schema-validator:${jsonSchemaValidatorVersion}"
 
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
