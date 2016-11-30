@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.config.RestAssuredConfig;
@@ -50,6 +51,7 @@ public abstract class BaseIntegrationTest {
 
     @After
     public void cleanupBase() {
+        destroySession();
         RestAssured.reset();
     }
 
@@ -60,5 +62,11 @@ public abstract class BaseIntegrationTest {
 
     protected static void createAuthSession() {
         createAuthSession("19121212-1212");
+    }
+
+    protected static void destroySession() {
+        if (!Strings.isNullOrEmpty(RestAssured.sessionId)) {
+            given().redirects().follow(false).when().get("web/logga-ut");
+        }
     }
 }
