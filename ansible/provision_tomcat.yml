@@ -2,6 +2,7 @@
 # This playbook provisions the environment for tomcat hosts of Mina Intyg 
 
 - hosts: minaintyg-tomcat
+  serial: 1
   become: yes 
 
   roles:

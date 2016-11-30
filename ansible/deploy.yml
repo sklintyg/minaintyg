@@ -2,9 +2,10 @@
 # This playbook deploys Mina Intyg 
 
 - hosts: minaintyg-tomcat
-  become: yes 
-  vars: 
-    version: 3.0.0-b39  
+  serial: 1
+  become: yes
+  vars:
+    version: 3.1.268
     config_version: master
 
   roles:
