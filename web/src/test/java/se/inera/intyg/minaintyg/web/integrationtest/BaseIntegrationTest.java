@@ -29,8 +29,6 @@ import org.junit.Before;
 import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.config.RestAssuredConfig;
-import com.jayway.restassured.config.SessionConfig;
 import com.jayway.restassured.http.ContentType;
 
 /**
@@ -46,7 +44,6 @@ public abstract class BaseIntegrationTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
-        RestAssured.config = new RestAssuredConfig().sessionConfig(new SessionConfig().sessionIdName("MISESSIONID"));
     }
 
     @After
