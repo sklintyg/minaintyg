@@ -19,10 +19,6 @@
 
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import static com.jayway.restassured.RestAssured.given;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.junit.After;
 import org.junit.Before;
 
@@ -30,6 +26,8 @@ import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
+
+import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
 
 /**
  * Base class for REST / SOAP in-container tests.
@@ -44,6 +42,7 @@ public abstract class BaseIntegrationTest {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
+        IntegrationTestUtil.certificateBaseUrl = System.getProperty("integration.tests.certificate.baseUrl");
     }
 
     @After
@@ -52,9 +51,8 @@ public abstract class BaseIntegrationTest {
         RestAssured.reset();
     }
 
-    protected static void createAuthSession(String pnr) {
-        RestAssured.sessionId = given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
-                .when().get("web/sso?guid=" + pnr).sessionId();
+    protected static void createAuthSession(String personId) {
+        RestAssured.sessionId = IntegrationTestUtil.login(personId);
     }
 
     protected static void createAuthSession() {
@@ -63,7 +61,7 @@ public abstract class BaseIntegrationTest {
 
     protected static void destroySession() {
         if (!Strings.isNullOrEmpty(RestAssured.sessionId)) {
-            given().redirects().follow(false).when().get("web/logga-ut");
+            IntegrationTestUtil.logout();
         }
     }
 }

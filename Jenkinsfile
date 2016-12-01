@@ -37,7 +37,7 @@ stage('deploy') {
 stage('restAssured') {
     node {
         try {
-            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ \
+            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=https://minaintyg.inera.nordicmedtest.se/inera-certificate/ \
                   -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion} -DtyperVersion=${typerVersion}"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \

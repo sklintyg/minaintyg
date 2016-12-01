@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /api/certificates",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "selected": {
+        "type": "boolean"
+      },
+      "type": {
+        "type": "string"
+      },
+      "caregiverName": {
+        "type": "string"
+      },
+      "careunitName": {
+        "type": "string"
+      },
+      "sentDate": {
+        "type": "string"
+      },
+      "archived": {
+        "type": "boolean"
+      },
+      "cancelled": {
+        "type": "boolean"
+      },
+      "complementaryInfo": {
+        "type": "string"
+      },
+      "statuses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "target": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "target",
+            "timestamp"
+          ]
+        }
+      }
+    },
+    "required": [
+      "id",
+      "selected",
+      "type",
+      "caregiverName",
+      "careunitName",
+      "sentDate",
+      "archived",
+      "cancelled",
+      "statuses"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for CertificateMeta",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "selected": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "caregiverName": {
+      "type": "string"
+    },
+    "careunitName": {
+      "type": "string"
+    },
+    "sentDate": {
+      "type": "string"
+    },
+    "archived": {
+      "type": "boolean"
+    },
+    "cancelled": {
+      "type": "boolean"
+    },
+    "statuses": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "required": [
+    "id",
+    "selected",
+    "type",
+    "caregiverName",
+    "careunitName",
+    "sentDate",
+    "archived",
+    "cancelled",
+    "statuses"
+  ]
+}

@@ -103,6 +103,7 @@ public class ApiController {
 
     @POST
     @Path("/consent/give")
+    @Produces(JSON_UTF8)
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'giveConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
@@ -112,6 +113,7 @@ public class ApiController {
 
     @POST
     @Path("/consent/revoke")
+    @Produces(JSON_UTF8)
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'revokeConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
