@@ -1,0 +1,174 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /moduleapi/certificate/<type>/<id>",
+  "type": "object",
+  "properties": {
+    "utlatande": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "grundData": {
+          "type": "object",
+          "properties": {
+            "signeringsdatum": {
+              "type": "string"
+            },
+            "skapadAv": {
+              "type": "object",
+              "properties": {
+                "personId": {
+                  "type": "string"
+                },
+                "fullstandigtNamn": {
+                  "type": "string"
+                },
+                "befattningar": {
+                  "type": "array"
+                },
+                "specialiteter": {
+                  "type": "array"
+                },
+                "vardenhet": {
+                  "type": "object",
+                  "properties": {
+                    "enhetsid": {
+                      "type": "string"
+                    },
+                    "enhetsnamn": {
+                      "type": "string"
+                    },
+                    "postadress": {
+                      "type": "string"
+                    },
+                    "postnummer": {
+                      "type": "string"
+                    },
+                    "postort": {
+                      "type": "string"
+                    },
+                    "telefonnummer": {
+                      "type": "string"
+                    },
+                    "epost": {
+                      "type": "string"
+                    },
+                    "vardgivare": {
+                      "type": "object",
+                      "properties": {
+                        "vardgivarid": {
+                          "type": "string"
+                        },
+                        "vardgivarnamn": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "vardgivarid",
+                        "vardgivarnamn"
+                      ]
+                    },
+                    "arbetsplatsKod": {
+                      "type": "string"
+                    }
+                  },
+				  "additionalProperties": true,
+                  "required": [
+                    "enhetsid",
+                    "enhetsnamn",
+                    "postadress",
+                    "postnummer",
+                    "postort",
+                    "telefonnummer",
+                    "vardgivare"
+                  ]
+                }
+              },
+			  "additionalProperties": true,
+              "required": [
+                "personId",
+                "fullstandigtNamn",
+                "vardenhet"
+              ]
+            },
+            "patient": {
+              "type": "object",
+              "properties": {
+                "personId": {
+                  "type": "string"
+                },
+                "fullstandigtNamn": {
+                  "type": "string"
+                },
+                "fornamn": {
+                  "type": "string"
+                },
+                "mellannamn": {
+                  "type": "string"
+                },
+                "efternamn": {
+                  "type": "string"
+                },
+                "postadress": {
+                  "type": "string"
+                },
+                "postnummer": {
+                  "type": "string"
+                },
+                "postort": {
+                  "type": "string"
+                },
+                "samordningsNummer": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "personId",
+                "fullstandigtNamn",
+                "efternamn"
+              ]
+            }
+          },
+		  "additionalProperties": true,
+          "required": [
+            "signeringsdatum",
+            "skapadAv",
+            "patient"
+          ]
+        },
+        "textVersion": {
+          "type": "string"
+        },
+        "typ": {
+          "type": "string"
+        }
+      },
+	  "additionalProperties": true,
+      "required": [
+        "id",
+        "grundData",
+        "typ"
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "cancelled": {
+          "type": "boolean"
+        },
+        "statuses": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "cancelled",
+        "statuses"
+      ]
+    }
+  },
+  "required": [
+    "utlatande",
+    "meta"
+  ]
+}
