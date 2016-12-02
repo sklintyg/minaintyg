@@ -29,7 +29,7 @@ $ grunt
 ```
 
 ### Kör FitNesse
-För att köra FitNesse-testerna måste man starta FitNesse wiki och Intygstjänsten och Mina intyg vara igång:
+För att köra FitNesse-testerna måste man starta FitNesse wiki samt se till att Intygstjänsten och Mina intyg är igång:
 ```
 $ cd minaintyg/specifications
 $ ../gradlew fitnesseWiki
