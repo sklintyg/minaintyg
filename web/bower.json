@@ -23,6 +23,9 @@
     },
     "angular-i18n": {
       "main": "angular-locale_sv-se.js"
+    },
+    "bootstrap": {
+      "main": ["dist/css/bootstrap.css","dist/js/bootstrap.js"]
     }
   },
   "resolutions": {
