@@ -31,8 +31,8 @@ $ grunt
 ### Kör FitNesse
 För att köra FitNesse-testerna måste man starta FitNesse wiki samt se till att Intygstjänsten och Mina intyg är igång:
 ```
-$ cd minaintyg/specifications
-$ ../gradlew fitnesseWiki
+$ cd minaintyg
+$ ./gradlew fitnesseWiki
 $ open http://localhost:9124/MinaIntyg.AutomatiseradeTester
 ```
 
