@@ -27,7 +27,7 @@
           <tr ng-repeat="cert in archivedCertificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
             <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
             <td headers="type">
-              <span message key="{{cert.type}}.label.certtitle"></span>
+              <span>{{moduleService.getModuleName(cert.type)}}</span>
             </td>
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}</td>

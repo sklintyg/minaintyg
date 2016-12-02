@@ -53,10 +53,10 @@
                       <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                         <h2 class="cert-title">
                           <button type="button" class="btn-link btn-link-link" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
-                            <span message key="{{cert.type}}.label.certtitle"></span>
+                            <span>{{moduleService.getModuleName(cert.type)}}</span>
                           </button>
                           <span ng-show="cert.cancelled">
-                  	        <span message key="{{cert.type}}.label.certtitle"></span> - <span message key="certificates.status.cancelledlc"></span>
+                            <span>{{moduleService.getModuleName(cert.type)}}</span> - <span message key="certificates.status.cancelled"></span>
                           </span>
                         </h2>
                       </div>
