@@ -30,9 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
@@ -45,7 +43,6 @@ public class VerifyConsentInterceptorTest {
 
     @InjectMocks
     private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
-
 
     @Test
     public void testPrehandleNoConsentNoJson() throws Exception {
