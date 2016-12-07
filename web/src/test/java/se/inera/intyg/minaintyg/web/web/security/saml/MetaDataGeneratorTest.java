@@ -22,11 +22,14 @@ package se.inera.intyg.minaintyg.web.web.security.saml;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.security.PrivateKey;
 
 import javax.xml.namespace.QName;
 
@@ -37,11 +40,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.opensaml.Configuration;
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.SAMLObjectBuilder;
+import org.opensaml.common.*;
 import org.opensaml.saml2.metadata.*;
+import org.opensaml.samlext.idpdisco.DiscoveryResponse;
+import org.opensaml.ws.message.encoder.MessageEncodingException;
+import org.opensaml.xml.XMLObjectBuilder;
 import org.opensaml.xml.XMLObjectBuilderFactory;
 import org.opensaml.xml.io.Marshaller;
+import org.opensaml.xml.security.SecurityConfiguration;
+import org.opensaml.xml.security.SecurityException;
+import org.opensaml.xml.security.credential.Credential;
+import org.opensaml.xml.security.credential.UsageType;
+import org.opensaml.xml.security.keyinfo.*;
+import org.opensaml.xml.signature.*;
+import org.opensaml.xml.signature.impl.SignatureImpl;
 import org.opensaml.xml.util.AttributeMap;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.metadata.ExtendedMetadata;
@@ -149,10 +161,111 @@ public class MetaDataGeneratorTest {
         metadataGenerator.generateMetadata();
     }
 
+    @Test
+    public void testGetServerKeyInfo() throws Exception {
+        final String alias = "alias";
+        Credential credential = mock(Credential.class);
+        SecurityConfiguration secConfig = mock(SecurityConfiguration.class);
+        when(credential.getPrivateKey()).thenReturn(mock(PrivateKey.class));
+        when(secConfig.getKeyInfoGeneratorManager()).thenReturn(mock(NamedKeyInfoGeneratorManager.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager()).thenReturn(mock(KeyInfoGeneratorManager.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential)).thenReturn(mock(KeyInfoGeneratorFactory.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential).newInstance()).thenReturn(mock(KeyInfoGenerator.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential).newInstance().generate(credential)).thenReturn(mock(KeyInfo.class));
+        Configuration.setGlobalSecurityConfiguration(secConfig);
+        when(keyManager.getCredential(alias)).thenReturn(credential);
+
+        KeyInfo serverKeyInfo = metadataGenerator.getServerKeyInfo(alias);
+
+        assertNotNull(serverKeyInfo);
+        verify(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential).newInstance()).generate(credential);
+    }
+
+    @Test(expected = SAMLRuntimeException.class)
+    public void testGetServerKeyInfoSecurityException() throws Exception {
+        final String alias = "alias";
+        Credential credential = mock(Credential.class);
+        SecurityConfiguration secConfig = mock(SecurityConfiguration.class);
+        when(credential.getPrivateKey()).thenReturn(mock(PrivateKey.class));
+        when(secConfig.getKeyInfoGeneratorManager()).thenReturn(mock(NamedKeyInfoGeneratorManager.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager()).thenReturn(mock(KeyInfoGeneratorManager.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential)).thenReturn(mock(KeyInfoGeneratorFactory.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential).newInstance()).thenReturn(mock(KeyInfoGenerator.class));
+        when(secConfig.getKeyInfoGeneratorManager().getDefaultManager().getFactory(credential).newInstance().generate(credential)).thenThrow(new SecurityException());
+        Configuration.setGlobalSecurityConfiguration(secConfig);
+        when(keyManager.getCredential(alias)).thenReturn(credential);
+
+        metadataGenerator.getServerKeyInfo(alias);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetServerKeyInfoDoesNotExist() {
+        final String alias = "nonExistent";
+        metadataGenerator.getServerKeyInfo(alias);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetServerKeyInfoMissingPrivateKey() {
+        final String alias = "aliasWithoutPrivateKey";
+        when(keyManager.getCredential(alias)).thenReturn(mock(Credential.class));
+        metadataGenerator.getServerKeyInfo(alias);
+    }
+
+    @Test
+    public void testGetKeyDescriptor() {
+        setupSAMLObjectBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME, KeyDescriptor.class, null);
+        Configuration.getBuilderFactory().registerBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME, builderFactory.getBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME));
+        UsageType type = UsageType.SIGNING;
+        KeyInfo key = mock(KeyInfo.class);
+        KeyDescriptor res = metadataGenerator.getKeyDescriptor(type, key);
+
+        assertNotNull(res);
+        verify(res).setUse(type);
+        verify(res).setKeyInfo(key);
+    }
+
+    @Test
+    public void testGetDiscoveryService() {
+        final String entityAlias = "entityAlias";
+        setupSAMLObjectBuilder(DiscoveryResponse.DEFAULT_ELEMENT_NAME, DiscoveryResponse.class, null);
+
+        DiscoveryResponse res = metadataGenerator.getDiscoveryService(ENTITY_BASE_URL, entityAlias);
+
+        assertNotNull(res);
+        verify(res).setBinding(DiscoveryResponse.IDP_DISCO_NS);
+        verify(res).setLocation(anyString());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testSignSAMLObject() throws Exception {
+        final String signatureAlgorithm = "signatureAlgorithm";
+        SignableSAMLObject signableObject = mock(SignableSAMLObject.class);
+        when(signableObject.getElementQName()).thenReturn(Signature.DEFAULT_ELEMENT_NAME);
+        Credential signingCredential = mock(Credential.class);
+        XMLObjectBuilder<Signature> builder = mock(XMLObjectBuilder.class);
+        SignatureImpl signature = mock(SignatureImpl.class);
+        when(signature.getSignatureAlgorithm()).thenReturn(signatureAlgorithm);
+        when(signature.getCanonicalizationAlgorithm()).thenReturn(signatureAlgorithm);
+
+        when(signature.getKeyInfo()).thenReturn(mock(KeyInfo.class));
+        when(builder.buildObject(Signature.DEFAULT_ELEMENT_NAME)).thenReturn(signature);
+        Configuration.getBuilderFactory().registerBuilder(Signature.DEFAULT_ELEMENT_NAME, builder);
+        Configuration.getMarshallerFactory().registerMarshaller(Signature.DEFAULT_ELEMENT_NAME, mock(Marshaller.class));
+
+        try {
+            metadataGenerator.signSAMLObject(signableObject, signingCredential);
+            fail("should throw");
+        } catch (MessageEncodingException e) {
+            assertTrue(e.getCause() instanceof SignatureException);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private <T extends SAMLObject> void setupSAMLObjectBuilder(QName qname, Class<T> type, T mock) {
         SAMLObjectBuilder<T> builder = mock(SAMLObjectBuilder.class);
         when(builder.buildObject()).thenReturn(mock != null ? mock : mock(type));
+        when(builder.buildObject(qname)).thenReturn(mock != null ? mock : mock(type));
         when(builderFactory.getBuilder(qname)).thenReturn(builder);
     }
 }
