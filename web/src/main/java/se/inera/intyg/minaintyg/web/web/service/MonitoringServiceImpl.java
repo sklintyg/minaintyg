@@ -107,7 +107,7 @@ public class MonitoringServiceImpl implements MonitoringService {
 
     private void logStatus(String operation, HealthStatus status) {
         String result = status.isOk() ? "OK" : "FAIL";
-        LOG.info("Operation {} completed with result {} in {} ms", new Object[] { operation, result, status.getMeasurement() });
+        LOG.info("Operation {} completed with result {} in {} ms", operation, result, status.getMeasurement());
     }
 
     private HealthStatus createStatusWithTiming(boolean ok, StopWatch stopWatch) {

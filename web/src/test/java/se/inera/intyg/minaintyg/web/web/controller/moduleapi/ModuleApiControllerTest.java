@@ -91,6 +91,7 @@ public abstract class ModuleApiControllerTest {
 
     // - - - Test cases - - -
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
@@ -108,6 +109,7 @@ public abstract class ModuleApiControllerTest {
         assertEquals(bytes, response.getEntity());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificateEmployerPdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
@@ -126,6 +128,7 @@ public abstract class ModuleApiControllerTest {
         assertEquals(bytes, response.getEntity());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
