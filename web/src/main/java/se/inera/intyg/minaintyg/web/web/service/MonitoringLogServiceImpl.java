@@ -90,7 +90,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CONSENT_GIVEN("Consent given by citizen '{}'"),
         CONSENT_REVOKED("Consent revoked by citizen '{}'");
 
-        private String msg;
+        private final String msg;
 
         MonitoringEvent(String msg) {
             this.msg = msg;
