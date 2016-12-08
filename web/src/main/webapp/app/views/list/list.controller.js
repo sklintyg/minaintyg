@@ -19,9 +19,9 @@
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
     [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'common.IntygListService',
-        'common.dialogService', 'common.messageService',
+        'common.dialogService', 'common.messageService', 'common.moduleService',
         function($cookies, $location, $log, $rootScope, $scope, $window, IntygListService, dialogService,
-            messageService) {
+            messageService, moduleService) {
             'use strict';
 
             $scope.certificates = [];
@@ -30,13 +30,13 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 acceptprogressdone: true,
                 focus: false
             };
-
-            var archiveDialog = {};
-
-            $scope.messageService = messageService;
-            $scope.pageTitle = 'Inkorgen';
             $scope.isCollapsedArchive = true;
             $scope.isCollapsedRevoke = true;
+            $scope.messageService = messageService;
+            $scope.moduleService = moduleService;
+            $scope.pageTitle = 'Inkorgen';
+
+            var archiveDialog = {};
 
             $scope.sendSelected = function(item) {
                 $log.debug('send ' + item.id);

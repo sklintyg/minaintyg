@@ -31,8 +31,4 @@
     <Arg>org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern</Arg>
     <Arg>.*/.*jsp-api-[^/]\.jar$|./.*jsp-[^/]\.jar$|./.*taglibs[^/]*\.jar$</Arg>
   </Call>
-  <Call name="setInitParameter">
-    <Arg>org.eclipse.jetty.servlet.SessionCookie</Arg>
-    <Arg>MISESSIONID</Arg>
-  </Call>
 </Configure>

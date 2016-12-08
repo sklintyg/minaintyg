@@ -161,7 +161,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'common.title.helptext.lessinfo': 'Mindre information',
 
         'certificates.status.cancelled': 'Makulerat',
-        'certificates.status.cancelledlc': 'Makulerat',
         'certificates.status.sent': 'Mottaget av',
 
         'certificates.target.fk': 'Försäkringskassan',

@@ -10,23 +10,30 @@ Mina intyg byggs med hjälp av Maven enligt följande:
 $ git clone https://github.com/sklintyg/minaintyg.git
 
 $ cd minaintyg
-$ mvn install
+$ ./gradlew clean build install -PcodeQuality
 ```
 
 ### Starta webbapplikationen
 För att starta webbapplikationen så måste [Intygstjänsten](https://github.com/sklintyg/intygstjanst)  vara startad eftersom Mina intyg hämtar intygen direkt från Intygstjänsten. Därefter kan webbapplikationen startas med Jetty enligt följande:
 ```
-$ cd web
-$ mvn jetty:run
+$ cd minaintyg
+$ ./gradlew appRun
 $ open http://localhost:8088/welcome.jsp
+
+```
+### Kör Protractor
+För att köra Protractor-testerna måste Intygstjänsten och Mina intyg vara igång:
+```
+$ cd minaintyg/test
+$ grunt
 ```
 
 ### Kör FitNesse
-För att köra FitNesse-testerna måste man starta FitNesse wiki:
+För att köra FitNesse-testerna måste man starta FitNesse wiki samt se till att Intygstjänsten och Mina intyg är igång:
 ```
-$ cd ../specifications
-$ mvn verify -Pwiki
-$ open http://localhost:9124/
+$ cd minaintyg
+$ ./gradlew fitnesseWiki
+$ open http://localhost:9124/MinaIntyg.AutomatiseradeTester
 ```
 
 ## Licens

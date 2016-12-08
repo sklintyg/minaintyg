@@ -169,6 +169,7 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
      *
      * @throws javax.servlet.ServletException
      */
+    @Override
     public void afterPropertiesSet() throws ServletException {
 
         super.afterPropertiesSet();

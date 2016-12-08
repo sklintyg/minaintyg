@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /api/certificates/questions/<type>/<version>",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "intygsTyp": {
+      "type": "string"
+    },
+    "validFrom": {
+      "type": "string"
+    },
+    "validTo": {
+      "type": "string"
+    },
+    "pdfPath": {
+      "type": "string"
+    },
+    "texter": {
+      "type": "object"
+    },
+    "tillaggsfragor": {
+      "id": "http://jsonschema.net/tillaggsfragor",
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "intygsTyp"
+  ]
+}

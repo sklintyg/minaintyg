@@ -29,9 +29,7 @@ import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.ws.rs.core.Response;
 
@@ -44,9 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
@@ -95,6 +91,7 @@ public abstract class ModuleApiControllerTest {
 
     // - - - Test cases - - -
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
@@ -112,6 +109,7 @@ public abstract class ModuleApiControllerTest {
         assertEquals(bytes, response.getEntity());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificateEmployerPdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
@@ -130,11 +128,12 @@ public abstract class ModuleApiControllerTest {
         assertEquals(bytes, response.getEntity());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
-        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException());
+        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG))).thenThrow(new ModuleSystemException("error"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);

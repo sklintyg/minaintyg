@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /api/certificates/map",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "label": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "detailedDescription": {
+        "type": "string"
+      },
+      "cssPath": {
+        "type": "string"
+      },
+      "scriptPath": {
+        "type": "string"
+      },
+      "dependencyDefinitionPath": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "label",
+      "description",
+      "detailedDescription",
+      "cssPath",
+      "scriptPath",
+      "dependencyDefinitionPath"
+    ]
+  }
+}

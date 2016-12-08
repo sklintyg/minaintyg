@@ -31,7 +31,7 @@ import se.inera.intyg.minaintyg.web.api.CertificateStatus;
  */
 public final class CertificateStatusConverter {
 
-    public static final List<CertificateState> RELEVANT_STATUSES = Arrays.asList(CertificateState.SENT, CertificateState.CANCELLED);
+    private static final List<CertificateState> RELEVANT_STATUSES = Arrays.asList(CertificateState.SENT, CertificateState.CANCELLED);
 
     private CertificateStatusConverter() {
     }

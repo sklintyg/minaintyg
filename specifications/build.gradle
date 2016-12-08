@@ -15,7 +15,7 @@ fitnesse {
 
     extraProperties = [
             'fitnesse.working'       : "src/test/fitnesse",
-            'geb.env'                : System.properties['geb.env'] ?: "chrome",
+            'geb.env'                : System.properties['geb.env'] ?: "firefox",
             'certificate.baseUrl'    : System.properties['certificate.baseUrl'] ?: "http://localhost:8080/inera-certificate/",
             'certificate.web.baseUrl': System.properties['web.baseUrl'] ?: "http://localhost:8088/web/",
             'slim.port'              : "9103"
@@ -29,8 +29,8 @@ sonarqube {
 dependencies {
     compile project(":minaintyg-web")
 
-    compile "se.inera.intyg.common:log-messages:${commonVersion}"
-    compile "se.inera.intyg.common:hsa-integration:${commonVersion}"
+    compile "se.inera.intyg.infra:log-messages:${infraVersion}"
+    compile "se.inera.intyg.infra:hsa-integration:${infraVersion}"
     compile "se.inera.intyg.common:common-specifications:${commonVersion}"
 
     fitnesse "se.inera.intyg.common:common-specifications:${commonVersion}"

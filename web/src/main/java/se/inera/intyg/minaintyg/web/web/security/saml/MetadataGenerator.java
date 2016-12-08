@@ -138,7 +138,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
 
     private Collection<String> nameID = null;
 
-    public static final Collection<String> DEFAULT_NAME_ID = Arrays.asList(
+    private static final Collection<String> DEFAULT_NAME_ID = Arrays.asList(
             NameIDType.EMAIL,
             NameIDType.TRANSIENT,
             NameIDType.PERSISTENT,
@@ -159,7 +159,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     /**
      * Class logger.
      */
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MetadataGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MetadataGenerator.class);
 
     /**
      * Default constructor.
