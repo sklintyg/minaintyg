@@ -1,13 +1,8 @@
-# Configuration repository
-environment_name: "dev"
-config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
-deploy_from_repo: false
-
 # Spring profiles
 profiles: test
 
-# Tomcat
-tomcat_service: "{{ inventory_hostname }}-tomcat"
-tomcat_home: "{{ inera_root }}/{{ tomcat_service }}"
-inera_tomcat_folder: "/var/lib/{{ tomcat_service }}"
-webapps_folder: "{{ inera_tomcat_folder }}/webapps"
+# Configuration repository
+environment_name: "dev"
+config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
+
+deploy_from_repo: false
