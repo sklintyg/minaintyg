@@ -21,7 +21,7 @@ app_resources_folder: "{{ inera_root }}/minaintyg-resources"
 
 # Tomcat installation
 tomcat_service: "{{ inventory_hostname }}-tomcat"
-inera_tomcat_folder: "/var/lib/{{ tomcat_service }}"
+inera_tomcat_folder: "{{ inera_root }}/{{ tomcat_service }}"
 
 tomcat_conf: "{{ inera_tomcat_folder }}/conf"
 tomcat_bin: "{{ inera_tomcat_folder }}/bin"
