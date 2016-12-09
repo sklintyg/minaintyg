@@ -1,5 +1,2 @@
-[minaintyg-tomcat]
+[tomcat]
 minaintyg-demo ansible_ssh_host=10.250.35.50 ansible_ssh_user=miwebapp1 ansible_ssh_private_key_file=~/.ssh/inera_rsa
-
-[tomcat:children]
-minaintyg-tomcat
