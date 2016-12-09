@@ -1,5 +1,8 @@
+---
+
 # Configuration repository
-environment_name: "dev"
+environment_name: "test"
 config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 
-deploy_from_repo: false
+# Spring profiles
+profiles: test
