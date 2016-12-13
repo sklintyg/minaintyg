@@ -26,6 +26,11 @@ import java.io.Serializable;
 public class ConsentResponse implements Serializable {
     private Boolean result;
 
+    public ConsentResponse(Boolean result) {
+        super();
+        this.result = result;
+    }
+
     public Boolean getResult() {
         return result;
     }
@@ -34,8 +39,4 @@ public class ConsentResponse implements Serializable {
         this.result = result;
     }
 
-    public ConsentResponse(Boolean result) {
-        super();
-        this.result = result;
-    }
 }

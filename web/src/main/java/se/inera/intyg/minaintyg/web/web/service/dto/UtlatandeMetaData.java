@@ -23,7 +23,10 @@ import static org.springframework.util.Assert.hasText;
 import static org.springframework.util.Assert.notNull;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import se.inera.intyg.common.support.model.Status;
 
@@ -56,6 +59,16 @@ public class UtlatandeMetaData {
     /** A list of statuses of the utlatande. */
     private final List<Status> statuses;
 
+    /**
+     * Compare status newest first.
+     */
+    private static final Comparator<Status> STATUS_COMPARATOR = new Comparator<Status>() {
+        @Override
+        public int compare(Status o1, Status o2) {
+            return o2.getTimestamp().compareTo(o1.getTimestamp());
+        }
+    };
+
     // CHECKSTYLE:OFF ParameterNumber
     public UtlatandeMetaData(String id, String type, String issuerName, String facilityName, LocalDateTime signDate, String available,
             String complemantaryInfo, List<Status> statuses) {
@@ -64,9 +77,6 @@ public class UtlatandeMetaData {
         hasText(issuerName, "'issuerName' must not be empty");
         hasText(facilityName, "'facilityName' must not be empty");
         notNull(signDate, "'signDate' must not be null");
-        // Should these be mandatory?
-        // hasText(available, "'available' must not be empty");
-        // hasText(complemantaryInfo, "'complemantaryInfo' must not be empty");
         this.id = id;
         this.type = type;
         this.issuerName = issuerName;
@@ -82,16 +92,6 @@ public class UtlatandeMetaData {
         }
     }
     // CHECKSTYLE:ON ParameterNumber
-
-    /**
-     * Compare status newest first.
-     */
-    private static final Comparator<Status> STATUS_COMPARATOR = new Comparator<Status>() {
-        @Override
-        public int compare(Status o1, Status o2) {
-            return o2.getTimestamp().compareTo(o1.getTimestamp());
-        }
-    };
 
     public String getId() {
         return id;
