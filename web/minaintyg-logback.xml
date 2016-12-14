@@ -80,11 +80,11 @@
 
   <logger name="se.inera.intyg.minaintyg.web.web" level="debug" />
 
-  <logger name="se.inera.intyg.intygstyper.fk7263" level="debug" />
+  <logger name="se.inera.intyg.common.fk7263" level="debug" />
 
-  <logger name="se.inera.intyg.intygstyper.ts_bas" level="debug" />
+  <logger name="se.inera.intyg.common.ts_bas" level="debug" />
 
-  <logger name="se.inera.intyg.intygstyper.ts_diabetes" level="debug" />
+  <logger name="se.inera.intyg.common.ts_diabetes" level="debug" />
   
   <!-- Monitoring logger -->
   <logger name="se.inera.intyg.minaintyg.web.web.service.MonitoringLogService" level="INFO" />

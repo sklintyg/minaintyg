@@ -30,13 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.*;
 
-import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
-import se.inera.intyg.intygstyper.lisjp.support.LisjpEntryPoint;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
-import se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint;
-import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
-import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
-import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
+import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
+import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
+import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
+import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
+import se.inera.intyg.common.luse.support.LuseEntryPoint;
+import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
 
 public class ApiControllerIT extends BaseIntegrationTest {

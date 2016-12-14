@@ -38,6 +38,7 @@ import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.*;
+import se.inera.intyg.common.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.*;
@@ -48,7 +49,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
@@ -285,7 +285,7 @@ public class CertificateServiceImplTest {
         final String recipientId = "recipient-id";
         final String recipientName = "recipient-name";
         GetRecipientsForCertificateResponseType responseType = new GetRecipientsForCertificateResponseType();
-        responseType.setResult(se.inera.intyg.intygstyper.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.okResult());
+        responseType.setResult(se.inera.intyg.common.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.okResult());
         RecipientType rt = new RecipientType();
         rt.setId(recipientId);
         rt.setName(recipientName);
@@ -306,7 +306,7 @@ public class CertificateServiceImplTest {
     public void testGetRecipientsForCertificateErrorResponse() {
         final String type = "fk7263";
         GetRecipientsForCertificateResponseType responseType = new GetRecipientsForCertificateResponseType();
-        responseType.setResult(se.inera.intyg.intygstyper.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.errorResult(se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
+        responseType.setResult(se.inera.intyg.common.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.errorResult(se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
         when(getRecipientsService.getRecipientsForCertificate(anyString(), any(GetRecipientsForCertificateType.class))).thenReturn(responseType );
         service.getRecipientsForCertificate(type);
     }
