@@ -86,7 +86,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             };
 
             // FK dialog
-            var fromConsentPage = $cookies.RedirectFromConsent;
+            var fromConsentPage = $cookies.get('RedirectFromConsent');
             if (fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === 'FK')) {
                 dialogService.showDialog($scope, {
                     dialogId: 'fk-login-consent-dialog',
@@ -112,7 +112,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 }
                 // no matter outcome of dialog, it should be a one time popup..
                 // remove flag indicating forwarded from consent page..
-                delete $cookies.RedirectFromConsent;
+                $cookies.remove('RedirectFromConsent');
                 // ...and close dialog
             };
 
