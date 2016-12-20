@@ -1,14 +1,16 @@
 ---
 
 - name: Create minaintyg-env.sh file
-  template: src=minaintyg-env.sh.j2 dest="{{ inera_tomcat_folder }}/minaintyg-env.sh" mode=755
+  template:
+    src: minaintyg-env.sh.j2
+    dest: "{{ inera_tomcat_folder }}/minaintyg-env.sh"
+    mode: 0755
 
 - name: Configure setenv.sh
   lineinfile:
-    dest="{{ tomcat_bin }}/setenv.sh"
-    create=yes
-    mode=755
-    regexp="minaintyg-env\.sh"
-    insertafter="EOF"
-    line=". \"{{ inera_tomcat_folder }}/minaintyg-env.sh\""
-    
+    dest: "{{ tomcat_bin }}/setenv.sh"
+    create: yes
+    mode: 0755
+    regexp: "minaintyg-env\\.sh"
+    insertafter: "EOF"
+    line: ". \"{{ inera_tomcat_folder }}/minaintyg-env.sh\""
