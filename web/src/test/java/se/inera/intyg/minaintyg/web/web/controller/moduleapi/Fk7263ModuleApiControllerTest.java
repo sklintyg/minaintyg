@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.intyg.common.fk7263.model.internal.Utlatande;
+import se.inera.intyg.common.fk7263.model.internal.Fk7263Utlatande;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
@@ -52,7 +52,7 @@ public class Fk7263ModuleApiControllerTest extends ModuleApiControllerTest {
         certificateData = FileUtils.readFileToString(new ClassPathResource(JSON_PATH).getFile());
 
         // Map JSON to an Utlatande object
-        Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, Utlatande.class);
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, Fk7263Utlatande.class);
 
         List<Status> status = new ArrayList<>();
         status.add(new Status(CertificateState.SENT, TARGET, LocalDateTime.now()));
