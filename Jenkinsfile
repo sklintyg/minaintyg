@@ -23,56 +23,56 @@ stage('build') {
     }
 }
 
-stage('deploy') {
-    node {
-        util.run {
-            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
-                 installation: 'ansible-yum', inventory: 'ansible/inventory/minaintyg/test', playbook: 'ansible/deploy.yml'
-            util.waitForServer('https://minaintyg.inera.nordicmedtest.se/version.jsp')
-        }
-    }
-}
+//stage('deploy') {
+//    node {
+//        util.run {
+//            ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
+//                 installation: 'ansible-yum', inventory: 'ansible/inventory/minaintyg/test', playbook: 'ansible/deploy.yml'
+//            util.waitForServer('https://minaintyg.inera.nordicmedtest.se/version.jsp')
+//        }
+//    }
+//}
 
-stage('restAssured') {
-    node {
-        try {
-            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=http://minaintyg.inera.nordicmedtest.se/inera-certificate/ \
-                  -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
-                reportFiles: 'index.html', reportName: 'RestAssured results'
-        }
-    }
-}
+//stage('restAssured') {
+//    node {
+//        try {
+//            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=http://minaintyg.inera.nordicmedtest.se/inera-certificate/ \
+//                  -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+//        } finally {
+//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
+//                reportFiles: 'index.html', reportName: 'RestAssured results'
+//        }
+//    }
+//}
 
-stage('protractor') {
-    node {
-        try {
-            wrap([$class: 'Xvfb']) {
-                shgradle "protractorTests -Dprotractor.env=build-server \
-                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-            }
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/dev/report', \
-                 reportFiles: 'index.html', reportName: 'Protractor results'
-        }
-    }
-}
+//stage('protractor') {
+//    node {
+//        try {
+//            wrap([$class: 'Xvfb']) {
+//                shgradle "protractorTests -Dprotractor.env=build-server \
+//                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+//            }
+//        } finally {
+//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/dev/report', \
+//                 reportFiles: 'index.html', reportName: 'Protractor results'
+//        }
+//    }
+//}
 
-stage('fitnesse') {
-    node {
-        try {
-            wrap([$class: 'Xvfb']) {
-                shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
-                      -Dcertificate.baseUrl=https://minaintyg.inera.nordicmedtest.se/inera-certificate/ -PfileOutput -PoutputFormat=html\
-                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-            }
-        } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
-                 reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
-        }
-    }
-}
+//stage('fitnesse') {
+//    node {
+//        try {
+//            wrap([$class: 'Xvfb']) {
+//                shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
+//                      -Dcertificate.baseUrl=https://minaintyg.inera.nordicmedtest.se/inera-certificate/ -PfileOutput -PoutputFormat=html\
+//                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+//            }
+//        } finally {
+//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
+//                 reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
+//        }
+//    }
+//}
 
 stage('tag and upload') {
     node {
