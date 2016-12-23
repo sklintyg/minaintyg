@@ -21,8 +21,9 @@
 <properties>
 	<Edit>true</Edit>
 	<Files>true</Files>
-	<Help>Test för undantag såsom inte inloggad, sidan hittades ej etc.</Help>
+	<Help>Ersatt av protractor-tester (INTYG-3296)</Help>
 	<Properties>true</Properties>
+	<Prune/>
 	<RecentChanges>true</RecentChanges>
 	<Refactor>true</Refactor>
 	<Search>true</Search>
