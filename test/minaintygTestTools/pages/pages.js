@@ -27,18 +27,22 @@ var minaintygBase = require('./minaintyg.base.page.js');
 var welcomePage = require('./welcome.page.js');
 var consentPage = require('./consent.page.js');
 var inboxPage = require('./inbox.page.js');
+var archivedPage = require('./archived.page.js');
 var viewPage = require('./view.page.js');
 var customPage = require('./custom.page.js');
 var aboutPage = require('./about.page.js');
 var errorPage = require('./error.page.js');
+var notfoundPage = require('./notfound.page.js');
 
 module.exports = {
     'minaintygBase': minaintygBase,
     'welcomePage': welcomePage,
     'consentPage': consentPage,
     'inboxPage': inboxPage,
+    'archivedPage': archivedPage,
     'viewPage': viewPage,
     'customPage': customPage,
     'aboutPage': aboutPage,
-    'errorPage': errorPage
+    'errorPage': errorPage,
+    'notfoundPage': notfoundPage
 };

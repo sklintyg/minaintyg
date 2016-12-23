@@ -40,8 +40,23 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    viewCertificate: function(buttonId) {
-        element(by.id(buttonId)).click();
+    viewArchivedList: function() {
+        element(by.id('archivedTab')).click();
+    },
+    certificateExists: function(intygId) {
+        return element(by.id('certificate-' + intygId)).isPresent();
+    },
+    viewCertificate: function(intygId) {
+        element(by.id('viewCertificateBtn-' + intygId)).click();
+    },
+    archiveCertificate: function(intygId) {
+        element(by.id('archiveCertificateBtn-' + intygId)).click();
+    },
+    confirmArchiveCertificate: function() {
+        element(by.id('archive-button')).click();
+    },
+    archiveDialogIsDisplayed: function() {
+        return element(by.id('archive-confirmation-dialog')).isDisplayed();
     }
 });
 

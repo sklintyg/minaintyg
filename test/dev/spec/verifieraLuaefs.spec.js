@@ -88,7 +88,7 @@ describe('Verifiera LUAE_FS intyg', function() {
         });
 
         it('Visa intyg', function() {
-            inboxPage.viewCertificate('viewCertificateBtn-' + intygsId);
+            inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
         });
 

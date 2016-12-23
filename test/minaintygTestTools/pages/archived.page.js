@@ -19,10 +19,6 @@
 
 /* globals browser */
 
-/**
- * Created by erik
- */
-
 'use strict';
 var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
@@ -31,8 +27,10 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('viewCertificateHeader'));
-        this.customize = element(by.id('customizeCertificateBtn'));
+        this.at = element(by.id('archivedHeader'));
+    },
+    get: function () {
+        browser.get('web/start/#/arkiverade');
     },
     isAt: function isAt() {
         specHelper.waitForAngularTestability();
@@ -41,20 +39,17 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     viewInbox: function() {
         element(by.id('inboxTab')).click();
     },
-    certificateId: function() {
-        return element(by.id('certId')).getAttribute('title');
+    certificateExists: function(id) {
+        return element(by.id('restoreCertificate-' + id)).isPresent();
     },
-    archiveCertificate: function() {
-        element(by.id('archiveBtn')).click();
+    restoreCertificate: function(intygId) {
+        element(by.id('restoreCertificate-' + intygId)).click();
     },
-    confirmArchiveCertificate: function() {
-        element(by.id('archive-button')).click();
+    confirmRestoreCertificate: function() {
+        element(by.id('restore-button')).click();
     },
-    archiveDialogIsDisplayed: function() {
-        return element(by.id('archive-confirmation-dialog')).isDisplayed();
-    },
-    clickCustomizeCertificate: function() {
-        this.customize.click();
+    restoreDialogIsDisplayed: function() {
+        return element(by.id('restore-confirmation-dialog')).isDisplayed();
     }
 });
 

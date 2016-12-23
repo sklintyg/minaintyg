@@ -7,35 +7,46 @@ var xml = require('simple-xml-dom')
 
 var helpers = require('./../helpers/helpers.js');
 
-var templateJsonObj = require('./fk7263-metadata.json');
+var templateJsonObj = require('./generic-metadata.json');
 
 module.exports = {
 
-    getIntyg: function(userId) {
+    getFk7263: function(userId) {
+        return this.getIntyg('fk7263', userId);
+    },
+
+    getTsBas: function(userId) {
+        return this.getIntyg('ts-bas', userId);
+    },
+
+    getTsDiabetes: function(userId) {
+        return this.getIntyg('ts-diabetes', userId);
+    },
+
+    getLuse: function(userId) {
+        return this.getIntyg('luse', userId);
+    },
+
+    getLisjp: function(userId) {
+        return this.getIntyg('lisjp', userId);
+    },
+
+    getLuaena: function(userId) {
+        return this.getIntyg('luae_na', userId);
+    },
+
+    getLuaefs: function(userId) {
+        return this.getIntyg('luae_fs', userId);
+    },
+
+    getIntyg: function(type, userId) {
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
 
-        //cwd is expected to be minaintyg/test
-        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/fk7263-content.xml');
-
-        //read xml doc into string variable
-        var xmlString = fs.readFileSync(fullPath, 'utf8')
-            .replace(/\r?\n|\r/g, '')
-            .replace(/>\s+</g, '><')
-            .replace("CERTIFICATE_ID", templateJsonObj.id)
-            .replace("SIGNED_DATE", templateJsonObj.signedDate)
-            .replace("SENT_DATE", templateJsonObj.sentDate)
-            .replace("PATIENT_CRN", templateJsonObj.civicRegistrationNumber)
-            .replace("DOCTOR_NAME", templateJsonObj.signingDoctorName)
-            .replace("CAREUNIT_ID", templateJsonObj.careUnitId)
-            .replace("CAREUNIT_NAME", templateJsonObj.careUnitName)
-            .replace("CAREGIVER_ID", templateJsonObj.careGiverId)
-            .replace("CAREGIVER_NAME", templateJsonObj.careGiverName);
-
         return {
             id: templateJsonObj.id,
-            type: 'fk7263',
+            type: type,
             civicRegistrationNumber: templateJsonObj.civicRegistrationNumber,
             signedDate: templateJsonObj.signedDate,
             signingDoctorName: templateJsonObj.signingDoctorName,
@@ -55,18 +66,8 @@ module.exports = {
             deleted: false,
             deletedByCareGiver: false,
             revoked: false,
-            additionalInfo: '',
-            originalCertificate: xmlToString(xmlString)
+            additionalInfo: ''
         };
     }
 
 };
-
-
-// Private functions
-
-var xmlToString = function(xmlData) {
-    // Whitespace collapsed
-    return xml.serialize(xml.parse(xmlData))
-};
-

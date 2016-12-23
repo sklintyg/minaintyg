@@ -26,6 +26,13 @@ var restClient = require('./restclient.util.js');
 var env = require('./../environment.js').envConfig;
 
 module.exports = {
+    setConsent: function(userId) {
+        var options = {
+            url: 'testability/anvandare/consent/give/' + userId,
+            method: 'GET'
+        };
+        return restClient.run(options, 'json');
+    },
     deleteConsent: function(userId) {
         var options = {
             url: 'testability/anvandare/consent/revoke/' + userId,

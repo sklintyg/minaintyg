@@ -35,13 +35,13 @@ var fk7263 = miTestTools.testdata.fk7263;
 
 var EC = protractor.ExpectedConditions;
 
-xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
+describe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     var intygsId = null;
 
     beforeAll(function() {
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
+        // Givet samtycke
+        restHelper.setConsent();
 
         var intyg = fk7263.getIntyg();
         intygsId = intyg.id;
@@ -49,27 +49,15 @@ xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     });
 
-    xdescribe('Logga in och gå till anpassat intyg', function() {
+    describe('Logga in och gå till anpassat intyg', function() {
 
         // Logga in
         it('Logga in', function() {
             welcomePage.get();
             specHelper.waitForAngularTestability();
-            welcomePage.login();
+            welcomePage.login('19121212-1212', false);
             specHelper.waitForAngularTestability();
         });
-
-        it('Acceptera cookie', function() {
-            browser.wait(EC.elementToBeClickable(element(by.id('cookie-usage-consent-btn'))), 5000);
-            element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
-            browser.wait(EC.invisibilityOf(element(by.id('cookie-usage-consent-btn'))), 5000);
-        });
-
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickGiveConsent();
-        });
-
 
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
@@ -83,7 +71,7 @@ xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
         it('Visa intyg', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            inboxPage.viewCertificate('viewCertificateBtn-' + intygsId);
+            inboxPage.viewCertificate(intygsId);
         });
 
         it('Gå till anpassat intyg', function() {
@@ -93,22 +81,22 @@ xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     });
 
-    xdescribe('Verifiera anpassat intyg', function() {
+    describe('Verifiera anpassat intyg', function() {
         it('options', function() {
             expect(customPage.isAt()).toBeTruthy();
 
-            expect(element(by.id('options.2')).isSelected()).toBe(true);
-            expect(element(by.id('options.3')).isSelected()).toBe(true);
-            expect(element(by.id('options.4')).isSelected()).toBe(true);
-            expect(element(by.id('options.4b')).isSelected()).toBe(true);
-            expect(element(by.id('options.5')).isSelected()).toBe(true);
-            expect(element(by.id('options.6a')).isSelected()).toBe(true);
-            expect(element(by.id('options.7')).isSelected()).toBe(true);
-            expect(element(by.id('options.8a')).isSelected()).toBe(true);
-            expect(element(by.id('options.9')).isSelected()).toBe(true);
-            expect(element(by.id('options.10')).isSelected()).toBe(true);
-            expect(element(by.id('options.12')).isSelected()).toBe(true);
-            expect(element(by.id('options.13')).isSelected()).toBe(true);
+            expect(element(by.id('option.2')).isSelected()).toBe(true);
+            expect(element(by.id('option.3')).isSelected()).toBe(true);
+            expect(element(by.id('option.4')).isSelected()).toBe(true);
+            expect(element(by.id('option.4b')).isSelected()).toBe(true);
+            expect(element(by.id('option.5')).isSelected()).toBe(true);
+            expect(element(by.id('option.6a')).isSelected()).toBe(true);
+            expect(element(by.id('option.7')).isSelected()).toBe(true);
+            expect(element(by.id('option.8a')).isSelected()).toBe(true);
+            expect(element(by.id('option.9')).isSelected()).toBe(true);
+            expect(element(by.id('option.10')).isSelected()).toBe(true);
+            expect(element(by.id('option.12')).isSelected()).toBe(true);
+            expect(element(by.id('option.13')).isSelected()).toBe(true);
         });
     });
 
