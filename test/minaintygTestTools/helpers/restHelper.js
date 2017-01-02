@@ -38,6 +38,9 @@ module.exports = {
     },
     deleteIntyg: function(id) {
         return restUtil.deleteIntyg(id);
+    },
+    get: function(url, loggedIn) {
+        return restUtil.get(url, loggedIn);
     }
 
 };

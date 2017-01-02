@@ -43,6 +43,9 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     viewArchivedList: function() {
         element(by.id('archivedTab')).click();
     },
+    viewAbout: function() {
+        element(by.id('aboutTab')).click();
+    },
     certificateExists: function(intygId) {
         return element(by.id('certificate-' + intygId)).isPresent();
     },

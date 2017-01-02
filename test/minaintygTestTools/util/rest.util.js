@@ -26,6 +26,15 @@ var restClient = require('./restclient.util.js');
 var env = require('./../environment.js').envConfig;
 
 module.exports = {
+    login: function(personId) {
+        var user = personId || '191212121212';
+
+        var options = {
+            url: 'web/sso?guid=' + user,
+            method: 'GET',
+        };
+        return restClient.run(options, 'urlenc');
+    },
     setConsent: function(userId) {
         var options = {
             url: 'testability/anvandare/consent/give/' + userId,
@@ -36,6 +45,16 @@ module.exports = {
     deleteConsent: function(userId) {
         var options = {
             url: 'testability/anvandare/consent/revoke/' + userId,
+            method: 'GET'
+        };
+        return restClient.run(options, 'json');
+    },
+    get: function(url, loggedIn) {
+        if (loggedIn) {
+            this.login();
+        }
+        var options = {
+            url: url,
             method: 'GET'
         };
         return restClient.run(options, 'json');

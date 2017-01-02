@@ -30,7 +30,7 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 var MinaintygStartPageBase = MinaintygBasePage._extend({
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('mi-about-page'));
+        this.at = element(by.id('about-mina-intyg-root'));
     },
     get: function () {
         this.getPage('about');
@@ -38,6 +38,24 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     isAt: function isAt() {
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
+    },
+    viewConsent: function() {
+        element(by.id('link-about-samtycke')).click();
+    },
+    aboutMinaIntygIsDisplayed: function() {
+        return element(by.id('about-content-omminaintyg')).isDisplayed();
+    },
+    aboutConsentIsDisplayed: function() {
+        return element(by.id('about-content-samtycke')).isDisplayed();
+    },
+    revokeConsent: function() {
+        element(by.id('revokeConsentBtn')).click();
+    },
+    confirmRevokeConsent: function() {
+        element(by.id('revoke-consent-button')).click();
+    },
+    revokeConsentDialogIsDisplayed: function() {
+        return element(by.id('revoke-consent-confirmation-dialog')).isDisplayed();
     }
 });
 

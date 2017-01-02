@@ -21,8 +21,9 @@
 <properties>
 	<Edit>true</Edit>
 	<Files>true</Files>
-	<Help/>
+	<Help>Ersatt av protractor-tester (INTYG-3296)</Help>
 	<Properties>true</Properties>
+	<Prune/>
 	<RecentChanges>true</RecentChanges>
 	<Refactor>true</Refactor>
 	<Search>true</Search>
