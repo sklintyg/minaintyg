@@ -29,7 +29,7 @@ var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
 var notfoundPage = miTestTools.pages.notfoundPage;
 
-describe('Arkivera samt återställ intyg', function() {
+describe('Undantagshantering', function() {
 
 	var personId = '19010101-0101';
 
