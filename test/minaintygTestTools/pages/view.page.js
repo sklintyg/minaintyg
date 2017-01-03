@@ -63,6 +63,18 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
                 found = found || text.includes(status);
             })
         }).then(function() { return found; });
+    },
+    getTextContent: function(fieldId) {
+        return element(by.id(fieldId)).isDisplayed().then(function (isVisible) {
+            if (isVisible) {
+                return element(by.id(fieldId)).getText();
+            } else {
+                return 'notshown';
+            }
+        });
+    },
+    fieldNotShown: function(fieldId) {
+        return this.getTextContent(fieldId).then(function (value) { return value === 'notshown' });
     }
 });
 

@@ -31,7 +31,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 var customPage = miTestTools.pages.customPage;
 
-var fk7263 = miTestTools.testdata.fk7263;
+var genericTestdataBuilder = miTestTools.testdata.generic;
 
 var EC = protractor.ExpectedConditions;
 
@@ -43,10 +43,15 @@ describe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
         // Givet samtycke
         restHelper.setConsent();
 
-        var intyg = fk7263.getIntyg();
+        var intyg = genericTestdataBuilder.getFk7263();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
 
+    });
+
+    afterAll(function() {
+        restHelper.deleteConsent();
+        restHelper.deleteIntyg(intygsId);
     });
 
     describe('Logga in och gå till anpassat intyg', function() {

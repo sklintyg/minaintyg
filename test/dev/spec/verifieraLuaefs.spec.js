@@ -31,7 +31,7 @@ var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
-var luae_fs = miTestTools.testdata.luae_fs;
+var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera LUAE_FS intyg', function() {
 
@@ -49,9 +49,14 @@ describe('Verifiera LUAE_FS intyg', function() {
         // Ta bort tidigare samtycken
         restHelper.deleteConsent();
 
-        var intyg = luae_fs.getIntyg();
+        var intyg = genericTestdataBuilder.getLuaefs();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
+    });
+
+    afterAll(function() {
+        restHelper.deleteConsent();
+        restHelper.deleteIntyg(intygsId);
     });
 
     describe('Logga in', function() {

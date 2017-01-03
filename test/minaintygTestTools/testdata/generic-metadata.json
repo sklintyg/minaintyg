@@ -5,14 +5,14 @@
   "careUnitName": "WebCert Enhet 1",
   "careGiverId": "IFV1239877878-1041d",
   "careGiverName": "WebCert Vårdgivare 1",
-  "signedDate": "2013-03-17T00:00:00",
-  "sentDate": "2013-03-17T00:00:00",
+  "signedDate": "2016-05-26T09:26:24",
+  "sentDate": "2016-05-26T10:02:01",
   "signingDoctorName": "Jan Nilsson",
   "states": [
     {
       "target": "HV",
       "state": "RECEIVED",
-      "timestamp": "2013-03-17T00:00:01.234"
+      "timestamp": "2016-05-26T09:26:26.234"
     }
   ]
 }

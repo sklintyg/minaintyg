@@ -44,6 +44,22 @@ module.exports = {
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
 
+        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + type + '-content.xml');
+
+        //read xml doc into string variable
+        var xmlString = fs.readFileSync(fullPath, 'utf8')
+            .replace(/\r?\n|\r/g, '')
+            .replace(/>\s+</g, '><')
+            .replace("CERTIFICATE_ID", templateJsonObj.id)
+            .replace("SIGNED_DATE", templateJsonObj.signedDate)
+            .replace("SENT_DATE", templateJsonObj.sentDate)
+            .replace("PATIENT_CRN", templateJsonObj.civicRegistrationNumber)
+            .replace("DOCTOR_NAME", templateJsonObj.signingDoctorName)
+            .replace("CAREUNIT_ID", templateJsonObj.careUnitId)
+            .replace("CAREUNIT_NAME", templateJsonObj.careUnitName)
+            .replace("CAREGIVER_ID", templateJsonObj.careGiverId)
+            .replace("CAREGIVER_NAME", templateJsonObj.careGiverName);
+
         return {
             id: templateJsonObj.id,
             type: type,
@@ -66,8 +82,14 @@ module.exports = {
             deleted: false,
             deletedByCareGiver: false,
             revoked: false,
-            additionalInfo: ''
+            additionalInfo: '',
+            originalCertificate: xmlToString(xmlString)
         };
     }
 
+};
+
+var xmlToString = function(xmlData) {
+    // Whitespace collapsed
+    return xml.serialize(xml.parse(xmlData));
 };
