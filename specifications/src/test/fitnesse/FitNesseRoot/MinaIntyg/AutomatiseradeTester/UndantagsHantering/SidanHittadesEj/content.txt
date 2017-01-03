@@ -1,5 +1,0 @@
-!3 Verifier att 404-sidan visas korrekt.
-
-|skript|!-Undantagshantering-!|
-|gå till sida som inte finns|
-|sidan finns ej visas|

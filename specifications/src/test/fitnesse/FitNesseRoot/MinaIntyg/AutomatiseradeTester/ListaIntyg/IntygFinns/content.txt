@@ -1,6 +1,0 @@
-!3 Givet att användare har befintliga intyg så skall dessa visas i listan
-
-|skript|lista intyg|
-|logga på som|${person1.personnummer}|
-|inkorgsidan visas|
-|lista med intyg visas|

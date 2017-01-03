@@ -1,7 +1,0 @@
-!3 /api/* och /moduleapi/* resultat ska inte kunna cachas. Sidor ska ej kunna sättas i frames.
-
-|skript|!-HttpSakerhet-!|
-|logga på som|${person1.personnummer}|
-| api svar ska ej kunna cachas |
-| modul api svar ska ej kunna cachas |
-| en sida ska inte kunna sattas i frame |

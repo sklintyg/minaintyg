@@ -59,21 +59,6 @@ stage('build') {
 //    }
 //}
 
-//stage('fitnesse') {
-//    node {
-//        try {
-//            wrap([$class: 'Xvfb']) {
-//                shgradle "fitnesseTest -Dgeb.env=firefoxRemote -Dweb.baseUrl=https://minaintyg.inera.nordicmedtest.se/web/ \
-//                      -Dcertificate.baseUrl=https://minaintyg.inera.nordicmedtest.se/inera-certificate/ -PfileOutput -PoutputFormat=html\
-//                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-//            }
-//        } finally {
-//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'specifications/', \
-//                 reportFiles: 'fitnesse-results.html', reportName: 'Fitnesse results'
-//        }
-//    }
-//}
-
 stage('tag and upload') {
     node {
         shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"

@@ -28,12 +28,11 @@ $ cd minaintyg/test
 $ grunt
 ```
 
-### Kör FitNesse
-För att köra FitNesse-testerna måste man starta FitNesse wiki samt se till att Intygstjänsten och Mina intyg är igång:
+### Kör RestAssured
+För att köra RestAssured-testerna måste Intygstjänsten och Mina intyg vara igång:
 ```
 $ cd minaintyg
-$ ./gradlew fitnesseWiki
-$ open http://localhost:9124/MinaIntyg.AutomatiseradeTester
+$ ./gradlew restAssuredTest
 ```
 
 ## Licens
