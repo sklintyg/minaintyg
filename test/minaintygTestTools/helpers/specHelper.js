@@ -31,6 +31,9 @@ module.exports = {
     logout: function() {
         element(by.id('mvklogoutLink')).click();
     },
+    backToMvk: function() {
+        element(by.id('backToMvkLink')).click();
+    },
 
     waitForAngularTestability: function() {
         var clientScript =

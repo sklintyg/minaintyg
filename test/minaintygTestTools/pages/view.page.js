@@ -38,11 +38,11 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    viewInbox: function() {
-        element(by.id('inboxTab')).click();
-    },
     certificateId: function() {
         return element(by.id('certId')).getAttribute('title');
+    },
+    sendCertificate: function() {
+        element(by.id('sendCertificateBtn')).click();
     },
     archiveCertificate: function() {
         element(by.id('archiveBtn')).click();
@@ -55,6 +55,14 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     },
     clickCustomizeCertificate: function() {
         this.customize.click();
+    },
+    hasStatus: function(status) {
+        var found = false;
+        return element(by.id('latest-certificate-event')).all(by.tagName('span')).each(function(item) {
+            item.getText().then(function (text) {
+                found = found || text.includes(status);
+            })
+        }).then(function() { return found; });
     }
 });
 

@@ -19,10 +19,6 @@
 
 /* globals browser */
 
-/**
- * Created by erik
- */
-
 'use strict';
 var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
@@ -31,41 +27,39 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('inboxHeader'));
-    },
-    get: function () {
-        this.getPage('start');
+        this.at = element(by.id('send-certificate-flow-root-recipients'));
+        this.confirmRecipientSelectionBtn = element(by.id('confirmRecipientSelectionBtn'));
+        this.confirmAndSendBtn = element(by.id('confirmAndSendBtn'));
     },
     isAt: function isAt() {
-        specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    certificateTableIsShown: function() {
-        return element(by.id('certTable')).isPresent();
+    chooseRecipient: function(recipientId) {
+        element(by.id('recipient-' + recipientId)).click();
     },
-    noCertificatesIsShown: function() {
-        return element(by.id('noCerts')).isPresent();
+    alreadySentWarningMessageIsShown: function() {
+        return element(by.id('already-sent-to-recipient-message')).isDisplayed().then(function (isVisible) { return isVisible; });
     },
-    certificateExists: function(intygId) {
-        return element(by.id('certificate-' + intygId)).isPresent();
+    confirmRecipientSelection: function() {
+        this.confirmRecipientSelectionBtn.click();
     },
-    complementaryInfo: function(intygId) {
-        return element(by.id('certificate-period-' + intygId)).getText();
+    confirmAndSend: function() {
+        this.confirmAndSendBtn.click();
     },
-    cancelledCertificateDisplayed: function(intygId) {
-        return element(by.id('viewCertificateBtn-' + intygId)).isDisplayed().then(function (isVisible) { return !isVisible; });
+    chooseRecipientViewIsShown: function() {
+        return this.confirmRecipientSelectionBtn.isDisplayed();
     },
-    viewCertificate: function(intygId) {
-        element(by.id('viewCertificateBtn-' + intygId)).click();
+    confirmAndSendViewIsShown: function() {
+        return this.confirmAndSendBtn.isDisplayed();
     },
-    archiveCertificate: function(intygId) {
-        element(by.id('archiveCertificateBtn-' + intygId)).click();
+    selectedRecipient: function() {
+        return element(by.id('selected-recipient-message')).getText();
     },
-    confirmArchiveCertificate: function() {
-        element(by.id('archive-button')).click();
+    resultViewIsShown: function() {
+        return element(by.id('send-certificate-flow-result')).isDisplayed();
     },
-    archiveDialogIsDisplayed: function() {
-        return element(by.id('archive-confirmation-dialog')).isDisplayed();
+    backToViewCertificate: function() {
+        element(by.id('backToViewCertificateBtn')).click();
     }
 });
 

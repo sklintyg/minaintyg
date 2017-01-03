@@ -119,7 +119,7 @@ describe('Logga in som medborgare', function() {
 
         it('Gå till om samtycke', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            inboxPage.viewAbout();
+            inboxPage.clickAbout();
             expect(aboutPage.isAt()).toBeTruthy();
             expect(aboutPage.aboutMinaIntygIsDisplayed()).toBeTruthy();
             aboutPage.viewConsent();

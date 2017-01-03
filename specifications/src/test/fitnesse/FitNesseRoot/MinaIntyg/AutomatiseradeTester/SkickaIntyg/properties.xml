@@ -21,8 +21,9 @@
 <properties>
 	<Edit/>
 	<Files/>
-	<Help/>
+	<Help>Ersatt av protractor-tester (INTYG-3296)</Help>
 	<Properties/>
+	<Prune/>
 	<RecentChanges/>
 	<Refactor/>
 	<Search/>

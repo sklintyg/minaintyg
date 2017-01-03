@@ -23,26 +23,32 @@
  */
 'use strict';
 
-var minaintygBase = require('./minaintyg.base.page.js');
-var welcomePage = require('./welcome.page.js');
-var consentPage = require('./consent.page.js');
-var inboxPage = require('./inbox.page.js');
-var archivedPage = require('./archived.page.js');
-var viewPage = require('./view.page.js');
-var customPage = require('./custom.page.js');
 var aboutPage = require('./about.page.js');
+var accessdeniedPage = require('./accessdenied.page.js');
+var archivedPage = require('./archived.page.js');
+var consentPage = require('./consent.page.js');
+var customPage = require('./custom.page.js');
 var errorPage = require('./error.page.js');
+var inboxPage = require('./inbox.page.js');
+var mvkloginPage = require('./mvklogin.page.js');
+var mvklogoutPage = require('./mvklogout.page.js');
 var notfoundPage = require('./notfound.page.js');
+var sendPage = require('./send.page.js');
+var viewPage = require('./view.page.js');
+var welcomePage = require('./welcome.page.js');
 
 module.exports = {
-    'minaintygBase': minaintygBase,
-    'welcomePage': welcomePage,
-    'consentPage': consentPage,
-    'inboxPage': inboxPage,
-    'archivedPage': archivedPage,
-    'viewPage': viewPage,
-    'customPage': customPage,
     'aboutPage': aboutPage,
+    'accessdeniedPage': accessdeniedPage,
+    'archivedPage': archivedPage,
+    'consentPage': consentPage,
+    'customPage': customPage,
     'errorPage': errorPage,
-    'notfoundPage': notfoundPage
+    'inboxPage': inboxPage,
+    'mvkloginPage': mvkloginPage,
+    'mvklogoutPage': mvklogoutPage,
+    'notfoundPage': notfoundPage,
+    'sendPage': sendPage,
+    'viewPage': viewPage,
+    'welcomePage': welcomePage
 };

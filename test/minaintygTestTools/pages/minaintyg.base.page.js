@@ -45,11 +45,26 @@ var MinaIntygBasePage = Class._extend({
     clickAbout: function() {
         this.navbarAbout().click();
     },
+    clickInbox: function() {
+        this.navbarInbox().click();
+    },
+    clickArchived: function() {
+        this.navbarArchived().click();
+    },
     navbarLocation: function() {
         return element(by.id('location'));
     },
     navbarAbout: function() {
-        return element(by.id('aboutTab'));
+        return element.all(by.id('aboutTab')).first();
+    },
+    navbarInbox: function() {
+        return element.all(by.id('inboxTab')).first();
+    },
+    navbarArchived: function() {
+        return element.all(by.id('archivedTab')).first();
+    },
+    activeTab: function() {
+        return element.all(by.css('.navbar-nav li.active > a')).first().getAttribute('id');
     },
 
     //Locates the dynamic text based on text-key

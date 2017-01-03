@@ -27,26 +27,10 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('archivedHeader'));
-    },
-    get: function () {
-        browser.get('web/start/#/arkiverade');
+        this.at = element(by.css('.information'));
     },
     isAt: function isAt() {
-        specHelper.waitForAngularTestability();
         return isAt._super.call(this);
-    },
-    certificateExists: function(id) {
-        return element(by.id('restoreCertificate-' + id)).isPresent();
-    },
-    restoreCertificate: function(intygId) {
-        element(by.id('restoreCertificate-' + intygId)).click();
-    },
-    confirmRestoreCertificate: function() {
-        element(by.id('restore-button')).click();
-    },
-    restoreDialogIsDisplayed: function() {
-        return element(by.id('restore-confirmation-dialog')).isDisplayed();
     }
 });
 

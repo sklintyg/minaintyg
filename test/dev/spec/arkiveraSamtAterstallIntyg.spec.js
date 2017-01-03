@@ -93,7 +93,7 @@ describe('Arkivera samt återställ intyg', function() {
         });
 
         it('Intyget finns i listan med arkiverade intyg', function() {
-            inboxPage.viewArchivedList();
+            inboxPage.clickArchived();
             specHelper.waitForAngularTestability();
             expect(archivedPage.isAt()).toBeTruthy();
             expect(archivedPage.certificateExists(fk7263IntygsId)).toBeTruthy();
@@ -111,7 +111,7 @@ describe('Arkivera samt återställ intyg', function() {
         });
 
         it('Intyget finns i listan i inkorgen', function() {
-            archivedPage.viewInbox();
+            archivedPage.clickInbox();
             specHelper.waitForAngularTestability();
             expect(inboxPage.isAt()).toBeTruthy();
             expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
@@ -148,11 +148,11 @@ describe('Arkivera samt återställ intyg', function() {
         });
 
         it('Verifera att intyget inte längre finns i listan men att det finns i listan med arkiverade intyg', function() {
-            viewPage.viewInbox();
+            viewPage.clickInbox();
             specHelper.waitForAngularTestability();
             expect(inboxPage.isAt()).toBeTruthy();
             expect(inboxPage.certificateExists(fk7263IntygsId)).toBeFalsy();
-            inboxPage.viewArchivedList();
+            inboxPage.clickArchived();
             specHelper.waitForAngularTestability();
             expect(archivedPage.isAt()).toBeTruthy();
             expect(archivedPage.certificateExists(fk7263IntygsId)).toBeTruthy();
@@ -189,11 +189,11 @@ describe('Arkivera samt återställ intyg', function() {
         });
 
         it('Verifera att intyget inte längre finns i listan men att det finns i listan med arkiverade intyg', function() {
-            viewPage.viewInbox();
+            viewPage.clickInbox();
             specHelper.waitForAngularTestability();
             expect(inboxPage.isAt()).toBeTruthy();
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeFalsy();
-            inboxPage.viewArchivedList();
+            inboxPage.clickArchived();
             specHelper.waitForAngularTestability();
             expect(archivedPage.isAt()).toBeTruthy();
             expect(archivedPage.certificateExists(tsBasIntygsId)).toBeTruthy();
@@ -230,11 +230,11 @@ describe('Arkivera samt återställ intyg', function() {
         });
 
         it('Verifera att intyget inte längre finns i listan men att det finns i listan med arkiverade intyg', function() {
-            viewPage.viewInbox();
+            viewPage.clickInbox();
             specHelper.waitForAngularTestability();
             expect(inboxPage.isAt()).toBeTruthy();
             expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
-            inboxPage.viewArchivedList();
+            inboxPage.clickArchived();
             specHelper.waitForAngularTestability();
             expect(archivedPage.isAt()).toBeTruthy();
             expect(archivedPage.certificateExists(tsDiabetesIntygsId)).toBeTruthy();
