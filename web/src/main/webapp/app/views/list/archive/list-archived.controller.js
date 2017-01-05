@@ -18,12 +18,13 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$location', '$log', '$scope', 'common.dialogService', 'common.IntygListService',
-        function($location, $log, $scope, dialogService, IntygListService) {
+    [ '$location', '$log', '$scope', 'common.dialogService', 'common.IntygListService', 'common.moduleService',
+        function($location, $log, $scope, dialogService, IntygListService, moduleService) {
             'use strict';
 
             $scope.archivedCertificates = [];
             $scope.doneLoading = false;
+            $scope.moduleService = moduleService;
             $scope.dialog = {
                 acceptprogressdone: true,
                 focus: false
