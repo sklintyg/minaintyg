@@ -2,7 +2,6 @@
 
 # Configuration repository
 environment_name: "test"
-config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 
 # Spring profiles
 profiles: test
