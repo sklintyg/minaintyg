@@ -28,9 +28,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -68,8 +66,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
@@ -81,8 +78,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
+        given().redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
                 .when().get("api/certificates");
     }
 
@@ -91,9 +87,8 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
-                .when().get("api/certificates");
+        given().redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
+        .when().get("api/certificates");
     }
 
     @Test
@@ -108,8 +103,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/archived")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
@@ -121,8 +115,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .pathParams("type", Fk7263EntryPoint.MODULE_ID)
+        given().pathParams("type", Fk7263EntryPoint.MODULE_ID)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/{type}/recipients")
                 .then()
@@ -134,8 +127,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .pathParams("type", TsBasEntryPoint.MODULE_ID)
+        given().pathParams("type", TsBasEntryPoint.MODULE_ID)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/{type}/recipients")
                 .then()
@@ -150,8 +142,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         final String intygId = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(intygId, LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .pathParams("id", intygId)
+        given().pathParams("id", intygId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("api/certificates/{id}/archive")
                 .then()
@@ -166,8 +157,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         final String intygId = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .pathParams("id", intygId)
+        given().pathParams("id", intygId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("api/certificates/{id}/restore")
                 .then()
@@ -178,8 +168,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
     public void testGiveConsent() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().post("api/certificates/consent/give")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/consent-response-schema.json"));
@@ -190,8 +179,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().post("api/certificates/consent/revoke")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/consent-response-schema.json"));
@@ -201,8 +189,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
     public void testGetModulesMap() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/map")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/get-module-map-response-schema.json"))
@@ -213,8 +200,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
     public void testOnBeforeUnload() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        String res = given().filter(BaseIntegrationTest.sessionFilter)
-                .expect().statusCode(HttpServletResponse.SC_OK)
+        String res = given().expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/onbeforeunload").getBody().asString();
 
         assertEquals("ok", res);
@@ -225,8 +211,7 @@ public class ApiControllerIT extends BaseIntegrationTest {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().filter(BaseIntegrationTest.sessionFilter)
-                .pathParams("type", LuseEntryPoint.MODULE_ID, "version", "1.0")
+        given().pathParams("type", LuseEntryPoint.MODULE_ID, "version", "1.0")
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/questions/{type}/{version}")
                 .then()
