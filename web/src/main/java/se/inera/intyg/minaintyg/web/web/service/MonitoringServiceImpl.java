@@ -18,12 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import org.apache.commons.lang3.time.StopWatch;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
+
+import com.google.common.base.Stopwatch;
 
 import se.inera.intyg.minaintyg.web.web.service.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
@@ -61,8 +66,7 @@ public class MonitoringServiceImpl implements MonitoringService {
      */
     @Override
     public HealthStatus checkIntygstjanst() {
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
+        Stopwatch stopWatch = Stopwatch.createStarted();
         boolean ok = pingIntygstjanst();
         stopWatch.stop();
         HealthStatus status = createStatusWithTiming(ok, stopWatch);
@@ -109,12 +113,12 @@ public class MonitoringServiceImpl implements MonitoringService {
         LOG.info("Operation {} completed with result {} in {} ms", operation, result, status.getMeasurement());
     }
 
-    private HealthStatus createStatusWithTiming(boolean ok, StopWatch stopWatch) {
+    private HealthStatus createStatusWithTiming(boolean ok, Stopwatch stopWatch) {
         if (!ok) {
             return new HealthStatus(-1, ok);
         }
 
-        return new HealthStatus(stopWatch.getTime(), ok);
+        return new HealthStatus(stopWatch.elapsed(TimeUnit.MILLISECONDS), ok);
     }
 
 }

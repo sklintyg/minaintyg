@@ -23,12 +23,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 import se.inera.intyg.common.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.common.support.model.CertificateState;
@@ -50,7 +52,7 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
     @BeforeClass
     public static void loadCertificateData() throws IOException {
         // Read JSON file
-        certificateData = FileUtils.readFileToString(new ClassPathResource(JSON_PATH).getFile());
+        certificateData = Resources.toString(new ClassPathResource(JSON_PATH).getURL(), Charsets.UTF_8);
 
         // Map JSON to an LuaefsUtlatande object
         Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, LuaefsUtlatande.class);

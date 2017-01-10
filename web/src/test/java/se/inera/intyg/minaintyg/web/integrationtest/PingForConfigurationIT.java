@@ -26,11 +26,12 @@ import static org.hamcrest.core.IsNot.not;
 
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 
 public class PingForConfigurationIT extends BaseIntegrationTest {
@@ -42,7 +43,7 @@ public class PingForConfigurationIT extends BaseIntegrationTest {
 
     @Before
     public void setup() throws IOException {
-        request = FileUtils.readFileToString(new ClassPathResource("integrationtest/ping-for-configuration-request.xml").getFile());
+        request = Resources.toString(new ClassPathResource("integrationtest/ping-for-configuration-request.xml").getURL(), Charsets.UTF_8);
     }
 
     @Test

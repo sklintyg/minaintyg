@@ -18,9 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.web.overvakning;
 
-import org.apache.commons.lang3.time.StopWatch;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Stopwatch;
 
 public class HealthCheck {
 
@@ -28,16 +31,16 @@ public class HealthCheck {
 
     public Status getPing() {
         boolean ok;
-        StopWatch sp = new StopWatch();
-        sp.start();
+        Stopwatch sp = Stopwatch.createStarted();
         try {
             ok = true;
         } catch (Exception e) {
             ok = false;
         }
         sp.stop();
-        LOGGER.info("Ping in Mina Intyg got:{} response time {}", ok, sp.getTime());
-        return createStatus(ok, sp.getTime());
+        long elapsedMillis = sp.elapsed(TimeUnit.MILLISECONDS);
+        LOGGER.info("Ping in Mina Intyg got:{} response time {}", ok, elapsedMillis);
+        return createStatus(ok, elapsedMillis);
     }
 
     private Status createStatus(boolean ok, long time) {
