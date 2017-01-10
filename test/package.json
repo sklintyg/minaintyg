@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "file-reader": "^1.1.1",
-    "minaintyg-testtools": "file:minaintygTestTools"
+    "minaintyg-testtools": "file:./minaintygTestTools"
   },
   "devDependencies": {
     "chai": "^3.5.0",
