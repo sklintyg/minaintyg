@@ -29,6 +29,7 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.minaintyg.web.integrationtest.BaseIntegrationTest;
 
 public final class IntegrationTestUtil {
 
@@ -38,33 +39,40 @@ public final class IntegrationTestUtil {
     }
 
     public static String login(String personId) {
-        return given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
+        return given().filter(BaseIntegrationTest.sessionFilter)
+                .redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
                 .when().get("web/sso?guid=" + personId).sessionId();
     }
 
     public static void logout() {
-        given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
                 .when().get("web/logga-ut");
     }
 
     public static void addConsent(String personId){
-        given().get("testability/anvandare/consent/give/" + personId).then().statusCode(HttpServletResponse.SC_OK);
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .get("testability/anvandare/consent/give/" + personId).then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void revokeConsent(String personId){
-        given().get("testability/anvandare/consent/revoke/" + personId).then().statusCode(200);
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .get("testability/anvandare/consent/revoke/" + personId).then().statusCode(200);
     }
 
     public static void deleteIntyg(String id) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/" + id).then().statusCode(HttpServletResponse.SC_OK);
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .baseUri(certificateBaseUrl).delete("resources/certificate/" + id).then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void deleteCertificatesForCitizen(String personId) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/citizen/" + personId).then().statusCode(HttpServletResponse.SC_OK);
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .baseUri(certificateBaseUrl).delete("resources/certificate/citizen/" + personId).then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void givenIntyg(String intygId, String intygTyp, String personId, boolean revoked, boolean archived) {
-        given().baseUri(certificateBaseUrl).body(certificate(intygId, intygTyp, personId, revoked, archived))
+        given().filter(BaseIntegrationTest.sessionFilter)
+                .baseUri(certificateBaseUrl).body(certificate(intygId, intygTyp, personId, revoked, archived))
             .post("resources/certificate/").then().statusCode(HttpServletResponse.SC_OK);
     }
 

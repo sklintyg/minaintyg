@@ -24,6 +24,7 @@ import org.junit.Before;
 import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
+import com.jayway.restassured.filter.session.SessionFilter;
 import com.jayway.restassured.http.ContentType;
 
 import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
@@ -32,6 +33,8 @@ import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
  * Base class for REST / SOAP in-container tests.
  */
 public abstract class BaseIntegrationTest {
+
+    public static SessionFilter sessionFilter;
 
     /**
      * Common setup for all tests
@@ -42,6 +45,7 @@ public abstract class BaseIntegrationTest {
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         IntegrationTestUtil.certificateBaseUrl = System.getProperty("integration.tests.certificate.baseUrl");
+        sessionFilter = new SessionFilter();
     }
 
     @After
