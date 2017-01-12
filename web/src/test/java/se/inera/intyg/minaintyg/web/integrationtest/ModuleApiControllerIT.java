@@ -27,7 +27,9 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 
 import com.jayway.restassured.http.ContentType;
@@ -100,7 +102,8 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().redirects().follow(false).and().pathParams("type", type, "id", id)
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .redirects().follow(false).and().pathParams("type", type, "id", id)
                 .expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
                 .when().get("moduleapi/certificate/{type}/{id}");
     }
@@ -126,7 +129,8 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().pathParams("id", id, "target", "FK")
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("id", id, "target", "FK")
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("moduleapi/certificate/{id}/send/{target}")
                 .then()
@@ -142,7 +146,8 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        Response response = given().pathParams("type", type, "id", id)
+        Response response = given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("type", type, "id", id)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("moduleapi/certificate/{type}/{id}/pdf");
 
@@ -161,7 +166,8 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        Response response = given().contentType(ContentType.URLENC)
+        Response response = given()
+                .contentType(ContentType.URLENC).and().cookie("ROUTEID", IntegrationTestUtil.routeId)
                 .pathParams("type", type, "id", id)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().post("moduleapi/certificate/{type}/{id}/pdf/arbetsgivarutskrift");
@@ -179,11 +185,13 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtil.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().pathParams("type", type, "id", id)
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("type", type, "id", id)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("moduleapi/certificate/{type}/{id}")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"));
+
     }
 
 }

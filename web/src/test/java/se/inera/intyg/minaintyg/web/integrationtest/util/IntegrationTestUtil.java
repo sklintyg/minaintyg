@@ -22,6 +22,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,16 +35,23 @@ public final class IntegrationTestUtil {
 
     public static String certificateBaseUrl;
 
+    public static String routeId;
+
     private IntegrationTestUtil() {
     }
 
     public static String login(String personId) {
-        return given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
-                .when().get("web/sso?guid=" + personId).sessionId();
+        Map<String, String> cookies = given().redirects().follow(false).and()
+                .expect().statusCode(HttpServletResponse.SC_FOUND)
+                .when().get("web/sso?guid=" + personId).getCookies();
+
+        routeId = cookies.containsKey("ROUTEID") ? cookies.get("ROUTEID") : "nah";
+        return cookies.get("JSESSIONID");
     }
 
     public static void logout() {
-        given().redirects().follow(false).and().expect().statusCode(HttpServletResponse.SC_FOUND)
+        given().redirects().follow(false).and()
+                .expect().statusCode(HttpServletResponse.SC_FOUND)
                 .when().get("web/logga-ut");
     }
 
@@ -52,15 +60,18 @@ public final class IntegrationTestUtil {
     }
 
     public static void revokeConsent(String personId){
-        given().get("testability/anvandare/consent/revoke/" + personId).then().statusCode(200);
+        given().get("testability/anvandare/consent/revoke/" + personId)
+                .then().statusCode(200);
     }
 
     public static void deleteIntyg(String id) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/" + id).then().statusCode(HttpServletResponse.SC_OK);
+        given().baseUri(certificateBaseUrl).delete("resources/certificate/" + id)
+                .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void deleteCertificatesForCitizen(String personId) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/citizen/" + personId).then().statusCode(HttpServletResponse.SC_OK);
+        given().baseUri(certificateBaseUrl).delete("resources/certificate/citizen/" + personId)
+                .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void givenIntyg(String intygId, String intygTyp, String personId, boolean revoked, boolean archived) {
