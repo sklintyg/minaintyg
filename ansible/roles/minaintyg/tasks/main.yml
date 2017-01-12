@@ -37,4 +37,4 @@
        version={{ config_version }}
 
 - name: Start tomcat
-  service: name={{ tomcat_service }} state=started pattern={{ tomcat_service }}
+  service: name={{ tomcat_service }} state=restarted pattern={{ tomcat_service }}
