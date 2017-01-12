@@ -20,6 +20,7 @@ package se.inera.intyg.minaintyg.web.integrationtest;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -194,4 +195,21 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
 
     }
 
+    @Test
+    public void testModuleApiResponseNotCacheable() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        final String type = Fk7263EntryPoint.MODULE_ID;
+
+        final String id = UUID.randomUUID().toString();
+        IntegrationTestUtil.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("type", type, "id", id)
+                .expect().statusCode(HttpServletResponse.SC_OK)
+                .when().get("moduleapi/certificate/{type}/{id}")
+                .then()
+                .header("cache-control", equalTo("no-cache, no-store, max-age=0, must-revalidate"))
+                .header("x-frame-options", equalTo("DENY"));
+    }
 }

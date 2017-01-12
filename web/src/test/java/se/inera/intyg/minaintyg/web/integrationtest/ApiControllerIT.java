@@ -20,6 +20,7 @@ package se.inera.intyg.minaintyg.web.integrationtest;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -230,6 +231,19 @@ public class ApiControllerIT extends BaseIntegrationTest {
                 .when().get("api/certificates/questions/{type}/{version}")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/get-questions-response-schema.json"));
+    }
+
+    @Test
+    public void testApiResponseNotCacheable() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .expect().statusCode(HttpServletResponse.SC_OK)
+                .when().get("api/certificates/map")
+                .then()
+                .header("cache-control", equalTo("no-cache, no-store, max-age=0, must-revalidate"))
+                .header("x-frame-options", equalTo("DENY"));
     }
 
 }
