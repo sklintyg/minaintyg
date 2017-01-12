@@ -60,7 +60,8 @@ describe('Logga ut', function() {
         it('Mvks utloggningssida visas när man loggar ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.logout();
-            expect(mvklogoutPage.isAt()).toBeTruthy();
+            expect(browser.getTitle()).toEqual('Logga ut - 1177 Vårdguidens e-tjänster');
+            expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
@@ -88,7 +89,8 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
             // Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inloggade i MVK.
-            expect(mvkloginPage.isAt()).toBeTruthy();
+            expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
+            expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
