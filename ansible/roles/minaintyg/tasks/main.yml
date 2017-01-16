@@ -1,40 +1,56 @@
 ---
 
 - name: Stop tomcat
-  service: name={{ tomcat_service }} state=stopped pattern={{ tomcat_service }}
+  service:
+    name: {{ tomcat_service }}
+    state: stopped
+    pattern: {{ tomcat_service }}
 
 - name: Create release directory
-  file: path={{ releases_folder }} state=directory
+  file:
+    path: {{ releases_folder }}
+    state: directory
 
 - name: Download minaintyg-web-{{ version }}.war
-  get_url: url=https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
-           dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
-           validate_certs=no
-           timeout=60
+  get_url:
+    url: https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war
+    dest: {{ releases_folder }}/minaintyg-web-{{ version }}.war
+    validate_certs: no
+    timeout: 60
   when: deploy_from_repo|bool
 
 - name: Copy minaintyg-web-{{ version }}.war
-  copy: src={{ playbook_dir }}/../web/build/libs/minaintyg-web-{{ version }}.war dest={{ releases_folder }}/minaintyg-web-{{ version }}.war
+  copy:
+    src: {{ playbook_dir }}/../web/build/libs/minaintyg-web-{{ version }}.war
+    dest: {{ releases_folder }}/minaintyg-web-{{ version }}.war
   when: not deploy_from_repo|bool
 
 - name: Remove old version of unpacked war
-  file: state=absent
-      path={{ webapps_folder }}/ROOT
+  file:
+    state: absent
+    path: {{ webapps_folder }}/ROOT
 
 - name: Remove old version of war
-  file: state=absent
-      path={{ webapps_folder }}/ROOT.war
+  file:
+    state: absent
+    path: {{ webapps_folder }}/ROOT.war
 
 - name: Deploy minaintyg-web-{{ version }}.war as ROOT.war
-  command: cp {{ releases_folder }}/minaintyg-web-{{ version }}.war {{ webapps_folder }}/ROOT.war
+  command: "cp {{ releases_folder }}/minaintyg-web-{{ version }}.war {{ webapps_folder }}/ROOT.war"
 
 - name: Fetch configuration repo to get new branches
-  command: chdir={{ config_folder }} git fetch origin
+  command: git fetch origin
+  args:
+    chdir: {{ config_folder }}
 
 - name: Update configuration to {{ config_version }}
-  git: repo={{ config_repository }}
-       dest={{ config_folder }}
-       version={{ config_version }}
+  git:
+    repo: {{ config_repository }}
+    dest: {{ config_folder }}
+    version: {{ config_version }}
 
 - name: Start tomcat
-  service: name={{ tomcat_service }} state=restarted pattern={{ tomcat_service }}
+  service:
+    name: {{ tomcat_service }}
+    state: restarted
+    pattern: {{ tomcat_service }}
