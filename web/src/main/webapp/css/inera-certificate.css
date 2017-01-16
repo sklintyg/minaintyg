@@ -115,17 +115,16 @@
 
 .cert-titlebar .cert-title a,.cert-titlebar .cert-title button { color: #fff; font-weight: bold; }
 
-.cert-titlebar h2 > span {
-    color: #fff;
-}
+.cert-titlebar h2 > button { margin-left: 10px; }
+.cert-titlebar h2 > span { color: #fff; }
 
 .archived-table .cert-titlebar-type { color: #000; }
 .archived-table td { font-size: 12px; }
 
 .cert-titlebar .row { margin-right: 0px; margin-left: 0px; }
-.issue {
+.cert-titlebar .row .issue {
     color: #fff;
-    padding: 12px 0 0px 0;
+    padding: 12px 20px 0px 15px;
 }
 
 .cert-titlebar-value { font-weight: bold; }

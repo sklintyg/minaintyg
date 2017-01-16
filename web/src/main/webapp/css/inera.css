@@ -169,6 +169,11 @@ p {
 
 p.btn-row {
 	padding-top: 20px;
+	margin-bottom: 5px;
+}
+
+p.btn-row > button {
+	margin-bottom: 3px;
 }
 
 p.btn-row-desc {
@@ -670,10 +675,6 @@ div.statuslist {
 
 #special.disabled {
 	background: #123456; 
-}
-
-button#archiveCertificateBtn {
-	float: right;
 }
 
 .no-padding {

@@ -31,16 +31,13 @@
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
-	.cert-header .header-row:first-child {
-		padding: 0 15px 0 15px;
-	}
 	.btn {
 		padding: 10px 25px;
 		font-weight: bold;
 		border: none;
 	}
-	.issue {
-		padding: 12px 15px 10px 15px;
+	.cert-header .header-row:first-child {
+		padding: 0 15px 0 15px;
 	}
 	.cert-titlebar .cert-title {
 		color: #fff;
@@ -50,6 +47,9 @@
 	.intyg-body .body-row .text {
 		display: block;
 		padding: 10px 15px;
+	}
+	.issue {
+		padding: 12px 15px 10px 15px;
 	}
 	.ts-table th, .ts-table tr {
 		font-size: 12px !important;
