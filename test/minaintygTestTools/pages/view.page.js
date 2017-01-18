@@ -45,7 +45,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         element(by.id('sendCertificateBtn')).click();
     },
     archiveCertificate: function() {
-        element(by.id('archiveBtn')).click();
+        element(by.id('archiveCertificateBtn')).click();
     },
     confirmArchiveCertificate: function() {
         element(by.id('archive-button')).click();
