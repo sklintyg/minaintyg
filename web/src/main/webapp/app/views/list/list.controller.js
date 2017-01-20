@@ -124,7 +124,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     receiver = messageService.getProperty('certificates.target.' + receiver.toLowerCase());
                 }
                 if (timestamp) {
-                    timestamp = moment(timestamp).format("YYYY-MM-DD HH:mm")
+                    timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm');
                 }
 
                 console.log(timestamp);
