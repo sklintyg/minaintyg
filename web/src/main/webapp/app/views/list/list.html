@@ -6,36 +6,18 @@
 <div class="row">
   <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
     <p>
-      <div message key="inbox.description" class="mi-text"></div>
+      <div message key="inbox.description.1" class="mi-text"></div>
     </p>
-  </div>
-  <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-    <p class="mi-text">
-      <div message key="inbox.description.archive"></div>
-      <div uib-collapse="isCollapsedArchive">
-        <div class="well well-sm">
-          <span message key="inbox.helptext.arkivera"></span>
-        </div>
-      </div>
-      <div style="padding-top: 0.5em">
-        <a ng-show="isCollapsedArchive" ng-click="isCollapsedArchive = !isCollapsedArchive">
-          <span style="vertical-align: text-bottom;">
-            <span message key="common.title.helptext.moreinfo"></span>
-            <span message key="inbox.title.helptext.arkivera"></span>
-          </span>
-          <span class="glyphicon glyphicon-chevron-down"></span>
-        </a>
-        <a ng-show="!isCollapsedArchive" ng-click="isCollapsedArchive = !isCollapsedArchive">
-          <span style="vertical-align: text-bottom;">
-            <span message key="common.title.helptext.lessinfo"></span>
-            <span message key="inbox.title.helptext.arkivera"></span>
-          </span>
-          <span class="glyphicon glyphicon-chevron-up"></span>
-        </a>
-      </div>
+    <p>
+      <div message key="inbox.description.2" class="mi-text"></div>
     </p>
+    <p>
+      <div message key="inbox.description.3" class="mi-text"></div>
+    </p>
+    <br/>
   </div>
 </div>
+
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -56,12 +38,12 @@
                             <span>{{moduleService.getModuleName(cert.type)}}</span>
                           </button>
                           <span ng-show="cert.cancelled">
-                            <span>{{moduleService.getModuleName(cert.type)}}</span> - <span message key="certificates.status.cancelled"></span>
+                            <span>{{moduleService.getModuleName(cert.type)}}</span> - <span message key="cert.status.cancelled"></span>
                           </span>
                         </h2>
                       </div>
                       <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4 issue text-right">
-                        <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>&nbsp;<span message key="listtable.headers.issued"></span>
+                        <span message key="listtable.headers.issued"></span>&nbsp;<span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>
                       </div>
                     </div>
                   </div>
@@ -93,38 +75,49 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="row">
                       <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8 header-row">
-                        <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3> {{cert.careunitName}}
+                        <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3>
+                        <span>{{cert.careunitName}}</span>
                       </div>
                       <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4" ng-show="cert.complementaryInfo.length">
-                        <h3 class="tag"><span message key="{{cert.type | lowercase}}.inbox.complementaryinfo"></span></h3><span id="certificate-period-{{cert.id}}">{{cert.complementaryInfo}}</span>
+                        <h3 class="tag"><span message key="{{cert.type | lowercase}}.inbox.complementaryinfo"></span></h3>
+                        <span id="certificate-period-{{cert.id}}">{{cert.complementaryInfo}}</span>
                       </div>
                     </div>
+
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 header-row">
                         <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3>
-                        <div ng-show="cert.statuses.length>0">
-                          {{cert.statuses[0].timestamp | date:'short'}}
-                          <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                          <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span>s system</span>
+                        <div ng-show="cert.statuses.length > 0">
+                          <div ng-if="cert.statuses[0].type == 'CANCELLED'">
+                            {{ getEventText(cert.statuses[0].type, '', '', cert.statuses[0].timestamp) }}
+                          </div>
+                          <div ng-if="cert.statuses[0].type == 'RECEIVED' || cert.statuses[0].type == 'SENT'">
+                            {{ getEventText(cert.statuses[0].type, cert.careunitName, cert.statuses[0].target, cert.statuses[0].timestamp) }}
+                          </div>
                           <div uib-collapse="isCollapsedArchive">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
-                                {{status.timestamp | date:'short'}}
-                                <span message key="certificates.status.{{status.type}}"></span>
-                                <span ng-show="status.type == 'SENT'"><span message key="certificates.target.{{status.target}}"></span>s system</span><br>
+                                <div ng-if="status.type == 'CANCELLED'">
+                                  {{ getEventText(status.type, '', '', status.timestamp) }}
+                                </div>
+                                <div ng-if="status.type == 'RECEIVED' || status.type == 'SENT'">
+                                  {{ getEventText(status.type, cert.careunitName, status.target, status.timestamp) }}
+                                </div>
                               </div>
                             </div>
                           </div>
                           <p>
-                            <button type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsedArchive = !isCollapsedArchive"><span message key="label.status.{{ !isCollapsedArchive }}"></span></button>
+                            <button id="showEventsBtn-{{cert.id}}" type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsedArchive = !isCollapsedArchive"><span message key="label.status.{{ !isCollapsedArchive }}"></span></button>
                           </p>
                         </div>
-                        <span ng-show="cert.statuses.length==0">Ingen</span>
+                        <span ng-show="cert.statuses.length == 0">Ingen</span>
                       </div>
                       <div class="hidden-xs col-sm-6 col-md-4 col-lg-4 text-right">
-                        <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                         <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"
+                                 uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
                           <span message key="button.archive"></span>
                         </button>
                         <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
@@ -134,10 +127,11 @@
                     </div>
                     <div class="row hidden-sm hidden-md hidden-lg">
                       <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-                        <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                        <button type="button" id="archiveCertificateBtn-{{cert.id}}-xs" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"
+                                uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
                           <span message key="button.archive"></span>
                         </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                        <button type="button" id="viewCertificateBtn-{{cert.id}}-xs" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
                           <span message key="button.show"></span>
                         </button>
                       </div>

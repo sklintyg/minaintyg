@@ -46,6 +46,7 @@ module.exports = function(config) {
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
             'src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js',
+            'src/main/webapp/bower_components/momentjs/moment.js',
             // endbower
 
             // Load these first

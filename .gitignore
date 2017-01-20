@@ -16,3 +16,4 @@ rebel.xml
 build
 .gradle
 node-v*
+.DS_Store

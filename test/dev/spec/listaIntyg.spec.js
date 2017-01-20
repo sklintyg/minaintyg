@@ -30,7 +30,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Lista intyg', function() {
+fdescribe('Lista intyg', function() {
 
 	var personId = '19010101-0101';
 	var personIdNoCertificates = '19121212-9999';
@@ -54,9 +54,14 @@ describe('Lista intyg', function() {
         var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
         tsDiabetesIntygsId = tsDiabetesIntyg.id;
         tsDiabetesIntyg.certificateStates.push({
-             target: 'HV',
+             target: 'TS',
              state: 'CANCELLED',
              timestamp: '2013-03-18T00:00:01.234'
+        });
+        tsDiabetesIntyg.certificateStates.push({
+            target: 'TS',
+            state: 'SENT',
+            timestamp: '2013-03-17T15:32:34.832'
         });
         restHelper.createIntyg(tsDiabetesIntyg);
     });
@@ -69,7 +74,7 @@ describe('Lista intyg', function() {
         restHelper.deleteIntyg(tsDiabetesIntygsId);
     });
 
-    describe('Invånare med intyg', function() {
+    fdescribe('Invånare med intyg', function() {
 
         beforeEach(function() {
             browser.ignoreSynchronization = false;
@@ -103,6 +108,19 @@ describe('Lista intyg', function() {
             expect(inboxPage.cancelledCertificateDisplayed(fk7263IntygsId)).toBeFalsy();
         });
 
+        it('Verifiera makulerat intygs händelser', function() {
+            var attr = 'ng-if';
+            var attrVal = 'cert.statuses[0].type == \'CANCELLED\'';
+            var text = 'Intyget är makulerat 2013-03-18 00:00';
+            expect(inboxPage.eventExists(tsDiabetesIntygsId, attr, attrVal)).toBeTruthy();
+            expect(inboxPage.eventHasText(tsDiabetesIntygsId, attr, attrVal, text)).toBeTruthy();
+
+            attrVal = 'status.type == \'RECEIVED\' || status.type == \'SENT\'';
+            text = 'Skickat av WebCert Enhet 1 till Transportstyrelsen 2013-03-17 15:32';
+            expect(inboxPage.eventExists(tsDiabetesIntygsId, attr, attrVal)).toBeTruthy();
+            inboxPage.showEvents(tsDiabetesIntygsId);
+            expect(inboxPage.eventHasText(tsDiabetesIntygsId, attr, attrVal, text)).toBeTruthy();
+        });
     });
 
     describe('Invånare utan intyg', function() {

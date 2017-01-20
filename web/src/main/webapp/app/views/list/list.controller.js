@@ -116,7 +116,39 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 // ...and close dialog
             };
 
-            // fetch list of certs initially
+            // Compile event status message text
+            $scope.getEventText = function(type, sender, receiver, timestamp) {
+                var text = '';
+
+                if (receiver) {
+                    receiver = messageService.getProperty('certificates.target.' + receiver.toLowerCase());
+                }
+                if (timestamp) {
+                    timestamp = moment(timestamp).format("YYYY-MM-DD HH:mm")
+                }
+
+                console.log(timestamp);
+                if (type === 'CANCELLED') {
+                    text = messageService.getProperty('certificates.status.cancelled')
+                        .replace('//TIMESTAMP//', timestamp);
+                }
+                else if (type === 'RECEIVED') {
+                    text = messageService.getProperty('certificates.status.received')
+                        .replace('//SENDER//', sender)
+                        .replace('//RECEIVER//', receiver)
+                        .replace('//TIMESTAMP//', timestamp);
+                }
+                else if (type === 'SENT') {
+                    text = messageService.getProperty('certificates.status.sent')
+                        .replace('//SENDER//', sender)
+                        .replace('//RECEIVER//', receiver)
+                        .replace('//TIMESTAMP//', timestamp);
+                }
+
+                return text.length === 0 ? messageService.getProperty('certificates.status.noevent') : text;
+            }
+
+            // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
                 if (list !== null) {

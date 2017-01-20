@@ -27,6 +27,22 @@
 var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
+by.addLocator('attr',
+    /**
+     * Find element(s), where attribute = value
+     * @param {string} attr
+     * @param {string} value
+     * @param {Element} [parentElement=]
+     * @returns {Array.<Element>}
+     */
+    function (attr, value, parentElement) {
+        parentElement = parentElement || document;
+        var nodes = parentElement.querySelectorAll('[' + attr + ']');
+        return Array.prototype.filter.call(nodes, function (node) {
+            return (node.getAttribute(attr) === value);
+        });
+    });
+
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
     init: function init() {
@@ -66,7 +82,20 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     },
     archiveDialogIsDisplayed: function() {
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
+    },
+    eventExists: function(intygId, attr, attrVal) {
+        return element(by.id('certificate-' + intygId)).element(by.attr(attr, attrVal)).isPresent();
+    },
+    eventHasText: function(intygId, attr, attrVal, text) {
+        var el = element(by.id('certificate-' + intygId)).element(by.attr(attr, attrVal));
+        return el.getText().then(function(txt) {
+            return txt === text;
+        });
+    },
+    showEvents: function(intygId) {
+        element(by.id('showEventsBtn-' + intygId)).click();
     }
+
 });
 
 module.exports = new MinaintygStartPageBase();
