@@ -146,7 +146,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 }
 
                 return text.length === 0 ? messageService.getProperty('certificates.status.noevent') : text;
-            }
+            };
 
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
