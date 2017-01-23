@@ -186,10 +186,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
-        'certificates.status.cancelled': 'Intyget är makulerat //TIMESTAMP//',
+        'certificates.status.cancelled': 'Intyget är makulerat {0}',
         'certificates.status.cancelled.title': 'Makulerat',
-        'certificates.status.received': 'Skickat av //SENDER// och mottagits av //RECEIVER// //TIMESTAMP//',
-        'certificates.status.sent': 'Skickat av //SENDER// till //RECEIVER// //TIMESTAMP//',
+        'certificates.status.received': 'Skickat av {0} och mottagits av {1} {2}',
+        'certificates.status.sent': 'Skickat av {0} till {1} {2}',
         'certificates.status.noevent': 'Inget',
 
         'certificates.target.fk': 'Försäkringskassan',
