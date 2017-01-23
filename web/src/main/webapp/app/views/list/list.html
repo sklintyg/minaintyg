@@ -92,26 +92,24 @@
                         <h3 class="tag"><span message key="listtable.headers.latestEvent"></span></h3>
                         <div ng-show="cert.statuses.length > 0">
                           <div ng-if="cert.statuses[0].type == 'CANCELLED'">
-                            {{ getEventText(cert.statuses[0].type, '', '', cert.statuses[0].timestamp) }}
+                            {{getEventText(cert.statuses[0].type, '', '', cert.statuses[0].timestamp)}}
                           </div>
                           <div ng-if="cert.statuses[0].type == 'RECEIVED' || cert.statuses[0].type == 'SENT'">
-                            {{ getEventText(cert.statuses[0].type, cert.careunitName, cert.statuses[0].target, cert.statuses[0].timestamp) }}
+                            {{getEventText(cert.statuses[0].type, cert.careunitName, cert.statuses[0].target, cert.statuses[0].timestamp)}}
                           </div>
                           <div uib-collapse="isCollapsedArchive">
                             <div ng-repeat="status in cert.statuses" ng-switch on="$index > 0">
                               <div ng-switch-when="true">
                                 <div ng-if="status.type == 'CANCELLED'">
-                                  {{ getEventText(status.type, '', '', status.timestamp) }}
+                                  {{getEventText(status.type, '', '', status.timestamp)}}
                                 </div>
                                 <div ng-if="status.type == 'RECEIVED' || status.type == 'SENT'">
-                                  {{ getEventText(status.type, cert.careunitName, status.target, status.timestamp) }}
+                                  {{getEventText(status.type, cert.careunitName, status.target, status.timestamp)}}
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <p>
-                            <button id="showEventsBtn-{{cert.id}}" type="button" class="btn-link btn-link-link" ng-show="cert.statuses.length>1" href="#status" ng-click="isCollapsedArchive = !isCollapsedArchive"><span message key="label.status.{{ !isCollapsedArchive }}"></span></button>
-                          </p>
+                          <button id="showEventsBtn-{{cert.id}}" type="button" class="btn-link btn-link-link" href="#status" ng-show="cert.statuses.length > 1" ng-click="isCollapsedArchive = !isCollapsedArchive"><span message key="label.status.{{ !isCollapsedArchive }}"></span></button>
                         </div>
                         <span ng-show="cert.statuses.length == 0">Ingen</span>
                       </div>

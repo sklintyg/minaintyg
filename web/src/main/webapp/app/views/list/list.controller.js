@@ -127,24 +127,17 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm');
                 }
 
-                console.log(timestamp);
-                if (type === 'CANCELLED') {
-                    text = messageService.getProperty('certificates.status.cancelled')
-                        .replace('//TIMESTAMP//', timestamp);
+                if (type.toUpperCase() === 'CANCELLED') {
+                    text = messageService.getProperty('certificates.status.cancelled', [timestamp]);
                 }
-                else if (type === 'RECEIVED') {
-                    text = messageService.getProperty('certificates.status.received')
-                        .replace('//SENDER//', sender)
-                        .replace('//RECEIVER//', receiver)
-                        .replace('//TIMESTAMP//', timestamp);
+                else if (type.toUpperCase() === 'RECEIVED') {
+                    text = messageService.getProperty('certificates.status.received', [sender, receiver, timestamp]);
                 }
-                else if (type === 'SENT') {
-                    text = messageService.getProperty('certificates.status.sent')
-                        .replace('//SENDER//', sender)
-                        .replace('//RECEIVER//', receiver)
-                        .replace('//TIMESTAMP//', timestamp);
+                else if (type.toUpperCase() === 'SENT') {
+                    text = messageService.getProperty('certificates.status.sent', [sender, receiver, timestamp]);
                 }
 
+                console.log(text);
                 return text.length === 0 ? messageService.getProperty('certificates.status.noevent') : text;
             };
 
