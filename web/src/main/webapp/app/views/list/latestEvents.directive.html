@@ -1,0 +1,21 @@
+<div>
+  <h3 class="tag">
+    <span message key="listtable.headers.latestEvent"></span>
+  </h3>
+  <div ng-show="statuses.length > 0">
+    <div id="event-{{certId}}-0">{{getEventText(statuses[0])}}</div>
+    <div uib-collapse="isCollapsedArchive">
+      <div ng-repeat="status in statuses" ng-switch on="$index > 0">
+        <div ng-switch-when="true">
+          <div id="event-{{certId}}-{{$index}}">{{getEventText(status)}}</div>
+        </div>
+      </div>
+    </div>
+    <button id="showEventsBtn-{{certId}}" type="button" class="btn-link btn-link-link" href="#status" ng-show="statuses.length > 1" ng-click="isCollapsedArchive = !isCollapsedArchive">
+      <span message key="label.status.{{ !isCollapsedArchive }}"></span>
+    </button>
+  </div>
+  <div ng-show="statuses.length == 0">
+    <span message key="certificates.status.noevents"></span>
+  </div>
+</div>

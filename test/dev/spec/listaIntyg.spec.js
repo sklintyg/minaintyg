@@ -109,17 +109,14 @@ describe('Lista intyg', function() {
         });
 
         it('Verifiera makulerat intygs händelser', function() {
-            var attr = 'ng-if';
-            var attrVal = 'cert.statuses[0].type == \'CANCELLED\'';
             var text = 'Intyget är makulerat 2013-03-18 00:00';
-            expect(inboxPage.eventExists(tsDiabetesIntygsId, attr, attrVal)).toBeTruthy();
-            expect(inboxPage.eventHasText(tsDiabetesIntygsId, attr, attrVal, text)).toBeTruthy();
+            expect(inboxPage.eventExists(tsDiabetesIntygsId, 0)).toBeTruthy();
+            expect(inboxPage.eventHasText(tsDiabetesIntygsId, 0, text)).toBeTruthy();
 
-            attrVal = 'status.type == \'RECEIVED\' || status.type == \'SENT\'';
             text = 'Skickat av WebCert Enhet 1 till Transportstyrelsen 2013-03-17 15:32';
-            expect(inboxPage.eventExists(tsDiabetesIntygsId, attr, attrVal)).toBeTruthy();
+            expect(inboxPage.eventExists(tsDiabetesIntygsId, 1)).toBeTruthy();
             inboxPage.showEvents(tsDiabetesIntygsId);
-            expect(inboxPage.eventHasText(tsDiabetesIntygsId, attr, attrVal, text)).toBeTruthy();
+            expect(inboxPage.eventHasText(tsDiabetesIntygsId, 1, text)).toBeTruthy();
         });
     });
 

@@ -163,7 +163,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'listtable.headers.type': 'Typ av intyg',
         'listtable.headers.certinfo': 'Intygsinformation',
         'listtable.headers.issuedby': 'Utfärdare',
-        'listtable.headers.latestevent': 'Senaste händelse',
+        'listtable.headers.latestevent': 'Senaste händelser',
 
         'fkdialog.head': 'Du har gett ditt samtycke',
         'fkdialog.text': 'Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.',
@@ -190,7 +190,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'certificates.status.cancelled.title': 'Makulerat',
         'certificates.status.received': 'Skickat av {0} och mottagits av {1} {2}',
         'certificates.status.sent': 'Skickat av {0} till {1} {2}',
-        'certificates.status.noevent': 'Inget',
+        'certificates.status.noevents': 'Inga händelser',
 
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',

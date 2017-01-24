@@ -30,7 +30,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 acceptprogressdone: true,
                 focus: false
             };
-            $scope.isCollapsedArchive = true;
             $scope.isCollapsedRevoke = true;
             $scope.messageService = messageService;
             $scope.moduleService = moduleService;
@@ -114,31 +113,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 // remove flag indicating forwarded from consent page..
                 $cookies.remove('RedirectFromConsent');
                 // ...and close dialog
-            };
-
-            // Compile event status message text
-            $scope.getEventText = function(type, sender, receiver, timestamp) {
-                var text = '';
-
-                if (receiver) {
-                    receiver = messageService.getProperty('certificates.target.' + receiver.toLowerCase());
-                }
-                if (timestamp) {
-                    timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm');
-                }
-
-                if (type.toUpperCase() === 'CANCELLED') {
-                    text = messageService.getProperty('certificates.status.cancelled', [timestamp]);
-                }
-                else if (type.toUpperCase() === 'RECEIVED') {
-                    text = messageService.getProperty('certificates.status.received', [sender, receiver, timestamp]);
-                }
-                else if (type.toUpperCase() === 'SENT') {
-                    text = messageService.getProperty('certificates.status.sent', [sender, receiver, timestamp]);
-                }
-
-                console.log(text);
-                return text.length === 0 ? messageService.getProperty('certificates.status.noevent') : text;
             };
 
             // Fetch list of certs initially
