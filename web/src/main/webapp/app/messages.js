@@ -162,7 +162,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'listtable.headers.issued': 'Inkom till Mina intyg',
         'listtable.headers.type': 'Typ av intyg',
         'listtable.headers.certinfo': 'Intygsinformation',
-        'listtable.headers.issuedby': 'Utfärdare',
+        'listtable.headers.issuedby': 'Enhet',
         'listtable.headers.latestevent': 'Senaste händelser',
 
         'fkdialog.head': 'Du har gett ditt samtycke',
