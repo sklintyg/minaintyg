@@ -163,7 +163,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'listtable.headers.type': 'Typ av intyg',
         'listtable.headers.certinfo': 'Intygsinformation',
         'listtable.headers.issuedby': 'Enhet',
-        'listtable.headers.latestevent': 'Senaste händelser',
+        'listtable.headers.latestevent': 'Senaste händelse',
 
         'fkdialog.head': 'Du har gett ditt samtycke',
         'fkdialog.text': 'Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.',

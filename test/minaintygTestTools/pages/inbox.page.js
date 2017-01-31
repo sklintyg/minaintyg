@@ -68,10 +68,12 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
     },
     eventExists: function(intygId, eventId) {
-        return element(by.id('event-' + intygId + '-' + eventId)).isPresent();
+        var attrId = 'event-' + intygId + (eventId === undefined ? '' : '-' + eventId);
+        return element(by.id(attrId)).isPresent();
     },
-    eventHasText: function(intygId, eventId, text) {
-        var el = element(by.id('event-' + intygId + '-' + eventId));
+    eventHasText: function(text, intygId, eventId) {
+        var attrId = 'event-' + intygId + (eventId === undefined ? '' : '-' + eventId);
+        var el = element(by.id(attrId));
         return el.getText().then(function(txt) {
             return txt === text;
         });
