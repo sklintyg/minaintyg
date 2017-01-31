@@ -78,7 +78,7 @@ describe('Skicka intyg', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
             expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
-            expect(viewPage.hasStatus('Mottaget av')).toBeFalsy();
+            expect(viewPage.hasNoEvent('Inga händelser')).toBeTruthy();
         });
 
         it('Välj att skicka intyget', function() {
@@ -105,7 +105,7 @@ describe('Skicka intyg', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
             expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
-            expect(viewPage.hasStatus('Mottaget av')).toBeTruthy();
+            expect(viewPage.hasEvent('Skickat till')).toBeTruthy();
         });
     });
 

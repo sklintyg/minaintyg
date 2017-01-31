@@ -67,16 +67,15 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     archiveDialogIsDisplayed: function() {
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
     },
-    eventExists: function(intygId, eventId) {
-        var attrId = 'event-' + intygId + (eventId === undefined ? '' : '-' + eventId);
-        return element(by.id(attrId)).isPresent();
-    },
-    eventHasText: function(text, intygId, eventId) {
-        var attrId = 'event-' + intygId + (eventId === undefined ? '' : '-' + eventId);
-        var el = element(by.id(attrId));
-        return el.getText().then(function(txt) {
-            return txt === text;
-        });
+    hasEvent: function(intygId, text) {
+        var found = false;
+        var attrId = 'event-' + intygId;
+
+        return element.all(by.css('div[id^=' + attrId + ']')).each(function(item) {
+            item.getText().then(function (txt) {
+                found = found || txt.includes(text);
+            })
+        }).then(function() { return found; });
     },
     showEvents: function(intygId) {
         element(by.id('showEventsBtn-' + intygId)).click();
