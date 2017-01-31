@@ -16,6 +16,6 @@
     </button>
   </div>
   <div ng-if="statuses.length == 0">
-    <span message key="certificates.status.noevents"></span>
+    <div ng-attr-id="event-{{certId}}">{{messageService.getProperty('certificates.status.noevents')}}</div>
   </div>
 </div>

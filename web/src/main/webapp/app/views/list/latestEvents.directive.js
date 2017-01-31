@@ -23,7 +23,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
 
         function _getEventText(msgProperty, params) {
             var text = messageService.getProperty(msgProperty, params);
-            return text;
+            return text.length === 0 ? '' : text;
         }
 
         return {
@@ -37,6 +37,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
             templateUrl: '/app/views/list/latestEvents.directive.html',
             link: function(scope, element, attrs) {
 
+                scope.messageService = messageService;
                 scope.isCollapsedArchive = true;
 
                 // Default hideHeader attribute to false if not explicitly set to true
@@ -68,8 +69,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                         params.push.apply(params, [receiver, timestamp]);
                     }
 
-                    var text = _getEventText(msgProperty, params);
-                    return text.length === 0 ? _getEventText('certificates.status.noevents', []) : text;
+                    return _getEventText(msgProperty, params);
                 };
 
             }
