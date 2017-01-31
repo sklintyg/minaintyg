@@ -26,21 +26,14 @@
           <tbody>
           <tr ng-repeat="cert in archivedCertificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
             <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
-            <td headers="type">
-              <span>{{moduleService.getModuleName(cert.type)}}</span>
-            </td>
+            <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}</td>
             <td headers="latestEvent">
-              <div ng-show="cert.statuses.length>0">
-                {{cert.statuses[0].timestamp | date:'short'}}
-                <span message key="certificates.status.{{cert.statuses[0].type}}"></span>
-                <span ng-show="cert.statuses[0].type == 'SENT'"><span message key="certificates.target.{{cert.statuses[0].target}}"></span></span>
-              </div>
-              <span ng-show="!cert.statuses">Ingen</span>
+              <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" hide-header="true"></latest-events>
             </td>
-            <td headers="restore"><a id="restoreCertificate-{{cert.id}}" href
-                                     ng-click="openRestoreDialog(cert)"><span message key="label.restore"></span></a>
+            <td headers="restore">
+              <a id="restoreCertificate-{{cert.id}}" href ng-click="openRestoreDialog(cert)"><span message key="label.restore"></span></a>
             </td>
           </tr>
           </tbody>

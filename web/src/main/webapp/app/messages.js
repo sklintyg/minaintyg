@@ -188,8 +188,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'certificates.status.cancelled': 'Intyget är makulerat {0}',
         'certificates.status.cancelled.title': 'Makulerat',
-        'certificates.status.received': 'Skickat av {0} och mottagits av {1} {2}',
-        'certificates.status.sent': 'Skickat av {0} till {1} {2}',
+        'certificates.status.received': 'Mottagits av {0} {1}',
+        'certificates.status.sent': 'Skickat till {0} {1}',
         'certificates.status.noevents': 'Inga händelser',
 
         'certificates.target.fk': 'Försäkringskassan',
