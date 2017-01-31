@@ -2,7 +2,7 @@
   <h3 class="tag" ng-if="!hideHeader">
     <span message key="listtable.headers.latestEvent"></span>
   </h3>
-  <div ng-if="statuses.length > 0">
+  <div ng-if="statuses.length > 0" id="certificate-latestevents">
     <div ng-attr-id="event-{{certId}}-0">{{getEventText(statuses[0])}}</div>
     <div uib-collapse="isCollapsedArchive">
       <div ng-repeat="status in statuses" ng-switch on="$index > 0">
@@ -15,7 +15,7 @@
       <span message key="label.status.{{ !isCollapsedArchive }}"></span>
     </button>
   </div>
-  <div ng-if="statuses.length == 0">
+  <div ng-if="statuses.length == 0" id="certificate-noevents">
     <div ng-attr-id="event-{{certId}}">{{messageService.getProperty('certificates.status.noevents')}}</div>
   </div>
 </div>

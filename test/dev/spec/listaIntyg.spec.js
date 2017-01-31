@@ -109,20 +109,13 @@ describe('Lista intyg', function() {
         });
 
         it('Verifiera text för intyg som inte har någon händelse', function() {
-            var text = 'Inga händelser';
-            expect(inboxPage.eventExists(fk7263IntygsId)).toBeTruthy();
-            expect(inboxPage.eventHasText(text, fk7263IntygsId)).toBeTruthy();
+            expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
         });
 
         it('Verifiera makulerat intygs händelser', function() {
-            var text = 'Intyget är makulerat 2013-03-18 00:00';
-            expect(inboxPage.eventExists(tsDiabetesIntygsId, 0)).toBeTruthy();
-            expect(inboxPage.eventHasText(text, tsDiabetesIntygsId, 0)).toBeTruthy();
-
-            text = 'Skickat till Transportstyrelsen 2013-03-17 15:32';
-            expect(inboxPage.eventExists(tsDiabetesIntygsId, 1)).toBeTruthy();
+            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Intyget är makulerat 2013-03-18 00:00')).toBeTruthy();
             inboxPage.showEvents(tsDiabetesIntygsId);
-            expect(inboxPage.eventHasText(text, tsDiabetesIntygsId, 1)).toBeTruthy();
+            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Skickat till Transportstyrelsen 2013-03-17 15:32')).toBeTruthy();
         });
     });
 
