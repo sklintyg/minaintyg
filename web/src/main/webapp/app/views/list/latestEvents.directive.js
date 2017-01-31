@@ -30,15 +30,17 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
             restrict: 'E',
             replace: true,
             scope: {
-                header: '=',
-                cert: '='
+                certId: '@',
+                statuses: '=',
+                hideHeader: '@'
             },
             templateUrl: '/app/views/list/latestEvents.directive.html',
-            link: function(scope) {
+            link: function(scope, element, attrs) {
 
-                scope.certId = scope.cert.id;
                 scope.isCollapsedArchive = true;
-                scope.statuses = scope.cert.statuses;
+
+                // Default hideHeader attribute to false if not explicitly set to true
+                scope.hideHeader = attrs.hideHeader === 'true';
 
                 // Compile event status message text
                 scope.getEventText = function(status) {
@@ -46,7 +48,6 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                     var params = [];
 
                     var type = status.type;
-                    var sender = scope.cert.careunitName;
                     var receiver = messageService.getProperty('certificates.target.' + status.target.toLowerCase());
                     var timestamp = status.timestamp;
 
@@ -60,11 +61,11 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                     }
                     else if (type.toUpperCase() === 'RECEIVED') {
                         msgProperty = 'certificates.status.received';
-                        params.push.apply(params, [sender, receiver, timestamp]);
+                        params.push.apply(params, [receiver, timestamp]);
                     }
                     else if (type.toUpperCase() === 'SENT') {
                         msgProperty = 'certificates.status.sent';
-                        params.push.apply(params, [sender, receiver, timestamp]);
+                        params.push.apply(params, [receiver, timestamp]);
                     }
 
                     var text = _getEventText(msgProperty, params);
