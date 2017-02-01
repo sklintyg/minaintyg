@@ -31,7 +31,7 @@ var mvklogoutPage = miTestTools.pages.mvklogoutPage;
 var mvkloginPage = miTestTools.pages.mvkloginPage;
 var accessdeniedPage = miTestTools.pages.accessdeniedPage;
 
-describe('Logga ut', function() {
+xdescribe('Logga ut', function() {
 
     var personId = '19010101-0101';
 
