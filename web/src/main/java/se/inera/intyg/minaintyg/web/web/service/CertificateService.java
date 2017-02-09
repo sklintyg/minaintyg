@@ -28,10 +28,10 @@ import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedExcept
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
 
-
 public interface CertificateService {
 
-    Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) throws ExternalWebServiceCallFailedException;
+    Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId)
+            throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
@@ -62,9 +62,9 @@ public interface CertificateService {
      */
     UtlatandeMetaData restoreCertificate(String certificateId, Personnummer civicRegistrationNumber);
 
-
     /**
      * Get all labels for intyg as json.
+     *
      * @param intygsTyp
      * @param version
      * @return

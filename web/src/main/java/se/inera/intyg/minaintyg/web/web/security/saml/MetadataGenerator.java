@@ -31,6 +31,7 @@
  * limitations under the License.
  */
 package se.inera.intyg.minaintyg.web.web.security.saml;
+
 import java.util.*;
 
 import javax.xml.namespace.QName;
@@ -142,8 +143,7 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             NameIDType.TRANSIENT,
             NameIDType.PERSISTENT,
             NameIDType.UNSPECIFIED,
-            NameIDType.X509_SUBJECT
-    );
+            NameIDType.X509_SUBJECT);
 
     private XMLObjectBuilderFactory builderFactory;
 
@@ -194,13 +194,15 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
             throw new RuntimeException("Required attributes weren't set");
         }
 
-        SAMLObjectBuilder<EntityDescriptor> builder = (SAMLObjectBuilder<EntityDescriptor>) getBuilderFactory().getBuilder(EntityDescriptor.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<EntityDescriptor> builder = (SAMLObjectBuilder<EntityDescriptor>) getBuilderFactory()
+                .getBuilder(EntityDescriptor.DEFAULT_ELEMENT_NAME);
         EntityDescriptor descriptor = builder.buildObject();
         if (id != null) {
             descriptor.setID(id);
         }
         descriptor.setEntityID(entityId);
-        descriptor.getRoleDescriptors().add(buildSPSSODescriptor(entityBaseURL, entityAlias, requestSigned, assertionSigned, includedNameID));
+        descriptor.getRoleDescriptors()
+                .add(buildSPSSODescriptor(entityBaseURL, entityAlias, requestSigned, assertionSigned, includedNameID));
 
         try {
             if (signMetadata) {
@@ -283,9 +285,11 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     @Override
-    protected SPSSODescriptor buildSPSSODescriptor(String entityBaseURL, String entityAlias, boolean requestSigned, boolean wantAssertionSigned, Collection<String> includedNameID) {
+    protected SPSSODescriptor buildSPSSODescriptor(String entityBaseURL, String entityAlias, boolean requestSigned,
+            boolean wantAssertionSigned, Collection<String> includedNameID) {
 
-        SAMLObjectBuilder<SPSSODescriptor> builder = (SAMLObjectBuilder<SPSSODescriptor>) getBuilderFactory().getBuilder(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<SPSSODescriptor> builder = (SAMLObjectBuilder<SPSSODescriptor>) getBuilderFactory()
+                .getBuilder(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
         SPSSODescriptor spDescriptor = builder.buildObject();
         spDescriptor.setAuthnRequestsSigned(requestSigned);
         spDescriptor.setWantAssertionsSigned(wantAssertionSigned);
@@ -305,34 +309,47 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         // Assertion consumer MUST NOT be used with HTTP Redirect, Profiles 424, same applies to HoK profile
         for (String binding : bindingsSSO) {
             if (binding.equals(SAMLConstants.SAML2_ARTIFACT_BINDING_URI)) {
-                spDescriptor.getAssertionConsumerServices().add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++, getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_ARTIFACT_BINDING_URI));
+                spDescriptor.getAssertionConsumerServices()
+                        .add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++,
+                                getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_ARTIFACT_BINDING_URI));
             }
             if (binding.equals(SAMLConstants.SAML2_POST_BINDING_URI)) {
-                spDescriptor.getAssertionConsumerServices().add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++, getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_POST_BINDING_URI));
+                spDescriptor.getAssertionConsumerServices()
+                        .add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++,
+                                getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_POST_BINDING_URI));
             }
             if (binding.equals(SAMLConstants.SAML2_PAOS_BINDING_URI)) {
-                spDescriptor.getAssertionConsumerServices().add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++, getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_PAOS_BINDING_URI));
+                spDescriptor.getAssertionConsumerServices()
+                        .add(getAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++,
+                                getSAMLWebSSOProcessingFilterPath(), SAMLConstants.SAML2_PAOS_BINDING_URI));
             }
         }
 
         for (String binding : bindingsHoKSSO) {
             if (binding.equals(SAMLConstants.SAML2_ARTIFACT_BINDING_URI)) {
-                spDescriptor.getAssertionConsumerServices().add(getHoKAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++, getSAMLWebSSOHoKProcessingFilterPath(), SAMLConstants.SAML2_ARTIFACT_BINDING_URI));
+                spDescriptor.getAssertionConsumerServices()
+                        .add(getHoKAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++,
+                                getSAMLWebSSOHoKProcessingFilterPath(), SAMLConstants.SAML2_ARTIFACT_BINDING_URI));
             }
             if (binding.equals(SAMLConstants.SAML2_POST_BINDING_URI)) {
-                spDescriptor.getAssertionConsumerServices().add(getHoKAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++, getSAMLWebSSOHoKProcessingFilterPath(), SAMLConstants.SAML2_POST_BINDING_URI));
+                spDescriptor.getAssertionConsumerServices()
+                        .add(getHoKAssertionConsumerService(entityBaseURL, entityAlias, assertionConsumerIndex == index, index++,
+                                getSAMLWebSSOHoKProcessingFilterPath(), SAMLConstants.SAML2_POST_BINDING_URI));
             }
         }
 
         for (String binding : bindingsSLO) {
             if (binding.equals(SAMLConstants.SAML2_POST_BINDING_URI)) {
-                spDescriptor.getSingleLogoutServices().add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_POST_BINDING_URI));
+                spDescriptor.getSingleLogoutServices()
+                        .add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_POST_BINDING_URI));
             }
             if (binding.equals(SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
-                spDescriptor.getSingleLogoutServices().add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_REDIRECT_BINDING_URI));
+                spDescriptor.getSingleLogoutServices()
+                        .add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_REDIRECT_BINDING_URI));
             }
             if (binding.equals(SAMLConstants.SAML2_SOAP11_BINDING_URI)) {
-                spDescriptor.getSingleLogoutServices().add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_SOAP11_BINDING_URI));
+                spDescriptor.getSingleLogoutServices()
+                        .add(getSingleLogoutService(entityBaseURL, entityAlias, SAMLConstants.SAML2_SOAP11_BINDING_URI));
             }
         }
 
@@ -364,7 +381,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      * it is entered into the return collection, otherwise warning is logged. Values are returned in order of input
      * with all duplicities removed.
      *
-     * @param values input collection
+     * @param values
+     *            input collection
      * @return result with resolved aliases
      */
     @Override
@@ -404,7 +422,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
 
     @Override
     protected KeyDescriptor getKeyDescriptor(UsageType type, KeyInfo key) {
-        SAMLObjectBuilder<KeyDescriptor> builder = (SAMLObjectBuilder<KeyDescriptor>) Configuration.getBuilderFactory().getBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<KeyDescriptor> builder = (SAMLObjectBuilder<KeyDescriptor>) Configuration.getBuilderFactory()
+                .getBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME);
         KeyDescriptor descriptor = builder.buildObject();
         descriptor.setUse(type);
         descriptor.setKeyInfo(key);
@@ -417,7 +436,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
         // Resolve alases
         Collection<String> aliases = mapAliases(includedNameID);
         Collection<NameIDFormat> formats = new LinkedList<>();
-        SAMLObjectBuilder<NameIDFormat> builder = (SAMLObjectBuilder<NameIDFormat>) getBuilderFactory().getBuilder(NameIDFormat.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<NameIDFormat> builder = (SAMLObjectBuilder<NameIDFormat>) getBuilderFactory()
+                .getBuilder(NameIDFormat.DEFAULT_ELEMENT_NAME);
 
         // Populate nameIDs
         for (String nameIDValue : aliases) {
@@ -459,8 +479,10 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     @Override
-    protected AssertionConsumerService getAssertionConsumerService(String entityBaseURL, String entityAlias, boolean isDefault, int index, String filterURL, String binding) {
-        SAMLObjectBuilder<AssertionConsumerService> builder = (SAMLObjectBuilder<AssertionConsumerService>) getBuilderFactory().getBuilder(AssertionConsumerService.DEFAULT_ELEMENT_NAME);
+    protected AssertionConsumerService getAssertionConsumerService(String entityBaseURL, String entityAlias, boolean isDefault, int index,
+            String filterURL, String binding) {
+        SAMLObjectBuilder<AssertionConsumerService> builder = (SAMLObjectBuilder<AssertionConsumerService>) getBuilderFactory()
+                .getBuilder(AssertionConsumerService.DEFAULT_ELEMENT_NAME);
         AssertionConsumerService consumer = builder.buildObject();
         consumer.setLocation(getServerURL(entityBaseURL, entityAlias, filterURL));
         consumer.setBinding(binding);
@@ -472,16 +494,20 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     @Override
-    protected AssertionConsumerService getHoKAssertionConsumerService(String entityBaseURL, String entityAlias, boolean isDefault, int index, String filterURL, String binding) {
-        AssertionConsumerService hokAssertionConsumer = getAssertionConsumerService(entityBaseURL, entityAlias, isDefault, index, filterURL, org.springframework.security.saml.SAMLConstants.SAML2_HOK_WEBSSO_PROFILE_URI);
-        QName consumerName = new QName(org.springframework.security.saml.SAMLConstants.SAML2_HOK_WEBSSO_PROFILE_URI, AuthnRequest.PROTOCOL_BINDING_ATTRIB_NAME, "hoksso");
+    protected AssertionConsumerService getHoKAssertionConsumerService(String entityBaseURL, String entityAlias, boolean isDefault,
+            int index, String filterURL, String binding) {
+        AssertionConsumerService hokAssertionConsumer = getAssertionConsumerService(entityBaseURL, entityAlias, isDefault, index, filterURL,
+                org.springframework.security.saml.SAMLConstants.SAML2_HOK_WEBSSO_PROFILE_URI);
+        QName consumerName = new QName(org.springframework.security.saml.SAMLConstants.SAML2_HOK_WEBSSO_PROFILE_URI,
+                AuthnRequest.PROTOCOL_BINDING_ATTRIB_NAME, "hoksso");
         hokAssertionConsumer.getUnknownAttributes().put(consumerName, binding);
         return hokAssertionConsumer;
     }
 
     @Override
     protected DiscoveryResponse getDiscoveryService(String entityBaseURL, String entityAlias) {
-        SAMLObjectBuilder<DiscoveryResponse> builder = (SAMLObjectBuilder<DiscoveryResponse>) getBuilderFactory().getBuilder(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<DiscoveryResponse> builder = (SAMLObjectBuilder<DiscoveryResponse>) getBuilderFactory()
+                .getBuilder(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
         DiscoveryResponse discovery = builder.buildObject(DiscoveryResponse.DEFAULT_ELEMENT_NAME);
         discovery.setBinding(DiscoveryResponse.IDP_DISCO_NS);
         discovery.setLocation(getDiscoveryResponseURL(entityBaseURL, entityAlias));
@@ -490,7 +516,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
 
     @Override
     protected SingleLogoutService getSingleLogoutService(String entityBaseURL, String entityAlias, String binding) {
-        SAMLObjectBuilder<SingleLogoutService> builder = (SAMLObjectBuilder<SingleLogoutService>) getBuilderFactory().getBuilder(SingleLogoutService.DEFAULT_ELEMENT_NAME);
+        SAMLObjectBuilder<SingleLogoutService> builder = (SAMLObjectBuilder<SingleLogoutService>) getBuilderFactory()
+                .getBuilder(SingleLogoutService.DEFAULT_ELEMENT_NAME);
         SingleLogoutService logoutService = builder.buildObject();
         logoutService.setLocation(getServerURL(entityBaseURL, entityAlias, getSAMLLogoutFilterPath()));
         logoutService.setBinding(binding);
@@ -500,8 +527,10 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     /**
      * Creates URL at which the local server is capable of accepting incoming SAML messages.
      *
-     * @param entityBaseURL entity ID
-     * @param processingURL local context at which processing filter is waiting
+     * @param entityBaseURL
+     *            entity ID
+     * @param processingURL
+     *            local context at which processing filter is waiting
      * @return URL of local server
      */
     private String getServerURL(String entityBaseURL, String entityAlias, String processingURL) {
@@ -513,9 +542,12 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     /**
      * Creates URL at which the local server is capable of accepting incoming SAML messages.
      *
-     * @param entityBaseURL entity ID
-     * @param processingURL local context at which processing filter is waiting
-     * @param parameters    key - value pairs to be included as query part of the generated url, can be null
+     * @param entityBaseURL
+     *            entity ID
+     * @param processingURL
+     *            local context at which processing filter is waiting
+     * @param parameters
+     *            key - value pairs to be included as query part of the generated url, can be null
      * @return URL of local server
      */
     private String getServerURL(String entityBaseURL, String entityAlias, String processingURL, Map<String, String> parameters) {
@@ -620,12 +652,15 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     /**
-     * Signs the given SAML message if it a {@link org.opensaml.common.SignableSAMLObject} and this encoder has signing credentials.
+     * Signs the given SAML message if it a {@link org.opensaml.common.SignableSAMLObject} and this encoder has signing
+     * credentials.
      *
-     * @param signableObject    object to sign
-     * @param signingCredential credential to sign with
+     * @param signableObject
+     *            object to sign
+     * @param signingCredential
+     *            credential to sign with
      * @throws org.opensaml.ws.message.encoder.MessageEncodingException
-     *          thrown if there is a problem marshalling or signing the outbound message
+     *             thrown if there is a problem marshalling or signing the outbound message
      */
     @SuppressWarnings("unchecked")
     protected void signSAMLObject(SAMLObject signableObject, Credential signingCredential) throws MessageEncodingException {
@@ -829,10 +864,12 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     /**
-     * When true discovery profile extension metadata pointing to the default SAMLEntryPoint will be generated and stored
+     * When true discovery profile extension metadata pointing to the default SAMLEntryPoint will be generated and
+     * stored
      * in the generated metadata document.
      *
-     * @param includeDiscoveryExtension flag indicating whether IDP discovery should be enabled
+     * @param includeDiscoveryExtension
+     *            flag indicating whether IDP discovery should be enabled
      */
     @Override
     public void setIncludeDiscoveryExtension(boolean includeDiscoveryExtension) {
@@ -843,7 +880,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      * When true system will also automatically generate discoveryRequest and discoveryResponse addresses or
      * use values provided as customDiscoveryUrl and customDiscoveryResponseUrl and store them to the extended metadata.
      *
-     * @param includeDiscovery true when user should be redirected to discovery service during SSO initialization
+     * @param includeDiscovery
+     *            true when user should be redirected to discovery service during SSO initialization
      */
     public void setIncludeDiscovery(boolean includeDiscovery) {
         this.includeDiscovery = includeDiscovery;
@@ -868,7 +906,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     /**
      * Generated assertion consumer service with the index equaling set value will be marked as default.
      *
-     * @param assertionConsumerIndex assertion consumer index of service to mark as default
+     * @param assertionConsumerIndex
+     *            assertion consumer index of service to mark as default
      */
     @Override
     public void setAssertionConsumerIndex(int assertionConsumerIndex) {
@@ -879,7 +918,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      * Custom value of IDP Discovery request URL to be included in the extended metadata. Only used when
      * includeDiscovery is set to true.
      *
-     * @param customDiscoveryURL custom discovery request URL
+     * @param customDiscoveryURL
+     *            custom discovery request URL
      */
     public void setCustomDiscoveryURL(String customDiscoveryURL) {
         this.customDiscoveryURL = customDiscoveryURL;
@@ -893,7 +933,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      * Custom value of IDP Discovery response URL to be included in the SP metadata as extension and in extended
      * metadata. Only used when includeDiscovery is set to true.
      *
-     * @param customDiscoveryResponseURL custom discovery response URL
+     * @param customDiscoveryResponseURL
+     *            custom discovery response URL
      */
     public void setCustomDiscoveryResponseURL(String customDiscoveryResponseURL) {
         this.customDiscoveryResponseURL = customDiscoveryResponseURL;
@@ -904,14 +945,17 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     /**
-     * Provides set discovery request url or generates a default when none was provided. Primarily value set on extenedMetadata property
-     *  idpDiscoveryURL is used, when empty local property customDiscoveryURL is used, when empty URL is automatically generated.
+     * Provides set discovery request url or generates a default when none was provided. Primarily value set on
+     * extenedMetadata property
+     * idpDiscoveryURL is used, when empty local property customDiscoveryURL is used, when empty URL is automatically
+     * generated.
      *
      * @return URL to use for IDP discovery request
      */
     @Override
     protected String getDiscoveryURL(String entityBaseURL, String entityAlias) {
-        if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryURL() != null && extendedMetadata.getIdpDiscoveryURL().length() > 0) {
+        if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryURL() != null
+                && extendedMetadata.getIdpDiscoveryURL().length() > 0) {
             return extendedMetadata.getIdpDiscoveryURL();
         } else if (customDiscoveryURL != null && customDiscoveryURL.length() > 0) {
             return customDiscoveryURL;
@@ -921,14 +965,17 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
     }
 
     /**
-     * Provides set discovery response url or generates a default when none was provided. Primarily value set on extenedMetadata property
-     *  idpDiscoveryResponseURL is used, when empty local property customDiscoveryResponseURL is used, when empty URL is automatically generated.
+     * Provides set discovery response url or generates a default when none was provided. Primarily value set on
+     * extenedMetadata property
+     * idpDiscoveryResponseURL is used, when empty local property customDiscoveryResponseURL is used, when empty URL is
+     * automatically generated.
      *
      * @return URL to use for IDP discovery response
      */
     @Override
     protected String getDiscoveryResponseURL(String entityBaseURL, String entityAlias) {
-        if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryResponseURL() != null && extendedMetadata.getIdpDiscoveryResponseURL().length() > 0) {
+        if (extendedMetadata != null && extendedMetadata.getIdpDiscoveryResponseURL() != null
+                && extendedMetadata.getIdpDiscoveryResponseURL().length() > 0) {
             return extendedMetadata.getIdpDiscoveryResponseURL();
         } else if (customDiscoveryResponseURL != null && customDiscoveryResponseURL.length() > 0) {
             return customDiscoveryResponseURL;
@@ -948,7 +995,8 @@ public class MetadataGenerator extends org.springframework.security.saml.metadat
      * Default value for generation of extended metadata. Value is cloned upon each request to generate
      * new ExtendedMetadata object.
      *
-     * @param extendedMetadata default extended metadata or null
+     * @param extendedMetadata
+     *            default extended metadata or null
      */
     @Override
     public void setExtendedMetadata(ExtendedMetadata extendedMetadata) {

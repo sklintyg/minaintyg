@@ -77,7 +77,8 @@ public class MonitoringServiceImpl implements MonitoringService {
     public boolean pingIntygstjanst() {
         try {
             PingForConfigurationType parameters = new PingForConfigurationType();
-            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(intygstjanstLogicalAddress,
+            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(
+                    intygstjanstLogicalAddress,
                     parameters);
             return pingResponse != null;
         } catch (Exception e) {

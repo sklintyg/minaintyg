@@ -106,7 +106,8 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()),
+        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type,
+                new Personnummer(citizenService.getCitizen().getUsername()),
                 id);
         if (utlatande.isPresent()) {
             try {
@@ -168,7 +169,8 @@ public class ModuleApiController {
     @Path("/{type}/{id}/pdf/arbetsgivarutskrift")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/pdf")
-    public final Response getCertificatePdfEmployerCopy(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id,
+    public final Response getCertificatePdfEmployerCopy(@PathParam(value = "type") final String type,
+            @PathParam(value = "id") final String id,
             @FormParam("selectedOptionalFields") List<String> selectedOptionalFields) {
         LOG.debug("getCertificatePdfEmployerCopy: id {}, selectedOptionalFields {}", id, selectedOptionalFields);
         return getPdfInternal(type, id, selectedOptionalFields, true);
@@ -176,18 +178,21 @@ public class ModuleApiController {
     }
 
     private Response getPdfInternal(String type, String id, List<String> optionalFields, boolean isEmployerCopy) {
-        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type, new Personnummer(citizenService.getCitizen().getUsername()), id);
+        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type,
+                new Personnummer(citizenService.getCitizen().getUsername()), id);
         if (utlatande.isPresent()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);
-                List<Status> statusList = utlatande.get().getMetaData().getStatus().stream().filter(s -> CertificateState.SENT.equals(s.getType()))
+                List<Status> statusList = utlatande.get().getMetaData().getStatus().stream()
+                        .filter(s -> CertificateState.SENT.equals(s.getType()))
                         .collect(Collectors.toList());
 
                 PdfResponse pdf;
 
                 if (isEmployerCopy) {
-                    pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, optionalFields);
+                    pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG,
+                            optionalFields);
                 } else {
                     pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG);
                 }

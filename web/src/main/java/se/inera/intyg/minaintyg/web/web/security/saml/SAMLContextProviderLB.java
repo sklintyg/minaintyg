@@ -43,15 +43,20 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
 
     /**
      * Method wraps the original request and provides values specified for load-balancer. The following methods
-     * are overriden: getContextPath, getRequestURL, getRequestURI, getScheme, getServerName, getServerPort and isSecure.
+     * are overriden: getContextPath, getRequestURL, getRequestURI, getScheme, getServerName, getServerPort and
+     * isSecure.
      *
-     * @param request  original request
-     * @param response response object
-     * @param context  context to populate values to
+     * @param request
+     *            original request
+     * @param response
+     *            response object
+     * @param context
+     *            context to populate values to
      * @throws MetadataProviderException
      */
     @Override
-    protected void populateGenericContext(HttpServletRequest request, HttpServletResponse response, SAMLMessageContext context) throws MetadataProviderException {
+    protected void populateGenericContext(HttpServletRequest request, HttpServletResponse response, SAMLMessageContext context)
+            throws MetadataProviderException {
 
         super.populateGenericContext(new LPRequestWrapper(request), response, context);
 
@@ -120,7 +125,8 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     /**
      * Scheme of the LB server - either http or https.
      *
-     * @param scheme scheme
+     * @param scheme
+     *            scheme
      */
     public void setScheme(String scheme) {
         this.scheme = scheme;
@@ -129,7 +135,8 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     /**
      * Server name of the LB, e.g. www.myserver.com.
      *
-     * @param serverName server name
+     * @param serverName
+     *            server name
      */
     public void setServerName(String serverName) {
         this.serverName = serverName;
@@ -139,7 +146,8 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
      * Port of the server, in case value is <= 0 port will not be included in the requestURL and port
      * from the original request will be used for getServerPort calls.
      *
-     * @param serverPort server port
+     * @param serverPort
+     *            server port
      */
     public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
@@ -148,7 +156,8 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     /**
      * When true serverPort will be used in construction of LB requestURL.
      *
-     * @param includeServerPortInRequestURL true to include port
+     * @param includeServerPortInRequestURL
+     *            true to include port
      */
     public void setIncludeServerPortInRequestURL(boolean includeServerPortInRequestURL) {
         this.includeServerPortInRequestURL = includeServerPortInRequestURL;
@@ -157,7 +166,8 @@ public class SAMLContextProviderLB extends SAMLContextProviderImpl {
     /**
      * Context path of the LB, must be starting with slash, e.g. /saml-extension
      *
-     * @param contextPath context path
+     * @param contextPath
+     *            context path
      */
     public void setContextPath(String contextPath) {
         this.contextPath = contextPath;

@@ -63,7 +63,8 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
+        return CertificateMetaConverter
+                .toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
     }
 
     @GET
@@ -71,7 +72,8 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public List<CertificateMeta> listArchivedCertificates() {
         Citizen citizen = citizenService.getCitizen();
-        return CertificateMetaConverter.toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
+        return CertificateMetaConverter
+                .toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
     }
 
     @GET
@@ -88,7 +90,8 @@ public class ApiController {
     public CertificateMeta archive(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
+        return CertificateMetaConverter
+                .toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -97,7 +100,8 @@ public class ApiController {
     public CertificateMeta restore(@PathParam("id") final String id) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {}", id);
-        return CertificateMetaConverter.toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
+        return CertificateMetaConverter
+                .toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @POST

@@ -40,7 +40,8 @@ public class UtlatandeMetaDataConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UtlatandeMetaDataConverter.class);
 
-    private static final Comparator<? super Intyg> DESCENDING_DATE = Comparator.comparing(Intyg::getSigneringstidpunkt, Comparator.reverseOrder());
+    private static final Comparator<? super Intyg> DESCENDING_DATE = Comparator.comparing(Intyg::getSigneringstidpunkt,
+            Comparator.reverseOrder());
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;

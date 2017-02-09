@@ -30,7 +30,9 @@ import org.springframework.beans.factory.annotation.Value;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
 /**
- * AOP Advice that optionally overrides the WS call that {@link org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate} executes against MVK. The result
+ * AOP Advice that optionally overrides the WS call that
+ * {@link org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate}
+ * executes against MVK. The result
  * is overridden if you try to use a civic registration number as token.
  *
  * @author marced
@@ -49,6 +51,7 @@ public class MvkValidationServiceAdvice {
     }
 
     // CHECKSTYLE:OFF IllegalThrowsCheck
+    // CHECKSTYLE:OFF LineLength
     @Around("execution(public org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate(..))")
     public Object overrideMVKAuth(ProceedingJoinPoint joinPoint) throws Throwable {
         AuthenticationRequest req = (AuthenticationRequest) joinPoint.getArgs()[0];
@@ -56,7 +59,8 @@ public class MvkValidationServiceAdvice {
         String guid = req.getAuthenticationToken();
         if (guid != null && guid.matches(fakeMatcherRegExp)) {
             LOG.debug("'Fake' mvk token parameter detected - Mocking validation against MVK as {}...", guid);
-            guid = Personnummer.createValidatedPersonnummerWithDash(req.getAuthenticationToken()).map(Personnummer::getPersonnummer).orElse(req.getAuthenticationToken());
+            guid = Personnummer.createValidatedPersonnummerWithDash(req.getAuthenticationToken()).map(Personnummer::getPersonnummer)
+                    .orElse(req.getAuthenticationToken());
             return AuthenticationResultImpl.newPatient(guid);
         } else {
             LOG.debug("'Real' mvk token parameter detected - validating against MVK with token {}...", guid);
@@ -64,4 +68,5 @@ public class MvkValidationServiceAdvice {
         }
     }
     // CHECKSTYLE:ON IllegalThrowsCheck
+    // CHECKSTYLE:ON LineLength
 }

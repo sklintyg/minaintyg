@@ -161,7 +161,8 @@ public class CertificateServiceImpl implements CertificateService {
         case OK:
             return utlatandeMetaDataConverter.convert(response.getIntygsLista().getIntyg(), arkiverade);
         default:
-            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash() + " from Intygstjänsten. WS call result is "
+            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash()
+                    + " from Intygstjänsten. WS call result is "
                     + response.getResult());
             throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
                     response.getResult().getErrorId() != null ? response.getResult().getErrorId().name() : "");
@@ -223,7 +224,8 @@ public class CertificateServiceImpl implements CertificateService {
         boolean arkiverade = !StatusKod.DELETE.equals(status);
         // first assert the certificate belongs to the user
         UtlatandeMetaData utlatande = getCertificates(civicRegistrationNumber, arkiverade).stream()
-                .filter(c -> certificateId.equals(c.getId())).findAny().orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
+                .filter(c -> certificateId.equals(c.getId())).findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
         SetCertificateStatusType parameters = new SetCertificateStatusType();
         parameters.setIntygsId(toIntygsId(certificateId));
         parameters.setPart(toPart(PartKod.INVANA));
