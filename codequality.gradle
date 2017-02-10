@@ -59,12 +59,12 @@ subprojects {
                 destinationFile = file("$buildDir/jacoco/test.exec")
             }
         }
-
-        apply plugin: 'com.github.hierynomus.license'
     }
 
     // License ==============================================================
 
+    apply plugin: 'com.github.hierynomus.license'
+    
     license {
         ext.project_name = "sklintyg"
         ext.project_url = "https://github.com/sklintyg"
