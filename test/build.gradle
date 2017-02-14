@@ -1,5 +1,3 @@
-description = 'Mina intyg (Protactor Tests)'
-
 apply plugin: 'com.moowork.grunt'
 
 grunt {
