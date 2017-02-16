@@ -166,7 +166,7 @@ module.exports = function(grunt) {
         jshint: {
             minaintyg: {
                 options: {
-                    jshintrc: 'build/build-tools/jshint/.jshintrc',
+                    jshintrc: 'build/build-tools/jshint/jshintrc',
                     reporterOutput: '',
                     force: false,
                     ignores: ['**/*.min.js', '**/vendor/**']

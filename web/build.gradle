@@ -31,7 +31,7 @@ task jsTests(type: NodeTask, dependsOn: npmInstall) {
 
 test.dependsOn(jsTests)
 
-task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
+task jsInclude(type: NodeTask, dependsOn: npmInstall) {
     inputs.dir("$projectDir/src/main/resources")
     inputs.dir("$projectDir/src/main/webapp")
     inputs.files(fileTree(projectDir).include('*.js'))
@@ -45,7 +45,15 @@ task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
 
 war.dependsOn(jsInclude)
 
-task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall]) {
+task unzipBuildTools(type: Copy) {
+    into "$buildDir/build-tools/"
+    from {
+        def intygJar = project.rootProject.buildscript.configurations.classpath.find { it.name.contains("gradle-intyg") }
+        zipTree(intygJar)
+    }
+}
+
+task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
     outputs.upToDateWhen { false }
 
     script = file('node_modules/grunt-cli/bin/grunt')
@@ -84,29 +92,21 @@ gretty {
 
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
-    jvmArgs = [
-        "-Dcatalina.base=${buildDir}/catalina.base",
-        "-Dspring.profiles.active=dev",
-        "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
-        "-Djetty.port=8088",
-        "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
-        "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
-        "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-        "-Dminaintyg.useMinifiedJavaScript=${minified}"
-        ]
+    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
+               "-Dspring.profiles.active=dev",
+               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
+               "-Djetty.port=8088",
+               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
+               "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
+               "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
+               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
 }
 
 war.dependsOn createVersionPropertyFile
 
-configurations {
-    buildtools
-}
-
 dependencies {
-    buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
-
     compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:${intygInsuranceprocessSchemasVersion}"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
