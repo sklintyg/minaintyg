@@ -47,13 +47,11 @@ public final class CertificateMetaConverter {
         result.setComplementaryInfo(meta.getComplemantaryInfo());
 
         boolean cancelled = false;
-        if (meta.getStatuses() != null) {
-            for (Status statusType : meta.getStatuses()) {
-                result.getStatuses().add(statusType);
+        for (Status statusType : meta.getStatuses()) {
+            result.getStatuses().add(statusType);
 
-                if (statusType.getType().equals(CertificateState.CANCELLED)) {
-                    cancelled = true;
-                }
+            if (statusType.getType().equals(CertificateState.CANCELLED)) {
+                cancelled = true;
             }
         }
         result.setCancelled(cancelled);

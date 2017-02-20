@@ -43,11 +43,14 @@ public class ClearSecurityContextFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-
-        LOG.debug("Clearing security context");
-        handler.logout((HttpServletRequest) request, (HttpServletResponse) response, null);
-        filterChain.doFilter(request, response);
-
+        if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
+            LOG.debug("Clearing security context");
+            handler.logout((HttpServletRequest) request, (HttpServletResponse) response, null);
+            filterChain.doFilter(request, response);
+        } else {
+            throw new RuntimeException("Unexpected classes. request.class: " + request.getClass()
+                    + ", response.class: " + response.getClass());
+        }
     }
 
     public void setHandler(LogoutHandler handler) {
