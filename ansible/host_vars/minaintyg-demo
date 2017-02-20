@@ -1,2 +1,5 @@
 # Configuration repository
 environment_name: "demo"
+
+# Remove this override when migrating to the new demo-servers
+app_resources_folder: "{{ inera_root }}/minaintyg-resources"
