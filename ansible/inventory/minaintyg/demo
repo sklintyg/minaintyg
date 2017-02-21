@@ -1,2 +1,3 @@
 [tomcat]
-minaintyg-demo ansible_ssh_host=10.250.35.50 ansible_ssh_user=miwebapp1 ansible_ssh_private_key_file=~/.ssh/inera_rsa
+minaintyg-demo1 ansible_ssh_host=ine-dib-app01.sth.basefarm.net ansible_ssh_user=ine-intyg-build ansible_ssh_private_key_file=~/.ssh/ine-build_rsa
+minaintyg-demo2 ansible_ssh_host=ine-dib-app01.sth.basefarm.net ansible_ssh_user=ine-intyg-build ansible_ssh_private_key_file=~/.ssh/ine-build_rsa
