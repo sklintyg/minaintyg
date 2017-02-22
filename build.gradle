@@ -31,10 +31,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.15'
-        classpath 'org.akhikhl.gretty:gretty:+'
-        classpath 'com.moowork.gradle:gradle-node-plugin:0.+'
-        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.+'
+        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.+'
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.1.1'
+        classpath 'org.akhikhl.gretty:gretty:1.4.1'
     }
 }
 
@@ -59,17 +58,6 @@ allprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    checkstyle {
-        configProperties = ['package_name': 'minaintyg']
-    }
-
-    sonarqube {
-        properties {
-            property "sonar.projectName", "Mina intyg"
-            property "sonar.projectKey", "mina-intyg"
-        }
-    }
-    
     task createVersionPropertyFile(type: VersionPropertyFileTask)
 
     uploadArchives.repositories.mavenDeployer {
