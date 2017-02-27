@@ -148,7 +148,7 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
@@ -160,7 +160,7 @@ public class CertificateServiceImplTest {
         assertEquals(part, res.get().getMetaData().getStatus().get(0).getTarget());
         assertEquals(document, res.get().getInternalModel());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
     }
 
     @Test
@@ -175,14 +175,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertTrue(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
     }
 
     @Test
@@ -197,14 +197,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertFalse(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
     }
 
     @Test
@@ -218,14 +218,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertFalse(res.isPresent()); // don't return revoked certificate
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString());
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
     }
 
     @Test(expected = ExternalWebServiceCallFailedException.class)
@@ -237,7 +237,7 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         ModuleApi api = mock(ModuleApi.class);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString())).thenThrow(new ModuleException("error"));
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenThrow(new ModuleException("error"));
 
         service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
     }

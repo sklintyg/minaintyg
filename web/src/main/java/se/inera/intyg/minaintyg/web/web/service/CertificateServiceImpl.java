@@ -130,7 +130,7 @@ public class CertificateServiceImpl implements CertificateService {
     public Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
         CertificateResponse certificate;
         try {
-            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress);
+            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, PartKod.INVANA);
         } catch (ModuleException | ModuleNotFoundException e) {
             LOGGER.error("Failed to fetch utlatande '{}' from Intygstjänsten: {}", certificateId, e.getMessage());
             throw new ExternalWebServiceCallFailedException(e.getMessage(), null);
