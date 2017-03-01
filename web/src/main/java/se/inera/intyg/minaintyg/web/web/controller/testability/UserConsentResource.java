@@ -21,7 +21,7 @@ package se.inera.intyg.minaintyg.web.web.controller.testability;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 
 import javax.ws.rs.GET;

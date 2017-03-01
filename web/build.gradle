@@ -110,6 +110,8 @@ dependencies {
     compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:${intygInsuranceprocessSchemasVersion}"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
+    compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
+    
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
     compile "se.inera.intyg.common:luse:${commonVersion}"

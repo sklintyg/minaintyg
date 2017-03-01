@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
 
 public class SendCertificateToRecipientTypeConverterTest {

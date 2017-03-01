@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 @Service
 public class MonitoringLogServiceImpl implements MonitoringLogService {

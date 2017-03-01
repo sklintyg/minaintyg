@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 public interface MonitoringLogService {
 

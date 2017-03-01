@@ -18,17 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.web.util;
 
-import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
-
-import java.time.LocalDateTime;
-
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType.SkickatAv;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
+
+import java.time.LocalDateTime;
+
+import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
 
 public final class SendCertificateToRecipientTypeConverter {
 
@@ -36,7 +36,7 @@ public final class SendCertificateToRecipientTypeConverter {
     }
 
     public static SendCertificateToRecipientType convert(String intygsId, Personnummer personnummer,
-            Personnummer skickatAvPersonId, String recipient) {
+                                                         Personnummer skickatAvPersonId, String recipient) {
         SendCertificateToRecipientType request = new SendCertificateToRecipientType();
         request.setSkickatTidpunkt(LocalDateTime.now());
         request.setIntygsId(buildIntygId(intygsId));
