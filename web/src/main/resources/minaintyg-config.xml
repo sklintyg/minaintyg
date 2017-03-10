@@ -28,7 +28,7 @@
 
   <context:annotation-config />
 
-  <beans profile="qa,prod">
+  <beans profile="mi-security-test,qa,prod">
     <!-- Config file must be present in qa and prod -->  
     <context:property-placeholder
       location="file:${credentials.file}, file:${minaintyg.config.file}"
@@ -50,7 +50,7 @@
       location="classpath:default.properties, classpath:version.properties"
       order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.service, se.inera.intyg.minaintyg.web.web.util, se.inera.intyg.common.support.integration.module" />
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.auth, se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.service, se.inera.intyg.minaintyg.web.web.util, se.inera.intyg.common.support.integration.module" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">

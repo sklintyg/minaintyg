@@ -23,10 +23,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.stereotype.Service;
 
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.web.service.MonitoringLogService;
+import se.inera.intyg.schemas.contract.Personnummer;
 
+@Service
 public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingSessionRegistryImpl.class);

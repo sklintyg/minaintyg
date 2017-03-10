@@ -18,21 +18,22 @@
  */
 package se.inera.intyg.minaintyg.web.web.security;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VerifyConsentInterceptorTest {
@@ -45,7 +46,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleNoConsentNoJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -61,7 +62,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 

@@ -28,7 +28,7 @@
 
     <!-- Enable auto-wiring -->
     <context:annotation-config/>
-    <context:component-scan base-package="org.springframework.security.saml, se.inera.intyg.minaintyg.web.web.security"/>
+    <context:component-scan base-package="org.springframework.security.saml, se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.auth"/>
 
     <bean id="samlFilter" class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map request-matcher="ant">

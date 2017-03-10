@@ -87,18 +87,31 @@ gretty {
     contextPath = '/'
     httpPort = 8088
     scanInterval = 0
+    debugSuspend = false
 
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
 
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
+    // Normal settings
+//    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
+//               "-Dspring.profiles.active=dev",
+//               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
+//               "-Djetty.port=8088",
+//               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
+//               "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
+//               "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
+//               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
+
+    // SAML test settings for local testing
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev",
+               "-Dspring.profiles.active=dev,mi-security-test",
+               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/demo",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
-               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
-               "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
-               "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
+               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/credentials.properties",
+               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/minaintyg.properties",
+               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/minaintyg-logback.xml",
                "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir

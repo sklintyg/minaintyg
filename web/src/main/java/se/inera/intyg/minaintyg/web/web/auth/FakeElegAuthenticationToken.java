@@ -16,21 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.minaintyg.web.web.security;
+package se.inera.intyg.minaintyg.web.web.auth;
+
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 /**
- * Enumeration of the different login methods / sources that can be used to access the application.
+ * Simple auth token for fake logins for e-leg.
+ *
+ * Created by eriklupander on 2015-06-16.
  */
-public enum LoginMethodEnum {
+public class FakeElegAuthenticationToken extends AbstractAuthenticationToken {
 
-    ELVA77, FK;
+    private static final long serialVersionUID = -2796850504529240890L;
 
-    public String value() {
-        return name();
+    private FakeElegCredentials fakeElegCredentials;
+
+    public FakeElegAuthenticationToken(FakeElegCredentials fakeElegCredentials) {
+        super(null);
+        this.fakeElegCredentials = fakeElegCredentials;
     }
 
-    public static LoginMethodEnum fromValue(String v) {
-        return valueOf(v);
+    @Override
+    public Object getCredentials() {
+        return fakeElegCredentials;
     }
 
+    @Override
+    public Object getPrincipal() {
+        return null;
+    }
 }

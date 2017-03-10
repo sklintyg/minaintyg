@@ -53,7 +53,7 @@
       <bean class="se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor">
         <property name="timeoutSeconds" value="5"/>
         <property name="redirectLocation" value="/web/start"/>
-        <property name="logoutHandler" ref="securityContextLogoutHandler" />
+        <property name="logoutHandler" ref="logoutHandler" />
       </bean>
     </mvc:interceptor>
   </mvc:interceptors>

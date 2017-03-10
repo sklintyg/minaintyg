@@ -18,15 +18,6 @@
  */
 package se.inera.intyg.minaintyg.web.web.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import javax.ws.rs.core.Response;
-
 import org.apache.cxf.jaxrs.model.OperationResourceInfo;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.MessageContentsList;
@@ -35,11 +26,19 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.web.controller.api.ApiController;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import javax.ws.rs.core.Response;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VerifyConsentJAXRSInvokerTest {
@@ -55,7 +54,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleNoConsentJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -66,7 +65,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleNoConsentMethodAllowedWithoutConsent() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
         Exchange exchange = mock(Exchange.class);
@@ -85,7 +84,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -114,7 +113,7 @@ public class VerifyConsentJAXRSInvokerTest {
     public void testInvokeConsentNotKnown() throws Exception {
         final String personId = "19121212-1212";
         final Personnummer pnr = new Personnummer(personId);
-        Citizen citizen = new CitizenImpl(personId, LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl(personId, LoginMethodEnum.ELVA77);
         when(service.getCitizen()).thenReturn(citizen);
         when(consentService.fetchConsent(pnr)).thenReturn(true);
 

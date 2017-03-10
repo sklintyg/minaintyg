@@ -28,14 +28,14 @@ public class CitizenImplTest {
 
     @Test
     public void testHasNoConsent() throws Exception {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
         Assert.assertFalse(citizen.hasConsent());
         Assert.assertFalse(citizen.consentIsKnown());
     }
 
     @Test
     public void testHasConsentSet() throws Exception {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
         citizen.setConsent(false);
         Assert.assertTrue(citizen.consentIsKnown());
         Assert.assertFalse(citizen.hasConsent());
@@ -45,22 +45,22 @@ public class CitizenImplTest {
 
     @Test
     public void testReturnsDefaultRole() {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
         Assert.assertTrue(citizen.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CITIZEN")));
     }
    
     @Test
     public void testGetUsername() {
         String user = "username";
-        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.MVK);
+        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.ELVA77);
         Assert.assertEquals(user, citizen.getUsername());
     }
     
     @Test
     public void testLoginMethod() {
         String user = "username";
-        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.MVK);
-        Assert.assertEquals(LoginMethodEnum.MVK, citizen.getLoginMethod());
+        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.ELVA77);
+        Assert.assertEquals(LoginMethodEnum.ELVA77, citizen.getLoginMethod());
     }
 
 }
