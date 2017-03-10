@@ -36,6 +36,7 @@ var notfoundPage = require('./notfound.page.js');
 var sendPage = require('./send.page.js');
 var viewPage = require('./view.page.js');
 var welcomePage = require('./welcome.page.js');
+var anpassaLisjpPage = require('./anpassa.lisjp.page.js');
 
 module.exports = {
     'aboutPage': aboutPage,
@@ -50,5 +51,6 @@ module.exports = {
     'notfoundPage': notfoundPage,
     'sendPage': sendPage,
     'viewPage': viewPage,
-    'welcomePage': welcomePage
+    'welcomePage': welcomePage,
+    'anpassaLisjpPage': anpassaLisjpPage
 };
