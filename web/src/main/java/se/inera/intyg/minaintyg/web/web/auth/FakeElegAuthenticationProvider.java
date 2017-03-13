@@ -38,7 +38,9 @@ import java.util.Collection;
 import static se.inera.intyg.minaintyg.web.web.auth.CgiElegAssertion.FAKE_AUTHENTICATION_ELEG_CONTEXT_REF;
 
 /**
- * 
+ * Fake authentication provider for E-leg.
+ *
+ * Only supports {@link FakeElegAuthenticationToken}, e.g. must be unusable for real authentications.
  */
 public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvider {
 
@@ -60,7 +62,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
     private Collection<? extends GrantedAuthority> buildGrantedAuthorities(Object details) {
 
         if (details instanceof CitizenImpl) {
-            return ((CitizenImpl)details).getAuthorities();
+            return ((CitizenImpl) details).getAuthorities();
         } else {
             return new ArrayList<>();
         }
@@ -88,10 +90,9 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
 
         NameID nameId = new NameIDBuilder().buildObject();
         nameId.setValue(token.getCredentials().toString());
-        return new SAMLCredential(nameId, assertion, "fake-idp", "webcert");
+        return new SAMLCredential(nameId, assertion, "fake-idp", "minaintyg");
     }
 
-    
     @Autowired
     public void setMinaIntygUserDetailsService(MinaIntygUserDetailsService minaIntygUserDetailsService) {
         this.minaIntygUserDetailsService = minaIntygUserDetailsService;

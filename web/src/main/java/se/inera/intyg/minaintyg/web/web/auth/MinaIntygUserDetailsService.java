@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
+
+import se.inera.intyg.common.support.common.util.HashUtility;
 import se.inera.intyg.minaintyg.web.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
 
@@ -25,11 +27,10 @@ public class MinaIntygUserDetailsService implements SAMLUserDetailsService {
         String personId = getAttribute(credential, CgiElegAssertion.PERSON_ID_ATTRIBUTE);
         String firstName = getAttribute(credential, CgiElegAssertion.FORNAMN_ATTRIBUTE);
         String lastName = getAttribute(credential, CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE);
-        LOG.info("Got " + personId + " with name: " + firstName + " " + lastName);
 
-        // CHECKSTYLE:OFF MagicNumber
+        LOG.info("Got " + HashUtility.hash(personId) + " with name: " + firstName + " " + lastName);
+
         return new CitizenImpl(personId, LoginMethodEnum.ELVA77);
-        // CHECKSTYLE:ON MagicNumber
     }
 
     private String getAttribute(SAMLCredential samlCredential, String attributeName) {

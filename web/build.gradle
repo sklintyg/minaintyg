@@ -106,12 +106,12 @@ gretty {
     // SAML test settings for local testing
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,mi-security-test",
-               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/demo",
+               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
-               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/credentials.properties",
-               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/minaintyg.properties",
-               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/demo/minaintyg-logback.xml",
+               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/credentials.properties",
+               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg.properties",
+               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg-logback.xml",
                "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
@@ -144,7 +144,6 @@ dependencies {
     compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
     compile "org.opensaml:xmltooling:${xmlToolingVersion}"
-    compile "org.callistasoftware.netcare.commons:mvk-integration:${mvkIntegrationVersion}"
     compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")
     }

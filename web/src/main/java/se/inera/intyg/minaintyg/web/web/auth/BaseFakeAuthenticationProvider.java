@@ -40,8 +40,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Provides some common functionality for Fake authentication providers.
- *
- * Created by eriklupander on 2015-06-16.
  */
 public abstract class BaseFakeAuthenticationProvider implements AuthenticationProvider {
     private static DocumentBuilder documentBuilder;

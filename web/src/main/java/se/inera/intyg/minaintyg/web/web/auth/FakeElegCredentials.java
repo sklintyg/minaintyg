@@ -21,9 +21,7 @@ package se.inera.intyg.minaintyg.web.web.auth;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Fake container for approx. CGI SAML ticket attributes.
- *
- * Created by eriklupander on 2015-06-16.
+ * Fake container for approx. 1177/CGI SAML ticket attributes.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FakeElegCredentials {

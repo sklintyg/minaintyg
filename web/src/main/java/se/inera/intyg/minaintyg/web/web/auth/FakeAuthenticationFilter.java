@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 
-
 /**
  * @author andreaskaltenbach
  */
@@ -51,15 +50,13 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
             request.setCharacterEncoding("UTF-8");
         }
         String parameter = request.getParameter("guid");
-        
+
         // we manually encode the json parameter
         String json = URLDecoder.decode(parameter, "UTF-8");
         return performFakeElegAuthentication(json);
-
     }
 
     private Authentication performFakeElegAuthentication(String personnummer) {
-
         FakeElegCredentials fakeElegCredentials = new FakeElegCredentials();
         fakeElegCredentials.setPersonId(personnummer);
         LOG.info("Detected fake credentials " + fakeElegCredentials);

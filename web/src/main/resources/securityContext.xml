@@ -35,7 +35,7 @@
   <security:http security="none" pattern="/bower_components/**"/>
   <security:http security="none" pattern="/vendor/**"/>
   <security:http security="none" pattern="/web/webjars/**"/>
-  <security:http security="none" pattern="/web/eleglogin" />
+ <!-- <security:http security="none" pattern="/web/eleglogin" />    -->
   <security:http security="none" pattern="/api/modules/map"/>
   <security:http security="none" pattern="/api/modules/active"/>
   <security:http security="none" pattern="/css/**"/>
@@ -148,8 +148,18 @@
   <!-- ======================================================================== -->
   <beans profile="mi-security-test">
 
+    <!-- Handle all POST-backs with SAML tickets from IDPs for /saml/SSO -->
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)" request-matcher="regex">
+      <security:csrf disabled="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
+      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
 
-    <!-- From MI -->
+    <!-- For fake-login (used to be MVK). /web/sso accepts a fake context etc. -->
     <security:http pattern="/web/sso**" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
@@ -162,16 +172,19 @@
       </security:headers>
     </security:http>
 
+    <!-- Legacy FK SAML entry point. This should be removed, replaced by /saml/* + alias
     <security:http pattern="/web/fksso/**" authentication-manager-ref="authenticationManager" entry-point-ref="samlEntryPoint">
      <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
-   <!--   <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>  -->
+    <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>   
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
       <security:headers>
         <security:frame-options />
       </security:headers>
       <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
     </security:http>
+  -->
 
+    <!-- Some Role-based rules for /api, /moduleapi -->
     <security:http pattern="/api/**" use-expressions="true" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
@@ -189,6 +202,7 @@
       </security:headers>
     </security:http>
 
+    <!-- Various logout-links. These need to be modified -->
     <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="samlEntryPoint">
       <security:headers>
         <security:frame-options />
@@ -204,7 +218,8 @@
         <security:frame-options />
       </security:headers>
     </security:http>
-    
+
+    <!-- This is the "catch-all" config. -->
     <security:http use-expressions="true" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
@@ -268,7 +283,8 @@
     </security:http>
     -->
 
-    <!-- /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO -->
+    <!-- CLEAN UP WEBCERT REMAINS HERE!!!
+    /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO -->
     <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)|(\/visa\/intyg\/.*)|(\/webcert\/web\/.*)" request-matcher="regex">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
@@ -330,7 +346,8 @@
       </security:filter-chain-map>
     </bean>
 
-    <!-- Decide which requests should be saved for redirection after successful login.
+    <!--  CAN THIS BE DELETED FOR MINA INTYG? YES WE CAN!!
+          Decide which requests should be saved for redirection after successful login.
          Triggers on: /web/* and deep-integration links /visa/* and /webcert/*
          We don't want to save /api and /moduleapi requests since this will make the browser display the data. -->
     <bean id="saveRequestMatcher" class="org.springframework.security.web.util.matcher.RegexRequestMatcher">
@@ -382,7 +399,7 @@
       <constructor-arg>
         <list>
 
-          <!-- START SERVICE PROVIDER BEAN FOR E-LEG -->
+          <!-- START SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
           <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
             <constructor-arg>
               <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
@@ -412,9 +429,9 @@
 
             <property name="metadataTrustCheck" value="true"/>
           </bean>
-          <!-- END SERVICE PROVIDER BEAN FOR E-LEG -->
+          <!-- END SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
 
-          <!-- START IDENTITY PROVIDER BEAN FOR E-LEG -->
+          <!-- START IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
           <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
             <constructor-arg>
               <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
@@ -432,7 +449,61 @@
 
             <property name="metadataTrustCheck" value="false"/>
           </bean>
-          <!-- END IDENTITY PROVIDER BEAN FOR E-LEG -->
+          <!-- END IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
+
+
+
+          <!-- START SERVICE PROVIDER BEAN FOR FK SAML -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/sp-fk.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="defaultAlias"/>
+                <property name="local" value="true"/>
+                <property name="securityProfile" value="metaiop"/>
+                <property name="sslSecurityProfile" value="metaiop"/>    <!-- pkix -->
+                <property name="signMetadata" value="true"/>
+
+                <!-- The signingKey and encryptionKey refers to the _aliases_ of the key in the keystore defined in the keyManager bean -->
+                <property name="signingKey" value="${fk.saml.keystore.alias}"/>
+                <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
+                <property name="requireArtifactResolveSigned" value="true"/>
+                <property name="requireLogoutRequestSigned" value="true"/>
+                <property name="requireLogoutResponseSigned" value="true"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="true"/>
+          </bean>
+          <!-- END SERVICE PROVIDER BEAN FOR FK SAML -->
+
+          <!-- START IDENTITY PROVIDER BEAN FOR FK SAML -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/idp-fk.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="defaultAlias"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="false"/>
+          </bean>
+          <!-- END IDENTITY PROVIDER BEAN FOR FK SAML -->
 
 
           <!-- START SERVICE PROVIDER BEAN FOR SITHS

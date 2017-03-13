@@ -27,25 +27,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SAML-assertion for CGI säkerhetstjänst used for e-leg/privatläkare.
+ * SAML-assertion for CGI säkerhetstjänst used for e-leg.
  *
  * @author eriklupander
  */
 public class CgiElegAssertion {
 
-    public static final String FAKE_AUTHENTICATION_ELEG_CONTEXT_REF = "urn:inera:minaintyg:eleg:fake";
+    static final String FAKE_AUTHENTICATION_ELEG_CONTEXT_REF = "urn:inera:minaintyg:eleg:fake";
 
-    public static final String URN_OASIS_NAMES_TC_SAML_2_0_AC_CLASSES_TLSCLIENT = "urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient";
-    public static final String URN_OASIS_NAMES_TC_SAML_2_0_AC_CLASSES_SOFTWARE_PKI = "urn:oasis:names:tc:SAML:2.0:ac:classes:SoftwarePKI";
+    static final String PERSON_ID_ATTRIBUTE = "Subject_SerialNumber";
+    static final String FORNAMN_ATTRIBUTE = "Subject_GivenName";
+    static final String MELLAN_OCH_EFTERNAMN_ATTRIBUTE = "Subject_Surname";
 
-    public static final String PERSON_ID_ATTRIBUTE = "Subject_SerialNumber";
-    public static final String FORNAMN_ATTRIBUTE = "Subject_GivenName";
-    public static final String MELLAN_OCH_EFTERNAMN_ATTRIBUTE = "Subject_Surname";
-
-    public static final String UTFARDARE_ORGANISATIONSNAMN_ATTRIBUTE = "Issuer_OrganizationName";
-    public static final String UTFARDARE_CA_NAMN_ATTRIBUTE = "Issuer_CommonName";
-    public static final String SECURITY_LEVEL_ATTRIBUTE = "SecurityLevel"; // 3 == e-leg på fil, 4 == e-leg på kort.
-    public static final String LOGIN_METHOD = "LoginMethod"; // ccp1,2,8,10,11,12,13
+    private static final String UTFARDARE_ORGANISATIONSNAMN_ATTRIBUTE = "Issuer_OrganizationName";
+    private static final String UTFARDARE_CA_NAMN_ATTRIBUTE = "Issuer_CommonName";
+    private static final String SECURITY_LEVEL_ATTRIBUTE = "SecurityLevel"; // 3 == e-leg på fil, 4 == e-leg på kort.
+    private static final String LOGIN_METHOD = "LoginMethod"; // ccp1,2,8,10,11,12,13
 
     private String personId;
     private String fornamn;
