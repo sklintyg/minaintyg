@@ -104,11 +104,11 @@
                     </div>
                     <div class="row hidden-sm hidden-md hidden-lg">
                       <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-                        <button type="button" id="archiveCertificateBtn-{{cert.id}}-xs" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"
+                        <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"
                                 uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
                           <span message key="button.archive"></span>
                         </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}-xs" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
                           <span message key="button.show"></span>
                         </button>
                       </div>

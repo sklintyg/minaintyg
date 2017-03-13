@@ -38,6 +38,9 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
+    backToList: function() {
+        element(by.className('backlink')).click();
+    },
     certificateId: function() {
         return element(by.id('certId')).getAttribute('title');
     },
@@ -69,7 +72,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return element(by.id('certificate-noevents')).all(by.tagName('div')).each(function(item) {
             item.getText().then(function (text) {
                 found = found || text.includes(status);
-            })
+            });
         }).then(function() { return found; });
     },
     getTextContent: function(fieldId) {
@@ -82,7 +85,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         });
     },
     fieldNotShown: function(fieldId) {
-        return this.getTextContent(fieldId).then(function (value) { return value === 'notshown' });
+        return this.getTextContent(fieldId).then(function (value) { return value === 'notshown'; });
     }
 });
 

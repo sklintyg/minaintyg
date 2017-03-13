@@ -12,39 +12,47 @@ var templateJsonObj = require('./generic-metadata.json');
 module.exports = {
 
     getFk7263: function(userId) {
-        return this.getIntyg('fk7263', userId);
+        return this.getIntyg('fk7263', 'fk7263', userId);
     },
 
     getTsBas: function(userId) {
-        return this.getIntyg('ts-bas', userId);
+        return this.getIntyg('ts-bas','ts-bas', userId);
     },
 
     getTsDiabetes: function(userId) {
-        return this.getIntyg('ts-diabetes', userId);
+        return this.getIntyg('ts-diabetes', 'ts-diabetes', userId);
     },
 
     getLuse: function(userId) {
-        return this.getIntyg('luse', userId);
+        return this.getIntyg('luse', 'luse', userId);
     },
 
     getLisjp: function(userId) {
-        return this.getIntyg('lisjp', userId);
+        return this.getIntyg('lisjp', 'lisjp', userId);
     },
 
     getLuaena: function(userId) {
-        return this.getIntyg('luae_na', userId);
+        return this.getIntyg('luae_na', 'luae_na', userId);
     },
 
     getLuaefs: function(userId) {
-        return this.getIntyg('luae_fs', userId);
+        return this.getIntyg('luae_fs', 'luae_fs', userId);
     },
 
-    getIntyg: function(type, userId) {
+    getLisjpSmittskydd: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-smittskydd', userId);
+    },
+
+    getLisjpSmittskyddOvrigt: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-smittskydd-ovrigt', userId);
+    },
+
+    getIntyg: function(type, file, userId) {
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
 
-        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + type + '-content.xml');
+        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
 
         //read xml doc into string variable
         var xmlString = fs.readFileSync(fullPath, 'utf8')
