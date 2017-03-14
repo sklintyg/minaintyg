@@ -13,7 +13,7 @@ stage('deploy') {
     node {
         withEnv(["BASE_VERSION=${baseVersion}"]) {
             util.run({
-                    def itVersion = util.latestVersion("minaintyg-web", baseVersion)
+                    def itVersion = util.latestVersion("minaintyg-web", BASE_VERSION)
 
                     ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.105", deploy_from_repo: "true"],
                                     installation: 'ansible-yum',
