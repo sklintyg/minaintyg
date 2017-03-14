@@ -15,9 +15,7 @@ stage('deploy') {
                 def itVersion = util.latestVersion("minaintyg-web", baseVersion)
 
                 ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.105", deploy_from_repo: "true"],
-                                installation: 'ansible-yum',
-                                inventory: 'ansible/inventory/minaintyg/demo',
-                                playbook: 'ansible/deploy.yml')
+                                installation: 'ansible-yum', inventory: 'ansible/inventory/minaintyg/demo', playbook: 'ansible/deploy.yml')
 
                 util.waitForServer('https://demo.minaintyg.intygstjanster.se/version.jsp')
             })
