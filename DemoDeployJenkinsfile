@@ -11,17 +11,15 @@ stage('checkout') {
 
 stage('deploy') {
     node {
-        withEnv(["BASE_VERSION=${baseVersion}"]) {
-            util.run({
-                    def itVersion = util.latestVersion("minaintyg-web", BASE_VERSION)
+        util.run({
+                def itVersion = util.latestVersion("minaintyg-web", baseVersion)
 
-                    ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.105", deploy_from_repo: "true"],
-                                    installation: 'ansible-yum',
-                                    inventory: 'ansible/inventory/minaintyg/demo',
-                                    playbook: 'ansible/deploy.yml')
+                ansiblePlaybook(extraVars: [version: "${itVersion}", ansible_ssh_host: "164.40.180.105", deploy_from_repo: "true"],
+                                installation: 'ansible-yum',
+                                inventory: 'ansible/inventory/minaintyg/demo',
+                                playbook: 'ansible/deploy.yml')
 
-                    util.waitForServer('https://demo.minaintyg.intygstjanster.se/version.jsp')
-                })
-        }
+                util.waitForServer('https://demo.minaintyg.intygstjanster.se/version.jsp')
+            })
     }
 }
