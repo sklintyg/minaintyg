@@ -31,6 +31,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.providers.ExpiringUsernameAuthenticationToken;
 import org.springframework.security.saml.SAMLCredential;
 import se.inera.intyg.minaintyg.web.web.security.CitizenImpl;
+import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +52,12 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
 
         SAMLCredential credential = createSamlCredential(authentication);
         Object details = minaIntygUserDetailsService.loadUserBySAML(credential);
+
+        // Set origin (FK or ELVA77) from fake credentials.
+        if (authentication instanceof FakeElegAuthenticationToken && details instanceof CitizenImpl) {
+            FakeElegCredentials credz = (FakeElegCredentials) authentication.getCredentials();
+            details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()));
+        }
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,
                 buildGrantedAuthorities(details));

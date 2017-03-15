@@ -101,7 +101,11 @@ if ("prod".equals(profile)) {
             <h1>Testinloggningar</h1>
 
             <p>
-              <a id="loggaInSomTolvan" href="/web/sso?guid=19121212-1212">19121212-1212</a>
+              <a id="loggaInSomTolvan" href="/web/sso?guid=19121212-1212">19121212-1212 (1177)</a>
+            </p>
+
+            <p>
+              <a id="loggaInSomTolvanFK" href="/web/sso?guid=19121212-1212&origin=FK">19121212-1212 (FK)</a>
             </p>
 
             <p>

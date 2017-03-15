@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" Destination="http://192.168.0.180:8088/saml/SSO/alias/eleg" ID="_04419756df59b634cc722de578502d5e1e" InResponseTo="a2a8a1907155e0153ahha873ic895ag" IssueInstant="2017-03-13T14:35:16.376Z" Version="2.0">
+  <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+    https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/metadata/0/0
+  </saml2:Issuer>
+  <saml2p:Status>
+    <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+  </saml2p:Status>
+  <saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" ID="_04929d44dd145ab86cb47111017c073b63" IssueInstant="2017-03-13T14:35:16.376Z" Version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <saml2:Issuer>https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/metadata/0/0</saml2:Issuer>
+    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ds:SignedInfo>
+        <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+        <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+        <ds:Reference URI="#_04929d44dd145ab86cb47111017c073b63">
+          <ds:Transforms>
+            <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+            <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+              <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="xs"/>
+            </ds:Transform>
+          </ds:Transforms>
+          <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+          <ds:DigestValue>Dya7qD3EPEkdb4sfeQb5z36FIYc=</ds:DigestValue>
+        </ds:Reference>
+      </ds:SignedInfo>
+      <ds:SignatureValue>
+        S0Vn1eWkdbaewd71Rk6ILARZc9SLwfPI7P4OdkPt+H4EqRHEDQ3KgRyWz3nleKWZ7qPUN5rYbsjKkuTOSCEMewAVkPOi4EFf8U/i39sANUHQPv+XO5DIGOfzzj59nHuDqy7IyoE0Ytir69QQQgNuOrkE3/0e0qd0GmQMdwHRNpLy1SuZXPblmJxzH9iPSryR1hg9cDvZT1gKQQ/YT3XK+eS1YEXAPu/AX2MMSxmyMx9VL4EAs9bOTqsbSXcF7/b3UuELxPoxSa6o5YSJ+oz+eFghQ7D1H0+U27h5bjkYt47f0S0S3rRyXGXExdz+dvMVsrkyaYFBw8L4/j7UUS4bYA==
+      </ds:SignatureValue>
+      <ds:KeyInfo>
+        <ds:X509Data>
+          <ds:X509Certificate>MIIE1zCCA7+gAwIBAgISESFuhLPvw43EYoLwuCaHpSHsMA0GCSqGSIb3DQEBBQUAMC4xETAPBgNV
+            BAoTCEFscGhhU1NMMRkwFwYDVQQDExBBbHBoYVNTTCBDQSAtIEcyMB4XDTEzMDYxMzA4MDgzNloX
+            DTE4MDYxMzA4MDgzNlowTDEhMB8GA1UECxMYRG9tYWluIENvbnRyb2wgVmFsaWRhdGVkMScwJQYD
+            VQQDFB4qLnRlc3RpZHAuZnVua3Rpb25zdGphbnN0ZXIuc2UwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+            DwAwggEKAoIBAQDfkLxHfEIFI6Sr+JW9cQkXRDG714aRIXCN0+NdrPi2BPAmK34gVAxiED1pavsD
+            A7vQRmgd4RTrTCGFnL87wKZ9ZpBwkJd2j5VpT1Augn80hPPlSL097q3iCpxZSYekxpdoo120Dsdz
+            oFdiwhsK8AUfKn/KGJFaYxYL05+iUgVY2FYrRRuy3IpYcmz7UUpmYV37tWeYbnwJ+O53uPDOCK5e
+            nQ8vufakAPGFbOSvRCAuJ0doCQMFBjWbNZnAcpSLCL45YOxnNPLho70y22ID97mDCyRVy3vQd7dC
+            2gp391XfgRtTYHhHy1O1Qun8N5tEgRGlYeogQI+hzutT9/+72i2zAgMBAAGjggHPMIIByzAOBgNV
+            HQ8BAf8EBAMCBaAwSQYDVR0gBEIwQDA+BgZngQwBAgEwNDAyBggrBgEFBQcCARYmaHR0cHM6Ly93
+            d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wRwYDVR0RBEAwPoIeKi50ZXN0aWRwLmZ1bmt0
+            aW9uc3RqYW5zdGVyLnNlghx0ZXN0aWRwLmZ1bmt0aW9uc3RqYW5zdGVyLnNlMAkGA1UdEwQCMAAw
+            HQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMDoGA1UdHwQzMDEwL6AtoCuGKWh0dHA6Ly9j
+            cmwyLmFscGhhc3NsLmNvbS9ncy9nc2FscGhhZzIuY3JsMH8GCCsGAQUFBwEBBHMwcTA8BggrBgEF
+            BQcwAoYwaHR0cDovL3NlY3VyZTIuYWxwaGFzc2wuY29tL2NhY2VydC9nc2FscGhhZzIuY3J0MDEG
+            CCsGAQUFBzABhiVodHRwOi8vb2NzcDIuZ2xvYmFsc2lnbi5jb20vZ3NhbHBoYWcyMB0GA1UdDgQW
+            BBQreTDWAazuWiWVhrSs73MOyLXnBDAfBgNVHSMEGDAWgBQU6hlV8A4NMsYfdDO3jmYaTBIxHjAN
+            BgkqhkiG9w0BAQUFAAOCAQEAuETgY/eviBQ7JD+Dm3RZzmQNbGGlpUjkBexmSdmBoy/yV4ZzN830
+            aiqe0/wq9LKt/t/cglDZpjgGqJ3m+0TycoyrgI6DPBnBvPZTUWnjp/ZV/kBWQL1hNCc+LxoxAXbC
+            OnUQN8ecSKNVxyCqGLRI4zw9It8tCPPHRL0P++HSaIM/UItGWWBBp1qGHAnSnGHwFceCQYLwMVVE
+            vdsQ0aJFSniw9x/FymRVdpWJXV3vHuaXdcYj8z2NFSAOCfFWWjfIueKUXdQlVQbrQNMhxZixiiZy
+            UYkwvRU6geuoOfDY0iz1nZRWhfnfhgorLOVK3FTsUHqiroYcTOxvC9PFYQgZiA==
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </ds:Signature>
+    <saml2:Subject>
+      <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient">_04b422698f4126e76fee32fc82f6d99198
+      </saml2:NameID>
+      <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+        <saml2:SubjectConfirmationData Address="217.10.114.193" InResponseTo="a2a8a1907155e0153ahha873ic895ag" NotOnOrAfter="2017-03-13T14:40:16.376Z" Recipient="http://192.168.0.180:8088/saml/SSO/alias/eleg"/>
+      </saml2:SubjectConfirmation>
+    </saml2:Subject>
+    <saml2:Conditions NotBefore="2017-03-13T14:30:16.376Z" NotOnOrAfter="2017-03-13T14:40:16.376Z">
+      <saml2:AudienceRestriction>
+        <saml2:Audience>https://demo.minaintyg.intygstjanster.se/eleg</saml2:Audience>
+      </saml2:AudienceRestriction>
+    </saml2:Conditions>
+    <saml2:AuthnStatement AuthnInstant="2017-03-13T14:35:16.376Z" SessionIndex="_04d567d86f3d5a5f34566e6e5f8ed152a6">
+      <saml2:SubjectLocality Address="217.10.114.193"/>
+      <saml2:AuthnContext>
+        <saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:SoftwarePKI</saml2:AuthnContextClassRef>
+      </saml2:AuthnContext>
+    </saml2:AuthnStatement>
+    <saml2:AttributeStatement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <saml2:Attribute Name="Subject_SerialNumber">
+        <saml2:AttributeValue xsi:type="xs:string">198408209990</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Subject_GivenName">
+        <saml2:AttributeValue xsi:type="xs:string">Fredrik Freddy</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Subject_Surname">
+        <saml2:AttributeValue xsi:type="xs:string">Fransman</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Subject_CommonName">
+        <saml2:AttributeValue xsi:type="xs:string">Fredrik Fransman</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Subject_CountryName">
+        <saml2:AttributeValue xsi:type="xs:string">SE</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Gender">
+        <saml2:AttributeValue xsi:type="xs:string">M</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="dateOfBirth">
+        <saml2:AttributeValue xsi:type="xs:string">19840820</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="age">
+        <saml2:AttributeValue xsi:type="xs:string">33</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Issuer_CommonName">
+        <saml2:AttributeValue xsi:type="xs:string">Test Svenska Handelsbanken AB (publ</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Issuer_OrganizationName">
+        <saml2:AttributeValue xsi:type="xs:string">Svenska Handelsbanken AB (publ)</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="SecurityLevelDescription">
+        <saml2:AttributeValue xsi:type="xs:string">SmartcardPKI</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="SecurityLevel">
+        <saml2:AttributeValue xsi:type="xs:string">4</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="ValidationOcspResponse">
+        <saml2:AttributeValue xsi:type="xs:string">
+          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
+        </saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="sn_id">
+        <saml2:AttributeValue xsi:type="xs:string">8408209990</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="sn_type">
+        <saml2:AttributeValue xsi:type="xs:string">19</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="CertificateSerialNumber">
+        <saml2:AttributeValue xsi:type="xs:string">7d4b5548ba1065f6</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="Subject_OrganisationName">
+        <saml2:AttributeValue xsi:type="xs:string">Svenska Handelsbanken AB (publ)</saml2:AttributeValue>
+      </saml2:Attribute>
+      <saml2:Attribute Name="LoginMethod">
+        <saml2:AttributeValue xsi:type="xs:string">ccp10</saml2:AttributeValue>
+      </saml2:Attribute>
+    </saml2:AttributeStatement>
+  </saml2:Assertion>
+</saml2p:Response>

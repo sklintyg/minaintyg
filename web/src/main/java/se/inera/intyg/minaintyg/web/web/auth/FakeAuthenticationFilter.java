@@ -49,16 +49,19 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
         if (request.getCharacterEncoding() == null) {
             request.setCharacterEncoding("UTF-8");
         }
-        String parameter = request.getParameter("guid");
 
-        // we manually encode the json parameter
-        String json = URLDecoder.decode(parameter, "UTF-8");
-        return performFakeElegAuthentication(json);
+        String guid = request.getParameter("guid");
+        String origin = request.getParameter("origin") != null && request.getParameter("origin").trim().length() > 0 ? request.getParameter("origin") : "ELVA77";
+
+        // we manually encode the json guid
+        String json = URLDecoder.decode(guid, "UTF-8");
+        return performFakeElegAuthentication(json, origin);
     }
 
-    private Authentication performFakeElegAuthentication(String personnummer) {
+    private Authentication performFakeElegAuthentication(String personnummer, String origin) {
         FakeElegCredentials fakeElegCredentials = new FakeElegCredentials();
         fakeElegCredentials.setPersonId(personnummer);
+        fakeElegCredentials.setOrigin(origin);
         LOG.info("Detected fake credentials " + fakeElegCredentials);
         return getAuthenticationManager().authenticate(new FakeElegAuthenticationToken(fakeElegCredentials));
     }

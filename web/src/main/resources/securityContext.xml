@@ -35,6 +35,7 @@
   <security:http security="none" pattern="/bower_components/**"/>
   <security:http security="none" pattern="/vendor/**"/>
   <security:http security="none" pattern="/web/webjars/**"/>
+  <security:http security="none" pattern="/web/logout" />
  <!-- <security:http security="none" pattern="/web/eleglogin" />    -->
   <security:http security="none" pattern="/api/modules/map"/>
   <security:http security="none" pattern="/api/modules/active"/>
@@ -162,6 +163,7 @@
     <!-- For fake-login (used to be MVK). /web/sso accepts a fake context etc. -->
     <security:http pattern="/web/sso**" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter" />
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>

@@ -35,6 +35,9 @@ public class FakeElegCredentials {
     // Subject_Surname
     private String lastName;
 
+    // Origin (fake stuff)  FK or ELVA77
+    private String origin = "ELVA77";
+
     public String getPersonId() {
         return personId;
     }
@@ -57,5 +60,23 @@ public class FakeElegCredentials {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public String toString() {
+        return "FakeElegCredentials{" +
+                "personId='" + personId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", origin='" + origin + '\'' +
+                '}';
     }
 }
