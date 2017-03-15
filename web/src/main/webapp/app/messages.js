@@ -163,7 +163,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'listtable.headers.type': 'Typ av intyg',
         'listtable.headers.certinfo': 'Intygsinformation',
         'listtable.headers.issuedby': 'Enhet',
-        'listtable.headers.latestevent': 'Senaste händelse',
+        'listtable.headers.latestevent': 'Senaste händelser',
 
         'fkdialog.head': 'Du har gett ditt samtycke',
         'fkdialog.text': 'Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.',
@@ -186,11 +186,13 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
-        'certificates.status.cancelled': 'Intyget är makulerat {0}',
+        'certificates.status.cancelled': 'Intyget är makulerat',
         'certificates.status.cancelled.title': 'Makulerat',
-        'certificates.status.received': 'Mottagits av {0} {1}',
-        'certificates.status.sent': 'Skickat till {0} {1}',
+        'certificates.status.received': 'Mottagits av {0}',
+        'certificates.status.sent': 'Skickat till {0}',
         'certificates.status.noevents': 'Inga händelser',
+        'certificates.status.unknowndatetime': 'Okänd tid',
+        'certificates.status.statusesshown': '(Visar {0} av {1})',
 
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',

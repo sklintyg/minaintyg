@@ -32,7 +32,8 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
             scope: {
                 certId: '@',
                 statuses: '=',
-                hideHeader: '@'
+                hideHeader: '@',
+                maxStatuses: '@'
             },
             templateUrl: '/app/views/list/latestEvents.directive.html',
             link: function(scope, element, attrs) {
@@ -43,34 +44,37 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                 // Default hideHeader attribute to false if not explicitly set to true
                 scope.hideHeader = attrs.hideHeader === 'true';
 
-                // Compile event status message text
-                scope.getEventText = function(status) {
-                    var msgProperty = '';
-                    var params = [];
-
-                    var type = status.type;
-                    var receiver = messageService.getProperty('certificates.target.' + status.target.toLowerCase());
-                    var timestamp = status.timestamp;
-
-                    if (timestamp) {
-                        timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm');
-                    }
-
-                    if (type.toUpperCase() === 'CANCELLED') {
-                        msgProperty = 'certificates.status.cancelled';
-                        params.push(timestamp);
-                    }
-                    else if (type.toUpperCase() === 'RECEIVED') {
-                        msgProperty = 'certificates.status.received';
-                        params.push.apply(params, [receiver, timestamp]);
-                    }
-                    else if (type.toUpperCase() === 'SENT') {
-                        msgProperty = 'certificates.status.sent';
-                        params.push.apply(params, [receiver, timestamp]);
-                    }
-
-                    return _getEventText(msgProperty, params);
+                // Compile event status message info (date and text)
+                scope.getEventInfo = function(status) {
+                    var timestamp = status.timestamp ?
+                        moment(status.timestamp).format('YYYY-MM-DD HH:mm') :
+                        messageService.getProperty("certificates.status.unknowndatetime");
+                    var params = [messageService.getProperty('certificates.target.' + status.target.toLowerCase())];
+                    var msgProperty = 'certificates.status.' + status.type.toLowerCase(); //cancelled, received [sic] or sent
+                    var text = _getEventText(msgProperty, params);
+                    return {timestamp: timestamp, text: text};
                 };
+
+                scope.statusesShown = function(statuses, statusViewCollapsed) {
+                    var nrOfStats = statuses ? statuses.length : 0;
+                    var shown = Math.min(nrOfStats, scope.maxStatusRows(statusViewCollapsed));
+                    return messageService.getProperty('certificates.status.statusesshown', [shown, nrOfStats]);
+                };
+
+                scope.maxStatusRows = function(isCollapsedArchive) {
+                    return scope.maxStatuses ? scope.maxStatuses : (isCollapsedArchive ? 2 : 4);
+                };
+
+                scope.expandClicked = function() {
+                    if (scope.statuses.length > 4) {
+                        if (!scope.showModal) {
+                            scope.showModal = {};
+                        }
+                        scope.showModal.value = !scope.showModal.value;
+                    } else {
+                        scope.isCollapsedArchive = !scope.isCollapsedArchive;
+                    }
+                }
 
             }
 
@@ -78,3 +82,5 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
 
     }]
 );
+
+

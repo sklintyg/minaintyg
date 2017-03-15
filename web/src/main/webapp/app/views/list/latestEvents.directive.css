@@ -1,0 +1,20 @@
+.latest-events .lastevent-header {
+  font-weight: bold
+}
+
+.latest-events .event-row {
+  padding: 0.9em;
+  display: inline-block;
+}
+
+.latest-events .event-row-tight {
+  display: inline-block;
+}
+
+.latest-events .event-text {
+  padding-left: 1em;
+}
+
+.latest-events .stripe-dark {
+  background-color: #ededed;
+}

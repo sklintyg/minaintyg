@@ -90,7 +90,7 @@
 
                     <div class="row">
                       <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 header-row">
-                        <latest-events cert-id="{{cert.id}}" statuses="cert.statuses"></latest-events>
+                        <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" max-statuses="2"></latest-events>
                       </div>
                       <div class="hidden-xs col-sm-6 col-md-4 col-lg-4 text-right">
                          <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"

@@ -1,0 +1,22 @@
+<div modal-toggle show-modal="showModal" class="modal fade bs-example-modal-sm latest-events-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <span class="tag latest-events-modal-header" ng-if="!hideHeader">
+        <span message key="listtable.headers.latestEvent"></span>
+      </span>
+      <span id="statusesshown2" message params="[statuses.length, statuses.length]" key="certificates.status.statusesshown"></span>
+      <button type="button" class="close" data-dismiss="modal">
+        <span class="close-cross" aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+
+      <div class="modal-event-rows">
+        <div class="modal-event-row" ng-repeat="status in statuses track by $index" ng-init="info = getEventInfo({status: status})" ng-attr-id="event-{{certId}}-{{$index}}" ng-class-odd="'stripe-dark'">
+          <span ng-attr-id="event-timestamp-{{certId}}-{{$index}}2">{{info.timestamp}}</span>
+          <span class="modal-event-text" ng-attr-id="event-text-{{certId}}-{{$index}}2">{{info.text}}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

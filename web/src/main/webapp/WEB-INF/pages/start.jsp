@@ -42,6 +42,8 @@
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate-responsive.css"/>?<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="<c:url value="/app/views/list/latestEventsModal.directive.css"/>">
+<link rel="stylesheet" href="<c:url value="/app/views/list/latestEvents.directive.css"/>">
 
 <script type="text/javascript">
   /**

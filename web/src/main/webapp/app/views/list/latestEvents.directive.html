@@ -1,19 +1,22 @@
-<div>
-  <h3 class="tag" ng-if="!hideHeader">
-    <span message key="listtable.headers.latestEvent"></span>
-  </h3>
+<div class="latest-events">
+  <div class="tag" ng-if="!hideHeader" >
+    <span class="lastevent-header" message key="listtable.headers.latestEvent"></span>
+    <span ng-if="!maxStatuses" id="statusesshown">{{statusesShown(statuses, isCollapsedArchive)}}</span>
+  </div>
   <div ng-if="statuses.length > 0" id="certificate-latestevents">
-    <div ng-attr-id="event-{{certId}}-0">{{getEventText(statuses[0])}}</div>
-    <div uib-collapse="isCollapsedArchive">
-      <div ng-repeat="status in statuses" ng-switch on="$index > 0">
-        <div ng-switch-when="true">
-          <div ng-attr-id="event-{{certId}}-{{$index}}">{{getEventText(status)}}</div>
-        </div>
-      </div>
+    <div ng-repeat="status in statuses track by $index" ng-if="$index < maxStatusRows(isCollapsedArchive)"
+         ng-init="info = getEventInfo(status)" ng-attr-id="event-{{certId}}-{{$index}}"
+         ng-class="{'event-row-tight': maxStatuses, 'event-row': !maxStatuses, 'stripe-dark': !maxStatuses && $even}" >
+      <span ng-attr-id="event-timestamp-{{certId}}-{{$index}}">{{info.timestamp}}</span>
+      <span class="event-text" ng-attr-id="event-text-{{certId}}-{{$index}}">{{info.text}}</span>
     </div>
-    <button id="showEventsBtn-{{certId}}" type="button" class="btn-link btn-link-link" href="#status" ng-show="statuses.length > 1" ng-click="isCollapsedArchive = !isCollapsedArchive">
+    <button ng-if="!maxStatuses" id="showEventsBtn-{{certId}}" type="button" class="btn-link btn-link-link"
+            href="#status" ng-show="statuses.length > 1"
+            ng-click="expandClicked()">
       <span message key="label.status.{{ !isCollapsedArchive }}"></span>
     </button>
+
+    <events-modal show-modal="showModal" statuses="statuses" hide-header="hideHeader" get-event-info="getEventInfo(status)"/>
   </div>
   <div ng-if="statuses.length == 0" id="certificate-noevents">
     <div ng-attr-id="event-{{certId}}">{{messageService.getProperty('certificates.status.noevents')}}</div>
