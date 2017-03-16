@@ -140,7 +140,7 @@ describe('Verifiera Lisjp med smittbärarpenning', function() {
             expect(viewPage.getTextContent('grad_HALFTEN')).toEqual('50 procent');
         });
 
-        it('Verifiera att inte Övriga upplysningar syns', function() {
+        it('Verifiera att Övriga upplysningar inte syns', function() {
             expect(element(by.id('kommentar')).isPresent()).toBe(false);
         });
 
@@ -186,10 +186,11 @@ describe('Verifiera Lisjp med smittbärarpenning', function() {
             expect(viewPage.getTextContent('grad_TRE_FJARDEDEL')).toEqual('75 procent');
         });
 
-        it('Verifiera Övriga upplysningar', function() {
+        it('Verifiera att Övriga upplysningar syns', function() {
             expect(viewPage.getDynamicLabelText('KAT_8.RBK')).toBe(texts['KAT_8.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
 
+            expect(element(by.id('kommentar')).isPresent()).toBe(true);
             expect(viewPage.getTextContent('kommentar')).toEqual('Upplysningar ska skrivas här');
         });
 
