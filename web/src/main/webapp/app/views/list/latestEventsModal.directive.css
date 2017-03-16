@@ -33,11 +33,11 @@
     padding-right: 2em;
 }
 
-.stripe-dark {
+.latest-events-modal .stripe-dark {
     background-color: #ededed;
 }
 
-.modal-dialog {
+.latest-events-modal .modal-dialog {
     position: relative;
     display: table;
     overflow-y: scroll;
