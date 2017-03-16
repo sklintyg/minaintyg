@@ -17,7 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive("eventsModal",function(){
+angular.module('minaintyg').directive('eventsModal',function(){
+    'use strict';
+
     return {
         scope: {
             'showModal': '=',
@@ -26,5 +28,5 @@ angular.module('minaintyg').directive("eventsModal",function(){
             'getEventInfo': '&'
         },
         templateUrl: '/app/views/list/latestEventsModal.directive.html'
-    }
+    };
 });

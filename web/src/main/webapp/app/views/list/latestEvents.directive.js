@@ -48,7 +48,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                 scope.getEventInfo = function(status) {
                     var timestamp = status.timestamp ?
                         moment(status.timestamp).format('YYYY-MM-DD HH:mm') :
-                        messageService.getProperty("certificates.status.unknowndatetime");
+                        messageService.getProperty('certificates.status.unknowndatetime');
                     var params = [messageService.getProperty('certificates.target.' + status.target.toLowerCase())];
                     var msgProperty = 'certificates.status.' + status.type.toLowerCase(); //cancelled, received [sic] or sent
                     var text = _getEventText(msgProperty, params);
@@ -74,7 +74,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                     } else {
                         scope.isCollapsedArchive = !scope.isCollapsedArchive;
                     }
-                }
+                };
 
             }
 

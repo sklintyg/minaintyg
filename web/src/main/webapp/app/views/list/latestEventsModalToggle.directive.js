@@ -17,7 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive("modalToggle",function(){
+angular.module('minaintyg').directive('modalToggle',function(){
+    'use strict';
+
     return {
         scope: {
             'showModal': '='
@@ -32,5 +34,5 @@ angular.module('minaintyg').directive("modalToggle",function(){
                 }
             });
         }
-    }
+    };
 });
