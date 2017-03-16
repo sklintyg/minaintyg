@@ -407,3 +407,69 @@ div.infobox h4 {
 .cookie-banner-directive .container-fluid {
 	padding: 0;
 }
+
+
+
+
+
+#mi-compact-certificate-header {
+	/*background: #7897b3;*/
+	color: #fff;
+	padding:10px;
+	margin:40px 0;
+}
+#mi-compact-certificate-header .cert-type-title {
+	font-size: 16px;
+	font-weight: bold;
+}
+#mi-compact-certificate-header .glyphicon {
+	margin-right:20px;
+	line-height: inherit;
+}
+
+#mi-compact-certificate-header .certificate-issued {
+	text-align: right;
+}
+
+#mi-select-recipients .selection-list a.unsent span {
+	text-decoration: underline;
+}
+#mi-select-recipients .selection-list a.unsent:hover {
+	font-weight: bold;
+}
+
+#mi-select-recipients .selection-box {
+	padding: 10px;
+	background:#fff;
+	border: 1px solid #eee;
+}
+
+#mi-select-recipients .selection-box ul {
+	min-height:100px;
+}
+
+.mi-sending-dialog-window-class {
+	margin-top:100px;
+}
+
+
+.mi-sending-dialog-window-class .modal-body {
+	padding: 20px 60px 20px 60px;
+	min-height:150px;
+
+}
+.mi-sending-dialog-window-class .modal-body .result-rows {
+	font-weight:bold;
+}
+
+
+.mi-sending-dialog-window-class .modal-body .glyphicon-warning-sign {
+	color: #a00;
+}
+
+.mi-sending-dialog-window-class .modal-body .glyphicon-ok {
+	color: #0a0;
+}
+
+
+

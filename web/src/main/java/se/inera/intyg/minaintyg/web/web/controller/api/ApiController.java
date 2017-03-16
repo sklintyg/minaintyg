@@ -22,7 +22,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -32,14 +38,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
+import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
-import se.inera.intyg.minaintyg.web.web.service.*;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.web.util.CertificateMetaConverter;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 public class ApiController {
 
@@ -102,6 +111,25 @@ public class ApiController {
         LOG.debug("Requesting 'restore' for certificate {}", id);
         return CertificateMetaConverter
                 .toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
+    }
+
+    /**
+     * Send the certificate identified by the given id to the given recipients.
+     *
+     * @param id
+     *            - the globally unique id of a certificate.
+     * @param recipients
+     *            - List of recipient ids that should receive the certificate.
+     * @return The response of the send operation
+     */
+    @PUT
+    @Path("/{id}/send")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(JSON_UTF8)
+    public List<SendToRecipientResult> send(@PathParam("id") final String id, final List<String> recipients) {
+        Citizen citizen = citizenService.getCitizen();
+        LOG.debug("Requesting 'send' for certificate {} to recipients {}", id, recipients);
+        return certificateService.sendCertificate(new Personnummer(citizen.getUsername()), id, recipients);
     }
 
     @POST

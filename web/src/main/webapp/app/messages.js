@@ -106,6 +106,26 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'archived.restoremodal.header': 'Återställ intyg',
         'archived.restoremodal.text': 'När du väljer att återställa intyget kommer det att flyttas till <i>Inkorgen</i>.<br><br>Du kan när som helst arkivera intyget igen.',
 
+        /* SEND */
+        'sendpage.label.select-recipients.heading': 'Välj en eller flera mottagare som du vill skicka intyget till.',
+        'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till',
+        'sendpage.label.some-selected': 'Du har valt att skicka intyget till följande mottagare:',
+        'sendpage.btn.send': 'Skicka',
+        'sendpage.btn.clear': 'Rensa val',
+        'sendpage.btn.remove-one': 'Ta bort',
+        'sendpage.btn.select': 'Välj',
+
+        'sendpage.label.loading': 'Laddar...',
+        'sendpage.link.goback': 'Tillbaka',
+        'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
+        'sendpage.dialog.label.received-by': 'Mottaget av',
+        'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
+        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av all mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta Ineras nationella kundservice.',
+        'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
+        'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
+
+
+
         /* ABOUT */
 
         'about.header': 'Om Mina intyg',
@@ -210,6 +230,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen.</p><p><ul><li><a href="/web/start/#/arkiverade">Gå till Arkiverade intyg och försök igen</a></li><li>Kontakta <a href="/web/start/#/hjalp">support</a></li></ul></p>',
         'error.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Vänta några minuter och försök igen.</p><p><ul><li><a href="/web/start/#/omminaintyg">Gå till Om mina sidor och försök igen</a></li><li><a href="/web/start/#/hjalp">Kontakta support</a></li></ul></p>',
         'error.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Vänta några minuter och försök att ge ditt samtycke igen.</p><p><ul><li><a href="/web/visa-ge-samtycke#/start">Försök igen</a></li><li>Om felet kvarstår kan du kontakta support på telefon 0771-25 10 10</li><li>Om du inte kan nå ditt intyg i Mina intyg så kan du kontakta din läkare för att få en kopia av intyget.</li></ul></p>',
+        'error.generic': '<p>Tekniskt fel</p>Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>',
+        'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.',
 
         'error.nocerts': 'Du har inga intyg i inkorgen.',
         'error.noarchivedcerts': 'Du har inga arkiverade intyg.'

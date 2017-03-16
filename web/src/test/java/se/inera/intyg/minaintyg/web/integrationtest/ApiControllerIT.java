@@ -25,6 +25,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +40,7 @@ import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
 import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
@@ -244,6 +247,23 @@ public class ApiControllerIT extends BaseIntegrationTest {
                 .then()
                 .header("cache-control", equalTo("no-cache, no-store, max-age=0, must-revalidate"))
                 .header("x-frame-options", equalTo("DENY"));
+    }
+
+    @Test
+    public void testSend() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+
+        final String id = UUID.randomUUID().toString();
+        IntegrationTestUtil.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+
+        List<String> recipientList = Arrays.asList(PartKod.FKASSA.getValue(), "FAKE");
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("id", id).and().body(recipientList)
+                .expect().statusCode(HttpServletResponse.SC_OK)
+                .when().put("api/certificates/{id}/send")
+                .then()
+                .body(matchesJsonSchemaInClasspath("jsonschema/send-response-schema.json"));
     }
 
 }

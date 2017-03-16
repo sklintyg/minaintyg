@@ -42,6 +42,12 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             controller: 'minaintyg.ListArchivedCtrl',
             data:{title: 'Arkiverade intyg',keepInboxTabActive: false}
         }).
+        state('send', {
+            url : '/send/:type/:certificateId/:defaultRecipient',
+            templateUrl: '/app/views/send/send.page.html',
+            controller: 'minaintyg.SendCtrl',
+            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true}
+        }).
         state('omminaintyg', {
             url :'/omminaintyg',
             templateUrl: '/app/views/about/about-mina-intyg.html',

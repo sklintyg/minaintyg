@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Optional;
 
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.schemas.contract.Personnummer;
-import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 public interface CertificateService {
 
@@ -41,7 +41,8 @@ public interface CertificateService {
     /**
      * Request to send a specific certificate to a specific recipient.
      */
-    ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId);
+    List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
+            List<String> recipientIds);
 
     /**
      * Retrieves a list of possible recipients for the given certificate type.
