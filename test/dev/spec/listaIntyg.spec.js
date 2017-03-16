@@ -112,7 +112,7 @@ describe('Lista intyg', function() {
             expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
         });
 
-        it('Verifiera makulerat intygs händelser', function() {
+        xit('Verifiera makulerat intygs händelser', function() {
             expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Intyget är makulerat 2013-03-18 00:00')).toBeTruthy();
             inboxPage.showEvents(tsDiabetesIntygsId);
             expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Skickat till Transportstyrelsen 2013-03-17 15:32')).toBeTruthy();
