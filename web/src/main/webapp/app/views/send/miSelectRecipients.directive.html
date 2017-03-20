@@ -9,11 +9,11 @@
       <ul class="nav selection-list">
         <li ng-repeat="r in recipients | orderBy: 'name'">
 
-          <a ng-attr-id="{{'selectable-recipient-' + r.name}}" ng-if="!r.sent" class="unsent"
+          <a ng-attr-id="{{'selectable-recipient-' + r.id}}" ng-if="!r.sent" class="unsent"
              ng-click="select($event, r)" href="#">{{r.name}}<span class="pull-right" message
                                                                    key="sendpage.btn.select"></span></a>
 
-          <a ng-attr-id="{{'unselectable-recipient-' + r.name}}" ng-if="r.sent" class="sent">{{r.name}}<span
+          <a ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">{{r.name}}<span
               class="pull-right">Skickat {{r.sentTimestamp | date:'longDate'}}</span></a>
         </li>
       </ul>
@@ -28,7 +28,7 @@
 
       <ul class="nav selection-list">
         <li ng-repeat="sr in selected">
-          <a ng-attr-id="{{'removable-recipient-' + sr.name}}" ng-click="deselect($event, $index)" class="unsent" href="#">{{sr.name}}
+          <a ng-attr-id="{{'removable-recipient-' + sr.id}}" ng-click="deselect($event, $index)" class="unsent" href="#">{{sr.name}}
             <span class="pull-right"><span message key="sendpage.btn.remove-one"></span>
           </a>
         </li>

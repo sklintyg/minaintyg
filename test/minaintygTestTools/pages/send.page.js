@@ -27,39 +27,51 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
     init: function init() {
         init._super.call(this);
-        this.at = element(by.id('send-certificate-flow-root-recipients'));
-        this.confirmRecipientSelectionBtn = element(by.id('confirmRecipientSelectionBtn'));
-        this.confirmAndSendBtn = element(by.id('confirmAndSendBtn'));
+        this.at = element(by.id('send-certificate-page'));
+        this.confirmRecipientSelectionBtn = element(by.id('send-to-recipients-btn'));
+        this.sendingDialog = element(by.id('mi-sending-dialog'));
+
+        this.backToIntygBtn = element(by.id('back-to-intyg-btn'));
     },
     isAt: function isAt() {
         return isAt._super.call(this);
     },
-    chooseRecipient: function(recipientId) {
-        element(by.id('recipient-' + recipientId)).click();
+
+    selectRecipient: function(recipientId) {
+        element(by.id('selectable-recipient-' + recipientId)).click();
     },
-    alreadySentWarningMessageIsShown: function() {
-        return element(by.id('already-sent-to-recipient-message')).isDisplayed().then(function (isVisible) { return isVisible; });
+
+    recipientIsSelectable: function(recipientId) {
+        return element(by.id('selectable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
     },
+
+    deselectRecipient: function(recipientId) {
+        element(by.id('removable-recipient-' + recipientId)).click();
+    },
+
+    recipientIsDeselectable: function(recipientId) {
+        return element(by.id('removable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
+    },
+
+    recipientIsUnselectable: function(recipientId) {
+        return element(by.id('unselectable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
+    },
+
+    verifySendResultForRecipient: function(recipientId, success) {
+        return element(by.id((success ? 'success':'fail') + '-result-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
+    },
+
+
     confirmRecipientSelection: function() {
         this.confirmRecipientSelectionBtn.click();
     },
-    confirmAndSend: function() {
-        this.confirmAndSendBtn.click();
+
+    sendDialogIsShown: function() {
+        return this.sendingDialog.isDisplayed();
     },
-    chooseRecipientViewIsShown: function() {
-        return this.confirmRecipientSelectionBtn.isDisplayed();
-    },
-    confirmAndSendViewIsShown: function() {
-        return this.confirmAndSendBtn.isDisplayed();
-    },
-    selectedRecipient: function() {
-        return element(by.id('selected-recipient-message')).getText();
-    },
-    resultViewIsShown: function() {
-        return element(by.id('send-certificate-flow-result')).isDisplayed();
-    },
+
     backToViewCertificate: function() {
-        element(by.id('backToViewCertificateBtn')).click();
+        this.backToIntygBtn.click();
     }
 });
 

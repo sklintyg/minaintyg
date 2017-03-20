@@ -33,31 +33,30 @@ var welcomePage = miTestTools.pages.welcomePage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Skicka intyg', function() {
+describe('Skicka intyg', function() {
 
-	var personId = '19010101-0101';
-	var fk7263IntygsId = null;
-	var fk7263IntygsId2 = null;
+	var personId = '191212121212';
+	var intygsId1 = null;
+	var intygsId2 = null;
 
     beforeAll(function() {
         restHelper.setConsent(personId);
 
-        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
-        fk7263IntygsId = fk7263Intyg.id;
-        restHelper.createIntyg(fk7263Intyg);
-
-        var fk7263Intyg2 = genericTestDataBuilder.getFk7263(personId);
-        fk7263IntygsId2 = fk7263Intyg2.id;
-        restHelper.createIntyg(fk7263Intyg2);
+        var intyg1 = genericTestDataBuilder.getLisjpSmittskydd();
+        var intyg2 = genericTestDataBuilder.getLisjpSmittskydd();
+        intygsId1 = intyg1.id;
+        intygsId2 = intyg2.id;
+        restHelper.createIntyg(intyg1);
+        restHelper.createIntyg(intyg2);
     });
 
     afterAll(function() {
         restHelper.deleteConsent(personId);
-        restHelper.deleteIntyg(fk7263IntygsId);
-        restHelper.deleteIntyg(fk7263IntygsId2);
+        restHelper.deleteIntyg(intygsId1);
+        restHelper.deleteIntyg(intygsId2);
     });
 
-    describe('Skicka Fk7263', function() {
+    describe('Skicka lisjpintyg', function() {
 
         beforeEach(function() {
             browser.ignoreSynchronization = false;
@@ -73,11 +72,11 @@ xdescribe('Skicka intyg', function() {
 
         it('Visa ett intyg och verifiera att det är rätt intyg och av rätt typ', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
-            inboxPage.viewCertificate(fk7263IntygsId);
+            expect(inboxPage.certificateExists(intygsId1)).toBeTruthy();
+            inboxPage.viewCertificate(intygsId1);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
+            expect(browser.getCurrentUrl()).toContain('lisjp');
+            expect(viewPage.certificateId()).toEqual(intygsId1);
             expect(viewPage.hasNoEvent('Inga händelser')).toBeTruthy();
         });
 
@@ -89,24 +88,54 @@ xdescribe('Skicka intyg', function() {
 
         it('Välj mottagare, bekräfta och skicka intyget', function() {
             expect(sendPage.isAt()).toBeTruthy();
-            expect(sendPage.chooseRecipientViewIsShown()).toBeTruthy();
-            sendPage.chooseRecipient('FK');
-            expect(sendPage.alreadySentWarningMessageIsShown()).toBeFalsy();
+
+            //Default recipient (FK) skall vara förvald..
+            expect(sendPage.recipientIsDeselectable('FK')).toBeTruthy();
+
+            //Den fejkade mottagaren FBA skall däremot vara valbar..
+            //Toggla lite fram och tillbaka..
+            expect(sendPage.recipientIsSelectable('FBA')).toBeTruthy();
+            sendPage.selectRecipient('FBA');
+            expect(sendPage.recipientIsDeselectable('FBA')).toBeTruthy();
+            sendPage.deselectRecipient('FBA');
+            expect(sendPage.recipientIsSelectable('FBA')).toBeTruthy();
+            sendPage.selectRecipient('FBA');
+            expect(sendPage.recipientIsDeselectable('FBA')).toBeTruthy();
+
+            //Nu skall båda vara valda, skicka dom!
             sendPage.confirmRecipientSelection();
-            expect(sendPage.confirmAndSendViewIsShown()).toBeTruthy();
-            expect(sendPage.alreadySentWarningMessageIsShown()).toBeFalsy();
-            expect(sendPage.selectedRecipient()).toEqual('Försäkringskassan');
-            sendPage.confirmAndSend();
-            expect(sendPage.resultViewIsShown()).toBeTruthy();
+
+            expect(sendPage.sendDialogIsShown()).toBeTruthy();
+
+            //FK skall gå bra, FBA skall misslyckas
+            expect(sendPage.verifySendResultForRecipient('FK', true)).toBeTruthy();
+            expect(sendPage.verifySendResultForRecipient('FBA', false)).toBeTruthy();
+
+            //Klart, gå tillbaka till intyget..
             sendPage.backToViewCertificate();
         });
 
         it('Verifiera att intyget nu har status "skickat"', function() {
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
+            expect(browser.getCurrentUrl()).toContain('lisjp');
+            expect(viewPage.certificateId()).toEqual(intygsId1);
             expect(viewPage.hasEvent('Skickat till')).toBeTruthy();
         });
+
+        it('Välj att skicka redan skickat intyg', function() {
+            viewPage.sendCertificate();
+            expect(sendPage.isAt()).toBeTruthy();
+        });
+
+        it('mottagare som redan tagit emot intyget skall inte vara valbar', function() {
+            //Already sent it to FK, should not be selectable..
+            expect(sendPage.recipientIsUnselectable('FK')).toBeTruthy();
+
+            //but FBA that failed should still be selectable
+            expect(sendPage.recipientIsSelectable('FBA')).toBeTruthy();
+
+        });
+
     });
 
     describe('Skicka och avbryt', function() {
@@ -129,27 +158,23 @@ xdescribe('Skicka intyg', function() {
 
         it('Visa ett intyg och verifiera att det är rätt intyg och av rätt typ', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(inboxPage.certificateExists(fk7263IntygsId2)).toBeTruthy();
-            inboxPage.viewCertificate(fk7263IntygsId2);
+            expect(inboxPage.certificateExists(intygsId2)).toBeTruthy();
+            inboxPage.viewCertificate(intygsId2);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(fk7263IntygsId2);
-            expect(browser.getTitle()).toEqual('Läkarintyg FK7263 | Mina intyg');
+            expect(browser.getCurrentUrl()).toContain('lisjp');
+            expect(viewPage.certificateId()).toEqual(intygsId2);
+            expect(browser.getTitle()).toEqual('Läkarintyg för sjukpenning | Mina intyg');
         });
 
-        it('Välj att skicka intyget', function() {
+        it('Gå till skicka intyget sidan', function() {
             expect(viewPage.isAt()).toBeTruthy();
             viewPage.sendCertificate();
             expect(sendPage.isAt()).toBeTruthy();
         });
 
-        it('Välj mottagare, bekräfta men avbryt att skicka intyget', function() {
+        it('navigera till inboxen och arkiverade intyg', function() {
             expect(sendPage.isAt()).toBeTruthy();
-            expect(sendPage.chooseRecipientViewIsShown()).toBeTruthy();
-            sendPage.chooseRecipient('FK');
-            sendPage.confirmRecipientSelection();
-            expect(sendPage.confirmAndSendViewIsShown()).toBeTruthy();
-            expect(browser.getTitle()).toEqual('Kontrollera och skicka intyget | Mina intyg');
+            expect(browser.getTitle()).toEqual('Skicka intyg till mottagare | Mina intyg');
             expect(sendPage.activeTab()).toEqual('inboxTab');
             sendPage.clickArchived();
             expect(archivedPage.activeTab()).toEqual('archivedTab');
