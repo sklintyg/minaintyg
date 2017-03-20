@@ -1,7 +1,7 @@
 <div id="mi-compact-certificate-header" class="row cert-titlebar">
   <div class="col-xs-7">
     <div class="cert-type-title"><i class="glyphicon glyphicon-file gi-2x pull-left" />{{getModuleName()}}</div>
-    <div><span ng-if="meta.complementaryInfo">Intyget avser </span>{{meta.complementaryInfo}} </div>
+    <div><span ng-if="meta.complementaryInfo"><span message key="{{meta.type | lowercase}}.compact-header.complementaryinfo-prefix"></span> </span>{{meta.complementaryInfo}} </div>
   </div>
   <div class="col-xs-5 certificate-issued text-nowrap">
     Intyg utfärdat {{cert.grundData.signeringsdatum | date:'longDate'}}
