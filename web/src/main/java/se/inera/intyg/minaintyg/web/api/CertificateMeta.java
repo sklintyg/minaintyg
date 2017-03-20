@@ -24,6 +24,9 @@ import java.util.List;
 
 import se.inera.intyg.common.support.model.Status;
 
+/**
+ * DTO representing metadata of a signed certificate in the MI rest API.
+ */
 public class CertificateMeta {
 
     private String id;

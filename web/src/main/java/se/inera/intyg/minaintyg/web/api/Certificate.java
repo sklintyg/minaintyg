@@ -18,13 +18,18 @@
  */
 package se.inera.intyg.minaintyg.web.api;
 
+/**
+ * DTO representing a signed certificate in the MI rest API.
+ */
 public class Certificate {
 
+    //The actual certificate content model
     private final Object utlatande;
 
-    private final CertificateStatus meta;
+    //Extracted metadata about the certificate
+    private final CertificateMeta meta;
 
-    public Certificate(Object utlatande, CertificateStatus meta) {
+    public Certificate(Object utlatande, CertificateMeta meta) {
         this.utlatande = utlatande;
         this.meta = meta;
     }
@@ -33,7 +38,7 @@ public class Certificate {
         return utlatande;
     }
 
-    public CertificateStatus getMeta() {
+    public CertificateMeta getMeta() {
         return meta;
     }
 }

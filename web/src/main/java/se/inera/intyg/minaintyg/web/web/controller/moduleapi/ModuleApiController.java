@@ -21,6 +21,7 @@ package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,10 +54,10 @@ import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.minaintyg.web.api.Certificate;
-import se.inera.intyg.minaintyg.web.api.CertificateStatus;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.web.util.CertificateStatusConverter;
+import se.inera.intyg.minaintyg.web.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
 
 /**
@@ -72,6 +73,10 @@ public class ModuleApiController {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
+
+    //Relevant statuses for this context
+    private static final List<CertificateState> RELEVANT_STATUS_TYPES = Arrays.asList(CertificateState.SENT, CertificateState.CANCELLED);
+
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;
@@ -109,7 +114,7 @@ public class ModuleApiController {
         if (utlatande.isPresent()) {
             try {
                 JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
-                CertificateStatus meta = CertificateStatusConverter.toCertificateStatus(utlatande.get().getMetaData().getStatus());
+                CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(utlatande.get().getMetaData(), RELEVANT_STATUS_TYPES);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {

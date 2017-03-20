@@ -27,6 +27,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             $scope.vm = {
                 id: $stateParams.certificateId,
                 cert : null,
+                meta: null,
                 statuses: null,
                 type: $stateParams.type,
                 defaultRecipient: $stateParams.defaultRecipient,
@@ -58,6 +59,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             intygService.getCertificate($scope.vm.type, $scope.vm.id, function(result) {
                 if (result !== null) {
                     $scope.vm.cert = result.utlatande;
+                    $scope.vm.meta = result.meta;
                     $scope.vm.statuses = result.meta.statuses;
 
                     //Also need the list of recipients

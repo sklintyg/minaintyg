@@ -23,11 +23,13 @@ import java.util.List;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 
 /**
- * Converts meta data from the internal {@link UtlatandeMetaData} to the REST service model {@link CertificateMeta}.
+ * Converts meta data from the internal {@link UtlatandeMetaData} and {@link CertificateMetaData} to the REST service
+ * model {@link CertificateMeta}.
  */
 public final class CertificateMetaConverter {
 
@@ -65,6 +67,46 @@ public final class CertificateMetaConverter {
         for (UtlatandeMetaData certificateMetaType : metas) {
             result.add(toCertificateMeta(certificateMetaType));
         }
+
+        return result;
+    }
+
+    /**
+     * Converts CertificateMetaData types to Rest CertificateMeta, optionally filtering statuses to include only
+     * selected statuses.
+     *
+     * @param metaData
+     * @param statusFilter
+     *            - List of CertificateState types to keep
+     * @return
+     */
+    public static CertificateMeta toCertificateMeta(CertificateMetaData metaData, List<CertificateState> statusFilter) {
+        CertificateMeta result = new CertificateMeta();
+
+        result.setId(metaData.getCertificateId());
+        result.setSelected(false);
+        result.setType(metaData.getCertificateType());
+        result.setCaregiverName(metaData.getIssuerName());
+        result.setCareunitName(metaData.getFacilityName());
+        result.setSentDate(metaData.getSignDate());
+        result.setArchived(!metaData.isAvailable());
+        result.setComplementaryInfo(metaData.getAdditionalInfo());
+
+        boolean cancelled = false;
+
+        // Filter and at the same time, check if cancelled
+        for (Status status : metaData.getStatus()) {
+
+            // Obey any status filter restrictions
+            if (statusFilter == null || statusFilter.contains(status.getType())) {
+                result.getStatuses().add(status);
+            }
+
+            if (status.getType().equals(CertificateState.CANCELLED)) {
+                cancelled = true;
+            }
+        }
+        result.setCancelled(cancelled);
 
         return result;
     }

@@ -24,13 +24,13 @@ angular.module('minaintyg').directive('miCompactCertificateHeader', [ 'common.mo
         restrict: 'E',
         replace: true,
         scope: {
-            type: '=',
+            meta: '=',
             cert: '='
         },
         templateUrl: '/app/views/miCompactCertificateHeader.directive.html',
         controller: function($scope) {
             $scope.getModuleName = function() {
-                return moduleService.getModuleName($scope.type);
+                return moduleService.getModuleName($scope.meta.type);
             };
         }
     };

@@ -90,7 +90,7 @@ public class CertificateMetaConverterTest {
     }
 
     @Test
-    public void testAdditionalInfo() {
+    public void testComplementaryInfo() {
         CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
         UtlatandeMetaData utlatandeMeta = builder.build();
 
