@@ -3,7 +3,7 @@
     <span class="lastevent-header" message key="listtable.headers.latestEvent"></span>
     <span ng-if="!maxStatuses" id="statusesshown">{{statusesShown(statuses, isCollapsedArchive)}}</span>
   </div>
-  <div ng-if="statuses.length > 0" id="certificate-latestevents" ng-attr-id="event-{{certId}}">
+  <div ng-if="statuses.length > 0" ng-attr-id="event-{{certId}}">
     <div ng-repeat="status in statuses track by $index" ng-if="$index < maxStatusRows(isCollapsedArchive)"
          ng-init="info = getEventInfo(status)" ng-attr-id="event-{{certId}}-{{$index}}"
          ng-class="{'event-row-tight': maxStatuses, 'event-row': !maxStatuses, 'stripe-dark': !maxStatuses && $even}" >

@@ -59,11 +59,14 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     clickCustomizeCertificate: function() {
         this.customize.click();
     },
-    hasEvent: function(status) {
+    hasEvent: function(intygId, text, dateTime) {
         var found = false;
-        return element(by.id('certificate-latestevents')).all(by.tagName('div')).each(function(item) {
-            item.getText().then(function (text) {
-                found = found || text.includes(status);
+        var attrId = 'event-' + intygId;
+
+        return element.all(by.id(attrId)).each(function(item) {
+            item.getText().then(function (txt) {
+                console.log("TEST:" + txt);
+                found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },

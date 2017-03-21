@@ -431,21 +431,22 @@ div.infobox h4 {
 	text-align: right;
 }
 
+#mi-select-recipients .selection-box {
+	padding: 10px;
+	background:#fff;
+	border: 1px solid #eee;
+	min-height:140px;
+}
+
+#mi-select-recipients  div.button-row {
+margin-top:10px;
+}
+
 #mi-select-recipients .selection-list a.unsent span {
 	text-decoration: underline;
 }
 #mi-select-recipients .selection-list a.unsent:hover {
 	font-weight: bold;
-}
-
-#mi-select-recipients .selection-box {
-	padding: 10px;
-	background:#fff;
-	border: 1px solid #eee;
-}
-
-#mi-select-recipients .selection-box ul {
-	min-height:100px;
 }
 
 .mi-sending-dialog-window-class {

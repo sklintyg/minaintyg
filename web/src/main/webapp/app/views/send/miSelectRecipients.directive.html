@@ -1,46 +1,53 @@
 <div id="mi-select-recipients">
 
-  <p><span message key="sendpage.label.select-recipients.heading"></span></p>
+
 
   <div class="row">
 
     <!-- select from list -->
     <div class="col-xs-6">
-      <ul class="nav selection-list">
-        <li ng-repeat="r in recipients | orderBy: 'name'">
+      <div class="selection-box">
+        <div><span message key="sendpage.label.select-recipients.heading"></span></div>
+        <ul class="nav selection-list">
+          <li ng-repeat="r in recipients | orderBy: 'name'">
 
-          <a ng-attr-id="{{'selectable-recipient-' + r.id}}" ng-if="!r.sent" class="unsent"
-             ng-click="select($event, r)" href="#">{{r.name}}<span class="pull-right" message
-                                                                   key="sendpage.btn.select"></span></a>
+            <a ng-attr-id="{{'selectable-recipient-' + r.id}}" ng-if="!r.sent" class="unsent"
+               ng-click="select($event, r)" href="#">{{r.name}}<span class="pull-right" message
+                                                                     key="sendpage.btn.select"></span></a>
 
-          <a ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">{{r.name}}<span
-              class="pull-right">Skickat {{r.sentTimestamp | date:'longDate'}}</span></a>
-        </li>
-      </ul>
+            <a ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">{{r.name}}<span
+                class="pull-right">Skickat {{r.sentTimestamp | date:'longDate'}}</span></a>
+          </li>
+        </ul>
+      </div>
     </div>
 
 
     <!-- selected list -->
-    <div class="col-xs-6 selection-box">
+    <div class="col-xs-6">
+      <div class="selection-box">
+        <div ng-if="selected.length < 1"><span message key="sendpage.label.none-selected"></span></div>
+        <div ng-if="selected.length > 0"><span message key="sendpage.label.some-selected"></span></div>
 
-      <div ng-if="selected.length < 1"><span message key="sendpage.label.none-selected"></span></div>
-      <div ng-if="selected.length > 0"><span message key="sendpage.label.some-selected"></span></div>
-
-      <ul class="nav selection-list">
-        <li ng-repeat="sr in selected">
-          <a ng-attr-id="{{'removable-recipient-' + sr.id}}" ng-click="deselect($event, $index)" class="unsent" href="#">{{sr.name}}
-            <span class="pull-right"><span message key="sendpage.btn.remove-one"></span>
-          </a>
-        </li>
-      </ul>
-
-      <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-success" type="button" ng-disabled="selected.length < 1">
-        <i class="glyphicon glyphicon-ok"></i> <span message key="sendpage.btn.send">
-      </button>
-      <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-secondary" type="button" ng-if="selected.length > 0">
-        <i class="glyphicon glyphicon-remove"></i> <span message key="sendpage.btn.clear">
-      </button>
-
+        <ul class="nav selection-list">
+          <li ng-repeat="sr in selected">
+            <a ng-attr-id="{{'removable-recipient-' + sr.id}}" ng-click="deselect($event, $index)" class="unsent"
+               href="#">{{sr.name}}
+              <span class="pull-right" message key="sendpage.btn.remove-one"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="button-row">
+        <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-success"
+                type="button" ng-disabled="selected.length < 1">
+          <i class="glyphicon glyphicon-ok"></i> <span message key="sendpage.btn.send"></span>
+        </button>
+        <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-secondary" type="button"
+                ng-if="selected.length > 0">
+          <i class="glyphicon glyphicon-remove"></i> <span message key="sendpage.btn.clear"></span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

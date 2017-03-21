@@ -33,7 +33,7 @@ var welcomePage = miTestTools.pages.welcomePage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Skicka intyg', function() {
+describe('Skicka intyg', function() {
 
 	var personId = '191212121212';
 	var intygsId1 = null;
@@ -119,7 +119,7 @@ xdescribe('Skicka intyg', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('lisjp');
             expect(viewPage.certificateId()).toEqual(intygsId1);
-            expect(viewPage.hasEvent('Skickat till')).toBeTruthy();
+            expect(viewPage.hasEvent(intygsId1, 'Skickat till Försäkringskassan')).toBeTruthy();
         });
 
         it('Välj att skicka redan skickat intyg', function() {
