@@ -67,13 +67,13 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     archiveDialogIsDisplayed: function() {
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
     },
-    hasEvent: function(intygId, text) {
+    hasEvent: function(intygId, text, dateTime) {
         var found = false;
         var attrId = 'event-' + intygId;
 
         return element.all(by.css('div[id^=' + attrId + ']')).each(function(item) {
             item.getText().then(function (txt) {
-                found = found || txt.includes(text);
+                found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },
