@@ -32,7 +32,7 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-fdescribe('Verifiera Lisjp med smittbärarpenning', function() {
+describe('Verifiera Lisjp med smittbärarpenning', function() {
 
     var personId = '191212121212';
 
