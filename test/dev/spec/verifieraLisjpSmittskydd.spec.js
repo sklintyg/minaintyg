@@ -141,22 +141,22 @@ describe('Verifiera Lisjp med smittbärarpenning', function() {
             expect(viewPage.getDynamicLabelText('KAT_8.RBK')).toBe(texts['KAT_8.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
 
-            expect(element(by.id('ovrigt')).isPresent()).toBe(true);
-            expect(viewPage.getTextContent('ovrigt')).toEqual('Ej ifyllt');
+            expect(element(by.id('kommentar')).isPresent()).toBe(true);
+            expect(viewPage.getTextContent('kommentar')).toEqual('Ej ifyllt');
         });
 
         it('Kontrollera att övriga fält inte visas', function() {
-            expect(element(by.css('div[category-label=KAT_1.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_2.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_4.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_5.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=forsakringsmedicinsktBeslutsstod]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetstidsforlaggning]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetstidsforlaggningMotivering]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetsresor]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=prognos]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_7.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_9.RBK]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_1.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_2.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_4.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_5.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="forsakringsmedicinsktBeslutsstod"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetstidsforlaggning"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetstidsforlaggningMotivering"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetsresor"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="prognos"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_7.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_9.RBK"]')).isDisplayed()).toBe(false);
         });
 
     });
@@ -204,22 +204,22 @@ describe('Verifiera Lisjp med smittbärarpenning', function() {
             expect(viewPage.getDynamicLabelText('KAT_8.RBK')).toBe(texts['KAT_8.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
 
-            expect(element(by.id('ovrigt')).isPresent()).toBe(true);
-            expect(viewPage.getTextContent('ovrigt')).toEqual('Upplysningar ska skrivas här');
+            expect(element(by.id('kommentar')).isPresent()).toBe(true);
+            expect(viewPage.getTextContent('kommentar')).toEqual('Upplysningar ska skrivas här');
         });
 
         it('Kontrollera att övriga fält inte visas', function() {
-            expect(element(by.css('div[category-label=KAT_1.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_2.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_4.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_5.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=forsakringsmedicinsktBeslutsstod]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetstidsforlaggning]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetstidsforlaggningMotivering]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=arbetsresor]')).isDisplayed()).toBe(false);
-            expect(element(by.css('field-wrapper[field-name=prognos]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_7.RBK]')).isDisplayed()).toBe(false);
-            expect(element(by.css('div[category-label=KAT_9.RBK]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_1.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_2.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_4.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_5.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="forsakringsmedicinsktBeslutsstod"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetstidsforlaggning"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetstidsforlaggningMotivering"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="arbetsresor"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('field-wrapper[field-name="prognos"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_7.RBK"]')).isDisplayed()).toBe(false);
+            expect(element(by.css('div[category-label="KAT_9.RBK"]')).isDisplayed()).toBe(false);
         });
 
     });
