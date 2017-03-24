@@ -25,7 +25,8 @@ module.exports = function(grunt) {
     require('jit-grunt')(grunt, {
         bower: 'grunt-bower-task',
         configureProxies: 'grunt-connect-proxy',
-        ngtemplates: 'grunt-angular-templates'
+        ngtemplates: 'grunt-angular-templates',
+        postcss: 'grunt-postcss'
     });
 
     var WEB_DIR = 'src/main/webapp';
@@ -208,6 +209,18 @@ module.exports = function(grunt) {
                 files: {
                     '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
                 }
+            }
+        },
+
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    require('autoprefixer')({browsers: ['last 2 versions', 'ie 9']}) // add vendor prefixes
+                ]
+            },
+            dist: {
+                src: '<%= config.client %>/app/*.css'
             }
         },
 
@@ -395,6 +408,7 @@ module.exports = function(grunt) {
         'bower',
         'injector:sass',
         'sass',
+        'postcss',
         'injector:css',
         'wiredep',
         'ngtemplates:minaintyg',

@@ -2,6 +2,7 @@
   "name": "minaintyg",
   "version": "0.0.1",
   "devDependencies": {
+    "autoprefixer": "^6.7.7",
     "bower": "1.8.0",
     "grunt": "^1.0.1",
     "grunt-angular-templates": "^1.1.0",
@@ -17,8 +18,9 @@
     "grunt-karma": "^1.0.0",
     "grunt-lcov-merge": "^1.2.3",
     "grunt-ng-annotate": "^2.0.2",
+    "grunt-postcss": "^0.8.0",
     "grunt-sass": "^2.0.0",
-    "grunt-wiredep": "3.0.0",
+    "grunt-wiredep": "3.0.1",
     "jasmine-core": "2.5.2",
     "jit-grunt": "0.10.0",
     "karma": "^1.0.0",

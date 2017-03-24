@@ -59,11 +59,11 @@
 	.fk7263-tooltip-icon { margin-left: 11px; }
 	.table-responsive {
 		width: 100%;
-		margin-bottom: 0px;
+		margin-bottom: 0;
 		overflow-y: hidden;
 		overflow-x: scroll;
 		-ms-overflow-style: -ms-autohiding-scrollbar;
-		border: 0px solid transparent;
+		border: 0 solid transparent;
 		-webkit-overflow-scrolling: touch;
 	}
 }
