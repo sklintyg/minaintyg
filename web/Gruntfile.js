@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         return SRC_DIR + file;
     }));
 
-    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + 'pubapp/showcase/index.html']);
+    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + '/pubapp/showcase/index.html']);
     var _ = require('lodash');
 
     var modules = {
@@ -304,11 +304,6 @@ module.exports = function(grunt) {
                                 '/app/app-deps.js',
                                 serveStatic(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
                             ));
-                        middlewares.push(
-                            connect().use(
-                                '/css',
-                                serveStatic(__dirname + '/src/main/webapp/css') // jshint ignore:line
-                            ));
                         Object.keys(modules).forEach(function(moduleName) {
                             var module = modules[moduleName];
                             middlewares.push(
@@ -375,7 +370,7 @@ module.exports = function(grunt) {
                     transform: function(filePath) {
                         filePath = filePath.replace('/src/main/webapp/', '');
                         filePath = filePath.replace('/<%= config.tmp %>/', '');
-                        return '<link rel="stylesheet" href="/' + filePath + '">';
+                        return '<link rel="stylesheet" href="/' + filePath + '?_v=<spring:message code="buildNumber" />">';
                     },
                     starttag: '<!-- injector:css -->',
                     endtag: '<!-- endinjector -->'

@@ -36,7 +36,7 @@
 <!-- endbower -->
 
 <!-- injector:css -->
-<link rel="stylesheet" href="/app/app.css">
+<link rel="stylesheet" href="/app/app.css?_v=<spring:message code="buildNumber" />">
 <!-- endinjector -->
 
 </head>
