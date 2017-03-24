@@ -1,0 +1,22 @@
+#mi-select-recipients {
+  .selection-box {
+    padding: 10px;
+    background:#fff;
+    border: 1px solid #eee;
+    min-height:140px;
+  }
+
+  div.button-row {
+    margin-top:10px;
+  }
+
+  .selection-list a.unsent {
+    &:hover {
+      font-weight: bold;
+    }
+
+    span {
+      text-decoration: underline;
+    }
+  }
+}

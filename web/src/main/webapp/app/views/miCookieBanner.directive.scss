@@ -1,0 +1,18 @@
+.cookie-banner-directive {
+  margin: 0;
+  top: 0;
+  position: fixed;
+  right: 0;
+  left: 0;
+  border: none;
+  z-index: 20;
+
+  .alert {
+    max-width: inherit;
+    border-radius: 0;
+  }
+
+  .container-fluid {
+    padding: 0;
+  }
+}

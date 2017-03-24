@@ -1,0 +1,20 @@
+.mi-sending-dialog-window-class {
+  margin-top:100px;
+
+  .modal-body {
+    padding: 20px 60px 20px 60px;
+    min-height:150px;
+
+    .result-rows {
+      font-weight:bold;
+    }
+
+    .glyphicon-warning-sign {
+      color: #a00;
+    }
+
+    .glyphicon-ok {
+      color: #0a0;
+    }
+  }
+}

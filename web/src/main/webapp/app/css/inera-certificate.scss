@@ -16,116 +16,83 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-.eventbox {
-	background-color: #f4f4f4;
-    border-radius:5px;
-	padding: 20px;
-}
-
-.eventbox p {
-	font-weight:bold; padding: 10px 0 0 0; margin: 0
-}
-
-.eventbox ul {
-	list-style-type: none;
-	margin: 0;
-	padding-bottom: 5px;
-}
-
-.eventbox li {
-	color: #666666;
-}
-
-.eventbox h2 {
-	font-size: 13px;
-	font-weight: normal;
-}
-
-.eventbox a {
-	font-size: 12px;
-}
-.certificate-event {
-	height: auto;
-	max-height: 100px;
-	border: 1px solid #c2c2c2;
-	background: #F2F2F2;
-	overflow-y: auto;
-	border-radius: 4px;
-}
-.certificate-event p {
-	padding: 10px 10px 0px 10px;
-}
-.certificate-event-timestamp { 
-	font-size: 12px; 
-	margin-top: 2px;
-}
 .cert-icon {
     position: absolute;
     top: 12px;
     left: 15px;
 }
 
-.cert-titlebar {
-	background-color: #00687D;
-	border-radius:8px 8px 0 0;
-	background-image:linear-gradient(to bottom, #008391, #00687D);
-	background-repeat:repeat-x;
-}
-
 .cert-cancelled {
-	background-color: #7f7f7f;
-	background-image:linear-gradient(to bottom, #999999, #7f7f7f);
+  background-color: #7f7f7f;
+  background-image:linear-gradient(to bottom, #999999, #7f7f7f);
+
+  .archive .archive-only {
+    background-image:linear-gradient(to bottom, #008391, #00687D);
+    background-repeat:repeat-x;
+  }
 }
 
-.cert-cancelled .archive .archive-only { 
-	background-image:linear-gradient(to bottom, #008391, #00687D);
-	background-repeat:repeat-x;
-}
+.cert-titlebar {
+  background-color: #00687D;
+  border-radius:8px 8px 0 0;
+  background-image:linear-gradient(to bottom, #008391, #00687D);
+  background-repeat:repeat-x;
 
-.cert-titlebar .cert-title {
+  .cert-title {
     color: #fff;
     padding: 10px 0 5px 40px;
     display: inline-block;
-}
 
-.cert-titlebar .cert-title a,.cert-titlebar .cert-title button { color: #fff; font-weight: bold; }
+    a, button {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
 
-.cert-titlebar h2 > button { margin-left: 10px; }
-.cert-titlebar h2 > span { color: #fff; }
-
-.archived-table .cert-titlebar-type { color: #000; }
-.archived-table td { font-size: 12px; }
-
-.cert-titlebar .row { margin-right: 0; margin-left: 0; }
-.cert-titlebar .row .issue {
+  h2 > button {
+    margin-left: 10px;
+  }
+  h2 > span {
     color: #fff;
-    padding: 12px 20px 0 15px;
+  }
+
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+
+    .issue {
+      color: #fff;
+      padding: 12px 20px 0 15px;
+    }
+  }
 }
 
-.cert-titlebar-value { font-weight: bold; }
+.cert-titlebar-value {
+  font-weight: bold;
+}
 
 .archive {
-	border-left: 1px solid #fff;
-	display: inline-block;
-	padding-left: 0;
-	padding-right: 0;
-}
+  border-left: 1px solid #fff;
+  display: inline-block;
+  padding-left: 0;
+  padding-right: 0;
 
-.archive .popover-inner {
+  .popover-inner {
     width: 150px;
     text-align: center;
-}
+  }
 
-.archive a, .archive button {
+
+  a, button {
     cursor: pointer;
-	display: inline-block;
-	padding: 14px 26px 13px 20px;
-	height: 42px;
-	border-radius: 0 8px 0 0;
-	width: 100%;
-	text-align: center;
+    display: inline-block;
+    padding: 14px 26px 13px 20px;
+    height: 42px;
+    border-radius: 0 8px 0 0;
+    width: 100%;
+    text-align: center;
     border-width: 0;
+  }
 }
 
 .archive a:hover, .archive button:hover, .cert-cancelled .archive .archive-only:hover {
@@ -137,97 +104,42 @@
 	color: #fff;
 }
 
+.certificate div.cert div.cert-footer {
+  padding: 20px;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: #e9eae8;
+  background-color: #e9eae8;
+  border-radius: 0 0 8px 8px;
+}
+
 .certificate div.cert, .cert {
 	position: relative;
 }
 
-.cert-header {
-	padding: 10px 0 0 0;
-	background-color: #ededed;
-	font-weight: bold;
-	color: #323232;
-	border-radius: 0 0 8px 8px;
-	border: 1px solid #d8d8d8;
+.certificate div.cert div.intyg-body {
+  padding-top: 20px;
 }
 
-.cert-header .tag {
-	text-align: left;
-	display: block;
-	font-weight: normal;
-	font-size: 12px;
-	color: #656565;
-    padding: 0;
-}
 
-.cert-header .row {
-	border-bottom: 1px solid #dddddd;
-	padding: 10px 0;
-	margin-left: 0;
-	margin-right: 0;
-}
 .border-bottom-resp {
 	border-bottom: 0 solid transparent !important;
 }
 
-.cert-header .row:last-child {
-	padding-bottom: 10px;
-    border: 0;
-}
-
-.cert-header .header-row:first-child {
-	padding: 0 40px 0 40px;
-}
-.cert-preview {
-	border-bottom: 1px solid #dddddd;
-	margin-bottom: 10px;
-}
-.cert-preview .cert-header { padding: 0; }
 .header-row .alert {
     font-weight: normal;
     margin-bottom: 5px;
-}
-
-.certificate div.cert div.intyg-body {
-    padding-top: 20px;
 }
 
 .body-row {
 	margin: 0 0 20px 0;
 	background-color: #ededed;
 	border: 1px solid #d8d8d8;
-	border-radius: 8px 8px 8px 8px;	
+	border-radius: 8px 8px 8px 8px;
 }
+
 .body-row.unfilled {
 	background-color: #fff;
-}
-
-.intyg-body .body-row .title {
-	color: #333333;
-	font-weight: bold;
-	display: block;
-	padding: 10px 20px;
-	background-color: #d8d8d8;
-	border-radius: 8px 8px 0 0;
-}
-
-.intyg-body .body-row .title h3 {
-	padding-top: 0;
-	color: #333;
-}
-.intyg-body .body-row .title h4 {
-	color: #333;
-	font-size: 14px;
-	font-weight: normal;
-}
-
-.intyg-body .body-row .unfilled {
-	color: #888;
-	border-radius: 8px 8px 0 0;
-}
-
-.intyg-body .body-row .text {
-	display: block;
-	padding: 20px 40px;
 }
 
 ul.padded-list > li {
@@ -235,61 +147,9 @@ ul.padded-list > li {
     padding-left: 16px;
 }
 
-.certificate div.cert div.cert-footer {
-	padding: 20px;
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	border-color: #e9eae8;
-	background-color: #e9eae8;
-	border-radius: 0 0 8px 8px;	
-}
-
-.modifiable-certificate {
-	padding: 10px;
-	border-width: 1px 1px 1px 1px;
-	border-style: solid;
-	border-color: #e9eae8;
-	background-color: #e9eae8;
-	border-radius: 8px 8px 8px 8px;	
-}
-
-.modifiable-certificate h4 {
-	color: #000;
-	margin-top: 20px;
-}
-
-.modifiable-certificate div.content-box {
-	padding: 5px;
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	border-color: #e9eae8;
-	background-color: #fff;
-	border-radius: 8px 8px 8px 8px;	
-}
-
 .cert-summary span {
 	margin-right: 20px;
 	font-weight:bold;
-}
-
-div.infobox {
-    background-color: #008391;
-   	border-radius: 8px 8px 8px 8px;
-    color: #fff;
-    padding: 20px;
-}
-
-div.infobox h3 {
-    font-size: 16px;
-    padding: 0;
-    color: #fff;
-}
-
-div.infobox h4 {
-    padding: 10px 0 5px 0;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
 }
 
 .bold {
@@ -307,85 +167,6 @@ div.infobox h4 {
 
 .mi-category h2.title {
     margin-bottom: 20px;
-}
-
-/** Cookie banner css **/
-.cookie-banner-directive {
-	margin: 0;
-	top: 0;
-	position: fixed;
-	right: 0;
-	left: 0;
-	border: none;
-	z-index: 20;
-}
-
-.cookie-banner-directive .alert {
-	max-width: inherit;
-	border-radius: 0;
-}
-
-.cookie-banner-directive .container-fluid {
-	padding: 0;
-}
-
-#mi-compact-certificate-header {
-	/*background: #7897b3;*/
-	color: #fff;
-	padding:10px;
-	margin:40px 0;
-}
-#mi-compact-certificate-header .cert-type-title {
-	font-size: 16px;
-	font-weight: bold;
-}
-#mi-compact-certificate-header .glyphicon {
-	margin-right:20px;
-	line-height: inherit;
-}
-
-#mi-compact-certificate-header .certificate-issued {
-	text-align: right;
-}
-
-#mi-select-recipients .selection-box {
-	padding: 10px;
-	background:#fff;
-	border: 1px solid #eee;
-	min-height:140px;
-}
-
-#mi-select-recipients  div.button-row {
-	margin-top:10px;
-}
-
-#mi-select-recipients .selection-list a.unsent span {
-	text-decoration: underline;
-}
-#mi-select-recipients .selection-list a.unsent:hover {
-	font-weight: bold;
-}
-
-.mi-sending-dialog-window-class {
-	margin-top:100px;
-}
-
-
-.mi-sending-dialog-window-class .modal-body {
-	padding: 20px 60px 20px 60px;
-	min-height:150px;
-
-}
-.mi-sending-dialog-window-class .modal-body .result-rows {
-	font-weight:bold;
-}
-
-.mi-sending-dialog-window-class .modal-body .glyphicon-warning-sign {
-	color: #a00;
-}
-
-.mi-sending-dialog-window-class .modal-body .glyphicon-ok {
-	color: #0a0;
 }
 
 

@@ -1,0 +1,47 @@
+.mi-header {
+  margin-left: auto;
+  margin-right: auto;
+
+  .navbar-user-avatar {
+    display: inline-block;
+    float: right;
+    padding: 15px 0 0 0;
+
+    img {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  .navbar-user-info {
+    padding: 15px 15px 15px 0 !important;
+    display: inline-block;
+
+    span {
+      color: #fff;
+    }
+  }
+}
+
+
+
+#status {
+  float: right;
+  color: #ffffff;
+  text-align: right;
+  padding: 0 0 0 0;
+  font-size: 12px;
+  line-height: 146%;
+  display: inline-flex;
+
+  a, a span {
+    cursor: pointer;
+    color: #28b4c4;
+    font-size: 13px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
