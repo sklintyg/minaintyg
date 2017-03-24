@@ -35,6 +35,10 @@
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
+<!-- injector:css -->
+<link rel="stylesheet" href="/app/app.css">
+<!-- endinjector -->
+
 </head>
 <body>
   <div style="padding: 20px;">

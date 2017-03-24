@@ -28,7 +28,8 @@ module.exports = function(grunt) {
         ngtemplates: 'grunt-angular-templates'
     });
 
-    var SRC_DIR = 'src/main/webapp/app/';
+    var WEB_DIR = 'src/main/webapp';
+    var SRC_DIR = WEB_DIR + '/app/';
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
@@ -45,6 +46,9 @@ module.exports = function(grunt) {
     minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
+
+    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + 'pubapp/showcase/index.html']);
+    var _ = require('lodash');
 
     var modules = {
         'common':      { base: 'common/web' },
@@ -108,6 +112,11 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
+
+        config: {
+            // configurable paths
+            client: WEB_DIR
+        },
 
         bower: {
             install: {
@@ -186,6 +195,18 @@ module.exports = function(grunt) {
                     type : 'lcovonly',
                     dir : TEST_OUTPUT_DIR,
                     subdir: '.'
+                }
+            }
+        },
+
+        // Compiles Sass to CSS
+        sass: {
+            options: {
+                sourceMap: false
+            },
+            dist: {
+                files: {
+                    '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
                 }
             }
         },
@@ -311,6 +332,46 @@ module.exports = function(grunt) {
             }
         },
 
+        injector: {
+            options: {
+                lineEnding: grunt.util.linefeed
+            },
+
+            // Inject component scss into app.scss
+            sass: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/app/', '');
+                        return '@import \'' + filePath + '\';';
+                    },
+                    starttag: '// injector',
+                    endtag: '// endinjector'
+                },
+                files: {
+                    '<%= config.client %>/app/app.scss': [
+                        '<%= config.client %>/app/**/*.{scss,sass}',
+                        '!<%= config.client %>/app/app.{scss,sass}'
+                    ]
+                }
+            },
+
+            // Inject component css into index.html
+            css: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/', '');
+                        filePath = filePath.replace('/<%= config.tmp %>/', '');
+                        return '<link rel="stylesheet" href="/' + filePath + '">';
+                    },
+                    starttag: '<!-- injector:css -->',
+                    endtag: '<!-- endinjector -->'
+                },
+                files: _(fileToInjectCss).map(function(dest) {
+                    return [dest, '<%= config.client %>/app/**/*.css']
+                }).fromPairs().value()
+            }
+        },
+
         watch: {
             js: {
                 files: buildListForAllModules(function(module) {
@@ -330,7 +391,16 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('default', [
+        'bower',
+        'injector:sass',
+        'sass',
+        'injector:css',
+        'wiredep',
+        'ngtemplates:minaintyg',
+        'concat',
+        'ngAnnotate',
+        'uglify' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);

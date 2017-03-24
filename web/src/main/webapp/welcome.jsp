@@ -51,8 +51,10 @@ if ("prod".equals(profile)) {
 <!-- bower:css -->
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>?<spring:message code="buildNumber" />">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>?<spring:message code="buildNumber" />">
+
+<!-- injector:css -->
+<link rel="stylesheet" href="/app/app.css">
+<!-- endinjector -->
 
 <script type="text/javascript">
   /**

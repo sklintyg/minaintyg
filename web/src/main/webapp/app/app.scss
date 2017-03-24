@@ -429,7 +429,7 @@ i.icon-loader {
 	border: 1px;
 }
 
-div.formgroup-start. div.formgroup-single {
+div.formgroup-start, div.formgroup-single {
 	-webkit-border-radius: 1px;
 	-moz-border-radius: 1px;
 	border-radius: 1px;
@@ -1074,3 +1074,11 @@ div.inera-box .box-body {
 	border-radius: 0 4px 4px 0;
 	border-left: 8px solid transparent;
 }
+
+// Component styles are injected through grunt
+// injector
+@import 'css/inera-certificate-responsive.scss';
+@import 'css/inera-certificate.scss';
+@import 'views/list/latestEvents.directive.scss';
+@import 'views/list/latestEventsModal.directive.scss';
+// endinjector

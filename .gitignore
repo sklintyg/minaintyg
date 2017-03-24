@@ -17,3 +17,7 @@ build
 .gradle
 node-v*
 .DS_Store
+
+web/src/main/webapp/app/app.css
+
+.sass-cache/

@@ -52,7 +52,8 @@ module.exports = function(config) {
             // Load these first
             TEST_DIR + 'app.test.js',
 
-            { pattern: SRC_DIR + '**/*' },
+            'src/main/webapp/app/**/*.js',
+            'src/main/webapp/app/**/*.html',
             { pattern: TEST_DIR + '**/*.spec.js' }
         ],
 
