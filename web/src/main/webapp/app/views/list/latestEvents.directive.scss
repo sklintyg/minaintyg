@@ -1,20 +1,22 @@
-.latest-events .lastevent-header {
-  font-weight: bold
-}
+.latest-events {
+  .lastevent-header {
+    font-weight: bold
+  }
 
-.latest-events .event-row {
-  padding: 0.9em;
-  display: inline-block;
-}
+  .event-row {
+    display: inline-block;
+    padding: 0.9em;
+  }
 
-.latest-events .event-row-tight {
-  display: inline-block;
-}
+  .event-row-tight {
+    display: inline-block;
+  }
 
-.latest-events .event-text {
-  padding-left: 1em;
-}
+  .event-text {
+    padding-left: 1em;
+  }
 
-.latest-events .stripe-dark {
-  background-color: #ededed;
+  .stripe-dark {
+    background-color: #ededed;
+  }
 }

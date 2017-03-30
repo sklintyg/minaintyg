@@ -5,17 +5,17 @@
   .navbar-user-avatar {
     display: inline-block;
     float: right;
-    padding: 15px 0 0 0;
+    padding: 15px 0 0;
 
     img {
-      width: 34px;
       height: 34px;
+      width: 34px;
     }
   }
 
   .navbar-user-info {
-    padding: 15px 15px 15px 0 !important;
     display: inline-block;
+    padding: 15px 15px 15px 0 !important;
 
     span {
       color: #fff;
@@ -26,17 +26,17 @@
 
 
 #status {
+  color: #fff;
+  display: inline-flex;
   float: right;
-  color: #ffffff;
-  text-align: right;
-  padding: 0 0 0 0;
   font-size: 12px;
   line-height: 146%;
-  display: inline-flex;
+  padding: 0;
+  text-align: right;
 
   a, a span {
-    cursor: pointer;
     color: #28b4c4;
+    cursor: pointer;
     font-size: 13px;
     text-decoration: none;
 

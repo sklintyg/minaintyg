@@ -1,12 +1,12 @@
 .mi-sending-dialog-window-class {
-  margin-top:100px;
+  margin-top: 100px;
 
   .modal-body {
-    padding: 20px 60px 20px 60px;
-    min-height:150px;
+    min-height: 150px;
+    padding: 20px 60px;
 
     .result-rows {
-      font-weight:bold;
+      font-weight: bold;
     }
 
     .glyphicon-warning-sign {

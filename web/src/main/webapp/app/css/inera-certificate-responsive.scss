@@ -17,40 +17,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
-
-/* Landscape phone to portrait tablet */
+// Landscape phone to portrait tablet
 @media (max-width: 767px) {
-	.btn {
-		padding: 10px 25px;
-		font-weight: bold;
-		border: none;
-	}
-	.cert-header .header-row:first-child {
-		padding: 0 15px 0 15px;
-	}
-	.cert-titlebar .cert-title {
-		color: #fff;
-		padding: 10px 0 5px 25px;
-		display: inline-block;
-	}
-	.issue {
-		padding: 12px 15px 10px 15px;
-	}
-	.ts-table th, .ts-table tr {
-		font-size: 12px !important;
-	}
-	.ts-table tbody td { padding: 5px !important; }
-	.border-bottom-resp { border-bottom: 1px solid #dddddd !important; }
-	.fk7263-tooltip-icon { margin-left: 11px; }
-	.table-responsive {
-		width: 100%;
-		margin-bottom: 0;
-		overflow-y: hidden;
-		overflow-x: scroll;
-		-ms-overflow-style: -ms-autohiding-scrollbar;
-		border: 0 solid transparent;
-		-webkit-overflow-scrolling: touch;
-	}
+  .btn {
+    border: 0;
+    font-weight: bold;
+    padding: 10px 25px;
+  }
+
+  .cert-header .header-row:first-child {
+    padding: 0 15px;
+  }
+
+  .cert-titlebar .cert-title {
+    color: #fff;
+    display: inline-block;
+    padding: 10px 0 5px 25px;
+  }
+
+  .issue {
+    padding: 12px 15px 10px;
+  }
+
+  .ts-table {
+    th, tr {
+      font-size: 12px !important;
+    }
+
+    tbody td {
+      padding: 5px !important;
+    }
+  }
+
+  .border-bottom-resp {
+    border-bottom: 1px solid #dddddd !important;
+  }
+
+  .fk7263-tooltip-icon {
+    margin-left: 11px;
+  }
+
+  .table-responsive {
+    border: 0 solid transparent;
+    margin-bottom: 0;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
 }

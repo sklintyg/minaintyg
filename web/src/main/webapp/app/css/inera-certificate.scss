@@ -17,31 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 .cert-icon {
-    position: absolute;
-    top: 12px;
-    left: 15px;
+  left: 15px;
+  position: absolute;
+  top: 12px;
 }
 
 .cert-cancelled {
   background-color: #7f7f7f;
-  background-image:linear-gradient(to bottom, #999999, #7f7f7f);
+  background-image: linear-gradient(to bottom, #999999, #7f7f7f);
 
   .archive .archive-only {
-    background-image:linear-gradient(to bottom, #008391, #00687D);
-    background-repeat:repeat-x;
+    background-image: linear-gradient(to bottom, #008391, #00687D);
+    background-repeat: repeat-x;
   }
 }
 
 .cert-titlebar {
   background-color: #00687D;
-  border-radius:8px 8px 0 0;
-  background-image:linear-gradient(to bottom, #008391, #00687D);
-  background-repeat:repeat-x;
+  background-image: linear-gradient(to bottom, #008391, #00687D);
+  background-repeat: repeat-x;
+  border-radius: 8px 8px 0 0;
 
   .cert-title {
     color: #fff;
-    padding: 10px 0 5px 40px;
     display: inline-block;
+    padding: 10px 0 5px 40px;
 
     a, button {
       color: #fff;
@@ -52,13 +52,14 @@
   h2 > button {
     margin-left: 10px;
   }
+
   h2 > span {
     color: #fff;
   }
 
   .row {
-    margin-right: 0;
     margin-left: 0;
+    margin-right: 0;
 
     .issue {
       color: #fff;
@@ -78,96 +79,89 @@
   padding-right: 0;
 
   .popover-inner {
-    width: 150px;
     text-align: center;
+    width: 150px;
   }
 
-
   a, button {
+    border-radius: 0 8px 0 0;
+    border-width: 0;
     cursor: pointer;
     display: inline-block;
-    padding: 14px 26px 13px 20px;
     height: 42px;
-    border-radius: 0 8px 0 0;
-    width: 100%;
+    padding: 14px 26px 13px 20px;
     text-align: center;
-    border-width: 0;
+    width: 100%;
   }
 }
 
 .archive a:hover, .archive button:hover, .cert-cancelled .archive .archive-only:hover {
-    background: none;
-	background-color: #28b4c4;
-	padding: 14px 26px 13px 20px;
-	display: inline-block;
-	height: 42px;
-	color: #fff;
+  background: #28b4c4;
+  color: #fff;
+  display: inline-block;
+  height: 42px;
+  padding: 14px 26px 13px 20px;
 }
 
 .certificate div.cert div.cert-footer {
-  padding: 20px;
-  border-width: 0 1px 1px 1px;
-  border-style: solid;
-  border-color: #e9eae8;
   background-color: #e9eae8;
+  border: #e9eae8 solid;
   border-radius: 0 0 8px 8px;
+  border-width: 0 1px 1px 1px;
+  padding: 20px;
 }
 
 .certificate div.cert, .cert {
-	position: relative;
+  position: relative;
 }
 
 .certificate div.cert div.intyg-body {
   padding-top: 20px;
 }
 
-
 .border-bottom-resp {
-	border-bottom: 0 solid transparent !important;
+  border-bottom: 0 solid transparent !important;
 }
 
 .header-row .alert {
-    font-weight: normal;
-    margin-bottom: 5px;
+  font-weight: normal;
+  margin-bottom: 5px;
 }
 
 .body-row {
-	margin: 0 0 20px 0;
-	background-color: #ededed;
-	border: 1px solid #d8d8d8;
-	border-radius: 8px 8px 8px 8px;
+  background-color: #ededed;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px 8px 8px 8px;
+  margin: 0 0 20px 0;
 }
 
 .body-row.unfilled {
-	background-color: #fff;
+  background-color: #fff;
 }
 
 ul.padded-list > li {
-    padding-bottom: 5px;
-    padding-left: 16px;
+  padding-bottom: 5px;
+  padding-left: 16px;
 }
 
 .cert-summary span {
-	margin-right: 20px;
-	font-weight:bold;
+  font-weight: bold;
+  margin-right: 20px;
 }
 
 .bold {
-    font-weight: bold !important;
+  font-weight: bold !important;
 }
 
 .indent {
-    padding-left: 20px !important;
+  padding-left: 20px !important;
 }
 
 .cert-answer {
-    font-weight: bold;
-    white-space: pre-line;
+  font-weight: bold;
+  white-space: pre-line;
 }
 
 .mi-category h2.title {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-
-
-

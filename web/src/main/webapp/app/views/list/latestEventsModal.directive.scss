@@ -1,52 +1,54 @@
-.latest-events-modal .modal-content {
+.latest-events-modal {
+  .modal-content {
     padding: 1em;
-}
+  }
 
-.latest-events-modal .latest-events-modal-header {
-    padding: 0.5em;
-    font-weight: bold;
+  .latest-events-modal-header {
     display: inline-block;
-}
+    font-weight: bold;
+    padding: 0.5em;
+  }
 
-.latest-events-modal .close {
+  .close {
     line-height: 0.5em;
-}
+  }
 
-.latest-events-modal .close-cross {
-    font-weight: 300;
+  .close-cross {
     font-size: 1.5em;
+    font-weight: 300;
     vertical-align: top
-}
+  }
 
-.latest-events-modal .modal-event-rows {
+  .modal-event-rows {
     max-height: 50vh;
     overflow-y: scroll;
     padding-top: 0.5em;
-}
+  }
 
-.latest-events-modal .modal-event-row {
+  .modal-event-row {
     padding: 0.9em;
-}
+  }
 
-.latest-events-modal .modal-event-text {
+  .modal-event-text {
     padding-left: 1em;
     padding-right: 2em;
-}
+  }
 
-.latest-events-modal .stripe-dark {
+  .stripe-dark {
     background-color: #ededed;
-}
+  }
 
-.latest-events-modal .modal-dialog {
-    position: relative;
+  .modal-dialog {
     display: table;
-    overflow-y: scroll;
-    overflow-x: auto;
-    width: auto;
-    min-width: 300px;
     max-width: 95vw;
+    min-width: 300px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    position: relative;
+    width: auto;
+  }
 }
 
 .fa-times-thin:before {
-    content: '\00d7';
+  content: '\00d7';
 }
