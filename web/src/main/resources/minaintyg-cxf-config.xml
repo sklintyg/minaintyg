@@ -39,11 +39,11 @@
       address="${certificates.list.v3.url}"/>
 
   <jaxws:client id="setCertificateStatusRivtaClient"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponderInterface"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponderInterface"
       address="${certificates.setcertificatestatus-rivta.url}"/>
 
   <jaxws:client id="sendCertificateToRecipientClient"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponderInterface"
       address="${certificates.sendcertificatetorecipient.url}"/>
 
   <jaxws:client id="getCertificateClient"

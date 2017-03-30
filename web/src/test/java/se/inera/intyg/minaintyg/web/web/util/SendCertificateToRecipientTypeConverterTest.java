@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import se.inera.intyg.schemas.contract.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
 
 public class SendCertificateToRecipientTypeConverterTest {
 
