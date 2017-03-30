@@ -26,7 +26,8 @@ module.exports = function(grunt) {
         bower: 'grunt-bower-task',
         configureProxies: 'grunt-connect-proxy',
         ngtemplates: 'grunt-angular-templates',
-        postcss: 'grunt-postcss'
+        postcss: 'grunt-postcss',
+        sasslint: 'grunt-sass-lint'
     });
 
     var WEB_DIR = 'src/main/webapp';
@@ -186,6 +187,13 @@ module.exports = function(grunt) {
             }
         },
 
+        sasslint: {
+            options: {
+                //configFile: 'config/.sass-lint.yml' //For now we use the .sass-lint.yml that is packaged with sass-lint
+            },
+            target: [SRC_DIR + '**/*.scss']
+        },
+
         karma: {
             minaintyg: {
                 configFile: 'karma.conf.ci.js',
@@ -289,6 +297,7 @@ module.exports = function(grunt) {
                         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
                         var serveStatic = require('serve-static');
                         var middlewares = [];
+                        middlewares.push(require('connect-livereload')());
                         middlewares.push(
                             connect().use(
                                 '/web',
@@ -376,7 +385,7 @@ module.exports = function(grunt) {
                     endtag: '<!-- endinjector -->'
                 },
                 files: _(fileToInjectCss).map(function(dest) {
-                    return [dest, '<%= config.client %>/app/**/*.css']
+                    return [dest, '<%= config.client %>/app/**/*.css'];
                 }).fromPairs().value()
             }
         },
@@ -396,6 +405,29 @@ module.exports = function(grunt) {
                     return __dirname + module.src + '/**/*.html';
                 }).concat([ SRC_DIR + '/**/*.html' ]),
                 tasks: ['ngtemplates']
+            },
+            injectSass: {
+                files: [
+                    '<%= config.client %>/app/**/*.{scss,sass}'],
+                tasks: ['injector:sass']
+            },
+            sass: {
+                files: [
+                    '<%= config.client %>/app/**/*.{scss,sass}'],
+                tasks: ['sass', 'postcss']
+            },
+            livereload: {
+                files: [
+                    '<%= config.client %>/app/**/*.scss',
+                    '<%= config.client %>/app/**/*.html',
+                    '<%= config.client %>/app/**/*.js',
+                    '!<%= config.client %>/app/**/*.spec.js',
+                    '!<%= config.client %>/app/**/*.mock.js',
+                    '<%= config.client %>/img/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+                ],
+                options: {
+                    livereload: true
+                }
             }
         }
     });
