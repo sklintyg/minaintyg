@@ -43,8 +43,8 @@ import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.*;
+import se.riv.clinicalprocess.healthcond.certificate.v3.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UtlatandeMetaDataConverterTest {

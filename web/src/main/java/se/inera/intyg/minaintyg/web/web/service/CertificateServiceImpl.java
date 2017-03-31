@@ -57,18 +57,18 @@ import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.web.util.SendCertificateToRecipientTypeConverter;
 import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenType;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -120,7 +120,7 @@ public class CertificateServiceImpl implements CertificateService {
 
                 final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
-                if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType.ERROR)) {
+                if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v3.ResultCodeType.ERROR)) {
                     LOGGER.warn(String.format("SendCertificate error when sending certificate %s to recipient %s, errortext was '%s'",
                             certificateId, recipientId, response.getResult().getResultText()));
                     batchResult.add(new SendToRecipientResult(recipientId, false, null));
@@ -168,6 +168,10 @@ public class CertificateServiceImpl implements CertificateService {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setPersonId(InternalConverterUtil.getPersonId(civicRegistrationNumber));
         params.setArkiverade(arkiverade);
+        Part part = new Part();
+        part.setCode("INVANA");
+        part.setCodeSystem("769bb12b-bd9f-4203-a5cd-fd14f2eb3b80");
+        params.setPart(part);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
