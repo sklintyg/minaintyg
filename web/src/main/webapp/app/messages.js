@@ -59,7 +59,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'consent.consenttext5': '',
 
         'consent.consentheader6': '<h3>Ge och återta samtycke</h3>',
-        'consent.consenttext6': '<p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
+        'consent.consenttext6': '<p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta ditt samtycke. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
 
         'consent.confirmtext': 'Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg.',
         'consent.giveconsent': 'Jag ger mitt samtycke',
@@ -136,6 +136,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'about.consentheader': 'Samtycke',
 
         'about.revokeconsentheader': 'Återta samtycke',
+        'about.revokeconsent.button.label': 'Återta samtycke',
         'about.revokeconsenttext': '<p>Du kan när som helst återta ditt samtycke.</p><p>Om du återtar ditt samtycke upphör Inera att behandla dina personuppgifter, inklusive intyg, i Mina intyg. Om du därefter lämnar ett nytt samtycke kan du återigen se dina intyg.</p><p>Även om du lämnar ett nytt samtycke kan det i vissa fall finnas intyg som inte går att visa i Mina intyg igen. Det beror på att den vårdgivare som har utfärdat intygen upphört med sin verksamhet, eller slutat att använda tjänsten av annan anledning, under den tid som du har återtagit ditt samtycke. De intyg som inte längre kan visas i Mina intyg finns alltid hos vårdgivaren eller hos den vårdgivare eller myndighet som övertagit verksamheten.</p> <p>Om du vill behålla intygen så kan du ladda ner intygen på din dator innan du återtar ditt samtycke. Gå till inkorgen och välj "Visa intyget", klicka sen på "Spara som PDF".<p>Om du inte återtar ditt samtycke finns dina intyg kvar i tjänsten.</p>',
         'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
         'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
@@ -157,7 +158,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'help.faq':[
             {title:'',questions:[
-                {question: 'Varför kan jag inte se mitt intyg?', answer: 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21.Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.'},
+                {question: 'Varför kan jag inte se mitt intyg?', answer: 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.'},
                 {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer:'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank" title="Ladda ner Adobe Reader">Adobe Reader</a>.'},
                 {question:'Vad betyder det när intyget är ersatt?', answer: '<p>Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att försäkringskassan begärt en komplettering och vården svarat med ett nytt intyg med de kompletterande uppgifterna.</p><p>På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.</p>'},
                 {question:'Varför kan jag inte se makulerade intyg?',answer:'<p>Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.</p><p>Om en vårdgivare makulerar ett intyg, är det inte längre tillgängliga i Mina intyg.</p>'}]},
