@@ -58,6 +58,7 @@
 
     <!-- Enable the FK SAML Auth filter for our FK entry point url -->
     <security:http pattern="/web/fksso/**"  authentication-manager-ref="samlAuthenticationManager" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
