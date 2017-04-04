@@ -11,7 +11,7 @@
 
         <div class="col-xs-6">
           <span ng-if="r.status.sent" class="text-nowrap">
-            {{r.status.timestamp | date:'longDate'}}
+            {{r.status.timestamp | date:'short'}}
             <span ng-attr-id="{{'success-result-' + r.id}}" message key="sendpage.dialog.label.received-by"></span>
           </span>
           <span ng-if="!r.status.sent">

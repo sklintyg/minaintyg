@@ -107,10 +107,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'archived.restoremodal.text': 'När du väljer att återställa intyget kommer det att flyttas till <i>Inkorgen</i>.<br><br>Du kan när som helst arkivera intyget igen.',
 
         /* SEND */
-        'sendpage.label.select-recipients.heading': 'Välj en eller flera mottagare som du vill skicka intyget till.',
-        'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till',
+        'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till.',
+        'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till.',
         'sendpage.label.some-selected': 'Du har valt att skicka intyget till följande mottagare:',
-        'sendpage.btn.send': 'Skicka',
+        'sendpage.btn.send': 'Skicka intyg',
         'sendpage.btn.clear': 'Rensa val',
         'sendpage.btn.remove-one': 'Ta bort',
         'sendpage.btn.select': 'Välj',
@@ -120,7 +120,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
         'sendpage.dialog.label.received-by': 'Mottaget av',
         'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
-        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av all mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta Ineras nationella kundservice.',
+        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <a href="http://www.inera.se/felanmalan" target="_blank">Ineras nationella kundservice</a>.',
         'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 

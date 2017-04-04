@@ -442,6 +442,15 @@ div.infobox h4 {
 margin-top:10px;
 }
 
+#mi-select-recipients .selection-list a.sent {
+	text-decoration: none;
+	cursor: default;
+}
+#mi-select-recipients .selection-list a.sent:hover {
+	background:none;
+	color: #008391;
+}
+
 #mi-select-recipients .selection-list a.unsent span {
 	text-decoration: underline;
 }
