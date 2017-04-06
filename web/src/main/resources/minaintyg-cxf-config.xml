@@ -54,6 +54,10 @@
       serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface"
       address="${certificates.getrecipientforcertificate.url}"/>
 
+  <jaxws:client id="listKnownRecipientsClient"
+      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsResponderInterface"
+      address="${certificates.listknownrecipients.url}"/>
+
   <!-- Client for the PingForConfiguration service on Intygstjanst -->
   <jaxws:client id="pingIntygstjanstForConfigurationClient"
       serviceClass="se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface"

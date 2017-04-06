@@ -44,7 +44,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
@@ -64,6 +63,8 @@ public class ApiControllerTest {
 
     private static final String CIVIC_REGISTRATION_NUMBER = "19121212-1212";
     private static final Personnummer PNR = new Personnummer(CIVIC_REGISTRATION_NUMBER);
+    private static final String FKASSA_RECIPIENT_ID = "FKASSA";
+    private static final String TRANSP_RECIPIENT_ID = "TRANSP";
 
     @Mock
     private CertificateService certificateService;
@@ -250,10 +251,10 @@ public class ApiControllerTest {
         // When
         Personnummer personNummer = new Personnummer(CIVIC_REGISTRATION_NUMBER);
         String certificateId = "abc-123";
-        List<String> recipients = Arrays.asList(PartKod.FKASSA.getValue(), PartKod.TRANSP.getValue());
+        List<String> recipients = Arrays.asList(FKASSA_RECIPIENT_ID, TRANSP_RECIPIENT_ID);
         List<SendToRecipientResult> expectedResponse = new ArrayList<>();
-        expectedResponse.add(new SendToRecipientResult(PartKod.FKASSA.getValue(), true, LocalDateTime.now()));
-        expectedResponse.add(new SendToRecipientResult(PartKod.TRANSP.getValue(), true, LocalDateTime.now()));
+        expectedResponse.add(new SendToRecipientResult(FKASSA_RECIPIENT_ID, true, LocalDateTime.now()));
+        expectedResponse.add(new SendToRecipientResult(TRANSP_RECIPIENT_ID, true, LocalDateTime.now()));
 
         mockCitizen(CIVIC_REGISTRATION_NUMBER);
         when(certificateService.sendCertificate(personNummer, certificateId, recipients)).thenReturn(expectedResponse);

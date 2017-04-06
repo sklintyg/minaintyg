@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('latestEvents', ['common.messageService',
-    function(messageService) {
+angular.module('minaintyg').directive('latestEvents', ['common.messageService', '$sessionStorage', '$rootScope',
+    function(messageService, $sessionStorage, $rootScope) {
         'use strict';
 
         function _getEventText(msgProperty, params) {
@@ -44,15 +44,25 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                 // Default hideHeader attribute to false if not explicitly set to true
                 scope.hideHeader = attrs.hideHeader === 'true';
 
+                scope.recipientsLoaded = angular.isDefined($sessionStorage.knownRecipients) && $sessionStorage.knownRecipients !== null && $sessionStorage.knownRecipients.length > 0;
+
+                $rootScope.$on('recipients.updated', function() {
+                    scope.recipientsLoaded = true;
+                });
+
                 // Compile event status message info (date and text)
                 scope.getEventInfo = function(status) {
                     var timestamp = status.timestamp ?
                         moment(status.timestamp).format('YYYY-MM-DD HH:mm') :
                         messageService.getProperty('certificates.status.unknowndatetime');
-                    var params = [messageService.getProperty('certificates.target.' + status.target.toLowerCase())];
+                    var params = [scope.getNameForTarget(status.target)];
                     var msgProperty = 'certificates.status.' + status.type.toLowerCase(); //cancelled, received [sic] or sent
                     var text = _getEventText(msgProperty, params);
                     return {timestamp: timestamp, text: text};
+                };
+
+                scope.getNameForTarget = function(targetId) {
+                    return $sessionStorage.knownRecipients[targetId.toUpperCase()];
                 };
 
                 scope.statusesShown = function(statuses, statusViewCollapsed) {

@@ -194,4 +194,11 @@ public class ApiController {
 
         return questions;
     }
+
+    @GET
+    @Path("/recipients/list")
+    @Produces(JSON_UTF8)
+    public List<UtlatandeRecipient> listAllRecipients() {
+        return certificateService.getAllRecipients();
+    }
 }

@@ -47,6 +47,7 @@ module.exports = function(config) {
             'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
             'src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js',
             'src/main/webapp/bower_components/momentjs/moment.js',
+            'src/main/webapp/bower_components/ngstorage/ngStorage.js',
             // endbower
 
             // Load these first

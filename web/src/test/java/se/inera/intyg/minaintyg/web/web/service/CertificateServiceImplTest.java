@@ -36,7 +36,6 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.xml.namespace.QName;
@@ -55,7 +54,6 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.integration.converter.util.ResultTypeUtil;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
@@ -101,6 +99,10 @@ public class CertificateServiceImplTest {
     private static final String CERTIFICATE_ID = "certificateId";
     private static final String CERTIFICATE_TYPE = "certificateType";
     private static final String INTYGSTJANST_LOGICAL_ADDRESS = "INTYGSTJANST_LOGICAL_ADDRESS";
+
+    private static final String MINAINTYG_RECIPIENT_ID = "INVANA";
+    private static final String FK_RECIPIENT_ID = "FKASSA";
+    private static final String TS_RECIPIENT_ID = "TRANSP";
 
     @Mock
     private ListCertificatesForCitizenResponderInterface listServiceMock;
@@ -153,7 +155,7 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
@@ -165,7 +167,7 @@ public class CertificateServiceImplTest {
         assertEquals(part, res.get().getMetaData().getStatus().get(0).getTarget());
         assertEquals(document, res.get().getInternalModel());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
     }
 
     @Test
@@ -180,14 +182,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertTrue(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
     }
 
     @Test
@@ -202,14 +204,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertFalse(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
     }
 
     @Test
@@ -223,14 +225,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
         assertFalse(res.isPresent()); // don't return revoked certificate
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
     }
 
     @Test(expected = ExternalWebServiceCallFailedException.class)
@@ -242,7 +244,7 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         ModuleApi api = mock(ModuleApi.class);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(PartKod.INVANA))).thenThrow(new ModuleException("error"));
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenThrow(new ModuleException("error"));
 
         service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
     }
@@ -369,8 +371,7 @@ public class CertificateServiceImplTest {
         assertNotNull(paramCaptor.getValue().getIntygsId().getRoot());
         assertEquals(CERTIFICATE_ID, paramCaptor.getValue().getIntygsId().getExtension());
         assertNotNull(paramCaptor.getValue().getPart().getCodeSystem());
-        assertNotNull(paramCaptor.getValue().getPart().getDisplayName());
-        assertEquals(PartKod.INVANA.name(), paramCaptor.getValue().getPart().getCode());
+        assertEquals(MINAINTYG_RECIPIENT_ID, paramCaptor.getValue().getPart().getCode());
         assertNotNull(paramCaptor.getValue().getStatus().getCodeSystem());
         assertNotNull(paramCaptor.getValue().getStatus().getDisplayName());
         assertEquals(StatusKod.DELETE.name(), paramCaptor.getValue().getStatus().getCode());
@@ -447,8 +448,8 @@ public class CertificateServiceImplTest {
         assertNotNull(paramCaptor.getValue().getIntygsId().getRoot());
         assertEquals(CERTIFICATE_ID, paramCaptor.getValue().getIntygsId().getExtension());
         assertNotNull(paramCaptor.getValue().getPart().getCodeSystem());
-        assertNotNull(paramCaptor.getValue().getPart().getDisplayName());
-        assertEquals(PartKod.INVANA.name(), paramCaptor.getValue().getPart().getCode());
+
+        assertEquals(MINAINTYG_RECIPIENT_ID, paramCaptor.getValue().getPart().getCode());
         assertNotNull(paramCaptor.getValue().getStatus().getCodeSystem());
         assertNotNull(paramCaptor.getValue().getStatus().getDisplayName());
         assertEquals(StatusKod.RESTOR.name(), paramCaptor.getValue().getStatus().getCode());
@@ -487,7 +488,7 @@ public class CertificateServiceImplTest {
         String personId = "19121212-1212";
         String citizenUsername = "19121212-1212";
         String utlatandeId = "1234567890";
-        List<String> recipients = Arrays.asList(PartKod.FKASSA.getValue(), PartKod.TRANSP.getValue());
+        List<String> recipients = Arrays.asList(FK_RECIPIENT_ID, TS_RECIPIENT_ID);
 
         SendCertificateToRecipientResponseType successResponse = new SendCertificateToRecipientResponseType();
         successResponse.setResult(ResultTypeUtil.okResult());
@@ -512,12 +513,12 @@ public class CertificateServiceImplTest {
 
         /* Verify */
         assertEquals(2, apiResponse.size());
-        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(PartKod.FKASSA.getValue()))
+        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
                 .findFirst().get();
         assertTrue(fkResult.isSent());
         assertNotNull(fkResult.getTimestamp());
 
-        SendToRecipientResult tsResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(PartKod.TRANSP.getValue()))
+        SendToRecipientResult tsResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(TS_RECIPIENT_ID))
                 .findFirst().get();
         assertFalse(tsResult.isSent());
         assertNull(tsResult.getTimestamp());
@@ -527,7 +528,7 @@ public class CertificateServiceImplTest {
         // NOTE: This mocking assumes that they are processed in the order that they are enumerated in the recipients
         // list
         verify(sendServiceMock, times(2)).sendCertificateToRecipient(eq(INTYGSTJANST_LOGICAL_ADDRESS), arguments.capture());
-        verify(monitoringServiceMock).logCertificateSend(utlatandeId, PartKod.FKASSA.getValue());
+        verify(monitoringServiceMock).logCertificateSend(utlatandeId, FK_RECIPIENT_ID);
 
         List<SendCertificateToRecipientType> capturedArguments = arguments.getAllValues();
         SendCertificateToRecipientType actualRequestFK = capturedArguments.get(0);
@@ -537,7 +538,7 @@ public class CertificateServiceImplTest {
         assertNotNull(actualRequestFK.getIntygsId().getRoot());
         assertEquals(utlatandeId, actualRequestFK.getIntygsId().getExtension());
         assertNotNull(actualRequestFK.getMottagare().getCodeSystem());
-        assertEquals(PartKod.FKASSA.name(), actualRequestFK.getMottagare().getCode());
+        assertEquals(FK_RECIPIENT_ID, actualRequestFK.getMottagare().getCode());
         assertNotNull(actualRequestFK.getSkickatAv().getPersonId().getRoot());
         assertEquals(citizenUsername.replace("-", ""), actualRequestFK.getSkickatAv().getPersonId().getExtension());
 
@@ -548,7 +549,7 @@ public class CertificateServiceImplTest {
         assertNotNull(actualRequestTS.getIntygsId().getRoot());
         assertEquals(utlatandeId, actualRequestTS.getIntygsId().getExtension());
         assertNotNull(actualRequestTS.getMottagare().getCodeSystem());
-        assertEquals(PartKod.TRANSP.name(), actualRequestTS.getMottagare().getCode());
+        assertEquals(TS_RECIPIENT_ID, actualRequestTS.getMottagare().getCode());
         assertNotNull(actualRequestTS.getSkickatAv().getPersonId().getRoot());
         assertEquals(citizenUsername.replace("-", ""), actualRequestTS.getSkickatAv().getPersonId().getExtension());
     }
@@ -565,10 +566,10 @@ public class CertificateServiceImplTest {
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
         /* Then */
-        final List<SendToRecipientResult> apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", Arrays.asList("FK"));
+        final List<SendToRecipientResult> apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
 
         /* Verify */
-        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(PartKod.FKASSA.getValue()))
+        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
                 .findFirst().get();
         assertFalse(fkResult.isSent());
     }
@@ -582,10 +583,10 @@ public class CertificateServiceImplTest {
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
         /* Then */
-        final List<SendToRecipientResult> apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", Arrays.asList("FK"));
+        final List<SendToRecipientResult> apiResponse = service.sendCertificate(new Personnummer("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
 
          /* Verify */
-        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(PartKod.FKASSA.getValue()))
+        SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
                 .findFirst().get();
         assertFalse(fkResult.isSent());
     }

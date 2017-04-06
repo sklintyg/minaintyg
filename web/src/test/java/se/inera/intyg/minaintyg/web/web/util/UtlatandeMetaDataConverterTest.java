@@ -141,7 +141,7 @@ public class UtlatandeMetaDataConverterTest {
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
         assertEquals(CertificateState.SENT, result.getStatuses().get(0).getType());
-        assertEquals("FK", result.getStatuses().get(0).getTarget());
+        assertEquals("FKASSA", result.getStatuses().get(0).getTarget());
         assertEquals(statusTidpunkt, result.getStatuses().get(0).getTimestamp());
     }
 
@@ -163,7 +163,7 @@ public class UtlatandeMetaDataConverterTest {
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
         assertEquals(CertificateState.CANCELLED, result.getStatuses().get(0).getType());
-        assertEquals("TS", result.getStatuses().get(0).getTarget());
+        assertEquals("TRANSP", result.getStatuses().get(0).getTarget());
         assertEquals(statusTidpunkt, result.getStatuses().get(0).getTimestamp());
     }
 

@@ -40,7 +40,6 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
@@ -54,6 +53,7 @@ import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedExcept
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.service.repo.UtlatandeRecipientRepo;
 import se.inera.intyg.minaintyg.web.web.util.SendCertificateToRecipientTypeConverter;
 import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
@@ -74,6 +74,7 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
 public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateServiceImpl.class);
+    private static final String RECIPIENT_INVANA = "INVANA";
 
     /* Mapper to serialize/deserialize Utlatanden. */
     protected static ObjectMapper objectMapper = new CustomObjectMapper();
@@ -104,6 +105,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private UtlatandeMetaDataConverter utlatandeMetaDataConverter;
+
+    @Autowired
+    private UtlatandeRecipientRepo recipientRepo;
 
     // This value is injected by the setter method
     private String logicalAddress;
@@ -144,7 +148,7 @@ public class CertificateServiceImpl implements CertificateService {
     public Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
         CertificateResponse certificate;
         try {
-            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, PartKod.INVANA);
+            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, RECIPIENT_INVANA);
         } catch (ModuleException | ModuleNotFoundException e) {
             LOGGER.error("Failed to fetch utlatande '{}' from Intygstjänsten: {}", certificateId, e.getMessage());
             throw new ExternalWebServiceCallFailedException(e.getMessage(), null);
@@ -168,9 +172,7 @@ public class CertificateServiceImpl implements CertificateService {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setPersonId(InternalConverterUtil.getPersonId(civicRegistrationNumber));
         params.setArkiverade(arkiverade);
-        Part part = new Part();
-        part.setCode("INVANA");
-        part.setCodeSystem("769bb12b-bd9f-4203-a5cd-fd14f2eb3b80");
+        Part part = toPart(RECIPIENT_INVANA);
         params.setPart(part);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
@@ -213,6 +215,11 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
+    public List<UtlatandeRecipient> getAllRecipients() {
+        return recipientRepo.getAllRecipients();
+    }
+
+    @Override
     public UtlatandeMetaData archiveCertificate(String certificateId, Personnummer civicRegistrationNumber) {
         UtlatandeMetaData result = setCertificateState(certificateId, civicRegistrationNumber, StatusKod.DELETE);
         monitoringService.logCertificateArchived(certificateId);
@@ -246,7 +253,7 @@ public class CertificateServiceImpl implements CertificateService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
         SetCertificateStatusType parameters = new SetCertificateStatusType();
         parameters.setIntygsId(toIntygsId(certificateId));
-        parameters.setPart(toPart(PartKod.INVANA));
+        parameters.setPart(toPart(RECIPIENT_INVANA));
         parameters.setStatus(toStatus(status));
         parameters.setTidpunkt(LocalDateTime.now());
 
@@ -264,11 +271,10 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private Part toPart(PartKod partkod) {
+    private Part toPart(String id) {
         Part part = new Part();
-        part.setCode(partkod.name());
+        part.setCode(id);
         part.setCodeSystem(KV_PART_CODE_SYSTEM);
-        part.setDisplayName(partkod.getDisplayName());
         return part;
     }
 

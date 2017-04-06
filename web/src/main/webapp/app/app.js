@@ -22,7 +22,14 @@
 (function() {
     'use strict';
 
-    var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
+    var app = angular.module('minaintyg', [
+        'ui.bootstrap',
+        'ngCookies',
+        'ui.router',
+        'ngSanitize',
+        'ngAnimate',
+        'ngStorage',
+        'common']);
 
     // before we do anything...we need all modules
     var moduleArray = [];
@@ -87,8 +94,10 @@
         });
     });
 
-    app.run([ '$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService', 'minaintyg.messages',
-        function($log, $rootScope, $state, $window, moduleService, messageService, miMessages) {
+    app.run([ '$log', '$rootScope', '$state', '$window', '$sessionStorage', 'common.moduleService',
+        'common.messageService', 'common.IntygListService', 'minaintyg.messages',
+        function($log, $rootScope, $state, $window, $sessionStorage, moduleService, messageService, IntygListService,
+            miMessages) {
             $rootScope.lang = 'sv';
             $rootScope.DEFAULT_LANG = 'sv';
             $rootScope.MI_CONFIG = MI_CONFIG;
@@ -99,6 +108,19 @@
 
             $window.doneLoading = false;
             $window.rendered = true;
+
+            // Inject list of known recipients into $sessionStorage
+            $sessionStorage.knownRecipients = {};
+            IntygListService.getKnownRecipients(function(list) {
+
+                if(!angular.isDefined(list) || list === null){
+                    return null;
+                }
+
+                for(var i = 0; i < list.length; i++) {
+                    $sessionStorage.knownRecipients[list[i].id] = list[i].name;
+                }
+            });
 
             $rootScope.$on('$stateChangeStart',
                 function(/*event, toState, toParams, fromState, fromParams*/){
@@ -201,7 +223,6 @@
                     // Everything is loaded, bootstrap the application with all dependencies.
                     document.documentElement.setAttribute('ng-app', 'minaintyg');
                     angular.bootstrap(document, allModules);
-
                 });
             }).fail(function(error) {
                 if (window.console) {
