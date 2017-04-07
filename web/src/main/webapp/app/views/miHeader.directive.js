@@ -23,7 +23,6 @@ angular.module('minaintyg').directive('miHeader',
 
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 userName: '@'
             },

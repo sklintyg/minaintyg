@@ -1,0 +1,59 @@
+
+h2 {
+  font-weight: normal;
+}
+
+.btn {
+  padding: $mi-button-padding;
+}
+
+.btn-secondary {
+  @include button-variant($mi-button-secondary, $mi-button-bg, $mi-button-secondary);
+}
+
+.btn-third {
+  @include button-variant($mi-button-third, $mi-button-bg, $mi-button-third);
+}
+
+.btn-primary {
+  &:hover {
+    color: $mi-button-bg;
+    background-color: $mi-button-primary;
+    border-color: $mi-button-primary;
+  }
+}
+
+.btn-secondary {
+  &:hover {
+    color: $mi-button-bg;
+    background-color: $mi-button-secondary;
+    border-color: $mi-button-secondary;
+  }
+}
+
+.btn-third {
+  &:hover {
+    color: $mi-button-bg;
+    background-color: $mi-button-third;
+    border-color: $mi-button-third;
+  }
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-third {
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+    color: $mi-button-disabled;
+    border-color: $mi-button-disabled;
+  }
+}
+
+.modal {
+  .modal-footer {
+    border-top: 0;
+    text-align: left;
+  }
+}

@@ -33,9 +33,7 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->
@@ -57,40 +55,26 @@
 <body>
 
   <mvk-top-bar></mvk-top-bar>
-  <div class="container" id="mi-logo-header">
-    <div class="content-container">
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
-          <a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
-          <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
 
   <mi-cookie-banner></mi-cookie-banner>
 
   <div class="container">
-
-    <div id="content-container">
-      <div class="content">
-
-        <div class="row">
-          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <%-- No script to show at least something when javascript is off --%>
-            <noscript>
-              <h1>
-                <span><spring:message code="error.noscript.title" /></span>
-              </h1>
-              <div class="alert alert-error">
-                <spring:message code="error.noscript.text" />
-              </div>
-            </noscript>
-            <%-- ng-view that holds dynamic content managed by angular app --%>
-            <div id="view" ui-view></div>
-          </div>
+    <div class="content">
+      <div class="row">
+        <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <%-- No script to show at least something when javascript is off --%>
+          <noscript>
+            <h1>
+              <span><spring:message code="error.noscript.title" /></span>
+            </h1>
+            <div class="alert alert-error">
+              <spring:message code="error.noscript.text" />
+            </div>
+          </noscript>
+          <%-- ng-view that holds dynamic content managed by angular app --%>
+          <div id="view" ui-view></div>
         </div>
       </div>
     </div>
@@ -106,7 +90,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
@@ -119,8 +104,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
       <!-- endbower -->
       <script type="text/javascript" src="/app/app.js"></script>
     </c:otherwise>

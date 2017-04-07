@@ -32,7 +32,6 @@
 <title><spring:message code="application.name" /> : Version</title>
 
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->

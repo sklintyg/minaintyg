@@ -22,7 +22,6 @@ angular.module('minaintyg').directive('miCompactCertificateHeader', [ 'common.mo
 
     return {
         restrict: 'E',
-        replace: true,
         scope: {
             meta: '=',
             cert: '='

@@ -35,9 +35,7 @@
 <title><spring:message code="application.name" /></title>
 
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->
@@ -61,8 +59,6 @@
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
 
   <div class="container">
-
-    <div id="content-container">
       <div class="content">
         <mi-header user-name=""></mi-header>
         <div id="navigation-container"></div>
@@ -83,8 +79,6 @@
           </div>
         </div>
       </div>
-
-    </div>
   </div>
 
   <c:choose>
@@ -97,7 +91,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
@@ -110,8 +105,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
       <!-- endbower -->
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>

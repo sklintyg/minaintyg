@@ -47,9 +47,7 @@ if ("prod".equals(profile)) {
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->
@@ -75,65 +73,46 @@ if ("prod".equals(profile)) {
 
 <body ng-controller="welcomeController">
 
-  <!--
-    The MVK top bar header is copied here from mvkTopBar.directive.html file.
-    The purpose is to get Protractor to work with Angular when testing.
-  -->
-  <div id="headerContainer" role="banner" class="affix">
-    <div id="header">
-      <div class="container-fluid">
-        <a href="/web/tillbaka-till-mvk1177 Vårdguiden" class="backButton" id="backToMvkLink">
-          <message>1177 Vårdguiden</message>
-        </a>
-        <div class="clear"></div>
-      </div>
-    </div>
-  </div>
-
   <div class="container welcomepage">
+    <div class="content">
 
-    <div id="content-container">
-      <div class="content">
+      <div id="navigation-container"></div>
 
-        <div id="navigation-container"></div>
+      <div class="row-fluid">
+        <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 35px;">
+          <pre>Detta är en startsida som inte skall finns tillgänglig i en produktionsmiljö!</pre>
+          <h1>Testinloggningar</h1>
 
-        <div class="row-fluid">
-          <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 35px;">
-            <pre>Detta är en startsida som inte skall finns tillgänglig i en produktionsmiljö!</pre>
-            <h1>Testinloggningar</h1>
+          <p>
+            <a id="loggaInSomTolvan" href="/web/sso?guid=19121212-1212">19121212-1212</a>
+          </p>
 
-            <p>
-              <a id="loggaInSomTolvan" href="/web/sso?guid=19121212-1212">19121212-1212</a>
-            </p>
+          <p>
+            <a href="/web/sso?guid=19121212-0000">19121212-0000</a>
+          </p>
 
-            <p>
-              <a href="/web/sso?guid=19121212-0000">19121212-0000</a>
-            </p>
+          <p>
+            <a href="/web/sso?guid=19121212-0001">19121212-0001</a>
+          </p>
 
-            <p>
-              <a href="/web/sso?guid=19121212-0001">19121212-0001</a>
-            </p>
+          <p>
+            <a href="/web/sso?guid=19121212-0002">19121212-0002</a>
+          </p>
 
-            <p>
-              <a href="/web/sso?guid=19121212-0002">19121212-0002</a>
-            </p>
+          <p>
+            <a href="/web/sso?guid=19121212-0003">19121212-0003</a>
+          </p>
 
-            <p>
-              <a href="/web/sso?guid=19121212-0003">19121212-0003</a>
-            </p>
+          <h2>Logga in med annat guid</h2>
 
-            <h2>Logga in med annat guid</h2>
-
-            <form id="customguidform" class="navbar-form pull-left">
-              <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid">
-              <input id="loginBtn" type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;" value="logga in">
-            </form>
-          </div>
+          <form id="customguidform" class="navbar-form pull-left">
+            <input id="guid" type="text" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" placeholder="ange guid">
+            <input id="loginBtn" type="button" class="btn" onclick="location.href='/web/sso?guid=' + this.form.guid.value;" value="logga in">
+          </form>
         </div>
       </div>
-      <a href="/pubapp/showcase/index.html" target="_blank">Komponentbilbiotek (kräver inloggning först)</a><br/>
-
     </div>
+    <a href="/pubapp/showcase/index.html" target="_blank">Komponentbilbiotek (kräver inloggning först)</a><br/>
   </div>
 
 </body>

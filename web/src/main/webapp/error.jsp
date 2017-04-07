@@ -44,9 +44,7 @@
 <link rel="apple-touch-icon-precomposed" href="/img/touch-icon-small.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/touch-icon-big.png" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>?<spring:message code="buildNumber" />">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->
@@ -67,80 +65,66 @@
 <body ng-app="minaintyg">
 
   <mvk-top-bar></mvk-top-bar>
-  <div class="container" id="mi-logo-header">
-    <div class="content-container">
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
-          <a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
-          <mi-header user-name="<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username" /></sec:authorize>"></mi-header>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <mi-header user-name="<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username" /></sec:authorize>"></mi-header>
 
   <div class="container">
+    <div class="content">
+      <%--         <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header> --%>
+      <div id="navigation-container"></div>
 
-    <div id="content-container">
-      <div class="content">
-        <%--         <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header> --%>
-        <div id="navigation-container"></div>
+      <div class="row">
+        <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
-        <div class="row">
-          <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+          <c:choose>
+            <c:when test="${param.reason eq 'logout'}">
+              <h1>
+                <spring:message code="info.loggedout.title" />
+              </h1>
+              <div id="loggedOut" class="alert alert-info">
+                <spring:message code="info.loggedout.text" />
+              </div>
+              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+              <div class="btn-row">
+                <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
+                    code="info.loggedout.fk.loginagain" /></a>
+              </div>
+            </c:when>
 
-            <c:choose>
-              <c:when test="${param.reason eq 'logout'}">
-                <h1>
-                  <spring:message code="info.loggedout.title" />
-                </h1>
-                <div id="loggedOut" class="alert alert-info">
-                  <spring:message code="info.loggedout.text" />
-                </div>
-                <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
-                <div class="btn-row">
-                  <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
-                      code="info.loggedout.fk.loginagain" /></a>
-                </div>
-              </c:when>
+            <c:when test="${param.reason eq 'denied'}">
+              <h1>
+                <spring:message code="error.noauth.title" />
+              </h1>
+              <div id="noAuth" class="alert alert-info">
+                <spring:message code="error.noauth.text" />
+              </div>
+              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+              <div class="btn-row">
+                <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
+                    code="info.loggedout.fk.loginagain" /></a>
+              </div>
+            </c:when>
 
-              <c:when test="${param.reason eq 'denied'}">
-                <h1>
-                  <spring:message code="error.noauth.title" />
-                </h1>
-                <div id="noAuth" class="alert alert-info">
-                  <spring:message code="error.noauth.text" />
-                </div>
-                <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
-                <div class="btn-row">
-                  <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
-                      code="info.loggedout.fk.loginagain" /></a>
-                </div>
-              </c:when>
+            <c:when test="${param.reason eq 'notfound'}">
+              <h1>
+                <spring:message code="error.notfound.title" />
+              </h1>
+              <div id="notFound" class="alert alert-error">
+                <spring:message code="error.notfound.text" />
+              </div>
+            </c:when>
 
-              <c:when test="${param.reason eq 'notfound'}">
-                <h1>
-                  <spring:message code="error.notfound.title" />
-                </h1>
-                <div id="notFound" class="alert alert-error">
-                  <spring:message code="error.notfound.text" />
-                </div>
-              </c:when>
-
-              <c:otherwise>
-                <h1>
-                  <spring:message code="error.generictechproblem.title" />
-                </h1>
-                <div id="genericTechProblem" class="alert alert-error">
-                  <spring:message code="error.generictechproblem.text" />
-                </div>
-              </c:otherwise>
-            </c:choose>
-          </div>
+            <c:otherwise>
+              <h1>
+                <spring:message code="error.generictechproblem.title" />
+              </h1>
+              <div id="genericTechProblem" class="alert alert-error">
+                <spring:message code="error.generictechproblem.text" />
+              </div>
+            </c:otherwise>
+          </c:choose>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -154,7 +138,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
@@ -167,8 +152,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
       <!-- endbower -->
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>

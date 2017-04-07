@@ -1,12 +1,23 @@
-<span class="mi-header">
-	 <div id="status">
-	     <div class="status-row navbar-user-info" ng-show="userName.length">
-	         <message key="nav.label.loggedinas"></message><br>
-	         <span class="logged-in">{{userName}}</span><br>
-	         <a href="/web/logga-ut"  id="mvklogoutLink" class="mi-header-logout"><message key="mvk.header.logouttext"></message></a>
-	     </div>
-	     <div class="navbar-user-avatar">
-	     	<img class="user-avatar" alt="" ng-src="/img/avatar_retina.png" />
-	     </div>
-	 </div>
-</span>
+<div id="mi-logo-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-left">
+				<a href="/web/start" class="navbar-brand"><img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white-retina.png" /></a>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">
+				<span class="mi-header">
+					 <div id="status">
+							 <div class="status-row navbar-user-info" ng-show="userName.length">
+									 <message key="nav.label.loggedinas"></message><br>
+									 <span class="logged-in">{{userName}}</span><br>
+									 <a href="/web/logga-ut"  id="mvklogoutLink" class="mi-header-logout"><message key="mvk.header.logouttext"></message></a>
+							 </div>
+							 <div class="navbar-user-avatar">
+								<img class="user-avatar" alt="" ng-src="/img/avatar_retina.png" />
+							 </div>
+					 </div>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

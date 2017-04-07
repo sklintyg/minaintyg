@@ -1,0 +1,68 @@
+// Inera variables
+
+$mi-body-bg: #f3f4f6;
+$mi-text-color: #333;
+
+$mi-header-bg: #21263D;
+
+$mi-menu-bg: #E9EAF0;
+$mi-menu-bg-active: #0F6EDC; // TODO: add states colors
+
+$mi-mvk-header-bg-color:  #378998;
+
+// Font
+$mi-font: Arial, sans-serif;
+$mi-font-size-h1: 18px;
+$mi-font-size-h2: 16px;
+$mi-font-size-h3: 14px;
+$mi-heading-weight: bold;
+
+// Buttons
+$mi-button-bg: #fff;
+$mi-button-primary: #0f6edc;
+$mi-button-secondary: #009200;
+$mi-button-third: #4A4A4A;
+$mi-button-disabled: #777;
+$mi-button-radius: 2px;
+$mi-button-padding: 10px 12px;
+
+// Link
+$mi-link-color: #378998;
+$mi-link-external: #0F6EDC;
+$mi-link-secret: #FF9C5B;
+
+// Modal
+$mi-modal-header-border-color: #333;
+
+// Intyg
+$mi-intyg-header-bg: #43799A;
+$mi-intyg-header-color: #fff;
+
+
+// Bootstrap variables
+$icon-font-path: '../bower_components/bootstrap-sass/assets/fonts/bootstrap/';
+
+$body-bg: $mi-body-bg;
+$text-color: $mi-text-color;
+
+$navbar-default-bg: $mi-menu-bg;
+
+$navbar-default-link-active-color: #fff;
+$navbar-default-link-active-bg: $mi-menu-bg-active;
+
+$btn-primary-bg: $mi-button-bg;
+$btn-primary-color: $mi-button-primary;
+$btn-primary-border: $mi-button-primary;
+
+$btn-border-radius-base: $mi-button-radius;
+
+$font-family-base: $mi-font;
+$font-size-h1: $mi-font-size-h1;
+$font-size-h2: $mi-font-size-h2;
+$font-size-h3: $mi-font-size-h2;
+
+$headings-font-weight: $mi-heading-weight;
+
+$link-color: $mi-link-color;
+
+$modal-header-border-color: $mi-modal-header-border-color;

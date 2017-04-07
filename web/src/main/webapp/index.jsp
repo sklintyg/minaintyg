@@ -36,9 +36,7 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/mvk-topbar/css/styles.css"/>">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
 
 <!-- injector:css -->
@@ -60,8 +58,8 @@
 <body ng-app="minaintyg">
 
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
-  <div class="container" id="mi-logo-header">
-    <div class="content-container">
+  <div id="mi-logo-header">
+    <div class="container">
       <a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
     </div>
   </div>
@@ -69,41 +67,38 @@
   <mi-cookie-banner></mi-cookie-banner>
 
   <div class="container">
+    <div class="content">
 
-    <div id="content-container">
-      <div class="content">
+      <!--         <div id="navigation-container"> -->
+      <!--           <mi-header user-name=""></mi-header> -->
+      <!--         </div> -->
 
-        <!--         <div id="navigation-container"> -->
-        <!--           <mi-header user-name=""></mi-header> -->
-        <!--         </div> -->
-
-        <div id="content-body" class="row">
-          <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-            <h1>Välkommen till Mina intyg</h1>
-            <p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
-            <p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan.
-              Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
-            <p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.
-              Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
-            <p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras
-              i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen
-              person.</p>
-            <p>
-              <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
-                hur du skaffar en e-legitimation</a>
-            </p>
-            <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
-            <div class="btn-row">
-              <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
-            </div>
-
+      <div id="content-body" class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+          <h1>Välkommen till Mina intyg</h1>
+          <p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
+          <p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan.
+            Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
+          <p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.
+            Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
+          <p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras
+            i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen
+            person.</p>
+          <p>
+            <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
+              hur du skaffar en e-legitimation</a>
+          </p>
+          <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
+          <div class="btn-row">
+            <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
           </div>
-          <div class="hidden-xs col-sm-5 col-md-5 col-lg-5">
-            <img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
-          </div>
+
         </div>
-
+        <div class="hidden-xs col-sm-5 col-md-5 col-lg-5">
+          <img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -117,7 +112,7 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
@@ -131,8 +126,8 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
+      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
       <!-- endbower -->
       <script type="text/javascript" src="/app/base/app.js"></script>
     </c:otherwise>

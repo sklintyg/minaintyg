@@ -23,7 +23,6 @@ angular.module('minaintyg').directive('miMainNavigation',
 
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 linkPrefix: '@',
                 defaultActive: '@'

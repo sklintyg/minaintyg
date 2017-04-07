@@ -93,11 +93,11 @@
                         <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" max-statuses="2"></latest-events>
                       </div>
                       <div class="hidden-xs col-sm-6 col-md-4 col-lg-4 text-right">
-                         <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-inverse" ng-click="openArchiveDialog(cert)"
+                         <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-primary" ng-click="openArchiveDialog(cert)"
                                  uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
                           <span message key="button.archive"></span>
                         </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
                           <span message key="button.show"></span>
                         </button>
                       </div>
@@ -108,7 +108,7 @@
                                 uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
                           <span message key="button.archive"></span>
                         </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-success" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
                           <span message key="button.show"></span>
                         </button>
                       </div>

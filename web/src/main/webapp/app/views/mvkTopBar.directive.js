@@ -23,7 +23,6 @@ angular.module('minaintyg').directive('mvkTopBar',
 
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 hideLogout: '@'
             },

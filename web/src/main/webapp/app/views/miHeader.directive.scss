@@ -1,47 +1,61 @@
-.mi-header {
-  margin-left: auto;
-  margin-right: auto;
+mi-header {
+  #mi-logo-header {
+    background-color: $mi-header-bg;
+    height: 80px;
 
-  .navbar-user-avatar {
-    display: inline-block;
+    .navbar-brand {
+      padding: 23px 15px 15px 0 !important;
+    }
+
+    .page-logo {
+      height: 27px;
+      width: 145px;
+    }
+  }
+
+  .mi-header {
+    margin-left: auto;
+    margin-right: auto;
+
+    .navbar-user-avatar {
+      display: inline-block;
+      float: right;
+      padding: 15px 0 0;
+
+      img {
+        height: 34px;
+        width: 34px;
+      }
+    }
+
+    .navbar-user-info {
+      display: inline-block;
+      padding: 15px 15px 15px 0 !important;
+
+      span {
+        color: #fff;
+      }
+    }
+  }
+
+  #status {
+    color: #fff;
+    display: inline-flex;
     float: right;
-    padding: 15px 0 0;
+    font-size: 12px;
+    line-height: 146%;
+    padding: 0;
+    text-align: right;
 
-    img {
-      height: 34px;
-      width: 34px;
-    }
-  }
+    a, a span {
+      color: #28b4c4;
+      cursor: pointer;
+      font-size: 13px;
+      text-decoration: none;
 
-  .navbar-user-info {
-    display: inline-block;
-    padding: 15px 15px 15px 0 !important;
-
-    span {
-      color: #fff;
-    }
-  }
-}
-
-
-
-#status {
-  color: #fff;
-  display: inline-flex;
-  float: right;
-  font-size: 12px;
-  line-height: 146%;
-  padding: 0;
-  text-align: right;
-
-  a, a span {
-    color: #28b4c4;
-    cursor: pointer;
-    font-size: 13px;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
