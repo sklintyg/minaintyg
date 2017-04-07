@@ -34,6 +34,7 @@
     <bean class="se.inera.intyg.minaintyg.web.web.security.MvkValidationServiceAdvice">
       <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-?[0-9]{4}" />
     </bean>
+    <security:http security="none" pattern="/welcome.jsp" />
     <security:http security="none" pattern="/anvandare/consent/**"/>
   </beans>
 
@@ -57,6 +58,7 @@
 
     <!-- Enable the FK SAML Auth filter for our FK entry point url -->
     <security:http pattern="/web/fksso/**"  authentication-manager-ref="samlAuthenticationManager" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
@@ -68,7 +70,6 @@
   </beans>
 
   <beans>
-    <security:http security="none" pattern="/welcome.jsp" />
     <security:http pattern="/" entry-point-ref="mvkEntryPoint">
       <security:headers>
         <security:frame-options />

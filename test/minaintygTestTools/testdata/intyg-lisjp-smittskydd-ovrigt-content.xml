@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:RegisterCertificate
-    xmlns="urn:riv:clinicalprocess:healthcond:certificate:2"
-    xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2"
-    xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:2">
+    xmlns="urn:riv:clinicalprocess:healthcond:certificate:3"
+    xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3"
+    xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:3">
   <ns2:intyg>
     <intygs-id>
       <ns3:root>123456-7890</ns3:root>

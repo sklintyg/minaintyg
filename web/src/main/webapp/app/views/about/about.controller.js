@@ -69,6 +69,7 @@ angular.module('minaintyg').controller('minaintyg.AboutCtrl',
                         revokeConsent();
                     },
                     button1id: 'revoke-consent-button',
+                    button1text: 'about.revokeconsent.button.label',
                     autoClose: false
                 });
             };

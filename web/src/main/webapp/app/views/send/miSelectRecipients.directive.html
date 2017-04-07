@@ -16,7 +16,7 @@
                                                                      key="sendpage.btn.select"></span></a>
 
             <a ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">{{r.name}}<span
-                class="pull-right">Skickat {{r.sentTimestamp | date:'longDate'}}</span></a>
+                class="pull-right">Skickat {{r.sentTimestamp | date:'shortDate'}}</span></a>
           </li>
         </ul>
       </div>

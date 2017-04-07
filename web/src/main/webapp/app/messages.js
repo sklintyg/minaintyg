@@ -59,7 +59,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'consent.consenttext5': '',
 
         'consent.consentheader6': '<h3>Ge och återta samtycke</h3>',
-        'consent.consenttext6': '<p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
+        'consent.consenttext6': '<p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta ditt samtycke. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
 
         'consent.confirmtext': 'Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg.',
         'consent.giveconsent': 'Jag ger mitt samtycke',
@@ -107,10 +107,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'archived.restoremodal.text': 'När du väljer att återställa intyget kommer det att flyttas till <i>Inkorgen</i>.<br><br>Du kan när som helst arkivera intyget igen.',
 
         /* SEND */
-        'sendpage.label.select-recipients.heading': 'Välj en eller flera mottagare som du vill skicka intyget till.',
-        'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till',
+        'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till.',
+        'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till.',
         'sendpage.label.some-selected': 'Du har valt att skicka intyget till följande mottagare:',
-        'sendpage.btn.send': 'Skicka',
+        'sendpage.btn.send': 'Skicka intyg',
         'sendpage.btn.clear': 'Rensa val',
         'sendpage.btn.remove-one': 'Ta bort',
         'sendpage.btn.select': 'Välj',
@@ -120,7 +120,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
         'sendpage.dialog.label.received-by': 'Mottaget av',
         'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
-        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av all mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta Ineras nationella kundservice.',
+        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <a href="http://www.inera.se/felanmalan" target="_blank">Ineras nationella kundservice</a>.',
         'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 
@@ -136,6 +136,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'about.consentheader': 'Samtycke',
 
         'about.revokeconsentheader': 'Återta samtycke',
+        'about.revokeconsent.button.label': 'Återta samtycke',
         'about.revokeconsenttext': '<p>Du kan när som helst återta ditt samtycke.</p><p>Om du återtar ditt samtycke upphör Inera att behandla dina personuppgifter, inklusive intyg, i Mina intyg. Om du därefter lämnar ett nytt samtycke kan du återigen se dina intyg.</p><p>Även om du lämnar ett nytt samtycke kan det i vissa fall finnas intyg som inte går att visa i Mina intyg igen. Det beror på att den vårdgivare som har utfärdat intygen upphört med sin verksamhet, eller slutat att använda tjänsten av annan anledning, under den tid som du har återtagit ditt samtycke. De intyg som inte längre kan visas i Mina intyg finns alltid hos vårdgivaren eller hos den vårdgivare eller myndighet som övertagit verksamheten.</p> <p>Om du vill behålla intygen så kan du ladda ner intygen på din dator innan du återtar ditt samtycke. Gå till inkorgen och välj "Visa intyget", klicka sen på "Spara som PDF".<p>Om du inte återtar ditt samtycke finns dina intyg kvar i tjänsten.</p>',
         'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
         'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
@@ -157,10 +158,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'help.faq':[
             {title:'',questions:[
-                {question: 'Varför kan jag inte se mitt intyg?', answer: 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21.Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.'},
+                {question: 'Varför kan jag inte se mitt intyg?', answer: 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.'},
                 {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer:'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank" title="Ladda ner Adobe Reader">Adobe Reader</a>.'},
                 {question:'Vad betyder det när intyget är ersatt?', answer: '<p>Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att försäkringskassan begärt en komplettering och vården svarat med ett nytt intyg med de kompletterande uppgifterna.</p><p>På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.</p>'},
-                {question:'Varför kan jag inte se makulerade intyg?',answer:'<p>Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.</p><p>Om en vårdgivare makulerar ett intyg, är det inte längre tillgängliga i Mina intyg.</p>'}]},
+                {question:'Varför kan jag inte se makulerade intyg?',answer:'<p>Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.</p><p>Om en vårdgivare makulerar ett intyg, är det inte tillgängligt i Mina intyg.</p>'}]},
             {title:'Frågor och svar om samtycke',questions:[
                 {question:'Varför måste jag ge samtycke?',answer:'För att kunna använda tjänsten Mina intyg måste du först lämna ditt samtycke till att dina intyg får lagras i lagringstjänst kopplad till Mina intyg samt visas och hanteras i Mina intyg. Utan ditt samtycke till att dina personuppgifter i intygen hanteras i Mina intyg kan tjänsten inte användas.'},
                 {question:'Vad innebär samtycke?',answer:'Samtycke är en frivillig, otvetydig och särskild viljeyttring genom vilken du godkänner den personuppgiftsbehandling som sker genom att dina intyg hanteras i Mina intyg. Samtycket innebär att intyg som utfärdats inom hälso- och sjukvården kan synliggöras och hanteras i Mina intyg. I Mina intyg kan du själv läsa, spara ner på din dator och skriva ut dina intyg samt skicka intyg vidare till exempelvis Försäkringskassan.'},
@@ -172,9 +173,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
             ]},
             {title:'Frågor och svar om säkerhet',questions:[
                 {question:'Är det säkert att använda Mina intyg?',answer:'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation), E-legitimation är ett säkert sätt att logga in på.'},
-                {question:'Hur skyddas mina uppgifter?',answer:'All data i Mina intyg lagras på ett säkert sätt. Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PuL), Patientdatalagen (PDL) och av Datainspektionen.'},
+                {question:'Hur skyddas mina uppgifter?',answer:'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PuL), Patientdatalagen (PDL) och av Datainspektionen.'},
                 {question:'Kan andra komma åt mina uppgifter?',answer:'Nej, i och med att du bara kan logga in med e-legitimation, vars inloggning baseras på ditt personnummer, kan endast information om dig som loggar in visas.'},
                 {question:'Varför kan jag inte logga in med lösenord och sms?',answer:'Lösenord och SMS uppfyller inte de krav som gäller för hantering av medicinsk information, som till exempel kan finnas i ett läkarintyg.'},
+                {question:'Är det säkert med e-legitimation?',answer:'Ja, en e-legitimation är ett säkert sätt att identifiera sig i Sverige, men glöm inte att även skydda din dator.'},
                 {question:'Om jag loggat in med e-legitimation på Mina intyg, måste jag logga in med e-legitimation på nytt om jag vill gå in på Försäkringskassans Mina sidor?',answer:'Ja för tillfället behöver du göra det. Detta kan dock komma att ändras framöver.'},
                 {question:'Hur skickas informationen från journalsystemet till Mina intyg?',answer:'Informationen skickas på ett säkert sätt via Hälso- och Sjukvårdens Nationella tjänsteplattform.<p>Så kan du skydda din dator:<ol><li>Håll din dator uppdaterad. Ditt operativsystem och din webbläsare bör alltid ha de senaste säkerhetsuppdateringarna installerade. Se också till att du alltid använder senaste versionen av säkerhetsprogrammet för din e-legitimation.</li><li>Använd ett uppdaterat antivirusprogram. Vi rekommenderar att du använder ett uppdaterat antivirusprogram som skyddar din dator från skadlig kod och automatiskt kontrollerar de filer som kommer till din dator.</li><li>Logga ut när du är klar. Avsluta varje besök i Mina intyg med att logga ut och stänga webbläsaren.</li></ol></p>'}
             ]}

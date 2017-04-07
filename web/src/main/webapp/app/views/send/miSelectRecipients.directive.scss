@@ -10,13 +10,27 @@
     margin-top: 10px;
   }
 
-  .selection-list a.unsent {
-    &:hover {
-      font-weight: bold;
+  .selection-list {
+    a.sent {
+      cursor: default;
+      text-decoration: none;
+
+      &:hover {
+        background:none;
+        color: #008391;
+      }
     }
 
-    span {
-      text-decoration: underline;
+    a.unsent {
+      &:hover {
+        font-weight: bold;
+      }
+
+      span {
+        text-decoration: underline;
+      }
     }
   }
+
+
 }
