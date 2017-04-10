@@ -1,9 +1,10 @@
-.mi-compact-certificate-header {
-  color: $mi-intyg-header-color;
-  margin: 40px 0;
-  padding: 10px;
-  background: $mi-intyg-header-bg;
-
+mi-compact-certificate-header {
+ .row {
+   color: $mi-intyg-header-color;
+   margin: 40px 0;
+   padding: 10px;
+   background: $mi-intyg-header-bg;
+ }
   .cert-type-title {
     font-size: 16px;
     font-weight: bold;

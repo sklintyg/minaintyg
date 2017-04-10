@@ -39,11 +39,11 @@
         </ul>
       </div>
       <div class="button-row">
-        <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-secondary"
+        <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
                 type="button" ng-disabled="selected.length < 1">
           <i class="glyphicon glyphicon-ok"></i> <span message key="sendpage.btn.send"></span>
         </button>
-        <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-secondary" type="button"
+        <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-third" type="button"
                 ng-if="selected.length > 0">
           <i class="glyphicon glyphicon-remove"></i> <span message key="sendpage.btn.clear"></span>
         </button>

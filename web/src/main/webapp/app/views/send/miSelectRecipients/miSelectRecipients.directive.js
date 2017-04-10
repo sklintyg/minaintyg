@@ -28,7 +28,7 @@ angular.module('minaintyg').directive('miSelectRecipients', function() {
             defaultRecipient: '@',
             onSend: '&'
         },
-        templateUrl: '/app/components/common-intyg/miSelectRecipients/miSelectRecipients.directive.html',
+        templateUrl: '/app/views/send/miSelectRecipients/miSelectRecipients.directive.html',
         controller: function($scope) {
 
             //Private controller functions  ---------------------------------
