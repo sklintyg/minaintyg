@@ -35,7 +35,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService',
                 hideHeader: '@',
                 maxStatuses: '@'
             },
-            templateUrl: '/app/views/list/latestEvents.directive.html',
+            templateUrl: '/app/components/common-intyg/latestEvents/latestEvents.directive.html',
             link: function(scope, element, attrs) {
 
                 scope.messageService = messageService;

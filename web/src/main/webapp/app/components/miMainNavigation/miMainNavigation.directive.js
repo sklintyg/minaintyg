@@ -43,6 +43,6 @@ angular.module('minaintyg').directive('miMainNavigation',
                     return page === currentRoute ? 'active' : '';
                 };
             },
-            templateUrl: '/app/views/miMainNavigation.directive.html'
+            templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'
         };
     });

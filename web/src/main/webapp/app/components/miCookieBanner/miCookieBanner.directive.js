@@ -25,7 +25,7 @@ angular.module('minaintyg').directive('miCookieBanner',
         return {
             restrict: 'E',
             scope: {},
-            templateUrl: '/app/views/miCookieBanner.directive.html',
+            templateUrl: '/app/components/miCookieBanner/miCookieBanner.directive.html',
             controller: function($scope, $timeout) {
                 $scope.isOpen = false;
                 $scope.showDetails = false;

@@ -17,15 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('mvkTopBar',
+angular.module('minaintyg').directive('miHeader',
     function() {
         'use strict';
 
         return {
             restrict: 'E',
             scope: {
-                hideLogout: '@'
+                userName: '@'
             },
-            templateUrl: '/app/views/mvkTopBar.directive.html'
+            templateUrl: '/app/components/miHeader/miHeader.directive.html'
         };
     });

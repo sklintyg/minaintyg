@@ -86,7 +86,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
+                <a class="btn btn-primary" href="${mvkMainUrl}"><spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
@@ -100,7 +100,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-success" href="${mvkMainUrl}"><spring:message
+                <a class="btn btn-primary" href="${mvkMainUrl}"><spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>

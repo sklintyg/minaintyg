@@ -27,6 +27,6 @@ angular.module('minaintyg').directive('eventsModal',function(){
             'hideHeader': '=',
             'getEventInfo': '&'
         },
-        templateUrl: '/app/views/list/latestEventsModal.directive.html'
+        templateUrl: '/app/components/common-intyg/latestEventsModal/latestEventsModal.directive.html'
     };
 });

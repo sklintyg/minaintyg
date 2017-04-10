@@ -26,7 +26,7 @@ angular.module('minaintyg').directive('miCompactCertificateHeader', [ 'common.mo
             meta: '=',
             cert: '='
         },
-        templateUrl: '/app/views/miCompactCertificateHeader.directive.html',
+        templateUrl: '/app/components/common-intyg/miCompactCertificateHeader/miCompactCertificateHeader.directive.html',
         controller: function($scope) {
             $scope.getModuleName = function() {
                 return moduleService.getModuleName($scope.meta.type);

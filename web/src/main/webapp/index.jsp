@@ -90,7 +90,7 @@
           </p>
           <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
           <div class="btn-row">
-            <a class="btn btn-success" href="${mvkMainUrl}">Logga in</a>
+            <a class="btn btn-primary" href="${mvkMainUrl}">Logga in</a>
           </div>
 
         </div>

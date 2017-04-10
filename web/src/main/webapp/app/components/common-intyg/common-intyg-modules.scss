@@ -1,0 +1,20 @@
+//Here we put common styles that is used by content in intyg-modules.
+// The current styles are temporary to make it somewhat usable until we have developed custom directives for the inbox etc.
+.cert {
+  padding-bottom:20px;
+}
+.cert-titlebar {
+  background-color: #00687D;
+  background-image: linear-gradient(to bottom, #008391, #00687D);
+  background-repeat: repeat-x;
+  border-radius: 8px 8px 0 0;
+
+  .cert-title {
+    color: #fff;
+    display: inline-block;
+
+    span {
+      color: #fff;
+    }
+  }
+}
