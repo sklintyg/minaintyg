@@ -3,12 +3,18 @@ h1, h2, h3 {
     outline: none;
   }
 }
+
 h2 {
   font-weight: normal;
 }
 
 .btn {
   padding: $mi-button-padding;
+  //3d pressed effect - swap 1 px margins when pressed
+  margin: 0 1px 1px 0;
+  &:active {
+    margin: 1px 0 0 1px;
+  }
 }
 
 .btn-secondary {
@@ -21,7 +27,7 @@ h2 {
 
 .btn-primary {
   //For now - we have same style for all interaction states of buttons.
-  &:hover, &:focus, &:active, &:focus:active  {
+  &:hover, &:focus, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-primary;
     border-color: $mi-button-primary;
@@ -29,7 +35,7 @@ h2 {
 }
 
 .btn-secondary {
-  &:hover, &:focus, &:active, &:focus:active  {
+  &:hover, &:focus, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-secondary;
     border-color: $mi-button-secondary;
@@ -37,7 +43,7 @@ h2 {
 }
 
 .btn-third {
-  &:hover, &:focus, &:active, &:focus:active  {
+  &:hover, &:focus, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-third;
     border-color: $mi-button-third;
