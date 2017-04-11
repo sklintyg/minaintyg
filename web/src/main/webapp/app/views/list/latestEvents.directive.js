@@ -44,7 +44,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService', 
                 // Default hideHeader attribute to false if not explicitly set to true
                 scope.hideHeader = attrs.hideHeader === 'true';
 
-                scope.recipientsLoaded = angular.isDefined($sessionStorage.knownRecipients) && $sessionStorage.knownRecipients !== null && $sessionStorage.knownRecipients.length > 0;
+                scope.recipientsLoaded = angular.isDefined($sessionStorage.knownRecipients) && $sessionStorage.knownRecipients !== null;
 
                 $rootScope.$on('recipients.updated', function() {
                     scope.recipientsLoaded = true;
