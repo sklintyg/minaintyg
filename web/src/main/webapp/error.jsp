@@ -109,7 +109,7 @@
               <h1>
                 <spring:message code="error.notfound.title" />
               </h1>
-              <div id="notFound" class="alert alert-error">
+              <div id="notFound" class="alert alert-danger">
                 <spring:message code="error.notfound.text" />
               </div>
             </c:when>
@@ -118,7 +118,7 @@
               <h1>
                 <spring:message code="error.generictechproblem.title" />
               </h1>
-              <div id="genericTechProblem" class="alert alert-error">
+              <div id="genericTechProblem" class="alert alert-danger">
                 <spring:message code="error.generictechproblem.text" />
               </div>
             </c:otherwise>

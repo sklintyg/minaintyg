@@ -31,6 +31,20 @@ $mi-link-color: #378998;
 $mi-link-external: #0F6EDC;
 $mi-link-secret: #FF9C5B;
 
+//Alerts (we dont use success variant)
+
+$mi-alert-info-bg: #D8EEF7;
+$mi-alert-info-border: #4890E2;
+$mi-alert-info-text: #000000;
+
+$mi-alert-warning-bg: #FCF9E4;
+$mi-alert-warning-border: #ECDBA9;
+$mi-alert-warning-text: #97784B;
+
+$mi-alert-danger-bg: #F2DEDE;
+$mi-alert-danger-border: #D0021C;
+$mi-alert-danger-text: #751723;
+
 // Modal
 $mi-modal-header-border-color: #333;
 
@@ -39,7 +53,7 @@ $mi-intyg-header-bg: #43799A;
 $mi-intyg-header-color: #fff;
 
 
-// Bootstrap variables
+// Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)
 $icon-font-path: '../bower_components/bootstrap-sass/assets/fonts/bootstrap/';
 
 $body-bg: $mi-body-bg;
@@ -66,3 +80,16 @@ $headings-font-weight: $mi-heading-weight;
 $link-color: $mi-link-color;
 
 $modal-header-border-color: $mi-modal-header-border-color;
+
+//Alerts
+$alert-info-bg: $mi-alert-info-bg;
+$alert-info-border: $mi-alert-info-border;
+$alert-info-text: $mi-alert-info-text;
+
+$alert-warning-bg: $mi-alert-warning-bg;
+$alert-warning-border: $mi-alert-warning-border;
+$alert-warning-text: $mi-alert-warning-text;
+
+$alert-danger-bg: $mi-alert-danger-bg;
+$alert-danger-border: $mi-alert-danger-border;
+$alert-danger-text: $mi-alert-danger-text;

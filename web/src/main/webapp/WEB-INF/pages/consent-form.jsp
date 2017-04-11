@@ -69,7 +69,7 @@
             <h1>
               <span><spring:message code="error.noscript.title" /></span>
             </h1>
-            <div class="alert alert-error">
+            <div class="alert alert-danger">
               <spring:message code="error.noscript.text" />
             </div>
           </noscript>
