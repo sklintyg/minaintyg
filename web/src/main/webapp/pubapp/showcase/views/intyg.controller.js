@@ -13,7 +13,7 @@ angular.module('showcase').controller('showcase.intygCtrl',
                     'patient':{'personId':'191212121212','fullstandigtNamn':'Tolvan Tolvansson','fornamn':'Tolvan','efternamn':'Tolvansson','postadress':'Svensson, Storgatan 1, PL 1234','postnummer':'12345','postort':'Småmåla','samordningsNummer':false}
                 },
                 'typ':'luse',
-                'meta':{'cancelled':false,'statuses':[{'type':'SENT','target':'FK','timestamp':'2016-06-15T13:41:59.000'}]}
+                'meta':{'cancelled':false,'statuses':[{'type':'SENT','target':'FKASSA','timestamp':'2016-06-15T13:41:59.000'}]}
             };
-            
+
         }]);

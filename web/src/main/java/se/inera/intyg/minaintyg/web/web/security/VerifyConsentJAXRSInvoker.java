@@ -35,9 +35,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.ImmutableSet;
 
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 /**
  * Created by orjan on 14-08-19(34).
@@ -45,16 +45,13 @@ import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentJAXRSInvoker.class);
-
+    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "onbeforeunload", "giveConsent",
+            "listAllRecipients");
     @Autowired
     private ConsentService consentService;
-
     @Autowired
     private CitizenService citizenService;
-
     private AtomicLong consentCounter = new AtomicLong();
-
-    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "onbeforeunload", "giveConsent");
 
     @Override
     public Object invoke(Exchange exchange, Object requestParams, Object resourceObject) {

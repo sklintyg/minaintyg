@@ -54,6 +54,13 @@ public interface CertificateService {
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
 
     /**
+     * Retrieve a list of all recipients known to Intygstjänsten.
+     *
+     * @return a List of {@link UtlatandeRecipient}
+     */
+    List<UtlatandeRecipient> getAllRecipients();
+
+    /**
      * Set a certificate as archived.
      */
     UtlatandeMetaData archiveCertificate(String certificateId, Personnummer civicRegistrationNumber);

@@ -33,7 +33,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String intygsId = "intygsId";
         final String personnummer = "personnummer";
         final String skickatAvPersonId = "skickatavpid";
-        final String recipient = "TS";
+        final String recipient = "TRANSP";
 
         SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
                 new Personnummer(skickatAvPersonId), recipient);
