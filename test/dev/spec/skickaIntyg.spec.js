@@ -90,7 +90,7 @@ describe('Skicka intyg', function() {
             expect(sendPage.isAt()).toBeTruthy();
 
             //Default recipient (FK) skall vara förvald..
-            expect(sendPage.recipientIsDeselectable('FK')).toBeTruthy();
+            expect(sendPage.recipientIsDeselectable('FKASSA')).toBeTruthy();
 
             //Den fejkade mottagaren FBA skall däremot vara valbar..
             //Toggla lite fram och tillbaka..
@@ -108,7 +108,7 @@ describe('Skicka intyg', function() {
             expect(sendPage.sendDialogIsShown()).toBeTruthy();
 
             //FK skall gå bra, FBA skall misslyckas
-            expect(sendPage.verifySendResultForRecipient('FK', true)).toBeTruthy();
+            expect(sendPage.verifySendResultForRecipient('FKASSA', true)).toBeTruthy();
             expect(sendPage.verifySendResultForRecipient('FBA', false)).toBeTruthy();
 
             //Klart, gå tillbaka till intyget..
@@ -129,7 +129,7 @@ describe('Skicka intyg', function() {
 
         it('mottagare som redan tagit emot intyget skall inte vara valbar', function() {
             //Already sent it to FK, should not be selectable..
-            expect(sendPage.recipientIsUnselectable('FK')).toBeTruthy();
+            expect(sendPage.recipientIsUnselectable('FKASSA')).toBeTruthy();
 
             //but FBA that failed should still be selectable
             expect(sendPage.recipientIsSelectable('FBA')).toBeTruthy();
