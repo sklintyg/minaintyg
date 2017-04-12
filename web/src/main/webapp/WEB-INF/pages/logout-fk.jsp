@@ -96,6 +96,7 @@
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
