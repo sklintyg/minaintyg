@@ -54,12 +54,12 @@ describe('Lista intyg', function() {
         var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
         tsDiabetesIntygsId = tsDiabetesIntyg.id;
         tsDiabetesIntyg.certificateStates.push({
-             target: 'TS',
+             target: 'HSVARD',
              state: 'CANCELLED',
              timestamp: '2013-03-18T00:00:01.234'
         });
         tsDiabetesIntyg.certificateStates.push({
-            target: 'TS',
+            target: 'TRANSP',
             state: 'SENT',
             timestamp: '2013-03-17T15:32:34.832'
         });
