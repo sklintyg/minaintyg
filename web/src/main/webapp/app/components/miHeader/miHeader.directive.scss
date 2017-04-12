@@ -1,58 +1,41 @@
+
 mi-header {
-  #mi-logo-header {
-    background-color: $mi-header-bg;
-    height: 80px;
 
-    .navbar-brand {
-      padding: 23px 15px 15px 0 !important;
-    }
+  // Define local variables for directive
+  $mi-header-text-color: #fff;
+  $mi-header-link-color: #FFF0C3;
+  $mi-header-height: 80px;
 
-    .page-logo {
-      height: 27px;
-      width: 145px;
-    }
-  }
+  //Set default values of directive
+  display: block;
+  background-color: $mi-header-bg;
+  color: $mi-header-text-color;
 
-  .mi-header {
-    margin-left: auto;
-    margin-right: auto;
+  .mi-header-col {
+    height: $mi-header-height;
 
-    .navbar-user-avatar {
-      display: inline-block;
-      float: right;
-      padding: 15px 0 0;
-
-      img {
-        height: 34px;
-        width: 34px;
-      }
-    }
-
-    .navbar-user-info {
-      display: inline-block;
-      padding: 15px 15px 15px 0 !important;
-
-      span {
-        color: #fff;
-      }
+    //Vertically align column content
+    > div {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 
-  #status {
-    color: #fff;
-    display: inline-flex;
-    float: right;
-    font-size: 12px;
-    line-height: 146%;
-    padding: 0;
+  .page-logo {
+    height: 27px;
+    width: 145px;
+  }
+
+  .user-info {
     text-align: right;
 
-    a, a span {
-      color: #28b4c4;
-      cursor: pointer;
-      font-size: 13px;
-      text-decoration: none;
+    .user-name {
+      font-weight: bold;
+    }
 
+    a {
+      color: $mi-header-link-color;
       &:hover {
         text-decoration: underline;
       }

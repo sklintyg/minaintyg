@@ -57,10 +57,13 @@ h2 {
   &[disabled],
   fieldset[disabled] & {
     cursor: $cursor-disabled;
-    color: $mi-button-disabled !important;
-    border-color: $mi-button-disabled !important;
+    color: $mi-button-disabled;
+    border-color: $mi-button-disabled;
     &:hover, &:focus, &:active, &:active:hover {
+      color: $mi-button-disabled;
       border-color: $mi-button-disabled;
+      background-color: $mi-button-bg;
+      margin: 0 1px 1px 0;
     }
   }
 }
