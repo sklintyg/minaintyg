@@ -2,4 +2,19 @@ mi-main-navigation {
   .container {
     padding: 0;
   }
+  .navbar-default .navbar-nav > li > a:hover {
+    color: #0F6EDC;
+  }
+
+  @media (min-width: 768px) {
+    .navbar {
+      border-radius: none;
+    }
+    .navbar {
+      position: relative;
+      min-height: 50px;
+      margin-bottom: 0;
+      border: none;
+    }
+  }
 }

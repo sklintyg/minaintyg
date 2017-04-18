@@ -1,132 +1,135 @@
-<!-- View start -->
-<h1 ng-focus="pagefocus" tabindex="0" xmlns="http://www.w3.org/1999/html">
-  <span id="inboxHeader" message key="inbox.header"></span>
-</h1>
+<mi-page-head>
+  <!-- View start -->
+  <h1 ng-focus="pagefocus" tabindex="0" xmlns="http://www.w3.org/1999/html">
+    <span id="inboxHeader" message key="inbox.header"></span>
+  </h1>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
-    <p>
-      <div message key="inbox.description.1" class="mi-text"></div>
-    </p>
-    <p>
-      <div message key="inbox.description.2" class="mi-text"></div>
-    </p>
-    <p>
-      <div message key="inbox.description.3" class="mi-text"></div>
-    </p>
-    <br/>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+      <p>
+        <div message key="inbox.description.1" class="mi-text"></div>
+      </p>
+      <p>
+        <div message key="inbox.description.2" class="mi-text"></div>
+      </p>
+      <p>
+        <div message key="inbox.description.3" class="mi-text"></div>
+      </p>
+      <br/>
+    </div>
   </div>
-</div>
+</mi-page-head>
 
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-    <div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | unarchived).length>0">
-      <div id="certTable">
-        <div ng-repeat="cert in certificates | unarchived" class="{{cert.status}}" ng-class="{'intyglist': 1}">
-          <div class="certificate">
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div id="certificate-{{cert.id}}" class="cert">
-                  <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
-                    <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" /></a>
-                    <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
-                    <div class="row">
-                      <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8">
-                        <h2 class="cert-title">
-                          <button type="button" class="btn-link btn-link-link text-left" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
-                            <span>{{moduleService.getModuleName(cert.type)}}</span>
-                          </button>
-                          <span ng-show="cert.cancelled">
-                            <span>{{moduleService.getModuleName(cert.type)}}</span> - <span message key="cert.status.cancelled"></span>
-                          </span>
-                        </h2>
-                      </div>
-                      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4 issue text-right">
-                        <span class="cert-titlebar-value"><span message key="listtable.headers.issued"></span></span>
-                        <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="cert-header">
-                    <div class="row" ng-show="cert.cancelled">
-                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 header-row">
-                        <div class="alert alert-info mi-text">
-                          <div message key="inbox.revoked" style="display: inline-block"></div>
-                          <div message key="inbox.revoked.archive" style="display: inline-block; margin-top: 0.5em;"></div>
-                          <div uib-collapse="isCollapsedRevoke"  style="margin-top: 0.5em;">
-                              <span message key="inbox.revoked.helptext"></span>
-                          </div>
-                          <div style="display: inline-block; margin-top: 0.5em;">
-                            <a ng-show="isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
-                              <span style="vertical-align: text-bottom;">
-                                <span message key="common.title.helptext.moreinfo"></span>
-                                <span message key="inbox.title.helptext.makulera"></span>
-                              </span>
-                              <span class="glyphicon glyphicon-chevron-down"></span>
-                            </a>
-                            <a ng-show="!isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
-                              <span style="vertical-align: text-bottom;">
-                                <span message key="common.title.helptext.lessinfo"></span>
-                                <span message key="inbox.title.helptext.makulera"></span>
-                              </span>
-                              <span class="glyphicon glyphicon-chevron-up"></span>
-                            </a>
-                          </div>
+      <div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading" show-content="doneLoading && (certificates | unarchived).length>0">
+        <div id="certTable">
+          <div ng-repeat="cert in certificates | unarchived" class="{{cert.status}}" ng-class="{'intyglist': 1}">
+            <div class="certificate">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div id="certificate-{{cert.id}}" class="cert">
+                    <div class="cert-titlebar" ng-class="{'cert-cancelled': cert.cancelled}">
+                      <a ng-show="!cert.cancelled" ng-click="sendSelected(cert)"><img class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" /></a>
+                      <img ng-show="cert.cancelled" class="cert-icon" alt="" ng-src="/web/webjars/{{cert.type | lowercase}}/minaintyg/img/{{cert.type | lowercase}}.png" />
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8">
+                          <h2 class="cert-title">
+                            <button type="button" class="btn-link btn-link-link text-left" ng-click="sendSelected(cert)" ng-show="!cert.cancelled">
+                              <span>{{moduleService.getModuleName(cert.type)}}</span>
+                            </button>
+                            <span ng-show="cert.cancelled">
+                              <span>{{moduleService.getModuleName(cert.type)}}</span> - <span message key="cert.status.cancelled"></span>
+                            </span>
+                          </h2>
+                        </div>
+                        <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4 issue text-right">
+                          <span class="cert-titlebar-value"><span message key="listtable.headers.issued"></span></span>
+                          <span class="cert-titlebar-value">{{cert.sentDate | date:'shortDate'}}</span>
                         </div>
                       </div>
                     </div>
+                    <div class="cert-header">
+                      <div class="row" ng-show="cert.cancelled">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 header-row">
+                          <div class="alert alert-info mi-text">
+                            <div message key="inbox.revoked" style="display: inline-block"></div>
+                            <div message key="inbox.revoked.archive" style="display: inline-block; margin-top: 0.5em;"></div>
+                            <div uib-collapse="isCollapsedRevoke"  style="margin-top: 0.5em;">
+                                <span message key="inbox.revoked.helptext"></span>
+                            </div>
+                            <div style="display: inline-block; margin-top: 0.5em;">
+                              <a ng-show="isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
+                                <span style="vertical-align: text-bottom;">
+                                  <span message key="common.title.helptext.moreinfo"></span>
+                                  <span message key="inbox.title.helptext.makulera"></span>
+                                </span>
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                              </a>
+                              <a ng-show="!isCollapsedRevoke" ng-click="isCollapsedRevoke = !isCollapsedRevoke">
+                                <span style="vertical-align: text-bottom;">
+                                  <span message key="common.title.helptext.lessinfo"></span>
+                                  <span message key="inbox.title.helptext.makulera"></span>
+                                </span>
+                                <span class="glyphicon glyphicon-chevron-up"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                    <div class="row">
-                      <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8 header-row">
-                        <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3>
-                        <span>{{cert.careunitName}}</span>
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8 header-row">
+                          <h3 class="tag"><span message key="listtable.headers.issuedby"></span></h3>
+                          <span>{{cert.careunitName}}</span>
+                        </div>
+                        <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4" ng-show="cert.complementaryInfo.length">
+                          <h3 class="tag"><span message key="{{cert.type | lowercase}}.inbox.complementaryinfo"></span></h3>
+                          <span id="certificate-period-{{cert.id}}">{{cert.complementaryInfo}}</span>
+                        </div>
                       </div>
-                      <div class="col-xs-6 col-sm-5 col-md-4 col-lg-4" ng-show="cert.complementaryInfo.length">
-                        <h3 class="tag"><span message key="{{cert.type | lowercase}}.inbox.complementaryinfo"></span></h3>
-                        <span id="certificate-period-{{cert.id}}">{{cert.complementaryInfo}}</span>
-                      </div>
-                    </div>
 
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 header-row">
-                        <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" max-statuses="2"></latest-events>
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 header-row">
+                          <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" max-statuses="2"></latest-events>
+                        </div>
+                        <div class="hidden-xs col-sm-6 col-md-4 col-lg-4 text-right">
+                           <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-click="openArchiveDialog(cert)"
+                                   uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
+                            <span message key="button.archive"></span>
+                          </button>
+                          <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-primary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                            <span message key="button.show"></span>
+                          </button>
+                        </div>
                       </div>
-                      <div class="hidden-xs col-sm-6 col-md-4 col-lg-4 text-right">
-                         <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-click="openArchiveDialog(cert)"
-                                 uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
-                          <span message key="button.archive"></span>
-                        </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-primary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
-                          <span message key="button.show"></span>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="row hidden-sm hidden-md hidden-lg">
-                      <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
-                        <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-click="openArchiveDialog(cert)"
-                                uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
-                          <span message key="button.archive"></span>
-                        </button>
-                        <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-primary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
-                          <span message key="button.show"></span>
-                        </button>
+                      <div class="row hidden-sm hidden-md hidden-lg">
+                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg text-right">
+                          <button type="button" id="archiveCertificateBtn-{{cert.id}}" class="btn btn-secondary" ng-click="openArchiveDialog(cert)"
+                                  uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
+                            <span message key="button.archive"></span>
+                          </button>
+                          <button type="button" id="viewCertificateBtn-{{cert.id}}" class="btn btn-primary" ng-show="!cert.cancelled" ng-disabled="cert.cancelled" ng-click="sendSelected(cert)">
+                            <span message key="button.show"></span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            </div>
-          <div class="table-bottom" ng-show="(certificates | unarchived).length>0"></div>
+              </div>
+            <div class="table-bottom" ng-show="(certificates | unarchived).length>0"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div id="noCerts" ng-show="doneLoading && (certificates | unarchived).length<1" class="alert alert-info">
+      <span message key="error.nocerts"></span>
+    </div>
+  </div>
 </div>
-<div class="row">
-	<div id="noCerts" ng-show="doneLoading && (certificates | unarchived).length<1" class="alert alert-info">
-		<span message key="error.nocerts"></span>
-	</div>
-</div>
-
