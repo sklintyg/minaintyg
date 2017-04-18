@@ -3,10 +3,10 @@
 $mi-body-bg: #f3f4f6;
 $mi-text-color: #333;
 
-$mi-header-bg: #21263D;
-
 $mi-menu-bg: #E9EAF0;
-$mi-menu-bg-active: #0F6EDC; // TODO: add states colors
+$mi-menu-active-color: #fff;
+$mi-menu-active-bg: #0F6EDC;
+$mi-menu-hover-color: #0F6EDC;
 
 $mi-mvk-header-bg-color:  #378998;
 
@@ -61,8 +61,9 @@ $text-color: $mi-text-color;
 
 $navbar-default-bg: $mi-menu-bg;
 
-$navbar-default-link-active-color: #fff;
-$navbar-default-link-active-bg: $mi-menu-bg-active;
+$navbar-default-link-active-color: $mi-menu-active-color;
+$navbar-default-link-active-bg: $mi-menu-active-bg;
+$navbar-default-link-hover-color: $mi-menu-hover-color;
 
 $btn-primary-bg: $mi-button-bg;
 $btn-primary-color: $mi-button-primary;
