@@ -38,6 +38,7 @@
 
 <!-- injector:css -->
 <link rel="stylesheet" href="/app/app.css?_v=<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="/font/css/fontello.css?_v=<spring:message code="buildNumber" />">
 <!-- endinjector -->
 
 <script type="text/javascript">

@@ -385,7 +385,7 @@ module.exports = function(grunt) {
                     endtag: '<!-- endinjector -->'
                 },
                 files: _(fileToInjectCss).map(function(dest) {
-                    return [dest, '<%= config.client %>/app/**/*.css'];
+                    return [dest, '<%= config.client %>/{app,font}/**/*.css'];
                 }).fromPairs().value()
             }
         },
