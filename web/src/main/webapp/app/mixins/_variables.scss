@@ -10,6 +10,8 @@ $mi-menu-hover-color: #0F6EDC;
 
 $mi-mvk-header-bg-color:  #378998;
 
+$mi-disabled-color: #777;
+
 // Font
 $mi-font: Arial, sans-serif;
 $mi-font-size-h1: 18px;
@@ -22,7 +24,7 @@ $mi-button-bg: #fff;
 $mi-button-primary: #009200;
 $mi-button-secondary: #0f6edc;
 $mi-button-third: #4A4A4A;
-$mi-button-disabled: #777;
+$mi-button-disabled: $mi-disabled-color;
 $mi-button-radius: 2px;
 $mi-button-padding: 10px 12px;
 
@@ -50,6 +52,7 @@ $mi-modal-header-border-color: #333;
 
 // Intyg
 $mi-intyg-header-bg: #43799A;
+$mi-intyg-header-revoked-bg: $mi-disabled-color;
 $mi-intyg-header-color: #fff;
 
 

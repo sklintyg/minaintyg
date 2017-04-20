@@ -7,7 +7,7 @@
     <div ng-repeat="status in statuses track by $index" ng-if="$index < maxStatusRows(isCollapsedArchive)"
          ng-init="info = getEventInfo(status)" ng-attr-id="event-{{certId}}-{{$index}}"
          ng-class="{'event-row-tight': maxStatuses, 'event-row': !maxStatuses, 'stripe-dark': !maxStatuses && $even}" >
-      <span ng-attr-id="event-timestamp-{{certId}}-{{$index}}">{{info.timestamp}}</span>
+      <span ng-attr-id="event-timestamp-{{certId}}-{{$index}}" class="latest-events-timestamp">{{info.timestamp}}</span>
       <span class="event-text" ng-attr-id="event-text-{{certId}}-{{$index}}">{{info.text}}</span>
     </div>
     <button ng-if="!maxStatuses" id="showEventsBtn-{{certId}}" type="button" class="btn-link btn-link-link"

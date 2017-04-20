@@ -1,21 +1,39 @@
 mi-compact-certificate-header {
- .row {
-   color: $mi-intyg-header-color;
-   margin: 40px 0;
-   padding: 10px;
-   background: $mi-intyg-header-bg;
- }
+  display: block;
+
+
+  .mi-compact-certificate-header {
+    background: $mi-intyg-header-bg;
+    color: $mi-intyg-header-color;
+    padding: 15px;
+
+    &.revoked {
+      background: $mi-intyg-header-revoked-bg;
+    }
+  }
+
+
+  .icon {
+    margin-right: 10px;
+    font-size: 36px;
+    line-height: 36px;
+
+    &:before {
+      display:inline;
+    }
+  }
+
   .cert-type-title {
-    font-size: 16px;
-    font-weight: bold;
+    h1 {
+      display: inline;
+    }
   }
 
-  .glyphicon {
-    line-height: inherit;
-    margin-right: 20px;
+  .complementary-info {
+    float: left;
   }
 
-  .certificate-issued {
+  .certificate-issued-date {
     text-align: right;
   }
 }

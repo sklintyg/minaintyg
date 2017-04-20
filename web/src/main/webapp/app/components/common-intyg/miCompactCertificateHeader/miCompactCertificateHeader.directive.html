@@ -1,9 +1,25 @@
-<div class="row">
-  <div class="col-xs-9">
-    <div class="cert-type-title"><i class="glyphicon glyphicon-file gi-2x pull-left" />{{getModuleName()}}</div>
-    <div><span ng-if="meta.complementaryInfo"><span message key="{{meta.type | lowercase}}.compact-header.complementaryinfo-prefix"></span> </span>{{meta.complementaryInfo}} </div>
+<div class="container mi-compact-certificate-header" ng-attr-id="mi-compact-certificate-header-{{certMetaModel.id}}" ng-class="{'revoked': certMetaModel.cancelled}">
+
+  <i class="icon icon-doc-text-2 pull-left"></i>
+
+  <div>
+    <div class="cert-type-title"><h1>{{getModuleName()}}</h1></div>
+
+    <div>
+      <div class="complementary-info">
+        <span message key="{{certMetaModel.type | lowercase}}.compact-header.complementaryinfo-prefix"></span>
+        <span
+            ng-attr-id="certificate-complementary-info-{{certMetaModel.id}}">{{certMetaModel.complementaryInfo}}</span>
+      </div>
+
+      <div class="certificate-issued-date">
+        <span class="text-nowrap">Intyg utfärdat</span> <b class="text-nowrap">{{certMetaModel.sentDate |
+        date:'shortDate'}}</b>
+      </div>
+
+    </div>
+
+
   </div>
-  <div class="col-xs-3 certificate-issued">
-    Intyg utfärdat <span class="text-nowrap">{{cert.grundData.signeringsdatum | date:'longDate'}}</span>
-  </div>
+
 </div>

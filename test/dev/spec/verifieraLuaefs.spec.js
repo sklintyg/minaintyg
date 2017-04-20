@@ -84,7 +84,7 @@ describe('Verifiera LUAE_FS intyg', function() {
 
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
+            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
         it('Intyget ska finnas i listan', function() {

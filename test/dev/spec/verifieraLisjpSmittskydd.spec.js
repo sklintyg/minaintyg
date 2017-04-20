@@ -89,7 +89,7 @@ describe('Verifiera Lisjp med smittbärarpenning', function() {
         // Logga in
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
+            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
         it('Intyg 1 ska finnas i listan', function() {

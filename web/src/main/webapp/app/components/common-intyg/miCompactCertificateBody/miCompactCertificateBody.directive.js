@@ -17,16 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miCompactCertificateHeader', [ 'common.moduleService', function(moduleService) {
+angular.module('minaintyg').directive('miCompactCertificateBody', [ 'common.moduleService', 'common.messageService', function(moduleService, messageService) {
     'use strict';
 
     return {
         restrict: 'E',
         scope: {
-            certMetaModel: '='
+            certMetaModel: '=',
+            onViewClick: '&',
+            onArchiveClick: '&'
         },
-        templateUrl: '/app/components/common-intyg/miCompactCertificateHeader/miCompactCertificateHeader.directive.html',
+        templateUrl: '/app/components/common-intyg/miCompactCertificateBody/miCompactCertificateBody.directive.html',
         controller: function($scope) {
+
+            $scope.messageService = messageService;
             $scope.getModuleName = function() {
                 return moduleService.getModuleName($scope.certMetaModel.type);
             };

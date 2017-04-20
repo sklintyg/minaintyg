@@ -77,11 +77,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         /* INBOX */
 
-        'inbox.header': 'Inkorgen',
+        'inbox.header': 'Översikt över dina intyg',
 
-        'inbox.description.1': 'Här listas alla dina intyg med det senast inkomna intyget överst. Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. För att hantera intyget väljer du <i>Visa intyget</i>, då kan du:',
-        'inbox.description.2': '<ul><li>Läsa intyget</li><li>Ladda ner intyget som en PDF</li><li>Skriva ut intyget</li><li>Skicka intyget elektroniskt till olika mottagare</li><li>Anpassa intyget till din arbetsgivare (endast sjukpenningintyg)</li></ul>',
-        'inbox.description.3': 'Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
+        'inbox.description.1': 'Här listas alla dina intyg med det senast utfärdade intyget överst. Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. I Mina intyg kan du skicka dina intyg till olika mottagare, som t.ex. Försäkringskassan, anpassa dina intyg för arbetsgivaren eller ladda ner intygen som PDF. Klicka på knappen Visa intyg för att hantera dina intyg.',
+        'inbox.description.2': 'Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen.<br><br>Läs mer om arkivering av intyg under fliken <a href="/web/start/#/arkiverade">Arkiverade intyg</a>.',
 
         'inbox.tooltip.archive': '<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken <a href="#">Arkiverade intyg</a>.',
 
@@ -96,6 +95,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'inbox.title.helptext.makulera': 'om makulerat intyg',
 
         'inbox.helptext.arkivera': '<p><b>Att arkivera intyg</b></p>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
+
+        'inbox.list.issuer.label': 'Utfärdare:',
 
         /* ARCHIVED */
 

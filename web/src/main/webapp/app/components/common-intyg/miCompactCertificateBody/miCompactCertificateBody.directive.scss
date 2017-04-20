@@ -1,0 +1,31 @@
+mi-compact-certificate-body {
+  display: block;
+
+
+  .mi-compact-certificate-body {
+    background: #fff;
+    padding: 15px;
+    background: #fff;
+  }
+  .row:first-child {
+    padding-bottom: 20px;
+  }
+
+  .issuer-label {
+    color: #777;
+  }
+
+  .compact-body-latest-events {
+    //overide of latest-events styles. May we should instead extend that directive to allow for more detailed styling via attributes?
+
+    .lastevent-header {
+      font-weight: normal;
+      color: #777;
+    }
+
+    .latest-events-timestamp {
+      font-weight: bold;
+    }
+  }
+}
+

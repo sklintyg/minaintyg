@@ -70,7 +70,7 @@ describe('Logga in som medborgare', function() {
 
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
+            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
         it('Logga in igen och verifiera att man då hamnar direkt på inkorgssidan', function() {

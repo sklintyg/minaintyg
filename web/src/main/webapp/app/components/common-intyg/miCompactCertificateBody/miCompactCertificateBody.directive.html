@@ -1,0 +1,30 @@
+<div class="container mi-compact-certificate-body">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="issuer-label"><span message key="inbox.list.issuer.label" /></div>
+      <span ng-attr-id="cert-issuer-text-{{certMetaModel.id}}"><strong>{{certMetaModel.caregiverName}}, {{certMetaModel.careunitName}}</strong></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <latest-events cert-id="{{certMetaModel.id}}" statuses="certMetaModel.statuses" max-statuses="2"
+                     class="compact-body-latest-events"></latest-events>
+    </div>
+
+    <div class="col-xs-6 text-right">
+      <button type="button" ng-attr-id="archiveCertificateBtn-{{certMetaModel.id}}" class="btn btn-secondary"
+              ng-click="onArchiveClick({cert:certMetaModel})"
+              uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter"
+              popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
+        <i class="icon icon-box"></i> <span message key="button.archive"></span>
+      </button>
+
+      <button type="button" ng-attr-id="viewCertificateBtn-{{certMetaModel.id}}" class="btn btn-primary"
+              ng-if="!certMetaModel.cancelled" ng-click="onViewClick({cert:certMetaModel})">
+        <i class="icon icon-eye"></i> <span message key="button.show"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
