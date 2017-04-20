@@ -11,6 +11,7 @@ $mi-menu-hover-color: #0F6EDC;
 $mi-mvk-header-bg-color:  #378998;
 
 $mi-disabled-color: #777;
+$mi-box-shadow-color: #ddd;
 
 // Font
 $mi-font: Arial, sans-serif;
@@ -53,6 +54,9 @@ $mi-modal-header-border-color: #333;
 // Intyg
 $mi-intyg-header-bg: #43799A;
 $mi-intyg-header-color: #fff;
+
+$mi-intyg-body-bg: #fff;
+
 
 
 // Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)

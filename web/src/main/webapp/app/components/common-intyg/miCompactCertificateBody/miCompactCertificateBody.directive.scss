@@ -3,16 +3,13 @@ mi-compact-certificate-body {
 
 
   .mi-compact-certificate-body {
-    background: #fff;
+    background: $mi-intyg-body-bg;
     padding: 15px;
-    background: #fff;
+    box-shadow: 0 3px 5px $mi-box-shadow-color;
+
   }
   .row:first-child {
-    padding-bottom: 20px;
-  }
-
-  .issuer-label {
-    color: #777;
+    padding-bottom: 30px;
   }
 
   .compact-body-latest-events {
@@ -20,7 +17,7 @@ mi-compact-certificate-body {
 
     .lastevent-header {
       font-weight: normal;
-      color: #777;
+      color: $text-muted;
     }
 
     .latest-events-timestamp {
