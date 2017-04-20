@@ -26,11 +26,7 @@
 'use strict';
 var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
-var hasClass = function (element, cls) {
-    return element.getAttribute('class').then(function (classes) {
-        return classes.split(' ').indexOf(cls) !== -1;
-    });
-};
+
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
 
@@ -56,9 +52,6 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     },
     complementaryInfo: function(intygId) {
         return element(by.id('certificate-complementary-info-' + intygId)).getText();
-    },
-    cancelledCertificateDisplayed: function(intygId) {
-        return hasClass(element(by.id('mi-compact-certificate-header-' + intygId)), 'revoked');
     },
     viewCertificate: function(intygId) {
         element(by.id('viewCertificateBtn-' + intygId)).click();

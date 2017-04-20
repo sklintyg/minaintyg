@@ -75,7 +75,7 @@ public class ModuleApiController {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
     //Relevant statuses for this context
-    private static final List<CertificateState> RELEVANT_STATUS_TYPES = Arrays.asList(CertificateState.SENT, CertificateState.CANCELLED);
+    private static final List<CertificateState> RELEVANT_STATUS_TYPES = Arrays.asList(CertificateState.SENT);
 
 
     @Autowired

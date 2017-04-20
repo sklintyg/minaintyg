@@ -47,16 +47,7 @@ public final class CertificateMetaConverter {
         result.setSentDate(meta.getSignDate());
         result.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
         result.setComplementaryInfo(meta.getComplemantaryInfo());
-
-        boolean cancelled = false;
-        for (Status statusType : meta.getStatuses()) {
-            result.getStatuses().add(statusType);
-
-            if (statusType.getType().equals(CertificateState.CANCELLED)) {
-                cancelled = true;
-            }
-        }
-        result.setCancelled(cancelled);
+        result.getStatuses().addAll(meta.getStatuses());
 
         return result;
     }
@@ -92,9 +83,6 @@ public final class CertificateMetaConverter {
         result.setArchived(!metaData.isAvailable());
         result.setComplementaryInfo(metaData.getAdditionalInfo());
 
-        boolean cancelled = false;
-
-        // Filter and at the same time, check if cancelled
         for (Status status : metaData.getStatus()) {
 
             // Obey any status filter restrictions
@@ -102,11 +90,7 @@ public final class CertificateMetaConverter {
                 result.getStatuses().add(status);
             }
 
-            if (status.getType().equals(CertificateState.CANCELLED)) {
-                cancelled = true;
-            }
         }
-        result.setCancelled(cancelled);
 
         return result;
     }

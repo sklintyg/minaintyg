@@ -52,18 +52,14 @@ describe('Lista intyg', function() {
         restHelper.createIntyg(tsBasIntyg);
 
         var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
+        //this revoked certificate should not appear
         tsDiabetesIntygsId = tsDiabetesIntyg.id;
         tsDiabetesIntyg.certificateStates.push({
              target: 'HSVARD',
              state: 'CANCELLED',
              timestamp: '2013-03-18T00:00:01.234'
         });
-        tsDiabetesIntyg.certificateStates.push({
-            target: 'TRANSP',
-            state: 'SENT',
-            timestamp: '2013-03-17T15:32:34.832'
-        });
-        restHelper.createIntyg(tsDiabetesIntyg);
+         restHelper.createIntyg(tsDiabetesIntyg);
     });
 
     afterAll(function() {
@@ -92,30 +88,18 @@ describe('Lista intyg', function() {
             expect(inboxPage.certificateTableIsShown()).toBeTruthy();
             expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
-            expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeTruthy();
+            //revoked should NOT exist in list
+            expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
         });
 
         it('Intyg avser innehåller information för ett TS-intyg', function() {
             expect(inboxPage.complementaryInfo(tsBasIntygsId).length).not.toEqual(0);
         });
 
-        it('Makulerat intyg skall visas på specifikt sätt i listan', function() {
-            // makulerat intyg
-            expect(inboxPage.cancelledCertificateDisplayed(tsDiabetesIntygsId)).toBeTruthy();
-
-            // icke-makulerade intyg
-            expect(inboxPage.cancelledCertificateDisplayed(tsBasIntygsId)).toBeFalsy();
-            expect(inboxPage.cancelledCertificateDisplayed(fk7263IntygsId)).toBeFalsy();
-        });
-
         it('Verifiera text för intyg som inte har någon händelse', function() {
             expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
         });
 
-        it('Verifiera makulerat intygs händelser', function() {
-            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Intyget är makulerat', '2013-03-18 00:00')).toBeTruthy();
-            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Skickat till Transportstyrelsen', '2013-03-17 15:32')).toBeTruthy();
-        });
     });
 
     describe('Invånare utan intyg', function() {

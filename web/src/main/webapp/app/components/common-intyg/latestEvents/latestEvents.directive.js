@@ -56,7 +56,7 @@ angular.module('minaintyg').directive('latestEvents', ['common.messageService', 
                         moment(status.timestamp).format('YYYY-MM-DD HH:mm') :
                         messageService.getProperty('certificates.status.unknowndatetime');
                     var params = [scope.getNameForTarget(status.target)];
-                    var msgProperty = 'certificates.status.' + status.type.toLowerCase(); //cancelled, received [sic] or sent
+                    var msgProperty = 'certificates.status.' + status.type.toLowerCase(); //received [sic] or sent
                     var text = _getEventText(msgProperty, params);
                     return {timestamp: timestamp, text: text};
                 };

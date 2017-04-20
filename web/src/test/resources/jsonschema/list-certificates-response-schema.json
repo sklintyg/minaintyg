@@ -26,9 +26,6 @@
       "archived": {
         "type": "boolean"
       },
-      "cancelled": {
-        "type": "boolean"
-      },
       "complementaryInfo": {
         "type": "string"
       },
@@ -63,7 +60,6 @@
       "careunitName",
       "sentDate",
       "archived",
-      "cancelled",
       "statuses"
     ]
   }

@@ -18,7 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.web.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +90,10 @@ public class UtlatandeMetaDataConverter {
         Collections.sort(input, DESCENDING_DATE);
 
         for (Intyg intyg : input) {
-            result.add(convert(intyg, arkiverade));
+            //Enforce business rule GE-013 (no revoked certificates should be accessible in Mina Intyg)
+            if (intyg.getStatus().stream().noneMatch(is -> StatusKod.CANCEL.equals(StatusKod.valueOf(is.getStatus().getCode())))) {
+                result.add(convert(intyg, arkiverade));
+            }
         }
 
         return result;

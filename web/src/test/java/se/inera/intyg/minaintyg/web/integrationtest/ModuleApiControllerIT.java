@@ -164,6 +164,21 @@ public class ModuleApiControllerIT extends BaseIntegrationTest {
         assertTrue(contentHeader.contains("attachment; filename="));
     }
 
+    @Test
+    public void testGetRevokedCertificate() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+
+        final String id = UUID.randomUUID().toString();
+        IntegrationTestUtil.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
+
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id)
+                .expect().statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                .when().get("moduleapi/certificate/{type}/{id}");
+
+    }
+
     private void testGetCertificate(String type) {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);

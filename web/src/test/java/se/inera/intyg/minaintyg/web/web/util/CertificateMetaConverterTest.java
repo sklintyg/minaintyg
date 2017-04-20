@@ -51,7 +51,6 @@ public class CertificateMetaConverterTest {
     @BeforeClass
     public static void setup() {
         sentStatus = new Status(CertificateState.SENT, TARGET, FIRST_TIMESTAMP);
-        cancelledStatus = new Status(CertificateState.CANCELLED, TARGET, LATER_TIMESTAMP);
     }
 
     @Before
@@ -64,29 +63,6 @@ public class CertificateMetaConverterTest {
                 .signDate(LocalDateTime.now())
                 .available(AVAILABLE)
                 .additionalInfo("2013-01-01 till 2014-01-01");
-    }
-
-    @Test
-    public void testIsCertificateCancelledWithNullList() {
-        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
-        assertFalse(meta.getCancelled());
-    }
-
-    @Test
-    public void testIsCertificateCancelledWithoutCancelStatus() {
-        builder.addStatus(sentStatus);
-
-        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
-        assertFalse(meta.getCancelled());
-    }
-
-    @Test
-    public void testIsCertificateCancelledWithCancelStatus() {
-        builder.addStatus(sentStatus);
-        builder.addStatus(cancelledStatus);
-
-        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
-        assertTrue(meta.getCancelled());
     }
 
     @Test

@@ -36,7 +36,6 @@ public class CertificateMeta {
     private String careunitName;
     private LocalDateTime sentDate;
     private Boolean archived;
-    private Boolean cancelled;
     private String complementaryInfo;
     private List<Status> statuses = new ArrayList<>();
 
@@ -86,14 +85,6 @@ public class CertificateMeta {
 
     public void setArchived(Boolean archived) {
         this.archived = archived;
-    }
-
-    public Boolean getCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(Boolean cancelled) {
-        this.cancelled = cancelled;
     }
 
     public String getComplementaryInfo() {

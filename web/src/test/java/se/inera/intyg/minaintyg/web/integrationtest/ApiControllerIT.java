@@ -80,6 +80,22 @@ public class ApiControllerIT extends BaseIntegrationTest {
     }
 
     @Test
+    public void testListCertificatesFiltersRevokedCertificates() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .expect().statusCode(HttpServletResponse.SC_OK)
+                .when().get("api/certificates")
+                .then()
+                .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
+                .body("", hasSize(1));
+    }
+
+    @Test
     public void testListCertificatesWithoutConsent() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);

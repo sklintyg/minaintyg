@@ -84,15 +84,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'inbox.tooltip.archive': '<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken <a href="#">Arkiverade intyg</a>.',
 
-        'inbox.revoked': 'Intyget är makulerat av din vårdgivare. Det går därför inte att visa eller hantera. Kontakta din vårdgivare för mer information.',
-        'inbox.revoked.archive': 'Vill du inte längre se detta intyg i Inkorgen kan du arkivera det.',
-        'inbox.revoked.helptext': 'Vårdgivaren kan makulera ett intyg för att det är felaktigt. Vid makuleringen meddelas de som har tagit emot intyget att det inte längre är giltigt. Du kan se ett makulerat intyg i inkorgen, men det är "utgråat" och du kan inte öppna eller titta på intyget. Ett makulerat intyg går inte heller att skriva ut eller skicka. Om du har begärt rättelse av ett felaktigt intyg hos din vårdgivare så visas det i Mina intyg som ett makulerat intyg.',
-
         'inbox.archivemodal.header': 'Arkivera intyg',
         'inbox.archivemodal.text': 'När du väljer att arkivera intyget kommer det att flyttas till <i>Arkiverade intyg</i>.<br><br> Du kan när som helst återställa intyget igen.',
 
         'inbox.title.helptext.arkivera': 'om att arkivera intyg',
-        'inbox.title.helptext.makulera': 'om makulerat intyg',
 
         'inbox.helptext.arkivera': '<p><b>Att arkivera intyg</b></p>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
 
@@ -210,8 +205,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
-        'certificates.status.cancelled': 'Intyget är makulerat',
-        'certificates.status.cancelled.title': 'Makulerat',
         'certificates.status.received': 'Mottagits av {0}',
         'certificates.status.sent': 'Skickat till {0}',
         'certificates.status.noevents': 'Inga händelser',
