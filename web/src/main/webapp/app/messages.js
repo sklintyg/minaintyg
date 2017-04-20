@@ -30,9 +30,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'button.archive': 'Arkivera',
         'button.archive.tooltip': 'Flytta intyget till Arkiverade intyg',
-        'button.viewcertificate.tooltip': 'Läs och hantera ditt intyg',
         'button.send': 'Skicka',
         'button.show': 'Visa intyget',
+        'button.show.tooltip': 'Läs och hantera ditt intyg',
 
         'modal.tekniskt-fel.header': 'Tekniskt fel',
         'modal.button.tekniskt-fel.ok': 'OK',
