@@ -75,11 +75,11 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
                     button1click: function() {
-                        $log.debug('archive');
                         $scope.archiveSelected();
                     },
                     button1id: 'archive-button',
                     button1text: 'button.archive',
+                    button1icon: 'icon-box',
                     autoClose: false
                 });
             };

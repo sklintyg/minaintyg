@@ -28,11 +28,11 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
         'label.archivedcertificatesloading': 'Arkiverade intyg laddas. Vänligen vänta... ',
 
-        'button.archive': 'Arkivera',
-        'button.archive.tooltip': 'Flytta intyget till Arkiverade intyg',
+        'button.archive': 'Arkivera intyg',
+        'button.archive.tooltip': 'Flyttar intyget till Arkiverade intyg.',
         'button.send': 'Skicka',
-        'button.show': 'Visa intyget',
-        'button.show.tooltip': 'Läs och hantera ditt intyg',
+        'button.show': 'Visa intyg',
+        'button.show.tooltip': 'Läs och hantera ditt intyg.',
 
         'modal.tekniskt-fel.header': 'Tekniskt fel',
         'modal.button.tekniskt-fel.ok': 'OK',
