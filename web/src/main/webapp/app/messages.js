@@ -89,8 +89,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'inbox.archivemodal.header': 'Arkivera intyg',
         'inbox.archivemodal.text': 'När du väljer att arkivera intyget kommer det att flyttas till <i>Arkiverade intyg</i>.<br><br> Du kan när som helst återställa intyget igen.',
 
-        'inbox.title.helptext.arkivera': 'om att arkivera intyg',
-
         'inbox.helptext.arkivera': '<p><b>Att arkivera intyg</b></p>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
 
         'inbox.list.issuer.label': 'Utfärdare:',
@@ -99,10 +97,15 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'archived.header': 'Arkiverade intyg',
 
-        'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte helt ta bort ditt intyg från tjänsten. Däremot kan du flytta dina gamla intyg hit till <i>Arkiverade intyg</i>.</p><p>Om du väljer att återkalla ditt samtycke kommer dina intyg att tas bort från Mina intyg.</p><p>Oavsett om du arkiverar ett intyg eller om du återkallar ditt samtycke, är din vårdgivare enligt lag alltid skyldig att lagra uppgifterna i din patientjournal i minst 10 år. Ofta lagras de längre, i vissa fall livet ut. Denna lagring sker inte i Mina intyg.</p><p>Om någon uppgift i ditt intyg är fel ska du vända dig till din vårdgivare. De kan då rätta uppgiften i patientjournalen och göra ett nytt och korrekt intyg tillgängligt i Mina intyg.</p><p><a href="http://www.datainspektionen.se/lagar-och-regler/patientdatalagen" target="_blank">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p><p>Du kan flytta tillbaka ett arkiverat intyg till inkorgen genom att klicka på <i>Återställ</i>.</p>',
+        'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till Arkiverade intyg.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
+        'archived.description.part2': '<p><a href="http://www.datainspektionen.se/lagar-och-regler/patientdatalagen" target="_blank">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ.</p>',
 
-        'archived.restoremodal.header': 'Återställ intyg',
-        'archived.restoremodal.text': 'När du väljer att återställa intyget kommer det att flyttas till <i>Inkorgen</i>.<br><br>Du kan när som helst arkivera intyget igen.',
+        'archived-cert-table.headers.issued': 'Intyg utfärdat',
+        'archived-cert-table.headers.type': 'Typ av intyg',
+        'archived-cert-table.headers.complementary-info': 'Intyg avser',
+        'archived-cert-table.headers.issuedby': 'Intygsutfärdare',
+        'btn-link.restore': 'Återställ',
+        'btn-link.restore.tooltip': 'Flytta intyget tillbaka till Inkorgen.',
 
         /* SEND */
         'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till.',
@@ -180,16 +183,12 @@ angular.module('minaintyg').constant('minaintyg.messages', {
             ]}
         ],
 
-        'listtable.headers.issued': 'Inkom till Mina intyg',
-        'listtable.headers.type': 'Typ av intyg',
-        'listtable.headers.certinfo': 'Intygsinformation',
-        'listtable.headers.issuedby': 'Enhet',
-        'listtable.headers.latestevent': 'Senaste händelser',
-
         'fkdialog.head': 'Du har gett ditt samtycke',
         'fkdialog.text': 'Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.',
         'fkdialog.button.returntofk': 'Tillbaka till Försäkringskassan',
         'fkdialog.button.continueuse': 'Gå vidare till Mina intyg',
+
+        'listtable.headers.latestevent': 'Senaste händelser',
 
         'mvk.header.linktext': '1177 Vårdguiden',
         'mvk.header.logouttext': 'Logga ut',

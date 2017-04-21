@@ -57,6 +57,11 @@ $mi-intyg-header-color: #fff;
 
 $mi-intyg-body-bg: #fff;
 
+//Tables
+$mi-intyg-table-bg: #fff;
+//odd rows when striped
+$mi-intyg-table-bg-accent: #eee;
+
 
 
 // Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)
@@ -100,3 +105,4 @@ $alert-warning-text: $mi-alert-warning-text;
 $alert-danger-bg: $mi-alert-danger-bg;
 $alert-danger-border: $mi-alert-danger-border;
 $alert-danger-text: $mi-alert-danger-text;
+

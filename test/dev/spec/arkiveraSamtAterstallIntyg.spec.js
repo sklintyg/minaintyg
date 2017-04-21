@@ -102,8 +102,6 @@ describe('Arkivera samt återställ intyg', function() {
         it('Återställ intyg', function() {
             expect(archivedPage.isAt()).toBeTruthy();
             archivedPage.restoreCertificate(fk7263IntygsId);
-            expect(archivedPage.restoreDialogIsDisplayed()).toBeTruthy();
-            archivedPage.confirmRestoreCertificate();
         });
 
         it('Intyget ska inte längre finnas i listan med arkiverade intyg', function() {

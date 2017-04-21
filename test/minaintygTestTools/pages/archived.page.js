@@ -41,12 +41,6 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     },
     restoreCertificate: function(intygId) {
         element(by.id('restoreCertificate-' + intygId)).click();
-    },
-    confirmRestoreCertificate: function() {
-        element(by.id('restore-button')).click();
-    },
-    restoreDialogIsDisplayed: function() {
-        return element(by.id('restore-confirmation-dialog')).isDisplayed();
     }
 });
 

@@ -74,3 +74,13 @@ h2 {
     text-align: left;
   }
 }
+//Tables
+.table-striped {
+  > tbody > tr:nth-of-type(odd) {
+    background-color: $mi-intyg-table-bg;
+  }
+
+  > tbody > tr:nth-of-type(even) {
+    background-color: $mi-intyg-table-bg-accent;
+  }
+}

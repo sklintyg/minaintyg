@@ -18,50 +18,24 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$location', '$log', '$scope', 'common.dialogService', 'common.IntygListService', 'common.moduleService',
-        function($location, $log, $scope, dialogService, IntygListService, moduleService) {
+    [ '$location', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
+        function($location, $log, $scope, IntygListService, moduleService, messageService) {
             'use strict';
 
             $scope.archivedCertificates = [];
             $scope.doneLoading = false;
             $scope.moduleService = moduleService;
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false
-            };
+            $scope.messageService = messageService;
 
-            // Restore dialog
-            var restoreDialog = {};
-            $scope.certToRestore = {};
+            $scope.restoreCert = function(item) {
 
-            $scope.openRestoreDialog = function(cert) {
-                $scope.certToRestore = cert;
-                $scope.dialog.focus = true;
-                restoreDialog = dialogService.showDialog($scope, {
-                    dialogId: 'restore-confirmation-dialog',
-                    titleId: 'archived.restoremodal.header',
-                    bodyTextId: 'archived.restoremodal.text',
-                    button1click: function() {
-                        $scope.restoreCert();
-                    },
-                    button1id: 'restore-button',
-                    button1text: 'label.restore',
-                    autoClose: false
-                });
-            };
-
-            $scope.restoreCert = function() {
-                var item = $scope.certToRestore;
                 $log.debug('Restore requested for cert:' + item.id);
-                $scope.dialog.acceptprogressdone = false;
 
                 IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
                     $log.debug('(restore) statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
                         oldItem.archived = fromServer.archived;
                         oldItem.selected = false;
-                        restoreDialog.close();
-                        $scope.dialog.acceptprogressdone = true;
                     } else {
                         // show error view
                         $location.path('/fel/couldnotrestorecert');
