@@ -7,12 +7,12 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6 body-col">
       <latest-events cert-id="{{certMetaModel.id}}" statuses="certMetaModel.statuses" max-statuses="2"
                      class="compact-body-latest-events"></latest-events>
     </div>
 
-    <div class="col-xs-6 text-right">
+    <div class="col-xs-12 col-sm-6 body-col text-right">
       <button type="button" ng-attr-id="archiveCertificateBtn-{{certMetaModel.id}}" class="btn btn-secondary"
               ng-click="onArchiveClick({cert:certMetaModel})"
               uib-popover="{{messageService.getProperty('button.archive.tooltip')}}" popover-trigger="mouseenter"
@@ -26,6 +26,7 @@
               popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
         <i class="icon icon-eye"></i> <span message key="button.show"></span>
       </button>
+
     </div>
   </div>
 </div>
