@@ -39,28 +39,19 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         /* CONSENT */
 
-        'consent.consentpage.title': 'Ditt samtycke',
+        'consent.consentpage.title': 'Samtycke',
         'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina intyg.',
         'consent.aboutheader': 'Om tjänsten Mina intyg',
-        'consent.abouttext': 'Mina intyg är en webbtjänst där du enkelt kan hantera olika intyg som hälso- och sjukvården utfärdat till dig. Du kan läsa intygen, spara ner dem på din dator och skriva ut dem. Du kan även välja att skicka intygen vidare till de mottagare som är anslutna till Mina intyg, till exempel Försäkringskassan och Transportstyrelsen. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.',
+        'consent.abouttext': 'Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.',
 
-        'consent.consentheader1': '<h3>Personuppgifter i Mina intyg</h3>',
-        'consent.consenttext1': '<p>Din vårdgivare är enligt patientdatalagen skyldig att föra patientjournal. De intyg som vårdgivaren utfärdar innehåller uppgifter från patientjournalen. När du ger ditt samtycke kommer din vårdgivare att lämna ut kopior av dina intyg till Mina intyg och du kan direkt börja hantera dina intyg i tjänsten. Mina intyg hanterar endast personuppgifter som finns i intygen.</p><p>Personuppgifterna finns i Mina intyg för att underlätta för dig. Du ska enkelt kunna hantera dina intyg och välja när och till vem du vill skicka dem.</p>',
+        'consent.consentheader1': 'Personuppgifter i Mina intyg',
+        'consent.consenttext1': 'Din vårdgivare är enligt patientdatalagen skyldig att föra patientjournal. De intyg som vårdgivaren utfärdar innehåller uppgifter från patientjournalen. När du ger ditt samtycke kommer din vårdgivare att lämna ut kopior av dina intyg till Mina intyg och du kan direkt börja hantera dina intyg i tjänsten. Mina intyg hanterar endast personuppgifter som finns i intygen.<br><br>Personuppgifterna finns i Mina intyg för att underlätta för dig. Du ska enkelt kunna hantera dina intyg och välja när och till vem du vill skicka dem.',
 
-        'consent.consentheader2': '<h3>Ansvarig för Mina intyg</h3>',
-        'consent.consenttext2': '<p>Tjänsten Mina intyg drivs av <a href="http://www.inera.se/" target="_blank">Inera AB</a> som är personuppgiftsansvarig för den behandling av personuppgifter om enskilda personer som sker i tjänsten. </p><p>Postadress: Box 17703, 118 93 Stockholm<br>Organisationsnummer: 556559-4230</p><p>Om du har frågor eller har problem med att använda Mina intyg kan du kontakta <a href="http://www.inera.se/felanmalan" target="_blank">Nationell kundservice</a>.</p>',
+        'consent.consentheader2': 'Ansvarig för Mina intyg',
+        'consent.consenttext2': 'Tjänsten Mina intyg drivs av <a href="http://www.inera.se/" target="_blank">Inera AB</a> som är personuppgiftsansvarig för den behandling av personuppgifter om enskilda personer som sker i tjänsten. </p><p>Postadress: Box 17703, 118 93 Stockholm<br>Organisationsnummer: 556559-4230</p><p>Om du har frågor eller har problem med att använda Mina intyg kan du kontakta <a href="http://www.inera.se/kontakt" target="_blank">Ineras kundservice</a>.',
 
-        'consent.consentheader3': '<h3>Dina rättigheter</h3>',
-        'consent.consenttext3': '<p>Som användare av tjänsten Mina intyg har du bland annat rätt att:</p><ul><li>varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB</li><li>när som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system med stöd av patientdatalagen)</li><li>begära att tredje man till vilka personuppgifter lämnats ut underrättas om personuppgifter som rättats, blockerats eller utplånats. Någon sådan underrättelse behöver dock inte lämnas om detta visar sig vara omöjligt eller skulle innebära en oproportionerligt hög arbetsinsats.</li><li>kräva skadestånd enligt <a href="http://www.riksdagen.se/sv/Dokument-Lagar/Lagar/Svenskforfattningssamling/Personuppgiftslag-1998204_sfs-1998-204/?bet=1998:204" target="_blank">48 § PUL</a> vid behandling av personuppgifter i strid med lag.</li></ul></p>',
-
-        'consent.consentheader4': '',
-        'consent.consenttext4': '',
-
-        'consent.consentheader5': '',
-        'consent.consenttext5': '',
-
-        'consent.consentheader6': '<h3>Ge och återta samtycke</h3>',
-        'consent.consenttext6': '<p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta ditt samtycke. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
+        'consent.consentheader6': 'Ge och återta samtycke',
+        'consent.consenttext6': 'Du kan när som helst återta ditt samtycke.<br><br>Om du återtar ditt samtycke upphör Inera att behandla dina personuppgifter, inklusive intyg, i Mina intyg. Om du därefter lämnar ett nytt samtycke kan du återigen se dina intyg.<br><br>Även om du lämnar ett nytt samtycke kan det i vissa fall finnas intyg som inte går att visa i Mina intyg igen. Det beror på att den vårdgivare som har utfärdat intygen upphört med sin verksamhet, eller slutat att använda tjänsten av annan anledning, under den tid som du har återtagit ditt samtycke. De intyg som inte längre kan visas i Mina intyg finns alltid hos vårdgivaren eller hos den vårdgivare eller myndighet som övertagit verksamheten.<br><br>Om du vill behålla intygen så kan du ladda ner intygen på din dator innan du återtar ditt samtycke. Gå till inkorgen och välj "Visa intyget", klicka sen på "Spara som PDF".<br><br>Om du inte återtar ditt samtycke finns dina intyg kvar i tjänsten.',
 
         'consent.confirmtext': 'Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg.',
         'consent.giveconsent': 'Jag ger mitt samtycke',

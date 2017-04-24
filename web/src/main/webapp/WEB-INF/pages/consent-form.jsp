@@ -53,7 +53,7 @@
 </script>
 
 </head>
-<body>
+<body class="consent-background">
 
   <mvk-top-bar></mvk-top-bar>
 
@@ -61,7 +61,7 @@
 
   <mi-cookie-banner></mi-cookie-banner>
 
-  <div class="container">
+  <div class="container container-narrow">
     <div class="content">
       <div class="row">
         <div id="content-body" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
