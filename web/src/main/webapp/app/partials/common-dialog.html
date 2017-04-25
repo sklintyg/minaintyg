@@ -9,8 +9,8 @@
 </div>
 <div class="modal-footer">
   <button type="button" id="{{button1id}}" class="btn btn-primary" ng-disabled="!dialog.acceptprogressdone" ng-click="button1click()">
-    <img ng-if="!dialog.acceptprogressdone" ng-src="/img/ajax-loader-small-green.gif" />
-    <i ng-if="button1icon" class="icon" ng-class="button1icon"></i> <span message key="{{button1text}}"></span>
+    <i ng-if="!dialog.acceptprogressdone" class="icon icon-spinner animate-spin"></i>
+    <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span message key="{{button1text}}"></span>
   </button>
   <button type="button" id="{{button2id}}" class="btn btn-third" ng-click="button2click()">
     <i ng-if="button2icon" class="icon" ng-class="button2icon"></i> <span message key="{{button2text}}"></span>

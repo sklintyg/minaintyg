@@ -1,8 +1,9 @@
 //Here we put common styles that is used by content in intyg-modules.
 // The current styles are temporary to make it somewhat usable until we have developed custom directives for the inbox etc.
 .cert {
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
+
 .cert-titlebar {
   background-color: #00687D;
   background-image: linear-gradient(to bottom, #008391, #00687D);
@@ -16,5 +17,18 @@
     span {
       color: #fff;
     }
+  }
+}
+
+//This should be moved to the directive (in common-web/META-INF/resources/webjars/common/minaintyg/gui/miSpinner.directive.html)
+// when we have support for component-scoped scss files there...
+.mi-spinner-directive {
+  text-align: center;
+  padding: 20px;
+  color: $mi-spinner-color;
+
+  .icon {
+    font-size: 35px;
+
   }
 }
