@@ -33,6 +33,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'button.send': 'Skicka',
         'button.show': 'Visa intyg',
         'button.show.tooltip': 'Läs och hantera ditt intyg.',
+        'button.goback': 'Tillbaka',
 
         'modal.tekniskt-fel.header': 'Tekniskt fel',
         'modal.button.tekniskt-fel.ok': 'OK',

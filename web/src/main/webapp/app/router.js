@@ -23,6 +23,8 @@
 angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) {
     'use strict';
 
+    var hereText = 'Du är här: ';
+
     $stateProvider.
         state('consent', {
             url :'/consent',
@@ -34,31 +36,36 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             url : '/lista',
             templateUrl: '/app/views/list/list.html',
             controller: 'minaintyg.ListCtrl',
-            data:{title: 'Inkorgen',keepInboxTabActive: false}
+            data:{title: 'Inkorgen',keepInboxTabActive: false},
+            ncyBreadcrumb: { label: '<i class="icon icon-inbox"></i> ' + hereText + ' Inkorg' }
         }).
         state('arkiverade', {
             url : '/arkiverade',
             templateUrl: '/app/views/list/archive/list-archived.html',
             controller: 'minaintyg.ListArchivedCtrl',
-            data:{title: 'Arkiverade intyg',keepInboxTabActive: false}
+            data:{title: 'Arkiverade intyg',keepInboxTabActive: false},
+            ncyBreadcrumb: { label: '<i class="icon icon-box"></i> ' + hereText + ' Arkiverade intyg' }
         }).
         state('send', {
             url : '/send/:type/:certificateId/:defaultRecipient',
             templateUrl: '/app/views/send/send.page.html',
             controller: 'minaintyg.SendCtrl',
-            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true}
+            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true},
+            ncyBreadcrumb: { label: 'Skicka intyg' }
         }).
         state('omminaintyg', {
             url :'/omminaintyg',
             templateUrl: '/app/views/about/about-mina-intyg.html',
             controller: 'minaintyg.AboutCtrl',
-            data:{title: 'Om mina intyg',keepInboxTabActive: false}
+            data:{title: 'Om mina intyg',keepInboxTabActive: false},
+            ncyBreadcrumb: { label: '<i class="icon icon-mina_intyg"></i> ' + hereText + ' Om Mina intyg' }
         }).
         state('hjalp', {
             url : '/hjalp',
             templateUrl: '/app/views/help/help.html',
             controller: 'minaintyg.HelpCtrl',
-            data:{title: 'Hjälp',keepInboxTabActive: false}
+            data:{title: 'Hjälp',keepInboxTabActive: false},
+            ncyBreadcrumb: { label: '<i class="icon icon-help-circled-1"></i> ' + hereText + ' Hjälp och support' }
         }).
         state('fel', {
             url :'/fel/:errorCode',
