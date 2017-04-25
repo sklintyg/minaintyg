@@ -21,8 +21,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:set var="useMinifiedJavaScript" value="${pageAttributes.useMinifiedJavaScript}"/>
-<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
+<c:set var="useMinifiedJavaScript" value="${pageAttributes.useMinifiedJavaScript}" />
+<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}" />
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app" ng-app="minaintyg">
@@ -44,14 +44,21 @@
 <link rel="stylesheet" href="/font/css/fontello.css?_v=<spring:message code="buildNumber" />">
 <!-- endinjector -->
 
-<script type="text/javascript">
-  /**
-   Global JS config/constants for this app, to be used by scripts
-   **/
-  var MI_CONFIG = {
-    BUILD_NUMBER: '<spring:message code="buildNumber" />',
-    USE_MINIFIED_JAVASCRIPT: '${useMinifiedJavaScript}'
+<style media="screen" type="text/css">
+  #welcome-image {
+    margin-top: 20px;
+    width: 92%;
+    max-width: 400px;
   }
+</style>
+<script type="text/javascript">
+    /**
+     Global JS config/constants for this app, to be used by scripts
+     **/
+    var MI_CONFIG = {
+        BUILD_NUMBER: '<spring:message code="buildNumber" />',
+        USE_MINIFIED_JAVASCRIPT: '${useMinifiedJavaScript}'
+    }
 </script>
 
 </head>
@@ -59,63 +66,67 @@
 <body ng-app="minaintyg">
 
   <mvk-top-bar hide-logout="true"></mvk-top-bar>
-  <div id="mi-logo-header">
-    <div class="container">
-      <a href="/web/start" class="navbar-brand"><img alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo" src="/img/logo-minaintyg-white.png" /></a>
-    </div>
-  </div>
-
+  <mi-header user-name=""></mi-header>
   <mi-cookie-banner></mi-cookie-banner>
-
+  <br>
   <div class="container">
-    <div class="content">
+    <div id="content-body">
+      <div class="hidden-xs col-sm-6 text-right">
+        <img id="welcome-image" alt="Bild av hand" src="<c:url value="/img/hand.jpg" />" />
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <h1>Välkommen till Mina intyg</h1>
+        <p>Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
+        <hr>
+        <p>I Mina intyg kan du läsa, skriva ut och spara dina intyg. Du kan också skicka de till t.ex.
+          Försäkringskassan.
+          Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
 
-      <!--         <div id="navigation-container"> -->
-      <!--           <mi-header user-name=""></mi-header> -->
-      <!--         </div> -->
+        <p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.
+          Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
 
-      <div id="content-body" class="row">
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-          <h1>Välkommen till Mina intyg</h1>
-          <p class="ingress">Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
-          <p>I Mina intyg kan du läsa, skriva ut och spara dina intyg och du kan skicka intyg till Försäkringskassan.
-            Det enda du behöver är en e-legitimation för att kunna logga in och använda tjänsten.</p>
-          <p>All informationsöverföring är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.
-            Det kostar inget att använda tjänsten och du kan hantera dina intyg när och var det passar dig.</p>
-          <p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras
-            i tjänsten. Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen
-            person.</p>
-          <p>
-            <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
-              hur du skaffar en e-legitimation</a>
-          </p>
-          <p class="btn-row-desc">Inloggningen sker via 1177 Vårdguiden</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="${mvkMainUrl}">Logga in</a>
-          </div>
+        <p>Första gången du loggar in i Mina intyg måste du ge ditt samtycke till att dina personuppgifter hanteras i
+          tjänsten.
+          Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
+        <p>
+          <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
+            hur du skaffar en e-legitimation</a>
+        </p>
+        <br>
+        <p><a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> Logga in</a></p>
+        <p><i>Inloggningen sker via 1177 Vårdguiden</i></p>
 
-        </div>
-        <div class="hidden-xs col-sm-5 col-md-5 col-lg-5">
-          <img id="welcome-image" src="<c:url value="/img/hand.jpg" />" />
-        </div>
+
       </div>
 
     </div>
+
   </div>
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
-      <script type="text/javascript" src="/bower_components/jquery/jquery.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular/angular.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-i18n/angular-locale_sv-se.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/jquery/jquery.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular/angular.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-animate/angular-animate.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-cookies/angular-cookies.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-i18n/angular-locale_sv-se.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-sanitize/angular-sanitize.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript"
+              src="/bower_components/ngstorage/ngStorage.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>

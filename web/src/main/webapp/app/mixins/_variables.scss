@@ -12,6 +12,7 @@ $mi-mvk-header-bg-color:  #378998;
 
 $mi-disabled-color: #777;
 $mi-box-shadow-color: #ddd;
+$mi-hr-border-color: #d7d7d7;
 
 // Font
 $mi-font: Arial, sans-serif;
@@ -105,4 +106,7 @@ $alert-warning-text: $mi-alert-warning-text;
 $alert-danger-bg: $mi-alert-danger-bg;
 $alert-danger-border: $mi-alert-danger-border;
 $alert-danger-text: $mi-alert-danger-text;
+
+//Hr
+$hr-border: $mi-hr-border-color;
 
