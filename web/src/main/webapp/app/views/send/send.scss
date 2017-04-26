@@ -1,25 +1,29 @@
 
 #send-certificate-page-content mi-compact-certificate-header {
-  margin: 40px 0;
+  margin: 20px 0;
 }
 
 .mi-sending-dialog-window-class {
   margin-top: 100px;
 
   .modal-body {
-    min-height: 150px;
+    min-height: 180px;
     padding: 20px 60px;
 
     .result-rows {
       font-weight: bold;
     }
 
-    .glyphicon-warning-sign {
-      color: #a00;
-    }
+    .icon {
+      font-size: 18px;
 
-    .glyphicon-ok {
-      color: #0a0;
+      &.icon-attention {
+        color: $mi-alert-danger-text;
+      }
+
+      &.icon-ok {
+        color: $mi-success-color;
+      }
     }
   }
 }

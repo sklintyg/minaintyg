@@ -9,7 +9,7 @@
     <div class="modal-body">
       <div ng-repeat="r in vm.recipients" class="row result-rows">
 
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <span ng-if="r.status.sent" class="text-nowrap">
             {{r.status.timestamp | date:'short'}}
             <span ng-attr-id="{{'success-result-' + r.id}}" message key="sendpage.dialog.label.received-by"></span>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-xs-6">
           {{r.name}}
-          <i class="glyphicon pull-right" ng-class="{'glyphicon-ok' :r.status.sent, 'glyphicon-warning-sign' :!r.status.sent}"></i>
+          <strong><i class="icon pull-right" ng-class="{'icon-ok' :r.status.sent, 'icon-attention danger' :!r.status.sent}"></i></strong>
         </div>
 
 
@@ -29,7 +29,7 @@
 
     <div class="modal-footer">
       <button id="back-to-intyg-btn" ng-click="onBackToCertificate()" class="btn btn-primary" type="button">
-        <i class="glyphicon glyphicon-arrow-left"></i> <span message key="sendpage.dialog.btn.back-to-intyg"></span>
+        <i class="icon icon-left-1"></i> <span message key="sendpage.dialog.btn.back-to-intyg"></span>
       </button>
     </div>
 

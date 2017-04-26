@@ -22,7 +22,6 @@ angular.module('minaintyg').directive('miSelectRecipients', function() {
 
     return {
         restrict: 'E',
-        replace: true,
         scope: {
             recipients: '=',
             defaultRecipient: '@',

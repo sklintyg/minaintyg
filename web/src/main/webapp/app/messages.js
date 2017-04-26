@@ -113,7 +113,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
         'sendpage.dialog.label.received-by': 'Mottaget av',
         'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
-        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <a href="http://www.inera.se/felanmalan" target="_blank">Ineras nationella kundservice</a>.',
+        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <a href="http://www.inera.se/kontakt" target="_blank">Ineras kundservice</a>.',
         'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 
