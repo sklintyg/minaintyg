@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="sv" id="ng-app" ng-app="miWelcomeApp">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="ROBOTS" content="nofollow, noindex" />
+
+<title>Mina Intyg testinloggning</title>
+<!-- build:css({build/.tmp,src/main/webapp}) app/app.css -->
+<!-- injector:css -->
+<link rel="stylesheet" href="/app/app.css">
+<!-- endinjector -->
+<!-- endbuild -->
+
+<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+
+<style type="text/css">
+  textarea {
+    font-family: Consolas, Lucida Console, monospace;
+    font-size: 0.7em;
+  }
+</style>
+
+<script type="text/javascript">
+
+    angular.module('miWelcomeApp', [
+        'miWelcomeApp.controllers'
+    ]);
+
+    angular.module('miWelcomeApp.controllers', []).controller('welcomeController',
+        ['$scope', '$http', '$log', function($scope, $http, $log) {
+
+            function _fetchPuPersons() {
+                $http.get('/services/pu-api/person').success(function(data) {
+                    $scope.loginModel = _loginModel(data);
+                    $scope.selectedIndex = '0';
+                }).error(function(data, status) {
+                    $log.error('error ' + status);
+                });
+            }
+
+            function _isArray(obj) {
+                return Object.prototype.toString.call(obj) == "[object Array]";
+            }
+
+            function _loginModel(data) {
+                if (_isArray(data)) {
+
+                    data
+                        .sort(function(a, b) {
+                            return a.personpost.personId.localeCompare(b.personpost.personId);
+                        });
+
+                    // Add an index property to all items
+                    for (var a = 0; a < data.length; a++) {
+                        data[a].index = a;
+                    }
+                    return data;
+                }
+
+                return [];
+            }
+
+
+            $scope.loginModel = [];
+
+            $scope.$watch('selectedIndex', function(newSelected, oldVal) {
+                if (newSelected === undefined) {
+                    return;
+                }
+
+                var jsonEl = angular.element(document.querySelector('#userJson'));
+                var jsonElView = angular.element(document.querySelector('#userJsonDisplay'));
+                var selector = angular.element(document.querySelector('#jsonSelect'));
+
+                // Catch user login option
+                var login = $scope.loginModel[newSelected];
+
+                // Get the HSA person from model
+                var puPerson = {
+                    personnummer: login.personpost.personId,
+                    namn: login.personpost.namn.fornamn + ' ' + login.personpost.namn.efternamn,
+                    sekretessmarkering: login.sekretessmarkering
+                };
+
+                var loginJson = JSON.stringify(puPerson, '', 1);
+                jsonElView.text(loginJson);
+                jsonEl.text(escape(loginJson));
+            });
+
+            $scope.login = function() {
+                var contextString = angular.element(document.querySelector('#userJsonDisplay')).val();
+                var context = JSON.parse(contextString);
+                location.href='/web/sso?guid=' + context.personnummer;
+            };
+
+            // Fetch fake logins from the PU stub
+            _fetchPuPersons();
+        }]
+    );
+
+
+</script>
+</head>
+<body ng-controller="welcomeController">
+
+    <div class="container">
+
+      <div id="content-container">
+        <div class="content row">
+
+          <h1 class="page-header">Testinloggningar Mina Intyg</h1>
+
+          <div class="form-group col-xs-8">
+
+            <h4 id="header" ng-if="loginModel.length > 0">Mallar</h4>
+
+            <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="18" class="form-control"
+                    style="width: 100%;max-width:100%">
+              <option id="x{{login.personpost.personId}}" ng-repeat="login in loginModel" value="{{login.index}}">
+                {{login.personpost.personId}} - {{login.personpost.namn.fornamn}} {{login.personpost.namn.efternamn}}
+                {{login.sekretessmarkering == 'J' ? '(Sekretess)' :''}}
+              </option>
+            </select>
+
+            <input id="loginBtn" type="submit" value="Logga in" ng-click="login()" class="btn btn-primary"
+                   style="margin-top: 20px;width: 100%">
+
+          </div>
+
+          <div class="form-group col-xs-4">
+            <p>
+            <h4>Inloggningsprofil</h4>
+            <input type="hidden" id="userJson" name="userjson" />
+            <textarea id="userJsonDisplay" name="userJsonDisplay" class="field form-control"
+                      style="height: 200px;width: 100%;">
+            </textarea>
+          </div>
+
+          <a href="/pubapp/showcase/index.html" target="_blank">Komponentbilbiotek (kräver inloggning först)</a><br />
+        </div>
+      </div>
+    </div>
+
+
+</body>
+</html>

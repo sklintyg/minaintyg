@@ -29,11 +29,11 @@
 module.exports = {
 
     get: function() {
-        browser.get('welcome.jsp');
+        browser.get('welcome.html');
     },
 
     isAt: function isAt() {
-        return element(by.id('customguidform')).isDisplayed();
+        return element(by.id('jsonSelect')).isDisplayed();
     },
 
     disableCookieConsentBanner: function() {
@@ -54,7 +54,11 @@ module.exports = {
             this.enableCookieConsentBanner();
         }
 
-        element(by.id('guid')).sendKeys(userId || '19121212-1212');
+        userId = userId || '191212121212';
+        userId = userId.replace('-', '');
+        userId = 'x' + userId;
+        
+        element(by.id(userId)).click();
         element(by.id('loginBtn')).click();
     }
 
