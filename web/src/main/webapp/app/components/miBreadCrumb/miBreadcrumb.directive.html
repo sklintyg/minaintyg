@@ -1,0 +1,19 @@
+<div class="inline-block">
+
+  <i class="icon icon-{{stateIconName}}"></i>
+
+  <span id="backnav" ng-show="steps.length > 1">
+    <a class="backlink" href="/web/start/#/"><i class="icon icon-left-1"></i></a> <a class="backlink" href="/web/start/#/"><message key="button.goback" /></a>
+  </span>
+
+  Du är här:
+  <ol class="breadcrumb">
+    <li ng-repeat="step in steps | limitTo:(steps.length-1)">
+      <a ng-if="step.link" href="{{step.link}}" ng-bind-html="step.label"></a>
+      <span ng-if="!step.link" ng-bind-html="step.label"></span>
+    </li>
+    <li ng-repeat="step in steps | limitTo:-1" class="active">
+      <span ng-bind-html="step.label"></span>
+    </li>
+  </ol>
+</div>

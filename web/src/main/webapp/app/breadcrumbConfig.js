@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright (C) 2017 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
@@ -17,34 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.page-title {
-  padding-top: 40px;
-}
-
-@media (min-width: 1200px){
-  .container.container-narrow {
-    width: 550px;
-  }
-}
-@media (min-width: 992px){
-  .container.container-narrow {
-    width: 550px;
-  }
-}
-
-.alert {
-  padding: 15px 20px 15px 20px;
-  border-radius: 2px;
-}
-
-.consent-button-pretext {
-  font-style: italic;
-  font-weight: bold;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 20px 0 0 0;
-  padding-bottom: 20px;
-}
+angular.module('minaintyg').constant('minaintyg.BreadcrumbConfig', {
+    inkorg: { icon: 'inbox', link: '/web/start', label: 'Inkorg'},
+    intyg: { label: 'Läsa och hantera intyg' },
+    skicka: { label: 'Skicka intyg' },
+    arkiv: { icon: 'box', label: 'Arkiverade intyg'},
+    om: { icon: 'mina_intyg', label: 'Om Mina intyg' },
+    hjalp: { icon: 'help-circled-1', label: 'Hjälp och support' }
+});

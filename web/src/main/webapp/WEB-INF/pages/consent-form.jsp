@@ -107,7 +107,6 @@
       <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-      <script type="text/javascript" src="/bower_components/angular-breadcrumb/release/angular-breadcrumb.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
       <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.js"></script>
       <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
