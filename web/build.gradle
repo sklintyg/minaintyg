@@ -93,7 +93,7 @@ gretty {
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev",
+               "-Dspring.profiles.active=dev,caching-enabled",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
@@ -119,6 +119,8 @@ dependencies {
     compile "se.inera.intyg.common:luae_na:${commonVersion}"
     compile "se.inera.intyg.common:luae_fs:${commonVersion}"
     compile "se.inera.intyg.common:fk7263:${commonVersion}"
+
+    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
 
     compile "org.springframework:spring-web:${springVersion}"
     compile "org.springframework:spring-webmvc:${springVersion}"

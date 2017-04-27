@@ -18,31 +18,48 @@
  */
 package se.inera.intyg.minaintyg.web.web.security;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import org.callistasoftware.netcare.mvk.authentication.service.api.AuthenticationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UserDetails;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  */
 @RunWith(MockitoJUnitRunner.class)
 public class MvkPreAuthenticationCallbackTest {
+
+    private static final String PERSON_ID = "19121212-1212";
+
+    @Mock
+    private MinaIntygPUService minaIntygPUService;
+
+    @InjectMocks
+    private MvkPreAuthenticationCallback testee;
+
     @Test
     public void testLookupPrincipal() throws Exception {
 
-        AuthenticationResult authenticationResultMock = mock(AuthenticationResult.class);
-        when(authenticationResultMock.getUsername()).thenReturn("1234567890");
+        when(minaIntygPUService.getPerson(PERSON_ID))
+                .thenReturn(new Person(new Personnummer(PERSON_ID), false, false, "", "", "", "", "", ""));
 
-        MvkPreAuthenticationCallback mvkPreAuthenticationCallback = new MvkPreAuthenticationCallback();
-        UserDetails userDetails = mvkPreAuthenticationCallback.lookupPrincipal(authenticationResultMock);
+        AuthenticationResult authenticationResultMock = mock(AuthenticationResult.class);
+        when(authenticationResultMock.getUsername()).thenReturn(PERSON_ID);
+
+        new MvkPreAuthenticationCallback();
+        UserDetails userDetails = testee.lookupPrincipal(authenticationResultMock);
 
         assertEquals(userDetails.getClass().getCanonicalName(), CitizenImpl.class.getCanonicalName());
-        assertEquals(((Citizen) userDetails).getUsername(), "1234567890");
+        assertEquals(((Citizen) userDetails).getUsername(), PERSON_ID);
 
     }
 }

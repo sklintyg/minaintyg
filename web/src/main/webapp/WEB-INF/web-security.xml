@@ -36,6 +36,7 @@
     </bean>
     <security:http security="none" pattern="/welcome.jsp" />
     <security:http security="none" pattern="/anvandare/consent/**"/>
+    <security:http security="none" pattern="/services/**" />
   </beans>
 
   <beans profile="!dev">
