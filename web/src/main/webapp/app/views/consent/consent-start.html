@@ -1,16 +1,18 @@
-<div id="consentTerms" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div id="consentTerms">
   <h1 class="page-title"><span message key="consent.consentpage.title"></span></h1>
 
   <div class="alert alert-info">
     <h3>Ditt samtycke</h3>
-    <p>Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina intyg.</p>
+    <p>Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas
+      där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina
+      intyg.</p>
   </div>
 
-  <h3><span message key="consent.aboutheader"></span></h3>
-  <p><span message key="consent.abouttext"></span></p>
-
-
   <div ng-include="'/app/views/about/section-samtycke-common-partial.html'"></div>
+
+  <span message key="about.dina.rattigheter"></span>
+  <span message key="about.ge.aterta.samtycke"></span>
+
 
   <hr class="divider">
   <p class="consent-button-pretext"><span message key="consent.confirmtext"></span></p>
@@ -20,5 +22,4 @@
       <span message key='consent.giveconsent'></span>
     </button>
   </p>
-
 </div>
