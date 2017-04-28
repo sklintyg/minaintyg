@@ -18,7 +18,7 @@ För att starta webbapplikationen så måste [Intygstjänsten](https://github.co
 ```
 $ cd minaintyg
 $ ./gradlew appRun
-$ open http://localhost:8088/welcome.jsp
+$ open http://localhost:8088/welcome.html
 
 ```
 ### Kör Protractor

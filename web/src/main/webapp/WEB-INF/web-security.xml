@@ -34,8 +34,9 @@
     <bean class="se.inera.intyg.minaintyg.web.web.security.MvkValidationServiceAdvice">
       <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-?[0-9]{4}" />
     </bean>
-    <security:http security="none" pattern="/welcome.jsp" />
+    <security:http security="none" pattern="/welcome.html" />
     <security:http security="none" pattern="/anvandare/consent/**"/>
+    <security:http security="none" pattern="/services/**" />
   </beans>
 
   <beans profile="!dev">

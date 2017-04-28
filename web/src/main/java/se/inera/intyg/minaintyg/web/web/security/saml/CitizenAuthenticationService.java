@@ -20,27 +20,53 @@ package se.inera.intyg.minaintyg.web.web.security.saml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Service;
-
-import se.inera.intyg.schemas.contract.Personnummer;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
+import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
+import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
 import se.inera.intyg.minaintyg.web.web.security.CitizenImpl;
-import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
+import se.inera.intyg.schemas.contract.InvalidPersonNummerException;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import static se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum.FK;
 
 @Service
 public class CitizenAuthenticationService implements SAMLUserDetailsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CitizenAuthenticationService.class);
 
+    @Autowired
+    private MinaIntygPUService minaIntygPUService;
+
+    private PersonNameUtil personNameUtil = new PersonNameUtil();
+
     @Override
     public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
         String userid = credential.getNameID().getValue();
-        LOG.debug("SAML user: " + new Personnummer(userid).getPnrHash());
-        // CHECKSTYLE:OFF MagicNumber
-        return new CitizenImpl(userid.substring(0, 8) + "-" + userid.substring(8), LoginMethodEnum.FK);
-        // CHECKSTYLE:ON MagicNumber
+        Personnummer pnr = new Personnummer(userid);
+
+        LOG.debug("SAML user: " + pnr.getPnrHash());
+
+        try {
+            Person person = minaIntygPUService.getPerson(pnr.getPersonnummer());
+            LOG.info("Citizen authenticated and present in PU-service.");
+            return new CitizenImpl(pnr.getNormalizedPnr(), FK, personNameUtil.buildFullName(person), person.isSekretessmarkering());
+        } catch (PersonNotFoundException e) {
+            LOG.error("Person not found in PU-service, cannot authorize access to Mina Intyg.");
+            throw e;
+        } catch (IllegalStateException e) {
+            LOG.error("Person could not be looked up in PU-service due to technical error, "
+                    + "cannot authorize access to Mina Intyg.");
+            throw e;
+        } catch (InvalidPersonNummerException e) {
+            LOG.error("Could not transform userid from SAML credential to valid Personnummer.");
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
 }

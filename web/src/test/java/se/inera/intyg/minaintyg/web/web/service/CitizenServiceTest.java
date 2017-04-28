@@ -18,29 +18,31 @@
  */
 package se.inera.intyg.minaintyg.web.web.service;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.security.CitizenImpl;
+import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import se.inera.intyg.minaintyg.web.web.security.*;
-
 @RunWith(MockitoJUnitRunner.class)
 public class CitizenServiceTest {
 
+    private static final String PERSON_FULL_NAME = "Tolvan Tolvansson";
     private CitizenService service = new CitizenService();
 
     @Test
     public void testGetCitizen() {
         final String username = "1234567890";
-        Citizen user = new CitizenImpl(username, LoginMethodEnum.FK);
+        Citizen user = new CitizenImpl(username, LoginMethodEnum.FK, PERSON_FULL_NAME, false);
         Authentication auth = mock(Authentication.class);
         when(auth.getPrincipal()).thenReturn(user);
         SecurityContextHolder.getContext().setAuthentication(auth);
