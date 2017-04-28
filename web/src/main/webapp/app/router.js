@@ -51,20 +51,6 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             data:{title: 'Arkiverade intyg', keepInboxTabActive: false,
                 breadcrumb: ['arkiv']}
         }).
-        state('omminaintyg', {
-            url :'/omminaintyg',
-            templateUrl: '/app/views/about/about-mina-intyg.html',
-            controller: 'minaintyg.AboutCtrl',
-            data:{title: 'Om Mina intyg', keepInboxTabActive: false,
-                breadcrumb: ['om']}
-        }).
-        state('hjalp', {
-            url : '/hjalp',
-            templateUrl: '/app/views/help/help.html',
-            controller: 'minaintyg.HelpCtrl',
-            data:{title: 'Hjälp', keepInboxTabActive: false,
-                breadcrumb: ['hjalp']}
-        }).
         state('fel', {
             url :'/fel/:errorCode',
             templateUrl: '/app/views/error/error.html',

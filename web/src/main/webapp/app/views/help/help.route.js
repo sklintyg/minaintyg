@@ -4,10 +4,8 @@ angular.module('minaintyg').config(function($stateProvider) {
         url: '/hjalp',
         templateUrl: '/app/views/help/help-page.html',
         controller: 'minaintyg.HelpCtrl',
-        data: {
-            title: 'Hjälp',
-            keepInboxTabActive: false
-        }
+        data:{title: 'Hjälp', keepInboxTabActive: false,
+            breadcrumb: ['hjalp']}
     }).state('help.info', {
         url: '/info',
         views: {

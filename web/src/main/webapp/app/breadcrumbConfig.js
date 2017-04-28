@@ -33,5 +33,8 @@ angular.module('minaintyg').constant('minaintyg.BreadcrumbConfig', {
     anpassa: { label: 'Anpassa intyg' },
     arkiv: { icon: 'box', label: 'Arkiverade intyg'},
     om: { icon: 'mina_intyg', label: 'Om Mina intyg' },
-    hjalp: { icon: 'help-circled-1', label: 'Hjälp och support' }
+    hjalp: { icon: 'help-circled-1', label: 'Hjälp och support' },
+    info: { label: '' },
+    samtycke: { label: 'Samtycke' },
+    juridik: { label: 'Lagring av personuppgifter, sekretess och lagar' }
 });
