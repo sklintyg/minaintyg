@@ -2,6 +2,10 @@ body {
   line-height: 1.5;
 }
 
+.light-background {
+  background-color: #fff;
+}
+
 h1, h2, h3 {
   &:focus {
     outline: none;
@@ -91,21 +95,4 @@ h2 {
   > tbody > tr:nth-of-type(even) {
     background-color: $mi-intyg-table-bg-accent;
   }
-}
-
-
-
-
-
-
-
-
-.breadcrumb {
-  display: inline;
-  padding: 0;
-  background-color: transparent;
-}
-
-.icon-size-2 {
-  font-size: 18px;
 }

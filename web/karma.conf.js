@@ -45,7 +45,6 @@ module.exports = function(config) {
             'src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js',
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
             'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
-            'src/main/webapp/bower_components/angular-breadcrumb/release/angular-breadcrumb.js',
             'src/main/webapp/bower_components/momentjs/moment.js',
             'src/main/webapp/bower_components/ngstorage/ngStorage.js',
             'src/main/webapp/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',

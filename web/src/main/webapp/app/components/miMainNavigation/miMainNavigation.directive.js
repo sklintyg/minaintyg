@@ -38,7 +38,7 @@ angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $
                         return 'active';
                     }
                 }
-                var currentRootState = $rootScope.keepInboxTab ? 'lista' : _getRootStateName($state.current.name) || 'lista';
+                var currentRootState = $rootScope.keepInboxTab ? 'inkorg' : _getRootStateName($state.current.name) || 'inkorg';
 
                 return (page === currentRootState) ? 'active' : '';
             };

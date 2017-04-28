@@ -23,41 +23,39 @@
 angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) {
     'use strict';
 
-    var hereText = 'Du är här: ';
-
     $stateProvider.
         state('consent', {
             url :'/consent',
             templateUrl: '/app/views/consent/consent-start.html',
             controller: 'minaintyg.ConsentCtrl',
-            data:{title: 'Ditt samtycke',keepInboxTabActive: false}
+            data:{title: 'Ditt samtycke', keepInboxTabActive: false}
         }).
-        state('lista', {
-            url : '/lista',
+        state('inkorg', {
+            url : '/inkorg',
             templateUrl: '/app/views/list/list.html',
             controller: 'minaintyg.ListCtrl',
-            data:{title: 'Inkorgen',keepInboxTabActive: false},
-            ncyBreadcrumb: { label: '<i class="icon icon-inbox"></i> ' + hereText + ' Inkorg' }
-        }).
-        state('arkiverade', {
-            url : '/arkiverade',
-            templateUrl: '/app/views/list/archive/list-archived.html',
-            controller: 'minaintyg.ListArchivedCtrl',
-            data:{title: 'Arkiverade intyg',keepInboxTabActive: false},
-            ncyBreadcrumb: { label: '<i class="icon icon-box"></i> ' + hereText + ' Arkiverade intyg' }
+            data:{title: 'Inkorgen', keepInboxTabActive: false,
+                breadcrumb: ['inkorg']}
         }).
         state('send', {
             url : '/send/:type/:certificateId/:defaultRecipient',
             templateUrl: '/app/views/send/send.page.html',
             controller: 'minaintyg.SendCtrl',
-            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true},
-            ncyBreadcrumb: { label: 'Skicka intyg' }
+            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true,
+                breadcrumb: ['inkorg', 'intyg', 'skicka']}
+        }).
+        state('arkiverade', {
+            url : '/arkiverade',
+            templateUrl: '/app/views/list/archive/list-archived.html',
+            controller: 'minaintyg.ListArchivedCtrl',
+            data:{title: 'Arkiverade intyg', keepInboxTabActive: false,
+                breadcrumb: ['arkiv']}
         }).
         state('fel', {
             url :'/fel/:errorCode',
             templateUrl: '/app/views/error/error.html',
             controller: 'minaintyg.ErrorViewCtrl',
-            data:{title: 'Fel',keepInboxTabActive: false}
+            data:{title: 'Fel', keepInboxTabActive: false}
         });
 
         $urlRouterProvider.otherwise(function() {
@@ -67,7 +65,7 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
                 return '/consent';
             }
             else {
-                return '/lista';
+                return '/inkorg';
             }
         });
 });

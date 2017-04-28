@@ -29,17 +29,10 @@
         'ngSanitize',
         'ngAnimate',
         'ngStorage',
-        'ncy-angular-breadcrumb',
         'common']);
 
     // before we do anything...we need all modules
     var moduleArray = [];
-
-    app.config(function($breadcrumbProvider) {
-        $breadcrumbProvider.setOptions({
-            templateUrl: '/app/partials/breadcrumb.html'
-        });
-    });
 
     app.value('networkConfig', {
         defaultTimeout: 30000 // test: 1000

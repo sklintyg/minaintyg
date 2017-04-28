@@ -6,13 +6,15 @@ angular.module('minaintyg')
                 url: '/omminaintyg',
                 templateUrl: '/app/views/about/about-mina-intyg-page.html',
                 controller: 'minaintyg.AboutCtrl',
-                data:{title: 'Om mina intyg', keepInboxTabActive: false}
+                data:{title: 'Om Mina intyg', keepInboxTabActive: false,
+                    breadcrumb: ['om']}
             })
             .state('omminaintyg.info', {
                 url: '/info',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-info.html'
+                        templateUrl: '/app/views/about/section-info.html',
+                        data:{ breadcrumb: ['om', 'info'] }
                     }
                 }
             })
@@ -20,7 +22,8 @@ angular.module('minaintyg')
                 url: '/samtycke',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-samtycke.html'
+                        templateUrl: '/app/views/about/section-samtycke.html',
+                        data:{ breadcrumb: ['om', 'samtycke'] }
                     }
                 }
             })
@@ -28,7 +31,8 @@ angular.module('minaintyg')
                 url: '/juridik',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-juridik.html'
+                        templateUrl: '/app/views/about/section-juridik.html',
+                        data:{ breadcrumb: ['om', 'juridik'] }
                     }
                 }
             });
