@@ -53,13 +53,6 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true},
             ncyBreadcrumb: { label: 'Skicka intyg' }
         }).
-        state('omminaintyg', {
-            url :'/omminaintyg',
-            templateUrl: '/app/views/about/about-mina-intyg.html',
-            controller: 'minaintyg.AboutCtrl',
-            data:{title: 'Om mina intyg',keepInboxTabActive: false},
-            ncyBreadcrumb: { label: '<i class="icon icon-mina_intyg"></i> ' + hereText + ' Om Mina intyg' }
-        }).
         state('hjalp', {
             url : '/hjalp',
             templateUrl: '/app/views/help/help.html',

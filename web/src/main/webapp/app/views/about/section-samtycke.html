@@ -1,0 +1,26 @@
+<div id="about-content-samtycke">
+  <h1>Samtycke</h1>
+
+
+
+  <div ng-include="'/app/views/about/section-samtycke-common-partial.html'"></div>
+
+
+  <div class="alert alert-info">
+    <h3>Återta Samtycke</span></h3>
+
+
+    <p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p>
+
+    <p>Du kan när som helst återta ditt samtycke. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg.
+      När du återtar ditt samtycke kan du inte längre använda Mina intyg.
+      Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>
+
+    <p>
+      <button id="revokeConsentBtn" type="button" ng-click="openRevokeDialog()" class="btn btn-secondary">
+        <i class="icon icon-lock"></i> Återta samtycke
+      </button>
+    </p>
+  </div>
+
+</div>

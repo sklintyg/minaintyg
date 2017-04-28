@@ -1,0 +1,44 @@
+mi-help-navigation-menu {
+
+  // Stacked pills
+  .nav-pills {
+
+    // Only last item should have a bottom border
+    &:last-child {
+      border-bottom: 1px solid $mi-nav-pills-border-color;
+    }
+    // All items items should have a top border
+    > li {
+      float: none;
+      border-top: 1px solid 1px $mi-nav-pills-border-color;
+      margin: 0;
+
+      + li {
+        margin: 0;
+      }
+
+      //Base navpill link style
+      a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: $mi-text-color;
+
+        &:hover {
+          color: $mi-link-color;
+          background-color: $nav-pills-active-link-hover-bg;
+          text-decoration: underline;
+        }
+      }
+
+      &.active {
+        a, a:focus, a:hover {
+          font-weight: bold;
+          color: $nav-pills-active-link-hover-color;
+          background-color: $mi-nav-pills-link-active-bg;
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
+}
