@@ -30,8 +30,8 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             controller: 'minaintyg.ConsentCtrl',
             data:{title: 'Ditt samtycke', keepInboxTabActive: false}
         }).
-        state('lista', {
-            url : '/lista',
+        state('inkorg', {
+            url : '/inkorg',
             templateUrl: '/app/views/list/list.html',
             controller: 'minaintyg.ListCtrl',
             data:{title: 'Inkorgen', keepInboxTabActive: false,
@@ -79,7 +79,7 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
                 return '/consent';
             }
             else {
-                return '/lista';
+                return '/inkorg';
             }
         });
 });

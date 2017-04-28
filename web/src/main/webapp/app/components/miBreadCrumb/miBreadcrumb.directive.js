@@ -18,15 +18,21 @@
  */
 
 angular.module('minaintyg').directive('miBreadcrumb', [
-    '$rootScope', '$location', '$state', 'minaintyg.BreadcrumbConfig',
-    function($rootScope, $location, $state, config) {
+    '$rootScope', '$location', '$state', '$stateParams', 'minaintyg.BreadcrumbConfig',
+    function($rootScope, $location, $state, $stateParams, config) {
         'use strict';
 
         return {
             restrict: 'E',
             scope: {
+                enableLinks: '=?'
             },
             controller: function($scope) {
+
+                if(!angular.isDefined($scope.enableLinks)){
+                    $scope.enableLinks = true;
+                }
+
                 if($state.current.data){
                     if($state.current.data.breadcrumb){
 
@@ -39,13 +45,38 @@ angular.module('minaintyg').directive('miBreadcrumb', [
                             // Build steps array used to generate list items
                             var steps = [];
                             angular.forEach(breadcrumbList, function(crumbName){
-                                this.push(config[crumbName]);
+
+                                var step = {stateName: crumbName, stateConfig: config[crumbName]};
+
+                                // If no link function is present use the statename
+                                if(!step.stateConfig.link) {
+                                    step.stateConfig.link = step.stateName;
+                                }
+
+                                if(!$scope.enableLinks) {
+                                    step.stateConfig.link = null;
+                                }
+
+                                this.push(step);
                             }, steps);
 
                             $scope.steps = steps;
                         }
                     }
                 }
+
+                $scope.link = function(step){
+
+                    var goStateParams = { stateName: step.stateName };
+
+                    // Override params if a link function is defined
+                    if(typeof config[step.stateName].link === 'function'){
+                        goStateParams = config[step.stateName].link($stateParams);
+                    }
+
+                    // If no custom statename is passed, use the name of the state itself
+                    $state.go(goStateParams.stateName || step.stateName, goStateParams.stateParams);
+                };
             },
             templateUrl: '/app/components/miBreadcrumb/miBreadcrumb.directive.html'
         };

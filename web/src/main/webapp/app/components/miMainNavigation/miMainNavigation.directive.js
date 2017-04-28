@@ -36,9 +36,9 @@ angular.module('minaintyg').directive('miMainNavigation',
                     }
                     var currentRoute;
                     if ($rootScope.keepInboxTab) {
-                        currentRoute = 'lista';
+                        currentRoute = 'inkorg';
                     } else {
-                        currentRoute = $location.path().substring(1) || 'lista';
+                        currentRoute = $location.path().substring(1) || 'inkorg';
                     }
                     return page === currentRoute ? 'active' : '';
                 };

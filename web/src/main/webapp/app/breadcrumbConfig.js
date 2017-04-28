@@ -18,9 +18,19 @@
  */
 
 angular.module('minaintyg').constant('minaintyg.BreadcrumbConfig', {
-    inkorg: { icon: 'inbox', link: '/web/start', label: 'Inkorg'},
-    intyg: { label: 'Läsa och hantera intyg' },
+    inkorg: { icon: 'inbox', label: 'Inkorg', link: true },
+    intyg: { label: 'Läsa och hantera intyg',
+        link: function(stateParams) {
+            'use strict';
+            return {
+                stateName: stateParams.type + '-view',
+                stateParams: {
+                    certificateId: stateParams.certificateId }
+            };
+        }
+    },
     skicka: { label: 'Skicka intyg' },
+    anpassa: { label: 'Anpassa intyg' },
     arkiv: { icon: 'box', label: 'Arkiverade intyg'},
     om: { icon: 'mina_intyg', label: 'Om Mina intyg' },
     hjalp: { icon: 'help-circled-1', label: 'Hjälp och support' }
