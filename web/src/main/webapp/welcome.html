@@ -30,12 +30,55 @@
     angular.module('miWelcomeApp.controllers', []).controller('welcomeController',
         ['$scope', '$http', '$log', function($scope, $http, $log) {
 
+        // Populate with some hard-coded data in case the request to the stub fails (i.e. we're running on demo or qa)
+        var localData = [
+            {
+              "sekretessmarkering": "N",
+              "personpost": {
+                  "personId": "201212121212",
+                  "namn": {
+                      "fornamn": "Lilltolvan",
+                      "efternamn": "Tolvansson",
+                      "any": []
+                  },
+                  "folkbokforingsadress": {
+                      "utdelningsadress1": "Storgatan 1",
+                      "postNr": "12345",
+                      "postort": "Småmåla"
+                  },
+                  "any": []
+              },
+              "any": []
+          },{
+              "sekretessmarkering": "N",
+              "personpost": {
+                  "personId": "191212121212",
+                  "namn": {
+                      "fornamn": "Tolvan",
+                      "efternamn": "Tolvansson",
+                      "any": []
+                  },
+                  "folkbokforingsadress": {
+                      "careOf": "Svensson",
+                      "utdelningsadress1": "Storgatan 1",
+                      "utdelningsadress2": "PL 1234",
+                      "postNr": "12345",
+                      "postort": "Småmåla"
+                  },
+                  "any": []
+              },
+              "any": []
+          }
+        ];
+
             function _fetchPuPersons() {
-                $http.get('/services/pu-api/person').success(function(data) {
+                $http.get('/services/pu-api/personx').success(function(data) {
                     $scope.loginModel = _loginModel(data);
                     $scope.selectedIndex = '0';
-                }).error(function(data, status) {
-                    $log.error('error ' + status);
+                }).error(function() {
+                    $scope.stubActive = false;
+                    $scope.loginModel = _loginModel(localData);
+                    $scope.selectedIndex = '0';
                 });
             }
 
@@ -63,6 +106,7 @@
 
 
             $scope.loginModel = [];
+            $scope.stubActive = true;
 
             $scope.$watch('selectedIndex', function(newSelected, oldVal) {
                 if (newSelected === undefined) {
@@ -110,6 +154,8 @@
         <div class="content row">
 
           <h1 class="page-header">Testinloggningar Mina Intyg</h1>
+
+          <div ng-if="!stubActive"><strong>OBS!</strong><br/>PU-stubben är ej aktiv. För att själv välja identitet, ändra för hand personnumret i användarkontexten i högra rutan.</div>
 
           <div class="form-group col-xs-8">
 
