@@ -9,3 +9,5 @@ proxy_env:
 
 # Spring profiles
 profiles: test,wc-pu-stub
+
+tomcat_http_port: 8080
