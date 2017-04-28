@@ -8,6 +8,6 @@ proxy_env:
   https_proxy: http://bf-proxy.sth:8888
 
 # Spring profiles
-profiles: test,wc-pu-stub
+profiles: test
 
 tomcat_http_port: 8081
