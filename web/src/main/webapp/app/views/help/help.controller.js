@@ -21,26 +21,20 @@ angular.module('minaintyg').controller('minaintyg.HelpCtrl',['$scope','common.me
     function($scope, messageService) {
         'use strict';
 
-        $scope.pagefocus = true;
-
-        // Hold left side navigation state
-        $scope.visibility = {
-            helpdescription: true,
-            helpfaq: false
-        };
-
-        // Hold focus state for sub pages
-        $scope.subpagefocus = {
-            helpdescription: false,
-            helpfaq: false
-        };
-
-        $scope.navigateTo = function(section) {
-            angular.forEach($scope.visibility, function(value, key) {
-                $scope.visibility[key] = (key === section);
-                $scope.subpagefocus[key] = (key === section);
-            });
-        };
-
+        //faq's are actually arrays of faq items
         $scope.faqs = messageService.getProperty('help.faq');
+
+        $scope.menuItems = [];
+
+        $scope.menuItems.push({
+            id: 'link-help-info',
+            link: 'help.info',
+            label: 'Hjälp och support'
+        });
+        $scope.menuItems.push({
+            id: 'link-help-faq',
+            link: 'help.faq',
+            label: 'Vanliga frågor och svar'
+        });
+
     }]);

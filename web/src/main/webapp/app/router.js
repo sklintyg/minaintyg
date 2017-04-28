@@ -53,13 +53,6 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true},
             ncyBreadcrumb: { label: 'Skicka intyg' }
         }).
-        state('hjalp', {
-            url : '/hjalp',
-            templateUrl: '/app/views/help/help.html',
-            controller: 'minaintyg.HelpCtrl',
-            data:{title: 'Hjälp',keepInboxTabActive: false},
-            ncyBreadcrumb: { label: '<i class="icon icon-help-circled-1"></i> ' + hereText + ' Hjälp och support' }
-        }).
         state('fel', {
             url :'/fel/:errorCode',
             templateUrl: '/app/views/error/error.html',
