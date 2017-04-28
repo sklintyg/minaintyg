@@ -4,4 +4,4 @@
 environment_name: "test"
 
 # Spring profiles
-profiles: test
+profiles: test,wc-pu-stub
