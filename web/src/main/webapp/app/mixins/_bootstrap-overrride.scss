@@ -20,6 +20,10 @@ h2 {
   margin-top: 25px;
 }
 
+.alert .alert-heading {
+  margin-top: 0;
+}
+
 .btn {
   padding: $mi-button-padding;
   //3d pressed effect - swap 1 px margins when pressed
