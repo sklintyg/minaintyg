@@ -22,13 +22,25 @@ import org.callistasoftware.netcare.mvk.authentication.service.api.Authenticatio
 import org.callistasoftware.netcare.mvk.authentication.service.api.PreAuthenticationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
+import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
+import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
+
+import static se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum.MVK;
 
 @Service
 public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
 
     private static final Logger LOG = LoggerFactory.getLogger(MvkPreAuthenticationCallback.class);
+
+    @Autowired
+    private MinaIntygPUService minaIntygPUService;
+
+    private PersonNameUtil personNameUtil = new PersonNameUtil();
 
     @Override
     public UserDetails createMissingUser(AuthenticationResult preAuthenticated) {
@@ -43,6 +55,16 @@ public class MvkPreAuthenticationCallback implements PreAuthenticationCallback {
     @Override
     public UserDetails lookupPrincipal(AuthenticationResult auth) {
         LOG.info("Citizen authenticated.");
-        return new CitizenImpl(auth.getUsername(), LoginMethodEnum.MVK);
+        try {
+            Person person = minaIntygPUService.getPerson(auth.getUsername());
+            return new CitizenImpl(auth.getUsername(), MVK, personNameUtil.buildFullName(person), person.isSekretessmarkering());
+        } catch (PersonNotFoundException e) {
+            LOG.error("Person not found in PU-service, cannot authorize access to Mina Intyg.");
+            throw e;
+        } catch (IllegalStateException e) {
+            LOG.error("Person could not be looked up in PU-service due to technical error, "
+                    + "cannot authorize access to Mina Intyg.");
+            throw e;
+        }
     }
 }

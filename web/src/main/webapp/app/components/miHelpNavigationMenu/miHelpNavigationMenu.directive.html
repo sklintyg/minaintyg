@@ -1,0 +1,7 @@
+<div class="mi-help-navigation-menu">
+  <ul class="nav nav-pills nav-stacked" role="menu">
+    <li ui-sref-active="active" ng-repeat="menu in menuItems">
+      <a ng-attr-id="{{::menu.id}}" ui-sref="{{::menu.link}}" role="menuitem">{{menu.label}}</a>
+    </li>
+  </ul>
+</div>

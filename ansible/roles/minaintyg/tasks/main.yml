@@ -30,13 +30,11 @@
     state: absent
     path: "{{ webapps_folder }}/ROOT"
 
-- name: Remove old version of war
-  file:
-    state: absent
-    path: "{{ webapps_folder }}/ROOT.war"
-
 - name: Deploy minaintyg-web-{{ version }}.war as ROOT.war
-  command: "cp {{ releases_folder }}/minaintyg-web-{{ version }}.war {{ webapps_folder }}/ROOT.war"
+  copy:
+    src: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
+    dest: "{{ webapps_folder }}/ROOT.war"
+    remote_src: True
 
 - name: Fetch configuration repo to get new branches
   command: git fetch origin

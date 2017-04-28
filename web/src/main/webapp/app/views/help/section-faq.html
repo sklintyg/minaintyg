@@ -1,0 +1,29 @@
+<div id="help-content-faq">
+
+  <h1>Vanliga frågor och svar</h1>
+  <p>Här kan du läsa vanliga frågor och svar om tjänsten Mina intyg.
+    Om du inte hittar svar på din fråga kan du ringa Ineras kundservice på telefonnummer: 0771-25 10 10 alla vardagar
+    klockan 7-22.
+
+    Om ditt ärende inte är akut kan du fylla i formuläret på <span message key="links.inera.kundservice"></span> hemsida. </p>
+  <p>För medicinska frågor som rör ditt intyg ska du kontakta den som utfärdade ditt intyg, eller den mottagning du
+    besökte när du fick ditt intyg utfärdat.</p>
+
+
+  <div ng-repeat="faqsection in faqs">
+    <h1 ng-if="faqsection.title" class="section-title"><span>{{faqsection.title}}</span></h1>
+    <div ng-repeat="faq in faqsection.questions" class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3>
+            <span ng-bind-html="faq.question"></span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <span ng-bind-html="faq.answer"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

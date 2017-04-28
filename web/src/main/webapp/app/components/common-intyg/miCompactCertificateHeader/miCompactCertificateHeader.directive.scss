@@ -11,26 +11,32 @@ mi-compact-certificate-header {
 
 
   .icon {
-    margin-right: 10px;
-    font-size: 36px;
-    line-height: 36px;
-
-    &:before {
-      display:inline;
-    }
+    font-size: 42px;
+    line-height: 42px;
   }
 
   .cert-type-title {
     h1 {
-      display: inline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 80%;
+      margin: 0;
+      padding-top: 3px;
     }
   }
 
   .complementary-info {
     float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+
   }
 
   .certificate-issued-date {
     text-align: right;
+    margin-right: 15px;
   }
 }

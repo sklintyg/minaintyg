@@ -300,6 +300,11 @@ module.exports = function(grunt) {
                         middlewares.push(require('connect-livereload')());
                         middlewares.push(
                             connect().use(
+                                '/welcome.html',
+                                serveStatic(__dirname + '/src/main/webapp/welcome.html') // jshint ignore:line
+                            ));
+                        middlewares.push(
+                            connect().use(
                                 '/web',
                                 serveStatic(__dirname + '/src/main/webapp') // jshint ignore:line
                             ));
@@ -418,6 +423,7 @@ module.exports = function(grunt) {
             },
             livereload: {
                 files: [
+                    '<%= config.client %>/*.html',
                     '<%= config.client %>/app/**/*.scss',
                     '<%= config.client %>/app/**/*.html',
                     '<%= config.client %>/app/**/*.js',

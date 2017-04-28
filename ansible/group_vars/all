@@ -10,7 +10,7 @@ config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 proxy_env: {}
 
 # Spring profile
-profile: test
+profiles: test
 
 # Configuration repository
 config_repository: https://github.com/sklintyg/minaintyg-konfiguration.git

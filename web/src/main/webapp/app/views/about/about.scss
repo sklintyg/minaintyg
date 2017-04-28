@@ -1,0 +1,11 @@
+.about-mina-intyg-page {
+  padding-top: 40px;
+  background-color: #fff;
+}
+@media (min-width: $screen-sm-min) {
+  .about-section {
+    h1:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

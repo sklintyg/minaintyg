@@ -18,13 +18,8 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:cxf="http://cxf.apache.org/core"
-  xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
-        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
   <context:annotation-config />
 
@@ -45,12 +40,14 @@
   <beans>
     <import resource="classpath*:module-config.xml" />
     <import resource="classpath*:mi-module-cxf-servlet.xml" />
+    <import resource="classpath*:pu-services-config.xml" />
+    <import resource="classpath*:/pu-ignite-config.xml" />
 
     <context:property-placeholder
       location="classpath:default.properties, classpath:version.properties"
       order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.service, se.inera.intyg.minaintyg.web.web.util, se.inera.intyg.common.support.integration.module" />
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.service, se.inera.intyg.minaintyg.web.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
@@ -90,5 +87,4 @@
     <bean id="befattningService" class="se.inera.intyg.common.support.services.BefattningService" />
 
   </beans>
-
 </beans>

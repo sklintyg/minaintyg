@@ -1,0 +1,39 @@
+#help-mina-intyg-page {
+
+  padding-top: 40px;
+  background-color: $mi-intyg-body-bg;
+
+  #help-content-faq {
+
+    //Style to create a
+    // ---------- Title ---------
+    // effect for the faq sections
+
+    h1.section-title {
+      text-align: center;
+      border-bottom: 1px solid $mi-nav-pills-border-color;
+      line-height: 0;
+      padding: 0;
+      margin: 50px 0 30px 0;
+
+      span {
+        background: $mi-intyg-body-bg;
+        padding: 0 15px;
+      }
+
+    }
+
+    .panel-heading h3 {
+      margin: 5px;
+    }
+  }
+
+}
+
+@media (min-width: $screen-sm-min) {
+  .help-section {
+    h1:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

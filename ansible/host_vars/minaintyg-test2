@@ -4,4 +4,7 @@
 environment_name: "test"
 
 # Spring profiles
-profiles: test
+profiles: test,wc-pu-stub
+
+# Stub port
+tomcat_http_port: 8084

@@ -1,13 +1,14 @@
-<div id="mi-select-recipients">
+<div>
 
-
+  <p>
+    <span message key="sendpage.label.select-recipients.heading"></span>
+  </p>
 
   <div class="row">
 
     <!-- select from list -->
     <div class="col-xs-6">
-      <div class="selection-box">
-        <div><span message key="sendpage.label.select-recipients.heading"></span></div>
+      <div>
         <ul class="nav selection-list">
           <li ng-repeat="r in recipients | orderBy: 'name'">
 
@@ -37,16 +38,18 @@
             </a>
           </li>
         </ul>
-      </div>
-      <div class="button-row">
-        <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
-                type="button" ng-disabled="selected.length < 1">
-          <i class="glyphicon glyphicon-ok"></i> <span message key="sendpage.btn.send"></span>
-        </button>
-        <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-third" type="button"
-                ng-if="selected.length > 0">
-          <i class="glyphicon glyphicon-remove"></i> <span message key="sendpage.btn.clear"></span>
-        </button>
+
+        <div class="button-row">
+          <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
+                  type="button" ng-disabled="selected.length < 1">
+            <i class="icon icon-ok"></i> <span message key="sendpage.btn.send"></span>
+          </button>
+          <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-third" type="button"
+                  ng-if="selected.length > 0">
+            <i class="icon icon-cancel"></i> <span message key="sendpage.btn.clear"></span>
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
