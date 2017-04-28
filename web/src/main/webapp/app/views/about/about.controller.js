@@ -19,39 +19,10 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
-                function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
+        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService',
+                function($filter, $location, $log, $scope, $window, consentService, dialogService) {
                     'use strict';
 
-                    // Hold left side navigation state
-                    $scope.visibility = {
-                        omminaintyg: true,
-                        samtycke: false,
-                        juridik: false
-                    };
-
-                    // Hold focus state for sub pages
-                    $scope.subpagefocus = {
-                        omminaintyg: false,
-                        samtycke: false,
-                        juridik: false
-                    };
-
-                    $scope.dialog = {
-                        acceptprogressdone: true,
-                        focus: false
-                    };
-
-                    $scope.navigateTo = function(section) {
-                        angular.forEach($scope.visibility, function(value, key) {
-                            $scope.visibility[key] = (key === section) ? true : false;
-                            $scope.subpagefocus[key] = (key === section) ? true : false;
-                        });
-                    };
-
-                    $scope.getMessage = function(key) {
-                        return messageService.getProperty(key);
-                    };
 
                     // Revoke dialog
 
@@ -87,7 +58,6 @@ angular.module('minaintyg').controller(
                         });
                     }
 
-                    $scope.pagefocus = true;
 
                     $scope.menuItems = [];
 
