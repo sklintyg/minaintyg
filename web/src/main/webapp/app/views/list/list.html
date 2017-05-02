@@ -25,7 +25,7 @@
 
     <div class="row">
       <div class="col-xs-12" id="certTable">
-        <div ng-repeat="cert in certificates | unarchived">
+        <div ng-repeat="cert in certificates | unarchived" class="fade-slide-animation">
           <div id="certificate-{{cert.id}}" class="cert-table-row">
             <mi-compact-certificate-header cert-meta-model="cert"></mi-compact-certificate-header>
             <mi-compact-certificate-body cert-meta-model="cert" on-view-click="sendSelected(cert)"
