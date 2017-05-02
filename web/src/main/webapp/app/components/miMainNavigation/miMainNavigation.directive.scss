@@ -2,6 +2,9 @@ mi-main-navigation {
   .container {
     padding: 0;
   }
+  .navbar-nav {
+    margin: 0;
+  }
   .navbar-default .navbar-nav > li > a:hover {
     color: #0F6EDC;
   }
