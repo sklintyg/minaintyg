@@ -33,6 +33,7 @@
               <mi-compact-certificate-body cert-meta-model="cert" on-view-click="sendSelected(cert)"
                                            on-archive-click="openArchiveDialog(cert)"></mi-compact-certificate-body>
             </div>
+            <p ng-if="$last"><span class="text-muted last-intyg" message key="inbox.message.no-more-certificates"></span></p>
           </div>
         </div>
       </div>
