@@ -7,7 +7,7 @@ var xml = require('simple-xml-dom')
 
 var helpers = require('./../helpers/helpers.js');
 
-var templateJsonObj = require('./generic-metadata.json');
+var templateJsonObjTemplate = require('./generic-metadata.json');
 
 module.exports = {
 
@@ -49,11 +49,12 @@ module.exports = {
 
     getIntyg: function(type, file, userId, signedDate) {
 
+        //Create a local copy that we are free to mutate
+        var templateJsonObj = JSON.parse(JSON.stringify(templateJsonObjTemplate));
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
         templateJsonObj.signedDate = signedDate || templateJsonObj.signedDate;
-        console.error("singdate=" + templateJsonObj.signedDate + " parameter:" + signedDate);
         var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
 
         //read xml doc into string variable
