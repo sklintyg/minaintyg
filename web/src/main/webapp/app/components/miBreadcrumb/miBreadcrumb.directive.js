@@ -18,52 +18,82 @@
  */
 
 angular.module('minaintyg').directive('miBreadcrumb', [
-    '$rootScope', '$location', '$state', '$stateParams', 'minaintyg.BreadcrumbConfig',
-    function($rootScope, $location, $state, $stateParams, config) {
+    '$rootScope', '$location', '$state', '$stateParams', '$window', 'minaintyg.BreadcrumbConfig',
+    function($rootScope, $location, $state, $stateParams, $window, config) {
         'use strict';
 
         return {
             restrict: 'E',
             scope: {
-                enableLinks: '=?'
+                enableLinks: '=?',
             },
-            controller: function($scope) {
+            controller: function($scope, $window) {
+
+                var breadcrumbList = null;
+                var backState = null;
+
+                function buildStepsFromStateBreadcrumb() {
+                    if($state.current.data){
+                        if($state.current.data.breadcrumb){
+
+                            breadcrumbList = $state.current.data.breadcrumb;
+                            backState = $state.current.data.backState;
+
+                            // Take icon from the top level breadcrumb
+                            if(breadcrumbList.length > 0){
+                                $scope.stateIconName = config[breadcrumbList[0]].icon;
+
+                                // Build steps array used to generate list items
+                                var steps = [];
+                                angular.forEach(breadcrumbList, function(crumbName){
+
+                                    var step = {stateName: crumbName, stateConfig: config[crumbName]};
+
+                                    // If no link function is present use the statename
+                                    if(!step.stateConfig.link) {
+                                        step.stateConfig.link = step.stateName;
+                                    }
+
+                                    if(!$scope.enableLinks) {
+                                        step.stateConfig.link = null;
+                                    }
+
+                                    this.push(step);
+                                }, steps);
+
+                                $scope.steps = steps;
+                            }
+                        }
+                    }
+                }
 
                 if(!angular.isDefined($scope.enableLinks)){
                     $scope.enableLinks = true;
                 }
 
-                if($state.current.data){
-                    if($state.current.data.breadcrumb){
+                $scope.$watch(function() {
+                   return $state.current.data;
+                }, function(current, old){
+                    buildStepsFromStateBreadcrumb();
+                }, true);
 
-                        var breadcrumbList = $state.current.data.breadcrumb;
+                buildStepsFromStateBreadcrumb();
 
-                        // Take icon from the top level breadcrumb
-                        if(breadcrumbList.length > 0){
-                            $scope.stateIconName = config[breadcrumbList[0]].icon;
+                $scope.back = function(){
 
-                            // Build steps array used to generate list items
-                            var steps = [];
-                            angular.forEach(breadcrumbList, function(crumbName){
+                    // Use backstate override if specified, otherwise use next to last breadcrumb as fallback
+                    if(angular.isDefined(backState)){
 
-                                var step = {stateName: crumbName, stateConfig: config[crumbName]};
-
-                                // If no link function is present use the statename
-                                if(!step.stateConfig.link) {
-                                    step.stateConfig.link = step.stateName;
-                                }
-
-                                if(!$scope.enableLinks) {
-                                    step.stateConfig.link = null;
-                                }
-
-                                this.push(step);
-                            }, steps);
-
-                            $scope.steps = steps;
+                        // If special state history-back is requested, we back using the browser, otherwise we just trust the specified requested state
+                        if(backState === 'history-back'){
+                            $window.history.back();
+                        } else {
+                            $state.go(backState);
                         }
+                    } else if(breadcrumbList && breadcrumbList.length > 1){
+                        $state.go(breadcrumbList[breadcrumbList.length - 2]);
                     }
-                }
+                };
 
                 $scope.link = function(step){
 

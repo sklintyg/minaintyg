@@ -42,7 +42,7 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
             templateUrl: '/app/views/send/send.page.html',
             controller: 'minaintyg.SendCtrl',
             data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true,
-                breadcrumb: ['inkorg', 'intyg', 'skicka']}
+                breadcrumb: ['inkorg', 'intyg', 'skicka'], backState: 'history-back'}
         }).
         state('arkiverade', {
             url : '/arkiverade',

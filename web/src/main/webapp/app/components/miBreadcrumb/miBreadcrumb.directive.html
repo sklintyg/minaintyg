@@ -3,7 +3,8 @@
   <i class="icon icon-{{stateIconName}}"></i>
 
   <span id="backnav" ng-show="steps.length > 1 && enableLinks">
-    <a class="backlink" ui-sref="inkorg"><i class="icon icon-left-1"></i></a> <a class="backlink" ui-sref="inkorg"><message key="button.goback" /></a>
+    <button class="btn btn-link" ng-click="back()"><i class="icon icon-left-1"></i>
+    </button> <button class="btn btn-link" ng-click="back()"><message key="button.goback" /></button>
   </span>
 
   Du är här:

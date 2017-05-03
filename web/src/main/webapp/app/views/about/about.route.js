@@ -13,8 +13,7 @@ angular.module('minaintyg')
                 url: '/info',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-info.html',
-                        data:{ breadcrumb: ['om', 'info'] }
+                        templateUrl: '/app/views/about/section-info.html'
                     }
                 }
             })
@@ -22,17 +21,15 @@ angular.module('minaintyg')
                 url: '/samtycke',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-samtycke.html',
-                        data:{ breadcrumb: ['om', 'samtycke'] }
+                        templateUrl: '/app/views/about/section-samtycke.html'
                     }
-                }
+                },
             })
             .state('omminaintyg.juridik', {
                 url: '/juridik',
                 views: {
                     'content@omminaintyg': {
-                        templateUrl: '/app/views/about/section-juridik.html',
-                        data:{ breadcrumb: ['om', 'juridik'] }
+                        templateUrl: '/app/views/about/section-juridik.html'
                     }
                 }
             });
