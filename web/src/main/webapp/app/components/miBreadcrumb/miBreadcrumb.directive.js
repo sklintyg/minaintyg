@@ -25,7 +25,7 @@ angular.module('minaintyg').directive('miBreadcrumb', [
         return {
             restrict: 'E',
             scope: {
-                enableLinks: '=?',
+                enableLinks: '=?'
             },
             controller: function($scope, $window) {
 

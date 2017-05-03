@@ -23,7 +23,7 @@ angular.module('minaintyg')
                     'content@omminaintyg': {
                         templateUrl: '/app/views/about/section-samtycke.html'
                     }
-                },
+                }
             })
             .state('omminaintyg.juridik', {
                 url: '/juridik',
