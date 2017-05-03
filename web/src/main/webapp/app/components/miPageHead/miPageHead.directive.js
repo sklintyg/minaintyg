@@ -24,10 +24,7 @@ angular.module('minaintyg').directive('miPageHead',
         return {
             restrict: 'E',
             transclude: true,
-            scope: {
-            },
-            controller: function($scope) {
-            },
+            scope: {},
             templateUrl: '/app/components/miPageHead/miPageHead.directive.html'
         };
     });
