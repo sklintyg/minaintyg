@@ -94,9 +94,13 @@
       </security:headers>
     </security:http>
     <security:http security="none" pattern="/ws/**" />
-    <!-- Allow access to bower_components without being logged in -->
+    <!-- Allow access to static client resources without being logged in -->
     <security:http security="none" pattern="/bower_components/**"/>
-
+    <!-- Allow access to static client resources without being logged in.
+    This should also solve the problem of font-files not beeing loaded in IE due to problems with certain cache-headers + https access.
+    If an URI is under spring security, spring will add cache-headers, which we avoid by excluding everything under /font from Spring Security.
+      see INTYG-3924, INTYG-3450 -->
+    <security:http security="none" pattern="/font/**" />
     <!-- Allow access to webjars without being logged in -->
     <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
       <security:csrf disabled="true"/>
