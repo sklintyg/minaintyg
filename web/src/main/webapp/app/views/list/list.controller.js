@@ -117,20 +117,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 // ...and close dialog
             };
 
-            // Fetch list of certs initially
-            IntygListService.getCertificates(function(list) {
-                $scope.doneLoading = true;
-
-                if (list !== null) {
-                    $scope.activeCertificates = list;
-                    $scope.refreshActiveCertificates();
-
-                } else {
-                    // show error view
-                    $location.path('/fel/couldnotloadcertlist');
-                }
-            });
-
             $scope.refreshActiveCertificates = function() {
                 $scope.activeCertificates = $filter('unarchived')($scope.activeCertificates);
                 var currentYear = null;
@@ -145,6 +131,22 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 });
 
             };
+            
+            // Fetch list of certs initially
+            IntygListService.getCertificates(function(list) {
+                $scope.doneLoading = true;
+
+                if (list !== null) {
+                    $scope.activeCertificates = list;
+                    $scope.refreshActiveCertificates();
+
+                } else {
+                    // show error view
+                    $location.path('/fel/couldnotloadcertlist');
+                }
+            });
+
+
 
             // Set focus on new page so screen readers can announce it
             $scope.pagefocus = true;
