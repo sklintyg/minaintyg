@@ -19,30 +19,35 @@
   </div>
 </mi-page-head>
 
-<div class="container">
-  <div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading"
-       show-content="doneLoading && (certificates | unarchived).length>0">
 
-    <div class="row">
-      <div class="col-xs-12" id="certTable">
-        <div ng-repeat="cert in certificates | unarchived" class="fade-slide-animation">
-          <div id="certificate-{{cert.id}}" class="cert-table-row">
-            <mi-compact-certificate-header cert-meta-model="cert"></mi-compact-certificate-header>
-            <mi-compact-certificate-body cert-meta-model="cert" on-view-click="sendSelected(cert)"
-                                         on-archive-click="openArchiveDialog(cert)"></mi-compact-certificate-body>
+<div mi-spinner label="label.certificatesloading" show-spinner="!doneLoading"
+     show-content="doneLoading && activeCertificates.length>0">
+  <div id="certTable">
+    <div ng-repeat="cert in activeCertificates" class="fade-slide-animation">
+      <mi-year-divider year="cert.yearDivider"></mi-year-divider>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="certificate-{{cert.id}}" class="cert-table-row">
+              <mi-compact-certificate-header cert-meta-model="cert"></mi-compact-certificate-header>
+              <mi-compact-certificate-body cert-meta-model="cert" on-view-click="sendSelected(cert)"
+                                           on-archive-click="openArchiveDialog(cert)"></mi-compact-certificate-body>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+</div>
+<div class="container" ng-show="doneLoading && activeCertificates.length<1">
   <div class="row">
-    <div id="noCerts" ng-show="doneLoading && (certificates | unarchived).length<1" class="col-xs-12">
+    <div id="noCerts" class="col-xs-12">
       <div class="alert alert-info">
         <span message key="error.nocerts"></span>
       </div>
     </div>
   </div>
 </div>
+
 
 

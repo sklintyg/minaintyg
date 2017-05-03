@@ -11,16 +11,16 @@ var templateJsonObj = require('./generic-metadata.json');
 
 module.exports = {
 
-    getFk7263: function(userId) {
-        return this.getIntyg('fk7263', 'fk7263', userId);
+    getFk7263: function(userId, signDate) {
+        return this.getIntyg('fk7263', 'fk7263', userId, signDate);
     },
 
-    getTsBas: function(userId) {
-        return this.getIntyg('ts-bas','ts-bas', userId);
+    getTsBas: function(userId, signDate) {
+        return this.getIntyg('ts-bas','ts-bas', userId, signDate);
     },
 
-    getTsDiabetes: function(userId) {
-        return this.getIntyg('ts-diabetes', 'ts-diabetes', userId);
+    getTsDiabetes: function(userId, signDate) {
+        return this.getIntyg('ts-diabetes', 'ts-diabetes', userId, signDate);
     },
 
     getLuse: function(userId) {
@@ -47,11 +47,13 @@ module.exports = {
         return this.getIntyg('lisjp', 'lisjp-smittskydd-ovrigt', userId);
     },
 
-    getIntyg: function(type, file, userId) {
+    getIntyg: function(type, file, userId, signedDate) {
+
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
-
+        templateJsonObj.signedDate = signedDate || templateJsonObj.signedDate;
+        console.error("singdate=" + templateJsonObj.signedDate + " parameter:" + signedDate);
         var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
 
         //read xml doc into string variable

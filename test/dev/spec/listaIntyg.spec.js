@@ -43,11 +43,11 @@ describe('Lista intyg', function() {
         restHelper.setConsent(personId);
         restHelper.setConsent(personIdNoCertificates);
 
-        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
+        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
         fk7263IntygsId = fk7263Intyg.id;
         restHelper.createIntyg(fk7263Intyg);
 
-        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId);
+        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01.234');
         tsBasIntygsId = tsBasIntyg.id;
         restHelper.createIntyg(tsBasIntyg);
 
@@ -90,6 +90,10 @@ describe('Lista intyg', function() {
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
             //revoked should NOT exist in list
             expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
+        });
+
+        it('Listan skall innehålla en årsavskiljare för 2016', function() {
+            expect(element(by.id('mi-year-divider-2016')).isDisplayed()).toBeTruthy();
         });
 
         it('Intyg avser innehåller information för ett TS-intyg', function() {

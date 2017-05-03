@@ -18,13 +18,14 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'common.IntygListService',
+    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
         'common.dialogService', 'common.messageService', 'common.moduleService',
-        function($cookies, $location, $log, $rootScope, $scope, $window, IntygListService, dialogService,
+        function($cookies, $location, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
             messageService, moduleService) {
             'use strict';
 
-            $scope.certificates = [];
+
+            $scope.activeCertificates= [];
             $scope.doneLoading = false;
             $scope.dialog = {
                 acceptprogressdone: true,
@@ -55,6 +56,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     if (fromServer !== null) {
                         oldItem.archived = fromServer.archived;
                         oldItem.selected = false;
+                        $scope.refreshActiveCertificates();
                         archiveDialog.close();
                         $scope.dialog.acceptprogressdone = true;
                     } else {
@@ -118,13 +120,31 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
+
                 if (list !== null) {
-                    $scope.certificates = list;
+                    $scope.activeCertificates = list;
+                    $scope.refreshActiveCertificates();
+
                 } else {
                     // show error view
                     $location.path('/fel/couldnotloadcertlist');
                 }
             });
+
+            $scope.refreshActiveCertificates = function() {
+                $scope.activeCertificates = $filter('unarchived')($scope.activeCertificates);
+                var currentYear = null;
+                angular.forEach($scope.activeCertificates, function(cert) {
+
+                    //If next cert is on a different year - it should show a year-divider
+                    var certYear = $filter('date')(cert.sentDate, 'yyyy');
+                    cert.yearDivider = currentYear && (currentYear !== certYear) ? certYear : null;
+
+                    //Update year to compare next with
+                    currentYear = certYear;
+                });
+
+            };
 
             // Set focus on new page so screen readers can announce it
             $scope.pagefocus = true;
