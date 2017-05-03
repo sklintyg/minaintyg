@@ -8,7 +8,15 @@ angular.module('minaintyg').directive('miScrollToTop',
 
                 $scope.lowerHalf = false;
 
+                $scope.$on('$locationChangeStart', function (event) {
+                    $scope.lowerHalf = false;
+                });
+
                 $document.on('scroll', function () {
+                    checkScroller();
+                });
+
+                function checkScroller() {
                     var scrollbarPercentage = getScrollbarPercentage();
                     if (
                         (scrollbarPercentage > 0.5 && !$scope.lowerHalf) ||
@@ -18,7 +26,7 @@ angular.module('minaintyg').directive('miScrollToTop',
                             $scope.lowerHalf = !$scope.lowerHalf;
                         });
                     }
-                });
+                }
 
                 function getScrollbarPercentage() {
                     var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
