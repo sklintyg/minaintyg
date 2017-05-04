@@ -77,7 +77,7 @@
       </div>
       <div class="col-xs-12 col-sm-6">
         <h1>Välkommen till Mina intyg</h1>
-        <p>Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg</p>
+        <p>Mina intyg är en säker webbtjänst där du kan hantera dina läkarintyg.</p>
         <hr>
         <p>I Mina intyg kan du läsa, skriva ut och spara dina intyg. Du kan också skicka de till t.ex.
           Försäkringskassan.
@@ -90,8 +90,8 @@
           tjänsten.
           Därefter kan du börja använda Mina intyg omedelbart. Du kan bara använda tjänsten för din egen person.</p>
         <p>
-          <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument">Mer information om
-            hur du skaffar en e-legitimation</a>
+          <a href="${mvkMainUrl}/C125755F00329208/p/KONT-8ZSGV8?opendocument" target="_blank">Mer information om
+            hur du skaffar en e-legitimation.</a>
         </p>
         <br>
         <p><a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> Logga in</a></p>
