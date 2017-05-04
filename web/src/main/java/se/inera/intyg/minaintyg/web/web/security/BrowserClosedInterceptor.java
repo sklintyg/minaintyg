@@ -19,10 +19,12 @@
 package se.inera.intyg.minaintyg.web.web.security;
 
 import java.io.IOException;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 import javax.servlet.http.*;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -39,9 +41,16 @@ public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
     public static final String BROWSER_CLOSED_TIMESTAMP = "BROWSER_CLOSED_TIMESTAMP";
     private static final Logger LOG = LoggerFactory.getLogger(BrowserClosedInterceptor.class);
 
+    private Clock systemClock = Clock.systemDefaultZone();
+
     private LogoutHandler logoutHandler;
     private String redirectLocation;
     private Integer timeoutSeconds;
+
+    @VisibleForTesting
+    void setMockSystemClock(Clock systemClock) {
+        this.systemClock = systemClock;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -51,7 +60,7 @@ public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
         LocalDateTime then = (LocalDateTime) session.getAttribute(BROWSER_CLOSED_TIMESTAMP);
 
         if (then != null) {
-            if (then.plusSeconds(timeoutSeconds).isBefore(LocalDateTime.now())) {
+            if (then.plusSeconds(timeoutSeconds).isBefore(LocalDateTime.now(systemClock))) {
                 LOG.warn("Browser closed and protected page revisited, user logged out");
                 // log out user
                 logoutHandler.logout(request, response, null);
