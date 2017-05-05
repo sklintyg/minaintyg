@@ -19,8 +19,8 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService',
-                function($filter, $location, $log, $scope, $window, consentService, dialogService) {
+        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
+                function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
                     'use strict';
 
 
@@ -57,6 +57,8 @@ angular.module('minaintyg').controller(
                         });
                     }
 
+                    //faq's are actually arrays of faq items
+                    $scope.faqs = messageService.getProperty('help.faq');
 
                     $scope.menuItems = [];
 
@@ -65,14 +67,29 @@ angular.module('minaintyg').controller(
                         link: 'omminaintyg.info',
                         label: 'Om Mina intyg'
                     });
+
+                    $scope.menuItems.push({
+                        id: 'link-help-faq',
+                        link: 'omminaintyg.faq',
+                        label: 'Vanliga frågor och svar'
+                    });
+
                     $scope.menuItems.push({
                         id: 'link-about-samtycke',
                         link: 'omminaintyg.samtycke',
                         label: 'Samtycke'
                     });
+
                     $scope.menuItems.push({
                         id: 'link-about-juridik',
                         link: 'omminaintyg.juridik',
-                        label: 'Lagring av personuppgifter, sekretess och lagar'
+                        label: 'Lagring av hantering av intyg'
                     });
+
+                    $scope.menuItems.push({
+                        id: 'link-help-info',
+                        link: 'omminaintyg.help-info',
+                        label: 'Hjälp och support'
+                    });
+
                 } ]);

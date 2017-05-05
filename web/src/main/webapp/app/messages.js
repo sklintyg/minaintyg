@@ -57,7 +57,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'nav.label.inbox': 'Inkorgen',
         'nav.label.archived': 'Arkiverade intyg',
         'nav.label.aboutminaintyg': 'Om Mina intyg',
-        'nav.label.help': 'Hjälp och support',
         'nav.label.loggedinas': 'Du är inloggad som:',
 
         /* INBOX */
