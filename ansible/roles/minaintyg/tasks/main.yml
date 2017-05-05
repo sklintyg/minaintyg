@@ -13,7 +13,7 @@
 
 - name: Download minaintyg-web-{{ version }}.war
   get_url:
-    url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war"
+    url: "https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war"
     dest: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
     validate_certs: no
     timeout: 60
