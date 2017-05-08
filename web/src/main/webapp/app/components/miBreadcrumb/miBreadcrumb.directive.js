@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').directive('miBreadcrumb', [
-    '$rootScope', '$location', '$state', '$stateParams', '$window', 'minaintyg.BreadcrumbConfig',
-    function($rootScope, $location, $state, $stateParams, $window, config) {
+    '$rootScope', '$location', '$state', '$stateParams', '$window', '$log', 'minaintyg.BreadcrumbConfig',
+    function($rootScope, $location, $state, $stateParams, $window, $log, config) {
         'use strict';
 
         return {
@@ -29,25 +29,36 @@ angular.module('minaintyg').directive('miBreadcrumb', [
             },
             controller: function($scope, $window) {
 
-                var breadcrumbList = null;
                 var backState = null;
+                var breadcrumbList = null;
 
                 function buildStepsFromStateBreadcrumb() {
-                    if($state.current.data){
-                        if($state.current.data.breadcrumb){
 
-                            breadcrumbList = $state.current.data.breadcrumb;
-                            backState = $state.current.data.backState;
+                    $scope.steps = null;
+                    if($state.current.data && $state.current.data.breadcrumb){
+
+                        breadcrumbList = $state.current.data.breadcrumb;
+                        backState = $state.current.data.backState;
+
+                        if(breadcrumbList.length > 0){
 
                             // Take icon from the top level breadcrumb
-                            if(breadcrumbList.length > 0){
-                                $scope.stateIconName = config[breadcrumbList[0]].icon;
+                            $scope.stateIconName = null;
+                            var breadcrumbConfig = config[breadcrumbList[0]];
+                            if(breadcrumbConfig) {
+                                $scope.stateIconName = breadcrumbConfig.icon;
+                            }
 
-                                // Build steps array used to generate list items
-                                var steps = [];
-                                angular.forEach(breadcrumbList, function(crumbName){
+                            // Build steps array used to generate list items
+                            var steps = [];
+                            angular.forEach(breadcrumbList, function(crumbName){
 
-                                    var step = {stateName: crumbName, stateConfig: config[crumbName]};
+                                var stepConfig = config[crumbName];
+
+                                var step = {stateName: crumbName, stateConfig: stepConfig};
+                                if(!stepConfig) {
+                                    $log.debug('step config missing for crumb ' + crumbName);
+                                } else {
 
                                     // If no link function is present use the statename
                                     if(!step.stateConfig.link) {
@@ -57,12 +68,12 @@ angular.module('minaintyg').directive('miBreadcrumb', [
                                     if(!$scope.enableLinks) {
                                         step.stateConfig.link = null;
                                     }
+                                }
 
-                                    this.push(step);
-                                }, steps);
+                                this.push(step);
+                            }, steps);
 
-                                $scope.steps = steps;
-                            }
+                            $scope.steps = steps;
                         }
                     }
                 }
@@ -100,8 +111,8 @@ angular.module('minaintyg').directive('miBreadcrumb', [
                     var goStateParams = { stateName: step.stateName };
 
                     // Override params if a link function is defined
-                    if(typeof config[step.stateName].link === 'function'){
-                        goStateParams = config[step.stateName].link($stateParams);
+                    if(step.stateConfig && typeof step.stateConfig.link === 'function'){
+                        goStateParams = step.stateConfig.link($stateParams);
                     }
 
                     // If no custom statename is passed, use the name of the state itself
