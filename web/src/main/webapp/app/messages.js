@@ -40,10 +40,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         /* CONSENT */
 
-        'consent.consentpage.title': 'Samtycke',
         'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina intyg.',
         'consent.aboutheader': 'Om tjänsten Mina intyg',
-        'consent.abouttext': 'Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.',
+        'consent.abouttext': 'Mina intyg är en webbtjänst där du enkelt kan hantera olika intyg som hälso- och sjukvården utfärdat till dig. Du kan läsa intygen, spara ner dem på din dator och skriva ut dem. Du kan även välja att skicka intygen vidare till de mottagare som är anslutna till Mina intyg, till exempel Försäkringskassan och Transportstyrelsen. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.',
 
 
         'consent.confirmtext': 'Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg.',
@@ -114,11 +113,13 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'about.revokeconsent.button.label': 'Återta samtycke',
         'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
-        'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
+        'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst aktivera tjänsten igen genom att lämna ett nytt samtycke.',
 
         'about.dina.rattigheter': '<h3>Dina rättigheter</h3><p> Som användare av tjänsten Mina intyg har du bland annat rätt att: <ul> <li>Varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB.</li> <li>När som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system  med stöd av patientdatalagen).</li><li>Begära att tredje man, till vilka personuppgifter lämnats ut, underrättas om personuppgifter som rättats,  blockerats eller utplånats.</li><li>Kräva skadestånd enligt <a href="http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/personuppgiftslag-1998204_sfs-1998-204" target="_blank">48 § PUL</a> vid behandling av personuppgifter i strid med lag. </li> </ul> </p>',
         'about.ge.aterta.samtycke': '<h3>Ge och återta samtycke</h3><p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg    kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
-        /* HELP */
+        'about.samtycke.om.tjansten': '<h3>Om tjänsten Mina Intyg</h3><p>Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.</p>',
+
+/* HELP */
 
         'help.faq':[
             {title:'',questions:[
@@ -197,7 +198,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.noarchivedcerts': 'Du har inga arkiverade intyg.'
     },
     'en': {
-        'consent.consentpage.title': 'Consent of use',
         'label.showall': 'Show all',
         'label.inbox': 'The INBOX',
         'label.archived': 'Archived'
