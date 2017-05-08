@@ -32,6 +32,20 @@ module.exports = function(config) {
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            'src/main/webapp/app/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // If your build process changes the path to your templates,
+            // use stripPrefix and prependPrefix to adjust it.
+            stripPrefix: 'src/main/webapp',
+
+            // the name of the Angular module to create
+            moduleName: 'htmlTemplates'
+        },
+
         // list of files / patterns to load in the browser
         files: [
 
@@ -49,6 +63,7 @@ module.exports = function(config) {
             'src/main/webapp/bower_components/ngstorage/ngStorage.js',
             'src/main/webapp/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
             // endbower
+            'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
 
             // Load these first
             TEST_DIR + 'app.test.js',
@@ -94,7 +109,8 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
 
         reporters: [ 'progress' ]
