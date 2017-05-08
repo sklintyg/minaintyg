@@ -83,7 +83,7 @@ angular.module('minaintyg').controller(
                     $scope.menuItems.push({
                         id: 'link-about-juridik',
                         link: 'omminaintyg.juridik',
-                        label: 'Lagring av hantering av intyg'
+                        label: 'Lagring och hantering av intyg'
                     });
 
                     $scope.menuItems.push({
