@@ -53,7 +53,8 @@ angular.module('minaintyg').directive('miBreadcrumb', [
                             var steps = [];
                             angular.forEach(breadcrumbList, function(crumbName){
 
-                                var stepConfig = config[crumbName];
+                                // Copy config so we don't overwrite the config
+                                var stepConfig = angular.copy(config[crumbName]);
 
                                 var step = {stateName: crumbName, stateConfig: stepConfig};
                                 if(!stepConfig) {
