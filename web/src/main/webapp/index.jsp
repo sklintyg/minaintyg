@@ -48,8 +48,7 @@
 <style media="screen" type="text/css">
   #welcome-image {
     margin-top: 20px;
-    width: 92%;
-    max-width: 400px;
+    width: 100%;
   }
 </style>
 <script type="text/javascript">
@@ -73,7 +72,7 @@
   <div class="container">
     <div id="content-body">
       <div class="hidden-xs col-sm-6 text-right">
-        <img id="welcome-image" alt="Bild av hand" src="<c:url value="/img/hand.jpg" />" />
+        <img id="welcome-image" alt="Bild av hand" src="<c:url value="/img/mina_intyg_start.jpg" />" />
       </div>
       <div class="col-xs-12 col-sm-6">
         <h1>Välkommen till Mina intyg</h1>
