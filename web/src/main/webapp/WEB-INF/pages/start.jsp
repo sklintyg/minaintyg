@@ -68,6 +68,7 @@
 
   <%-- ng-view that holds dynamic content managed by angular app --%>
   <div id="view" ui-view></div>
+  <mi-scroll-to-top></mi-scroll-to-top>
 
   <div class="container">
     <div class="">
