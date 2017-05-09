@@ -87,6 +87,7 @@ $.when.apply(this, modulePromises).then(function() {
 });
 
 function loadCssFromUrl(url) {
+    'use strict';
     var link = document.createElement('link');
     link.type = 'text/css';
     link.rel = 'stylesheet';
