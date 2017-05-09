@@ -162,6 +162,10 @@
     // Get a list of all modules
     // to find all files to load.
     getModules().then(function(modules) {
+
+        //Load mi common css
+        loadCssFromUrl('/web/webjars/common/minaintyg/mi-common.css?' + MI_CONFIG.BUILD_NUMBER);
+
         var modulePromises = [];
 
         if (MI_CONFIG.USE_MINIFIED_JAVASCRIPT === 'true') {

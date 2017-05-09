@@ -34,6 +34,8 @@ app.run([ '$rootScope', '$window', 'common.messageService', 'minaintyg.messages'
 } ]);
 
 var modulePromises = [];
+//Always load common css
+loadCssFromUrl('/web/webjars/common/minaintyg/mi-common.css?' + MI_CONFIG.BUILD_NUMBER);
 
 if (MI_CONFIG.USE_MINIFIED_JAVASCRIPT === 'true') {
     modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.min.js?' +
@@ -84,6 +86,13 @@ $.when.apply(this, modulePromises).then(function() {
     });
 });
 
+function loadCssFromUrl(url) {
+    var link = document.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = url;
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
 
 function loadScriptFromUrl(url) {
     'use strict';

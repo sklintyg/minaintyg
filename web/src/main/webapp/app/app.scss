@@ -24,11 +24,6 @@
 
 // Component styles are injected through grunt
 // injector
-@import 'components/common-intyg/common-intyg-modules.scss';
-@import 'components/common-intyg/latestEvents/latestEvents.directive.scss';
-@import 'components/common-intyg/latestEventsModal/latestEventsModal.directive.scss';
-@import 'components/common-intyg/miCompactCertificateBody/miCompactCertificateBody.directive.scss';
-@import 'components/common-intyg/miCompactCertificateHeader/miCompactCertificateHeader.directive.scss';
 @import 'components/global-modifiers.scss';
 @import 'components/icons.scss';
 @import 'components/miBreadcrumb/miBreadcrumb.directive.scss';

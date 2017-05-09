@@ -32,6 +32,7 @@ module.exports = function(grunt) {
 
     var WEB_DIR = 'src/main/webapp';
     var SRC_DIR = WEB_DIR + '/app/';
+    var CSS_MICOMMON_DEST_DIR = '/../../common/web/build/resources/main/META-INF/resources/webjars/common/minaintyg/';
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
@@ -318,6 +319,7 @@ module.exports = function(grunt) {
                                 '/app/app-deps.js',
                                 serveStatic(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
                             ));
+
                         Object.keys(modules).forEach(function(moduleName) {
                             var module = modules[moduleName];
                             middlewares.push(
@@ -341,6 +343,14 @@ module.exports = function(grunt) {
                                     serveStatic(__dirname + module.dest + '/css')//jshint ignore:line
                                 ));
                         });
+
+                        //load mi-common from common build dir
+                        middlewares.push(
+                            connect().use(
+                                '/web/webjars/common/minaintyg/mi-common.css',
+                                serveStatic(__dirname + CSS_MICOMMON_DEST_DIR + 'mi-common.css') //jshint ignore:line
+                            ));
+
                         middlewares.push(proxy);
                         return middlewares;
                     }
