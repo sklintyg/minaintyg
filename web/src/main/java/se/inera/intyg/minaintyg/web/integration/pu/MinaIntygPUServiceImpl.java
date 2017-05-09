@@ -29,11 +29,12 @@ public class MinaIntygPUServiceImpl implements MinaIntygPUService {
         if (personSvar.getStatus() == PersonSvar.Status.FOUND) {
             return personSvar.getPerson();
         } else if (personSvar.getStatus() == PersonSvar.Status.NOT_FOUND) {
-            LOG.error("Person identified by '{}' not found i PU-service", pnr.getPnrHash());
+            LOG.error("Person identified by '{}' not found i PU-service, cannot login.", pnr.getPnrHash());
             throw new PersonNotFoundException("Person identified by '" + pnr.getPnrHash() + "' not found i PU-service");
         } else {
-            LOG.error("Error communicating with PU service, cannot query person '{}'", pnr.getPnrHash());
-            throw new IllegalStateException("Error communicating with PU service, cannot query person '" + pnr.getPnrHash() + "'");
+            LOG.warn("Error communicating with PU service, cannot query person '{}'. "
+                    + "Returning bare Person object with PNR only.", pnr.getPnrHash());
+            return new Person(pnr, false, false, "", "", "", "", "", "");
         }
     }
 

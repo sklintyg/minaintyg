@@ -38,15 +38,16 @@ public class MinaIntygPUServiceImplTest {
     }
 
     @Test(expected = PersonNotFoundException.class)
-    public void testGetPersonNotFound() {
+    public void testGetPersonNotFoundStopsLoggingIn() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.NOT_FOUND));
         testee.getPerson(PERSON_ID);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testGetPersonError() {
+    @Test
+    public void testGetPersonErrorAllowsLoginAnyway() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.ERROR));
-        testee.getPerson(PERSON_ID);
+        Person person = testee.getPerson(PERSON_ID);
+        assertEquals(PERSON_ID, person.getPersonnummer().getPersonnummer());
     }
 
     private PersonSvar buildOkPUSvar(PersonSvar.Status status) {
