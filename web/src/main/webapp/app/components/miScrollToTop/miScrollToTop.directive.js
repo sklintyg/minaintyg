@@ -17,15 +17,19 @@ angular.module('minaintyg').directive('miScrollToTop',
                 });
 
                 function checkScroller() {
-                    var scrollbarPercentage = getScrollbarPercentage();
-                    if (
-                        (scrollbarPercentage > 0.5 && !$scope.lowerHalf) ||
-                        (scrollbarPercentage <= 0.5 && $scope.lowerHalf)
-                    ) {
+                    var windowHeight = window.innerHeight;
+                    var currentScroll = $(document).scrollTop();
+                    if (currentScroll > (windowHeight / 2) && !$scope.lowerHalf) {
                         $scope.$apply(function () {
-                            $scope.lowerHalf = !$scope.lowerHalf;
+                            $scope.lowerHalf = true;
                         });
                     }
+                    else if (currentScroll < (windowHeight / 2) && $scope.lowerHalf) {
+                        $scope.$apply(function () {
+                            $scope.lowerHalf = false;
+                        });
+                    }
+                    console.log(currentScroll + "/" + windowHeight + "/" + $scope.lowerHalf);
                 }
 
                 function getScrollbarPercentage() {
