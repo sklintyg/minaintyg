@@ -16,34 +16,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-.scrollToTop{
-    text-align: center; 
-    width:50px; 
-    color: white; 
-    background: #21263D; 
+mi-scroll-to-top {
+  .scrollToTop {
+    text-align: center;
+    width: 50px;
+    color: white;
+    background: #21263D;
     position: fixed;
-    bottom: 100px; 
+    bottom: 100px;
     right: 100px;
-}
+  }
 
-.enter{
-  right: 0px;
-}
+  .enter {
+    right: 0;
+  }
 
-.upparrowSize{
-  width: "15px";
-  height: "7px";
-}
+  .upparrowSize {
+    width: 15px;
+    height: 7px;
+  }
 
-.exit{
-  right: -100px;
-}
+  .exit {
+    right: -100px;
+  }
 
-.enter-add, .enter-remove {
-transition: all ease-in-out 0.1s;
-}
+  .enter-add, .enter-remove {
+    transition: all ease-in-out 0.1s;
+  }
 
-.exit-add, .exit-remove  {
-transition: all ease-in-out 0.1s;
+  .exit-add, .exit-remove {
+    transition: all ease-in-out 0.1s;
+  }
 }
