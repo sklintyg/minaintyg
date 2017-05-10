@@ -29,7 +29,6 @@ angular.module('minaintyg').directive('miScrollToTop',
                             $scope.lowerHalf = false;
                         });
                     }
-                    console.log(currentScroll + "/" + windowHeight + "/" + $scope.lowerHalf);
                 }
 
                 function getScrollbarPercentage() {
