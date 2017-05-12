@@ -335,7 +335,7 @@ module.exports = function(grunt) {
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
-                                    serveStatic(__dirname + module.dest + '/js/module-deps.json') //jshint ignore:line
+                                    serveStatic(__dirname + module.dest + '/module-deps.json') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
