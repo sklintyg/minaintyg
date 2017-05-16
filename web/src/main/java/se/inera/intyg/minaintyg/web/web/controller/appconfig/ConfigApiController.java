@@ -18,16 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.web.controller.appconfig;
 
-import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.util.SystemPropertiesConfig;
@@ -52,9 +51,12 @@ public class ConfigApiController {
     @GET
     @Path("/app")
     @Produces(JSON_UTF8)
-    public ConfigResponse getConfig() {
-        return new ConfigResponse(systemConfigBean.getBuildNumber(), systemConfigBean.getUseMinifiedJavascript(),
-                systemConfigBean.getMvkMainUrl(), certificateService.getAllRecipients());
+    public Response getConfig() {
+
+        Response.ResponseBuilder builder = Response
+                .ok(new ConfigResponse(systemConfigBean.getBuildNumber(), systemConfigBean.getUseMinifiedJavascript(),
+                        systemConfigBean.getMvkMainUrl(), certificateService.getAllRecipients()));
+        return builder.cacheControl(getNoCacheControl()).build();
     }
 
     /**
@@ -65,7 +67,20 @@ public class ConfigApiController {
     @GET
     @Path("/map")
     @Produces(JSON_UTF8)
-    public List<IntygModule> getModulesMap() {
-        return moduleRegistry.listAllModules();
+    public Response getModulesMap() {
+        Response.ResponseBuilder builder = Response
+                .ok(moduleRegistry.listAllModules());
+        return builder.cacheControl(getNoCacheControl()).build();
+    }
+
+    private CacheControl getNoCacheControl() {
+        CacheControl cc = new CacheControl();
+        cc.setNoCache(true);
+        cc.setNoStore(true);
+        cc.setMustRevalidate(true);
+        cc.setPrivate(true);
+        cc.setMaxAge(0);
+
+        return cc;
     }
 }

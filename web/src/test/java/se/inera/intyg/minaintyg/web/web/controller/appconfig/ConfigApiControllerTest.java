@@ -9,6 +9,8 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -49,7 +51,10 @@ public class ConfigApiControllerTest {
         when(systemConfigBean.getMvkMainUrl()).thenReturn(MVK_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
 
-        ConfigResponse config = controller.getConfig();
+        Response response = controller.getConfig();
+
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+        ConfigResponse config = (ConfigResponse) response.getEntity();
 
         assertNotNull(config);
         assertEquals(1, config.getKnownRecipients().size());
@@ -64,7 +69,11 @@ public class ConfigApiControllerTest {
     public void testGetModulesMap() throws Exception {
         when(moduleRegistry.listAllModules()).thenReturn(Arrays.asList(mock(IntygModule.class)));
 
-        List<IntygModule> res = controller.getModulesMap();
+        Response response = controller.getModulesMap();
+
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+
+        List<IntygModule> res = (List<IntygModule>) response.getEntity();
 
         assertNotNull(res);
         assertEquals(1, res.size());

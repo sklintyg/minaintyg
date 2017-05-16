@@ -20,7 +20,6 @@ package se.inera.intyg.minaintyg.web.integrationtest;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -63,13 +62,20 @@ public class ApiControllerIT extends BaseIntegrationTest {
     public void testListCertificates() {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER,
+                false, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
 
         given().cookie("ROUTEID", IntegrationTestUtil.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
@@ -83,9 +89,12 @@ public class ApiControllerIT extends BaseIntegrationTest {
     public void testListCertificatesFiltersRevokedCertificates() {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+                false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
 
         given().cookie("ROUTEID", IntegrationTestUtil.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
@@ -98,7 +107,8 @@ public class ApiControllerIT extends BaseIntegrationTest {
     @Test
     public void testListCertificatesWithoutConsent() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
 
         given().cookie("ROUTEID", IntegrationTestUtil.routeId)
                 .redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
@@ -108,23 +118,31 @@ public class ApiControllerIT extends BaseIntegrationTest {
     @Test
     public void testListCertificatesWithoutSession() {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                false);
 
         given().redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
-        .when().get("api/certificates");
+                .when().get("api/certificates");
     }
 
     @Test
     public void testListArchivedCertificates() {
         IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
-        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER,
+                false, true);
+        IntegrationTestUtil.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+                true);
 
         given().cookie("ROUTEID", IntegrationTestUtil.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
@@ -216,18 +234,6 @@ public class ApiControllerIT extends BaseIntegrationTest {
     }
 
     @Test
-    public void testGetModulesMap() {
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
-        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/map")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/get-module-map-response-schema.json"))
-                .body("", hasSize(greaterThanOrEqualTo(7)));
-    }
-
-    @Test
     public void testOnBeforeUnload() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
@@ -236,6 +242,18 @@ public class ApiControllerIT extends BaseIntegrationTest {
                 .when().get("api/certificates/onbeforeunload").getBody().asString();
 
         assertEquals("ok", res);
+    }
+
+    @Test
+    public void testGetUser() {
+        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+
+        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+                .expect().statusCode(HttpServletResponse.SC_OK)
+                .when().get("api/certificates/user")
+                .then()
+                .body(matchesJsonSchemaInClasspath("jsonschema/get-user-response-schema.json"));
     }
 
     @Test
@@ -249,19 +267,6 @@ public class ApiControllerIT extends BaseIntegrationTest {
                 .when().get("api/certificates/questions/{type}/{version}")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/get-questions-response-schema.json"));
-    }
-
-    @Test
-    public void testApiResponseNotCacheable() {
-        IntegrationTestUtil.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
-        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/map")
-                .then()
-                .header("cache-control", equalTo("no-cache, no-store, max-age=0, must-revalidate"))
-                .header("x-frame-options", equalTo("DENY"));
     }
 
     @Test

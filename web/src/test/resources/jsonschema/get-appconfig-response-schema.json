@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /appconfig/api/app",
+  "type": "object",
+  "properties": {
+    "buildNumber": {
+      "type": "string"
+    },
+    "useMinifiedJavascript": {
+      "type": "boolean"
+    },
+    "mvkMainUrl": {
+      "type": "string"
+    },
+    "knownRecipients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "id": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "required": [
+    "buildNumber",
+    "useMinifiedJavascript",
+    "mvkMainUrl",
+    "knownRecipients"
+  ]
+}
+
