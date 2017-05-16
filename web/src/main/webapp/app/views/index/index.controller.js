@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ * Copyright (C) 2017 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -17,12 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('mvkTopBar',
-    function() {
-        'use strict';
+angular.module('minaintyg').controller('minaintyg.IndexCtrl', [ '$scope', 'MIConfig', function($scope, MIConfig) {
+    'use strict';
 
-        return {
-            restrict: 'E',
-            templateUrl: '/app/components/mvkTopBar/mvkTopBar.directive.html'
-        };
-    });
+    $scope.config = MIConfig;
+
+} ]);

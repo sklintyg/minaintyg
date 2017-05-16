@@ -18,32 +18,21 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
   <mvc:annotation-driven/>
   <mvc:default-servlet-handler/>
 
-  <mvc:interceptors>
-    <mvc:interceptor>
-      <mvc:mapping path="/**"/>
-      <mvc:exclude-mapping path="/certificates/user"/>
-      <mvc:exclude-mapping path="/certificates/consent/**"/>
-      <mvc:exclude-mapping path="/certificates/recipients/**"/>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
-      </bean>
-    </mvc:interceptor>
-  </mvc:interceptors>
-
   <context:annotation-config/>
-  <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller.api"/>
+  <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller.appconfig"/>
 
-  <jaxrs:server address="/certificates">
+  <jaxrs:server address="/api">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.intyg.minaintyg.web.web.controller.api.ApiController"/>
+      <bean class="se.inera.intyg.minaintyg.web.web.controller.appconfig.ConfigApiController"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
@@ -51,9 +40,6 @@
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
-    <jaxrs:invoker>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentJAXRSInvoker"/>
-    </jaxrs:invoker>
   </jaxrs:server>
 
   <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">

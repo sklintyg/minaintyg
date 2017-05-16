@@ -27,6 +27,10 @@ import se.inera.intyg.minaintyg.web.web.security.Citizen;
 public class CitizenService {
 
     public Citizen getCitizen() {
+        if (SecurityContextHolder.getContext() == null || SecurityContextHolder.getContext().getAuthentication() == null) {
+            return null;
+        }
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return principal instanceof Citizen ? (Citizen) principal : null;
     }

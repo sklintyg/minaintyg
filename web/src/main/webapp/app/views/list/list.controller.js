@@ -19,9 +19,9 @@
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
     [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
-        'common.dialogService', 'common.messageService', 'common.moduleService',
+        'common.dialogService', 'common.messageService', 'common.moduleService', 'MIUser',
         function($cookies, $location, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
-            messageService, moduleService) {
+            messageService, moduleService, MIUser) {
             'use strict';
 
 
@@ -88,7 +88,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
 
             // FK dialog
             var fromConsentPage = $cookies.get('RedirectFromConsent');
-            if (fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === 'FK')) {
+            if (fromConsentPage && (MIUser.loginMethod === 'FK')) {
                 dialogService.showDialog($scope, {
                     dialogId: 'fk-login-consent-dialog',
                     titleId: 'fkdialog.head',

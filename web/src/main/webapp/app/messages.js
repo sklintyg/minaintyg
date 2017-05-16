@@ -107,7 +107,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 
-
+        'info.loggedout.fk.title': 'Du är utloggad ur Mina intyg',
+        'info.loggedout.fk.text': 'Stäng detta webbfönster för att fortsätta till Försäkringskassans Mina sidor.',
 
         /* ABOUT */
 

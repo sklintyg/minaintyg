@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $state) {
+angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $state, MIUser) {
     'use strict';
 
     return {
@@ -41,6 +41,9 @@ angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $
                 var currentRootState = $rootScope.keepInboxTab ? 'inkorg' : _getRootStateName($state.current.name) || 'inkorg';
 
                 return (page === currentRootState) ? 'active' : '';
+            };
+            $scope.showMenu = function(){
+                return MIUser.consentGiven;
             };
         },
         templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'

@@ -78,6 +78,7 @@
     </security:http>
     <security:http security="none" pattern="/favicon.ico" />
     <security:http security="none" pattern="/web/resources/**" />
+    <security:http security="none" pattern="/appconfig/**" />
     <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="mvkEntryPoint">
       <security:headers>
         <security:frame-options />

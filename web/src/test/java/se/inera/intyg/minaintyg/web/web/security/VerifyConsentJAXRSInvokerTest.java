@@ -27,6 +27,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.minaintyg.web.web.controller.api.ApiController;
+import se.inera.intyg.minaintyg.web.web.controller.appconfig.ConfigApiController;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
 import se.inera.intyg.schemas.contract.Personnummer;
@@ -72,7 +73,7 @@ public class VerifyConsentJAXRSInvokerTest {
         when(service.getCitizen()).thenReturn(citizen);
         Exchange exchange = mock(Exchange.class);
         OperationResourceInfo ori = mock(OperationResourceInfo.class);
-        when(ori.getMethodToInvoke()).thenReturn(ApiController.class.getMethod("getModulesMap", new Class[] {}));
+        when(ori.getMethodToInvoke()).thenReturn(ConfigApiController.class.getMethod("getModulesMap", new Class[] {}));
         when(exchange.get(OperationResourceInfo.class)).thenReturn(ori);
 
         final Long consentCounter = invoker.getConsentCounter();

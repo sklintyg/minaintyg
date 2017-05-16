@@ -36,11 +36,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.common.support.modules.registry.IntygModule;
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
+import se.inera.intyg.minaintyg.web.api.UserInfo;
 import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
@@ -64,9 +63,6 @@ public class ApiController {
 
     @Autowired
     private CitizenService citizenService;
-
-    @Autowired
-    private IntygModuleRegistry moduleRegistry;
 
     @GET
     @Produces(JSON_UTF8)
@@ -156,18 +152,6 @@ public class ApiController {
     }
 
     /**
-     * Serving module configuration for Angular bootstrapping.
-     *
-     * @return a JSON object
-     */
-    @GET
-    @Path("/map")
-    @Produces(JSON_UTF8)
-    public List<IntygModule> getModulesMap() {
-        return moduleRegistry.listAllModules();
-    }
-
-    /**
      * Endpoint used by client to notify server that onbeforeunload is triggered.
      *
      * @param req
@@ -196,9 +180,16 @@ public class ApiController {
     }
 
     @GET
-    @Path("/recipients/list")
+    @Path("/user")
     @Produces(JSON_UTF8)
-    public List<UtlatandeRecipient> listAllRecipients() {
-        return certificateService.getAllRecipients();
+    public UserInfo getUser() {
+        Citizen citizen = citizenService.getCitizen();
+        if (citizen != null) {
+            return new UserInfo(citizen.getUsername(), citizen.getFullName(), citizen.getLoginMethod().name(),
+                    citizen.isSekretessmarkering(), citizen.hasConsent());
+        } else {
+            throw new IllegalStateException("No citizen in securityContext");
+        }
     }
+
 }

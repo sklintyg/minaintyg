@@ -2,16 +2,16 @@
   <div class="row">
     <div class="col-xs-3 mi-header-col">
       <div>
-        <a ng-href="{{userName.length ? '/web/start' : '/'}}">
+        <a ng-href="{{user.fullName.length ? '/web/start' : '/'}}">
           <img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo"
                src="/img/logo-minaintyg-white-retina.png" />
         </a>
       </div>
     </div>
-    <div class="col-xs-9 mi-header-col user-info" ng-if="userName.length">
+    <div class="col-xs-9 mi-header-col user-info" ng-if="user.fullName.length">
       <div>
         <message class="hidden-xs" key="nav.label.loggedinas"></message>
-        &nbsp;<span class="user-name">{{userName}}</span><br>
+        &nbsp;<span class="user-name">{{user.fullName}}</span><br>
         <a href="/web/logga-ut" id="mvklogoutLink">
           <message key="mvk.header.logouttext"></message>
           <i class="icon icon-logout-1"></i>

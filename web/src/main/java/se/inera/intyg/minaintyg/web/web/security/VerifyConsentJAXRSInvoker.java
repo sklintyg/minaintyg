@@ -45,10 +45,12 @@ import se.inera.intyg.schemas.contract.Personnummer;
 public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentJAXRSInvoker.class);
-    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "onbeforeunload", "giveConsent",
-            "listAllRecipients");
+    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "getUser", "onbeforeunload",
+            "giveConsent");
+
     @Autowired
     private ConsentService consentService;
+
     @Autowired
     private CitizenService citizenService;
     private AtomicLong consentCounter = new AtomicLong();

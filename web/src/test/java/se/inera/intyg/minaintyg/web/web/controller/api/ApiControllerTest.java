@@ -44,13 +44,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
+import se.inera.intyg.minaintyg.web.api.UserInfo;
 import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
 import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.web.service.ConsentService;
@@ -65,6 +66,8 @@ public class ApiControllerTest {
     private static final Personnummer PNR = new Personnummer(CIVIC_REGISTRATION_NUMBER);
     private static final String FKASSA_RECIPIENT_ID = "FKASSA";
     private static final String TRANSP_RECIPIENT_ID = "TRANSP";
+    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.MVK;
+    private static final String PERSON_FULLNAME = "Tolvan Tolvansson";
 
     @Mock
     private CertificateService certificateService;
@@ -194,18 +197,6 @@ public class ApiControllerTest {
     }
 
     @Test
-    public void testGetModulesMap() throws Exception {
-        when(moduleRegistry.listAllModules()).thenReturn(Arrays.asList(mock(IntygModule.class)));
-
-        List<IntygModule> res = apiController.getModulesMap();
-
-        assertNotNull(res);
-        assertEquals(1, res.size());
-
-        verify(moduleRegistry).listAllModules();
-    }
-
-    @Test
     public void testOnBeforeUnload() throws Exception {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getSession()).thenReturn(mock(HttpSession.class));
@@ -265,6 +256,29 @@ public class ApiControllerTest {
         // Verify
         assertEquals(actualResult, expectedResponse);
         verify(certificateService).sendCertificate(eq(personNummer), eq(certificateId), eq(recipients));
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+        Citizen citizen = mock(Citizen.class);
+        when(citizen.getUsername()).thenReturn(CIVIC_REGISTRATION_NUMBER);
+        when(citizen.getLoginMethod()).thenReturn(LOGIN_METHOD);
+        when(citizen.getFullName()).thenReturn(PERSON_FULLNAME);
+        when(citizen.isSekretessmarkering()).thenReturn(true);
+        when(citizen.hasConsent()).thenReturn(true);
+
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        UserInfo user = apiController.getUser();
+
+        assertNotNull(user);
+        assertEquals(CIVIC_REGISTRATION_NUMBER, user.getPersonId());
+        assertEquals(LOGIN_METHOD.name(), user.getLoginMethod());
+        assertEquals(PERSON_FULLNAME, user.getFullName());
+        assertEquals(true, user.isSekretessmarkering());
+        assertEquals(true, user.isConsentGiven());
+
+
     }
 
     private void mockCitizen(String personId) {

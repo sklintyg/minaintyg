@@ -31,16 +31,16 @@
 <c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
 
 <!DOCTYPE html>
-<html lang="sv" id="ng-app" ng-app="minaintyg">
+<html lang="sv" id="ng-app">
+<!-- error.jsp -->
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
-<meta name="viewport" content="width=320,initial-scale=1.0,target-densityDPI=320dpi">
+<meta name="viewport" content="width=device-width">
 
 <title><spring:message code="application.name" /></title>
 
-<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 <link rel="apple-touch-icon-precomposed" href="/img/touch-icon-small.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/touch-icon-big.png" />
 
@@ -53,26 +53,16 @@
 <link rel="stylesheet" href="/font/css/fontello.css?_v=<spring:message code="buildNumber" />">
 <!-- endinjector -->
 
-<script type="text/javascript">
-  /**
-   Global JS config/constants for this app, to be used by scripts
-   **/
-  var MI_CONFIG = {
-    BUILD_NUMBER: '<spring:message code="buildNumber" />',
-    USE_MINIFIED_JAVASCRIPT: '<c:out value="${useMinifiedJavaScript}"/>'
-  }
-</script>
 </head>
 
-<body ng-app="minaintyg">
+<body>
 
   <mvk-top-bar></mvk-top-bar>
 
-  <mi-header user-name="<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username" /></sec:authorize>"></mi-header>
+  <mi-header></mi-header>
 
   <div class="container">
     <div class="content">
-      <%--         <mi-header user-name="<c:catch><sec:authentication property="principal.username" /></c:catch>"></mi-header> --%>
       <div id="navigation-container"></div>
 
       <div class="row">
@@ -88,7 +78,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${mvkMainUrl}"><spring:message
+                <a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
@@ -102,7 +92,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${mvkMainUrl}"><spring:message
+                <a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
@@ -142,8 +132,7 @@
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/momentjs/min/moment.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.min.js?<spring:message code="buildNumber" />"></script>
-      <script type="text/javascript" src="/app/base/app.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript" src="/app/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
       <!-- bower:js -->
@@ -156,10 +145,9 @@
       <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
-      <script type="text/javascript" src="/bower_components/ngstorage/ngStorage.js"></script>
       <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
       <!-- endbower -->
-      <script type="text/javascript" src="/app/base/app.js"></script>
+      <script type="text/javascript" src="/app/app.js"></script>
     </c:otherwise>
   </c:choose>
 
