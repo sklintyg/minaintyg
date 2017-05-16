@@ -31,7 +31,9 @@ angular.module('minaintyg').directive('miScrollToTop', function() {
             }
 
             $scope.scrollToTop = function() {
-                $window.scrollTo(0, 0);
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
             };
 
         }
