@@ -32,7 +32,8 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-describe('Verifiera Lisjp med smittbärarpenning', function() {
+//Temporarily disabled this while we develop new lisjp view with uv-framework.
+xdescribe('Verifiera Lisjp med smittbärarpenning', function() {
 
     var personId = '191212121212';
 
