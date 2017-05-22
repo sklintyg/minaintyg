@@ -33,32 +33,32 @@ stage('deploy') {
    }
 }
 
-// stage('restAssured') {
-//    node {
-//        try {
-//            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=http://minaintyg.inera.nordicmedtest.se/inera-certificate/ \
-//                  -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-//        } finally {
-//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
-//                reportFiles: 'index.html', reportName: 'RestAssured results'
-//        }
-//    }
-// }
+stage('restAssured') {
+   node {
+       try {
+           shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=http://minaintyg.inera.nordicmedtest.se/inera-certificate/ \
+                 -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+       } finally {
+           publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
+               reportFiles: 'index.html', reportName: 'RestAssured results'
+       }
+   }
+}
 
-// stage('protractor') {
-//    node {
-//        try {
-//            sh(script: 'rm -rf test/node_modules/minaintyg-testtools') // Without this, node does not always recognize that a new version is available.
-//            wrap([$class: 'Xvfb']) {
-//                shgradle "protractorTests -Dprotractor.env=build-server \
-//                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-//            }
-//        } finally {
-//            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/dev/report', \
-//                 reportFiles: 'index.html', reportName: 'Protractor results'
-//        }
-//    }
-// }
+stage('protractor') {
+   node {
+       try {
+           sh(script: 'rm -rf test/node_modules/minaintyg-testtools') // Without this, node does not always recognize that a new version is available.
+           wrap([$class: 'Xvfb']) {
+               shgradle "protractorTests -Dprotractor.env=build-server \
+                     -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+           }
+       } finally {
+           publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/dev/report', \
+                reportFiles: 'index.html', reportName: 'Protractor results'
+       }
+   }
+}
 
 stage('tag and upload') {
     node {
