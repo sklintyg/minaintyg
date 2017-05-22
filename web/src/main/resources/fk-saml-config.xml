@@ -110,6 +110,7 @@
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages -->
     <bean id="samlAuthenticationProvider" class="org.springframework.security.saml.SAMLAuthenticationProvider">
+        <property name="forcePrincipalAsString" value="false" />
         <property name="userDetails" ref="citizenAuthenticationService" />
     </bean>
 
