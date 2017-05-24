@@ -54,7 +54,9 @@
         });
     }
 
-    app.config([ '$httpProvider', 'common.http403ResponseInterceptorProvider', function($httpProvider, http403ResponseInterceptorProvider) {
+    app.config([ '$logProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', function($logProvider, $httpProvider, http403ResponseInterceptorProvider) {
+        $logProvider.debugEnabled(true);
+
         // Add cache buster interceptor
         $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
