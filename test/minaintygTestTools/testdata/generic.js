@@ -43,6 +43,10 @@ module.exports = {
         return this.getIntyg('lisjp', 'lisjp-smittskydd', userId);
     },
 
+    getLisjpFull: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-full', userId);
+    },
+
     getLisjpSmittskyddOvrigt: function(userId) {
         return this.getIntyg('lisjp', 'lisjp-smittskydd-ovrigt', userId);
     },

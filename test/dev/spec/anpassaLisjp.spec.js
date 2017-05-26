@@ -90,13 +90,6 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
             expect(viewPage.isAt()).toBeTruthy();
         });
 
-        it('Verifiera intygshuvud', function() {
-
-            expect(element(by.id('patient-name')).getText()).toBe('Tolvan Tolvansson');
-            expect(element(by.id('patient-crn')).getText()).toBe('19121212-1212');
-
-        });
-
         it('Gå till anpassa intyg', function() {
             viewPage.clickCustomizeCertificate();
             expect(anpassaPage.isAt()).toBeTruthy();

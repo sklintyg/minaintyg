@@ -76,7 +76,7 @@ describe('Skicka intyg', function() {
             inboxPage.viewCertificate(intygsId1);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('lisjp');
-            expect(viewPage.certificateId()).toEqual(intygsId1);
+            expect(browser.getCurrentUrl()).toContain(intygsId1);
             expect(viewPage.hasNoEvent('Inga händelser')).toBeTruthy();
         });
 
@@ -118,7 +118,7 @@ describe('Skicka intyg', function() {
         it('Verifiera att intyget nu har status "skickat"', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('lisjp');
-            expect(viewPage.certificateId()).toEqual(intygsId1);
+            expect(browser.getCurrentUrl()).toContain(intygsId1);
             expect(viewPage.hasEvent(intygsId1, 'Skickat till Försäkringskassan')).toBeTruthy();
         });
 
@@ -162,7 +162,7 @@ describe('Skicka intyg', function() {
             inboxPage.viewCertificate(intygsId2);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('lisjp');
-            expect(viewPage.certificateId()).toEqual(intygsId2);
+            expect(browser.getCurrentUrl()).toContain(intygsId2);
             expect(browser.getTitle()).toEqual('Läkarintyg för sjukpenning | Mina intyg');
         });
 

@@ -87,6 +87,10 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
             }
         });
     },
+    showsNoValue: function(fieldId) {
+        return element(by.id(fieldId)).isElementPresent(by.tagName('uv-no-value'));
+    },
+
     fieldNotShown: function(fieldId) {
         return this.getTextContent(fieldId).then(function (value) { return value === 'notshown'; });
     }
