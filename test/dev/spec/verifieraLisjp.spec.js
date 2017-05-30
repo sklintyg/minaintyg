@@ -41,7 +41,7 @@ describe('Verifiera Lisjp', function() {
 
     var intygsId1 = null;
     var intygsId2 = null;
-    
+
     beforeAll(function() {
         browser.ignoreSynchronization = false;
 
@@ -153,11 +153,8 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera bedömning', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_32.RBK')).toBe(texts['FRG_32.RBK']);
-            //TODO: uv-table should use kodverk values for percentage - not custom text?
-            //expect(viewPage.getDynamicLabelText('KV_FKMU_0003.HELT_NEDSATT.RBK')).toBe(texts['KV_FKMU_0003.HELT_NEDSATT.RBK']);
-            //expect(viewPage.getDynamicLabelText('KV_FKMU_0003.HALFTEN.RBK')).toBe(texts['KV_FKMU_0003.HALFTEN.RBK']);
-            expect(viewPage.getTextContent('sjukskrivningar-row0-col0')).toEqual('100%');
-            expect(viewPage.getTextContent('sjukskrivningar-row1-col0')).toEqual('50%');
+            expect(viewPage.getTextContent('sjukskrivningar-row0-col0')).toEqual(texts['KV_FKMU_0003.HELT_NEDSATT.RBK']);
+            expect(viewPage.getTextContent('sjukskrivningar-row1-col0')).toEqual(texts['KV_FKMU_0003.HALFTEN.RBK']);
 
 
             expect(viewPage.showsNoValue('forsakringsmedicinsktBeslutsstod')).toBeTruthy();
@@ -279,22 +276,20 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera bedömning', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_32.RBK')).toBe(texts['FRG_32.RBK']);
-            //TODO: uv-table should use kodverk values for percentage value - not custom shortform?
-            //expect(viewPage.getDynamicLabelText('KV_FKMU_0003.HELT_NEDSATT.RBK')).toBe(texts['KV_FKMU_0003.HELT_NEDSATT.RBK']);
-            //expect(viewPage.getDynamicLabelText('KV_FKMU_0003.HALFTEN.RBK')).toBe(texts['KV_FKMU_0003.HALFTEN.RBK']);
-            expect(viewPage.getTextContent('sjukskrivningar-row0-col0')).toEqual('100%');
+
+            expect(viewPage.getTextContent('sjukskrivningar-row0-col0')).toEqual(texts['KV_FKMU_0003.HELT_NEDSATT.RBK']);
             expect(viewPage.getTextContent('sjukskrivningar-row0-col1')).toEqual('2017-06-19');
             expect(viewPage.getTextContent('sjukskrivningar-row0-col2')).toEqual('2017-07-10');
 
-            expect(viewPage.getTextContent('sjukskrivningar-row1-col0')).toEqual('75%');
+            expect(viewPage.getTextContent('sjukskrivningar-row1-col0')).toEqual(texts['KV_FKMU_0003.TRE_FJARDEDEL.RBK']);
             expect(viewPage.getTextContent('sjukskrivningar-row1-col1')).toEqual('2017-05-28');
             expect(viewPage.getTextContent('sjukskrivningar-row1-col2')).toEqual('2017-06-18');
 
-            expect(viewPage.getTextContent('sjukskrivningar-row2-col0')).toEqual('50%');
+            expect(viewPage.getTextContent('sjukskrivningar-row2-col0')).toEqual(texts['KV_FKMU_0003.HALFTEN.RBK']);
             expect(viewPage.getTextContent('sjukskrivningar-row2-col1')).toEqual('2017-05-27');
             expect(viewPage.getTextContent('sjukskrivningar-row2-col2')).toEqual('2017-05-27');
 
-            expect(viewPage.getTextContent('sjukskrivningar-row3-col0')).toEqual('25%');
+            expect(viewPage.getTextContent('sjukskrivningar-row3-col0')).toEqual(texts['KV_FKMU_0003.EN_FJARDEDEL.RBK']);
             expect(viewPage.getTextContent('sjukskrivningar-row3-col1')).toEqual('2017-05-26');
             expect(viewPage.getTextContent('sjukskrivningar-row3-col2')).toEqual('2017-05-26');
 
