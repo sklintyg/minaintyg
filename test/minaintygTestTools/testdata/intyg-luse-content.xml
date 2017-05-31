@@ -186,11 +186,5 @@
             <ns4:delsvar id="26.1">true</ns4:delsvar>
             <ns4:delsvar id="26.2">Kontaktinfo.</ns4:delsvar>
         </ns4:svar>
-        <ns4:svar id="9001">
-            <ns4:delsvar id="9001.1">Skostorlek.</ns4:delsvar>
-        </ns4:svar>
-        <ns4:svar id="9002">
-            <ns4:delsvar id="9002.1">Längd.</ns4:delsvar>
-        </ns4:svar>
     </ns2:intyg>
 </registerCertificateType>
