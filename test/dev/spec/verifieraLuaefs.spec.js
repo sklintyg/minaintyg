@@ -39,6 +39,8 @@ describe('Verifiera LUAE_FS intyg', function() {
     var intygsId = null;
 
     beforeAll(function() {
+        browser.ignoreSynchronization = false;
+
         //Load and cache expected dynamictext-values for this intygstype.
         textHelper.readTextsFromFkTextFile('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
             texts = textResources;

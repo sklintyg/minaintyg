@@ -336,7 +336,7 @@ describe('Verifiera Lisjp', function() {
 
         });
 
-        it('Verifiera att tiiläägsfrågorna är besvarade', function() {
+        it('Verifiera att tilläggsfrågorna är besvarade', function() {
             expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
             expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Nej, men rolig');
 
