@@ -33,7 +33,7 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-describe('Verifiera LUAE_FS intyg', function() {
+xdescribe('Verifiera LUAE_FS intyg', function() {
 
     var texts = null;
     var intygsId = null;

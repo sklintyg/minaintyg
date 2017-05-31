@@ -30,7 +30,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Visa intyg Fk7263', function() {
+xdescribe('Visa intyg Fk7263', function() {
 
     var personId = '19010101-0101';
     var intygsId = null;

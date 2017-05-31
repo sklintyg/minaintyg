@@ -35,7 +35,7 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 var EC = protractor.ExpectedConditions;
 
-describe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
+xdescribe('Verifiera FK7263 anpassat arbetsivarintyg', function() {
 
     var intygsId = null;
 
