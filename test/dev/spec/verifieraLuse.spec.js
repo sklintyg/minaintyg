@@ -54,13 +54,12 @@ describe('Verifiera LUSE', function() {
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuse();
         intygsId = intyg.id;
-        console.log(intygsId);
         restHelper.createIntyg(intyg);
     });
 
     afterAll(function() {
         restHelper.deleteConsent(personId);
-        //restHelper.deleteIntyg(intygsId);
+        restHelper.deleteIntyg(intygsId);
     });
 
     describe('Logga in', function() {
