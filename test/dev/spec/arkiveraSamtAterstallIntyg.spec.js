@@ -175,8 +175,6 @@ describe('Arkivera samt återställ intyg', function() {
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
             inboxPage.viewCertificate(tsBasIntygsId);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('ts-bas');
-            expect(viewPage.certificateId()).toEqual(tsBasIntygsId);
         });
 
         it('Arkivera intyget', function() {
