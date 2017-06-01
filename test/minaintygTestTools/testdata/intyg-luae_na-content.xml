@@ -191,6 +191,9 @@
         <ns4:svar id="23">
             <ns4:delsvar id="23.1">Medicinska förutsättningar för arbete 2</ns4:delsvar>
         </ns4:svar>
+      <ns4:svar id="24">
+        <ns4:delsvar id="24.1">Medicinska förutsättningar för arbete 3</ns4:delsvar>
+      </ns4:svar>
         <ns4:svar id="25">
             <ns4:delsvar id="25.1">Övrigt</ns4:delsvar>
         </ns4:svar>
