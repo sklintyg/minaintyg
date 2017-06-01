@@ -1,0 +1,122 @@
+[
+  {
+    "key": "patientdatalagen",
+    "url": "http://www.riksdagen.se/sv/Dokument-Lagar/Lagar/Svenskforfattningssamling/Patientdatalag-2008355_sfs-2008-355/?bet=2008:355",
+    "text": "Patientdatalagen (PDL)",
+    "target": "_blank"
+  },
+  {
+    "key": "diPatientDataLagen",
+    "url": "http://www.datainspektionen.se/lagar-och-regler/patientdatalagen",
+    "text": "Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen",
+    "target": "_blank"
+  },
+  {
+    "key": "personuppgiftslagen",
+    "url": "http://www.riksdagen.se/sv/Dokument-Lagar/Lagar/Svenskforfattningssamling/Personuppgiftslag-1998204_sfs-1998-204/?bet=1998:204",
+    "text": "Personuppgiftslagen (PUL)",
+    "target": "_blank"
+  },
+  {
+    "key": "pul48",
+    "url": "http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/personuppgiftslag-1998204_sfs-1998-204",
+    "text": "48 § PUL",
+    "target": "_blank"
+  },
+  {
+    "key": "ptsCookies",
+    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "text": "Post- och telestyrelsens webbplats (extern länk).",
+    "target": "_blank"
+  },
+  {
+    "key": "ptsCookiesBanner",
+    "url": "http://www.pts.se/sv/Privat/Internet/Integritet1/Fragor-och-svar-om-kakor-for-anvandare2/",
+    "text": "Post- och telestyrelsens webbplats",
+    "target": "_blank"
+  },
+  {
+    "key": "ptsCookiesMerOm",
+    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "text": "Mer om kakor (cookies) på Post- och telestyrelsens webbplats",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraStartsida",
+    "url": "http://www.inera.se",
+    "text": "Inera AB (extern länk)",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraAb",
+    "url": "http://www.inera.se",
+    "text": "Inera AB",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraKundserviceKontakt",
+    "url": "http://www.inera.se/kontakt",
+    "text": "Ineras kundservice",
+    "target": "_blank"
+  }, 
+  {
+    "key": "ineraKundserviceFelanmalan",
+    "url": "http://www.inera.se/felanmalan",
+    "text": "Kontaktinformation till kundservice (extern länk)",
+    "target": "_blank"
+  },
+  {
+    "key": "ineraKundserviceAnmalFel",
+    "url": "http://www.inera.se/felanmalan",
+    "text": "Ineras kundservice",
+    "target": "_blank"
+  },
+  {
+    "key": "merInfoElegMvk",
+    "url": "https://www.minavardkontakter.se/C125755F00329208/p/KONT-8ZSGV8?opendocument",
+    "text": "Mer information om hur du skaffar en e-legitimation.",
+    "target": "_blank"
+  },
+  {
+    "key": "1177etjanster",
+    "url": "http://www.1177.se/e-tjanster",
+    "text": "1177.se/e-tjanster",
+    "target": "_blank"
+  },
+  {
+    "key": "forsakringskassan",
+    "url": "http://www.forsakringskassan.se",
+    "text": "Försäkringskassan",
+    "target": "_blank"
+  },
+  {
+    "key": "skatteverketSekretessmarkeradePersonuppgifter",
+    "url": "https://www.skatteverket.se/privat/folkbokforing/skyddadepersonuppgifter/hanteringavsekretessmarkeradepersonuppgifter.4.18e1b10334ebe8bc80002541.html",
+    "text": "här",
+    "target": "_blank"
+  },
+  {
+    "key": "ivo",
+    "url": "http://www.ivo.se/Sidor/default.aspx",
+    "text": "Inspektionen för vård och omsorg, IVO",
+    "target": "_blank"
+  },
+  {
+    "key": "1177uppgifterSkyddasHanteras",
+    "url": "http://www.1177.se/Tema/E-tjanster/Om-1177-Vardguidens-e-tjanster/Sa-skyddas-och-hanteras-dina-uppgifter-i-e-tjansterna/",
+    "text": "Mer information om hantering av personuppgifter hos 1177 Vårdguiden",
+    "target": "_blank"
+  },
+  {
+    "key": "1177patientjournalen",
+    "url": "http://www.1177.se/Regler-och-rattigheter/Patientjournalen/",
+    "text": "Mer information om patientjournalen hos 1177.se",
+    "target": "_blank"
+  },
+  {
+    "key": "adobeReader",
+    "url": "https://get.adobe.com/reader/?loc=se",
+    "text": "Adobe Reader",
+    "target": "_blank"
+  }
+]

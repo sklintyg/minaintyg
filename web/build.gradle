@@ -120,6 +120,7 @@ dependencies {
     compile "se.inera.intyg.common:luae_fs:${commonVersion}"
     compile "se.inera.intyg.common:fk7263:${commonVersion}"
 
+    compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
 
     compile "org.springframework:spring-web:${springVersion}"

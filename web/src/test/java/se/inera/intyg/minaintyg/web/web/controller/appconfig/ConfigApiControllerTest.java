@@ -1,27 +1,27 @@
 package se.inera.intyg.minaintyg.web.web.controller.appconfig;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
-
-import javax.ws.rs.core.Response;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
+import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.web.util.SystemPropertiesConfig;
+
+import javax.ws.rs.core.Response;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by marced on 2017-05-12.
@@ -41,6 +41,9 @@ public class ConfigApiControllerTest {
     @Mock
     private SystemPropertiesConfig systemConfigBean;
 
+    @Mock
+    private DynamicLinkService dynamicLinkService;
+
     @InjectMocks
     private ConfigApiController controller;
 
@@ -50,6 +53,7 @@ public class ConfigApiControllerTest {
         when(systemConfigBean.getBuildNumber()).thenReturn(BUILD_NUMBER);
         when(systemConfigBean.getMvkMainUrl()).thenReturn(MVK_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
+        when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
 
         Response response = controller.getConfig();
 

@@ -102,14 +102,16 @@
         });
     });
 
-    app.run([ '$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService', 'common.recipientsFactory',
+    app.run([ '$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService', 'common.dynamicLinkService', 'common.recipientsFactory',
             'minaintyg.messages', 'MIConfig',
-            function($log, $rootScope, $state, $window, moduleService, messageService, recipientsFactory, miMessages, MIConfig) {
+            function($log, $rootScope, $state, $window, moduleService, messageService, dynamicLinkService, recipientsFactory, miMessages, MIConfig) {
                 $rootScope.lang = 'sv';
                 $rootScope.DEFAULT_LANG = 'sv';
                 $rootScope.page_title = 'Titel'; // jshint ignore:line
 
                 messageService.addResources(miMessages);
+                messageService.addLinks(MIConfig.links);
+                dynamicLinkService.addLinks(MIConfig.links);
                 moduleService.setModules(moduleArray);
 
                 $window.doneLoading = false;

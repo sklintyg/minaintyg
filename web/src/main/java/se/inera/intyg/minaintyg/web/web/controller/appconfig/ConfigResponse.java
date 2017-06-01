@@ -18,10 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.web.controller.appconfig;
 
+import se.inera.intyg.infra.dynamiclink.model.DynamicLink;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+
 import java.io.Serializable;
 import java.util.List;
-
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import java.util.Map;
 
 /**
  * DTO representing config metadata of a MI user session.
@@ -36,12 +38,15 @@ public class ConfigResponse implements Serializable {
     private boolean useMinifiedJavascript;
     private String mvkMainUrl;
     private List<UtlatandeRecipient> knownRecipients;
+    private Map<String, DynamicLink> links;
 
-    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String mvkMainUrl, List<UtlatandeRecipient> knownRecipients) {
+    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String mvkMainUrl, List<UtlatandeRecipient> knownRecipients,
+            Map<String, DynamicLink> links) {
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
         this.mvkMainUrl = mvkMainUrl;
         this.knownRecipients = knownRecipients;
+        this.links = links;
     }
 
     public String getBuildNumber() {
@@ -60,4 +65,7 @@ public class ConfigResponse implements Serializable {
         return knownRecipients;
     }
 
+    public Map<String, DynamicLink> getLinks() {
+        return links;
+    }
 }

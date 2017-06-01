@@ -18,18 +18,18 @@
  */
 package se.inera.intyg.minaintyg.web.web.controller.appconfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
+import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.util.SystemPropertiesConfig;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.minaintyg.web.web.service.CertificateService;
-import se.inera.intyg.minaintyg.web.web.util.SystemPropertiesConfig;
 
 /**
  * Created by marced on 2017-05-12.
@@ -48,6 +48,9 @@ public class ConfigApiController {
     @Autowired
     private SystemPropertiesConfig systemConfigBean;
 
+    @Autowired
+    private DynamicLinkService dynamicLinkService;
+
     @GET
     @Path("/app")
     @Produces(JSON_UTF8)
@@ -55,7 +58,8 @@ public class ConfigApiController {
 
         Response.ResponseBuilder builder = Response
                 .ok(new ConfigResponse(systemConfigBean.getBuildNumber(), systemConfigBean.getUseMinifiedJavascript(),
-                        systemConfigBean.getMvkMainUrl(), certificateService.getAllRecipients()));
+                        systemConfigBean.getMvkMainUrl(), certificateService.getAllRecipients(),
+                        dynamicLinkService.getAllAsMap()));
         return builder.cacheControl(getNoCacheControl()).build();
     }
 

@@ -80,7 +80,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'archived.header': 'Arkiverade intyg',
 
         'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till Arkiverade intyg.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
-        'archived.description.part2': '<p><a href="http://www.datainspektionen.se/lagar-och-regler/patientdatalagen" target="_blank">Läs mer om lagring av uppgifter och ändring av information hos Datainspektionen</a>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ.</p>',
+        'archived.description.part2': '<p><LINK:diPatientDataLagen>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ.</p>',
 
         'archived-cert-table.headers.issued': 'Intyg utfärdat',
         'archived-cert-table.headers.type': 'Typ av intyg',
@@ -103,7 +103,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
         'sendpage.dialog.label.received-by': 'Mottaget av',
         'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
-        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <a href="http://www.inera.se/kontakt" target="_blank">Ineras kundservice</a>.',
+        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <LINK:ineraKundserviceKontakt>.',
         'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 
@@ -116,7 +116,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
         'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst aktivera tjänsten igen genom att lämna ett nytt samtycke.',
 
-        'about.dina.rattigheter': '<h3>Dina rättigheter</h3><p> Som användare av tjänsten Mina intyg har du bland annat rätt att: <ul> <li>Varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB.</li> <li>När som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system  med stöd av patientdatalagen).</li><li>Begära att tredje man, till vilka personuppgifter lämnats ut, underrättas om personuppgifter som rättats,  blockerats eller utplånats.</li><li>Kräva skadestånd enligt <a href="http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/personuppgiftslag-1998204_sfs-1998-204" target="_blank">48 § PUL</a> vid behandling av personuppgifter i strid med lag. </li> </ul> </p>',
+        'about.dina.rattigheter': '<h3>Dina rättigheter</h3><p> Som användare av tjänsten Mina intyg har du bland annat rätt att: <ul> <li>Varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB.</li> <li>När som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system  med stöd av patientdatalagen).</li><li>Begära att tredje man, till vilka personuppgifter lämnats ut, underrättas om personuppgifter som rättats,  blockerats eller utplånats.</li><li>Kräva skadestånd enligt <LINK:pul48> vid behandling av personuppgifter i strid med lag. </li> </ul> </p>',
         'about.ge.aterta.samtycke': '<h3>Ge och återta samtycke</h3><p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg    kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
         'about.samtycke.om.tjansten': '<h3>Om tjänsten Mina Intyg</h3><p>Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.</p>',
 
@@ -125,7 +125,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'help.faq':[
             {title:'',questions:[
                 {question: 'Varför kan jag inte se mitt intyg?', answer: 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.'},
-                {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer:'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare, exempelvis <a href="https://get.adobe.com/reader/?loc=se" target="_blank" title="Ladda ner Adobe Reader">Adobe Reader</a>.'},
+                {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer:'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare, exempelvis <LINK:adobeReader>.'},
                 {question:'Varför kan jag inte se makulerade intyg?',answer:'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.<p>Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.</p>'}
             ]},
             {title:'Frågor och svar om samtycke',questions:[
@@ -144,7 +144,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         ],
 
         /* LINKS */
-        'links.inera.kundservice': '<a href="http://www.inera.se/kontakt" target="_blank">Ineras Kundservice</a>',
+        'links.inera.kundservice': '<LINK:ineraKundserviceKontakt>',
 
         'fkdialog.head': 'Du har gett ditt samtycke',
         'fkdialog.text': 'Du har gett ditt samtycke till att Försäkringskassan får hämta dina intyg från tjänsten Mina intyg. Nu kan du välja att logga ut och återgå till Försäkringskassans Mina sidor, eller gå vidare till tjänsten Mina intyg.',
