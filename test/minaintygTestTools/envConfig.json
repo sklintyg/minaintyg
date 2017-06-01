@@ -4,7 +4,7 @@
         "INTYGTJANST_URL": "https://minaintyg.inera.nordicmedtest.se/inera-certificate"
     },
     "dev": {
-        "MINAINTYG_URL": "http://localhost:8088/",
+        "MINAINTYG_URL": "http://localhost:8089/",
         "INTYGTJANST_URL": "http://localhost:8080/inera-certificate"
     }
 }

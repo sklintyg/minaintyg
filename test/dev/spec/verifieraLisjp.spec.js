@@ -350,7 +350,6 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 0101112131416');
             expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, NMT vg3');
             expect(viewPage.getTextContent('vardenhet-adress')).toEqual('NMT gata 3, 12345 Testhult');
-
         });
 
 
