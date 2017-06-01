@@ -93,26 +93,15 @@ describe('Verifiera LUSE', function() {
             expect(viewPage.getDynamicLabelText('KAT_1.RBK')).toBe(texts['KAT_1.RBK']);
 
             expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2016-04-21');
-            expect(viewPage.showsNoValue('undersokningAvPatienten')).toBeFalsy();
-
             expect(viewPage.getTextContent('journaluppgifter')).toEqual('2016-04-21');
-            expect(viewPage.showsNoValue('journaluppgifter')).toBeFalsy();
-
             expect(viewPage.getTextContent('anhorigsBeskrivningAvPatienten')).toEqual('2016-04-21');
-            expect(viewPage.showsNoValue('anhorigsBeskrivningAvPatienten')).toBeFalsy();
-
             expect(viewPage.getTextContent('annatGrundForMU')).toEqual('2016-04-21');
-            expect(viewPage.showsNoValue('annatGrundForMU')).toBeFalsy();
-
             expect(viewPage.getTextContent('annatGrundForMUBeskrivning')).toEqual('Annat underlag.');
 
             expect(viewPage.getTextContent('kannedomOmPatient')).toEqual('2016-04-21');
-            expect(viewPage.showsNoValue('kannedomOmPatient')).toBeFalsy();
 
             // Andra medicinska underlag
             expect(viewPage.getTextContent('underlagFinns')).toEqual('Ja');
-            expect(viewPage.showsNoValue('underlagFinns')).toBeFalsy();
-
 
             expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från habiliteringen');
             expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2016-04-07');
@@ -128,15 +117,12 @@ describe('Verifiera LUSE', function() {
 
             expect(viewPage.getDynamicLabelText('FRG_7.RBK')).toBe(texts['FRG_7.RBK']);
             expect(viewPage.getTextContent('diagnosgrund')).toBe('När ställdes diagnos.');
-            expect(viewPage.showsNoValue('diagnosgrund')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_45.RBK')).toBe(texts['FRG_45.RBK']);
             expect(viewPage.getTextContent('nyBedomningDiagnosgrund')).toBe('Ja');
-            expect(viewPage.showsNoValue('nyBedomningDiagnosgrund')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('DFR_45.2.RBK')).toBe(texts['DFR_45.2.RBK']);
             expect(viewPage.getTextContent('diagnosForNyBedomning')).toBe('Hela diagnosen kan vara trasig');
-            expect(viewPage.showsNoValue('diagnosForNyBedomning')).toBeFalsy();
         });
 
         it('Verifiera att sjukdomens bakgrund är angivet', function() {
@@ -144,7 +130,6 @@ describe('Verifiera LUSE', function() {
 
             expect(viewPage.getDynamicLabelText('FRG_5.RBK')).toBe(texts['FRG_5.RBK']);
             expect(viewPage.getTextContent('sjukdomsforlopp')).toBe('Sjukdomsförlopp.');
-            expect(viewPage.showsNoValue('sjukdomsforlopp')).toBeFalsy();
         });
 
         it('Verifiera att funktionsnedsättningar är angivet', function() {
@@ -153,37 +138,30 @@ describe('Verifiera LUSE', function() {
             expect(viewPage.getDynamicLabelText('FRG_8.RBK')).toBe(texts['FRG_8.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_8.1.RBK')).toBe(texts['DFR_8.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningIntellektuell')).toBe('Intellektuell.');
-            expect(viewPage.showsNoValue('funktionsnedsattningIntellektuell')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_9.RBK')).toBe(texts['FRG_9.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_9.1.RBK')).toBe(texts['DFR_9.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningKommunikation')).toBe('Social.');
-            expect(viewPage.showsNoValue('funktionsnedsattningKommunikation')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_10.RBK')).toBe(texts['FRG_10.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_10.1.RBK')).toBe(texts['DFR_10.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningKoncentration')).toBe('Koncentration.');
-            expect(viewPage.showsNoValue('funktionsnedsattningKoncentration')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_11.RBK')).toBe(texts['FRG_11.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_11.1.RBK')).toBe(texts['DFR_11.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningPsykisk')).toBe('Psykisk.');
-            expect(viewPage.showsNoValue('funktionsnedsattningPsykisk')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_12.RBK')).toBe(texts['FRG_12.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_12.1.RBK')).toBe(texts['DFR_12.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningSynHorselTal')).toBe('Tal.');
-            expect(viewPage.showsNoValue('funktionsnedsattningSynHorselTal')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_13.RBK')).toBe(texts['FRG_13.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_13.1.RBK')).toBe(texts['DFR_13.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningBalansKoordination')).toBe('Balans.');
-            expect(viewPage.showsNoValue('funktionsnedsattningBalansKoordination')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_14.RBK')).toBe(texts['FRG_14.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_14.1.RBK')).toBe(texts['DFR_14.1.RBK']);
             expect(viewPage.getTextContent('funktionsnedsattningAnnan')).toBe('Annan funktion.');
-            expect(viewPage.showsNoValue('funktionsnedsattningAnnan')).toBeFalsy();
         });
 
         it('Verifiera att aktivitetsbegränsningar är angivet', function() {
@@ -192,7 +170,6 @@ describe('Verifiera LUSE', function() {
             expect(viewPage.getDynamicLabelText('FRG_17.RBK')).toBe(texts['FRG_17.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_17.1.RBK')).toBe(texts['DFR_17.1.RBK']);
             expect(viewPage.getTextContent('aktivitetsbegransning')).toBe('Aktivitetsbegränsning allt.');
-            expect(viewPage.showsNoValue('aktivitetsbegransning')).toBeFalsy();
         });
 
         it('Verifiera medicinska behandlingar/åtgärder är angivet', function() {
@@ -201,22 +178,18 @@ describe('Verifiera LUSE', function() {
             expect(viewPage.getDynamicLabelText('FRG_18.RBK')).toBe(texts['FRG_18.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_18.1.RBK')).toBe(texts['DFR_18.1.RBK']);
             expect(viewPage.getTextContent('avslutadBehandling')).toBe('Åtgärder.');
-            expect(viewPage.showsNoValue('avslutadBehandling')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_19.RBK')).toBe(texts['FRG_19.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_19.1.RBK')).toBe(texts['DFR_19.1.RBK']);
             expect(viewPage.getTextContent('pagaendeBehandling')).toBe('Pågående åtgärder.');
-            expect(viewPage.showsNoValue('pagaendeBehandling')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_20.RBK')).toBe(texts['FRG_20.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_20.1.RBK')).toBe(texts['DFR_20.1.RBK']);
             expect(viewPage.getTextContent('planeradBehandling')).toBe('Planerade åtgärder.');
-            expect(viewPage.showsNoValue('planeradBehandling')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_21.RBK')).toBe(texts['FRG_21.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_21.1.RBK')).toBe(texts['DFR_21.1.RBK']);
             expect(viewPage.getTextContent('substansintag')).toBe('Substans.');
-            expect(viewPage.showsNoValue('substansintag')).toBeFalsy();
         });
 
         it('Verifiera de medicinska föutsättningarna för arbete är angivet', function() {
@@ -224,11 +197,9 @@ describe('Verifiera LUSE', function() {
 
             expect(viewPage.getDynamicLabelText('FRG_22.RBK')).toBe(texts['FRG_22.RBK']);
             expect(viewPage.getTextContent('medicinskaForutsattningarForArbete')).toBe('Förutsättningar över tid.');
-            expect(viewPage.showsNoValue('medicinskaForutsattningarForArbete')).toBeFalsy();
 
             expect(viewPage.getDynamicLabelText('FRG_23.RBK')).toBe(texts['FRG_23.RBK']);
             expect(viewPage.getTextContent('formagaTrotsBegransning')).toBe('Vad kan patienten göra.');
-            expect(viewPage.showsNoValue('formagaTrotsBegransning')).toBeFalsy();
         });
 
         it('Verifiera att Övriga upplysningar är angivet', function() {
@@ -236,7 +207,6 @@ describe('Verifiera LUSE', function() {
 
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
             expect(viewPage.getTextContent('ovrigt')).toEqual('Övrigt lång text.');
-            expect(viewPage.showsNoValue('ovrigt')).toBeFalsy();
         });
 
         it('Verifiera att Kontakt är angivet', function() {
@@ -245,10 +215,8 @@ describe('Verifiera LUSE', function() {
             expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
             expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
             expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
-            expect(viewPage.showsNoValue('kontaktMedFk')).toBeFalsy();
             expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
             expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Kontaktinfo.');
-            expect(viewPage.showsNoValue('anledningTillKontakt')).toBeFalsy();
         });
 
         it('Verifiera att skapad av är angivet', function() {
