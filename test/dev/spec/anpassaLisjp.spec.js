@@ -38,6 +38,8 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
     var intygsId = null;
 
     beforeAll(function() {
+        // Rensa alla intyg för tolvan
+        restHelper.deleteAllIntygForCitizen();
 
         // Ta bort tidigare samtycken
         restHelper.deleteConsent();

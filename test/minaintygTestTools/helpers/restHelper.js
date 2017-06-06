@@ -39,6 +39,9 @@ module.exports = {
     deleteIntyg: function(id) {
         return restUtil.deleteIntyg(id);
     },
+    deleteAllIntygForCitizen: function(userId) {
+        return restUtil.deleteAllIntyg(userId || '191212121212');
+    },
     get: function(url, loggedIn) {
         return restUtil.get(url, loggedIn);
     }
