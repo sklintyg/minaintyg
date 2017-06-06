@@ -215,7 +215,6 @@ describe('Arkivera samt återställ intyg', function() {
             inboxPage.viewCertificate(tsDiabetesIntygsId);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('ts-diabetes');
-            expect(viewPage.certificateId()).toEqual(tsDiabetesIntygsId);
         });
 
         it('Arkivera intyget', function() {
