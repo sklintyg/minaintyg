@@ -105,20 +105,27 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         it('Gå tillbaka till första sidan', function() {
             anpassaPage.clickShowSelection();
             expect(anpassaPage.isAt()).toBeTruthy();
-            expect(element(by.id('select-option-FRG_1')).isDisplayed());
+            expect(element(by.id('toggle-select-option-FRG_1.RBK')).isDisplayed());
         });
 
 
-        it('Bocka ur "grund för MU delen" och gå till summary igen', function() {
-            element(by.id('select-option-FRG_1')).click();
+        it('Bocka ur "grund för MU" och "Diagnos" och gå till summary igen', function() {
+            element(by.id('toggle-select-option-FRG_1.RBK')).click();
+            element(by.id('toggle-select-option-FRG_6.RBK')).click();
+
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
 
         });
 
-        it('Nu skall 1 vara bortvald', function() {
-            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(17);
-            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
+        it('Nu skall 2 vara bortvalda', function() {
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(16);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
+        });
+
+        it('gå till nedladdningssteget', function() {
+            anpassaPage.showDownloadBtn.click();
+            expect(element(by.id('downloadprint')).isDisplayed());
         });
 
     });
