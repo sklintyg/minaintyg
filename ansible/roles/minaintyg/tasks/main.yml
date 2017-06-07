@@ -36,6 +36,11 @@
     dest: "{{ webapps_folder }}/ROOT.war"
     remote_src: True
 
+- name: Remove minaintyg-web-{{ version }}.war from releases
+  file:
+    state: absent
+    path: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
+
 - name: Fetch configuration repo to get new branches
   command: git fetch origin
   args:
