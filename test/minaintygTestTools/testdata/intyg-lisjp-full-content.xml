@@ -147,21 +147,8 @@
         </ns3:cv>
       </delsvar>
     </svar>
-    <svar id="28">
-      <instans>5</instans>
-      <delsvar id="28.1">
-        <ns3:cv>
-          <ns3:code>PROGRAM</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
-          <ns3:displayName>Deltagande i arbetsmarknadspolitiskt program</ns3:displayName>
-        </ns3:cv>
-      </delsvar>
-    </svar>
     <svar id="29">
       <delsvar id="29.1">Ett yrke med arbetsuppgifter</delsvar>
-    </svar>
-    <svar id="30">
-      <delsvar id="30.1">Aktiviteter i programmet</delsvar>
     </svar>
     <svar id="6">
       <delsvar id="6.2">

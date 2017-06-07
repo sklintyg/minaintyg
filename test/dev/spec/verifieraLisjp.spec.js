@@ -129,7 +129,6 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera att frågor sysselsättning är ej angivet', function() {
             expect(viewPage.showsNoValue('sysselsattning')).toBeTruthy();
             expect(viewPage.showsNoValue('nuvarandeArbete')).toBeTruthy();
-            expect(viewPage.showsNoValue('arbetsmarknadspolitisktProgram')).toBeTruthy();
         });
 
         it('Verifiera diagnos', function() {
@@ -223,13 +222,9 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.getTextContent('sysselsattning-1')).toBe(texts['KV_FKMU_0002.ARBETSSOKANDE.RBK']);
             expect(viewPage.getTextContent('sysselsattning-2')).toBe(texts['KV_FKMU_0002.FORALDRALEDIG.RBK']);
             expect(viewPage.getTextContent('sysselsattning-3')).toBe(texts['KV_FKMU_0002.STUDIER.RBK']);
-            expect(viewPage.getTextContent('sysselsattning-4')).toBe(texts['KV_FKMU_0002.PROGRAM.RBK']);
 
             expect(viewPage.showsNoValue('nuvarandeArbete')).toBeFalsy();
             expect(viewPage.getTextContent('nuvarandeArbete')).toBe('Ett yrke med arbetsuppgifter');
-
-            expect(viewPage.showsNoValue('arbetsmarknadspolitisktProgram')).toBeFalsy();
-            expect(viewPage.getTextContent('arbetsmarknadspolitisktProgram')).toBe('Aktiviteter i programmet');
         });
 
         it('Verifiera korrekta diagnoser', function() {
