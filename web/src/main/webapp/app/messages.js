@@ -79,8 +79,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'archived.header': 'Arkiverade intyg',
 
-        'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till Arkiverade intyg.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
-        'archived.description.part2': '<p><LINK:diPatientDataLagen>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ.</p>',
+        'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till <i>Arkiverade intyg</i>.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
+        'archived.description.part2': '<p><LINK:diPatientDataLagen>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ intyg.</p>',
 
         'archived-cert-table.headers.issued': 'Intyg utfärdat',
         'archived-cert-table.headers.type': 'Typ av intyg',
