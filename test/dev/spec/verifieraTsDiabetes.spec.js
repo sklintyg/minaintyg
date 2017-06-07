@@ -31,7 +31,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Visa intyg ts-diabetes', function() {
+describe('Visa intyg ts-diabetes', function() {
 
     var personId = '19010101-0101';
     var intygsId = null;
@@ -67,79 +67,96 @@ xdescribe('Visa intyg ts-diabetes', function() {
             expect(inboxPage.certificateExists(intygsId)).toBeTruthy();
             inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('ts-diabetes');
-            expect(viewPage.certificateId()).toEqual(intygsId);
-        });
-
-        it('Verifiera patient och utfärdare', function() {
-            expect(viewPage.getTextContent('patient-name')).toEqual('Herr Dundersjuk');
-            expect(viewPage.getTextContent('patient-crn')).toEqual(personId);
-            expect(viewPage.getTextContent('careunit')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('caregiver')).toEqual('WebCert Vårdgivare 1');
         });
 
         it('Verifiera intyg avser och identitet styrkt genom', function() {
-            expect(viewPage.getTextContent('intygAvser')).toEqual('AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI');
-            expect(viewPage.getTextContent('identitet')).toEqual('Pass');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-0')).toEqual('AM');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-1')).toEqual('A1');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-2')).toEqual('A2');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-3')).toEqual('A');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-4')).toEqual('B');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-5')).toEqual('BE');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-6')).toEqual('Traktor');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-7')).toEqual('C1');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-8')).toEqual('C1E');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-9')).toEqual('C');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-10')).toEqual('CE');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-11')).toEqual('D1');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-12')).toEqual('D1E');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-13')).toEqual('D');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-14')).toEqual('DE');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-15')).toEqual('Taxi');
+            expect(viewPage.getTextContent('vardkontakt-idkontroll')).toEqual('Pass');
         });
 
         it('Verifiera "1. Allmänt"', function() {
-            expect(viewPage.getTextContent('observationsperiod')).toEqual('2012');
-            expect(viewPage.getTextContent('diabetestyp')).toEqual('Typ 2');
-            expect(viewPage.getTextContent('endastKost')).toEqual('Ja');
-            expect(viewPage.getTextContent('tabletter')).toEqual('Ja');
-            expect(viewPage.getTextContent('insulin')).toEqual('Ja');
-            expect(viewPage.getTextContent('insulinBehandlingsperiod')).toEqual('2012');
-            expect(viewPage.getTextContent('annanBehandlingBeskrivning')).toEqual('Hypnos');
+            expect(viewPage.getTextContent('diabetes-observationsperiod')).toEqual('2012');
+            expect(viewPage.getTextContent('diabetes-diabetestyp')).toEqual('Typ 2');
+            expect(viewPage.getTextContent('diabetes-endastKost')).toEqual('Endast kost');
+            expect(viewPage.getTextContent('diabetes-tabletter')).toEqual('Tabletter');
+            expect(viewPage.getTextContent('diabetes-insulin')).toEqual('Insulin');
+            expect(viewPage.getTextContent('diabetes-insulinBehandlingsperiod')).toEqual('2012');
+            expect(viewPage.getTextContent('diabetes-annanBehandlingBeskrivning')).toEqual('Hypnos');
         });
 
         it('Verifiera "2. Hypoglykemier (lågt blodsocker)"', function() {
-            expect(viewPage.getTextContent('kunskapOmAtgarder')).toEqual('Ja');
-            expect(viewPage.getTextContent('teckenNedsattHjarnfunktion')).toEqual('Ja');
-            expect(viewPage.getTextContent('saknarFormagaKannaVarningstecken')).toEqual('Ja');
-            expect(viewPage.getTextContent('allvarligForekomst')).toEqual('Ja');
-            expect(viewPage.getTextContent('allvarligForekomstBeskrivning')).toEqual('Beskrivning');
-            expect(viewPage.getTextContent('allvarligForekomstTrafiken')).toEqual('Ja');
-            expect(viewPage.getTextContent('allvarligForekomstTrafikBeskrivning')).toEqual('Beskrivning');
-            expect(viewPage.getTextContent('egenkontrollBlodsocker')).toEqual('Ja');
-            expect(viewPage.getTextContent('allvarligForekomstVakenTid')).toEqual('Ja');
-            expect(viewPage.getTextContent('allvarligForekomstVakenTidObservationstid')).toEqual('2012-12-12');
+            expect(viewPage.getTextContent('hypoglykemier-kunskapOmAtgarder')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-teckenNedsattHjarnfunktion')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-saknarFormagaKannaVarningstecken')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomst')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomstBeskrivning')).toEqual('Beskrivning');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomstTrafiken')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomstTrafikBeskrivning')).toEqual('Beskrivning');
+            expect(viewPage.getTextContent('hypoglykemier-egenkontrollBlodsocker')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomstVakenTid')).toEqual('Ja');
+            expect(viewPage.getTextContent('hypoglykemier-allvarligForekomstVakenTidObservationstid')).toEqual('2012-12-12');
         });
 
         it('Verifiera "3. Synintyg"', function() {
-            expect(viewPage.getTextContent('separatOgonlakarintyg')).toEqual('Nej');
-            expect(viewPage.getTextContent('synfaltsprovningUtanAnmarkning')).toEqual('Ja');
-            expect(viewPage.getTextContent('hogerutanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('hogermedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('vansterutanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('vanstermedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('binokulartutanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('binokulartmedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('diplopi')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-separatOgonlakarintyg')).toEqual('Nej');
+            expect(viewPage.getTextContent('syn-synfaltsprovningUtanAnmarkning')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-row0-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row0-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row0-col3')).toEqual('Nej');
+            expect(viewPage.getTextContent('syn-row1-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row1-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row1-col3')).toEqual('Nej');
+            expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row2-col3')).toEqual('Nej');
+            expect(viewPage.getTextContent('syn-diplopi')).toEqual('Ja');
         });
 
         it('Verifiera "4. Bedömning"', function() {
-            expect(viewPage.getTextContent('lamplighetInnehaBehorighet')).toEqual('Ej ifyllt');
-            expect(viewPage.getTextContent('bedomning')).toEqual('AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI');
-            expect(viewPage.fieldNotShown('bedomningKanInteTaStallning')).toBeTruthy();
-            expect(viewPage.getTextContent('lakareSpecialKompetens')).toEqual('Kronologisk bastuberedning');
+            expect(viewPage.getTextContent('bedomning-lamplighetInnehaBehorighet')).toEqual('Nej');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-0')).toEqual('AM');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-1')).toEqual('A1');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-2')).toEqual('A2');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-3')).toEqual('A');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-4')).toEqual('B');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-5')).toEqual('BE');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-6')).toEqual('Traktor');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-7')).toEqual('C1');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-8')).toEqual('C1E');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-9')).toEqual('C');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-10')).toEqual('CE');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-11')).toEqual('D1');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-12')).toEqual('D1E');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-13')).toEqual('D');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-14')).toEqual('DE');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-15')).toEqual('Taxi');
+            expect(viewPage.getTextContent('bedomning-lakareSpecialKompetens')).toEqual('Kronologisk bastuberedning');
         });
 
         it('Verifiera "Övriga kommentarer och upplysningar"', function() {
             expect(viewPage.getTextContent('kommentar')).toEqual('Kommentarer av det viktiga slaget');
         });
 
-        it('Verifiera signeringsdatum', function() {
-            expect(viewPage.getTextContent('signeringsdatum')).toEqual('26 maj 2016');
-        });
-
         it('Verifiera skapad av', function() {
-            expect(viewPage.getTextContent('physician-name-id')).toEqual('Jan Nilsson');
-            expect(viewPage.getTextContent('careunit-name-id')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('careunit-postal_address')).toEqual('Enhetsvägen 12');
-            expect(viewPage.getTextContent('careunit-postal_code')).toEqual('54321');
-            expect(viewPage.getTextContent('careunit-postal_city')).toEqual('Tumba');
-            expect(viewPage.getTextContent('careunit-postal_phone')).toEqual('08-1337');
+            expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
+            expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 08-1337');
+            expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
+            expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Enhetsvägen 12, 54321 Tumba');
         });
     });
 
