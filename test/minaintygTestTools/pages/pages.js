@@ -37,6 +37,7 @@ var sendPage = require('./send.page.js');
 var viewPage = require('./view.page.js');
 var welcomePage = require('./welcome.page.js');
 var anpassaLisjpPage = require('./anpassa.lisjp.page.js');
+var anpassaFk7263Page = require('./anpassa.fk7263.page.js');
 
 module.exports = {
     'aboutPage': aboutPage,
@@ -52,5 +53,6 @@ module.exports = {
     'sendPage': sendPage,
     'viewPage': viewPage,
     'welcomePage': welcomePage,
-    'anpassaLisjpPage': anpassaLisjpPage
+    'anpassaLisjpPage': anpassaLisjpPage,
+    'anpassaFk7263Page': anpassaFk7263Page
 };
