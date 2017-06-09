@@ -33,40 +33,38 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Verifiera LUAE_FS intyg', function() {
+fdescribe('Verifiera LUAE_FS', function() {
 
-    var texts = null;
+    var personId = '191212121212';
     var intygsId = null;
+    var texts = null;
 
     beforeAll(function() {
         browser.ignoreSynchronization = false;
 
-        //Load and cache expected dynamictext-values for this intygstype.
+        // Load and cache expected dynamictext-values for this intygstype.
         textHelper.readTextsFromFkTextFile('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
             texts = textResources;
         }, function(err) {
             fail('Error during text lookup ' + err);
         });
 
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
+        // Just set the consent, don't need to test it in every protractor test
+        restHelper.setConsent(personId);
 
+        // Skapa intygen
         var intyg = genericTestdataBuilder.getLuaefs();
         intygsId = intyg.id;
+        console.log(intygsId);
         restHelper.createIntyg(intyg);
     });
 
     afterAll(function() {
-        restHelper.deleteConsent();
+        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 
     describe('Logga in', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
         // Logga in
         it('Logga in', function() {
             welcomePage.get();
@@ -75,127 +73,84 @@ xdescribe('Verifiera LUAE_FS intyg', function() {
             specHelper.waitForAngularTestability();
         });
 
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickGiveConsent();
-        });
-
-    });
-
-    describe('Verifiera intyg', function() {
-
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
             expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
-        it('Intyget ska finnas i listan', function() {
+        it('Intyg ska finnas i listan', function() {
             expect(element(by.id('certificate-' + intygsId)).isPresent());
             expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
         });
+    });
+
+    describe('Verifiera intyg', function() {
 
         it('Visa intyg', function() {
             inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
         });
 
-        it('Verifiera intygshuvud', function() {
-            expect(element(by.id('patient-name')).getText()).toBe('Tolvan Tolvansson');
-            expect(element(by.id('patient-crn')).getText()).toBe('19121212-1212');
-            expect(element(by.id('careunit')).getText()).toBe('WebCert Enhet 1');
-            expect(element(by.id('caregiver')).getText()).toBe('WebCert Vårdgivare 1');
-        });
-
-        it('Verifiera grund för medicinskt underlag', function() {
+        it('Verifiera att frågor under grund för medicinskt underlag är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_1.RBK')).toBe(texts['KAT_1.RBK']);
-            expect(viewPage.getDynamicLabelText('FRG_1.RBK')).toBe(texts['FRG_1.RBK']);
-            expect(viewPage.getDynamicLabelText('KV_FKMU_0001.UNDERSOKNING.RBK')).toBe(texts['KV_FKMU_0001.UNDERSOKNING.RBK']);
-            expect(viewPage.getDynamicLabelText('KV_FKMU_0001.JOURNALUPPGIFTER.RBK')).toBe(texts['KV_FKMU_0001.JOURNALUPPGIFTER.RBK']);
-            expect(viewPage.getDynamicLabelText('KV_FKMU_0001.ANHORIG.RBK')).toBe(texts['KV_FKMU_0001.ANHORIG.RBK']);
-            expect(viewPage.getDynamicLabelText('KV_FKMU_0001.ANNAT.RBK')).toBe(texts['KV_FKMU_0001.ANNAT.RBK']);
-            expect(viewPage.getDynamicLabelText('FRG_2.RBK')).toBe(texts['FRG_2.RBK']);
-            expect(viewPage.getDynamicLabelText('FRG_3.RBK')).toBe(texts['FRG_3.RBK']);
 
-            // Utlåtande baserat på
-            expect(element(by.id('undersokningAvPatienten')).element(by.binding('cert.undersokningAvPatienten')).getText()).toBe('| 26 maj 2016');
-            expect(element(by.id('journaluppgifter')).element(by.binding('cert.journaluppgifter')).getText()).toBe('| 26 maj 2016');
-            expect(element(by.id('anhorigsBeskrivningAvPatienten')).element(by.binding('cert.anhorigsBeskrivningAvPatienten')).getText()).toBe('| 26 maj 2016');
-            expect(element(by.id('annatGrundForMU')).element(by.binding('cert.annatGrundForMU')).getText()).toBe('| 26 maj 2016');
-            expect(element(by.binding('cert.annatGrundForMUBeskrivning')).getText()).toBe('Uppgifter från habiliteringscentrum.');
+            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2016-05-26');
+            expect(viewPage.getTextContent('journaluppgifter')).toEqual('2016-05-26');
+            expect(viewPage.getTextContent('anhorigsBeskrivningAvPatienten')).toEqual('2016-05-26');
+            expect(viewPage.getTextContent('annatGrundForMU')).toEqual('2016-05-26');
+            expect(viewPage.getTextContent('annatGrundForMUBeskrivning')).toEqual('Uppgifter från habiliteringscentrum.');
 
-            // Känt patienten sedan
-            expect(element(by.binding('cert.kannedomOmPatient')).getText()).toBe('20 maj 2016');
+            expect(viewPage.getTextContent('kannedomOmPatient')).toEqual('2016-05-20');
 
             // Andra medicinska underlag
-            expect(element(by.id('underlagFinns-yes')).getText()).toBe('Ja');
+            expect(viewPage.getTextContent('underlagFinns')).toEqual('Ja');
 
-            expect(element(by.id('underlag_0_typ')).getText()).toBe('Underlag från psykolog');
-            expect(element(by.id('underlag_0_datum')).getText()).toBe('3 september 2015');
-            expect(element(by.id('underlag_0_hamtasFran')).getText()).toBe('Skickas med posten');
-            expect(element(by.id('underlag_1_typ')).getText()).toBe('Underlag från habiliteringen');
-            expect(element(by.id('underlag_1_datum')).getText()).toBe('4 november 2015');
-            expect(element(by.id('underlag_1_hamtasFran')).getText()).toBe('Arkivet');
+            expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från psykolog');
+            expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2015-09-03');
+            expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('Skickas med posten');
         });
 
-        it('Verifiera diagnos', function() {
+        it('Verifiera att korrekta diagnoser är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
-            expect(viewPage.getDynamicLabelText('FRG_3.RBK')).toBe(texts['FRG_3.RBK']);
-            expect(viewPage.getDynamicLabelText('DFR_6.2.RBK')).toBe(texts['DFR_6.2.RBK']);
 
-            expect(element(by.id('diagnosKod0')).getText()).toBe('S47');
-            expect(element(by.id('diagnosBeskrivning0')).getText()).toBe('Klämskada skuldra');
-            expect(element(by.id('diagnosKod1')).getText()).toBe('J22');
-            expect(element(by.id('diagnosBeskrivning1')).getText()).toBe('Icke specificerad akut infektion i nedre luftvägarna');
+            expect(viewPage.getDynamicLabelText('FRG_6.RBK')).toBe(texts['FRG_6.RBK']);
+            expect(viewPage.getTextContent('diagnoser-row0-col0')).toBe('S47');
+            expect(viewPage.getTextContent('diagnoser-row0-col1'))
+                .toBe('Klämskada skuldra');
+
         });
 
-        it('Verifiera funktionsnedsättning', function() {
+        it('Verifiera att funktionsnedsättningar är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
+
             expect(viewPage.getDynamicLabelText('FRG_15.RBK')).toBe(texts['FRG_15.RBK']);
+            expect(viewPage.getTextContent('funktionsnedsattningDebut')).toBe('Skoldansen');
+
             expect(viewPage.getDynamicLabelText('FRG_16.RBK')).toBe(texts['FRG_16.RBK']);
-
-            expect(element(by.binding('cert.funktionsnedsattningDebut')).getText()).toBe('Skoldansen');
-            expect(element(by.binding('cert.funktionsnedsattningPaverkan')).getText()).toBe('Haltar när han dansar');
+            expect(viewPage.getTextContent('funktionsnedsattningPaverkan')).toBe('Haltar när han dansar');
         });
 
-        it('Verifiera övrigt', function() {
+        it('Verifiera att Övriga upplysningar är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_5.RBK')).toBe(texts['KAT_5.RBK']);
+
             expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
-
-            expect(element(by.binding('cert.ovrigt')).getText()).toBe('Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar');
+            expect(viewPage.getTextContent('ovrigt')).toEqual('Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar');
         });
 
-        it('Verifiera kontakt', function() {
+        it('Verifiera att Kontakt är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
-            expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
-            expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
-
-            expect(element(by.id('kontaktFk-yes')).getText()).toBe('Ja');
-            expect(element(by.binding('cert.anledningTillKontakt')).getText()).toBe('Vill stämma av ersättningen');
-        });
-/* // the final text files does not contain tilläggsfrågor so questions aren't generated so tests cannot run
-        it('Verifiera tilläggsfrågor', function() {
-            expect(viewPage.getDynamicLabelText('KAT_9999.RBK')).toBe(texts['KAT_9999.RBK']);
-            // These test should work when the internal transport format changes
-            //expect(viewPage.getDynamicLabelText('DFR_9001.1.RBK')).toBe(texts['DFR_9001.1.RBK']);
-            //expect(viewPage.getDynamicLabelText('DFR_9002.1.RBK')).toBe(texts['DFR_9002.1.RBK']);
-
-            expect(element(by.id('tillaggsfraga_0')).getText()).toBe('Tämligen påverkad');
-            expect(element(by.id('tillaggsfraga_1')).getText()).toBe('Minst 3 fot');
-        });
-*/
-        it('Verifiera intygsfot', function() {
-            expect(element(by.binding('cert.grundData.signeringsdatum')).getText()).toBe('2016-05-26');
-            expect(element(by.binding('cert.grundData.skapadAv.fullstandigtNamn')).getText()).toBe('Jan Nilsson');
-            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.enhetsnamn')).getText()).toBe('WebCert Enhet 1');
-            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.postadress')).getText()).toBe('Enhetsg. 1');
-            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.postnummer')).getText()).toBe('100 10 Stadby');
-            expect(element(by.binding('cert.grundData.skapadAv.vardenhet.telefonnummer')).getText()).toBe('0812341234');
+            expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
+            expect(viewPage.getTextContent('kontaktFk')).toEqual('Nej');
         });
 
-    });
+        it('Verifiera att skapad av är angivet', function() {
+            expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
+            expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 0812341234');
+            expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
+            expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Enhetsg. 1, 100 10 Stadby');
 
-    afterAll(function() {
-        restHelper.deleteIntyg(intygsId);
+        });
+
     });
 
 });
