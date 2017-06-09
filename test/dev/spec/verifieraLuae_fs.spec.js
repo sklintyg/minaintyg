@@ -33,7 +33,7 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-fdescribe('Verifiera LUAE_FS', function() {
+describe('Verifiera LUAE_FS', function() {
 
     var personId = '191212121212';
     var intygsId = null;
