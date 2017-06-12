@@ -125,6 +125,37 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
             expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
         });
 
+        it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isPresent()).toBeFalsy();
+        });
+
+
+        it('Gå tillbaka till första sidan igen', function() {
+            anpassaPage.clickShowSelection();
+            expect(anpassaPage.isAt()).toBeTruthy();
+        });
+
+        it('Bocka ur "aktivitetsbegransning" och en confirm-dialog skall visas', function() {
+            element(by.id('toggle-select-option-FRG_17.RBK')).click();
+            expect(element(by.id('confirm-field-deselection-dialog')).isDisplayed());
+            expect(element(by.id('ok-to-deselect-button')).isDisplayed());
+        });
+
+        it('Godkänn bortval av fältet och gå till summary', function() {
+            expect(element(by.id('ok-to-deselect-button')).click());
+            anpassaPage.clickShowSummary();
+            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+        });
+
+        it('Nu skall 3 vara bortvalda', function() {
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
+        });
+
+        it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isDisplayed());
+        });
+
         it('gå till nedladdningssteget', function() {
             anpassaPage.showDownloadBtn.click();
             expect(element(by.id('downloadprint')).isDisplayed());
