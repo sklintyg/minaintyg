@@ -124,6 +124,10 @@ describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
             expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
         });
 
+        it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isPresent()).toBeFalsy();
+        });
+
         it('Gå tillbaka till första sidan igen', function() {
             anpassaPage.clickShowSelection();
             expect(anpassaPage.isAt()).toBeTruthy();
@@ -144,6 +148,10 @@ describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
         it('Nu skall 3 vara bortvalda', function() {
             expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(14);
             expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
+        });
+
+        it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isDisplayed());
         });
 
         it('gå till nedladdningssteget', function() {
