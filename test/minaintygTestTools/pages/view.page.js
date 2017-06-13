@@ -41,8 +41,8 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     backToList: function() {
         element(by.className('backlink')).click();
     },
-    certificateId: function() {
-        return element(by.id('certId')).getAttribute('title');
+    isAtCert: function(certId) {
+      return element(by.id('mi-compact-certificate-header-' + certId)).isDisplayed();
     },
     sendCertificate: function() {
         element(by.id('sendCertificateBtn')).click();

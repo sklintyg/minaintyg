@@ -67,7 +67,7 @@ xdescribe('Visa intyg Fk7263', function() {
             inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(intygsId);
+            expect(viewPage.isAtCert(intygsId)).toBeTruthy();
         });
 
         it('Verifiera patient och utfärdare', function() {

@@ -135,7 +135,7 @@ describe('Arkivera samt återställ intyg', function() {
             inboxPage.viewCertificate(fk7263IntygsId);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
+            expect(viewPage.isAtCert(fk7263IntygsId)).toBeTruthy();
         });
 
         it('Arkivera intyget', function() {
