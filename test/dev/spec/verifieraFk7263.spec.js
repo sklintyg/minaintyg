@@ -30,25 +30,30 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Visa intyg Fk7263', function() {
+fdescribe('Visa intyg Fk7263', function() {
 
     var personId = '19010101-0101';
-    var intygsId = null;
+    var intygsId1 = null;
+    var intygsId2 = null;
 
     beforeAll(function() {
         restHelper.setConsent(personId);
 
         var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
-        intygsId = fk7263Intyg.id;
+        var fk7263Intyg2 = genericTestDataBuilder.getFk7263Smittskydd(personId);
+        intygsId1 = fk7263Intyg.id;
+        intygsId2 = fk7263Intyg2.id;
         restHelper.createIntyg(fk7263Intyg);
+        restHelper.createIntyg(fk7263Intyg2);
     });
 
     afterAll(function() {
         restHelper.deleteConsent(personId);
-        restHelper.deleteIntyg(intygsId);
+        restHelper.deleteIntyg(intygsId1);
+        restHelper.deleteIntyg(intygsId2);
     });
 
-    describe('Verifiera Fk7263', function() {
+    describe('Verifiera Fk7263 smittskydd', function() {
 
         beforeEach(function() {
             browser.ignoreSynchronization = false;
@@ -63,23 +68,115 @@ xdescribe('Visa intyg Fk7263', function() {
 
         it('Visa ett intyg och verifiera att det är rätt intyg och av rätt typ', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(inboxPage.certificateExists(intygsId)).toBeTruthy();
-            inboxPage.viewCertificate(intygsId);
+            expect(inboxPage.certificateExists(intygsId2)).toBeTruthy();
+            inboxPage.viewCertificate(intygsId2);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.isAtCert(intygsId)).toBeTruthy();
-        });
-
-        it('Verifiera patient och utfärdare', function() {
-            expect(viewPage.getTextContent('patient-name')).toEqual('Test Testorsson');
-            expect(viewPage.getTextContent('patient-crn')).toEqual(personId);
-            expect(viewPage.getTextContent('careunit')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('caregiver')).toEqual('WebCert Vårdgivare 1');
+            expect(viewPage.isAtCert(intygsId2)).toBeTruthy();
         });
 
         it('Verifiera fält 1: Smittskydd', function() {
-            expect(viewPage.fieldNotShown('smittskydd-yes')).toBeTruthy();
-            expect(viewPage.getTextContent('smittskydd-no')).toEqual('Nej');
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ja');
+        });
+
+        it('Verifiera fält 2: Diagnoskod och -beskrivning', function() {
+            expect(viewPage.getTextContent('diagnosKod')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('diagnosBeskrivning')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 3: Aktuell sjukdomsförlopp', function() {
+            expect(viewPage.getTextContent('sjukdomsforlopp')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 4: Funktionsnedsättning', function() {
+            expect(viewPage.getTextContent('funktionsnedsattning')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 4b: Intyg baseras på', function() {
+            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('telefonkontaktMedPatienten')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('journaluppgifter')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('annanReferens')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 5: Aktivitetsbegränsning', function() {
+            expect(viewPage.getTextContent('aktivitetsbegransning')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 6a: Rekommendationer', function() {
+            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Nej');
+            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Nej');
+            expect(viewPage.getTextContent('rekommendationOvrigt')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 6b: Planerad eller pågående behandling/åtgärd', function() {
+            expect(viewPage.getTextContent('atgardInomSjukvarden')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('annanAtgard')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 7: Arbetsinriktad rehabilitering', function() {
+            expect(viewPage.getTextContent('rehabilitering')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 8a: Arbetsförmåga bedömning', function() {
+            expect(viewPage.getTextContent('nuvarandeArbetsuppgifter')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 8b: Arbetsförmåga nedsatthet', function() {
+            expect(viewPage.getTextContent('nedsattMed50-row-col1')).toEqual('2017-06-14');
+            expect(viewPage.getTextContent('nedsattMed50-row-col2')).toEqual('2017-06-20');
+        });
+
+        it('Verifiera fält 9: Arbetsförmåga nedsatthet längre tid', function() {
+            expect(viewPage.getTextContent('arbetsformagaPrognos')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 10: Prognos', function() {
+            expect(viewPage.getTextContent('prognosBedomning')).toEqual('Ja');
+        });
+
+        it('Verifiera fält 11: Resor till och från arbetet', function() {
+            expect(viewPage.getTextContent('resaTillArbetet')).toEqual('Nej');
+        });
+
+        it('Verifiera fält 12: Kontakt önskas med FK', function() {
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Nej');
+        });
+
+        it('Verifiera fält 13: Övriga upplysningar', function() {
+            expect(viewPage.getTextContent('kommentar')).toEqual('Ej angivet');
+        });
+
+        it('Verifiera fält 17: Förskrivarkod och arbetsplatskod', function() {
+            expect(viewPage.getTextContent('forskrivarkodOchArbetsplatskod')).toEqual('1234567 - 123456789011');
+        });
+
+    });
+
+    describe('Verifiera Fk7263 (ej smittskydd)', function() {
+
+        beforeEach(function() {
+            browser.ignoreSynchronization = false;
+        });
+
+        it('Logga in', function() {
+            welcomePage.get();
+            specHelper.waitForAngularTestability();
+            welcomePage.login(personId, false);
+            specHelper.waitForAngularTestability();
+        });
+
+        it('Visa ett intyg och verifiera att det är rätt intyg och av rätt typ', function() {
+            expect(inboxPage.isAt()).toBeTruthy();
+            expect(inboxPage.certificateExists(intygsId1)).toBeTruthy();
+            inboxPage.viewCertificate(intygsId1);
+            expect(viewPage.isAt()).toBeTruthy();
+            expect(browser.getCurrentUrl()).toContain('fk7263');
+            expect(viewPage.isAtCert(intygsId1)).toBeTruthy();
+        });
+
+        it('Verifiera fält 1: Smittskydd', function() {
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Nej');
         });
 
         it('Verifiera fält 2: Diagnoskod och -beskrivning', function() {
@@ -96,10 +193,10 @@ xdescribe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 4b: Intyg baseras på', function() {
-            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('Min undersökning av patienten den 1 april 2013');
-            expect(viewPage.getTextContent('telefonkontaktMedPatienten')).toEqual('Min telefonkontakt med patienten den 1 april 2013');
-            expect(viewPage.getTextContent('journaluppgifter')).toEqual('Journaluppgifter, den 1 april 2013');
-            expect(viewPage.fieldNotShown('annanReferens')).toBeTruthy();
+            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2013-04-01');
+            expect(viewPage.getTextContent('telefonkontaktMedPatienten')).toEqual('2013-04-01');
+            expect(viewPage.getTextContent('journaluppgifter')).toEqual('2013-04-01');
+            expect(viewPage.getTextContent('annanReferens')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 5: Aktivitetsbegränsning', function() {
@@ -107,33 +204,38 @@ xdescribe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 6a: Rekommendationer', function() {
-            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Kontakt med Arbetsförmedlingen');
-            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Kontakt med företagshälsovården');
+            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Ja');
+            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Ja');
             expect(viewPage.getTextContent('rekommendationOvrigt')).toEqual('När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik');
         });
 
         it('Verifiera fält 6b: Planerad eller pågående behandling/åtgärd', function() {
-            expect(viewPage.getTextContent('atgardSjukvard')).toEqual('Utreds om operation är nödvändig');
-            expect(viewPage.getTextContent('atgardAnnan')).toEqual('Patienten ansvarar för att armen hålls i stillhet');
+            expect(viewPage.getTextContent('atgardInomSjukvarden')).toEqual('Utreds om operation är nödvändig');
+            expect(viewPage.getTextContent('annanAtgard')).toEqual('Patienten ansvarar för att armen hålls i stillhet');
         });
 
         it('Verifiera fält 7: Arbetsinriktad rehabilitering', function() {
-            expect(viewPage.fieldNotShown('rehabilitering-yes')).toBeTruthy();
-            expect(viewPage.fieldNotShown('rehabilitering-no')).toBeTruthy();
-            expect(viewPage.getTextContent('rehabilitering-unjudgeable')).toEqual('Går inte att bedöma');
+            expect(viewPage.getTextContent('rehabilitering')).toEqual('Går inte att bedöma');
         });
 
         it('Verifiera fält 8a: Arbetsförmåga bedömning', function() {
             expect(viewPage.getTextContent('nuvarandeArbetsuppgifter')).toEqual('Dirigent. Dirigerar en större orkester på deltid');
-            expect(viewPage.getTextContent('arbetslos')).toEqual('Arbetslöshet - att utföra sådant arbete som är normalt förekommande på arbetsmarknaden');
-            expect(viewPage.getTextContent('foraldraledig')).toEqual('Föräldraledighet med föräldrapenning - att vårda sitt barn');
+            expect(viewPage.getTextContent('arbetsloshet')).toEqual('Arbetslöshet - att utföra sådant arbete som är normalt förekommande på arbetsmarknaden');
+            expect(viewPage.getTextContent('foraldrarledighet')).toEqual('Föräldraledighet med föräldrapenning - att vårda sitt barn');
         });
 
         it('Verifiera fält 8b: Arbetsförmåga nedsatthet', function() {
-            expect(viewPage.getTextContent('nedsattMed25')).toEqual('Nedsatt med 1/4\nFrån och med 1 april 2011 – längst till och med 31 maj 2011');
-            expect(viewPage.getTextContent('nedsattMed50')).toEqual('Nedsatt med hälften\nFrån och med 7 mars 2011 – längst till och med 31 mars 2011');
-            expect(viewPage.getTextContent('nedsattMed75')).toEqual('Nedsatt med 3/4\nFrån och med 14 februari 2011 – längst till och med 6 mars 2011');
-            expect(viewPage.getTextContent('nedsattMed100')).toEqual('Helt nedsatt\nFrån och med 26 januari 2011 – längst till och med 13 februari 2011');
+            expect(viewPage.getTextContent('nedsattMed25-row-col1')).toEqual('2011-04-01');
+            expect(viewPage.getTextContent('nedsattMed25-row-col2')).toEqual('2011-05-31');
+
+            expect(viewPage.getTextContent('nedsattMed50-row-col1')).toEqual('2011-03-07');
+            expect(viewPage.getTextContent('nedsattMed50-row-col2')).toEqual('2011-03-31');
+
+            expect(viewPage.getTextContent('nedsattMed75-row-col1')).toEqual('2011-02-14');
+            expect(viewPage.getTextContent('nedsattMed75-row-col2')).toEqual('2011-03-06');
+
+            expect(viewPage.getTextContent('nedsattMed100-row-col1')).toEqual('2011-01-26');
+            expect(viewPage.getTextContent('nedsattMed100-row-col2')).toEqual('2011-02-13');
         });
 
         it('Verifiera fält 9: Arbetsförmåga nedsatthet längre tid', function() {
@@ -141,40 +243,30 @@ xdescribe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 10: Prognos', function() {
-            expect(viewPage.fieldNotShown('arbetsformagaPrognos-yes')).toBeTruthy();
-            expect(viewPage.fieldNotShown('arbetsformagaPrognos-partialyes')).toBeTruthy();
-            expect(viewPage.fieldNotShown('arbetsformagaPrognos-no')).toBeTruthy();
-            expect(viewPage.getTextContent('arbetsformagaPrognos-unjudgeable')).toEqual('Går inte att bedöma');
+            expect(viewPage.getTextContent('prognosBedomning')).toEqual('Går inte att bedöma');
         });
 
         it('Verifiera fält 11: Resor till och från arbetet', function() {
-            expect(viewPage.fieldNotShown('resaTillArbetet-yes')).toBeTruthy();
-            expect(viewPage.getTextContent('resaTillArbetet-no')).toEqual('Nej');
+            expect(viewPage.getTextContent('resaTillArbetet')).toEqual('Nej');
         });
 
         it('Verifiera fält 12: Kontakt önskas med FK', function() {
-            expect(viewPage.getTextContent('kontaktFk-yes')).toEqual('Ja');
-            expect(viewPage.fieldNotShown('kontaktFk-no')).toBeTruthy();
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
         });
 
         it('Verifiera fält 13: Övriga upplysningar', function() {
             expect(viewPage.getTextContent('kommentar')).toEqual('Prognosen att återgå till arbete är svår att bedömma förrän utredningen är genomförd.');
         });
 
-        it('Verifiera fält 14: Signeringsdatum', function() {
-            expect(viewPage.getTextContent('signeringsdatum')).toEqual('26 maj 2016');
-        });
-
-        it('Verifiera fält 15: Skapad av', function() {
-            expect(viewPage.getTextContent('vardperson-namn')).toEqual('Jan Nilsson');
-            expect(viewPage.getTextContent('vardperson-enhet')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('vardperson-postadress')).toEqual('Lasarettsvägen 13');
-            expect(viewPage.getTextContent('vardperson-postnummer-ort')).toEqual('85150 Sundsvall');
-            expect(viewPage.getTextContent('vardperson-telefonnummer')).toEqual('060-1818000');
-        });
-
         it('Verifiera fält 17: Förskrivarkod och arbetsplatskod', function() {
             expect(viewPage.getTextContent('forskrivarkodOchArbetsplatskod')).toEqual('1234567 - 123456789011');
+        });
+
+        it('Verifiera Skapad av', function() {
+            expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
+            expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
+            expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Lasarettsvägen 13, 85150 Sundsvall');
+            expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 060-1818000');
         });
 
     });

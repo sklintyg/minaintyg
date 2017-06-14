@@ -15,6 +15,10 @@ module.exports = {
         return this.getIntyg('fk7263', 'fk7263', userId, signDate);
     },
 
+    getFk7263Smittskydd: function(userId, signDate) {
+        return this.getIntyg('fk7263', 'fk7263-smittskydd', userId, signDate);
+    },
+
     getTsBas: function(userId, signDate) {
         return this.getIntyg('ts-bas','ts-bas', userId, signDate);
     },
