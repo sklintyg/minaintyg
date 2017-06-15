@@ -118,5 +118,11 @@
     "url": "https://get.adobe.com/reader/?loc=se",
     "text": "Adobe Reader",
     "target": "_blank"
+  },
+  {
+    "key": "forsakringskassan-sjuk",
+    "url": "http://www.forsakringskassan.se/sjuk",
+    "text": "www.forsakringskassan.se/sjuk",
+    "target": "_blank"
   }
 ]
