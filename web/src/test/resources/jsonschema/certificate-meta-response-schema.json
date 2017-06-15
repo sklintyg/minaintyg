@@ -24,9 +24,6 @@
     "archived": {
       "type": "boolean"
     },
-    "cancelled": {
-      "type": "boolean"
-    },
     "statuses": {
       "type": "array",
       "items": {}
@@ -40,7 +37,6 @@
     "careunitName",
     "sentDate",
     "archived",
-    "cancelled",
     "statuses"
   ]
 }

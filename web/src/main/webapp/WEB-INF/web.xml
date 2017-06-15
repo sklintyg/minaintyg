@@ -83,6 +83,16 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <servlet>
+    <servlet-name>appconfig</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/appconfig-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
   <!-- Mina intyg testability services -->
   <servlet>
     <servlet-name>testability</servlet-name>
@@ -104,6 +114,17 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <!-- Mina Intyg integration services -->
+  <servlet>
+    <servlet-name>services</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/services-cxf-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>web</servlet-name>
     <url-pattern>/web/*</url-pattern>
@@ -117,12 +138,20 @@
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>appconfig</servlet-name>
+    <url-pattern>/appconfig/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>testability</servlet-name>
     <url-pattern>/testability/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>monitoring</servlet-name>
     <url-pattern>/monitoring/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>services</servlet-name>
+    <url-pattern>/services/*</url-pattern>
   </servlet-mapping>
 
   <filter>
@@ -147,7 +176,7 @@
     <location>/error.jsp?reason=error</location>
   </error-page>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>boot-app.jsp</welcome-file>
   </welcome-file-list>
 
 </web-app>

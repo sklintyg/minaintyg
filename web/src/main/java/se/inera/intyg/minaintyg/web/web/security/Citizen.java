@@ -18,9 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.web.security;
 
-import java.io.Serializable;
-
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
 
 /**
  * The details of a citizen.
@@ -50,5 +50,15 @@ public interface Citizen extends UserDetails, Serializable {
      * @return {@link LoginMethodEnum} Login method used
      */
     LoginMethodEnum getLoginMethod();
+
+    /**
+     * Returns the full name of the person.
+     */
+    String getFullName();
+
+    /**
+     * Returns true if person has sekretessmarkering according to the PU service.
+     */
+    boolean isSekretessmarkering();
 
 }

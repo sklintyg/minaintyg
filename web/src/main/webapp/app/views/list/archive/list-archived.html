@@ -1,52 +1,62 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-    <h1 ng-focus="pagefocus" tabindex="0">
-      <span id="archivedHeader" message key="archived.header"></span>
-    </h1>
-    <p></p>
-    <span message key="archived.description"></span>
+<mi-page-head>
+  <mi-breadcrumb></mi-breadcrumb>
+
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h1 ng-focus="pagefocus" tabindex="0">
+        <span id="archivedHeader" message key="archived.header"></span>
+      </h1>
+      <span message key="archived.description"></span>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+      <h1>&nbsp;</h1>
+      <span message key="archived.description.part2"></span>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading"
-         show-content="doneLoading && (archivedCertificates | archived).length>0">
-      <div class="table-responsive">
-        <table id="certTable" class="table expandable archived-table" aria-labelledby="archivedHeader">
-          <thead>
-          <tr>
-            <th scope="col" id="issued"><span message key="listtable.headers.issued"></span></th>
-            <th scope="col" id="type"><span message key="listtable.headers.type"></span></th>
-            <th scope="col" id="certinfo"><span message key="listtable.headers.certinfo"></span></th>
-            <th scope="col" id="issuedby"><span message key="listtable.headers.issuedby"></span></th>
-            <th scope="col" id="latestEvent"><span message key="listtable.headers.latestEvent"></span></th>
-            <th scope="col" id="restore" aria-hidden="true" aria-label="Återställ intyg">&nbsp;</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="cert in archivedCertificates | archived" class="{{cert.status}}" ng-class="{'intyglist':1}">
-            <td scope="row" headers="issued">{{cert.sentDate | date:'longDate'}}</td>
-            <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
-            <td headers="certinfo">{{cert.complementaryInfo}}</td>
-            <td headers="issuedby">{{cert.careunitName}}</td>
-            <td headers="latestEvent">
-              <latest-events cert-id="{{cert.id}}" statuses="cert.statuses" hide-header="true"></latest-events>
-            </td>
-            <td headers="restore">
-              <a id="restoreCertificate-{{cert.id}}" href ng-click="openRestoreDialog(cert)"><span message key="label.restore"></span></a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+
+</mi-page-head>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading"
+           show-content="doneLoading && (archivedCertificates | archived).length>0">
+        <div class="table-responsive">
+          <table id="archived-cert-table" class="table table-striped" aria-labelledby="archivedHeader">
+            <thead>
+            <tr>
+              <th scope="col" id="issued"><span message class="text-nowrap" key="archived-cert-table.headers.issued"></span></th>
+              <th scope="col" id="type"><span message key="archived-cert-table.headers.type"></span></th>
+              <th scope="col" id="certinfo"><span message key="archived-cert-table.headers.complementary-info"></span></th>
+              <th scope="col" id="issuedby"><span message key="archived-cert-table.headers.issuedby"></span></th>
+              <th scope="col" id="restore" aria-hidden="true" aria-label="Återställ intyg">&nbsp;</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="cert in archivedCertificates | archived">
+              <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
+              <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
+              <td headers="certinfo">{{cert.complementaryInfo}}</td>
+              <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
+              <td headers="restore">
+                <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
+                       popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="text-muted">Inga fler intyg</span>
+      </div>
+      <!-- eof spinner -->
+      <div class="table-bottom" ng-hide="(archivedCertificates | archived).length<1"></div>
+
+      <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (archivedCertificates | archived).length<1">
+        <span message key="error.noarchivedcerts"></span>
       </div>
     </div>
-    <!-- eof spinner -->
-    <div class="table-bottom" ng-hide="(archivedCertificates | archived).length<1"></div>
-
-    <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (archivedCertificates | archived).length<1">
-      <span message key="error.noarchivedcerts"></span>
-    </div>
   </div>
 </div>
-
-

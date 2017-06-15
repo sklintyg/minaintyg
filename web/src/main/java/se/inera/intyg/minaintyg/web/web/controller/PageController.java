@@ -67,19 +67,11 @@ public class PageController {
         return "redirect:/web/start";
     }
 
-    @RequestMapping(value = "/start", method = RequestMethod.GET)
+    @RequestMapping(value = {"/start", "/visa-ge-samtycke"}, method = RequestMethod.GET)
     public ModelAndView displayStart() {
-        ModelAndView modelAndView = new ModelAndView("start");
+        ModelAndView modelAndView = new ModelAndView("boot-app");
         populateUseMinifiedJavaScript(modelAndView);
         LOG.debug("displayStart");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/visa-ge-samtycke", method = RequestMethod.GET)
-    public ModelAndView displayConsentForm() {
-        ModelAndView modelAndView = new ModelAndView("consent-form");
-        populateUseMinifiedJavaScript(modelAndView);
-        LOG.debug("displayConsentForm");
         return modelAndView;
     }
 
@@ -99,7 +91,7 @@ public class PageController {
 
     @RequestMapping(value = { "/logga-ut-fk" }, method = RequestMethod.GET)
     public ModelAndView loggaUtFk(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("logout-fk");
+        ModelAndView modelAndView = new ModelAndView("boot-app");
         populateUseMinifiedJavaScript(modelAndView);
         LOG.debug("loggaUtFk");
         invalidateSessionAndClearContext(request);

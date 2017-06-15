@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default" ng-if="showMenu()">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+				<span class="sr-only">Meny</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li ng-class="navClass('inkorg')"><a role="menuitem" ui-sref="inkorg" id="inboxTab"><message key="nav.label.inbox"></message></a></li>
+				<li class="divider-vertical" aria-hidden="true"></li>
+				<li ng-class="navClass('arkiverade')"><a role="menuitem" ui-sref="arkiverade" id="archivedTab"><message key="nav.label.archived"></message></a></li>
+				<li class="divider-vertical" aria-hidden="true"></li>
+				<li ng-class="navClass('omminaintyg')"><a role="menuitem" ui-sref="omminaintyg.info" id="aboutTab"><message key="nav.label.aboutminaintyg"></message></a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

@@ -1,34 +1,36 @@
-<div id="consentTerms" class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-  <h1><span message key="consent.consentpage.title"></span></h1>
+<mi-scroll-to-top></mi-scroll-to-top>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div id="consentTerms">
+        <h1 class="page-title"></h1>
 
-  <div class="alert alert-info">
-	  <span message key="consent.info"></span>
+        <div class="alert alert-info">
+          <h3 class="alert-heading">Ditt samtycke</h3>
+          <p>Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och
+            visas
+            där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina
+            intyg.</p>
+        </div>
+        <h3><span message key="consent.aboutheader"></span></h3>
+        <p><span message key="consent.abouttext"></span></p>
+
+        <div ng-include="'/app/views/about/section-samtycke-common-partial.html'"></div>
+
+        <span message key="about.dina.rattigheter"></span>
+        <span message key="about.ge.aterta.samtycke"></span>
+
+
+        <hr class="divider">
+        <p class="consent-button-pretext"><span message key="consent.confirmtext"></span></p>
+        <p>
+          <button type="button" id="giveConsentButton" ng-click="giveConsent()" class="btn btn-primary">
+            <i class="icon icon-lock-open"></i>
+            <span message key='consent.giveconsent'></span>
+          </button>
+        </p>
+      </div>
+    </div>
   </div>
-
-  <h2><span message key="consent.aboutheader"></span></h2>
-  <p><span message key="consent.abouttext"></span></p>
-
-  <span message key="consent.consentheader1"></span>
-  <span message key="consent.consenttext1"></span>
-
-  <span message key="consent.consentheader2"></span>
-  <span message key="consent.consenttext2"></span>
-
-  <span message key="consent.consentheader3"></span>
-  <span message key="consent.consenttext3"></span>
-
-  <span message key="consent.consentheader4"></span>
-  <span message key="consent.consenttext4"></span>
-
-  <span message key="consent.consentheader5"></span>
-  <span message key="consent.consenttext5"></span>
-
-  <span message key="consent.consentheader6"></span>
-  <span message key="consent.consenttext6"></span>
-
-  <p class="btn-row-desc"><span message key="consent.confirmtext"></span></p>
-  <p>
-    <button type="button" id="giveConsentButton" ng-click="giveConsent()" class="btn btn-success"><span message key='consent.giveconsent'></span></button>
-  </p>
 
 </div>

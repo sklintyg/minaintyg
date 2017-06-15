@@ -24,51 +24,69 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
     'use strict';
 
     $stateProvider.
+    state('index', {
+        url :'/',
+        templateUrl: '/app/views/index/index.html',
+        controller: 'minaintyg.IndexCtrl',
+        data:{title: 'Mina Intyg', keepInboxTabActive: false}
+    }).
+    state('fk-logged-out', {
+        url :'/fk-logged-out',
+        templateUrl: '/app/views/fk-logged-out/fk-logged-out.html',
+        controller: 'minaintyg.FkLoggedOutCtrl',
+        data:{title: 'Mina Intyg', keepInboxTabActive: false}
+    }).
         state('consent', {
             url :'/consent',
             templateUrl: '/app/views/consent/consent-start.html',
             controller: 'minaintyg.ConsentCtrl',
-            data:{title: 'Ditt samtycke',keepInboxTabActive: false}
+            data:{title: 'Ditt samtycke', keepInboxTabActive: false}
         }).
-        state('lista', {
-            url : '/lista',
+        state('inkorg', {
+            url : '/inkorg',
             templateUrl: '/app/views/list/list.html',
             controller: 'minaintyg.ListCtrl',
-            data:{title: 'Inkorgen',keepInboxTabActive: false}
+            data:{title: 'Inkorgen', keepInboxTabActive: false,
+                breadcrumb: ['inkorg']}
+        }).
+        state('send', {
+            url : '/send/:type/:certificateId/:defaultRecipient',
+            templateUrl: '/app/views/send/send.page.html',
+            controller: 'minaintyg.SendCtrl',
+            data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true,
+                breadcrumb: ['inkorg', 'intyg', 'skicka'], backState: 'history-back'}
         }).
         state('arkiverade', {
             url : '/arkiverade',
             templateUrl: '/app/views/list/archive/list-archived.html',
             controller: 'minaintyg.ListArchivedCtrl',
-            data:{title: 'Arkiverade intyg',keepInboxTabActive: false}
-        }).
-        state('omminaintyg', {
-            url :'/omminaintyg',
-            templateUrl: '/app/views/about/about-mina-intyg.html',
-            controller: 'minaintyg.AboutCtrl',
-            data:{title: 'Om mina intyg',keepInboxTabActive: false}
-        }).
-        state('hjalp', {
-            url : '/hjalp',
-            templateUrl: '/app/views/help/help.html',
-            controller: 'minaintyg.HelpCtrl',
-            data:{title: 'Hjälp',keepInboxTabActive: false}
+            data:{title: 'Arkiverade intyg', keepInboxTabActive: false,
+                breadcrumb: ['arkiv']}
         }).
         state('fel', {
             url :'/fel/:errorCode',
             templateUrl: '/app/views/error/error.html',
             controller: 'minaintyg.ErrorViewCtrl',
-            data:{title: 'Fel',keepInboxTabActive: false}
+            data:{title: 'Fel', keepInboxTabActive: false}
         });
 
         $urlRouterProvider.otherwise(function() {
-            // When running IE in QA the VerifyConsentInterceptor doesnt give us the #/consent after the redirect.
-            // This is a workaround to add it back.
+            // This block handles the initial selection of state of the app, depending on the url
+            // (The PageController / consentInterceptor sends redirects etc.)
             if (window.location.href.indexOf('/web/visa-ge-samtycke') > -1) {
+                //Handle and detect server-redirect to samtycke.
                 return '/consent';
             }
+            if (window.location.href.indexOf('/web/logga-ut-fk') > -1) {
+                //Handle and detect server-redirect to special fk-logged-out-view.
+                return '/fk-logged-out';
+            } else if (window.location.pathname ==='/') {
+                //Handle landningpage startup
+                return '/';
+            }
             else {
-                return '/lista';
+                //Otherwise default to inkorg
+                return '/inkorg';
             }
         });
 });

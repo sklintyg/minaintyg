@@ -30,7 +30,9 @@
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**"/>
+      <mvc:exclude-mapping path="/certificates/user"/>
       <mvc:exclude-mapping path="/certificates/consent/**"/>
+      <mvc:exclude-mapping path="/certificates/recipients/**"/>
       <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
       </bean>
     </mvc:interceptor>

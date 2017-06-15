@@ -21,6 +21,7 @@ package se.inera.intyg.minaintyg.web.web.controller.moduleapi;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +30,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -51,16 +51,14 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.minaintyg.web.api.Certificate;
-import se.inera.intyg.minaintyg.web.api.CertificateStatus;
-import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
-import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.web.util.CertificateStatusConverter;
+import se.inera.intyg.minaintyg.web.web.util.CertificateMetaConverter;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
@@ -75,6 +73,10 @@ public class ModuleApiController {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
+
+    //Relevant statuses for this context
+    private static final List<CertificateState> RELEVANT_STATUS_TYPES = Arrays.asList(CertificateState.SENT);
+
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;
@@ -112,7 +114,7 @@ public class ModuleApiController {
         if (utlatande.isPresent()) {
             try {
                 JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
-                CertificateStatus meta = CertificateStatusConverter.toCertificateStatus(utlatande.get().getMetaData().getStatus());
+                CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(utlatande.get().getMetaData(), RELEVANT_STATUS_TYPES);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {
@@ -124,24 +126,6 @@ public class ModuleApiController {
         }
     }
 
-    /**
-     * Send the certificate identified by the given id to the given target.
-     *
-     * @param id
-     *            - the globally unique id of a certificate.
-     * @param target
-     *            - id of target system that should receive the certificate.
-     * @return The response of the send operation
-     */
-    @PUT
-    @Path("/{id}/send/{target}")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response send(@PathParam("id") final String id, @PathParam("target") final String target) {
-        Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'send' for certificate {} to target {}", id, target);
-        ModuleAPIResponse response = certificateService.sendCertificate(new Personnummer(citizen.getUsername()), id, target);
-        return Response.ok(response).build();
-    }
 
     /**
      * Return the certificate identified by the given id as PDF.

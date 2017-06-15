@@ -36,14 +36,19 @@
       <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-?[0-9]{4}" />
     </bean>
     -->
+    <!--
     <security:http security="none" pattern="/anvandare/consent/**"/>
+    <security:http security="none" pattern="/services/**" />
+    -->
   </beans>
 
   <beans profile="!dev">
 
 
-    <!-- Enable the FK SAML Auth filter for our FK entry point url
+    <!-- Enable the FK SAML Auth filter for our FK entry point url   -->
+    <!--
     <security:http pattern="/web/fksso/**"  authentication-manager-ref="samlAuthenticationManager" entry-point-ref="mvkEntryPoint">
+      <security:csrf disabled="true"/>
       <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
@@ -65,6 +70,7 @@
       </security:headers>
     </security:http>
 
+    <security:http security="none" pattern="/appconfig/**" />
     <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="mvkEntryPoint">
       <security:headers>
         <security:frame-options />
@@ -81,17 +87,20 @@
       </security:headers>
     </security:http>
     -->
-
+    <!-- Allow access to static client resources without being logged in.  -->
 
     <!-- Allow access to webjars without being logged in
+      see INTYG-3924, INTYG-3450 -->
+    <!--
+    <security:http security="none" pattern="/font/**" />
     <security:http pattern="/web/webjars/**" entry-point-ref="mvkEntryPoint">
       <security:csrf disabled="true"/>
       <security:headers>
         <security:frame-options />
       </security:headers>
     </security:http>
+   -->
 
-    -->
 
 
     <!-- MVK is out

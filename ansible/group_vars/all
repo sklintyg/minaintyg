@@ -10,11 +10,12 @@ config_etc_folder: "{{ config_folder }}/{{ environment_name }}"
 proxy_env: {}
 
 # Spring profile
-profile: test
+profiles: test
 
 # Configuration repository
 config_repository: https://github.com/sklintyg/minaintyg-konfiguration.git
 config_folder: "{{ inera_root }}/minaintyg-konfiguration"
+config_version: "master"
 gitcrypt_key_name: "git-crypt4.key"
 gitcrypt_key_file: "./{{ gitcrypt_key_name }}"
 

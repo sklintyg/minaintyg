@@ -38,6 +38,8 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
     var intygsId = null;
 
     beforeAll(function() {
+        // Rensa alla intyg för tolvan
+        restHelper.deleteAllIntygForCitizen('19121212-1212');
 
         // Ta bort tidigare samtycken
         restHelper.deleteConsent();
@@ -77,7 +79,7 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
 
         it('Header ska var Inkorgen', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Inkorgen');
+            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
         it('Intyget ska finnas i listan', function() {
@@ -88,13 +90,6 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         it('Visa intyg', function() {
             inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
-        });
-
-        it('Verifiera intygshuvud', function() {
-
-            expect(element(by.id('patient-name')).getText()).toBe('Tolvan Tolvansson');
-            expect(element(by.id('patient-crn')).getText()).toBe('19121212-1212');
-
         });
 
         it('Gå till anpassa intyg', function() {
@@ -112,20 +107,58 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         it('Gå tillbaka till första sidan', function() {
             anpassaPage.clickShowSelection();
             expect(anpassaPage.isAt()).toBeTruthy();
-            expect(element(by.id('select-option-FRG_1')).isDisplayed());
+            expect(element(by.id('toggle-select-option-FRG_1.RBK')).isDisplayed());
         });
 
 
-        it('Bocka ur "grund för MU delen" och gå till summary igen', function() {
-            element(by.id('select-option-FRG_1')).click();
+        it('Bocka ur "grund för MU" och "Diagnos" och gå till summary igen', function() {
+            element(by.id('toggle-select-option-FRG_1.RBK')).click();
+            element(by.id('toggle-select-option-FRG_6.RBK')).click();
+
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
 
         });
 
-        it('Nu skall 1 vara bortvald', function() {
-            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(17);
-            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
+        it('Nu skall 2 vara bortvalda', function() {
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(16);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
+        });
+
+        it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isPresent()).toBeFalsy();
+        });
+
+
+        it('Gå tillbaka till första sidan igen', function() {
+            anpassaPage.clickShowSelection();
+            expect(anpassaPage.isAt()).toBeTruthy();
+        });
+
+        it('Bocka ur "aktivitetsbegransning" och en confirm-dialog skall visas', function() {
+            element(by.id('toggle-select-option-FRG_17.RBK')).click();
+            expect(element(by.id('confirm-field-deselection-dialog')).isDisplayed());
+            expect(element(by.id('ok-to-deselect-button')).isDisplayed());
+        });
+
+        it('Godkänn bortval av fältet och gå till summary', function() {
+            expect(element(by.id('ok-to-deselect-button')).click());
+            anpassaPage.clickShowSummary();
+            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+        });
+
+        it('Nu skall 3 vara bortvalda', function() {
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
+        });
+
+        it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
+            expect(element(by.id('warn-for-unselected-important-field')).isDisplayed());
+        });
+
+        it('gå till nedladdningssteget', function() {
+            anpassaPage.showDownloadBtn.click();
+            expect(element(by.id('downloadprint')).isDisplayed());
         });
 
     });

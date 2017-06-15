@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+/*
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@import "mixins/variables";
+@import '../bower_components/bootstrap-sass/assets/stylesheets/bootstrap.scss';
+@import "mixins/bootstrap-overrride";
+
+// Component styles are injected through grunt
+// injector
+@import 'components/global-modifiers.scss';
+@import 'components/icons.scss';
+@import 'components/miBreadcrumb/miBreadcrumb.directive.scss';
+@import 'components/miCookieBanner/miCookieBanner.directive.scss';
+@import 'components/miHeader/miHeader.directive.scss';
+@import 'components/miHelpNavigationMenu/miHelpNavigationMenu.directive.scss';
+@import 'components/miMainNavigation/miMainNavigation.directive.scss';
+@import 'components/miPageHead/miPageHead.directive.scss';
+@import 'components/miScrollToTop/miScrollToTop.directive.scss';
+@import 'components/miScrollToTopLink/miScrollToTopLink.directive.scss';
+@import 'components/miYearDivider/miYearDivider.directive.scss';
+@import 'components/mvkTopBar/mvkTopBar.directive.scss';
+@import 'views/about/about.scss';
+@import 'views/consent/consent.scss';
+@import 'views/index/index.scss';
+@import 'views/list/archive/list-archived.scss';
+@import 'views/list/list.scss';
+@import 'views/send/miSelectRecipients/miSelectRecipients.directive.scss';
+@import 'views/send/send.scss';
+// endinjector

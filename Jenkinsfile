@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion = "3.2.${BUILD_NUMBER}"
-def commonVersion = "3.2.+"
-def infraVersion = "3.2.+"
+def buildVersion = "3.3.${BUILD_NUMBER}"
+def commonVersion = "3.3.+"
+def infraVersion = "3.3.+"
 
 stage('checkout') {
     node {
@@ -48,6 +48,7 @@ stage('restAssured') {
 stage('protractor') {
    node {
        try {
+           sh(script: 'rm -rf test/node_modules/minaintyg-testtools') // Without this, node does not always recognize that a new version is available.
            wrap([$class: 'Xvfb']) {
                shgradle "protractorTests -Dprotractor.env=build-server \
                      -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"

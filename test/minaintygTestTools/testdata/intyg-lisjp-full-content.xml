@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:RegisterCertificate
+    xmlns="urn:riv:clinicalprocess:healthcond:certificate:3"
+    xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3"
+    xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:3">
+
+  <ns2:intyg>
+    <intygs-id>
+      <ns3:root>TSTNMT2321000156-1077</ns3:root>
+      <ns3:extension>CERTIFICATE_ID</ns3:extension>
+    </intygs-id>
+    <typ>
+      <ns3:code>LISJP</ns3:code>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
+      <ns3:displayName>Läkarintyg för sjukpenning</ns3:displayName>
+    </typ>
+    <version>1.0</version>
+    <signeringstidpunkt>SIGNED_DATE</signeringstidpunkt>
+    <skickatTidpunkt>2017-05-26T09:59:27</skickatTidpunkt>
+    <patient>
+      <person-id>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
+        <ns3:extension>PATIENT_CRN</ns3:extension>
+      </person-id>
+      <fornamn>Tolvan</fornamn>
+      <efternamn>Tolvansson</efternamn>
+      <postadress>Svensson, Storgatan 1, PL 1234</postadress>
+      <postnummer>12345</postnummer>
+      <postort>Småmåla</postort>
+    </patient>
+    <skapadAv>
+      <personal-id>
+        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+        <ns3:extension>IFV1239877878-1049</ns3:extension>
+      </personal-id>
+      <fullstandigtNamn>DOCTOR_NAME</fullstandigtNamn>
+      <forskrivarkod>0000000</forskrivarkod>
+      <enhet>
+        <enhets-id>
+          <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+          <ns3:extension>CAREUNIT_ID</ns3:extension>
+        </enhets-id>
+        <arbetsplatskod>
+          <ns3:root>1.2.752.29.4.71</ns3:root>
+          <ns3:extension>1234567890</ns3:extension>
+        </arbetsplatskod>
+        <enhetsnamn>CAREUNIT_NAME</enhetsnamn>
+        <postadress>NMT gata 3</postadress>
+        <postnummer>12345</postnummer>
+        <postort>Testhult</postort>
+        <telefonnummer>0101112131416</telefonnummer>
+        <epost>enhet3@webcert.invalid.se</epost>
+        <vardgivare>
+          <vardgivare-id>
+            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+            <ns3:extension>CAREGIVER_ID</ns3:extension>
+          </vardgivare-id>
+          <vardgivarnamn>NMT vg3</vardgivarnamn>
+        </vardgivare>
+      </enhet>
+    </skapadAv>
+    <svar id="27">
+      <delsvar id="27.1">false</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>1</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>UNDERSOKNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min undersökning av patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2017-05-26</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>2</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>TELEFONKONTAKT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min telefonkontakt med patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2017-05-26</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>3</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>JOURNALUPPGIFTER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Journaluppgifter från den</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2017-05-26</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>4</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>ANNAT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Annat</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2017-05-26</delsvar>
+      <delsvar id="1.3">baserat på annat</delsvar>
+    </svar>
+    <svar id="28">
+      <instans>1</instans>
+      <delsvar id="28.1">
+        <ns3:cv>
+          <ns3:code>NUVARANDE_ARBETE</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Nuvarande arbete</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="28">
+      <instans>2</instans>
+      <delsvar id="28.1">
+        <ns3:cv>
+          <ns3:code>ARBETSSOKANDE</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Arbetssökande</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="28">
+      <instans>3</instans>
+      <delsvar id="28.1">
+        <ns3:cv>
+          <ns3:code>FORALDRALEDIG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Föräldraledighet för vård av barn</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="28">
+      <instans>4</instans>
+      <delsvar id="28.1">
+        <ns3:cv>
+          <ns3:code>STUDIER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Studier</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="29">
+      <delsvar id="29.1">Ett yrke med arbetsuppgifter</delsvar>
+    </svar>
+    <svar id="6">
+      <delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>J22</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+          <ns3:displayName>Icke specificerad akut infektion i nedre luftvägarna</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.1">Icke specificerad akut infektion i nedre luftvägarna</delsvar>
+      <delsvar id="6.4">
+        <ns3:cv>
+          <ns3:code>M46</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+          <ns3:displayName>Andra inflammatoriska sjukdomar i ryggraden</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.3">Andra inflammatoriska sjukdomar i ryggraden</delsvar>
+      <delsvar id="6.6">
+        <ns3:cv>
+          <ns3:code>S22</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+          <ns3:displayName>Fraktur på revben, bröstbenet och bröstkotpelaren</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.5">Fraktur på revben, bröstbenet och bröstkotpelaren</delsvar>
+    </svar>
+    <svar id="35">
+      <delsvar id="35.1">Funktionell nedsättning</delsvar>
+    </svar>
+    <svar id="17">
+      <delsvar id="17.1">Begränsning i aktivitet</delsvar>
+    </svar>
+    <svar id="19">
+      <delsvar id="19.1">En pågående behandling</delsvar>
+    </svar>
+    <svar id="20">
+      <delsvar id="20.1">En planerad behandling</delsvar>
+    </svar>
+    <svar id="32">
+      <instans>1</instans>
+      <delsvar id="32.1">
+        <ns3:cv>
+          <ns3:code>HELT_NEDSATT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>100%</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="32.2">
+        <ns3:datePeriod>
+          <ns3:start>2017-06-19</ns3:start>
+          <ns3:end>2017-07-10</ns3:end>
+        </ns3:datePeriod>
+      </delsvar>
+    </svar>
+    <svar id="32">
+      <instans>2</instans>
+      <delsvar id="32.1">
+        <ns3:cv>
+          <ns3:code>TRE_FJARDEDEL</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>75%</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="32.2">
+        <ns3:datePeriod>
+          <ns3:start>2017-05-28</ns3:start>
+          <ns3:end>2017-06-18</ns3:end>
+        </ns3:datePeriod>
+      </delsvar>
+    </svar>
+    <svar id="32">
+      <instans>3</instans>
+      <delsvar id="32.1">
+        <ns3:cv>
+          <ns3:code>HALFTEN</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>50%</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="32.2">
+        <ns3:datePeriod>
+          <ns3:start>2017-05-27</ns3:start>
+          <ns3:end>2017-05-27</ns3:end>
+        </ns3:datePeriod>
+      </delsvar>
+    </svar>
+    <svar id="32">
+      <instans>4</instans>
+      <delsvar id="32.1">
+        <ns3:cv>
+          <ns3:code>EN_FJARDEDEL</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>25%</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="32.2">
+        <ns3:datePeriod>
+          <ns3:start>2017-05-26</ns3:start>
+          <ns3:end>2017-05-26</ns3:end>
+        </ns3:datePeriod>
+      </delsvar>
+    </svar>
+    <svar id="37">
+      <delsvar id="37.1">Arbetsförmågan bedöms nedsatt en längre tid.</delsvar>
+    </svar>
+    <svar id="33">
+      <delsvar id="33.1">true</delsvar>
+      <delsvar id="33.2">Ett medicinskt skäl till annan förläggning</delsvar>
+    </svar>
+    <svar id="34">
+      <delsvar id="34.1">true</delsvar>
+    </svar>
+    <svar id="39">
+      <delsvar id="39.1">
+        <ns3:cv>
+          <ns3:code>ATER_X_ANTAL_DGR</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
+          <ns3:displayName>Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x
+            antal dagar
+          </ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="39.3">
+        <ns3:cv>
+          <ns3:code>NITTIO_DGR</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0007</ns3:codeSystem>
+          <ns3:displayName>90 dagar</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>1</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>ARBETSTRANING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Arbetsträning</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>2</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>ARBETSANPASSNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Arbetsanpassning</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>3</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>SOKA_NYTT_ARBETE</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Söka nytt arbete</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>4</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>BESOK_ARBETSPLATS</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Besök på arbetsplatsen</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>5</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>ERGONOMISK</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Ergonomisk bedömning</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>6</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>HJALPMEDEL</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Hjälpmedel</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>7</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>KONFLIKTHANTERING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Konflikthantering</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>8</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>KONTAKT_FHV</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Kontakt med företagshälsovård</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>9</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>OMFORDELNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Omfördelning av arbetsuppgifter</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="40">
+      <instans>10</instans>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>OVRIGA_ATGARDER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Övrigt</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="44">
+      <delsvar id="44.1">Övriga åtgärder finns</delsvar>
+    </svar>
+    <svar id="25">
+      <delsvar id="25.1">En del övrigt om patienten</delsvar>
+    </svar>
+    <svar id="26">
+      <delsvar id="26.1">true</delsvar>
+      <delsvar id="26.2">Gillar att prata i telefon</delsvar>
+    </svar>
+    <svar id="9001">
+      <delsvar id="9001.1">Nej, men rolig</delsvar>
+    </svar>
+    <svar id="9002">
+      <delsvar id="9002.1">Absolut</delsvar>
+    </svar>
+  </ns2:intyg>
+</ns2:RegisterCertificate>

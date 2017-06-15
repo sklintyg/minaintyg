@@ -1,0 +1,37 @@
+mi-select-recipients {
+  display: block;
+  margin-bottom: 30px;
+
+  .selection-box {
+    background: $mi-intyg-body-bg;
+    border: 1px solid #eee;
+    padding: 15px;
+    box-shadow: 0 3px 5px $mi-box-shadow-color;
+  }
+
+
+  .selection-list {
+    min-height: 160px;
+    a.sent {
+      cursor: default;
+      text-decoration: none;
+
+      &:hover {
+        background:none;
+        color: #008391;
+      }
+    }
+
+    a.unsent {
+      &:hover {
+        font-weight: bold;
+      }
+
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+
+
+}

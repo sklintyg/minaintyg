@@ -38,6 +38,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class VerifyConsentInterceptorTest {
 
+    private static final String PERSON_FULL_NAME = "Tolvan Tolvansson";
+
     @Mock
     private CitizenService service = mock(CitizenService.class);
 
@@ -46,7 +48,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleNoConsentNoJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -62,7 +64,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 

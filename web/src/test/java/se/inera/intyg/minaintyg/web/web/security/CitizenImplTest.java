@@ -26,16 +26,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  */
 public class CitizenImplTest {
 
+    private static final String PERSON_FULL_NAME = "Tolvan Tolvansson";
+    private static final String USERNAME = "username";
+
     @Test
     public void testHasNoConsent() throws Exception {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl(USERNAME, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         Assert.assertFalse(citizen.hasConsent());
         Assert.assertFalse(citizen.consentIsKnown());
     }
 
     @Test
     public void testHasConsentSet() throws Exception {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         Assert.assertTrue(citizen.consentIsKnown());
         Assert.assertFalse(citizen.hasConsent());
@@ -45,21 +48,19 @@ public class CitizenImplTest {
 
     @Test
     public void testReturnsDefaultRole() {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         Assert.assertTrue(citizen.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CITIZEN")));
     }
    
     @Test
     public void testGetUsername() {
-        String user = "username";
-        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.ELVA77);
-        Assert.assertEquals(user, citizen.getUsername());
+        Citizen citizen = new CitizenImpl(USERNAME, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
+        Assert.assertEquals(USERNAME, citizen.getUsername());
     }
     
     @Test
     public void testLoginMethod() {
-        String user = "username";
-        Citizen citizen = new CitizenImpl(user, LoginMethodEnum.ELVA77);
+        Citizen citizen = new CitizenImpl(USERNAME, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         Assert.assertEquals(LoginMethodEnum.ELVA77, citizen.getLoginMethod());
     }
 

@@ -18,13 +18,14 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', 'common.IntygListService',
-        'common.dialogService', 'common.messageService', 'common.moduleService',
-        function($cookies, $location, $log, $rootScope, $scope, $window, IntygListService, dialogService,
-            messageService, moduleService) {
+    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
+        'common.dialogService', 'common.messageService', 'common.moduleService', 'MIUser',
+        function($cookies, $location, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
+            messageService, moduleService, MIUser) {
             'use strict';
 
-            $scope.certificates = [];
+
+            $scope.activeCertificates= [];
             $scope.doneLoading = false;
             $scope.dialog = {
                 acceptprogressdone: true,
@@ -55,6 +56,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     if (fromServer !== null) {
                         oldItem.archived = fromServer.archived;
                         oldItem.selected = false;
+                        $scope.refreshActiveCertificates();
                         archiveDialog.close();
                         $scope.dialog.acceptprogressdone = true;
                     } else {
@@ -75,18 +77,18 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
                     button1click: function() {
-                        $log.debug('archive');
                         $scope.archiveSelected();
                     },
                     button1id: 'archive-button',
                     button1text: 'button.archive',
+                    button1icon: 'icon-box',
                     autoClose: false
                 });
             };
 
             // FK dialog
             var fromConsentPage = $cookies.get('RedirectFromConsent');
-            if (fromConsentPage && ($rootScope.MI_CONFIG.LOGIN_METHOD === 'FK')) {
+            if (fromConsentPage && (MIUser.loginMethod === 'FK')) {
                 dialogService.showDialog($scope, {
                     dialogId: 'fk-login-consent-dialog',
                     titleId: 'fkdialog.head',
@@ -115,16 +117,36 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 // ...and close dialog
             };
 
+            $scope.refreshActiveCertificates = function() {
+                $scope.activeCertificates = $filter('unarchived')($scope.activeCertificates);
+                var currentYear = null;
+                angular.forEach($scope.activeCertificates, function(cert) {
+
+                    //If next cert is on a different year - it should show a year-divider
+                    var certYear = $filter('date')(cert.sentDate, 'yyyy');
+                    cert.yearDivider = currentYear && (currentYear !== certYear) ? certYear : null;
+
+                    //Update year to compare next with
+                    currentYear = certYear;
+                });
+
+            };
+            
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
+
                 if (list !== null) {
-                    $scope.certificates = list;
+                    $scope.activeCertificates = list;
+                    $scope.refreshActiveCertificates();
+
                 } else {
                     // show error view
                     $location.path('/fel/couldnotloadcertlist');
                 }
             });
+
+
 
             // Set focus on new page so screen readers can announce it
             $scope.pagefocus = true;

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schema for /api/certificates/user",
+  "type": "object",
+  "properties": {
+    "personId": {
+      "type": "string"
+    },
+    "fullName": {
+      "type": "string"
+    },
+    "loginMethod": {
+      "type": "string"
+    },
+    "sekretessmarkering": {
+      "type": "boolean"
+    },
+    "consentGiven": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "personId",
+    "fullName",
+    "loginMethod",
+    "sekretessmarkering",
+    "consentGiven"
+  ]
+}

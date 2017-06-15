@@ -9,13 +9,13 @@
 
 <title>Mina intyg | Komponenter</title>
 
-<link rel="stylesheet" href="/mvk-topbar/css/styles.css">
 <!-- bower:css -->
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- endbower -->
-<link rel="stylesheet" href="/css/inera.css">
-<link rel="stylesheet" href="/css/inera-certificate.css">
-<link rel="stylesheet" href="/css/inera-certificate-responsive.css">
+<!-- injector:css -->
+<link rel="stylesheet" href="/app/app.css?_v=<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="/font/css/animation.css?_v=<spring:message code="buildNumber" />">
+<link rel="stylesheet" href="/font/css/fontello.css?_v=<spring:message code="buildNumber" />">
+<!-- endinjector -->
 <link rel="stylesheet" href="ref.app.css" media="screen">
 
 
@@ -39,14 +39,15 @@
   <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="/bower_components/momentjs/moment.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
   <!-- endbower -->
-  <script type="text/javascript" src="/web/webjars/angularjs/1.4.10/angular-mocks.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-mocks/angular-mocks.js"></script>
 
-  <script type="text/javascript" src="/app/messages.js"></script>
+
 
   <script type="text/javascript" src="ref.app.js"></script>
+  <script type="text/javascript" src="/app/messages.js"></script>
   <script type="text/javascript" src="ref.app.routes.js"></script>
 
   <script type="text/javascript" src="views/bootstrap.controller.js"></script>

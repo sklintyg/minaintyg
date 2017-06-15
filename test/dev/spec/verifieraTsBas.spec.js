@@ -67,129 +67,137 @@ describe('Visa intyg ts-bas', function() {
             expect(inboxPage.certificateExists(intygsId)).toBeTruthy();
             inboxPage.viewCertificate(intygsId);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('ts-bas');
-            expect(viewPage.certificateId()).toEqual(intygsId);
-        });
-
-        it('Verifiera patient och utfärdare', function() {
-            expect(viewPage.getTextContent('patient-name')).toEqual('Herr Dundersjuk');
-            expect(viewPage.getTextContent('patient-crn')).toEqual(personId);
-            expect(viewPage.getTextContent('careunit')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('caregiver')).toEqual('WebCert Vårdgivare 1');
         });
 
         it('Verifiera intyg avser och identitet styrkt genom', function() {
-            expect(viewPage.getTextContent('intygAvser')).toEqual('C1, C1E, C, CE, D1, D1E, D, DE, TAXI, ANNAT');
-            expect(viewPage.getTextContent('identitet')).toEqual('Pass');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-0')).toEqual('C1');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-1')).toEqual('C1E');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-2')).toEqual('C');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-3')).toEqual('CE');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-4')).toEqual('D1');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-5')).toEqual('D1E');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-6')).toEqual('D');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-7')).toEqual('DE');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-8')).toEqual('Taxi');
+            expect(viewPage.getTextContent('intygAvser-korkortstyp-9')).toEqual('Annat');
+            expect(viewPage.getTextContent('vardkontakt-idkontroll')).toEqual('Pass');
         });
 
         it('Verifiera "1. Synfunktioner"', function() {
-            expect(viewPage.getTextContent('synfaltsdefekter')).toEqual('Ja');
-            expect(viewPage.getTextContent('nattblindhet')).toEqual('Ja');
-            expect(viewPage.getTextContent('diplopi')).toEqual('Ja');
-            expect(viewPage.getTextContent('nystagmus')).toEqual('Ja');
-            expect(viewPage.getTextContent('hogerOgautanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('hogerOgamedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('hogerOgakontaktlins')).toEqual('Ja');
-            expect(viewPage.getTextContent('vansterOgautanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('vansterOgamedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('vansterOgakontaktlins')).toEqual('Ja');
-            expect(viewPage.getTextContent('binokulartutanKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('binokulartmedKorrektion')).toEqual('0,0');
-            expect(viewPage.getTextContent('korrektionsglasensStyrka')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-synfaltsdefekter')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-nattblindhet')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-diplopi')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-progressivOgonsjukdom')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-nystagmus')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-row0-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row0-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row0-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-row1-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row1-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row1-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('syn-row2-col3')).toEqual('Nej');
+            expect(viewPage.getTextContent('syn-korrektionsglasensStyrka')).toEqual('Ja');
         });
 
         it('Verifiera "2. Hörsel och balanssinne"', function() {
-            expect(viewPage.getTextContent('horselBalansbalansrubbningar')).toEqual('Ja');
-            expect(viewPage.getTextContent('horselBalanssvartUppfattaSamtal4Meter')).toEqual('Ja');
+            expect(viewPage.getTextContent('horselBalans-balansrubbningar')).toEqual('Ja');
+            expect(viewPage.getTextContent('horselBalans-svartUppfattaSamtal4Meter')).toEqual('Ja');
         });
 
         it('Verifiera "3. Rörelseorganens funktioner"', function() {
-            expect(viewPage.getTextContent('funktionsnedsattning')).toEqual('Ja');
-            expect(viewPage.getTextContent('funktionsnedsattningbeskrivning')).toEqual('Spik i foten');
-            expect(viewPage.getTextContent('funktionsnedsattningotillrackligRorelseformaga')).toEqual('Ja');
+            expect(viewPage.getTextContent('funktionsnedsattning-funktionsnedsattning')).toEqual('Ja');
+            expect(viewPage.getTextContent('funktionsnedsattning-beskrivning')).toEqual('Spik i foten');
+            expect(viewPage.getTextContent('funktionsnedsattning-otillrackligRorelseformaga')).toEqual('Ja');
         });
 
         it('Verifiera "4. Hjärt- och kärlsjukdomar"', function() {
-            expect(viewPage.getTextContent('hjartKarlSjukdom')).toEqual('Ja');
-            expect(viewPage.getTextContent('hjarnskadaEfterTrauma')).toEqual('Ja');
-            expect(viewPage.getTextContent('riskfaktorerStroke')).toEqual('Ja');
-            expect(viewPage.getTextContent('beskrivningRiskfaktorer')).toEqual('Förkärlek för Elvismackor');
+            expect(viewPage.getTextContent('hjartKarl-hjartKarlSjukdom')).toEqual('Ja');
+            expect(viewPage.getTextContent('hjartKarl-hjarnskadaEfterTrauma')).toEqual('Ja');
+            expect(viewPage.getTextContent('hjartKarl-riskfaktorerStroke')).toEqual('Ja');
+            expect(viewPage.getTextContent('hjartKarl-beskrivningRiskfaktorer')).toEqual('Förkärlek för Elvismackor');
         });
 
         it('Verifiera "5. Diabetes"', function() {
-            expect(viewPage.getTextContent('harDiabetes')).toEqual('Ja');
-            expect(viewPage.getTextContent('diabetesTyp')).toEqual('Typ 2');
-            expect(viewPage.getTextContent('kost')).toEqual('Kost');
-            expect(viewPage.fieldNotShown('tabletter')).toBeTruthy();
-            expect(viewPage.fieldNotShown('insulin')).toBeTruthy();
+            expect(viewPage.getTextContent('diabetes-harDiabetes')).toEqual('Ja');
+            expect(viewPage.getTextContent('diabetes-diabetesTyp')).toEqual('Typ 2');
+            expect(viewPage.getTextContent('diabetes-kost')).toEqual('Kost');
         });
 
         it('Verifiera "6. Neurologiska sjukdomar"', function() {
-            expect(viewPage.getTextContent('neurologiskSjukdom')).toEqual('Ja');
+            expect(viewPage.getTextContent('neurologi-neurologiskSjukdom')).toEqual('Ja');
         });
 
         it('Verifiera "7. Epilepsi, epileptiskt anfall och annan medvetandestörning"', function() {
-            expect(viewPage.getTextContent('medvetandestorning')).toEqual('Ja');
-            expect(viewPage.getTextContent('medvetandestorningbeskrivning')).toEqual('Beskrivning');
+            expect(viewPage.getTextContent('medvetandestorning-medvetandestorning')).toEqual('Ja');
+            expect(viewPage.getTextContent('medvetandestorning-beskrivning')).toEqual('Beskrivning');
         });
 
         it('Verifiera "8. Njursjukdomar"', function() {
-            expect(viewPage.getTextContent('nedsattNjurfunktion')).toEqual('Ja');
+            expect(viewPage.getTextContent('njurar-nedsattNjurfunktion')).toEqual('Ja');
         });
 
         it('Verifiera "9. Demens och andra kognitiva störningar"', function() {
-            expect(viewPage.getTextContent('sviktandeKognitivFunktion')).toEqual('Ja');
+            expect(viewPage.getTextContent('kognitivt-sviktandeKognitivFunktion')).toEqual('Ja');
         });
 
         it('Verifiera "10. Sömn- och vakenhetsstörningar"', function() {
-            expect(viewPage.getTextContent('teckenSomnstorningar')).toEqual('Ja');
+            expect(viewPage.getTextContent('somnVakenhet-teckenSomnstorningar')).toEqual('Ja');
         });
 
         it('Verifiera "11. Alkohol, narkotika och läkemedel"', function() {
-            expect(viewPage.getTextContent('teckenMissbruk')).toEqual('Ja');
-            expect(viewPage.getTextContent('foremalForVardinsats')).toEqual('Ja');
-            expect(viewPage.getTextContent('provtagningBehovs')).toEqual('Ja');
-            expect(viewPage.getTextContent('lakarordineratLakemedelsbruk')).toEqual('Ja');
-            expect(viewPage.getTextContent('lakemedelOchDos')).toEqual('Läkemedel och dos');
+            expect(viewPage.getTextContent('narkotikaLakemedel-teckenMissbruk')).toEqual('Ja');
+            expect(viewPage.getTextContent('narkotikaLakemedel-foremalForVardinsats')).toEqual('Ja');
+            expect(viewPage.getTextContent('narkotikaLakemedel-provtagningBehovs')).toEqual('Ja');
+            expect(viewPage.getTextContent('narkotikaLakemedel-lakarordineratLakemedelsbruk')).toEqual('Ja');
+            expect(viewPage.getTextContent('narkotikaLakemedel-lakemedelOchDos')).toEqual('Läkemedel och dos');
         });
 
         it('Verifiera "12. Psykiska sjukdomar och störningar"', function() {
-            expect(viewPage.getTextContent('psykiskSjukdom')).toEqual('Ja');
+            expect(viewPage.getTextContent('psykiskt-psykiskSjukdom')).toEqual('Ja');
         });
 
         it('Verifiera "13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning"', function() {
-            expect(viewPage.getTextContent('psykiskUtvecklingsstorning')).toEqual('Ja');
-            expect(viewPage.getTextContent('harSyndrom')).toEqual('Ja');
+            expect(viewPage.getTextContent('utvecklingsstorning-psykiskUtvecklingsstorning')).toEqual('Ja');
+            expect(viewPage.getTextContent('utvecklingsstorning-harSyndrom')).toEqual('Ja');
+        });
+
+        it('Verifiera "14. Övrig medicinering"', function() {
+            expect(viewPage.getTextContent('sjukhusvard-sjukhusEllerLakarkontakt')).toEqual('Ja');
+            expect(viewPage.getTextContent('sjukhusvard-tidpunkt')).toEqual('20 Januari');
+            expect(viewPage.getTextContent('sjukhusvard-vardinrattning')).toEqual('Vårdcentralen');
+            expect(viewPage.getTextContent('sjukhusvard-anledning')).toEqual('Akut lungsot');
         });
 
         it('Verifiera "15. Övrig medicinering"', function() {
-            expect(viewPage.getTextContent('stadigvarandeMedicinering')).toEqual('Ja');
-            expect(viewPage.getTextContent('medicineringbeskrivning')).toEqual('Alvedon');
+            expect(viewPage.getTextContent('medicinering-stadigvarandeMedicinering')).toEqual('Ja');
+            expect(viewPage.getTextContent('medicinering-beskrivning')).toEqual('Alvedon');
         });
 
         it('Verifiera "Övrig kommentar"', function() {
             expect(viewPage.getTextContent('kommentar')).toEqual('Här kommer en övrig kommentar');
-            expect(viewPage.fieldNotShown('kommentarEjAngivet')).toBeTruthy();
         });
 
         it('Verifiera "Bedömning"', function() {
-            expect(viewPage.getTextContent('bedomning')).toEqual('C1, C1E, C, CE, D1, D1E, D, DE, TAXI, ANNAT');
-            expect(viewPage.fieldNotShown('bedomningKanInteTaStallning')).toBeTruthy();
-            expect(viewPage.getTextContent('lakareSpecialKompetens')).toEqual('Spektralanalys');
-        });
-
-        it('Verifiera signeringsdatum', function() {
-            expect(viewPage.getTextContent('signeringsdatum')).toEqual('26 maj 2016');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-0')).toEqual('C1');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-1')).toEqual('C1E');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-2')).toEqual('C');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-3')).toEqual('CE');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-4')).toEqual('D1');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-5')).toEqual('D1E');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-6')).toEqual('D');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-7')).toEqual('DE');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-8')).toEqual('Taxi');
+            expect(viewPage.getTextContent('bedomning-korkortstyp-9')).toEqual('Annat');
+            expect(viewPage.getTextContent('bedomning-lakareSpecialKompetens')).toEqual('Spektralanalys');
         });
 
         it('Verifiera skapad av', function() {
-            expect(viewPage.getTextContent('physician-name-id')).toEqual('Jan Nilsson');
-            expect(viewPage.getTextContent('careunit-name-id')).toEqual('WebCert Enhet 1');
-            expect(viewPage.getTextContent('careunit-postal_address')).toEqual('Enhetsvägen 12');
-            expect(viewPage.getTextContent('careunit-postal_code')).toEqual('54321');
-            expect(viewPage.getTextContent('careunit-postal_city')).toEqual('Tumba');
-            expect(viewPage.getTextContent('careunit-postal_phone')).toEqual('08-1337');
+            expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
+            expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 08-1337');
+            expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
+            expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Enhetsvägen 12, 54321 Tumba');
         });
     });
 

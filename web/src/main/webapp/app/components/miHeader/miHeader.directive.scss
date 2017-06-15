@@ -1,0 +1,45 @@
+
+mi-header {
+
+  // Define local variables for directive
+  $mi-header-bg: #21263D;
+  $mi-header-text-color: #fff;
+  $mi-header-link-color: #FFF0C3;
+  $mi-header-height: 80px;
+
+  //Set default values of directive
+  display: block;
+  background-color: $mi-header-bg;
+  color: $mi-header-text-color;
+
+  .mi-header-col {
+    height: $mi-header-height;
+
+    //Vertically align column content
+    > div {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .page-logo {
+    height: 27px;
+    width: 145px;
+  }
+
+  .user-info {
+    text-align: right;
+
+    .user-name {
+      font-weight: bold;
+    }
+
+    a {
+      color: $mi-header-link-color;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

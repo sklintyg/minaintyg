@@ -18,8 +18,8 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:cxf="http://cxf.apache.org/core"
-       xsi:schemaLocation="
+    xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:cxf="http://cxf.apache.org/core"
+    xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
@@ -34,30 +34,34 @@
       serviceClass="se.inera.intyg.insuranceprocess.healthreporting.setconsent.rivtabp20.v1.SetConsentResponderInterface"
       address="${consent.set.url}"/>
 
-  <jaxws:client id="listCertificatesClientV2"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponderInterface"
-      address="${certificates.list.v2.url}"/>
+  <jaxws:client id="listCertificatesClientV3"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponderInterface"
+      address="${certificates.list.v3.url}"/>
 
   <jaxws:client id="setCertificateStatusRivtaClient"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponderInterface"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponderInterface"
       address="${certificates.setcertificatestatus-rivta.url}"/>
 
   <jaxws:client id="sendCertificateToRecipientClient"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface"
-      address="${certificates.sendcertificatetorecipient.url}" />
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponderInterface"
+      address="${certificates.sendcertificatetorecipient.url}"/>
 
   <jaxws:client id="getCertificateClient"
-      serviceClass="se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface"
-      address="${certificates.getcertificate.url}" />
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.getCertificate.v2.GetCertificateResponderInterface"
+      address="${certificates.getcertificate.url}"/>
 
   <jaxws:client id="getRecipientsForCertificateClient"
       serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface"
-      address="${certificates.getrecipientforcertificate.url}" />
+      address="${certificates.getrecipientforcertificate.url}"/>
+
+  <jaxws:client id="listKnownRecipientsClient"
+      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsResponderInterface"
+      address="${certificates.listknownrecipients.url}"/>
 
   <!-- Client for the PingForConfiguration service on Intygstjanst -->
-  <jaxws:client id="pingIntygstjanstForConfigurationClient" 
-                  serviceClass="se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface"
-                  address="${certificates.pingforconfiguration.url}" />
+  <jaxws:client id="pingIntygstjanstForConfigurationClient"
+      serviceClass="se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface"
+      address="${certificates.pingforconfiguration.url}"/>
 
   <cxf:bus>
     <cxf:features>

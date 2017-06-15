@@ -23,21 +23,29 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BrowserClosedInterceptorTest {
 
-	private static final String REDIRECT_LOCATION = "/home/login";
+    private static final String REDIRECT_LOCATION = "/home/login";
+    private static final Clock FIXED_TIME_CLOCK = Clock.fixed(Instant.ofEpochMilli(0), ZoneId.systemDefault());
 
     @Mock
     private LogoutHandler logoutHandler = mock(LogoutHandler.class);
@@ -51,6 +59,7 @@ public class BrowserClosedInterceptorTest {
 
     @Before
     public void init() {
+        interceptor.setMockSystemClock(FIXED_TIME_CLOCK);
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
@@ -97,7 +106,7 @@ public class BrowserClosedInterceptorTest {
     }
 
     public LocalDateTime getOffsetTime(int secondOffset) {
-        return LocalDateTime.now().minusSeconds(secondOffset);
+        return LocalDateTime.now(FIXED_TIME_CLOCK).minusSeconds(secondOffset);
     }
 
 }

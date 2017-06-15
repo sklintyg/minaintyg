@@ -17,73 +17,79 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').controller('minaintyg.AboutCtrl',
-    [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService',
-        'common.messageService',
-        function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
-            'use strict';
+angular.module('minaintyg').controller(
+        'minaintyg.AboutCtrl',
+        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
+                function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
+                    'use strict';
 
-            // Hold left side navigation state
-            $scope.visibility = {
-                omminaintyg: true,
-                samtycke: false,
-                juridik: false
-            };
 
-            // Hold focus state for sub pages
-            $scope.subpagefocus = {
-                omminaintyg: false,
-                samtycke: false,
-                juridik: false
-            };
+                    // Revoke dialog
 
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false
-            };
+                    var revokeDialog = {};
 
-            $scope.navigateTo = function(section) {
-                angular.forEach($scope.visibility, function(value, key) {
-                    $scope.visibility[key] = (key === section) ? true : false;
-                    $scope.subpagefocus[key] = (key === section) ? true : false;
-                });
-            };
+                    $scope.openRevokeDialog = function() {
+                        revokeDialog = dialogService.showDialog($scope, {
+                            dialogId: 'revoke-consent-confirmation-dialog',
+                            titleId: 'about.revokemodal.header',
+                            bodyTextId: 'about.revokemodal.text',
+                            button1click: function() {
+                                $log.debug('revoking consent..');
+                                $scope.dialog.acceptprogressdone = true;
+                                revokeConsent();
+                            },
+                            button1id: 'revoke-consent-button',
+                            button1icon: 'icon icon-lock',
+                            button1text: 'about.revokeconsent.button.label',
+                            autoClose: false
+                        });
+                    };
 
-            $scope.getMessage = function(key) {
-                return messageService.getProperty(key);
-            };
-
-            // Revoke dialog
-
-            var revokeDialog = {};
-
-            $scope.openRevokeDialog = function() {
-                $scope.dialog.focus = true;
-                revokeDialog = dialogService.showDialog($scope, {
-                    dialogId: 'revoke-consent-confirmation-dialog',
-                    titleId: 'about.revokemodal.header',
-                    bodyTextId: 'about.revokemodal.text',
-                    button1click: function() {
-                        $log.debug('revoking consent..');
-                        $scope.dialog.acceptprogressdone = true;
-                        revokeConsent();
-                    },
-                    button1id: 'revoke-consent-button',
-                    autoClose: false
-                });
-            };
-
-            function revokeConsent() {
-                consentService.revokeConsent(function(data) {
-                    $log.debug('revokeConsent callback:' + data);
-                    $scope.dialog.acceptprogressdone = false;
-                    if (data !== null && data.result) {
-                        $window.location.href = '/web/start';
-                    } else {
-                        $location.path('/fel/couldnotrevokeconsent');
+                    function revokeConsent() {
+                        consentService.revokeConsent(function(data) {
+                            $log.debug('revokeConsent callback:' + data);
+                            $scope.dialog.acceptprogressdone = false;
+                            if (data !== null && data.result) {
+                                $window.location.href = '/web/start';
+                            } else {
+                                $location.path('/fel/couldnotrevokeconsent');
+                            }
+                        });
                     }
-                });
-            }
 
-            $scope.pagefocus = true;
-        }]);
+                    //faq's are actually arrays of faq items
+                    $scope.faqs = messageService.getProperty('help.faq');
+
+                    $scope.menuItems = [];
+
+                    $scope.menuItems.push({
+                        id: 'link-about-omminaintyg',
+                        link: 'omminaintyg.info',
+                        label: 'Om Mina intyg'
+                    });
+
+                    $scope.menuItems.push({
+                        id: 'link-help-faq',
+                        link: 'omminaintyg.faq',
+                        label: 'Vanliga frågor och svar'
+                    });
+
+                    $scope.menuItems.push({
+                        id: 'link-about-samtycke',
+                        link: 'omminaintyg.samtycke',
+                        label: 'Samtycke'
+                    });
+
+                    $scope.menuItems.push({
+                        id: 'link-about-juridik',
+                        link: 'omminaintyg.juridik',
+                        label: 'Lagring och hantering av intyg'
+                    });
+
+                    $scope.menuItems.push({
+                        id: 'link-help-info',
+                        link: 'omminaintyg.help-info',
+                        label: 'Hjälp och support'
+                    });
+
+                } ]);

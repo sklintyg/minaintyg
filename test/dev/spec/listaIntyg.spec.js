@@ -43,27 +43,23 @@ describe('Lista intyg', function() {
         restHelper.setConsent(personId);
         restHelper.setConsent(personIdNoCertificates);
 
-        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
+        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
         fk7263IntygsId = fk7263Intyg.id;
         restHelper.createIntyg(fk7263Intyg);
 
-        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId);
+        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01.234');
         tsBasIntygsId = tsBasIntyg.id;
         restHelper.createIntyg(tsBasIntyg);
 
         var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
+        //this revoked certificate should not appear
         tsDiabetesIntygsId = tsDiabetesIntyg.id;
         tsDiabetesIntyg.certificateStates.push({
-             target: 'TS',
+             target: 'HSVARD',
              state: 'CANCELLED',
              timestamp: '2013-03-18T00:00:01.234'
         });
-        tsDiabetesIntyg.certificateStates.push({
-            target: 'TS',
-            state: 'SENT',
-            timestamp: '2013-03-17T15:32:34.832'
-        });
-        restHelper.createIntyg(tsDiabetesIntyg);
+         restHelper.createIntyg(tsDiabetesIntyg);
     });
 
     afterAll(function() {
@@ -92,31 +88,22 @@ describe('Lista intyg', function() {
             expect(inboxPage.certificateTableIsShown()).toBeTruthy();
             expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
-            expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeTruthy();
+            //revoked should NOT exist in list
+            expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
+        });
+
+        it('Listan skall innehålla en årsavskiljare för 2016', function() {
+            expect(element(by.id('mi-year-divider-2016')).isDisplayed()).toBeTruthy();
         });
 
         it('Intyg avser innehåller information för ett TS-intyg', function() {
             expect(inboxPage.complementaryInfo(tsBasIntygsId).length).not.toEqual(0);
         });
 
-        it('Makulerat intyg skall visas på specifikt sätt i listan', function() {
-            // makulerat intyg
-            expect(inboxPage.cancelledCertificateDisplayed(tsDiabetesIntygsId)).toBeTruthy();
-
-            // icke-makulerade intyg
-            expect(inboxPage.cancelledCertificateDisplayed(tsBasIntygsId)).toBeFalsy();
-            expect(inboxPage.cancelledCertificateDisplayed(fk7263IntygsId)).toBeFalsy();
-        });
-
         it('Verifiera text för intyg som inte har någon händelse', function() {
             expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
         });
 
-        it('Verifiera makulerat intygs händelser', function() {
-            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Intyget är makulerat 2013-03-18 00:00')).toBeTruthy();
-            inboxPage.showEvents(tsDiabetesIntygsId);
-            expect(inboxPage.hasEvent(tsDiabetesIntygsId, 'Skickat till Transportstyrelsen 2013-03-17 15:32')).toBeTruthy();
-        });
     });
 
     describe('Invånare utan intyg', function() {

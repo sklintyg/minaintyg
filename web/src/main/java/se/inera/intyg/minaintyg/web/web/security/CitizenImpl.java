@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.web.security;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Implementation of the @see CitizenDetails interface.
@@ -34,12 +34,16 @@ public class CitizenImpl implements Citizen {
     private Boolean consent;
     private String username;
     private LoginMethodEnum loginMethod;
+    private String fullName;
+    private boolean sekretessmarkering = false;
 
     private Set<SimpleGrantedAuthority> roles = Collections.singleton(new SimpleGrantedAuthority("ROLE_CITIZEN"));
 
-    public CitizenImpl(String username, LoginMethodEnum loginMethod) {
+    public CitizenImpl(String username, LoginMethodEnum loginMethod, String fullName, boolean sekretessmarkering) {
         this.username = username;
         this.loginMethod = loginMethod;
+        this.fullName = fullName;
+        this.sekretessmarkering = sekretessmarkering;
     }
 
     @Override
@@ -99,5 +103,15 @@ public class CitizenImpl implements Citizen {
     @Override
     public LoginMethodEnum getLoginMethod() {
         return loginMethod;
+    }
+
+    @Override
+    public String getFullName() {
+        return fullName;
+    }
+
+    @Override
+    public boolean isSekretessmarkering() {
+        return sekretessmarkering;
     }
 }

@@ -40,40 +40,41 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.minaintyg.web.api.ModuleAPIResponse;
+import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.exception.ResultTypeErrorException;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.web.service.repo.UtlatandeRecipientRepo;
 import se.inera.intyg.minaintyg.web.web.util.SendCertificateToRecipientTypeConverter;
 import se.inera.intyg.minaintyg.web.web.util.UtlatandeMetaDataConverter;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v2.ListCertificatesForCitizenType;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v1.SetCertificateStatusType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
+import se.inera.intyg.schemas.contract.Personnummer;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.SetCertificateStatusType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CertificateServiceImpl.class);
+    private static final String RECIPIENT_INVANA = "INVANA";
 
     /* Mapper to serialize/deserialize Utlatanden. */
     protected static ObjectMapper objectMapper = new CustomObjectMapper();
@@ -105,32 +106,49 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private UtlatandeMetaDataConverter utlatandeMetaDataConverter;
 
+    @Autowired
+    private UtlatandeRecipientRepo recipientRepo;
+
     // This value is injected by the setter method
     private String logicalAddress;
 
     @Override
-    public ModuleAPIResponse sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String recipientId) {
-        LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
+    public List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
+            List<String> recipients) {
+        List<SendToRecipientResult> batchResult = new ArrayList<>();
+        for (String recipientId : recipients) {
+            LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
+            try {
+                SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
+                        civicRegistrationNumber, new Personnummer(citizenService.getCitizen().getUsername()), recipientId);
 
-        SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
-                civicRegistrationNumber, new Personnummer(citizenService.getCitizen().getUsername()), recipientId);
+                final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
-        final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
+                if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v3.ResultCodeType.ERROR)) {
+                    LOGGER.warn(String.format("SendCertificate error when sending certificate %s to recipient %s, errortext was '%s'",
+                            certificateId, recipientId, response.getResult().getResultText()));
+                    batchResult.add(new SendToRecipientResult(recipientId, false, null));
+                } else {
+                    batchResult.add(new SendToRecipientResult(recipientId, true, LocalDateTime.now()));
+                    monitoringService.logCertificateSend(certificateId, recipientId);
+                }
+            } catch (Exception e) {
+                LOGGER.error(
+                        String.format("SendCertificate exception when sending certificate %s to recipient %s", certificateId, recipientId),
+                        e);
+                batchResult.add(new SendToRecipientResult(recipientId, false, null));
+            }
 
-        if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType.ERROR)) {
-            LOGGER.warn("SendCertificate error: {}", response.getResult().getResultText());
-            return new ModuleAPIResponse("error", "");
         }
+        return batchResult;
 
-        monitoringService.logCertificateSend(certificateId, recipientId);
-        return new ModuleAPIResponse("sent", "");
     }
 
     @Override
     public Optional<CertificateResponse> getUtlatande(String type, Personnummer civicRegistrationNumber, String certificateId) {
         CertificateResponse certificate;
         try {
-            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, PartKod.INVANA);
+            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, RECIPIENT_INVANA);
         } catch (ModuleException | ModuleNotFoundException e) {
             LOGGER.error("Failed to fetch utlatande '{}' from Intygstjänsten: {}", certificateId, e.getMessage());
             throw new ExternalWebServiceCallFailedException(e.getMessage(), null);
@@ -154,6 +172,8 @@ public class CertificateServiceImpl implements CertificateService {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setPersonId(InternalConverterUtil.getPersonId(civicRegistrationNumber));
         params.setArkiverade(arkiverade);
+        Part part = toPart(RECIPIENT_INVANA);
+        params.setPart(part);
 
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
@@ -195,6 +215,11 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
+    public List<UtlatandeRecipient> getAllRecipients() {
+        return recipientRepo.getAllRecipients();
+    }
+
+    @Override
     public UtlatandeMetaData archiveCertificate(String certificateId, Personnummer civicRegistrationNumber) {
         UtlatandeMetaData result = setCertificateState(certificateId, civicRegistrationNumber, StatusKod.DELETE);
         monitoringService.logCertificateArchived(certificateId);
@@ -228,7 +253,7 @@ public class CertificateServiceImpl implements CertificateService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
         SetCertificateStatusType parameters = new SetCertificateStatusType();
         parameters.setIntygsId(toIntygsId(certificateId));
-        parameters.setPart(toPart(PartKod.INVANA));
+        parameters.setPart(toPart(RECIPIENT_INVANA));
         parameters.setStatus(toStatus(status));
         parameters.setTidpunkt(LocalDateTime.now());
 
@@ -246,11 +271,10 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    private Part toPart(PartKod partkod) {
+    private Part toPart(String id) {
         Part part = new Part();
-        part.setCode(partkod.name());
+        part.setCode(id);
         part.setCodeSystem(KV_PART_CODE_SYSTEM);
-        part.setDisplayName(partkod.getDisplayName());
         return part;
     }
 

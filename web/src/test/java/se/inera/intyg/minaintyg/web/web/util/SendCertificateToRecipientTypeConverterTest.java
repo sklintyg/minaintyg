@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import se.inera.intyg.schemas.contract.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v1.SendCertificateToRecipientType;
+import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
 
 public class SendCertificateToRecipientTypeConverterTest {
 
@@ -33,7 +33,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String intygsId = "intygsId";
         final String personnummer = "personnummer";
         final String skickatAvPersonId = "skickatavpid";
-        final String recipient = "TS";
+        final String recipient = "TRANSP";
 
         SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
                 new Personnummer(skickatAvPersonId), recipient);

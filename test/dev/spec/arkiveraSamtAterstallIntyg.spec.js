@@ -102,8 +102,6 @@ describe('Arkivera samt återställ intyg', function() {
         it('Återställ intyg', function() {
             expect(archivedPage.isAt()).toBeTruthy();
             archivedPage.restoreCertificate(fk7263IntygsId);
-            expect(archivedPage.restoreDialogIsDisplayed()).toBeTruthy();
-            archivedPage.confirmRestoreCertificate();
         });
 
         it('Intyget ska inte längre finnas i listan med arkiverade intyg', function() {
@@ -137,7 +135,7 @@ describe('Arkivera samt återställ intyg', function() {
             inboxPage.viewCertificate(fk7263IntygsId);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
-            expect(viewPage.certificateId()).toEqual(fk7263IntygsId);
+            expect(viewPage.isAtCert(fk7263IntygsId)).toBeTruthy();
         });
 
         it('Arkivera intyget', function() {
@@ -177,8 +175,6 @@ describe('Arkivera samt återställ intyg', function() {
             expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
             inboxPage.viewCertificate(tsBasIntygsId);
             expect(viewPage.isAt()).toBeTruthy();
-            expect(browser.getCurrentUrl()).toContain('ts-bas');
-            expect(viewPage.certificateId()).toEqual(tsBasIntygsId);
         });
 
         it('Arkivera intyget', function() {
@@ -219,7 +215,6 @@ describe('Arkivera samt återställ intyg', function() {
             inboxPage.viewCertificate(tsDiabetesIntygsId);
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('ts-diabetes');
-            expect(viewPage.certificateId()).toEqual(tsDiabetesIntygsId);
         });
 
         it('Arkivera intyget', function() {

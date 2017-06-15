@@ -76,5 +76,12 @@ module.exports = {
             method: 'DELETE'
         };
         return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+    },
+    deleteAllIntyg: function(userId) {
+        var options = {
+            url: 'certificate/citizen/' + userId,
+            method: 'DELETE'
+        };
+        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
     }
 };

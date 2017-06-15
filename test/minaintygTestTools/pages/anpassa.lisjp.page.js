@@ -32,8 +32,9 @@ var anpassaLisjpPage = MinaintygBasePage._extend({
     init: function init() {
         init._super.call(this);
         this.at = element(by.id('customizeCertificateHeader'));
-        this.showsummaryBtn = element(by.id('confirmCertificateCustomizationBtn'));
-        this.showSelectionBtn = element(by.id('backToCustomizeCertificateBtn'));
+        this.showsummaryBtn = element(by.id('goto-step-2'));
+        this.showSelectionBtn = element(by.id('goto-step-1'));
+        this.showDownloadBtn = element(by.id('goto-step-3'));
 
     },
     isAt: function isAt() {

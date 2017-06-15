@@ -105,7 +105,7 @@ gretty {
 
     // SAML test settings for local testing
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev,mi-security-test",
+               "-Dspring.profiles.active=dev,mi-security-test,caching-enabled",
                "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
@@ -132,6 +132,9 @@ dependencies {
     compile "se.inera.intyg.common:luae_na:${commonVersion}"
     compile "se.inera.intyg.common:luae_fs:${commonVersion}"
     compile "se.inera.intyg.common:fk7263:${commonVersion}"
+
+    compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
+    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
 
     compile "org.springframework:spring-web:${springVersion}"
     compile "org.springframework:spring-webmvc:${springVersion}"

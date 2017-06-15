@@ -1,0 +1,17 @@
+mi-year-divider {
+  display: block;
+
+  h4 {
+    text-align: center;
+    border-bottom: 1px solid $mi-nav-pills-border-color;
+    line-height: 0;
+    padding: 0;
+    margin: 20px 2px 40px 2px;
+
+    span {
+      background: $mi-body-bg;
+      color: $mi-nav-pills-border-color;
+      padding: 0 20px;
+    }
+  }
+}

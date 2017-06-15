@@ -7,44 +7,63 @@ var xml = require('simple-xml-dom')
 
 var helpers = require('./../helpers/helpers.js');
 
-var templateJsonObj = require('./generic-metadata.json');
+var templateJsonObjTemplate = require('./generic-metadata.json');
 
 module.exports = {
 
-    getFk7263: function(userId) {
-        return this.getIntyg('fk7263', userId);
+    getFk7263: function(userId, signDate) {
+        return this.getIntyg('fk7263', 'fk7263', userId, signDate);
     },
 
-    getTsBas: function(userId) {
-        return this.getIntyg('ts-bas', userId);
+    getFk7263Smittskydd: function(userId, signDate) {
+        return this.getIntyg('fk7263', 'fk7263-smittskydd', userId, signDate);
     },
 
-    getTsDiabetes: function(userId) {
-        return this.getIntyg('ts-diabetes', userId);
+    getTsBas: function(userId, signDate) {
+        return this.getIntyg('ts-bas','ts-bas', userId, signDate);
+    },
+
+    getTsDiabetes: function(userId, signDate) {
+        return this.getIntyg('ts-diabetes', 'ts-diabetes', userId, signDate);
     },
 
     getLuse: function(userId) {
-        return this.getIntyg('luse', userId);
+        return this.getIntyg('luse', 'luse', userId);
     },
 
     getLisjp: function(userId) {
-        return this.getIntyg('lisjp', userId);
+        return this.getIntyg('lisjp', 'lisjp', userId);
     },
 
     getLuaena: function(userId) {
-        return this.getIntyg('luae_na', userId);
+        return this.getIntyg('luae_na', 'luae_na', userId);
     },
 
     getLuaefs: function(userId) {
-        return this.getIntyg('luae_fs', userId);
+        return this.getIntyg('luae_fs', 'luae_fs', userId);
     },
 
-    getIntyg: function(type, userId) {
+    getLisjpSmittskydd: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-smittskydd', userId);
+    },
+
+    getLisjpFull: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-full', userId);
+    },
+
+    getLisjpSmittskyddOvrigt: function(userId) {
+        return this.getIntyg('lisjp', 'lisjp-smittskydd-ovrigt', userId);
+    },
+
+    getIntyg: function(type, file, userId, signedDate) {
+
+        //Create a local copy that we are free to mutate
+        var templateJsonObj = JSON.parse(JSON.stringify(templateJsonObjTemplate));
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
-
-        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + type + '-content.xml');
+        templateJsonObj.signedDate = signedDate || templateJsonObj.signedDate;
+        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
 
         //read xml doc into string variable
         var xmlString = fs.readFileSync(fullPath, 'utf8')

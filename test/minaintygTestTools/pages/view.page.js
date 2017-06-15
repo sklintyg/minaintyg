@@ -38,8 +38,11 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    certificateId: function() {
-        return element(by.id('certId')).getAttribute('title');
+    backToList: function() {
+        element(by.className('backlink')).click();
+    },
+    isAtCert: function(certId) {
+      return element(by.id('mi-compact-certificate-header-' + certId)).isDisplayed();
     },
     sendCertificate: function() {
         element(by.id('sendCertificateBtn')).click();
@@ -56,11 +59,14 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     clickCustomizeCertificate: function() {
         this.customize.click();
     },
-    hasEvent: function(status) {
+    hasEvent: function(intygId, text, dateTime) {
         var found = false;
-        return element(by.id('certificate-latestevents')).all(by.tagName('div')).each(function(item) {
-            item.getText().then(function (text) {
-                found = found || text.includes(status);
+        var attrId = 'event-' + intygId;
+
+        return element.all(by.id(attrId)).each(function(item) {
+            item.getText().then(function (txt) {
+                console.log("TEST:" + txt);
+                found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },
@@ -69,7 +75,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return element(by.id('certificate-noevents')).all(by.tagName('div')).each(function(item) {
             item.getText().then(function (text) {
                 found = found || text.includes(status);
-            })
+            });
         }).then(function() { return found; });
     },
     getTextContent: function(fieldId) {
@@ -81,8 +87,12 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
             }
         });
     },
+    showsNoValue: function(fieldId) {
+        return element(by.id(fieldId)).isElementPresent(by.tagName('uv-no-value'));
+    },
+
     fieldNotShown: function(fieldId) {
-        return this.getTextContent(fieldId).then(function (value) { return value === 'notshown' });
+        return this.getTextContent(fieldId).then(function (value) { return value === 'notshown'; });
     }
 });
 

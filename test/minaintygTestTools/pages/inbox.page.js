@@ -29,6 +29,7 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
+
     init: function init() {
         init._super.call(this);
         this.at = element(by.id('inboxHeader'));
@@ -50,10 +51,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return element(by.id('certificate-' + intygId)).isPresent();
     },
     complementaryInfo: function(intygId) {
-        return element(by.id('certificate-period-' + intygId)).getText();
-    },
-    cancelledCertificateDisplayed: function(intygId) {
-        return element(by.id('viewCertificateBtn-' + intygId)).isDisplayed().then(function (isVisible) { return !isVisible; });
+        return element(by.id('certificate-complementary-info-' + intygId)).getText();
     },
     viewCertificate: function(intygId) {
         element(by.id('viewCertificateBtn-' + intygId)).click();
@@ -67,13 +65,13 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     archiveDialogIsDisplayed: function() {
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
     },
-    hasEvent: function(intygId, text) {
+    hasEvent: function(intygId, text, dateTime) {
         var found = false;
         var attrId = 'event-' + intygId;
 
         return element.all(by.css('div[id^=' + attrId + ']')).each(function(item) {
             item.getText().then(function (txt) {
-                found = found || txt.includes(text);
+                found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },

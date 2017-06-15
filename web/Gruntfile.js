@@ -25,10 +25,14 @@ module.exports = function(grunt) {
     require('jit-grunt')(grunt, {
         bower: 'grunt-bower-task',
         configureProxies: 'grunt-connect-proxy',
-        ngtemplates: 'grunt-angular-templates'
+        ngtemplates: 'grunt-angular-templates',
+        postcss: 'grunt-postcss',
+        sasslint: 'grunt-sass-lint'
     });
 
-    var SRC_DIR = 'src/main/webapp/app/';
+    var WEB_DIR = 'src/main/webapp';
+    var SRC_DIR = WEB_DIR + '/app/';
+    var CSS_MICOMMON_DEST_DIR = '/../../common/web/build/resources/main/META-INF/resources/webjars/common/minaintyg/';
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/webapp/') +  'app/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
@@ -45,6 +49,9 @@ module.exports = function(grunt) {
     minaintyg = [SRC_DIR + 'app.js', DEST_DIR + 'templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
+
+    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + '/pubapp/showcase/index.html']);
+    var _ = require('lodash');
 
     var modules = {
         'common':      { base: 'common/web' },
@@ -108,6 +115,11 @@ module.exports = function(grunt) {
     });
 
     grunt.initConfig({
+
+        config: {
+            // configurable paths
+            client: WEB_DIR
+        },
 
         bower: {
             install: {
@@ -176,6 +188,13 @@ module.exports = function(grunt) {
             }
         },
 
+        sasslint: {
+            options: {
+                //configFile: 'config/.sass-lint.yml' //For now we use the .sass-lint.yml that is packaged with sass-lint
+            },
+            target: [SRC_DIR + '**/*.scss']
+        },
+
         karma: {
             minaintyg: {
                 configFile: 'karma.conf.ci.js',
@@ -187,6 +206,31 @@ module.exports = function(grunt) {
                     dir : TEST_OUTPUT_DIR,
                     subdir: '.'
                 }
+            }
+        },
+
+        // Compiles Sass to CSS
+        sass: {
+            options: {
+                sourceMap: false
+            },
+            dist: {
+                files: {
+                    '<%= config.client %>/app/app.css': '<%= config.client %>/app/app.scss'
+                }
+            }
+        },
+
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    require('autoprefixer')({browsers: ['last 2 versions', 'ie 9']}), // add vendor prefixes
+                    require('cssnano')() // minify the result
+                ]
+            },
+            dist: {
+                src: '<%= config.client %>/app/*.css'
             }
         },
 
@@ -254,6 +298,12 @@ module.exports = function(grunt) {
                         var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
                         var serveStatic = require('serve-static');
                         var middlewares = [];
+                        middlewares.push(require('connect-livereload')());
+                        middlewares.push(
+                            connect().use(
+                                '/welcome.html',
+                                serveStatic(__dirname + '/src/main/webapp/welcome.html') // jshint ignore:line
+                            ));
                         middlewares.push(
                             connect().use(
                                 '/web',
@@ -269,11 +319,7 @@ module.exports = function(grunt) {
                                 '/app/app-deps.js',
                                 serveStatic(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
                             ));
-                        middlewares.push(
-                            connect().use(
-                                '/css',
-                                serveStatic(__dirname + '/src/main/webapp/css') // jshint ignore:line
-                            ));
+
                         Object.keys(modules).forEach(function(moduleName) {
                             var module = modules[moduleName];
                             middlewares.push(
@@ -289,7 +335,7 @@ module.exports = function(grunt) {
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
-                                    serveStatic(__dirname + module.dest + '/js/module-deps.json') //jshint ignore:line
+                                    serveStatic(__dirname + module.dest + '/module-deps.json') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
@@ -297,6 +343,14 @@ module.exports = function(grunt) {
                                     serveStatic(__dirname + module.dest + '/css')//jshint ignore:line
                                 ));
                         });
+
+                        //load mi-common from common build dir
+                        middlewares.push(
+                            connect().use(
+                                '/web/webjars/common/minaintyg/mi-common.css',
+                                serveStatic(__dirname + CSS_MICOMMON_DEST_DIR + 'mi-common.css') //jshint ignore:line
+                            ));
+
                         middlewares.push(proxy);
                         return middlewares;
                     }
@@ -308,6 +362,46 @@ module.exports = function(grunt) {
                         port: 8088
                     }
                 ]
+            }
+        },
+
+        injector: {
+            options: {
+                lineEnding: grunt.util.linefeed
+            },
+
+            // Inject component scss into app.scss
+            sass: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/app/', '');
+                        return '@import \'' + filePath + '\';';
+                    },
+                    starttag: '// injector',
+                    endtag: '// endinjector'
+                },
+                files: {
+                    '<%= config.client %>/app/app.scss': [
+                        '<%= config.client %>/app/!(mixins)/**/*.{scss,sass}',
+                        '!<%= config.client %>/app/app.{scss,sass}'
+                    ]
+                }
+            },
+
+            // Inject component css into index.html
+            css: {
+                options: {
+                    transform: function(filePath) {
+                        filePath = filePath.replace('/src/main/webapp/', '');
+                        filePath = filePath.replace('/<%= config.tmp %>/', '');
+                        return '<link rel="stylesheet" href="/' + filePath + '?_v=<spring:message code="buildNumber" />">';
+                    },
+                    starttag: '<!-- injector:css -->',
+                    endtag: '<!-- endinjector -->'
+                },
+                files: _(fileToInjectCss).map(function(dest) {
+                    return [dest, '<%= config.client %>/{app,font}/**/*.css'];
+                }).fromPairs().value()
             }
         },
 
@@ -326,11 +420,45 @@ module.exports = function(grunt) {
                     return __dirname + module.src + '/**/*.html';
                 }).concat([ SRC_DIR + '/**/*.html' ]),
                 tasks: ['ngtemplates']
+            },
+            injectSass: {
+                files: [
+                    '<%= config.client %>/app/**/*.{scss,sass}'],
+                tasks: ['injector:sass']
+            },
+            sass: {
+                files: [
+                    '<%= config.client %>/app/**/*.{scss,sass}'],
+                tasks: ['sass', 'postcss']
+            },
+            livereload: {
+                files: [
+                    '<%= config.client %>/*.html',
+                    '<%= config.client %>/app/**/*.scss',
+                    '<%= config.client %>/app/**/*.html',
+                    '<%= config.client %>/app/**/*.js',
+                    '!<%= config.client %>/app/**/*.spec.js',
+                    '!<%= config.client %>/app/**/*.mock.js',
+                    '<%= config.client %>/img/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+                ],
+                options: {
+                    livereload: true
+                }
             }
         }
     });
 
-    grunt.registerTask('default', [ 'bower', 'wiredep', 'ngtemplates:minaintyg', 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('default', [
+        'bower',
+        'injector:sass',
+        'sass',
+        'postcss',
+        'injector:css',
+        'wiredep',
+        'ngtemplates:minaintyg',
+        'concat',
+        'ngAnnotate',
+        'uglify' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
     grunt.registerTask('test', [ 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);

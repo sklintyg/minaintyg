@@ -1,0 +1,127 @@
+// Inera variables
+
+$mi-body-bg: #f3f4f6;
+$mi-text-color: #333;
+
+$mi-menu-bg: #E9EAF0;
+$mi-menu-active-color: #fff;
+$mi-menu-active-bg: #0F6EDC;
+$mi-menu-hover-color: #0F6EDC;
+
+$mi-mvk-header-bg-color:  #378998;
+
+$mi-disabled-color: #777;
+$mi-box-shadow-color: #ddd;
+$mi-hr-border-color: #d7d7d7;
+$mi-spinner-color: #0F6EDC;
+
+
+// Font
+$mi-font: Arial, sans-serif;
+$mi-font-size-h1: 18px;
+$mi-font-size-h2: 16px;
+$mi-font-size-h3: 14px;
+$mi-heading-weight: bold;
+
+// Buttons
+$mi-button-bg: #fff;
+$mi-button-primary: #009200;
+$mi-button-secondary: #0f6edc;
+$mi-button-third: #4A4A4A;
+$mi-button-disabled: $mi-disabled-color;
+$mi-button-radius: 2px;
+$mi-button-padding: 10px 12px;
+
+// Link
+$mi-link-color: #378998;
+$mi-link-external: #0F6EDC;
+$mi-link-secret: #FF9C5B;
+
+//Alerts (we dont use success variant)
+
+$mi-alert-info-bg: #D8EEF7;
+$mi-alert-info-border: #4890E2;
+$mi-alert-info-text: #000000;
+
+$mi-alert-warning-bg: #FCF9E4;
+$mi-alert-warning-border: #ECDBA9;
+$mi-alert-warning-text: #97784B;
+
+$mi-alert-danger-bg: #F2DEDE;
+$mi-alert-danger-border: #D0021C;
+$mi-alert-danger-text: #751723;
+
+$mi-success-color: #009200;
+
+// Modal
+$mi-modal-header-border-color: #333;
+
+// Intyg
+$mi-intyg-header-bg: #43799A;
+$mi-intyg-header-color: #fff;
+
+$mi-intyg-body-bg: #fff;
+
+//Tables
+$mi-intyg-table-bg: #fff;
+//odd rows when striped
+$mi-intyg-table-bg-accent: #eee;
+
+//Nav pills
+$mi-nav-pills-active-link-hover-color: #333;
+$mi-nav-pills-active-link-hover-bg: #fff;
+$mi-nav-pills-border-color: #d7d7d7;
+$mi-nav-pills-link-active-bg: #e4eefa;
+
+
+
+// Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)
+$icon-font-path: '../bower_components/bootstrap-sass/assets/fonts/bootstrap/';
+
+$body-bg: $mi-body-bg;
+$text-color: $mi-text-color;
+
+$navbar-default-bg: $mi-menu-bg;
+
+$navbar-default-link-active-color: $mi-menu-active-color;
+$navbar-default-link-active-bg: $mi-menu-active-bg;
+$navbar-default-link-hover-color: $mi-menu-hover-color;
+
+//Nav pills
+$nav-pills-active-link-hover-color: $mi-nav-pills-active-link-hover-color;
+$nav-pills-active-link-hover-bg: $mi-nav-pills-active-link-hover-bg;
+$nav-pills-border-radius: 0px;
+
+$btn-primary-bg: $mi-button-bg;
+$btn-primary-color: $mi-button-primary;
+$btn-primary-border: $mi-button-primary;
+
+$btn-border-radius-base: $mi-button-radius;
+
+$font-family-base: $mi-font;
+$font-size-h1: $mi-font-size-h1;
+$font-size-h2: $mi-font-size-h2;
+$font-size-h3: $mi-font-size-h2;
+
+$headings-font-weight: $mi-heading-weight;
+
+$link-color: $mi-link-color;
+
+$modal-header-border-color: $mi-modal-header-border-color;
+
+//Alerts
+$alert-info-bg: $mi-alert-info-bg;
+$alert-info-border: $mi-alert-info-border;
+$alert-info-text: $mi-alert-info-text;
+
+$alert-warning-bg: $mi-alert-warning-bg;
+$alert-warning-border: $mi-alert-warning-border;
+$alert-warning-text: $mi-alert-warning-text;
+
+$alert-danger-bg: $mi-alert-danger-bg;
+$alert-danger-border: $mi-alert-danger-border;
+$alert-danger-text: $mi-alert-danger-text;
+
+//Hr
+$hr-border: $mi-hr-border-color;
+

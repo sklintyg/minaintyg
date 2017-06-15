@@ -56,7 +56,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         // Set origin (FK or ELVA77) from fake credentials.
         if (authentication instanceof FakeElegAuthenticationToken && details instanceof CitizenImpl) {
             FakeElegCredentials credz = (FakeElegCredentials) authentication.getCredentials();
-            details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()));
+            details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()), credz.getFirstName() + " " + credz.getLastName(), false);
         }
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,

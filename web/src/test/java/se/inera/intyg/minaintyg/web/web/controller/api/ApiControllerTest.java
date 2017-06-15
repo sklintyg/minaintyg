@@ -18,6 +18,34 @@
  */
 package se.inera.intyg.minaintyg.web.web.controller.api;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.api.ConsentResponse;
+import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
+import se.inera.intyg.minaintyg.web.api.UserInfo;
+import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
+import se.inera.intyg.minaintyg.web.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.web.security.LoginMethodEnum;
+import se.inera.intyg.minaintyg.web.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.web.service.ConsentService;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
+import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -29,34 +57,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.intyg.common.support.modules.registry.IntygModule;
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.schemas.contract.Personnummer;
-import se.inera.intyg.minaintyg.web.api.CertificateMeta;
-import se.inera.intyg.minaintyg.web.api.ConsentResponse;
-import se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor;
-import se.inera.intyg.minaintyg.web.web.security.Citizen;
-import se.inera.intyg.minaintyg.web.web.service.*;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeMetaData;
-import se.inera.intyg.minaintyg.web.web.service.dto.UtlatandeRecipient;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ApiControllerTest {
 
     private static final String CIVIC_REGISTRATION_NUMBER = "19121212-1212";
     private static final Personnummer PNR = new Personnummer(CIVIC_REGISTRATION_NUMBER);
+    private static final String FKASSA_RECIPIENT_ID = "FKASSA";
+    private static final String TRANSP_RECIPIENT_ID = "TRANSP";
+    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;
+    private static final String PERSON_FULLNAME = "Tolvan Tolvansson";
 
     @Mock
     private CertificateService certificateService;
@@ -186,18 +195,6 @@ public class ApiControllerTest {
     }
 
     @Test
-    public void testGetModulesMap() throws Exception {
-        when(moduleRegistry.listAllModules()).thenReturn(Arrays.asList(mock(IntygModule.class)));
-
-        List<IntygModule> res = apiController.getModulesMap();
-
-        assertNotNull(res);
-        assertEquals(1, res.size());
-
-        verify(moduleRegistry).listAllModules();
-    }
-
-    @Test
     public void testOnBeforeUnload() throws Exception {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getSession()).thenReturn(mock(HttpSession.class));
@@ -220,7 +217,9 @@ public class ApiControllerTest {
 
         assertEquals("ok", res);
         verify(req.getSession()).getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP);
-        verify(req.getSession(), never()).setAttribute(eq(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP), anyObject()); // verify not overridden
+        verify(req.getSession(), never()).setAttribute(eq(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP), anyObject()); // verify
+                                                                                                                            // not
+                                                                                                                            // overridden
     }
 
     @Test
@@ -233,6 +232,51 @@ public class ApiControllerTest {
 
         assertEquals(questionsString, res);
         verify(certificateService).getQuestions(type, version);
+    }
+
+    @Test
+    public void testSendCertificate() throws Exception {
+
+        // When
+        Personnummer personNummer = new Personnummer(CIVIC_REGISTRATION_NUMBER);
+        String certificateId = "abc-123";
+        List<String> recipients = Arrays.asList(FKASSA_RECIPIENT_ID, TRANSP_RECIPIENT_ID);
+        List<SendToRecipientResult> expectedResponse = new ArrayList<>();
+        expectedResponse.add(new SendToRecipientResult(FKASSA_RECIPIENT_ID, true, LocalDateTime.now()));
+        expectedResponse.add(new SendToRecipientResult(TRANSP_RECIPIENT_ID, true, LocalDateTime.now()));
+
+        mockCitizen(CIVIC_REGISTRATION_NUMBER);
+        when(certificateService.sendCertificate(personNummer, certificateId, recipients)).thenReturn(expectedResponse);
+
+        // Then
+        final List<SendToRecipientResult> actualResult = apiController.send(certificateId, recipients);
+
+        // Verify
+        assertEquals(actualResult, expectedResponse);
+        verify(certificateService).sendCertificate(eq(personNummer), eq(certificateId), eq(recipients));
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+        Citizen citizen = mock(Citizen.class);
+        when(citizen.getUsername()).thenReturn(CIVIC_REGISTRATION_NUMBER);
+        when(citizen.getLoginMethod()).thenReturn(LOGIN_METHOD);
+        when(citizen.getFullName()).thenReturn(PERSON_FULLNAME);
+        when(citizen.isSekretessmarkering()).thenReturn(true);
+        when(citizen.hasConsent()).thenReturn(true);
+
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        UserInfo user = apiController.getUser();
+
+        assertNotNull(user);
+        assertEquals(CIVIC_REGISTRATION_NUMBER, user.getPersonId());
+        assertEquals(LOGIN_METHOD.name(), user.getLoginMethod());
+        assertEquals(PERSON_FULLNAME, user.getFullName());
+        assertEquals(true, user.isSekretessmarkering());
+        assertEquals(true, user.isConsentGiven());
+
+
     }
 
     private void mockCitizen(String personId) {

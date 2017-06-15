@@ -1,17 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Schema for /moduleapi/certificate/<id>/send/<target>",
-  "type": "object",
-  "properties": {
-    "resultCode": {
-      "type": "string"
+  "title": "Schema for /api/certificates/<id>/send",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "recipientId": {
+        "type": "string"
+      },
+      "sent": {
+        "type": "boolean"
+      }
+    ,
+      "timestamp": {
+        "type": "string"
+      }
     },
-    "errorCode": {
-      "type": "string"
-    }
-  },
-  "required": [
-    "resultCode",
-    "errorCode"
-  ]
+    "required": [
+      "recipientId",
+      "sent"
+    ]
+  }
 }

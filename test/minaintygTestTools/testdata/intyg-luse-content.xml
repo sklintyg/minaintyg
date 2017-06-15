@@ -1,4 +1,4 @@
-<registerCertificateType xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2" xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:2" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:2">
+<registerCertificateType xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3" xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:3" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:3">
     <ns2:intyg>
         <ns4:intygs-id>
             <ns3:root>TSTNMT2321000156-1039</ns3:root>
@@ -185,12 +185,6 @@
         <ns4:svar id="26">
             <ns4:delsvar id="26.1">true</ns4:delsvar>
             <ns4:delsvar id="26.2">Kontaktinfo.</ns4:delsvar>
-        </ns4:svar>
-        <ns4:svar id="9001">
-            <ns4:delsvar id="9001.1">Skostorlek.</ns4:delsvar>
-        </ns4:svar>
-        <ns4:svar id="9002">
-            <ns4:delsvar id="9002.1">Längd.</ns4:delsvar>
         </ns4:svar>
     </ns2:intyg>
 </registerCertificateType>

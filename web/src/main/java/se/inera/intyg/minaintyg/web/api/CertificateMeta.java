@@ -24,6 +24,9 @@ import java.util.List;
 
 import se.inera.intyg.common.support.model.Status;
 
+/**
+ * DTO representing metadata of a signed certificate in the MI rest API.
+ */
 public class CertificateMeta {
 
     private String id;
@@ -33,7 +36,6 @@ public class CertificateMeta {
     private String careunitName;
     private LocalDateTime sentDate;
     private Boolean archived;
-    private Boolean cancelled;
     private String complementaryInfo;
     private List<Status> statuses = new ArrayList<>();
 
@@ -83,14 +85,6 @@ public class CertificateMeta {
 
     public void setArchived(Boolean archived) {
         this.archived = archived;
-    }
-
-    public Boolean getCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(Boolean cancelled) {
-        this.cancelled = cancelled;
     }
 
     public String getComplementaryInfo() {

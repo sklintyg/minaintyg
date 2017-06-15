@@ -13,7 +13,7 @@
 
 - name: Download minaintyg-web-{{ version }}.war
   get_url:
-    url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war"
+    url: "https://build-inera.nordicmedtest.se/nexus/repository/releases/se/inera/intyg/minaintyg/minaintyg-web/{{ version }}/minaintyg-web-{{ version }}.war"
     dest: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
     validate_certs: no
     timeout: 60
@@ -30,13 +30,16 @@
     state: absent
     path: "{{ webapps_folder }}/ROOT"
 
-- name: Remove old version of war
+- name: Deploy minaintyg-web-{{ version }}.war as ROOT.war
+  copy:
+    src: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
+    dest: "{{ webapps_folder }}/ROOT.war"
+    remote_src: True
+
+- name: Remove minaintyg-web-{{ version }}.war from releases
   file:
     state: absent
-    path: "{{ webapps_folder }}/ROOT.war"
-
-- name: Deploy minaintyg-web-{{ version }}.war as ROOT.war
-  command: "cp {{ releases_folder }}/minaintyg-web-{{ version }}.war {{ webapps_folder }}/ROOT.war"
+    path: "{{ releases_folder }}/minaintyg-web-{{ version }}.war"
 
 - name: Fetch configuration repo to get new branches
   command: git fetch origin
