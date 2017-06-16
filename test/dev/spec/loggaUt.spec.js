@@ -58,7 +58,7 @@ describe('Logga ut', function() {
         it('Mvks utloggningssida visas när man loggar ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.logout();
-            browser.driver.sleep(4000);
+            browser.driver.sleep(3000);
             expect(browser.getTitle()).toEqual('Logga ut - 1177 Vårdguidens e-tjänster');
             expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
         });
@@ -88,7 +88,7 @@ describe('Logga ut', function() {
         it('Välj "Tillbaka till Mina Vårdkontakter" i headern', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
-            browser.driver.sleep(4000);
+            browser.driver.sleep(3000);
             // Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inloggade i MVK.
             expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
             expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
@@ -96,7 +96,7 @@ describe('Logga ut', function() {
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
             browser.driver.get(browser.baseUrl + 'web/start');
-            browser.waitForAngular();
+            specHelper.waitForAngularTestability();
             expect(accessdeniedPage.isAt()).toBeTruthy();
         });
 
@@ -124,6 +124,7 @@ describe('Logga ut', function() {
 
         it('Inkorgsidan visas när invånaren går tillbaka direkt', function() {
             browser.driver.get(browser.baseUrl + 'web/start');
+            browser.waitForAngular();
             expect(inboxPage.isAt()).toBeTruthy();
         });
 
@@ -131,7 +132,6 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             browser.driver.get('http://www.google.com');
             expect(browser.getTitle()).toEqual('Google');
-            browser.driver.sleep(5000);
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
