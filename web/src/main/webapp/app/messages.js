@@ -73,7 +73,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'inbox.helptext.arkivera': '<p><b>Att arkivera intyg</b></p>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
         'inbox.message.no-more-certificates': 'Inga fler intyg',
-        'inbox.list.issuer.label': 'Utfärdare:',
+        'inbox.list.issuer.label': 'Utfärdare',
 
         /* ARCHIVED */
 
