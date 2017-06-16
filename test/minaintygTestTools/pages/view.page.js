@@ -65,14 +65,13 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
         return element.all(by.id(attrId)).each(function(item) {
             item.getText().then(function (txt) {
-                console.log("TEST:" + txt);
                 found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },
-    hasNoEvent: function(status) {
+    hasNoEvent: function(intygId, status) {
         var found = false;
-        return element(by.id('certificate-noevents')).all(by.tagName('div')).each(function(item) {
+        return element.all(by.css('.certificate-noevents-'+intygId)).first().all(by.tagName('div')).each(function(item) {
             item.getText().then(function (text) {
                 found = found || text.includes(status);
             });

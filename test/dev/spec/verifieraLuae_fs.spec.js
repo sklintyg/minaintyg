@@ -55,7 +55,7 @@ describe('Verifiera LUAE_FS', function() {
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuaefs();
         intygsId = intyg.id;
-        console.log(intygsId);
+        debug(intygsId);
         restHelper.createIntyg(intyg);
     });
 

@@ -1,26 +1,22 @@
 {
   "name": "e2e-test",
   "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "file-reader": "^1.1.1",
     "minaintyg-testtools": "file:./minaintygTestTools"
   },
   "devDependencies": {
-    "grunt": "^0.4.0",
+    "grunt": "^0.4.5",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-env": "^0.4.4",
-    "grunt-jsbeautifier": "^0.2.12",
-    "grunt-ng-annotate": "^0.3.0",
-    "grunt-protractor-runner": "^3.0.0",
+    "grunt-protractor-runner": "^4.0.0",
     "grunt-protractor-webdriver": "^0.2.5",
     "http-backend-proxy": "^1.4.3",
     "jasmine-reporters": "^2.0.7",
     "jclass": "^1.1.9",
-    "mysql": "^2.5.4",
-    "node-soap": "^1.0.0",
-    "protractor": "^3.1.1",
-    "protractor-jasmine2-screenshot-reporter": "^0.1.7",
+    "protractor-jasmine2-screenshot-reporter": "^0.3.5",
     "request": "^2.65.0",
     "simple-xml-dom": "^1.0.0",
     "xml2js": "^0.4.4"

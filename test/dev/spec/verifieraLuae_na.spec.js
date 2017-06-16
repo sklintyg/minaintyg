@@ -54,7 +54,7 @@ describe('Verifiera LUAE_NA', function() {
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuaena();
         intygsId = intyg.id;
-        console.log(intygsId);
+        debug(intygsId);
         restHelper.createIntyg(intyg);
     });
 

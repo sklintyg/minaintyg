@@ -30,6 +30,11 @@
  'use strict';
 var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
+var screenshotReporter = new HtmlScreenshotReporter({
+    dest: 'dev/report',
+    filename: 'index.html'
+});
+
 exports.config = {
     //seleniumAddress: 'http://localhost:4444/wd/hub',
     baseUrl: require('./../minaintygTestTools/environment.js').envConfig.MINAINTYG_URL,
@@ -88,6 +93,14 @@ exports.config = {
         //isVerbose: true, // jasmine 1.3 only
         //includeStackTrace: true // jasmine 1.3 only
     },
+
+    // Setup the report before any tests start
+    beforeLaunch: function() {
+        return new Promise(function(resolve){
+            screenshotReporter.beforeLaunch(resolve);
+        });
+    },
+
     onPrepare: function() {
         // implicit and page load timeouts
         //browser.manage().timeouts().pageLoadTimeout(40000);
@@ -107,6 +120,14 @@ exports.config = {
             console.log(text);
         };
 
+        var debug = false;
+
+        global.debug = function(text){
+            if (debug) {
+                console.log(text);
+            }
+        };
+
         var reporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(
             new reporters.JUnitXmlReporter({
@@ -114,12 +135,7 @@ exports.config = {
                 filePrefix: 'junit',
                 consolidateAll:true}));
 
-        jasmine.getEnv().addReporter(
-            new HtmlScreenshotReporter({
-                dest: 'dev/report',
-                filename: 'index.html'
-            })
-        );
+        jasmine.getEnv().addReporter(screenshotReporter);
 
         var disableNgAnimate = function() {
             angular.module('disableNgAnimate', []).run(['$animate', function($animate) {
@@ -129,5 +145,12 @@ exports.config = {
         };
 
         browser.addMockModule('disableNgAnimate', disableNgAnimate);
+    },
+
+    // Close the report after all tests finish
+    afterLaunch: function(exitCode) {
+        return new Promise(function(resolve){
+            screenshotReporter.afterLaunch(resolve.bind(this, exitCode));
+        });
     }
 };
