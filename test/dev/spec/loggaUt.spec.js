@@ -27,11 +27,9 @@ var restHelper = miTestTools.helpers.rest;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
-var mvklogoutPage = miTestTools.pages.mvklogoutPage;
-var mvkloginPage = miTestTools.pages.mvkloginPage;
 var accessdeniedPage = miTestTools.pages.accessdeniedPage;
 
-xdescribe('Logga ut', function() {
+describe('Logga ut', function() {
 
     var personId = '19010101-0101';
 
@@ -60,7 +58,7 @@ xdescribe('Logga ut', function() {
         it('Mvks utloggningssida visas när man loggar ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.logout();
-            browser.driver.sleep(2000);
+            browser.driver.sleep(4000);
             expect(browser.getTitle()).toEqual('Logga ut - 1177 Vårdguidens e-tjänster');
             expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
         });
@@ -89,7 +87,7 @@ xdescribe('Logga ut', function() {
         it('Välj "Tillbaka till Mina Vårdkontakter" i headern', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
-            browser.driver.sleep(2000);
+            browser.driver.sleep(4000);
             // Här visas MVK's inloggningssida eftersom vi kör i testmiljön och ej är inloggade i MVK.
             expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
             expect(browser.getCurrentUrl()).toContain('minavardkontakter.se');
