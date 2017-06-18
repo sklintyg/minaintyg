@@ -132,6 +132,7 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             browser.driver.get('http://www.google.com');
             expect(browser.getTitle()).toEqual('Google');
+            browser.driver.sleep(5000);
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
