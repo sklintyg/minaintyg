@@ -65,7 +65,7 @@ describe('Logga ut', function() {
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
             browser.driver.get(browser.baseUrl + 'web/start');
-            browser.waitForAngular();
+            specHelper.waitForAngularTestability();
             expect(accessdeniedPage.isAt()).toBeTruthy();
         });
 
@@ -124,7 +124,7 @@ describe('Logga ut', function() {
 
         it('Inkorgsidan visas när invånaren går tillbaka direkt', function() {
             browser.driver.get(browser.baseUrl + 'web/start');
-            browser.waitForAngular();
+            specHelper.waitForAngularTestability();
             expect(inboxPage.isAt()).toBeTruthy();
         });
 
@@ -136,7 +136,7 @@ describe('Logga ut', function() {
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
             browser.driver.get(browser.baseUrl + 'web/start');
-            browser.waitForAngular();
+            specHelper.waitForAngularTestability();
             expect(accessdeniedPage.isAt()).toBeTruthy();
         });
 
