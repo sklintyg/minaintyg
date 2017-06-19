@@ -27,7 +27,6 @@ var restHelper = miTestTools.helpers.rest;
 var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
@@ -140,7 +139,11 @@ describe('Verifiera LUAE_FS', function() {
         it('Verifiera att Kontakt är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
-            expect(viewPage.getTextContent('kontaktFk')).toEqual('Nej');
+            expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
+            expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
+            expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Vill stämma av ersättningen');
+            expect(viewPage.showsNoValue('anledningTillKontakt')).toBeFalsy();
         });
 
         it('Verifiera att skapad av är angivet', function() {
