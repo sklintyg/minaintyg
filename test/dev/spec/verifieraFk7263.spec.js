@@ -119,7 +119,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 8a: Arbetsförmåga bedömning', function() {
-            expect(viewPage.getTextContent('nuvarandeArbetsuppgifter')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('patientworkcapacity-no-value')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 8b: Arbetsförmåga nedsatthet', function() {
@@ -219,7 +219,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 8a: Arbetsförmåga bedömning', function() {
-            expect(viewPage.getTextContent('nuvarandeArbetsuppgifter')).toEqual('Dirigent. Dirigerar en större orkester på deltid');
+            expect(viewPage.getTextContent('nuvarandeArbetsuppgifter-text')).toEqual('Dirigent. Dirigerar en större orkester på deltid');
             expect(viewPage.getTextContent('arbetsloshet')).toEqual('Arbetslöshet - att utföra sådant arbete som är normalt förekommande på arbetsmarknaden');
             expect(viewPage.getTextContent('foraldrarledighet')).toEqual('Föräldraledighet med föräldrapenning - att vårda sitt barn');
         });
