@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         return SRC_DIR + file;
     }));
 
-    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + '/pubapp/showcase/index.html']);
+    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp']);
     var _ = require('lodash');
 
     var modules = {
@@ -133,7 +133,6 @@ module.exports = function(grunt) {
             minaintyg: {
                 directory: 'src/main/webapp/bower_components',
                 src: [
-                    SRC_DIR + '../pubapp/**/index.html',
                     SRC_DIR + '../**/*.jsp',
                     'karma.conf.js'
                 ],
