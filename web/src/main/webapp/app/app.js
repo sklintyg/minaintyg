@@ -114,21 +114,10 @@
                 dynamicLinkService.addLinks(MIConfig.links);
                 moduleService.setModules(moduleArray);
 
-                $window.doneLoading = false;
-                $window.rendered = true;
-
                 //Initialize commmon recipientsFactory with known recipients
                 recipientsFactory.setRecipients(MIConfig.knownRecipients);
 
-                $rootScope.$on('$stateChangeStart', function(/*event, toState, toParams, fromState, fromParams*/) {
-                    $window.doneLoading = false;
-                });
-
-                $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-                });
-
                 $rootScope.$on('$stateChangeSuccess', function(event, toState/*, toParams, fromState, fromParams*/) {
-                    $window.doneLoading = true;
                     if (toState.data.keepInboxTabActive === false) {
                         $rootScope.keepInboxTab = false;
                     }
