@@ -87,7 +87,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'archived-cert-table.headers.complementary-info': 'Intyg avser',
         'archived-cert-table.headers.issuedby': 'Intygsutfärdare',
         'btn-link.restore': 'Återställ intyg',
-        'btn-link.restore.tooltip': 'Flytta intyget tillbaka till Inkorgen.',
+        'btn-link.restore.tooltip': 'Flytta tillbaka intyget till Inkorgen.',
 
         /* SEND */
         'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till.',
