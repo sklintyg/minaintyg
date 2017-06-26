@@ -117,13 +117,10 @@ describe('Visa intyg ts-diabetes', function() {
             expect(viewPage.getTextContent('syn-synfaltsprovningUtanAnmarkning')).toEqual('Ja');
             expect(viewPage.getTextContent('syn-row0-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row0-col2')).toEqual('0,0');
-            expect(viewPage.getTextContent('syn-row0-col3')).toEqual('Nej');
             expect(viewPage.getTextContent('syn-row1-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row1-col2')).toEqual('0,0');
-            expect(viewPage.getTextContent('syn-row1-col3')).toEqual('Nej');
             expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
-            expect(viewPage.getTextContent('syn-row2-col3')).toEqual('Nej');
             expect(viewPage.getTextContent('syn-diplopi')).toEqual('Ja');
         });
 
