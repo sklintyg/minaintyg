@@ -31,7 +31,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Visa intyg ts-diabetes', function() {
+xdescribe('Visa intyg ts-diabetes', function() {
 
     var personId = '19010101-0101';
     var intygsId = null;
