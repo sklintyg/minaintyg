@@ -103,6 +103,11 @@ h2 {
   .modal-footer {
     border-top: 0;
     text-align: left;
+
+    .btn {
+      margin-right: 5px;
+      margin-left: 0;
+    }
   }
 }
 //Tables
