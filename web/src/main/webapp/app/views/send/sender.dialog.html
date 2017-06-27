@@ -9,7 +9,7 @@
     <div class="modal-body">
       <div ng-repeat="r in vm.recipients" class="row result-rows">
 
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           <span ng-if="r.status.sent" class="text-nowrap">
             {{r.status.timestamp | date:'short'}}
             <span ng-attr-id="{{'success-result-' + r.id}}" message key="sendpage.dialog.label.received-by"></span>
@@ -18,7 +18,7 @@
             <span ng-attr-id="{{'fail-result-' + r.id}}" message key="sendpage.dialog.label.not-received-by"></span>
           </span>
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
           {{r.name}}
           <strong><i class="icon pull-right" ng-class="{'icon-ok' :r.status.sent, 'icon-attention danger' :!r.status.sent}"></i></strong>
         </div>
