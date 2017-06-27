@@ -7,7 +7,7 @@
   <div class="row">
 
     <!-- select from list -->
-    <div class="col-xs-6">
+    <div class="col-sm-6">
       <div>
         <ul class="nav selection-list">
           <li ng-repeat="r in recipients | orderBy: 'name'">
@@ -25,7 +25,7 @@
 
 
     <!-- selected list -->
-    <div class="col-xs-6">
+    <div class="col-sm-6">
       <div class="selection-box">
         <div ng-if="selected.length < 1"><span message key="sendpage.label.none-selected"></span></div>
         <div ng-if="selected.length > 0"><span message key="sendpage.label.some-selected"></span></div>

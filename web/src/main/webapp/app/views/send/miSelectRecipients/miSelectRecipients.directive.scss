@@ -11,7 +11,12 @@ mi-select-recipients {
 
 
   .selection-list {
-    min-height: 160px;
+    min-height: 100px;
+
+    @media (min-width: $screen-sm-min) {
+      min-height: 160px;
+    }
+
     a.sent {
       cursor: default;
       text-decoration: none;
