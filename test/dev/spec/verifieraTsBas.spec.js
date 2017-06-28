@@ -31,7 +31,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Visa intyg ts-bas', function() {
+describe('Visa intyg ts-bas', function() {
 
     var personId = '19010101-0101';
     var intygsId = null;
@@ -121,7 +121,7 @@ xdescribe('Visa intyg ts-bas', function() {
         it('Verifiera "5. Diabetes"', function() {
             expect(viewPage.getTextContent('diabetes-harDiabetes')).toEqual('Ja');
             expect(viewPage.getTextContent('diabetes-diabetesTyp')).toEqual('Typ 2');
-            expect(viewPage.getTextContent('diabetes-kost')).toEqual('Kost');
+            expect(viewPage.getTextContent('diabetes-kost-diabetes-tabletter-diabetes-insulin-0')).toEqual('Kost');
         });
 
         it('Verifiera "6. Neurologiska sjukdomar"', function() {

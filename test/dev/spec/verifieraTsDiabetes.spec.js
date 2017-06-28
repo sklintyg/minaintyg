@@ -31,7 +31,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-xdescribe('Visa intyg ts-diabetes', function() {
+describe('Visa intyg ts-diabetes', function() {
 
     var personId = '19010101-0101';
     var intygsId = null;
@@ -92,9 +92,9 @@ xdescribe('Visa intyg ts-diabetes', function() {
         it('Verifiera "1. Allmänt"', function() {
             expect(viewPage.getTextContent('diabetes-observationsperiod')).toEqual('2012');
             expect(viewPage.getTextContent('diabetes-diabetestyp')).toEqual('Typ 2');
-            expect(viewPage.getTextContent('diabetes-endastKost')).toEqual('Endast kost');
-            expect(viewPage.getTextContent('diabetes-tabletter')).toEqual('Tabletter');
-            expect(viewPage.getTextContent('diabetes-insulin')).toEqual('Insulin');
+            expect(viewPage.getTextContent('diabetes-endastKost-diabetes-tabletter-diabetes-insulin-0')).toEqual('Endast kost');
+            expect(viewPage.getTextContent('diabetes-endastKost-diabetes-tabletter-diabetes-insulin-1')).toEqual('Tabletter');
+            expect(viewPage.getTextContent('diabetes-endastKost-diabetes-tabletter-diabetes-insulin-2')).toEqual('Insulin');
             expect(viewPage.getTextContent('diabetes-insulinBehandlingsperiod')).toEqual('2012');
             expect(viewPage.getTextContent('diabetes-annanBehandlingBeskrivning')).toEqual('Hypnos');
         });
