@@ -135,7 +135,8 @@ exports.config = {
                 filePrefix: 'junit',
                 consolidateAll:true}));
 
-        jasmine.getEnv().addReporter(screenshotReporter);
+        // Uncomment to add screenshots
+        //jasmine.getEnv().addReporter(screenshotReporter);
 
         var disableNgAnimate = function() {
             angular.module('disableNgAnimate', []).run(['$animate', function($animate) {
