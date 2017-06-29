@@ -459,6 +459,6 @@ module.exports = function(grunt) {
         'ngAnnotate',
         'uglify' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
-    grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('test', [ 'bower', 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
 };
