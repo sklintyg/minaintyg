@@ -39,7 +39,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return isAt._super.call(this);
     },
     backToList: function() {
-        element(by.className('backlink')).click();
+        element(by.id('breadcrumb-inkorg')).click();
     },
     isAtCert: function(certId) {
       return element(by.id('mi-compact-certificate-header-' + certId)).isDisplayed();

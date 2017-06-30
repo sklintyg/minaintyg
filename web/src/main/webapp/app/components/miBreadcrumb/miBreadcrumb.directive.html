@@ -4,6 +4,6 @@
 
   Du är här:
   <ol class="breadcrumb">
-    <li ng-repeat="step in steps | limitTo:(steps.length-1)"><button ng-if="step.stateConfig.link" class="btn btn-link" ng-click="link(step)">{{step.stateConfig.label}}</button><span ng-if="!step.stateConfig.link" ng-bind-html="step.stateConfig.label"></span></li><li ng-repeat="step in steps | limitTo:-1" class="active"><span ng-bind-html="step.stateConfig.label"></span></li>
+    <li ng-repeat="step in steps | limitTo:(steps.length-1)"><button id="breadcrumb-{{step.stateName}}"  ng-if="step.stateConfig.link" class="btn btn-link" ng-click="link(step)">{{step.stateConfig.label}}</button><span ng-if="!step.stateConfig.link" ng-bind-html="step.stateConfig.label"></span></li><li ng-repeat="step in steps | limitTo:-1" class="active"><span ng-bind-html="step.stateConfig.label"></span></li>
   </ol>
 </div>
