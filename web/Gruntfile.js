@@ -69,8 +69,8 @@ module.exports = function(grunt) {
         if (!module.angularModule) {
             module.angularModule = moduleName;
         }
-        module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
-        module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName;
+        module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName;
     });
 
     function buildListForAllModules(callback) {
@@ -105,10 +105,10 @@ module.exports = function(grunt) {
         Object.keys(modules).forEach(function(moduleName) {
             var module = modules[moduleName];
             var files = grunt.file.expand({cwd: __dirname + module.src},
-                ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
-            grunt.file.write(__dirname + module.dest + '/module-deps.json', JSON.stringify(files.
+                ['app-shared/**/*.js', 'minaintyg/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+            grunt.file.write(__dirname + module.dest + '/minaintyg/module-deps.json', JSON.stringify(files.
             map(function(file) {
-                return '/web/webjars/' + module.name + '/minaintyg/' + file;
+                return '/web/webjars/' + module.name + '/' + file;
             }).
             concat('/web/webjars/' + module.name + '/minaintyg/templates.js'), null, 4));
         });
