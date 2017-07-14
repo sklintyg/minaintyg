@@ -36,7 +36,7 @@ var screenshotReporter = new HtmlScreenshotReporter({
 });
 
 exports.config = {
-    //seleniumAddress: 'http://localhost:4444/wd/hub',
+    seleniumAddress: require('./../minaintygTestTools/environment.js').envConfig.SELENIUM_ADDRESS,
     baseUrl: require('./../minaintygTestTools/environment.js').envConfig.MINAINTYG_URL,
 
     specs: ['./spec/*.spec.js'],
