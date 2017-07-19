@@ -122,9 +122,36 @@ describe('Visa intyg ts-diabetes', function() {
             expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-diplopi')).toEqual('Ja');
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('notshown');
+        });
+
+        it('Verifiera "3. Synintyg" mobil-tabell', function() {
+            mobileSize();
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('0,0');
+
+            expect(viewPage.getTextContent('syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col2')).toEqual('notshown');
         });
 
         it('Verifiera "4. Bedömning"', function() {
+            desktopSize();
+
             expect(viewPage.getTextContent('bedomning-lamplighetInnehaBehorighet')).toEqual('Nej');
             expect(viewPage.getTextContent('bedomning-korkortstyp-0')).toEqual('AM');
             expect(viewPage.getTextContent('bedomning-korkortstyp-1')).toEqual('A1');

@@ -26,7 +26,6 @@ var restHelper = miTestTools.helpers.rest;
 var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
@@ -107,9 +106,27 @@ describe('Verifiera LUAE_NA', function() {
             expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från habiliteringen');
             expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2016-04-26');
             expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('vårdgivare');
+
+            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('notshown');
+        });
+
+        it('Verifiera medicinskt underlag mobil ', function() {
+            mobileSize();
+
+            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('Underlag från habiliteringen');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('2016-04-26');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('vårdgivare');
+
+            expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('notshown');
+            expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('notshown');
         });
 
         it('Verifiera att korrekta diagnoser är angivet', function() {
+            desktopSize();
+
             expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
 
             expect(viewPage.getDynamicLabelText('FRG_6.RBK')).toBe(texts['FRG_6.RBK']);

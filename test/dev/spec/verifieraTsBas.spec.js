@@ -98,9 +98,42 @@ describe('Visa intyg ts-bas', function() {
             expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-korrektionsglasensStyrka')).toEqual('Ja');
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row0-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('notshown');
+        });
+
+        it('Verifiera "1. Synfunktioner" mobil-tabell', function() {
+            mobileSize();
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row0-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('0,0');
+
+            expect(viewPage.getTextContent('syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row0-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col2')).toEqual('notshown');
         });
 
         it('Verifiera "2. Hörsel och balanssinne"', function() {
+            desktopSize();
+
             expect(viewPage.getTextContent('horselBalans-balansrubbningar')).toEqual('Ja');
             expect(viewPage.getTextContent('horselBalans-svartUppfattaSamtal4Meter')).toEqual('Ja');
         });
