@@ -32,7 +32,9 @@ var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 var screenshotReporter = new HtmlScreenshotReporter({
     dest: 'dev/report',
-    filename: 'index.html'
+    filename: 'index.html',
+    ignoreSkippedSpecs: true,
+    captureOnlyFailedSpecs: true
 });
 
 exports.config = {
@@ -116,6 +118,16 @@ exports.config = {
 
         global.miTestTools = require('minaintyg-testtools');
 
+        global.mobileSize = function() {
+            browser.driver.manage().window().setSize(450, 800);
+        };
+
+        global.desktopSize = function() {
+            browser.driver.manage().window().setSize(1200, 1000);
+        };
+
+        global.desktopSize();
+
         global.logg = function(text){
             console.log(text);
         };
@@ -135,8 +147,7 @@ exports.config = {
                 filePrefix: 'junit',
                 consolidateAll:true}));
 
-        // Uncomment to add screenshots
-        //jasmine.getEnv().addReporter(screenshotReporter);
+        jasmine.getEnv().addReporter(screenshotReporter);
 
         var disableNgAnimate = function() {
             angular.module('disableNgAnimate', []).run(['$animate', function($animate) {
