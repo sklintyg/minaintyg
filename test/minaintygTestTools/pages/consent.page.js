@@ -44,6 +44,7 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
     },
     clickGiveConsent: function() {
         this.giveConsent.click();
+        specHelper.waitForAngularTestability();
     }
 
 });
