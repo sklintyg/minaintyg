@@ -14,3 +14,25 @@
     border: none;
   }
 }
+
+.archived-mobile-list {
+
+  .archived-cert {
+    display: table;
+    width: 100%;
+  }
+
+  > .archived-cert:nth-of-type(even) {
+    background-color: $mi-intyg-table-bg;
+  }
+
+  > .archived-cert:nth-of-type(odd) {
+    background-color: $mi-intyg-table-bg-accent;
+  }
+
+  .row {
+    margin: 15px 0;
+  }
+
+  margin-bottom: 20px;
+}

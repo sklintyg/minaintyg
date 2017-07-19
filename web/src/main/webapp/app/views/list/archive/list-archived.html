@@ -23,32 +23,80 @@
     <div class="col-xs-12">
       <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading"
            show-content="doneLoading && (archivedCertificates | archived).length>0">
-        <div class="table-responsive">
-          <table id="archived-cert-table" class="table table-striped" aria-labelledby="archivedHeader">
-            <thead>
-            <tr>
-              <th scope="col" id="issued"><span message class="text-nowrap" key="archived-cert-table.headers.issued"></span></th>
-              <th scope="col" id="type"><span message key="archived-cert-table.headers.type"></span></th>
-              <th scope="col" id="certinfo"><span message key="archived-cert-table.headers.complementary-info"></span></th>
-              <th scope="col" id="issuedby"><span message key="archived-cert-table.headers.issuedby"></span></th>
-              <th scope="col" id="restore" aria-hidden="true" aria-label="Återställ intyg">&nbsp;</th>
-            </tr>
-            </thead>
+        <table id="archived-cert-table" class="table table-striped hidden-xs hidden-sm" aria-labelledby="archivedHeader">
+          <thead>
+          <tr>
+            <th scope="col" id="issued"><span message class="text-nowrap" key="archived-cert-table.headers.issued"></span></th>
+            <th scope="col" id="type"><span message key="archived-cert-table.headers.type"></span></th>
+            <th scope="col" id="certinfo"><span message key="archived-cert-table.headers.complementary-info"></span></th>
+            <th scope="col" id="issuedby"><span message key="archived-cert-table.headers.issuedby"></span></th>
+            <th scope="col" id="restore" aria-hidden="true" aria-label="Återställ intyg">&nbsp;</th>
+          </tr>
+          </thead>
 
-            <tbody>
-            <tr ng-repeat="cert in archivedCertificates | archived">
-              <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
-              <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
-              <td headers="certinfo">{{cert.complementaryInfo}}</td>
-              <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
-              <td headers="restore">
-                <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
-                       popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <tbody>
+          <tr ng-repeat="cert in archivedCertificates | archived">
+            <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
+            <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
+            <td headers="certinfo">{{cert.complementaryInfo}}</td>
+            <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
+            <td headers="restore">
+              <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
+                     popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="visible-xs visible-sm archived-mobile-list">
+          <div class="archived-cert" ng-repeat="cert in archivedCertificates | archived">
+            <div class="row">
+              <div class="col-xs-4 col-sm-3">
+                <span message class="text-nowrap" key="archived-cert-table.headers.issued"></span>
+              </div>
+              <div class="col-xs-8 col-sm-9 text-nowrap">
+                {{cert.sentDate | date:'shortDate'}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3">
+                <span message key="archived-cert-table.headers.type"></span>
+              </div>
+              <div class="col-xs-8 col-sm-9">
+                {{moduleService.getModuleName(cert.type)}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3">
+                <span message key="archived-cert-table.headers.complementary-info"></span>
+              </div>
+              <div class="col-xs-8 col-sm-9">
+                {{cert.complementaryInfo}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3">
+                <span message key="archived-cert-table.headers.issuedby"></span>
+              </div>
+              <div class="col-xs-8 col-sm-9">
+                {{cert.careunitName}}, {{cert.caregiverName}}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-4 col-sm-3">
+              </div>
+              <div class="col-xs-8 col-sm-9">
+                <a id="restoreCertificate-{{cert.id}}-list" href ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
+                        popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></a>
+              </div>
+            </div>
+          </div>
         </div>
+
         <span class="text-muted">Inga fler intyg</span>
       </div>
       <!-- eof spinner -->
