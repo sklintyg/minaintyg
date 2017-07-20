@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ConsentCtrl',
-    [ '$cookies', '$filter', '$location', '$scope', '$window', 'minaintyg.consentService',
-        function($cookies, $filter, $location, $scope, $window, consentService) {
+    [ '$cookies', '$filter', '$state', '$scope', '$window', 'minaintyg.consentService',
+        function($cookies, $filter, $state, $scope, $window, consentService) {
             'use strict';
 
             $scope.giveConsent = function() {
@@ -30,7 +30,7 @@ angular.module('minaintyg').controller('minaintyg.ConsentCtrl',
                         $cookies.put('RedirectFromConsent','1');
                         $window.location.href = '/web/start';
                     } else {
-                        $location.path('/fel/couldnotgiveconsent');
+                        $state.go('fel', {errorCode: 'couldnotgiveconsent'});
                     }
                 });
             };

@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').directive('miBreadcrumb', [
-    '$rootScope', '$location', '$state', '$stateParams', '$window', '$log', 'minaintyg.BreadcrumbConfig',
-    function($rootScope, $location, $state, $stateParams, $window, $log, config) {
+    '$state', '$stateParams', '$window', '$log', 'minaintyg.BreadcrumbConfig',
+    function($state, $stateParams, $window, $log, config) {
         'use strict';
 
         return {

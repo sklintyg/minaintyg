@@ -19,8 +19,8 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$location', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
-                function($filter, $location, $log, $scope, $window, consentService, dialogService, messageService) {
+        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
+                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService) {
                     'use strict';
 
 
@@ -52,7 +52,7 @@ angular.module('minaintyg').controller(
                             if (data !== null && data.result) {
                                 $window.location.href = '/web/start';
                             } else {
-                                $location.path('/fel/couldnotrevokeconsent');
+                                $state.go('fel', {errorCode: 'couldnotrevokeconsent'});
                             }
                         });
                     }

@@ -18,10 +18,10 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ConsentGivenCtrl',
-    function($filter, $location, $scope, $window) {
+    function($state, $scope) {
         'use strict';
         $scope.continueToMI = function() {
-            $window.location.href = '/web/start';
+            $state.go('index');
         };
 
         $scope.pagefocus = true;
