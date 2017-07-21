@@ -225,7 +225,7 @@ module.exports = function(grunt) {
                 map: false,
                 processors: [
                     require('autoprefixer')({browsers: ['last 2 versions', 'ie 9']}), // add vendor prefixes
-                    require('cssnano')() // minify the result
+                    require('cssnano')({zindex: false}) // minify the result
                 ]
             },
             dist: {

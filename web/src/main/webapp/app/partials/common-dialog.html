@@ -10,7 +10,7 @@
 <div class="modal-footer">
   <button type="button" id="{{button1id}}" class="btn btn-primary" ng-disabled="!dialog.acceptprogressdone" ng-click="button1click()"
           uib-popover="{{button1tooltip}}"
-          popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="false" popover-placement="auto top">
+          popover-trigger="mouseenter" popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
     <i ng-if="!dialog.acceptprogressdone" class="icon icon-spinner animate-spin"></i>
     <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span message key="{{button1text}}"></span>
   </button>
