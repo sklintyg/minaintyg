@@ -122,6 +122,7 @@
             <ns4:korkortstyp>D</ns4:korkortstyp>
             <ns4:korkortstyp>DE</ns4:korkortstyp>
             <ns4:korkortstyp>TAXI</ns4:korkortstyp>
+            <ns4:lamplighetInnehaBehorighetSpecial>false</ns4:lamplighetInnehaBehorighetSpecial>
             <ns4:behovAvLakareSpecialistKompetens>Kronologisk bastuberedning</ns4:behovAvLakareSpecialistKompetens>
         </ns4:bedomning>
     </ns3:intyg>
