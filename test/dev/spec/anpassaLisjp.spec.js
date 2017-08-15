@@ -26,7 +26,6 @@ var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 var anpassaPage = miTestTools.pages.anpassaLisjpPage;
@@ -36,10 +35,11 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
 
     var intygsId = null;
+    var personId = '19121212-1212';
 
     beforeAll(function() {
         // Rensa alla intyg för tolvan
-        restHelper.deleteAllIntygForCitizen('19121212-1212');
+        restHelper.deleteAllIntygForCitizen(personId);
 
         // Ta bort tidigare samtycken
         restHelper.deleteConsent();
@@ -47,20 +47,19 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         var intyg = genericTestdataBuilder.getLisjp();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
+
+        // Just set the consent, don't need to test it in every protractor test
+        restHelper.setConsent(personId);
     });
 
     afterAll(function() {
-        restHelper.deleteConsent();
+        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 
     describe('Logga in', function() {
 
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        // Logga in
+       // Logga in
         it('Logga in', function() {
             welcomePage.get();
             specHelper.waitForAngularTestability();
@@ -68,10 +67,7 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
             specHelper.waitForAngularTestability();
         });
 
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickGiveConsent();
-        });
+
 
     });
 

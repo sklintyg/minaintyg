@@ -26,7 +26,6 @@ var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 var anpassaPage = miTestTools.pages.anpassaFk7263Page;
@@ -36,6 +35,7 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
 
     var intygsId = null;
+    var personId = '19121212-1212';
 
     beforeAll(function() {
         // Rensa alla intyg för tolvan
@@ -47,10 +47,11 @@ describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
         var intyg = genericTestdataBuilder.getFk7263();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
+        restHelper.setConsent(personId);
     });
 
     afterAll(function() {
-       restHelper.deleteConsent();
+       restHelper.deleteConsent(personId);
        restHelper.deleteIntyg(intygsId);
     });
 
@@ -66,11 +67,6 @@ describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
             specHelper.waitForAngularTestability();
             welcomePage.login();
             specHelper.waitForAngularTestability();
-        });
-
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickGiveConsent();
         });
 
     });
