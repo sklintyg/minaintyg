@@ -103,6 +103,9 @@ h2 {
   .modal-footer {
     border-top: 0;
     text-align: left;
+    .btn+.btn {
+      margin-bottom: 1px;
+    }
   }
 }
 
@@ -111,8 +114,12 @@ h2 {
     .btn {
       width: 100%;
       margin: 5px 0 0 0;
+      +.btn {
+        margin: 5px 0 0 0;
+      }
     }
   }
+
 }
 
 //Tables
