@@ -54,16 +54,31 @@
         });
     }
 
-    app.config([ '$logProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', function($logProvider, $httpProvider, http403ResponseInterceptorProvider) {
-        $logProvider.debugEnabled(true);
+    app.config([ '$logProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider', '$windowProvider',
+            function($logProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider, $windowProvider) {
+                $logProvider.debugEnabled(true);
 
-        // Add cache buster interceptor
-        $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
+                // Add cache buster interceptor
+                $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
-        // Configure 403 interceptor provider
-        http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
-        $httpProvider.interceptors.push('common.http403ResponseInterceptor');
-    } ]);
+                // Configure 403 interceptor provider
+                http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
+                $httpProvider.interceptors.push('common.http403ResponseInterceptor');
+
+                // Configure default triggers for tooltipProvider to disable triggers for
+                // devices supporting touch events (caused by INTYG-4301). These defaults can be overridden by explict
+                // directive attribute 'popover-trigger', but then it will be enabled for all devices.
+                if ('ontouchstart' in $windowProvider.$get()) {
+                    $uibTooltipProvider.options({
+                        trigger: 'dontTrigger'
+                    });
+                } else {
+                    $uibTooltipProvider.options({
+                        trigger: 'mouseenter'
+                    });
+                }
+
+            } ]);
 
     app.config(function($provide) {
         $provide.decorator('$$rAF', function($delegate, $window, $timeout, $browser) {

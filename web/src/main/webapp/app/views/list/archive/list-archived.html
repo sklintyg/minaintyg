@@ -41,7 +41,7 @@
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
             <td headers="restore">
-              <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
+              <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}"
                      popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></button>
             </td>
           </tr>
@@ -90,7 +90,7 @@
               <div class="col-xs-4 col-sm-3">
               </div>
               <div class="col-xs-8 col-sm-9">
-                <a id="restoreCertificate-{{cert.id}}-list" href ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}" popover-trigger="mouseenter"
+                <a id="restoreCertificate-{{cert.id}}-list" href ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}"
                         popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span message key="btn-link.restore"></span></a>
               </div>
             </div>
