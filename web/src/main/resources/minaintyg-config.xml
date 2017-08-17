@@ -51,7 +51,7 @@
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
-        <bean class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
+        <bean class="se.inera.intyg.common.util.integration.json.CustomObjectMapper"/>
       </property>
     </bean>
 
@@ -81,7 +81,7 @@
       <property name="origin" value="MINA_INTYG"/>
     </bean>
 
-    <bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper" />
+    <bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.json.CustomObjectMapper" />
     <bean id="intygTextsService" class="se.inera.intyg.common.services.texts.IntygTextsServiceImpl" />
     <bean id="intygTextsRepository" class="se.inera.intyg.common.services.texts.repo.IntygTextsRepositoryImpl" />
     <bean id="befattningService" class="se.inera.intyg.common.support.services.BefattningService" />
