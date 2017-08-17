@@ -26,12 +26,12 @@
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"
   profile="!prod">
 
-  <!-- REST services for inserting questions and certificate drafts directly 
+  <!-- REST services for inserting questions and certificate drafts directly
     into the database for testing purposes -->
-    
+
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.intyg.minaintyg.web.web.controller.testability.UserConsentResource" />
+      <bean class="se.inera.intyg.minaintyg.web.controller.testability.UserConsentResource" />
     </jaxrs:serviceBeans>
 
     <jaxrs:providers>

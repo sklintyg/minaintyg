@@ -50,14 +50,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 
-import se.inera.intyg.minaintyg.web.integrationtest.util.IntegrationTestUtil;
-
-public class ConfigApiControllerIT extends BaseIntegrationTest {
+public class ConfigApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetConfig() {
 
-        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("appconfig/api/app")
                 .then()
@@ -68,7 +66,7 @@ public class ConfigApiControllerIT extends BaseIntegrationTest {
     @Test
     public void testGetModulesMap() {
 
-        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("appconfig/api/map")
                 .then()
@@ -79,7 +77,7 @@ public class ConfigApiControllerIT extends BaseIntegrationTest {
     @Test
     public void testApiResponseNotCacheable() {
 
-        given().cookie("ROUTEID", IntegrationTestUtil.routeId)
+        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("appconfig/api/map")
                 .then()

@@ -24,7 +24,7 @@
   <context:annotation-config />
 
   <beans profile="qa,prod">
-    <!-- Config file must be present in qa and prod -->  
+    <!-- Config file must be present in qa and prod -->
     <context:property-placeholder
       location="file:${credentials.file}, file:${minaintyg.config.file}"
       order="1" ignore-resource-not-found="false" ignore-unresolvable="true" />
@@ -47,7 +47,7 @@
       location="classpath:default.properties, classpath:version.properties"
       order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.security, se.inera.intyg.minaintyg.web.web.service, se.inera.intyg.minaintyg.web.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
@@ -68,10 +68,10 @@
       <property name="attributes">
         <map>
           <entry key="healthcheck">
-            <bean class="se.inera.intyg.minaintyg.web.web.overvakning.HealthCheck"/>
+            <bean class="se.inera.intyg.minaintyg.web.overvakning.HealthCheck"/>
           </entry>
           <entry key="pageAttributes">
-            <bean class="se.inera.intyg.minaintyg.web.web.util.JspPageAttributes"/>
+            <bean class="se.inera.intyg.minaintyg.web.util.JspPageAttributes"/>
           </entry>
         </map>
       </property>

@@ -85,9 +85,9 @@
   <logger name="se.inera.intyg.common.ts_bas" level="debug" />
 
   <logger name="se.inera.intyg.common.ts_diabetes" level="debug" />
-  
+
   <!-- Monitoring logger -->
-  <logger name="se.inera.intyg.minaintyg.web.web.service.MonitoringLogService" level="INFO" />
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />

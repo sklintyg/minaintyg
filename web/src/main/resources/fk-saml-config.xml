@@ -28,7 +28,7 @@
 
     <!-- Enable auto-wiring -->
     <context:annotation-config/>
-    <context:component-scan base-package="org.springframework.security.saml, se.inera.intyg.minaintyg.web.web.security"/>
+    <context:component-scan base-package="org.springframework.security.saml, se.inera.intyg.minaintyg.web.security"/>
 
     <bean id="samlFilter" class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map request-matcher="ant">
@@ -84,7 +84,7 @@
     <!-- Filter automatically generates default SP metadata -->
     <bean id="metadataGeneratorFilter" class="org.springframework.security.saml.metadata.MetadataGeneratorFilter">
         <constructor-arg>
-            <bean class="se.inera.intyg.minaintyg.web.web.security.saml.MetadataGenerator">
+            <bean class="se.inera.intyg.minaintyg.web.security.saml.MetadataGenerator">
                 <property name="includeDiscovery" value="false"/>
                 <property name="requestSigned" value="true"/>
                 <property name="wantAssertionSigned" value="false"/>
@@ -95,12 +95,12 @@
             </bean>
         </constructor-arg>
     </bean>
-    
+
     <!-- The filter is waiting for connections on URL suffixed with filterSuffix and presents SP metadata there -->
     <bean id="metadataDisplayFilter" class="org.springframework.security.saml.metadata.MetadataDisplayFilter"/>
 
     <!-- <bean id="contextProvider" class="org.springframework.security.saml.context.SAMLContextProviderLB">-->
-    <bean id="contextProvider" class="se.inera.intyg.minaintyg.web.web.security.saml.SAMLContextProviderLB">
+    <bean id="contextProvider" class="se.inera.intyg.minaintyg.web.security.saml.SAMLContextProviderLB">
         <property name="scheme" value="https"/>
         <property name="serverName" value="${fk.saml.proxy.host}"/>
         <property name="serverPort" value="443"/>

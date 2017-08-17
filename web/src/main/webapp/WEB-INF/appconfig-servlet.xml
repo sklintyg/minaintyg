@@ -28,11 +28,11 @@
   <mvc:default-servlet-handler/>
 
   <context:annotation-config/>
-  <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller.appconfig"/>
+  <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller.appconfig"/>
 
   <jaxrs:server address="/api">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.intyg.minaintyg.web.web.controller.appconfig.ConfigApiController"/>
+      <bean class="se.inera.intyg.minaintyg.web.controller.appconfig.ConfigApiController"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
