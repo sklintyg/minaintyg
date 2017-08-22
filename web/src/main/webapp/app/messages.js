@@ -91,7 +91,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'btn-link.restore.tooltip': 'Flytta tillbaka intyget till Inkorgen.',
 
         /* SEND */
-        'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till.',
+        'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till:',
         'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till.',
         'sendpage.label.some-selected': 'Du har valt att skicka intyget till följande mottagare:',
         'sendpage.btn.send': 'Skicka intyg',
