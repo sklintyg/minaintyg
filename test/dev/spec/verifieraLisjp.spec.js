@@ -80,6 +80,7 @@ describe('Verifiera Lisjp', function() {
 
         it('Ge samtycke', function() {
             expect(consentPage.isAt()).toBeTruthy();
+            consentPage.clickConfirmConsent();
             consentPage.clickGiveConsent();
         });
 

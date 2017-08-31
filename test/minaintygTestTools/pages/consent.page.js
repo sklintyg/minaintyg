@@ -34,6 +34,7 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
         init._super.call(this);
         this.at = element(by.id('consentTerms'));
         this.giveConsent = element(by.id('giveConsentButton'));
+        this.confirmConsent = element(by.id('giveConsentCheckbox'));
     },
     get: function () {
         return browser.get('web/start');
@@ -41,6 +42,9 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
     isAt: function isAt() {
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
+    },
+    clickConfirmConsent: function() {
+        this.confirmConsent.click();
     },
     clickGiveConsent: function() {
         this.giveConsent.click();
