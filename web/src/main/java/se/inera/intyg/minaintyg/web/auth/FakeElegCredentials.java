@@ -35,7 +35,7 @@ public class FakeElegCredentials {
     // Subject_Surname
     private String lastName;
 
-    // Origin (fake stuff)  FK or ELVA77
+    // Origin (fake stuff) FK or ELVA77
     private String origin = "ELVA77";
 
     public String getPersonId() {
@@ -72,11 +72,11 @@ public class FakeElegCredentials {
 
     @Override
     public String toString() {
-        return "FakeElegCredentials{" +
-                "personId='" + personId + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", origin='" + origin + '\'' +
-                '}';
+        return "FakeElegCredentials{"
+                + "personId='" + personId + '\''
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", origin='" + origin + '\''
+                + '}';
     }
 }

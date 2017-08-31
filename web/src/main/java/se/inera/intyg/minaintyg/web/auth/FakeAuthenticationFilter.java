@@ -51,7 +51,9 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
         }
 
         String guid = request.getParameter("guid");
-        String origin = request.getParameter("origin") != null && request.getParameter("origin").trim().length() > 0 ? request.getParameter("origin") : "ELVA77";
+        String origin = request.getParameter("origin") != null && request.getParameter("origin").trim().length() > 0
+                ? request.getParameter("origin")
+                : "ELVA77";
 
         // we manually encode the json guid
         String json = URLDecoder.decode(guid, "UTF-8");
@@ -59,10 +61,11 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
     }
 
     private Authentication performFakeElegAuthentication(String personnummer, String origin) {
-        se.inera.intyg.minaintyg.web.auth.FakeElegCredentials fakeElegCredentials = new se.inera.intyg.minaintyg.web.auth.FakeElegCredentials();
+        FakeElegCredentials fakeElegCredentials = new FakeElegCredentials();
         fakeElegCredentials.setPersonId(personnummer);
         fakeElegCredentials.setOrigin(origin);
         LOG.info("Detected fake credentials " + fakeElegCredentials);
-        return getAuthenticationManager().authenticate(new se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationToken(fakeElegCredentials));
+        return getAuthenticationManager()
+                .authenticate(new FakeElegAuthenticationToken(fakeElegCredentials));
     }
 }

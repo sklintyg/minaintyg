@@ -45,7 +45,7 @@ import static se.inera.intyg.minaintyg.web.auth.CgiElegAssertion.FAKE_AUTHENTICA
  */
 public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvider {
 
-    private se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService minaIntygUserDetailsService;
+    private MinaIntygUserDetailsService minaIntygUserDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -54,9 +54,11 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         Object details = minaIntygUserDetailsService.loadUserBySAML(credential);
 
         // Set origin (FK or ELVA77) from fake credentials.
-        if (authentication instanceof se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationToken && details instanceof CitizenImpl) {
-            se.inera.intyg.minaintyg.web.auth.FakeElegCredentials credz = (se.inera.intyg.minaintyg.web.auth.FakeElegCredentials) authentication.getCredentials();
-            details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()), credz.getFirstName() + " " + credz.getLastName(), false);
+        if (authentication instanceof FakeElegAuthenticationToken && details instanceof CitizenImpl) {
+            FakeElegCredentials credz = (FakeElegCredentials) authentication
+                    .getCredentials();
+            details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()),
+                    credz.getFirstName() + " " + credz.getLastName(), false);
         }
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,
@@ -77,11 +79,12 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationToken.class.isAssignableFrom(authentication);
+        return FakeElegAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     private SAMLCredential createSamlCredential(Authentication token) {
-        se.inera.intyg.minaintyg.web.auth.FakeElegCredentials fakeCredentials = (se.inera.intyg.minaintyg.web.auth.FakeElegCredentials) token.getCredentials();
+        FakeElegCredentials fakeCredentials = (FakeElegCredentials) token
+                .getCredentials();
 
         Assertion assertion = new AssertionBuilder().buildObject();
 
@@ -101,7 +104,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
     }
 
     @Autowired
-    public void setMinaIntygUserDetailsService(se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService minaIntygUserDetailsService) {
+    public void setMinaIntygUserDetailsService(MinaIntygUserDetailsService minaIntygUserDetailsService) {
         this.minaIntygUserDetailsService = minaIntygUserDetailsService;
     }
 }
