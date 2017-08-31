@@ -22,6 +22,8 @@ angular.module('minaintyg').controller('minaintyg.ConsentCtrl',
         function($cookies, $filter, $state, $scope, $window, consentService) {
             'use strict';
 
+            $scope.consentConfirmed = false;
+
             $scope.giveConsent = function() {
                 consentService.giveConsent(function(data) {
                     // If consent saved OK, proceed to main app and set cookie to indicate that we'e just

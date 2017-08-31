@@ -22,9 +22,14 @@
 
 
         <hr class="divider">
-        <p class="consent-button-pretext"><span message key="consent.confirmtext"></span></p>
+        <p class="consent-button-pretext checkbox">
+          <label for="giveConsentCheckbox" class="">
+            <input type="checkbox" id="giveConsentCheckbox" ng-model="consentConfirmed">
+            <span message key="consent.confirmtext"></span>
+          </label>
+        </p>
         <p>
-          <button type="button" id="giveConsentButton" ng-click="giveConsent()" class="btn btn-primary">
+          <button type="button" id="giveConsentButton" ng-click="giveConsent()" ng-disabled="!consentConfirmed" class="btn btn-primary">
             <i class="icon icon-lock-open"></i>
             <span message key='consent.giveconsent'></span>
           </button>
