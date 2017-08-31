@@ -1,3 +1,9 @@
+plugins {
+    id "se.inera.intyg.plugin.common" version "1.0.45" apply false
+    id "org.akhikhl.gretty" version "1.4.2" apply false
+    id "com.moowork.node" version "1.1.1" apply false
+}
+
 ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
     infraVersion = System.properties['infraVersion'] ?: '0-SNAPSHOT'
@@ -23,29 +29,15 @@ ext {
     mockitoVersion = "1.9.0"
 }
 
-buildscript {
-    repositories {
-        mavenLocal()
-        maven { url "https://build-inera.nordicmedtest.se/nexus/repository/releases/" }
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-
-    dependencies {
-        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.+'
-        classpath 'com.moowork.gradle:gradle-node-plugin:1.1.1'
-        classpath 'org.akhikhl.gretty:gretty:1.4.1'
-    }
-}
-
 allprojects {
+    apply plugin: 'se.inera.intyg.plugin.common'
+    apply plugin: 'maven'
+
     repositories {
         mavenLocal()
         maven { url "https://build-inera.nordicmedtest.se/nexus/repository/releases/" }
         maven { url "http://repo.maven.apache.org/maven2" }
     }
-
-    apply plugin: 'inera-intyg'
-    apply plugin: 'maven'
 
     dependencies {
         testCompile 'junit:junit:4.+'
@@ -77,5 +69,3 @@ allprojects {
 }
 
 task tagRelease(type: TagReleaseTask)
-
-task testReport(type: SharedTestReportTask)

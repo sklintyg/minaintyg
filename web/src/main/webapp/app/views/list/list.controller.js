@@ -18,9 +18,9 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
+    [ '$cookies', '$location', '$state', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
         'common.dialogService', 'common.messageService', 'common.moduleService', 'MIUser',
-        function($cookies, $location, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
+        function($cookies, $location, $state, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
             messageService, moduleService, MIUser) {
             'use strict';
 
@@ -61,7 +61,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                         $scope.dialog.acceptprogressdone = true;
                     } else {
                         // show error view
-                        $location.path('/fel/couldnotarchivecert');
+                        $state.go('fel', {errorCode: 'couldnotarchivecert'});
                     }
                 });
             };
@@ -82,6 +82,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     button1id: 'archive-button',
                     button1text: 'button.archive',
                     button1icon: 'icon-box',
+                    button1tooltip: messageService.getProperty('button.modal.archive.tooltip'),
                     autoClose: false
                 });
             };
@@ -142,7 +143,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
 
                 } else {
                     // show error view
-                    $location.path('/fel/couldnotloadcertlist');
+                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
                 }
             });
 

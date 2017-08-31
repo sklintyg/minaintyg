@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$location', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
-        function($location, $log, $scope, IntygListService, moduleService, messageService) {
+    [ '$state', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
+        function($state, $log, $scope, IntygListService, moduleService, messageService) {
             'use strict';
 
             $scope.archivedCertificates = [];
@@ -38,7 +38,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                         oldItem.selected = false;
                     } else {
                         // show error view
-                        $location.path('/fel/couldnotrestorecert');
+                        $state.go('fel', {errorCode: 'couldnotrestorecert'});
                     }
                 });
             };
@@ -50,7 +50,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                     $scope.archivedCertificates = list;
                 } else {
                     // show error view
-                    $location.path('/fel/couldnotloadcertlist');
+                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
                 }
             });
 

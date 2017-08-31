@@ -69,7 +69,7 @@
   </bean>
 
   <!-- Real logins should use the unified user details service facade -->
-  <bean id="minaintygUserDetailsService" class="se.inera.intyg.minaintyg.web.web.auth.MinaIntygUserDetailsService" />
+  <bean id="minaintygUserDetailsService" class="se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService" />
 
   <!-- Initialization of OpenSAML library-->
   <bean class="org.springframework.security.saml.SAMLBootstrap"/>
@@ -101,7 +101,7 @@
   <bean id="http403ForbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
 
   <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users), this impl performs audit logging of login and logouts. -->
-  <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.web.security.LoggingSessionRegistryImpl" />
+  <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.security.LoggingSessionRegistryImpl" />
 
   <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
   <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
@@ -177,7 +177,7 @@
     <!-- Legacy FK SAML entry point. This should be removed, replaced by /saml/* + alias
     <security:http pattern="/web/fksso/**" authentication-manager-ref="authenticationManager" entry-point-ref="samlEntryPoint">
      <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
-    <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>   
+    <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
       <security:headers>
         <security:frame-options />
@@ -231,42 +231,10 @@
       </security:headers>
     </security:http>
 
-    <!--
-    <security:http pattern="/" entry-point-ref="samlEntryPoint">
-      <security:headers>
-        <security:frame-options />
-      </security:headers>
-    </security:http>
-    -->
-
-
     <!-- Filter that resets the security context -->
-    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.web.security.ClearSecurityContextFilter">
+    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.security.ClearSecurityContextFilter">
       <property name="handler" ref="logoutHandler" />
     </bean>
-
-    <!-- /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO
-    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)|(\/visa\/intyg\/.*)|(\/webcert\/web\/.*)" request-matcher="regex">
-      <security:csrf disabled="true"/>
-      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
-      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
-      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
-      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
-      <security:request-cache ref="httpSessionRequestCache" />
-      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
-    </security:http>
-
-
-    <security:http use-expressions="false"  entry-point-ref="http403ForbiddenEntryPoint">
-      <security:csrf disabled="true"/>
-      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
-      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
-      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
-      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
-      <security:request-cache ref="httpSessionRequestCache" />
-      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
-    </security:http>
-     -->
 
     <security:authentication-manager alias="authenticationManager">
       <security:authentication-provider ref="samlAuthenticationProvider"/>
@@ -278,12 +246,6 @@
   <!-- The wc-security-prod profile only supports Säkerhetstjänst and CGI e-leg login -->
   <!-- =============================================================== -->
   <beans profile="prod,wc-security-prod">
-    <!-- /swagger-ui och /pubapp/simulator ej relevanta för minaintyg, ta bort?
-    <security:http entry-point-ref="http403ForbiddenEntryPoint" pattern="(\/swagger-ui\/.*)|(\/pubapp\/simulator\/.*)" request-matcher="regex">
-      <security:access-denied-handler ref="accessDeniedHandler" />
-      <security:intercept-url pattern="/**" access="denyAll"/>
-    </security:http>
-    -->
 
     <!-- CLEAN UP WEBCERT REMAINS HERE!!!
     /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO -->
@@ -309,7 +271,7 @@
   </beans>
 
   <beans profile="dev,test,qa">
-    <bean id="fakeAuthFilter" class="se.inera.intyg.minaintyg.web.web.auth.FakeAuthenticationFilter">
+    <bean id="fakeAuthFilter" class="se.inera.intyg.minaintyg.web.auth.FakeAuthenticationFilter">
       <property name="authenticationManager" ref="authenticationManager"/>
       <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
       <property name="authenticationSuccessHandler" ref="fakeSuccessHandler"/>
@@ -319,19 +281,8 @@
         class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
       <property name="defaultTargetUrl" value="/web/start"/>
     </bean>
-    <!--
-    <bean id="fakeAuthenticationProvider"
-        class="se.inera.intyg.webcert.web.auth.fake.FakeAuthenticationProvider">
-      <property name="userDetails" ref="userDetailsService"/>
-    </bean>
-
-    <bean id="commonFakeAuthenticationProvider"
-        class="se.inera.intyg.webcert.web.auth.fake.common.CommonFakeAuthenticationProvider">
-      <property name="userDetails" ref="webcertUserDetailsService"/>
-    </bean>
-      -->
     <bean id="fakeElegAuthenticationProvider"
-        class="se.inera.intyg.minaintyg.web.web.auth.FakeElegAuthenticationProvider">
+        class="se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationProvider">
       <property name="minaIntygUserDetailsService" ref="minaintygUserDetailsService"/>
     </bean>
   </beans>
@@ -380,7 +331,7 @@
     </bean>
 
     <!-- Entry point to initialize authentication, default values taken from properties file -->
-    <bean id="samlEntryPoint" class="se.inera.intyg.minaintyg.web.web.auth.MinaIntygSAMLEntryPoint">
+    <bean id="samlEntryPoint" class="se.inera.intyg.minaintyg.web.auth.MinaIntygSAMLEntryPoint">
       <property name="defaultProfileOptions">
         <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
           <property name="includeScoping" value="false"/>
@@ -508,75 +459,14 @@
           <!-- END IDENTITY PROVIDER BEAN FOR FK SAML -->
 
 
-          <!-- START SERVICE PROVIDER BEAN FOR SITHS
-          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
-            <constructor-arg>
-              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
-                <constructor-arg>
-                  <value type="java.io.File">${config.dir}/sp-sakerhetstjanst.xml</value>
-                </constructor-arg>
-                <property name="parserPool" ref="parserPool"/>
-              </bean>
-            </constructor-arg>
-            <property name="metadataTrustCheck" value="true"/>
-
-            <constructor-arg>
-              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
-                <property name="alias" value="defaultAlias"/>
-                <property name="local" value="true"/>
-                <property name="securityProfile" value="metaiop"/>
-                <property name="sslSecurityProfile" value="metaiop"/>
-                <property name="signMetadata" value="true"/>
-
-                <property name="signingKey" value="${sakerhetstjanst.saml.keystore.alias}"/>
-                <property name="encryptionKey" value="${sakerhetstjanst.saml.keystore.alias}"/>
-                <property name="requireArtifactResolveSigned" value="true"/>
-                <property name="requireLogoutRequestSigned" value="false"/>
-                <property name="requireLogoutResponseSigned" value="false"/>
-              </bean>
-            </constructor-arg>
-          </bean>
-            END SERVICE PROVIDER BEAN FOR SITHS -->
-
-
-          <!-- START IDENTITY PROVIDER BEAN FOR SITHS
-          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
-            <constructor-arg>
-              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
-                <constructor-arg>
-                  <value type="java.io.File">${config.dir}/idp-sakerhetstjanst.xml</value>
-                </constructor-arg>
-                <property name="parserPool" ref="parserPool"/>
-              </bean>
-            </constructor-arg>
-            <constructor-arg>
-              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
-                <property name="alias" value="defaultAlias"/>
-              </bean>
-            </constructor-arg>
-
-            <property name="metadataTrustCheck" value="true"/>
-          </bean>
-           END IDENTITY PROVIDER BEAN FOR SITHS -->
-
         </list>
       </constructor-arg>
       <property name="refreshCheckInterval" value="86400000"/>
 
-      <!-- Setting SITHS as default login method to be redirected to when requesting protected resource. -->
-      <!-- This value _must_ match the entityID specified in idp-sakerhetstjanst.xml.
-      <property name="defaultIDP" value="${sakerhetstjanst.saml.idp.metadata.url}" />
-                                                    -->
-
-      <!-- This makes sure the Sakerhetstjanst SP metadata is used by default -->
-      <!-- This value _must_ match the entityID specified in sp-sakerhetstjanst.xml
-      <property name="hostedSPName" value="${sakerhetstjanst.saml.entityId}" />
-       -->
-
     </bean>
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages e-leg class="org.springframework.security.saml.SAMLAuthenticationProvider"-->
-    <bean id="samlAuthenticationProvider" class="se.inera.intyg.minaintyg.web.web.auth.MinaIntygAuthenticationProvider">
+    <bean id="samlAuthenticationProvider" class="se.inera.intyg.minaintyg.web.auth.MinaIntygAuthenticationProvider">
       <property name="userDetails" ref="minaintygUserDetailsService"/>
       <property name="forcePrincipalAsString" value="false"/>
     </bean>

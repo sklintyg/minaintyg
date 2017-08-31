@@ -34,7 +34,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.jayway.restassured.http.ContentType;
 
-public class PingForConfigurationIT extends BaseIntegrationTest {
+public class PingForConfigurationIT extends IntegrationTestBase {
 
     private static final String BASE = "Envelope.Body.PingForConfigurationResponse.";
     private static final String PING_FOR_CONFIGURATION_V1_0 = "monitoring/ping-for-configuration/v1.0";

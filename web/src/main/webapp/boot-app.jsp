@@ -57,7 +57,7 @@
   <mi-cookie-banner></mi-cookie-banner>
 
   <%-- ng-view that holds dynamic content managed by angular app --%>
-  <div id="view" ui-view autoscroll></div>
+  <div id="view" ui-view autoscroll="false"></div>
 
   <%-- Add navigation aid directives --%>
   <mi-scroll-to-top></mi-scroll-to-top>

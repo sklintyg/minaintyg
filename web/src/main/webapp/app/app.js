@@ -20,14 +20,31 @@
 (function() {
     'use strict';
 
-    var app = angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common' ]);
+    var app = angular.module('minaintyg',
+        ['ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common']);
 
     // before we do anything...we need all modules
     var moduleArray = [];
 
     app.value('networkConfig', {
         defaultTimeout: 30000
-    // test: 1000
+        // test: 1000
+    });
+
+    //http://stackoverflow.com/a/29153678/411284
+
+    app.run(function($anchorScroll, $window) {
+        // hack to scroll to top when navigating to new URLS but not back/forward
+        var wrap = function(method) {
+            var orig = $window.window.history[method];
+            $window.window.history[method] = function() {
+                var retval = orig.apply(this, Array.prototype.slice.call(arguments));
+                $anchorScroll();
+                return retval;
+            };
+        };
+        wrap('pushState');
+        wrap('replaceState');
     });
 
     function getModules() {
@@ -54,23 +71,39 @@
         });
     }
 
-    app.config([ '$logProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', function($logProvider, $httpProvider, http403ResponseInterceptorProvider) {
-        $logProvider.debugEnabled(true);
+    app.config(['$logProvider', '$uiViewScrollProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider', '$windowProvider',
+        function($logProvider, $uiViewScrollProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider, $windowProvider) {
+            $logProvider.debugEnabled(false);
+            $uiViewScrollProvider.useAnchorScroll();
 
-        // Add cache buster interceptor
-        $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
+            // Add cache buster interceptor
+            $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
-        // Configure 403 interceptor provider
-        http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
-        $httpProvider.interceptors.push('common.http403ResponseInterceptor');
-    } ]);
+                // Configure 403 interceptor provider
+                http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
+                $httpProvider.interceptors.push('common.http403ResponseInterceptor');
+
+                // Configure default triggers for tooltipProvider to disable triggers for
+                // devices supporting touch events (caused by INTYG-4301). These defaults can be overridden by explict
+                // directive attribute 'popover-trigger', but then it will be enabled for all devices.
+                if ('ontouchstart' in $windowProvider.$get()) {
+                    $uibTooltipProvider.options({
+                        trigger: 'dontTrigger'
+                    });
+                } else {
+                    $uibTooltipProvider.options({
+                        trigger: 'mouseenter'
+                    });
+                }
+
+            } ]);
 
     app.config(function($provide) {
         $provide.decorator('$$rAF', function($delegate, $window, $timeout, $browser) {
             var requestAnimationFrame = $window.requestAnimationFrame || $window.webkitRequestAnimationFrame;
 
             var cancelAnimationFrame = $window.cancelAnimationFrame || $window.webkitCancelAnimationFrame ||
-                    $window.webkitCancelRequestAnimationFrame;
+                $window.webkitCancelRequestAnimationFrame;
 
             var rafSupported = !!requestAnimationFrame;
 
@@ -102,145 +135,139 @@
         });
     });
 
-    app.run([ '$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService', 'common.dynamicLinkService', 'common.recipientsFactory',
-            'minaintyg.messages', 'MIConfig',
-            function($log, $rootScope, $state, $window, moduleService, messageService, dynamicLinkService, recipientsFactory, miMessages, MIConfig) {
-                $rootScope.lang = 'sv';
-                $rootScope.DEFAULT_LANG = 'sv';
-                $rootScope.page_title = 'Titel'; // jshint ignore:line
+    app.run(['$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService',
+        'common.dynamicLinkService', 'common.recipientsFactory',
+        'minaintyg.messages', 'MIConfig',
+        function($log, $rootScope, $state, $window, moduleService, messageService, dynamicLinkService,
+            recipientsFactory, miMessages, MIConfig) {
+            $rootScope.lang = 'sv';
+            $rootScope.DEFAULT_LANG = 'sv';
+            $rootScope.page_title = 'Titel'; // jshint ignore:line
 
-                messageService.addResources(miMessages);
-                messageService.addLinks(MIConfig.links);
-                dynamicLinkService.addLinks(MIConfig.links);
-                moduleService.setModules(moduleArray);
+            messageService.addResources(miMessages);
+            messageService.addLinks(MIConfig.links);
+            dynamicLinkService.addLinks(MIConfig.links);
+            moduleService.setModules(moduleArray);
 
-                $window.doneLoading = false;
-                $window.rendered = true;
+            //Initialize commmon recipientsFactory with known recipients
+            recipientsFactory.setRecipients(MIConfig.knownRecipients);
 
-                //Initialize commmon recipientsFactory with known recipients
-                recipientsFactory.setRecipients(MIConfig.knownRecipients);
+            $rootScope.$on('$stateChangeSuccess', function(event, toState/*, toParams, fromState, fromParams*/) {
+                if (toState.data.keepInboxTabActive === false) {
+                    $rootScope.keepInboxTab = false;
+                }
+                if (toState.data.keepInboxTabActive === true) {
+                    $rootScope.keepInboxTab = true;
+                }
+                $rootScope.page_title = toState.data.title + ' | Mina intyg'; // jshint ignore:line
+            });
 
-                $rootScope.$on('$stateChangeStart', function(/*event, toState, toParams, fromState, fromParams*/) {
-                    $window.doneLoading = false;
-                });
+            $rootScope.$on('$stateChangeError', function(event, toState/*, toParams, fromState, fromParams, error*/) {
+                $log.log('$stateChangeError');
+                $log.log(toState);
+            });
 
-                $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-                });
+            $window.onbeforeunload = function() {
+                var request = new XMLHttpRequest();
+                // `false` makes the request synchronous
+                request.open('GET', '/api/certificates/onbeforeunload', false);
+                request.send(null);
+            };
 
-                $rootScope.$on('$stateChangeSuccess', function(event, toState/*, toParams, fromState, fromParams*/) {
-                    $window.doneLoading = true;
-                    if (toState.data.keepInboxTabActive === false) {
-                        $rootScope.keepInboxTab = false;
-                    }
-                    if (toState.data.keepInboxTabActive === true) {
-                        $rootScope.keepInboxTab = true;
-                    }
-                    $rootScope.page_title = toState.data.title + ' | Mina intyg'; // jshint ignore:line
-                });
-
-                $rootScope.$on('$stateChangeError', function(event, toState/*, toParams, fromState, fromParams, error*/) {
-                    $log.log('$stateChangeError');
-                    $log.log(toState);
-                });
-
-                $window.onbeforeunload = function() {
-                    var request = new XMLHttpRequest();
-                    // `false` makes the request synchronous
-                    request.open('GET', '/api/certificates/onbeforeunload', false);
-                    request.send(null);
-                };
-
-            } ]);
+        }]);
 
     // First load config, then user and modules
     getMIConfig().then(
-            function(miConfig) {
-                getMIUser().always(
-                        function(miUser) {
-                            getModules().then(
-                                    function(modules) {
-                                        //Load mi common css
-                                        loadCssFromUrl('/web/webjars/common/minaintyg/mi-common.css?' + miConfig.buildNumber);
+        function(miConfig) {
+            getMIUser().always(
+                function(miUser) {
+                    getModules().then(
+                        function(modules) {
+                            //Load mi common css
+                            loadCssFromUrl('/web/webjars/common/minaintyg/mi-common.css?' + miConfig.buildNumber);
 
-                                        var modulePromises = [];
+                            var modulePromises = [];
 
-                                        if (miConfig.useMinifiedJavascript) {
-                                            modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.min.js?' +
-                                                    miConfig.buildNumber));
-                                            // All dependencies in module-deps.json are included in module.min.js
-                                            // All dependencies in app-deps.json are included in app.min.js
+                            if (miConfig.useMinifiedJavascript) {
+                                modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.min.js?' +
+                                    miConfig.buildNumber));
+                                // All dependencies in module-deps.json are included in module.min.js
+                                // All dependencies in app-deps.json are included in app.min.js
 
-                                        } else {
-                                            modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.js'));
-                                            modulePromises.push($.get('/web/webjars/common/minaintyg/module-deps.json'));
-                                            modulePromises.push($.get('/app/app-deps.json'));
+                            } else {
+                                modulePromises.push(loadScriptFromUrl('/web/webjars/common/minaintyg/module.js'));
+                                modulePromises.push($.get('/web/webjars/common/minaintyg/module-deps.json'));
+                                modulePromises.push($.get('/app/app-deps.json'));
 
-                                            // Prevent jQuery from appending cache buster to the url to make it easier to debug.
-                                            $.ajaxSetup({
-                                                cache: true
-                                            });
-                                        }
+                                // Prevent jQuery from appending cache buster to the url to make it easier to debug.
+                                $.ajaxSetup({
+                                    cache: true
+                                });
+                            }
 
-                                        angular.forEach(modules, function(module) {
-                                            // Add module to array as is
-                                            moduleArray.push(module);
+                            angular.forEach(modules, function(module) {
+                                // Add module to array as is
+                                moduleArray.push(module);
 
-                                            loadCssFromUrl(module.cssPath + '?' + miConfig.buildNumber);
+                                loadCssFromUrl(module.cssPath + '?' + miConfig.buildNumber);
 
-                                            if (miConfig.useMinifiedJavascript) {
-                                                modulePromises.push(loadScriptFromUrl(module.scriptPath + '.min.js?' + miConfig.buildNumber));
-                                                // All dependencies for the modules are included in module.min.js
-                                            } else {
-                                                modulePromises.push(loadScriptFromUrl(module.scriptPath + '.js'));
-                                                modulePromises.push($.get(module.dependencyDefinitionPath));
+                                if (miConfig.useMinifiedJavascript) {
+                                    modulePromises.push(
+                                        loadScriptFromUrl(module.scriptPath + '.min.js?' + miConfig.buildNumber));
+                                    // All dependencies for the modules are included in module.min.js
+                                } else {
+                                    modulePromises.push(loadScriptFromUrl(module.scriptPath + '.js'));
+                                    modulePromises.push($.get(module.dependencyDefinitionPath));
+                                }
+                            });
+
+                            // Wait for all modules and module dependency definitions to load.
+                            $.when.apply(this, modulePromises).then(
+                                function() {
+                                    var dependencyPromises = [];
+
+                                    // Only needed for development since all dependencies are included in other files.
+                                    if (!miConfig.useMinifiedJavascript) {
+                                        angular.forEach(arguments, function(data) {
+                                            if (data !== undefined && data[0] instanceof Array) {
+                                                angular.forEach(data[0], function(depdendency) {
+                                                    dependencyPromises.push(loadScriptFromUrl(depdendency));
+                                                });
                                             }
                                         });
+                                    }
 
-                                        // Wait for all modules and module dependency definitions to load.
-                                        $.when.apply(this, modulePromises).then(
+                                    // Wait for all dependencies to load (for production dependencies are empty which is resolved immediately)
+                                    $.when.apply(this, dependencyPromises).then(
+                                        function() {
+                                            angular.element().ready(
                                                 function() {
-                                                    var dependencyPromises = [];
 
-                                                    // Only needed for development since all dependencies are included in other files.
-                                                    if (!miConfig.useMinifiedJavascript) {
-                                                        angular.forEach(arguments, function(data) {
-                                                            if (data !== undefined && data[0] instanceof Array) {
-                                                                angular.forEach(data[0], function(depdendency) {
-                                                                    dependencyPromises.push(loadScriptFromUrl(depdendency));
-                                                                });
-                                                            }
-                                                        });
-                                                    }
+                                                    var allModules = ['minaintyg', 'common'].concat(
+                                                        Array.prototype.slice
+                                                            .call(
+                                                                Array.prototype.map.call(moduleArray, function(module) {
+                                                                    return module.id;
+                                                                }), 0));
 
-                                                    // Wait for all dependencies to load (for production dependencies are empty which is resolved immediately)
-                                                    $.when.apply(this, dependencyPromises).then(
-                                                            function() {
-                                                                angular.element().ready(
-                                                                        function() {
-
-                                                                            var allModules = [ 'minaintyg', 'common' ].concat(Array.prototype.slice
-                                                                                    .call(Array.prototype.map.call(moduleArray, function(module) {
-                                                                                        return module.id;
-                                                                                    }), 0));
-
-                                                                            // Everything is loaded, bootstrap the application with all dependencies.
-                                                                            document.documentElement.setAttribute('ng-app', 'minaintyg');
-                                                                            angular.bootstrap(document, allModules);
-                                                                        });
-                                                            }).fail(function(error) {
-                                                        if (window.console) {
-                                                            console.log(error);
-                                                        }
-                                                    });
-                                                }).fail(function(error) {
-                                            if (window.console) {
-                                                console.log(error);
-                                            }
-                                        });
-
+                                                    // Everything is loaded, bootstrap the application with all dependencies.
+                                                    document.documentElement.setAttribute('ng-app', 'minaintyg');
+                                                    angular.bootstrap(document, allModules);
+                                                });
+                                        }).fail(function(error) {
+                                        if (window.console) {
+                                            console.log(error);
+                                        }
                                     });
+                                }).fail(function(error) {
+                                if (window.console) {
+                                    console.log(error);
+                                }
+                            });
+
                         });
-            });
+                });
+        });
 
     function loadCssFromUrl(url) {
         var link = document.createElement('link');

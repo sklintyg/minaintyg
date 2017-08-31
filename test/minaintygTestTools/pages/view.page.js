@@ -24,7 +24,7 @@
  */
 
 'use strict';
-var specHelper = require('./../helpers/specHelper.js')
+var specHelper = require('./../helpers/specHelper.js');
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
@@ -39,7 +39,7 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return isAt._super.call(this);
     },
     backToList: function() {
-        element(by.className('backlink')).click();
+        element(by.id('breadcrumb-inkorg')).click();
     },
     isAtCert: function(certId) {
       return element(by.id('mi-compact-certificate-header-' + certId)).isDisplayed();
@@ -65,14 +65,13 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
 
         return element.all(by.id(attrId)).each(function(item) {
             item.getText().then(function (txt) {
-                console.log("TEST:" + txt);
                 found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
             })
         }).then(function() { return found; });
     },
-    hasNoEvent: function(status) {
+    hasNoEvent: function(intygId, status) {
         var found = false;
-        return element(by.id('certificate-noevents')).all(by.tagName('div')).each(function(item) {
+        return element.all(by.css('.certificate-noevents-'+intygId)).first().all(by.tagName('div')).each(function(item) {
             item.getText().then(function (text) {
                 found = found || text.includes(status);
             });

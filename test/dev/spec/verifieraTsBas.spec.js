@@ -97,11 +97,43 @@ describe('Visa intyg ts-bas', function() {
             expect(viewPage.getTextContent('syn-row1-col3')).toEqual('Ja');
             expect(viewPage.getTextContent('syn-row2-col1')).toEqual('0,0');
             expect(viewPage.getTextContent('syn-row2-col2')).toEqual('0,0');
-            expect(viewPage.getTextContent('syn-row2-col3')).toEqual('Nej');
             expect(viewPage.getTextContent('syn-korrektionsglasensStyrka')).toEqual('Ja');
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row0-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row1-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('notshown');
+        });
+
+        it('Verifiera "1. Synfunktioner" mobil-tabell', function() {
+            mobileSize();
+
+            expect(viewPage.getTextContent('mobile-syn-row0-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row0-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row0-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('mobile-syn-row1-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col2')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row1-col3')).toEqual('Ja');
+            expect(viewPage.getTextContent('mobile-syn-row2-col1')).toEqual('0,0');
+            expect(viewPage.getTextContent('mobile-syn-row2-col2')).toEqual('0,0');
+
+            expect(viewPage.getTextContent('syn-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row0-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row0-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col2')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row1-col3')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('syn-row2-col2')).toEqual('notshown');
         });
 
         it('Verifiera "2. Hörsel och balanssinne"', function() {
+            desktopSize();
+
             expect(viewPage.getTextContent('horselBalans-balansrubbningar')).toEqual('Ja');
             expect(viewPage.getTextContent('horselBalans-svartUppfattaSamtal4Meter')).toEqual('Ja');
         });
@@ -122,7 +154,7 @@ describe('Visa intyg ts-bas', function() {
         it('Verifiera "5. Diabetes"', function() {
             expect(viewPage.getTextContent('diabetes-harDiabetes')).toEqual('Ja');
             expect(viewPage.getTextContent('diabetes-diabetesTyp')).toEqual('Typ 2');
-            expect(viewPage.getTextContent('diabetes-kost')).toEqual('Kost');
+            expect(viewPage.getTextContent('diabetes-kost-diabetes-tabletter-diabetes-insulin-0')).toEqual('Kost');
         });
 
         it('Verifiera "6. Neurologiska sjukdomar"', function() {

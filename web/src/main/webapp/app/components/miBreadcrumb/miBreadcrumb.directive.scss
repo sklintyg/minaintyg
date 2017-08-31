@@ -22,6 +22,10 @@
   display: inline;
   padding: 0;
   background-color: transparent;
+
+  >li+li:before {
+    content: "/";
+  }
 }
 
 mi-breadcrumb {

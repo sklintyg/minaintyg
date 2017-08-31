@@ -77,7 +77,7 @@ describe('Skicka intyg', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('lisjp');
             expect(browser.getCurrentUrl()).toContain(intygsId1);
-            expect(viewPage.hasNoEvent('Inga händelser')).toBeTruthy();
+            expect(viewPage.hasNoEvent(intygsId1, 'Inga händelser')).toBeTruthy();
         });
 
         it('Välj att skicka intyget', function() {

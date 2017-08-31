@@ -1,10 +1,12 @@
 {
     "build-server": {
         "MINAINTYG_URL": "https://minaintyg.inera.nordicmedtest.se/",
-        "INTYGTJANST_URL": "https://minaintyg.inera.nordicmedtest.se/inera-certificate"
+        "INTYGTJANST_URL": "https://minaintyg.inera.nordicmedtest.se/inera-certificate",
+        "SELENIUM_ADDRESS": "http://selenium1.nordicmedtest.se:4444/wd/hub"
     },
     "dev": {
         "MINAINTYG_URL": "http://localhost:8089/",
-        "INTYGTJANST_URL": "http://localhost:8080/inera-certificate"
+        "INTYGTJANST_URL": "http://localhost:8080/inera-certificate",
+        "SELENIUM_ADDRESS": ""
     }
 }

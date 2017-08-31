@@ -27,7 +27,6 @@ var restHelper = miTestTools.helpers.rest;
 var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
@@ -55,7 +54,7 @@ describe('Verifiera LUAE_FS', function() {
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuaefs();
         intygsId = intyg.id;
-        console.log(intygsId);
+        debug(intygsId);
         restHelper.createIntyg(intyg);
     });
 
@@ -108,9 +107,27 @@ describe('Verifiera LUAE_FS', function() {
             expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från psykolog');
             expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2015-09-03');
             expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('Skickas med posten');
+
+            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('notshown');
+        });
+
+        it('Verifiera medicinskt underlag mobil ', function() {
+            mobileSize();
+
+            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('Underlag från psykolog');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('2015-09-03');
+            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('Skickas med posten');
+
+            expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('notshown');
+            expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('notshown');
+            expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('notshown');
         });
 
         it('Verifiera att korrekta diagnoser är angivet', function() {
+            desktopSize();
+
             expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
 
             expect(viewPage.getDynamicLabelText('FRG_6.RBK')).toBe(texts['FRG_6.RBK']);
@@ -140,7 +157,11 @@ describe('Verifiera LUAE_FS', function() {
         it('Verifiera att Kontakt är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
-            expect(viewPage.getTextContent('kontaktFk')).toEqual('Nej');
+            expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
+            expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
+            expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Vill stämma av ersättningen');
+            expect(viewPage.showsNoValue('anledningTillKontakt')).toBeFalsy();
         });
 
         it('Verifiera att skapad av är angivet', function() {

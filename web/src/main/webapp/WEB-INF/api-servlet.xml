@@ -33,17 +33,17 @@
       <mvc:exclude-mapping path="/certificates/user"/>
       <mvc:exclude-mapping path="/certificates/consent/**"/>
       <mvc:exclude-mapping path="/certificates/recipients/**"/>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.security.VerifyConsentInterceptor">
       </bean>
     </mvc:interceptor>
   </mvc:interceptors>
 
   <context:annotation-config/>
-  <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller.api"/>
+  <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller.api"/>
 
   <jaxrs:server address="/certificates">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.intyg.minaintyg.web.web.controller.api.ApiController"/>
+      <bean class="se.inera.intyg.minaintyg.web.controller.api.ApiController"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
@@ -52,13 +52,13 @@
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
     <jaxrs:invoker>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentJAXRSInvoker"/>
+      <bean class="se.inera.intyg.minaintyg.web.security.VerifyConsentJAXRSInvoker"/>
     </jaxrs:invoker>
   </jaxrs:server>
 
   <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
     <property name="mapper">
-      <bean class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
+      <bean class="se.inera.intyg.common.util.integration.json.CustomObjectMapper"/>
     </property>
   </bean>
 

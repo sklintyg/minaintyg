@@ -1,7 +1,4 @@
 .about-mina-intyg-page {
-  background-color: $mi-intyg-body-bg;
-  min-height: calc(100vh - 175px);
-
   .row {
     padding-top:10px;
   }
@@ -31,6 +28,7 @@
     }
   }
 }
+
 @media (min-width: $screen-sm-min) {
   .about-section {
     h1:first-of-type {

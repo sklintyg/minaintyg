@@ -15,6 +15,13 @@ mi-header {
   .mi-header-col {
     height: $mi-header-height;
 
+    @media (max-width: 768px) {
+       height: $mi-header-height*0.75;
+       &.user-info > div {
+         top:30%;
+       }
+      }
+
     //Vertically align column content
     > div {
       position: relative;

@@ -18,21 +18,21 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-  <aop:aspectj-autoproxy />
+  <aop:aspectj-autoproxy/>
 
   <beans profile="dev, test, qa">
-    <!-- Note:  In dev and test profile there is an AOP Advice that shortcuts the 
-        org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate call if the 
-        guid parameter value matches the <fakeMatcherRegExp>. 
-        If it matches the advice will return a successful Auth Result with the guid as id - if no match, the service will try the mvk 
-        auth ws call as normal. So, use something like .../sso?guid=19900101-2122 to fake a login and otherwise a full mvk auth will 
+    <!-- Note:  In dev and test profile there is an AOP Advice that shortcuts the
+        org.callistasoftware.netcare.mvk.authentication.service.impl.MvkAuthenticationServiceImpl.authenticate call if the
+        guid parameter value matches the <fakeMatcherRegExp>.
+        If it matches the advice will return a successful Auth Result with the guid as id - if no match, the service will try the mvk
+        auth ws call as normal. So, use something like .../sso?guid=19900101-2122 to fake a login and otherwise a full mvk auth will
         be executed -->
     <!--
-    <bean class="se.inera.intyg.minaintyg.web.web.security.MvkValidationServiceAdvice">
+    <bean class="se.inera.intyg.minaintyg.web.security.MvkValidationServiceAdvice">
       <property name="fakeMatcherRegExp" value="[12]{1}[90]{1}[0-9]{6}-?[0-9]{4}" />
     </bean>
     -->
@@ -43,7 +43,6 @@
   </beans>
 
   <beans profile="!dev">
-
 
     <!-- Enable the FK SAML Auth filter for our FK entry point url   -->
     <!--
@@ -61,7 +60,6 @@
   </beans>
 
   <beans>
-
 
     <!--
     <security:http pattern="/" entry-point-ref="mvkEntryPoint">
@@ -101,8 +99,6 @@
     </security:http>
    -->
 
-
-
     <!-- MVK is out
     <import resource="classpath*:/netcare-mvk-integration-config.xml" />
     <import resource="classpath*:/netcare-mvk-integration-security-config.xml" />
@@ -110,7 +106,7 @@
     -->
 
     <!-- Legacy SAML configuration -->
-     <import resource="classpath*:securityContext.xml" />
+    <import resource="classpath*:securityContext.xml"/>
 
     <!--
     <security:authentication-manager>
@@ -160,7 +156,7 @@
     -->
 
     <!-- Filter that resets the security context
-    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.web.security.ClearSecurityContextFilter">
+    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.security.ClearSecurityContextFilter">
       <property name="handler" ref="securityContextLogoutHandler" />
     </bean>
     -->
@@ -169,7 +165,7 @@
     <bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
      -->
     <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users)
-    <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.web.security.LoggingSessionRegistryImpl" />
+    <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.security.LoggingSessionRegistryImpl" />
      -->
     <!-- Session authentication strategy that registers authenticated sessions with the session registry
     <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">

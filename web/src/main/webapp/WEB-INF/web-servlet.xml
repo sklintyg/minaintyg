@@ -39,7 +39,7 @@
       <mvc:exclude-mapping path="/logga-ut-fk"/>
       <!-- Since we load webjars resources via require we need to allow this without a given consent -->
       <mvc:exclude-mapping path="/webjars/**"/>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.VerifyConsentInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.security.VerifyConsentInterceptor">
       </bean>
     </mvc:interceptor>
     <mvc:interceptor>
@@ -50,7 +50,7 @@
       <mvc:exclude-mapping path="/tillbaka-till-mvk"/>
       <mvc:exclude-mapping path="/logga-ut"/>
       <mvc:exclude-mapping path="/logga-ut-fk"/>
-      <bean class="se.inera.intyg.minaintyg.web.web.security.BrowserClosedInterceptor">
+      <bean class="se.inera.intyg.minaintyg.web.security.BrowserClosedInterceptor">
         <property name="timeoutSeconds" value="5"/>
         <property name="redirectLocation" value="/web/start"/>
         <property name="logoutHandler" ref="logoutHandler" />
@@ -61,13 +61,13 @@
   <beans profile="qa,prod">
     <!-- Config file must be present in qa and prod -->
     <context:property-placeholder
-      location="file:${minaintyg.config.file}" order="1" 
+      location="file:${minaintyg.config.file}" order="1"
       ignore-resource-not-found="false" ignore-unresolvable="true" />
   </beans>
   <beans profile="dev,test">
     <!-- Config file could be missing in dev and test -->
     <context:property-placeholder
-      location="file:${minaintyg.config.file}" order="1" 
+      location="file:${minaintyg.config.file}" order="1"
       ignore-resource-not-found="true" ignore-unresolvable="true" />
   </beans>
 
@@ -76,7 +76,7 @@
       location="classpath:default.properties, classpath:default.${spring.profiles.active}.properties"  order="2"
       ignore-resource-not-found="true" ignore-unresolvable="true"/>
     <context:annotation-config/>
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.web.controller"/>
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller"/>
   </beans>
 
   <beans>
@@ -84,6 +84,11 @@
       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
       <property name="prefix" value="/"/>
       <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="localeResolver"
+        class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+      <property name="defaultLocale" value="en" />
     </bean>
   </beans>
 

@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         return SRC_DIR + file;
     }));
 
-    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp', WEB_DIR + '/pubapp/showcase/index.html']);
+    var fileToInjectCss = grunt.file.expand([WEB_DIR + '/WEB-INF/pages/*.jsp', WEB_DIR + '/*.jsp']);
     var _ = require('lodash');
 
     var modules = {
@@ -69,8 +69,8 @@ module.exports = function(grunt) {
         if (!module.angularModule) {
             module.angularModule = moduleName;
         }
-        module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName + '/minaintyg';
-        module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName + '/minaintyg';
+        module.src = '/../../' + module.base + '/src/main/resources/META-INF/resources/webjars/' + moduleName;
+        module.dest = '/../../' + module.base + '/build/resources/main/META-INF/resources/webjars/' + moduleName;
     });
 
     function buildListForAllModules(callback) {
@@ -105,10 +105,10 @@ module.exports = function(grunt) {
         Object.keys(modules).forEach(function(moduleName) {
             var module = modules[moduleName];
             var files = grunt.file.expand({cwd: __dirname + module.src},
-                ['**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
-            grunt.file.write(__dirname + module.dest + '/module-deps.json', JSON.stringify(files.
+                ['app-shared/**/*.js', 'minaintyg/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+            grunt.file.write(__dirname + module.dest + '/minaintyg/module-deps.json', JSON.stringify(files.
             map(function(file) {
-                return '/web/webjars/' + module.name + '/minaintyg/' + file;
+                return '/web/webjars/' + module.name + '/' + file;
             }).
             concat('/web/webjars/' + module.name + '/minaintyg/templates.js'), null, 4));
         });
@@ -133,7 +133,6 @@ module.exports = function(grunt) {
             minaintyg: {
                 directory: 'src/main/webapp/bower_components',
                 src: [
-                    SRC_DIR + '../pubapp/**/index.html',
                     SRC_DIR + '../**/*.jsp',
                     'karma.conf.js'
                 ],
@@ -226,7 +225,7 @@ module.exports = function(grunt) {
                 map: false,
                 processors: [
                     require('autoprefixer')({browsers: ['last 2 versions', 'ie 9']}), // add vendor prefixes
-                    require('cssnano')() // minify the result
+                    require('cssnano')({zindex: false}) // minify the result
                 ]
             },
             dist: {
@@ -265,12 +264,12 @@ module.exports = function(grunt) {
         ngtemplates : grunt.util._.extend(buildObjectForAllModules(function(module) {
             return {
                 cwd: __dirname + module.src,
-                src: ['**/*.html'],
-                dest: __dirname + module.dest + '/templates.js',
+                src: ['{minaintyg,app-shared}/**/*.html'],
+                dest: __dirname + module.dest + '/minaintyg/templates.js',
                 options: {
                     module: module.angularModule,
                     url: function(url) {
-                        return '/web/webjars/' + module.name + '/webcert/' + url;
+                        return '/web/webjars/' + module.name + '/' + url;
                     }
                 }
             };
@@ -325,22 +324,27 @@ module.exports = function(grunt) {
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg',
-                                    serveStatic(__dirname + module.src) //jshint ignore:line
+                                    serveStatic(__dirname + module.src + '/minaintyg') //jshint ignore:line
+                                ));
+                            middlewares.push(
+                                connect().use(
+                                    '/web/webjars/'+module.name+'/app-shared',
+                                    serveStatic(__dirname + module.src + '/app-shared') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg/templates.js',
-                                    serveStatic(__dirname + module.dest + '/templates.js') //jshint ignore:line
+                                    serveStatic(__dirname + module.dest + '/minaintyg/templates.js') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg/module-deps.json',
-                                    serveStatic(__dirname + module.dest + '/module-deps.json') //jshint ignore:line
+                                    serveStatic(__dirname + module.dest + '/minaintyg/module-deps.json') //jshint ignore:line
                                 ));
                             middlewares.push(
                                 connect().use(
                                     '/web/webjars/'+module.name+'/minaintyg/css',
-                                    serveStatic(__dirname + module.dest + '/css')//jshint ignore:line
+                                    serveStatic(__dirname + module.dest + '/minaintyg/css')//jshint ignore:line
                                 ));
                         });
 
@@ -460,6 +464,6 @@ module.exports = function(grunt) {
         'ngAnnotate',
         'uglify' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
-    grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('test', [ 'bower', 'karma' ]);
     grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
 };

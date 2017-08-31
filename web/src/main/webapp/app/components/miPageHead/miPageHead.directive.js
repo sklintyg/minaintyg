@@ -18,7 +18,7 @@
  */
 
 angular.module('minaintyg').directive('miPageHead',
-    function($rootScope, $location) {
+    function() {
         'use strict';
 
         return {

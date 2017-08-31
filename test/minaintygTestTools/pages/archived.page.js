@@ -36,11 +36,20 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
+    certificateRestoreLink: function(id) {
+        return element(by.id('restoreCertificate-' + id));
+    },
+    certificateRestoreMobileLink: function(id) {
+        return element(by.id('restoreCertificate-' + id + '-list'));
+    },
     certificateExists: function(id) {
-        return element(by.id('restoreCertificate-' + id)).isPresent();
+        return this.certificateRestoreLink(id).isPresent();
     },
     restoreCertificate: function(intygId) {
-        element(by.id('restoreCertificate-' + intygId)).click();
+        this.certificateRestoreLink(intygId).click();
+    },
+    certificateExistsMobile: function(id) {
+        return this.certificateRestoreMobileLink(id).isDisplayed();
     }
 });
 

@@ -78,16 +78,16 @@
 
   <logger name="org.apache.cxf" level="error" />
 
-  <logger name="se.inera.intyg.minaintyg.web.web" level="debug" />
+  <logger name="se.inera.intyg.minaintyg.web" level="debug" />
 
   <logger name="se.inera.intyg.common.fk7263" level="debug" />
 
   <logger name="se.inera.intyg.common.ts_bas" level="debug" />
 
   <logger name="se.inera.intyg.common.ts_diabetes" level="debug" />
-  
+
   <!-- Monitoring logger -->
-  <logger name="se.inera.intyg.minaintyg.web.web.service.MonitoringLogService" level="INFO" />
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />

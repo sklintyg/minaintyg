@@ -124,9 +124,7 @@
                 }
               },
               "required": [
-                "personId",
-                "fullstandigtNamn",
-                "efternamn"
+                "personId"
               ]
             }
           },

@@ -32,7 +32,6 @@ var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
-//Temporarily disabled this while we develop new lisjp view with uv-framework.
 describe('Verifiera Lisjp', function() {
 
     var personId = '191212121212';

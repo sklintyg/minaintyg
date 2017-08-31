@@ -1,4 +1,16 @@
-#welcome-image {
-  margin-top: 20px;
-  width: 100%;
+#welcome-page {
+  #welcome-image {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  a {
+    color: #009200;
+    &:visited {
+      color: #009200;
+    }
+    &:hover {
+      color: #ffffff;
+    }
+  }
 }

@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.SendCtrl',
-    [ '$filter', '$location', '$stateParams', '$scope', '$uibModal', 'minaintyg.SendService', 'common.IntygService',
-        function($filter, $location, $stateParams, $scope, $uibModal, sendService, intygService) {
+    [ '$filter', '$location', '$state', '$stateParams', '$scope', '$uibModal', 'minaintyg.SendService', 'common.IntygService',
+        function($filter, $location, $state, $stateParams, $scope, $uibModal, sendService, intygService) {
             'use strict';
 
             var dialogInstance;
@@ -71,7 +71,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                             });
                         }
                     }, function() {
-                        $location.path('/fel/generic');
+                        $state.go('fel', {errorCode: 'generic'});
                     }).finally(function() { // jshint ignore:line
                         $scope.vm.initializing = false;
                     });
@@ -79,10 +79,10 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
                 } else {
                     // show error view
-                    $location.path('/fel/certnotfound');
+                    $state.go('fel', {errorCode: 'certnotfound'});
                 }
-            }, function(error) {
-                $location.path('/fel/certnotfound');
+            }, function() {
+                $state.go('fel', {errorCode: 'certnotfound'});
             });
 
 
@@ -139,7 +139,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                         dialogVm.sending = false;
 
                     } else {
-                        $location.path('/fel/generic');
+                        $state.go('fel', {errorCode: 'generic'});
                     }
 
                 });

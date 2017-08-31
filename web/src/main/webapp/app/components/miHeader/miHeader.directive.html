@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-3 mi-header-col">
+    <div class="col-sm-3 col-xs-12 mi-header-col">
       <div>
         <a ng-href="{{authUserDescription.length ? '/web/start' : '/'}}">
           <img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo"
@@ -8,7 +8,7 @@
         </a>
       </div>
     </div>
-    <div class="col-xs-9 mi-header-col user-info" ng-if="authUserDescription">
+    <div class="col-sm-9 col-xs-12 mi-header-col user-info" ng-if="authUserDescription">
       <div>
         <message class="hidden-xs" key="nav.label.loggedinas"></message>
         &nbsp;<span class="user-name">{{authUserDescription}}</span><br>

@@ -1,0 +1,134 @@
+body {
+  line-height: 1.5;
+  -ms-overflow-style: scrollbar;
+}
+
+.light-background {
+  background-color: #fff;
+}
+
+a {
+  color: #378998;
+  &:visited {
+    color: #378998;
+  }
+
+  &.external-link {
+    color: #0F6EDC !important;
+    &:visited {
+      color: #42377D !important;;
+    }
+  }
+}
+
+h1, h2, h3 {
+  &:focus {
+    outline: none;
+  }
+}
+
+h2 {
+  font-weight: normal;
+}
+
+.h3, h3 {
+  margin-top: 25px;
+}
+
+.alert .alert-heading {
+  margin-top: 0;
+}
+
+.btn {
+  padding: $mi-button-padding;
+  //3d pressed effect - swap 1 px margins when pressed
+  margin: 0 1px 1px 0;
+  &:active {
+    margin: 1px 0 0 1px;
+  }
+}
+
+.btn-secondary {
+  @include button-variant($mi-button-secondary, $mi-button-bg, $mi-button-secondary);
+}
+
+.btn-third {
+  @include button-variant($mi-button-third, $mi-button-bg, $mi-button-third);
+}
+
+.btn-primary {
+  //For now - we have same style for all interaction states of buttons.
+  &:hover, &:focus, &:active, &:focus:active {
+    color: $mi-button-bg;
+    background-color: $mi-button-primary;
+    border-color: $mi-button-primary;
+  }
+}
+
+.btn-secondary {
+  &:hover, &:focus, &:active, &:focus:active {
+    color: $mi-button-bg;
+    background-color: $mi-button-secondary;
+    border-color: $mi-button-secondary;
+  }
+}
+
+.btn-third {
+  &:hover, &:focus, &:active, &:focus:active {
+    color: $mi-button-bg;
+    background-color: $mi-button-third;
+    border-color: $mi-button-third;
+  }
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-third {
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: $cursor-disabled;
+    color: $mi-button-disabled;
+    border-color: $mi-button-disabled;
+    &:hover, &:focus, &:active, &:active:hover {
+      color: $mi-button-disabled;
+      border-color: $mi-button-disabled;
+      background-color: $mi-button-bg;
+      margin: 0 1px 1px 0;
+    }
+  }
+}
+
+.modal {
+  .modal-footer {
+    border-top: 0;
+    text-align: left;
+    .btn+.btn {
+      margin-bottom: 1px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-footer {
+    .btn {
+      width: 100%;
+      margin: 5px 0 0 0;
+      +.btn {
+        margin: 5px 0 0 0;
+      }
+    }
+  }
+
+}
+
+//Tables
+.table-striped {
+  > tbody > tr:nth-of-type(odd) {
+    background-color: $mi-intyg-table-bg;
+  }
+
+  > tbody > tr:nth-of-type(even) {
+    background-color: $mi-intyg-table-bg-accent;
+  }
+}
