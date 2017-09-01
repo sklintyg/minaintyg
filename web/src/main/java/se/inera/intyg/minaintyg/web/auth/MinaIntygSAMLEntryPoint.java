@@ -27,7 +27,7 @@ import org.springframework.security.saml.websso.WebSSOProfileOptions;
 import java.util.HashSet;
 
 /**
- * Custom SAMLEntryPoint for Webcert that overrides the generation of AuthnContexts based on metadata alias:
+ * Custom SAMLEntryPoint for Mina Intyg that overrides the generation of AuthnContexts based on metadata alias:
  *
  * For ELEG (eleg), we do not specify anything. This is due to SSO problems at CGIs end when a previously authenticated
  * identity is validated against the IdP to access another system in the same federation.

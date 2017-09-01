@@ -30,6 +30,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.providers.ExpiringUsernameAuthenticationToken;
 import org.springframework.security.saml.SAMLCredential;
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
+import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
 import se.inera.intyg.minaintyg.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
 
@@ -47,6 +50,10 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
 
     private MinaIntygUserDetailsService minaIntygUserDetailsService;
 
+    private MinaIntygPUService minaIntygPUService;
+
+    private PersonNameUtil personNameUtil = new PersonNameUtil();
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -57,8 +64,9 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         if (authentication instanceof FakeElegAuthenticationToken && details instanceof CitizenImpl) {
             FakeElegCredentials credz = (FakeElegCredentials) authentication
                     .getCredentials();
+            Person person = minaIntygPUService.getPerson(credz.getPersonId());
             details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()),
-                    credz.getFirstName() + " " + credz.getLastName(), false);
+                    personNameUtil.buildFullName(person), person.isSekretessmarkering());
         }
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,
@@ -106,5 +114,10 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
     @Autowired
     public void setMinaIntygUserDetailsService(MinaIntygUserDetailsService minaIntygUserDetailsService) {
         this.minaIntygUserDetailsService = minaIntygUserDetailsService;
+    }
+
+    @Autowired
+    public void setMinaIntygPUService(MinaIntygPUService minaIntygPUService) {
+        this.minaIntygPUService = minaIntygPUService;
     }
 }

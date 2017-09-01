@@ -94,25 +94,25 @@ gretty {
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
     // Normal settings
-//    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-//               "-Dspring.profiles.active=dev",
-//               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
-//               "-Djetty.port=8088",
-//               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
-//               "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
-//               "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
-//               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
-
-    // SAML test settings for local testing
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev,mi-security-test,caching-enabled",
-               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest",
+               "-Dspring.profiles.active=dev",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
-               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/credentials.properties",
-               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg.properties",
-               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg-logback.xml",
+               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
+               "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
+               "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
                "-Dminaintyg.useMinifiedJavaScript=${minified}"]
+
+    // SAML test settings for local testing
+//    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
+//               "-Dspring.profiles.active=dev,mi-security-test,caching-enabled",
+//               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest",
+//               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
+//               "-Djetty.port=8088",
+//               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/credentials.properties",
+//               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg.properties",
+//               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg-logback.xml",
+//               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
 }
@@ -124,7 +124,7 @@ dependencies {
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
 
     compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
-    
+
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
     compile "se.inera.intyg.common:luse:${commonVersion}"

@@ -39,7 +39,10 @@
  <!-- <security:http security="none" pattern="/web/eleglogin" />    -->
   <security:http security="none" pattern="/api/modules/map"/>
   <security:http security="none" pattern="/api/modules/active"/>
+  <security:http security="none" pattern="/appconfig/**"/>
+  <security:http security="none" pattern="/app/**"/>
   <security:http security="none" pattern="/css/**"/>
+  <security:http security="none" pattern="/font/**"/>
   <security:http security="none" pattern="/js/**"/>
   <security:http security="none" pattern="/img/**"/>
 
@@ -69,7 +72,9 @@
   </bean>
 
   <!-- Real logins should use the unified user details service facade -->
-  <bean id="minaintygUserDetailsService" class="se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService" />
+  <bean id="minaintygUserDetailsService" class="se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService">
+    <property name="minaIntygPUService" ref="minaIntygPUService" />
+  </bean>
 
   <!-- Initialization of OpenSAML library-->
   <bean class="org.springframework.security.saml.SAMLBootstrap"/>
@@ -118,8 +123,9 @@
   <!-- =============================================================== -->
   <!-- These URLs are unsecured in all profiles except wc-security-prod -->
   <!-- =============================================================== -->
-  <beans profile="dev,test,qa">
-    <security:http security="none" pattern="/welcome.jsp"/>
+  <beans profile="dev,test,qa,mi-security-test">
+    <security:http security="none" pattern="/welcome.html"/>
+    <security:http security="none" pattern="/testability/**"/>
   </beans>
 
   <!-- =============================================================== -->
@@ -132,7 +138,7 @@
     <beans profile="dev,wc-security-dev">
       <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
         <security:csrf disabled="true"/>
-        <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
+        <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
         <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
         <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
@@ -152,7 +158,7 @@
     <!-- Handle all POST-backs with SAML tickets from IDPs for /saml/SSO -->
     <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)" request-matcher="regex">
       <security:csrf disabled="true"/>
-      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
@@ -163,7 +169,7 @@
     <!-- For fake-login (used to be MVK). /web/sso accepts a fake context etc. -->
     <security:http pattern="/web/sso**" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
-      <security:logout logout-url="/logout" logout-success-url="/welcome.jsp" invalidate-session="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
       <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
       <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter" />
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
@@ -284,6 +290,7 @@
     <bean id="fakeElegAuthenticationProvider"
         class="se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationProvider">
       <property name="minaIntygUserDetailsService" ref="minaintygUserDetailsService"/>
+      <property name="minaIntygPUService" ref="minaIntygPUService" />
     </bean>
   </beans>
 
@@ -541,8 +548,7 @@
         <property name="keyManager" ref="keyManager" />
     </bean>
 
-    <!-- Logout handler terminating local session -->
-    <bean id="logoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+    <!-- Note - logoutHandler moved to global profile scope -->
 
     <!-- Override default logout processing filter with the one processing SAML messages -->
     <bean id="samlLogoutFilter" class="org.springframework.security.saml.SAMLLogoutFilter">
@@ -566,4 +572,8 @@
 
   </beans>
 
+  <beans>
+    <!-- Logout handler terminating local session -->
+    <bean id="logoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+  </beans>
 </beans>

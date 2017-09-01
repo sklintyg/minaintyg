@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 
+import se.inera.intyg.infra.integration.pu.model.Person;
+import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
+import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
 import se.inera.intyg.minaintyg.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
 import se.inera.intyg.schemas.contract.util.HashUtility;
@@ -21,16 +24,20 @@ public class MinaIntygUserDetailsService implements SAMLUserDetailsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MinaIntygUserDetailsService.class);
 
+    private MinaIntygPUService minaIntygPUService;
+
+    private PersonNameUtil personNameUtil = new PersonNameUtil();
+
     @Override
     public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
 
         String personId = getAttribute(credential, CgiElegAssertion.PERSON_ID_ATTRIBUTE);
-        String firstName = getAttribute(credential, CgiElegAssertion.FORNAMN_ATTRIBUTE);
-        String lastName = getAttribute(credential, CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE);
+        Person person = minaIntygPUService.getPerson(personId);
+        String personName = personNameUtil.buildFullName(person);
 
-        LOG.info("Got " + HashUtility.hash(personId) + " with name: " + firstName + " " + lastName);
+        LOG.info("Got " + HashUtility.hash(personId) + " with name: " + personName);
 
-        return new CitizenImpl(personId, LoginMethodEnum.ELVA77, firstName + " " + lastName, false);
+        return new CitizenImpl(personId, LoginMethodEnum.ELVA77, personName, person.isSekretessmarkering());
     }
 
     private String getAttribute(SAMLCredential samlCredential, String attributeName) {
@@ -52,5 +59,9 @@ public class MinaIntygUserDetailsService implements SAMLUserDetailsService {
             }
         }
         throw new IllegalArgumentException("Could not extract attribute '" + attributeName + "' from SAMLCredential.");
+    }
+
+    public void setMinaIntygPUService(MinaIntygPUService minaIntygPUService) {
+        this.minaIntygPUService = minaIntygPUService;
     }
 }
