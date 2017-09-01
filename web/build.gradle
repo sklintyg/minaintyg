@@ -105,10 +105,11 @@ gretty {
 
     // SAML test settings for local testing
 //    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-//               "-Dspring.profiles.active=dev,mi-security-test,caching-enabled",
+//               "-Dspring.profiles.active=test,wc-pu-stub,caching-enabled",
 //               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest",
 //               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
 //               "-Djetty.port=8088",
+//               "-Dminaintyg.stubs.port=8088",
 //               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/credentials.properties",
 //               "-Dminaintyg.config.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg.properties",
 //               "-Dminaintyg.logback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/idptest/minaintyg-logback.xml",

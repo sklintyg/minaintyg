@@ -129,13 +129,14 @@
   </beans>
 
   <!-- =============================================================== -->
-  <!-- The dev and wc-security-dev profiles only supports Fake login   -->
+  <!-- The dev profile only supports Fake login   -->
   <!-- Note that running with mi-security-test automatically disables  -->
   <!-- these profiles due to conflicting /** intercept patterns if     -->
   <!-- both dev and mi-security-test are active.                       -->
   <!-- =============================================================== -->
-  <beans profile="!mi-security-test">
-    <beans profile="dev,wc-security-dev">
+
+   <beans profile="!mi-security-test">
+    <beans profile="dev,test">
       <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
         <security:csrf disabled="true"/>
         <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
@@ -192,7 +193,7 @@
     </security:http>
   -->
 
-    <!-- Some Role-based rules for /api, /moduleapi -->
+    <!-- Some Role-based rules for /api, /moduleapi
     <security:http pattern="/api/**" use-expressions="true" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
@@ -201,6 +202,9 @@
         <security:cache-control />
       </security:headers>
     </security:http>
+    -->
+
+    <!--  Removing /moduleapi for MI
     <security:http pattern="/moduleapi/**" use-expressions="true" entry-point-ref="samlEntryPoint">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/moduleapi/**" access="hasRole('ROLE_CITIZEN')" />
@@ -209,6 +213,7 @@
         <security:cache-control />
       </security:headers>
     </security:http>
+    -->
 
     <!-- Various logout-links. These need to be modified -->
     <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="samlEntryPoint">
@@ -255,7 +260,7 @@
 
     <!-- CLEAN UP WEBCERT REMAINS HERE!!!
     /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO -->
-    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)|(\/visa\/intyg\/.*)|(\/webcert\/web\/.*)" request-matcher="regex">
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)|(\/web\/.*)" request-matcher="regex">
       <security:csrf disabled="true"/>
       <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
       <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
