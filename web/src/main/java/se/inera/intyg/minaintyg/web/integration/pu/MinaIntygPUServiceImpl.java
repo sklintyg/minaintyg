@@ -38,4 +38,7 @@ public class MinaIntygPUServiceImpl implements MinaIntygPUService {
         }
     }
 
+    public void setPuService(PUService puService) {
+        this.puService = puService;
+    }
 }

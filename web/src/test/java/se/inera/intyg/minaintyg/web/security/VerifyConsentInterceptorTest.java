@@ -48,7 +48,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleNoConsentNoJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -64,7 +64,7 @@ public class VerifyConsentInterceptorTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 

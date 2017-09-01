@@ -16,21 +16,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.minaintyg.web.security;
+package se.inera.intyg.minaintyg.web.auth;
 
 /**
- * Enumeration of the different login methods / sources that can be used to access the application.
+ * Defines enumerations for a number of known  (and undocumented)
+ *
+ * <saml2:Attribute Name="LoginMethod">
+ *
+ * from the CGI funktionstjänster SAML IdP documentation.
+ *
+ * Created by eriklupander on 2015-09-23.
  */
-public enum LoginMethodEnum {
+public enum ElegLoginMethod {
+    /** Legacy NetID production. */
+    CCP1,
 
-    ELVA77, FK;
+    /** Legacy NetID test. */
+    CCP2,
 
-    public String value() {
-        return name();
-    }
+    /** NetID. */
+    CCP8,
 
-    public static LoginMethodEnum fromValue(String v) {
-        return valueOf(v);
-    }
+    /** BankID. */
+    CCP10,
 
+    /** Mobilt BankID. */
+    CCP11,
+
+    /** BankID  (Telia, future). */
+    CCP12,
+
+    /** Mobilt BankID (Telia, future). */
+    CCP13
 }

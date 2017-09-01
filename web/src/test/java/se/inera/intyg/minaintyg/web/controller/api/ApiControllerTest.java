@@ -18,32 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.controller.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
@@ -59,6 +39,24 @@ import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.schemas.contract.Personnummer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ApiControllerTest {
 
@@ -66,7 +64,7 @@ public class ApiControllerTest {
     private static final Personnummer PNR = new Personnummer(CIVIC_REGISTRATION_NUMBER);
     private static final String FKASSA_RECIPIENT_ID = "FKASSA";
     private static final String TRANSP_RECIPIENT_ID = "TRANSP";
-    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.MVK;
+    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;
     private static final String PERSON_FULLNAME = "Tolvan Tolvansson";
 
     @Mock

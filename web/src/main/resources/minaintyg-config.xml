@@ -23,7 +23,7 @@
 
   <context:annotation-config />
 
-  <beans profile="qa,prod">
+  <beans profile="mi-security-test,qa,prod">
     <!-- Config file must be present in qa and prod -->
     <context:property-placeholder
       location="file:${credentials.file}, file:${minaintyg.config.file}"
@@ -89,5 +89,8 @@
     <bean id="dynamicLinkRepository" class="se.inera.intyg.infra.dynamiclink.repository.DynamicLinkRepositoryImpl" />
     <bean id="dynamicLinkService" class="se.inera.intyg.infra.dynamiclink.service.DynamicLinkServiceImpl" />
 
+    <bean id="minaIntygPUService" class="se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUServiceImpl">
+           <property name="puService" ref="puService" />
+    </bean>
   </beans>
 </beans>

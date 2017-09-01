@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (C) 2016 Inera AB (http://www.inera.se)
+  ~
+  ~ This file is part of sklintyg (https://github.com/sklintyg).
+  ~
+  ~ sklintyg is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ sklintyg is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <!-- Enable auto-wiring -->
+  <context:annotation-config/>
+  <context:component-scan base-package="org.springframework.security.saml"/>
+
+  <!-- Unsecured pages -->
+  <security:http security="none" pattern="/public/**"/>
+  <security:http security="none" pattern="/bower_components/**"/>
+  <security:http security="none" pattern="/vendor/**"/>
+  <security:http security="none" pattern="/web/webjars/**"/>
+  <security:http security="none" pattern="/web/logout" />
+ <!-- <security:http security="none" pattern="/web/eleglogin" />    -->
+  <security:http security="none" pattern="/api/modules/map"/>
+  <security:http security="none" pattern="/api/modules/active"/>
+  <security:http security="none" pattern="/appconfig/**"/>
+  <security:http security="none" pattern="/app/**"/>
+  <security:http security="none" pattern="/css/**"/>
+  <security:http security="none" pattern="/font/**"/>
+  <security:http security="none" pattern="/js/**"/>
+  <security:http security="none" pattern="/img/**"/>
+
+  <security:http security="none" pattern="/"/>
+  <security:http security="none" pattern="/version.jsp"/>
+  <security:http security="none" pattern="/index.jsp"/>
+  <security:http security="none" pattern="/healthcheck.jsp"/>
+  <security:http security="none" pattern="/error.jsp"/>
+  <security:http security="none" pattern="/saml/web/**"/>
+  <security:http security="none" pattern="/saml2/web/**"/>
+  <security:http security="none" pattern="/services/**"/>
+
+  <!-- Allow access to healthcheck and monitoring services without being logged in -->
+  <security:http security="none" pattern="/monitoring/**" />
+  <security:http security="none" pattern="/health-check/health-check.jsp" />
+
+  <security:http security="none" pattern="/favicon.ico"/>
+
+  <security:http security="none" pattern="/web/resources/**" />
+  <security:http security="none" pattern="/ws/**" />
+
+
+  <!-- Logger for SAML messages and events -->
+  <bean id="samlLogger" class="org.springframework.security.saml.log.SAMLDefaultLogger">
+    <property name="logMessages" value="true"/>
+    <property name="logErrors" value="true"/>
+  </bean>
+
+  <!-- Real logins should use the unified user details service facade -->
+  <bean id="minaintygUserDetailsService" class="se.inera.intyg.minaintyg.web.auth.MinaIntygUserDetailsService">
+    <property name="minaIntygPUService" ref="minaIntygPUService" />
+  </bean>
+
+  <!-- Initialization of OpenSAML library-->
+  <bean class="org.springframework.security.saml.SAMLBootstrap"/>
+
+  <!-- Initialization of the velocity engine -->
+  <bean id="velocityEngine" class="org.springframework.security.saml.util.VelocityFactory" factory-method="getEngine"/>
+
+  <!-- XML parser pool needed for OpenSAML parsing -->
+  <bean id="parserPool" class="org.opensaml.xml.parse.StaticBasicParserPool" scope="singleton"
+        init-method="initialize"/>
+  <bean id="parserPoolHolder" class="org.springframework.security.saml.parser.ParserPoolHolder" scope="singleton"/>
+
+  <bean id="failureHandler"
+        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+    <property name="exceptionMappings">
+      <props>
+        <prop key="org.springframework.security.authentication.BadCredentialsException">
+          /error.jsp?reason=login.failed
+        </prop>
+      </props>
+    </property>
+    <property name="defaultFailureUrl" value="/error.jsp?reason=login.failed"/>
+  </bean>
+
+  <bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+    <property name="errorPage" value="/error.jsp?reason=denied" />
+  </bean>
+
+  <bean id="http403ForbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+
+  <!-- SessionRegistry is needed for keeping track of authenticated sessions (i.e users), this impl performs audit logging of login and logouts. -->
+  <bean id="sessionRegistry" class="se.inera.intyg.minaintyg.web.security.LoggingSessionRegistryImpl" />
+
+  <!-- Session authentication strategy that registers authenticated sessions with the session registry -->
+  <bean id="registerSessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+    <constructor-arg ref="sessionRegistry" />
+  </bean>
+
+  <!-- =============================================================== -->
+  <!-- Unsecured pages when not in production                          -->
+  <!-- =============================================================== -->
+  <beans profile="!prod">
+    <security:http security="none" pattern="/pubapp/**"/>
+  </beans>
+
+  <!-- =============================================================== -->
+  <!-- These URLs are unsecured in all profiles except wc-security-prod -->
+  <!-- =============================================================== -->
+  <beans profile="dev,test,qa,mi-security-test">
+    <security:http security="none" pattern="/welcome.html"/>
+    <security:http security="none" pattern="/testability/**"/>
+  </beans>
+
+  <!-- =============================================================== -->
+  <!-- The dev and wc-security-dev profiles only supports Fake login   -->
+  <!-- Note that running with mi-security-test automatically disables  -->
+  <!-- these profiles due to conflicting /** intercept patterns if     -->
+  <!-- both dev and mi-security-test are active.                       -->
+  <!-- =============================================================== -->
+  <beans profile="!mi-security-test">
+    <beans profile="dev,wc-security-dev">
+      <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+        <security:csrf disabled="true"/>
+        <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
+        <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+        <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
+        <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+      </security:http>
+
+      <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="fakeElegAuthenticationProvider"/>
+      </security:authentication-manager>
+    </beans>
+  </beans>
+
+  <!-- ======================================================================== -->
+  <!-- The mi-security-test profile support both E-leg and Fake login -->
+  <!-- ======================================================================== -->
+  <beans profile="mi-security-test">
+
+    <!-- Handle all POST-backs with SAML tickets from IDPs for /saml/SSO -->
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)" request-matcher="regex">
+      <security:csrf disabled="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
+      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
+
+    <!-- For fake-login (used to be MVK). /web/sso accepts a fake context etc. -->
+    <security:http pattern="/web/sso**" entry-point-ref="samlEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:logout logout-url="/logout" logout-success-url="/welcome.html" invalidate-session="true"/>
+      <security:custom-filter position="FIRST" ref="clearSecurityContextFilter" />
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter" />
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+
+    <!-- Legacy FK SAML entry point. This should be removed, replaced by /saml/* + alias
+    <security:http pattern="/web/fksso/**" authentication-manager-ref="authenticationManager" entry-point-ref="samlEntryPoint">
+     <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
+    <security:custom-filter after="FIRST" ref="metadataGeneratorFilter"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
+  -->
+
+    <!-- Some Role-based rules for /api, /moduleapi -->
+    <security:http pattern="/api/**" use-expressions="true" entry-point-ref="samlEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/api/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:headers>
+        <security:frame-options />
+        <security:cache-control />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/moduleapi/**" use-expressions="true" entry-point-ref="samlEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/moduleapi/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:headers>
+        <security:frame-options />
+        <security:cache-control />
+      </security:headers>
+    </security:http>
+
+    <!-- Various logout-links. These need to be modified -->
+    <security:http pattern="/web/tillbaka-till-mvk" entry-point-ref="samlEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/web/logga-ut" entry-point-ref="samlEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+    <security:http pattern="/web/logga-ut-fk" entry-point-ref="samlEntryPoint">
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+
+    <!-- This is the "catch-all" config. -->
+    <security:http use-expressions="true" entry-point-ref="samlEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/web/**" access="hasRole('ROLE_CITIZEN')" />
+      <security:logout logout-url="/web/logout" logout-success-url="/web/start?reason=logout" />
+      <security:headers>
+        <security:frame-options />
+      </security:headers>
+    </security:http>
+
+    <!-- Filter that resets the security context -->
+    <bean id="clearSecurityContextFilter" class="se.inera.intyg.minaintyg.web.security.ClearSecurityContextFilter">
+      <property name="handler" ref="logoutHandler" />
+    </bean>
+
+    <security:authentication-manager alias="authenticationManager">
+      <security:authentication-provider ref="samlAuthenticationProvider"/>
+      <security:authentication-provider ref="fakeElegAuthenticationProvider"/>
+    </security:authentication-manager>
+  </beans>
+
+  <!-- =============================================================== -->
+  <!-- The wc-security-prod profile only supports Säkerhetstjänst and CGI e-leg login -->
+  <!-- =============================================================== -->
+  <beans profile="prod,wc-security-prod">
+
+    <!-- CLEAN UP WEBCERT REMAINS HERE!!!
+    /visa/intyg/ and /webcert/web are deep-integration links used by VAS and Cosmic and should use SAML SSO -->
+    <security:http use-expressions="false" entry-point-ref="samlEntryPoint" pattern="(\/saml\/.*)|(\/visa\/intyg\/.*)|(\/webcert\/web\/.*)" request-matcher="regex">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
+
+    <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+      <security:csrf disabled="true"/>
+      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
+
+    <security:authentication-manager alias="authenticationManager">
+      <security:authentication-provider ref="samlAuthenticationProvider"/>
+    </security:authentication-manager>
+  </beans>
+
+  <beans profile="dev,test,qa">
+    <bean id="fakeAuthFilter" class="se.inera.intyg.minaintyg.web.auth.FakeAuthenticationFilter">
+      <property name="authenticationManager" ref="authenticationManager"/>
+      <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
+      <property name="authenticationSuccessHandler" ref="fakeSuccessHandler"/>
+      <property name="authenticationFailureHandler" ref="failureHandler"/>
+    </bean>
+    <bean id="fakeSuccessHandler"
+        class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+      <property name="defaultTargetUrl" value="/web/start"/>
+    </bean>
+    <bean id="fakeElegAuthenticationProvider"
+        class="se.inera.intyg.minaintyg.web.auth.FakeElegAuthenticationProvider">
+      <property name="minaIntygUserDetailsService" ref="minaintygUserDetailsService"/>
+      <property name="minaIntygPUService" ref="minaIntygPUService" />
+    </bean>
+  </beans>
+
+
+  <beans profile="prod,mi-security-test,mi-security-prod">
+
+    <bean id="samlFilter" class="org.springframework.security.web.FilterChainProxy">
+      <security:filter-chain-map request-matcher="ant">
+        <security:filter-chain pattern="/saml/login/**" filters="samlEntryPoint"/>
+        <security:filter-chain pattern="/saml/logout/**" filters="samlLogoutFilter"/>
+        <security:filter-chain pattern="/saml/SSO/**" filters="samlWebSSOProcessingFilter"/>
+        <security:filter-chain pattern="/saml/SingleLogout/**" filters="samlLogoutProcessingFilter"/>
+      </security:filter-chain-map>
+    </bean>
+
+    <!--  CAN THIS BE DELETED FOR MINA INTYG? YES WE CAN!!
+          Decide which requests should be saved for redirection after successful login.
+         Triggers on: /web/* and deep-integration links /visa/* and /webcert/*
+         We don't want to save /api and /moduleapi requests since this will make the browser display the data. -->
+    <bean id="saveRequestMatcher" class="org.springframework.security.web.util.matcher.RegexRequestMatcher">
+      <constructor-arg index="0" value="\/web\/.*|\/visa\/.*|\/webcert\/.*"/>
+      <constructor-arg index="1" value="GET"/>
+    </bean>
+    <bean id="httpSessionRequestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache">
+      <property name="requestMatcher" ref="saveRequestMatcher" />
+    </bean>
+
+    <!-- Handler deciding where to redirect user after successful login -->
+    <bean id="successRedirectHandler"
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+      <property name="defaultTargetUrl" value="${fk.saml.successful.login.url}"/>
+      <property name="requestCache" ref="httpSessionRequestCache" />
+    </bean>
+
+    <!-- Central storage of cryptographic keys -->
+    <bean id="keyManager" class="org.springframework.security.saml.key.JKSKeyManager">
+      <constructor-arg value="${fk.saml.keystore.file}"/>
+      <constructor-arg type="java.lang.String" value="${fk.saml.keystore.password}"/>
+      <constructor-arg>
+        <map>
+          <entry key="${fk.saml.keystore.alias}" value="${fk.saml.keystore.password}"/>
+        </map>
+      </constructor-arg>
+      <constructor-arg type="java.lang.String" value="${fk.saml.keystore.alias}"/>
+    </bean>
+
+    <!-- Entry point to initialize authentication, default values taken from properties file -->
+    <bean id="samlEntryPoint" class="se.inera.intyg.minaintyg.web.auth.MinaIntygSAMLEntryPoint">
+      <property name="defaultProfileOptions">
+        <bean class="org.springframework.security.saml.websso.WebSSOProfileOptions">
+          <property name="includeScoping" value="false"/>
+          <property name="authnContexts">
+            <list>
+              <!-- Important: In the custom WebcertSAMLEntryPoint we mutate these for the authnRequests due to SSO problems -->
+              <value>urn:oasis:names:tc:SAML:2.0:ac:classes:TLSClient</value>
+              <value>urn:oasis:names:tc:SAML:2.0:ac:classes:SoftwarePKI</value>
+            </list>
+          </property>
+        </bean>
+      </property>
+    </bean>
+
+    <!-- IDP Metadata configuration - paths to metadata of IDPs in circle of trust is here -->
+    <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager">
+
+      <constructor-arg>
+        <list>
+
+          <!-- START SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/sp-eleg.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="eleg"/>
+                <property name="local" value="true"/>
+                <property name="securityProfile" value="metaiop"/>
+                <property name="sslSecurityProfile" value="metaiop"/>    <!-- pkix -->
+                <property name="signMetadata" value="true"/>
+
+                <!-- The signingKey and encryptionKey refers to the _aliases_ of the key in the keystore defined in the keyManager bean -->
+                <property name="signingKey" value="${fk.saml.keystore.alias}"/>
+                <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
+                <property name="requireArtifactResolveSigned" value="true"/>
+                <property name="requireLogoutRequestSigned" value="true"/>
+                <property name="requireLogoutResponseSigned" value="true"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="true"/>
+          </bean>
+          <!-- END SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
+
+          <!-- START IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/idp-eleg.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="eleg"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="false"/>
+          </bean>
+          <!-- END IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
+
+
+
+          <!-- START SERVICE PROVIDER BEAN FOR FK SAML -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/sp-fk.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="defaultAlias"/>
+                <property name="local" value="true"/>
+                <property name="securityProfile" value="metaiop"/>
+                <property name="sslSecurityProfile" value="metaiop"/>    <!-- pkix -->
+                <property name="signMetadata" value="true"/>
+
+                <!-- The signingKey and encryptionKey refers to the _aliases_ of the key in the keystore defined in the keyManager bean -->
+                <property name="signingKey" value="${fk.saml.keystore.alias}"/>
+                <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
+                <property name="requireArtifactResolveSigned" value="true"/>
+                <property name="requireLogoutRequestSigned" value="true"/>
+                <property name="requireLogoutResponseSigned" value="true"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="true"/>
+          </bean>
+          <!-- END SERVICE PROVIDER BEAN FOR FK SAML -->
+
+          <!-- START IDENTITY PROVIDER BEAN FOR FK SAML -->
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${config.dir}/idp-fk.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+            <constructor-arg>
+              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
+                <property name="alias" value="defaultAlias"/>
+              </bean>
+            </constructor-arg>
+
+            <property name="metadataTrustCheck" value="false"/>
+          </bean>
+          <!-- END IDENTITY PROVIDER BEAN FOR FK SAML -->
+
+
+        </list>
+      </constructor-arg>
+      <property name="refreshCheckInterval" value="86400000"/>
+
+    </bean>
+
+    <!-- SAML Authentication Provider responsible for validating of received SAML messages e-leg class="org.springframework.security.saml.SAMLAuthenticationProvider"-->
+    <bean id="samlAuthenticationProvider" class="se.inera.intyg.minaintyg.web.auth.MinaIntygAuthenticationProvider">
+      <property name="userDetails" ref="minaintygUserDetailsService"/>
+      <property name="forcePrincipalAsString" value="false"/>
+    </bean>
+
+    <!-- Processing filter for WebSSO profile messages -->
+    <bean id="samlWebSSOProcessingFilter" class="org.springframework.security.saml.SAMLProcessingFilter">
+      <property name="authenticationManager" ref="authenticationManager"/>
+      <property name="sessionAuthenticationStrategy" ref="registerSessionAuthenticationStrategy"/>
+      <property name="authenticationSuccessHandler" ref="successRedirectHandler"/>
+      <property name="authenticationFailureHandler" ref="failureHandler"/>
+    </bean>
+
+    <!-- Class loading incoming SAML messages from httpRequest stream -->
+    <bean id="processor" class="org.springframework.security.saml.processor.SAMLProcessorImpl">
+      <constructor-arg>
+        <list>
+          <ref bean="redirectBinding"/>
+          <ref bean="postBinding"/>
+          <ref bean="artifactBinding"/>
+        </list>
+      </constructor-arg>
+    </bean>
+
+    <bean id="artifactBinding" class="org.springframework.security.saml.processor.HTTPArtifactBinding">
+      <constructor-arg ref="parserPool"/>
+      <constructor-arg ref="velocityEngine"/>
+      <constructor-arg>
+        <bean class="org.springframework.security.saml.websso.ArtifactResolutionProfileImpl">
+          <constructor-arg>
+            <bean class="org.apache.commons.httpclient.HttpClient"/>
+          </constructor-arg>
+          <property name="processor">
+            <bean id="soapProcessor" class="org.springframework.security.saml.processor.SAMLProcessorImpl">
+              <constructor-arg ref="soapBinding"/>
+            </bean>
+          </property>
+        </bean>
+      </constructor-arg>
+    </bean>
+
+    <bean id="soapBinding" class="org.springframework.security.saml.processor.HTTPSOAP11Binding">
+      <constructor-arg ref="parserPool"/>
+    </bean>
+
+    <!-- SAML 2.0 WebSSO Assertion Consumer -->
+    <bean id="webSSOprofileConsumer" class="org.springframework.security.saml.websso.WebSSOProfileConsumerImpl">
+      <property name="responseSkew" value="${sakerhetstjanst.saml.responseSkew}"/>
+    </bean>
+
+    <!-- SAML 2.0 Holder-of-Key WebSSO Assertion Consumer -->
+    <bean id="hokWebSSOprofileConsumer" class="org.springframework.security.saml.websso.WebSSOProfileConsumerHoKImpl"/>
+
+    <!-- SAML 2.0 Web SSO profile. Overridden by Webcert to provide AttributeConsumerIndex -->
+    <bean id="webSSOprofile" class="org.springframework.security.saml.websso.WebSSOProfileImpl">
+    </bean>
+
+    <!-- SAML 2.0 Logout Profile -->
+    <bean id="logoutprofile" class="org.springframework.security.saml.websso.SingleLogoutProfileImpl"/>
+
+    <!-- Bindings, encoders and decoders used for creating and parsing messages -->
+    <bean id="postBinding" class="org.springframework.security.saml.processor.HTTPPostBinding">
+      <constructor-arg ref="parserPool"/>
+      <constructor-arg ref="velocityEngine"/>
+    </bean>
+
+    <bean id="redirectBinding" class="org.springframework.security.saml.processor.HTTPRedirectDeflateBinding">
+      <constructor-arg ref="parserPool"/>
+    </bean>
+
+    <!-- Provider of default SAML Context -->
+    <bean id="contextProvider" class="org.springframework.security.saml.context.SAMLContextProviderImpl">
+        <property name="keyManager" ref="keyManager" />
+    </bean>
+
+    <!-- Note - logoutHandler moved to global profile scope -->
+
+    <!-- Override default logout processing filter with the one processing SAML messages -->
+    <bean id="samlLogoutFilter" class="org.springframework.security.saml.SAMLLogoutFilter">
+      <constructor-arg index="0" ref="successLogoutHandler"/>
+      <constructor-arg index="1" ref="logoutHandler"/>
+      <constructor-arg index="2" ref="logoutHandler"/>
+    </bean>
+
+    <!-- Filter processing incoming logout messages -->
+    <!-- First argument determines URL user will be redirected to after successful global logout -->
+    <bean id="samlLogoutProcessingFilter" class="org.springframework.security.saml.SAMLLogoutProcessingFilter">
+      <constructor-arg index="0" ref="successLogoutHandler"/>
+      <constructor-arg index="1" ref="logoutHandler"/>
+    </bean>
+
+    <!-- Handler for successful logout -->
+    <bean id="successLogoutHandler"
+          class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+      <property name="defaultTargetUrl" value="${fk.saml.successful.logout.url}"/>
+    </bean>
+
+  </beans>
+
+  <beans>
+    <!-- Logout handler terminating local session -->
+    <bean id="logoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+  </beans>
+</beans>

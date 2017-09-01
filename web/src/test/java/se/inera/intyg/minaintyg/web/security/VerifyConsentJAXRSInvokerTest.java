@@ -56,7 +56,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleNoConsentJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -67,7 +67,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleNoConsentMethodAllowedWithoutConsent() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
         Exchange exchange = mock(Exchange.class);
@@ -86,7 +86,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -115,7 +115,7 @@ public class VerifyConsentJAXRSInvokerTest {
     public void testInvokeConsentNotKnown() throws Exception {
         final String personId = "19121212-1212";
         final Personnummer pnr = new Personnummer(personId);
-        Citizen citizen = new CitizenImpl(personId, LoginMethodEnum.MVK, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl(personId, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         when(service.getCitizen()).thenReturn(citizen);
         when(consentService.fetchConsent(pnr)).thenReturn(true);
 
