@@ -12,6 +12,6 @@ proxy_env:
   https_proxy: http://bf-proxy.sth:8888
 
 # Spring profiles
-profiles: test
+profiles: test,mi-security-test
 
 tomcat_http_port: 8080
