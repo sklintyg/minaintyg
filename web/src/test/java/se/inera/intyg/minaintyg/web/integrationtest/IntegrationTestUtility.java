@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import static com.jayway.restassured.RestAssured.given;
-
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
@@ -29,6 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.lessThan;
 
 public final class IntegrationTestUtility {
 
@@ -50,7 +51,7 @@ public final class IntegrationTestUtility {
 
     public static void logout() {
         given().redirects().follow(false).and()
-                .expect().statusCode(HttpServletResponse.SC_FOUND)
+                .expect().statusCode(lessThan(404)) //statusCode(HttpServletResponse.SC_FOUND)
                 .when().get("web/logga-ut");
     }
 
