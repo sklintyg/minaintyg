@@ -98,7 +98,7 @@ gretty {
                "-Dspring.profiles.active=dev",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
-               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
+               "-Dminaintyg.credentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dminaintyg.config.file=${projectDir}/minaintyg-dev.properties",
                "-Dminaintyg.logback.file=${projectDir}/minaintyg-logback.xml",
                "-Dminaintyg.useMinifiedJavaScript=${minified}"]
