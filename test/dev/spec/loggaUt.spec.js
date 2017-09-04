@@ -85,12 +85,12 @@ describe('Logga ut', function() {
             expect(inboxPage.isAt()).toBeTruthy();
         });
 
-        it('Välj "Tillbaka till Mina Vårdkontakter" i headern (FIXA DETTA!!!)', function() {
+        it('Välj "Tillbaka till Mina Vårdkontakter" i headern', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
             browser.driver.sleep(3000);
-            expect(browser.getTitle()).toEqual('Mina intyg');
-            expect(browser.getCurrentUrl()).toContain('/saml/login/alias/eleg');
+            expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
+            expect(browser.getCurrentUrl()).toContain('https://kontakt.minavardkontakter.se/mvk/login/login.xhtml');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
