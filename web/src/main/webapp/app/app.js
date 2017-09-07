@@ -47,6 +47,14 @@
         wrap('replaceState');
     });
 
+    // The method above only works if $locationProvider.html5Mode(true)
+    // This method method works without BUT runs on back/forward buttons too
+    app.run(function ($rootScope, $state, $stateParams, $anchorScroll) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+            $anchorScroll();
+        });
+    });
+
     function getModules() {
         return $.get('/appconfig/api/map').then(function(data) {
             return data;
