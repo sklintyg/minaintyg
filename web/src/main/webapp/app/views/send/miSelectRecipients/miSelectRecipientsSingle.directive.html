@@ -1,0 +1,25 @@
+<div>
+  <div class="selection-box">
+
+    <h2>
+      <span message key="sendpage.label.single-recipient.heading"></span>
+    </h2>
+
+    <ul class="nav selection-list">
+      <li ng-repeat="sr in selected" class="unsent">
+        {{sr.name}}
+      </li>
+      <li ng-repeat="r in recipients | orderBy: 'name'">
+        <div class="sent">{{r.name}}<span class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span></div>
+      </li>
+    </ul>
+
+    <div class="button-row">
+      <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
+              type="button" ng-disabled="selected.length < 1">
+        <i class="icon icon-ok"></i> <span message key="sendpage.btn.send"></span>
+      </button>
+    </div>
+
+  </div>
+</div>

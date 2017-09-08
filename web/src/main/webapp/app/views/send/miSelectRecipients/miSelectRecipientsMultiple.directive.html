@@ -1,0 +1,58 @@
+<div>
+
+  <div class="row flex-row">
+
+    <!-- select from list -->
+    <div class="col-xs-12 col-sm-6">
+
+      <div class="selection-box">
+
+        <h2>
+          <span message key="sendpage.label.select-recipients.heading"></span>
+        </h2>
+
+        <ul class="nav selection-list">
+          <li ng-repeat="r in recipients | orderBy: 'name'">
+
+            <a ng-attr-id="{{'selectable-recipient-' + r.id}}" ng-if="!r.sent" class="unsent"
+               ng-click="select($event, r)" href="#">{{r.name}}<span class="pull-right" message
+                                                                     key="sendpage.btn.select"></span></a>
+
+            <div ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">{{r.name}}<span
+                class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- selected list -->
+    <div class="col-xs-12 col-sm-6">
+      <div class="selection-box">
+        <h2 ng-if="selected.length < 1"><span message key="sendpage.label.none-selected"></span></h2>
+        <h2 ng-if="selected.length > 0"><span message key="sendpage.label.some-selected"></span></h2>
+
+        <ul class="nav selection-list">
+          <li ng-repeat="sr in selected">
+            <a ng-attr-id="{{'removable-recipient-' + sr.id}}" ng-click="deselect($event, $index)" class="unsent"
+               href="#">{{sr.name}}
+              <span class="pull-right" message key="sendpage.btn.remove-one"></span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="button-row">
+          <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
+                  type="button" ng-disabled="selected.length < 1">
+            <i class="icon icon-ok"></i> <span message key="sendpage.btn.send"></span>
+          </button>
+          <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-third" type="button"
+                  ng-if="selected.length > 0">
+            <i class="icon icon-cancel"></i> <span message key="sendpage.btn.clear"></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

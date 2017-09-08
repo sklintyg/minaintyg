@@ -7,8 +7,19 @@ mi-select-recipients {
     border: 1px solid #eee;
     padding: 15px;
     box-shadow: 0 3px 5px $mi-box-shadow-color;
+    flex: 1 0 auto;
   }
 
+  .nav > li > a {
+    :focus, > :hover, :focus > span, :hover > span {
+      background-color: transparent;
+      text-decoration: underline;
+    }
+  }
+
+  .nav > li:hover {
+    font-weight: bold;
+  }
 
   .selection-list {
     min-height: 100px;
@@ -17,24 +28,12 @@ mi-select-recipients {
       min-height: 160px;
     }
 
-    a.sent {
-      cursor: default;
-      text-decoration: none;
-
-      &:hover {
-        background:none;
-        color: #008391;
-      }
+    .sent, .unsent {
+      padding: 10px 15px;
     }
 
-    a.unsent {
-      &:hover {
-        font-weight: bold;
-      }
-
-      span {
-        text-decoration: underline;
-      }
+    .timestamp {
+      color: #777777
     }
   }
 
