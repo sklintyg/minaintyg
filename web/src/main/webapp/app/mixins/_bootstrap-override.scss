@@ -124,6 +124,9 @@ h2 {
 
 //Tables
 .table-striped {
+  > tbody > tr > th {
+    background-color: $mi-intyg-table-header;
+  }
   > tbody > tr:nth-of-type(odd) {
     background-color: $mi-intyg-table-bg;
   }
