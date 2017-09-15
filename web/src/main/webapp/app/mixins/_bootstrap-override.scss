@@ -128,10 +128,10 @@ h2 {
     background-color: $mi-intyg-table-header;
   }
   > tbody > tr:nth-of-type(odd) {
-    background-color: $mi-intyg-table-bg;
+    background-color: $mi-intyg-table-bg-accent;
   }
 
   > tbody > tr:nth-of-type(even) {
-    background-color: $mi-intyg-table-bg-accent;
+    background-color: $mi-intyg-table-bg;
   }
 }
