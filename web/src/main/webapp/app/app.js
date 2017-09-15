@@ -32,25 +32,9 @@
     });
 
     //http://stackoverflow.com/a/29153678/411284
-
-    app.run(function($anchorScroll, $window) {
-        // hack to scroll to top when navigating to new URLS but not back/forward
-        var wrap = function(method) {
-            var orig = $window.window.history[method];
-            $window.window.history[method] = function() {
-                var retval = orig.apply(this, Array.prototype.slice.call(arguments));
-                $anchorScroll();
-                return retval;
-            };
-        };
-        wrap('pushState');
-        wrap('replaceState');
-    });
-
-    // The method above only works if $locationProvider.html5Mode(true)
-    // This method method works without BUT runs on back/forward buttons too
+    // This method method works BUT runs on back/forward buttons too
     app.run(function ($rootScope, $state, $stateParams, $anchorScroll) {
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+        $rootScope.$on('$stateChangeStart', function () {
             $anchorScroll();
         });
     });
