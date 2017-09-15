@@ -315,6 +315,11 @@ module.exports = function(grunt) {
                             ));
                         middlewares.push(
                             connect().use(
+                                '/img',
+                                serveStatic(__dirname + '/src/main/webapp/img') // jshint ignore:line
+                            ));
+                        middlewares.push(
+                            connect().use(
                                 '/app/app-deps.js',
                                 serveStatic(__dirname + DEST_DIR + '/app-deps.js') // jshint ignore:line
                             ));

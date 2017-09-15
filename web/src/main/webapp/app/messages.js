@@ -170,7 +170,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'listtable.headers.latestevent': 'Senaste händelser',
 
-        'mvk.header.linktext': '1177 Vårdguiden',
+        'mvk.header.linktext': 'E-tjänster',
         'mvk.header.logouttext': 'Logga ut',
 
         'common.close': 'Stäng',
