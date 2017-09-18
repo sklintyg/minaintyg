@@ -2,7 +2,8 @@
   <div class="selection-box">
 
     <h2>
-      <span message key="sendpage.label.single-recipient.heading"></span>
+      <span ng-if="selected.length > 0" message key="sendpage.label.single-recipient.heading"></span>
+      <span ng-if="selected.length == 0" message key="sendpage.label.single-recipient.sent.heading"></span>
     </h2>
 
     <ul class="nav selection-list">

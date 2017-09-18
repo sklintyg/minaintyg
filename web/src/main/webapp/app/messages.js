@@ -92,6 +92,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         /* SEND */
         'sendpage.label.single-recipient.heading': 'Klicka på knappen om du vill skicka ditt intyg till nedanstående mottagare',
+        'sendpage.label.single-recipient.sent.heading': 'Intyget har redan skickats till nedanstående mottagare',
         'sendpage.label.select-recipients.heading': 'Välj mottagare du vill skicka intyget till:',
         'sendpage.label.none-selected': 'Du har inte valt någon mottagare att skicka intyget till.',
         'sendpage.label.some-selected': 'Du har valt att skicka intyget till följande mottagare:',
