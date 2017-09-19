@@ -41,8 +41,9 @@ public class ConfigResponse implements Serializable {
     private List<UtlatandeRecipient> knownRecipients;
     private Map<String, DynamicLink> links;
 
-    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl, List<UtlatandeRecipient> knownRecipients,
-                          Map<String, DynamicLink> links) {
+    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
+            List<UtlatandeRecipient> knownRecipients,
+            Map<String, DynamicLink> links) {
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
         this.elva77MainUrl = elva77MainUrl;
