@@ -30,7 +30,8 @@ import static org.mockito.Mockito.when;
 public class ConfigApiControllerTest {
 
     private static final String BUILD_NUMBER = "1.0";
-    private static final String MVK_URL = "http://mvk.se/ABC123?apa=bepa";
+    private static final String ELVA77_MAIN_URL = "http://mvk.se/ABC123?apa=bepa";
+    private static final String ELVA77_LOGIN_URL = "/saml/login";
 
     @Mock
     private IntygModuleRegistry moduleRegistry;
@@ -51,7 +52,8 @@ public class ConfigApiControllerTest {
     public void getConfig() throws Exception {
         when(certificateService.getAllRecipients()).thenReturn(Arrays.asList(mock(UtlatandeRecipient.class)));
         when(systemConfigBean.getBuildNumber()).thenReturn(BUILD_NUMBER);
-        when(systemConfigBean.getElva77MainUrl()).thenReturn(MVK_URL);
+        when(systemConfigBean.getElva77MainUrl()).thenReturn(ELVA77_MAIN_URL);
+        when(systemConfigBean.getElva77LoginUrl()).thenReturn(ELVA77_LOGIN_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
         when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
 
@@ -63,7 +65,8 @@ public class ConfigApiControllerTest {
         assertNotNull(config);
         assertEquals(1, config.getKnownRecipients().size());
         assertEquals(BUILD_NUMBER, config.getBuildNumber());
-        assertEquals(MVK_URL, config.getElva77MainUrl());
+        assertEquals(ELVA77_MAIN_URL, config.getElva77MainUrl());
+        assertEquals(ELVA77_LOGIN_URL, config.getElva77LoginUrl());
         assertEquals(false, config.isUseMinifiedJavascript());
 
         verify(certificateService).getAllRecipients();
