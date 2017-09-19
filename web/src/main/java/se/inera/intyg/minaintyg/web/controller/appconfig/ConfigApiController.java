@@ -58,7 +58,7 @@ public class ConfigApiController {
 
         Response.ResponseBuilder builder = Response
                 .ok(new ConfigResponse(systemConfigBean.getBuildNumber(), systemConfigBean.getUseMinifiedJavascript(),
-                        systemConfigBean.getMvkMainUrl(), certificateService.getAllRecipients(),
+                        systemConfigBean.getElva77MainUrl(), systemConfigBean.getElva77LoginUrl(), certificateService.getAllRecipients(),
                         dynamicLinkService.getAllAsMap()));
         return builder.cacheControl(getNoCacheControl()).build();
     }

@@ -28,7 +28,7 @@
   }
   pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
 %>
-<c:set var="mvkMainUrl" value="${pageAttributes.mvkMainUrl}"/>
+<c:set var="elva77MainUrl" value="${pageAttributes.elva77MainUrl}"/>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app">
@@ -78,7 +78,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> <spring:message
+                <a class="btn btn-primary" href="${elva77MainUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
@@ -92,7 +92,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${mvkMainUrl}"><i class="icon icon-login"></i> <spring:message
+                <a class="btn btn-primary" href="${elva77MainUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>

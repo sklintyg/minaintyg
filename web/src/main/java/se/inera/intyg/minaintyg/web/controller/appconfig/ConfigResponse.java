@@ -36,15 +36,17 @@ public class ConfigResponse implements Serializable {
     // system properties
     private String buildNumber;
     private boolean useMinifiedJavascript;
-    private String mvkMainUrl;
+    private String elva77MainUrl;
+    private String elva77LoginUrl;
     private List<UtlatandeRecipient> knownRecipients;
     private Map<String, DynamicLink> links;
 
-    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String mvkMainUrl, List<UtlatandeRecipient> knownRecipients,
-            Map<String, DynamicLink> links) {
+    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl, List<UtlatandeRecipient> knownRecipients,
+                          Map<String, DynamicLink> links) {
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
-        this.mvkMainUrl = mvkMainUrl;
+        this.elva77MainUrl = elva77MainUrl;
+        this.elva77LoginUrl = elva77LoginUrl;
         this.knownRecipients = knownRecipients;
         this.links = links;
     }
@@ -57,8 +59,12 @@ public class ConfigResponse implements Serializable {
         return useMinifiedJavascript;
     }
 
-    public String getMvkMainUrl() {
-        return mvkMainUrl;
+    public String getElva77MainUrl() {
+        return elva77MainUrl;
+    }
+
+    public String getElva77LoginUrl() {
+        return elva77LoginUrl;
     }
 
     public List<UtlatandeRecipient> getKnownRecipients() {

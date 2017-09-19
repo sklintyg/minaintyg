@@ -51,7 +51,7 @@ public class ConfigApiControllerTest {
     public void getConfig() throws Exception {
         when(certificateService.getAllRecipients()).thenReturn(Arrays.asList(mock(UtlatandeRecipient.class)));
         when(systemConfigBean.getBuildNumber()).thenReturn(BUILD_NUMBER);
-        when(systemConfigBean.getMvkMainUrl()).thenReturn(MVK_URL);
+        when(systemConfigBean.getElva77MainUrl()).thenReturn(MVK_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
         when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
 
@@ -63,7 +63,7 @@ public class ConfigApiControllerTest {
         assertNotNull(config);
         assertEquals(1, config.getKnownRecipients().size());
         assertEquals(BUILD_NUMBER, config.getBuildNumber());
-        assertEquals(MVK_URL, config.getMvkMainUrl());
+        assertEquals(MVK_URL, config.getElva77MainUrl());
         assertEquals(false, config.isUseMinifiedJavascript());
 
         verify(certificateService).getAllRecipients();

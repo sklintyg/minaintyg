@@ -18,19 +18,31 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 public class JspPageAttributes {
 
+    private static final Logger LOG = LoggerFactory.getLogger(JspPageAttributes.class);
+
     private static final String USE_MINIFIED_JAVA_SCRIPT = "minaintyg.useMinifiedJavaScript";
 
     @Autowired
-    @Value("${mvk.url.main}")
-    private String mvkMainUrl;
+    @Value("${elva77.url.login}")
+    private String elva77LoginUrl;
 
-    public String getMvkMainUrl() {
-        return mvkMainUrl;
+    @Autowired
+    @Value("${elva77.url.main}")
+    private String elva77MainUrl;
+
+    public String getElva77LoginUrl() {
+        return elva77LoginUrl;
+    }
+
+    public String getElva77MainUrl() {
+        return elva77MainUrl;
     }
 
     public String getUseMinifiedJavaScript() {

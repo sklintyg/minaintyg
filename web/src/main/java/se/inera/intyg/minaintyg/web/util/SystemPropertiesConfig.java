@@ -34,21 +34,33 @@ public class SystemPropertiesConfig {
     @Value("${buildNumber}")
     private String buildNumber;
 
-    @Value("${mvk.url.main}")
-    private String mvkMainUrl;
+    @Value("${elva77.url.main}")
+    private String elva77MainUrl;
+
+    @Value("${elva77.url.login}")
+    private String elva77LoginUrl;
 
     @Autowired
     private Environment environment;
+
 
     public String getBuildNumber() {
         return buildNumber;
     }
 
-    public String getMvkMainUrl() {
-        return mvkMainUrl;
+    public String getElva77MainUrl() {
+        return elva77MainUrl;
     }
 
     public boolean getUseMinifiedJavascript() {
         return environment.getProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, Boolean.class, true);
+    }
+
+    public String getElva77LoginUrl() {
+        return elva77LoginUrl;
+    }
+
+    public void setElva77LoginUrl(String elva77LoginUrl) {
+        this.elva77LoginUrl = elva77LoginUrl;
     }
 }

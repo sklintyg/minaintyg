@@ -51,12 +51,16 @@ public class PageController {
     private CitizenService citizenService;
 
     @Autowired
-    @Value("${mvk.url.start}")
-    private String mvkStartUrl;
+    @Value("${elva77.url.start}")
+    private String elva77StartUrl;
 
     @Autowired
-    @Value("${mvk.url.logout}")
-    private String mvkLogoutUrl;
+    @Value("${elva77.url.main}")
+    private String elva77MainUrl;
+
+    @Autowired
+    @Value("${elva77.url.logout}")
+    private String elva77LogoutUrl;
 
     @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
     public String sso() {
@@ -79,14 +83,14 @@ public class PageController {
     public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
         invalidateSessionAndClearContext(request);
-        return "redirect:" + mvkStartUrl;
+        return "redirect:" + elva77MainUrl;
     }
 
     @RequestMapping(value = { "/logga-ut" }, method = RequestMethod.GET)
     public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
         invalidateSessionAndClearContext(request);
-        return "redirect:" + mvkLogoutUrl;
+        return "redirect:" + elva77LogoutUrl;
     }
 
     @RequestMapping(value = { "/logga-ut-fk" }, method = RequestMethod.GET)
