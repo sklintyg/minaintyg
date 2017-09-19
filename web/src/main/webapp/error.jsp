@@ -78,7 +78,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77MainUrl}"><i class="icon icon-login"></i> <spring:message
+                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
@@ -92,7 +92,7 @@
               </div>
               <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77MainUrl}"><i class="icon icon-login"></i> <spring:message
+                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
                     code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
