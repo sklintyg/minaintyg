@@ -34,7 +34,8 @@
   "required": [
     "buildNumber",
     "useMinifiedJavascript",
-    "mvkMainUrl",
+    "elva77MainUrl",
+    "elva77LoginUrl",
     "knownRecipients"
   ]
 }
