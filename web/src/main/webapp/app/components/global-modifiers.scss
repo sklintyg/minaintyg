@@ -19,9 +19,7 @@
  */
 
 body {
-  -ms-overflow-style: scrollbar;
-  -webkit-font-smoothing: antialiased;
-  overflow-y: scroll;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 .no-padding {
