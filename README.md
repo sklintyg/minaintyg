@@ -35,6 +35,20 @@ $ cd minaintyg
 $ ./gradlew restAssuredTest
 ```
 
+### Konfigurera körning över NTjP
+För att köra de publicerade tjänstekontrakt som används över en tjänsteplattform så behöver man göra följande:
+
+I sin certificate.properties, peka om:
+
+    intygstjanst.secure.host.url = https://<adress och port till tjänsteplattform>
+    
+I samma fil, ange en http:conduit som matchar ovanstående, t.ex:
+
+    mi.ntjp.conduit.name.expression=https://<adress och port till tjänsteplattform>/.*
+    
+Aktivera spring-profilen "mi-ntjp"
+
+
 ## Licens
 Copyright (C) 2014 Inera AB (http://www.inera.se)
 
