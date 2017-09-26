@@ -53,6 +53,11 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     },
     confirmRevokeConsent: function() {
         element(by.id('revoke-consent-button')).click();
+
+        // Wait for page reload
+        specHelper.waitForUrlPattern('/.*web\/visa-ge-samtycke#\/consent');
+        specHelper.waitForAngularTestability();
+
     },
     revokeConsentDialogIsDisplayed: function() {
         return element(by.id('revoke-consent-confirmation-dialog')).isDisplayed();
