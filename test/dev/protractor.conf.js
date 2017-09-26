@@ -38,6 +38,7 @@ var screenshotReporter = new HtmlScreenshotReporter({
 });
 
 exports.config = {
+    directConnect: true,
     seleniumAddress: require('./../minaintygTestTools/environment.js').envConfig.SELENIUM_ADDRESS,
     baseUrl: require('./../minaintygTestTools/environment.js').envConfig.MINAINTYG_URL,
 
@@ -62,7 +63,7 @@ exports.config = {
         version: '11',*/
 
         // Any other browser
-        browserName: 'firefox', // possible values: phantomjs, firefox, chrome
+        browserName: 'chrome', // possible values: phantomjs, firefox, chrome
 
         // Run parallell instances of same browser (combine with any browser above)
         shardTestFiles: false, // set to true to divide tests among instances
