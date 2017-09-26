@@ -11,4 +11,19 @@
     border-radius: 0;
     max-width: inherit;
   }
+
+}
+
+@media (max-width: 768px) {
+
+  .cookie-banner-directive {
+    .cookie-banner__text-scroll {
+      overflow-y: scroll;
+      max-height: 250px;
+    }
+
+    .cookie-banner__button {
+      padding-top: 10px;
+    }
+  }
 }
