@@ -28,7 +28,7 @@
   }
   pageContext.setAttribute("useMinifiedJavaScript", useMinifiedJavaScript);
 %>
-<c:set var="elva77MainUrl" value="${pageAttributes.elva77MainUrl}"/>
+<c:set var="elva77LoginUrl" value="${pageAttributes.elva77LoginUrl}"/>
 
 <!DOCTYPE html>
 <html lang="sv" id="ng-app">
