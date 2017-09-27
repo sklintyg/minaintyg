@@ -21,3 +21,4 @@ node-v*
 web/src/main/webapp/app/app.css
 
 .sass-cache/
+out
