@@ -61,7 +61,7 @@
 
   <%-- Add navigation aid directives --%>
   <mi-scroll-to-top></mi-scroll-to-top>
-  <mi-scroll-to-top-link></mi-scroll-to-top-link>
+  <mi-footer></mi-footer>
 
   <div class="container">
     <div class="">

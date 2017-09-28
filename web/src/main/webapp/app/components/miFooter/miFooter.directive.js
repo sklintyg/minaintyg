@@ -17,13 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miScrollToTopLink', function($window) {
+angular.module('minaintyg').directive('miFooter', [
+    '$window', 'common.dialogService',
+    function($window, dialogService) {
     'use strict';
 
     return {
         restrict: 'E',
         scope: {},
-        templateUrl: '/app/components/miScrollToTopLink/miScrollToTopLink.directive.html',
+        templateUrl: '/app/components/miFooter/miFooter.directive.html',
         link: function($scope) {
 
             $scope.vm = {
@@ -48,6 +50,17 @@ angular.module('minaintyg').directive('miScrollToTopLink', function($window) {
                 $scope.$apply();
             });
 
+            $scope.openCookieDialog = function(){
+                dialogService.showDialog($scope, {
+                    dialogId: 'cookie-footer-dialog',
+                    titleId: 'footer.cookies.modal.title',
+                    bodyTextId: 'footer.cookies.modal.body',
+                    button1click: function() {},
+                    button1id: 'cookie-button-close',
+                    button1text: 'common.close',
+                    autoClose: true
+                });
+            };
         }
     };
-});
+}]);
