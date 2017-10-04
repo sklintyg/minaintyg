@@ -23,18 +23,10 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/minaintyg-config.xml, classpath:/minaintyg-cxf-config.xml,
-      /WEB-INF/web-security.xml
+    <param-value>classpath:/minaintyg-config.xml, classpath:/minaintyg-cxf-config.xml, classpath:/securityContext.xml
     </param-value>
   </context-param>
-  <!--
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/minaintyg-config.xml, classpath:/minaintyg-cxf-config.xml,
-      /WEB-INF/web-security.xml
-    </param-value>
-  </context-param>
-  -->
+
   <context-param>
       <param-name>logbackConfigParameter</param-name>
       <param-value>minaintyg.logback.file</param-value>
