@@ -83,13 +83,13 @@ task restAssuredTest(type: Test) {
 }
 
 gretty {
-    integrationTestTask = null
     contextPath = '/'
-    httpPort = 8088
-    scanInterval = 0
-    debugSuspend = false
-
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
+    integrationTestTask = null
+    scanInterval = 0
+    httpPort = 8088
+    debugPort = 5006
+    debugSuspend = false
 
     def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
 
