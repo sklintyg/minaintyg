@@ -100,11 +100,13 @@
         <span class="text-muted">Inga fler intyg</span>
       </div>
       <!-- eof spinner -->
-      <div class="table-bottom" ng-hide="(archivedCertificates | archived).length<1"></div>
+      <mi-page-message-icon
+          id="noCerts"
+          img-path="/img/arkivtom.png"
+          msg-key="archived.message.nocerts"
+          ng-if="doneLoading && (archivedCertificates | archived).length<1">
+      </mi-page-message-icon>
 
-      <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (archivedCertificates | archived).length<1">
-        <span message key="error.noarchivedcerts"></span>
-      </div>
     </div>
   </div>
 </div>

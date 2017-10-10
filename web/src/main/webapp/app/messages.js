@@ -74,6 +74,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'inbox.helptext.arkivera': '<p><b>Att arkivera intyg</b></p>Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen. Läs mer om arkivering av intyg under fliken Arkiverade intyg.',
         'inbox.message.no-more-certificates': 'Inga fler intyg',
+        'inbox.message.nocerts': 'Du har inga intyg.',
         'inbox.list.issuer.label': 'Utfärdare',
 
         /* ARCHIVED */
@@ -82,6 +83,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till <i>Arkiverade intyg</i>.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
         'archived.description.part2': '<p><LINK:diPatientDataLagen>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ intyg.</p>',
+        'archived.message.nocerts': 'Du har inga arkiverade intyg.',
 
         'archived-cert-table.headers.issued': 'Intyg utfärdat',
         'archived-cert-table.headers.type': 'Typ av intyg',
@@ -216,8 +218,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.generic': '<p>Tekniskt fel</p>Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>',
         'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.',
 
-        'error.nocerts': 'Du har inga intyg i inkorgen.',
-        'error.noarchivedcerts': 'Du har inga arkiverade intyg.'
     },
     'en': {
         'label.showall': 'Show all',

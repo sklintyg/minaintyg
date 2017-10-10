@@ -40,12 +40,11 @@
     </div>
   </div>
 </div>
-<div class="container" ng-show="doneLoading && activeCertificates.length<1">
-  <div class="row">
-    <div id="noCerts" class="col-xs-12">
-      <div class="alert alert-info">
-        <span message key="error.nocerts"></span>
-      </div>
-    </div>
-  </div>
-</div>
+
+<mi-page-message-icon
+    id="noCerts"
+    img-path="/img/inkorgtom.png"
+    msg-key="inbox.message.nocerts"
+    ng-if="doneLoading && activeCertificates.length<1">
+</mi-page-message-icon>
+
