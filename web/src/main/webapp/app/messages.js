@@ -216,7 +216,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Vänta några minuter och försök igen.</p><p><ul><li><a href="/web/start/#/omminaintyg">Gå till Om mina sidor och försök igen</a></li><li><a href="/web/start/#/hjalp">Kontakta support</a></li></ul></p>',
         'error.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Vänta några minuter och försök att ge ditt samtycke igen.</p><p><ul><li><a href="/web/visa-ge-samtycke#/start">Försök igen</a></li><li>Om felet kvarstår kan du kontakta support på telefon 0771-25 10 10</li><li>Om du inte kan nå ditt intyg i Mina intyg så kan du kontakta din läkare för att få en kopia av intyget.</li></ul></p>',
         'error.generic': '<p>Tekniskt fel</p>Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>',
-        'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.',
+        'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.'
 
     },
     'en': {
