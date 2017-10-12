@@ -103,12 +103,11 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         it('Gå tillbaka till första sidan', function() {
             anpassaPage.clickShowSelection();
             expect(anpassaPage.isAt()).toBeTruthy();
-            expect(element(by.id('toggle-select-option-FRG_1.RBK')).isDisplayed());
+            expect(element(by.id('toggle-select-option-FRG_6.RBK')).isDisplayed());
         });
 
 
-        it('Bocka ur "grund för MU" och "Diagnos" och gå till summary igen', function() {
-            element(by.id('toggle-select-option-FRG_1.RBK')).click();
+        it('Bocka ur "Diagnos" och gå till summary igen', function() {
             element(by.id('toggle-select-option-FRG_6.RBK')).click();
 
             anpassaPage.clickShowSummary();
@@ -117,8 +116,8 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         });
 
         it('Nu skall 2 vara bortvalda', function() {
-            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(16);
-            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(17);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
         });
 
         it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
@@ -144,8 +143,8 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         });
 
         it('Nu skall 3 vara bortvalda', function() {
-            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
-            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
+            expect(element.all(by.css('#lisjp-included-fields div.selectable-field-wrapper')).count()).toEqual(16);
+            expect(element.all(by.css('#lisjp-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
         });
 
         it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
@@ -157,11 +156,6 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
             expect(element(by.id('downloadprint')).isDisplayed());
         });
 
-    });
-
-
-    afterAll(function() {
-        restHelper.deleteIntyg(intygsId);
     });
 
 });
