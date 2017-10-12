@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.integration.pu.model.Person;
 import se.inera.intyg.infra.integration.pu.model.PersonSvar;
 import se.inera.intyg.infra.integration.pu.services.PUService;
+import se.inera.intyg.minaintyg.web.exception.PUServiceErrorException;
 import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
 import se.inera.intyg.schemas.contract.Personnummer;
 
@@ -50,9 +51,8 @@ public class MinaIntygPUServiceImpl implements MinaIntygPUService {
             LOG.error("Person identified by '{}' not found i PU-service, cannot login.", pnr.getPnrHash());
             throw new PersonNotFoundException("Person identified by '" + pnr.getPnrHash() + "' not found i PU-service");
         } else {
-            LOG.warn("Error communicating with PU service, cannot query person '{}'. "
-                    + "Returning bare Person object with PNR only.", pnr.getPnrHash());
-            return new Person(pnr, false, false, "", "", "", "", "", "");
+            LOG.warn("Error communicating with PU service, cannot query person '{}'", pnr.getPnrHash());
+            throw new PUServiceErrorException("PU-service returns ");
         }
     }
 

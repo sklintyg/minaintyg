@@ -8,10 +8,17 @@
         </a>
       </div>
     </div>
-    <div class="col-sm-9 col-xs-12 mi-header-col user-info" ng-if="authUserDescription">
+    <div class="col-sm-7 col-xs-12 mi-header-col user-info" ng-if="authUserDescription">
       <div>
         <message class="hidden-xs" key="nav.label.loggedinas"></message>
         &nbsp;<span class="user-name">{{authUserDescription}}</span><br>
+        <a ng-click="showSekretessInfoMessage()" ng-if="userHasSekretessmarkering">
+          <i class="icon icon-shield"></i><span message key="user.label.sekrettessmarkering"></span>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-2 col-xs-12 mi-header-col user-logout">
+      <div>
         <a href="/web/logga-ut" id="mvklogoutLink">
           <message key="mvk.header.logouttext"></message>
           <i class="icon icon-logout-1"></i>

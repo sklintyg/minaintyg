@@ -16,33 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.minaintyg.web.service.dto;
+package se.inera.intyg.minaintyg.web.exception;
 
-import static org.springframework.util.Assert.hasText;
+/**
+ * Created by PEBE on 2017-10-13.
+ */
+public class PUServiceErrorException extends RuntimeException {
 
-public class UtlatandeRecipient {
-
-    private final String id;
-    private final String name;
-    private final boolean trusted;
-
-    public UtlatandeRecipient(String id, String name, boolean trusted) {
-        hasText(id, "recipient id must not be empty");
-        hasText(name, "recipient name must not be empty");
-        this.id = id;
-        this.name = name;
-        this.trusted = trusted;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isTrusted() {
-        return trusted;
+    public PUServiceErrorException(String message) {
+        super(message);
     }
 }

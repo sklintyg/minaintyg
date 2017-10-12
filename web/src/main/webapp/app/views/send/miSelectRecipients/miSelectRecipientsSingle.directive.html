@@ -9,9 +9,14 @@
     <ul class="nav selection-list">
       <li ng-repeat="sr in selected" class="unsent">
         {{sr.name}}
+        <i ng-if="userHasSekretessmarkering && sr.trusted" class="icon icon-shield"></i>
       </li>
       <li ng-repeat="r in recipients | orderBy: 'name'">
-        <div class="sent">{{r.name}}<span class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span></div>
+        <div class="sent">
+          {{r.name}}
+          <i ng-if="userHasSekretessmarkering && r.trusted" class="icon icon-shield"></i>
+          <span class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span>
+        </div>
       </li>
     </ul>
 

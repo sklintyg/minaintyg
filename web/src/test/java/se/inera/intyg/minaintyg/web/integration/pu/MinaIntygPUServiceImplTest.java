@@ -26,6 +26,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.infra.integration.pu.model.Person;
 import se.inera.intyg.infra.integration.pu.model.PersonSvar;
 import se.inera.intyg.infra.integration.pu.services.PUService;
+import se.inera.intyg.minaintyg.web.exception.PUServiceErrorException;
 import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
 import se.inera.intyg.schemas.contract.Personnummer;
 
@@ -60,11 +61,10 @@ public class MinaIntygPUServiceImplTest {
         testee.getPerson(PERSON_ID);
     }
 
-    @Test
-    public void testGetPersonErrorAllowsLoginAnyway() {
+    @Test(expected = PUServiceErrorException.class)
+    public void testGetPersonErrorStopsLoggingIn() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.ERROR));
-        Person person = testee.getPerson(PERSON_ID);
-        assertEquals(PERSON_ID, person.getPersonnummer().getPersonnummer());
+        testee.getPerson(PERSON_ID);
     }
 
     private PersonSvar buildOkPUSvar(PersonSvar.Status status) {

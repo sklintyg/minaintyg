@@ -28,7 +28,9 @@ angular.module('minaintyg').directive('miSelectRecipients', function() {
             onSend: '&'
         },
         templateUrl: '/app/views/send/miSelectRecipients/miSelectRecipients.directive.html',
-        controller: function($scope) {
+        controller: function($scope, MIUser) {
+
+            $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
 
             //Private controller functions  ---------------------------------
             function _select(index) {

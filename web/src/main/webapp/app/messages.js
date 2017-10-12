@@ -59,6 +59,20 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'nav.label.aboutminaintyg': 'Om Mina intyg',
         'nav.label.loggedinas': 'Du är inloggad som:',
 
+        'user.label.sekrettessmarkering': 'Du har en sekretessmarkering',
+        'user.sekretessmarkeringmodal.header': 'Vad innebär sekretessmarkering?',
+        'user.sekretessmarkeringmodal.button': '<i class="icon icon-ok"></i> Ok, jag förstår',
+
+        'send.sekretessmarkeringmodal.header': 'Observera!',
+        'send.sekretessmarkeringmodal.body': '<p>Mina intyg kan aldrig garantera hur de tillgängliga mottagarna för ett intyg hanterar sekretessmarkerade personuppgifter eller om de följer Skatteverkets vägledning för hur sekretessmarkerade personuppgifter ska hanteras. Myndigheter ska ha särskilda rutiner för hantering av sekretessmarkerade personuppgifter.</p><p>Vill du veta mer om hur en specifik mottagare hanterar inkomna handlingar för dig med sekretessmarkering, hänvisar vi till den aktuella mottagaren</p>',
+        'send.sekretessmarkeringmodal.button1': '<i class="icon icon-ok"></i> Skicka',
+        'send.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
+
+        'pdf.sekretessmarkeringmodal.header': 'Ladda ner intyg som PDF',
+        'pdf.sekretessmarkeringmodal.body': '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p><p>När du laddar ner ditt intyg som PDF kommer det att sparas till den dator/enhet du använder. Om du till exempel använder en offentlig dator kan det vara bra att radera det nerladdade intyget innan du lämnar datorn/enheten.</p>',
+        'pdf.sekretessmarkeringmodal.button1': '<i class="icon icon-download-1"></i> Skicka',
+        'pdf.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
+
         /* INBOX */
 
         'inbox.header': 'Översikt över dina intyg',

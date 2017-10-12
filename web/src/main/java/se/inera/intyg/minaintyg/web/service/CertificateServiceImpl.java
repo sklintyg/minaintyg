@@ -202,7 +202,8 @@ public class CertificateServiceImpl implements CertificateService {
         case OK:
             List<UtlatandeRecipient> recipientList = new ArrayList<>();
             for (RecipientType recipientType : response.getRecipient()) {
-                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(recipientType.getId(), recipientType.getName());
+                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(recipientType.getId(), recipientType.getName(),
+                        recipientType.isTrusted());
                 recipientList.add(utlatandeRecipient);
             }
             return recipientList;

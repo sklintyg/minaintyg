@@ -71,7 +71,7 @@ public class UtlatandeRecipientRepoImpl implements UtlatandeRecipientRepo {
             // Always use intygstjansten as master
             if (response.getResult().getResultCode().equals(ResultCodeType.OK)) {
                 recipients.clear();
-                response.getRecipient().forEach(r -> recipients.add(new UtlatandeRecipient(r.getId(), r.getName())));
+                response.getRecipient().forEach(r -> recipients.add(new UtlatandeRecipient(r.getId(), r.getName(), r.isTrusted())));
             } else {
                 LOG.error("Got error: {} when updating recipients from Intygstjansten.",
                         response.getResult().getResultText());
