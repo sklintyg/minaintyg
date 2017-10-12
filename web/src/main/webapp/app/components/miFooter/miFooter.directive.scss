@@ -10,13 +10,16 @@ mi-footer {
     margin: 0 0 5px 0;
   }
 
-  mi-scroll-to-top-link {
-    display: block;
-    padding: 50px 0;
-  }
-
   .mi-footer__cookie-link {
     padding: 20px 0;
+  }
+
+  .container {
+    padding-top: 120px;
+  }
+
+  .scroll-to-top-div {
+    height: 23px;
   }
 
 }

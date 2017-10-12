@@ -1,9 +1,9 @@
 <div>
-  <mi-scroll-to-top-link class="text-center" ng-if="vm.visible" ng-cloak>
-    <button ng-click="scrollToTop()" class="btn btn-link no-padding">
+  <div class="text-center scroll-to-top-div">
+    <button ng-click="scrollToTop()" class="btn btn-link no-padding" ng-if="vm.visible">
       Till toppen av sidan
     </button>
-  </mi-scroll-to-top-link>
+  </div>
 
   <div class="container">
     <div class="row">
@@ -28,7 +28,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <p class="mi-footer__cookie-link">Om kakor Mina intyg använder kakor <a class="btn btn-link no-padding" ng-href="" ng-click="openCookieDialog()">Läs mer om kakor (cookies)</a></p>
+        <p class="mi-footer__cookie-link">Om kakor Mina intyg använder kakor <a ng-href="" ng-click="openCookieDialog()">Läs mer om kakor (cookies)</a></p>
       </div>
     </div>
   </div>
