@@ -35,6 +35,11 @@ h2 {
   margin-top: 25px;
 }
 
+.container>.navbar-collapse {
+  padding-right: 0;
+  margin-right: 0;
+}
+
 .alert .alert-heading {
   margin-top: 0;
 }
