@@ -38,10 +38,10 @@
             $anchorScroll();
             // INTYG-4465: prevent state change when user press 'backwards' if modal is open, but close modal.
             if($uibModalStack.getTop()) {
-                event.preventDefault();
+                // event.preventDefault();
                 $uibModalStack.dismissAll();
                 // Restore original state in order to make it work for DJUPINTEGRATION and avoid messing up the history.
-                $state.go(fromState, fromParams);
+                // $state.go(fromState, fromParams);
             }
         });
     });
