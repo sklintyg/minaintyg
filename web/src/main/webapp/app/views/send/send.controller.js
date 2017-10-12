@@ -149,6 +149,11 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
 
             $scope.backToViewCertificate = function () {
+                if (dialogInstance) {
+                    dialogInstance.close();
+                    dialogInstance = undefined;
+                }
+
                 $location.path($scope.vm.type + '/view/' + $scope.vm.id).search({});
             };
             // expose calculated static link for pdf download
