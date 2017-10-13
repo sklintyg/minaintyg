@@ -29,6 +29,7 @@ var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 var anpassaPage = miTestTools.pages.anpassaLisjpPage;
+var aboutPage = miTestTools.pages.aboutPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
@@ -112,7 +113,6 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
 
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-
         });
 
         it('Nu skall 2 vara bortvalda', function() {
@@ -154,6 +154,12 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         it('gå till nedladdningssteget', function() {
             anpassaPage.showDownloadBtn.click();
             expect(element(by.id('downloadprint')).isDisplayed());
+        });
+
+        it('Testa att lämna', function() {
+            inboxPage.clickAbout();
+            expect(element(by.id('leave-button')).click());
+            expect(aboutPage.isAt()).toBeTruthy();
         });
 
     });
