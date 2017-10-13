@@ -45,8 +45,13 @@ mi-header {
 
     a {
       color: $mi-header-link-color;
+
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
       }
     }
   }
@@ -55,8 +60,13 @@ mi-header {
     text-align: right;
     a {
       color: $mi-header-logout-link-color;
+
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
       }
     }
   }
