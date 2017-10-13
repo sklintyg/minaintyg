@@ -74,7 +74,10 @@ $mi-nav-pills-active-link-hover-bg: #fff;
 $mi-nav-pills-border-color: #d7d7d7;
 $mi-nav-pills-link-active-bg: #e4eefa;
 
-
+// Panels
+$mi-panel-border-color: #A9C4D7;
+$mi-panel-heading-bg: #A9C4D7;
+$mi-panel-heading-color: #333;
 
 // Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)
 $icon-font-path: '../bower_components/bootstrap-sass/assets/fonts/bootstrap/';
@@ -91,7 +94,7 @@ $navbar-default-link-hover-color: $mi-menu-hover-color;
 //Nav pills
 $nav-pills-active-link-hover-color: $mi-nav-pills-active-link-hover-color;
 $nav-pills-active-link-hover-bg: $mi-nav-pills-active-link-hover-bg;
-$nav-pills-border-radius: 0px;
+$nav-pills-border-radius: 0;
 
 $btn-primary-bg: $mi-button-bg;
 $btn-primary-color: $mi-button-primary;
@@ -127,3 +130,9 @@ $alert-danger-text: $mi-alert-danger-text;
 //Hr
 $hr-border: $mi-hr-border-color;
 
+
+// Panel
+$panel-default-heading-bg: $mi-panel-heading-bg;
+$panel-default-text: $mi-panel-heading-color;
+$panel-default-border: $mi-panel-border-color;
+$panel-border-radius: 0;

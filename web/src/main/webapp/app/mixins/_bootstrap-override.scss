@@ -129,6 +129,13 @@ h2 {
 
 }
 
+.panel-heading {
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
 //Tables
 .table-striped {
   > tbody > tr > th {
