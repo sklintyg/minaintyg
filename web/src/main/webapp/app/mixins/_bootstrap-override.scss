@@ -116,7 +116,7 @@ h2 {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $screen-sm-max) {
   .modal-footer {
     .btn {
       width: 100%;

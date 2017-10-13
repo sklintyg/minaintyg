@@ -15,7 +15,7 @@ mi-header {
   .mi-header-col {
     height: $mi-header-height;
 
-    @media (max-width: 768px) {
+    @media (max-width: $screen-sm-max) {
        height: $mi-header-height*0.75;
        &.user-info > div {
          top:30%;

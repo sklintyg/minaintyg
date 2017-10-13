@@ -14,7 +14,7 @@
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: $screen-sm-max) {
 
   .cookie-banner-directive {
     .cookie-banner__text-scroll {
