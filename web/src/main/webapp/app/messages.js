@@ -145,6 +145,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
             {title:'',questions:[
                 {question: 'Varför kan jag inte se mitt intyg?', answer: 'help.faq.1.q1.answer'},
                 {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer: 'help.faq.1.q2.answer'},
+                {question:'Vad betyder det när intyget är ersatt?', answer: 'help.faq.1.q4.answer'},
                 {question:'Varför kan jag inte se makulerade intyg?',answer: 'help.faq.1.q3.answer'}
             ]},
             {title:'Frågor och svar om samtycke',questions:[
@@ -165,6 +166,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'help.faq.1.q1.answer': 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.',
         'help.faq.1.q2.answer': 'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare, exempelvis <LINK:adobeReader>.',
         'help.faq.1.q3.answer': 'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.<p>Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.</p>',
+        'help.faq.1.q4.answer': '<p>Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att försäkringskassan begärt en komplettering och vården svarat med ett nytt intyg med de kompletterande uppgifterna.</p><p>På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.</p>',
 
         'help.faq.2.q1.answer': 'För att kunna använda Mina intyg måste du först lämna ditt samtycke till att dina intyg får lagras i en lagringstjänst kopplad till Mina intyg, samt visas och hanteras i Mina intyg. Utan ditt samtycke till att dina personuppgifter i intygen hanteras i Mina intyg kan tjänsten inte användas.',
         'help.faq.2.q2.answer': 'Läs mer om samtycke till att använda Mina intyg <a href="#/omminaintyg/samtycke">här</a>.',
@@ -207,11 +209,13 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
-        'certificates.status.received': 'Mottagits av {0}',
-        'certificates.status.sent': 'Skickat till {0}',
-        'certificates.status.noevents': 'Inga händelser',
-        'certificates.status.unknowndatetime': 'Okänd tid',
-        'certificates.status.statusesshown': '(Visar {0} av {1})',
+        'certificates.events.received': 'Mottagits av {0}',
+        'certificates.events.sent': 'Skickat till {0}',
+        'certificates.events.noevents': 'Inga händelser',
+        'certificates.events.unknowndatetime': 'Okänd tid',
+        'certificates.events.eventsshown': '(Visar {0} av {1})',
+        'certificates.events.ersatt': 'Ersattes av vården med ett nytt <a href="/web/start#/{1}/view/{0}">intyg</a>',
+        'certificates.events.ersatter': 'Ersätter ett <a href="/web/start#/{1}/view/{0}">intyg</a> som inte längre är aktuellt',
 
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',
@@ -222,6 +226,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'certificates.send.label.issuer': 'Utfärdare',
         'certificates.send.label.period': 'Period:',
         'certificates.send.label.unit': 'Enhet:',
+
+        'certificates.label.replaced': 'ERSATT INTYG',
 
         'error.pagetitle': 'Tekniskt fel',
         'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',

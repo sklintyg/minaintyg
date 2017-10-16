@@ -18,31 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.controller.moduleapi;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
@@ -60,6 +41,23 @@ import se.inera.intyg.minaintyg.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
  * certificate.
@@ -74,9 +72,8 @@ public class ModuleApiController {
     private static final Logger LOG = LoggerFactory.getLogger(ModuleApiController.class);
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
-    //Relevant statuses for this context
+    // Relevant statuses for this context
     private static final List<CertificateState> RELEVANT_STATUS_TYPES = Arrays.asList(CertificateState.SENT);
-
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;
@@ -114,7 +111,9 @@ public class ModuleApiController {
         if (utlatande.isPresent()) {
             try {
                 JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
-                CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(utlatande.get().getMetaData(), RELEVANT_STATUS_TYPES);
+                List<IntygRelations> relations = certificateService.getRelationsForCertificates(Arrays.asList(id));
+                CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande.get().getMetaData(), relations,
+                        RELEVANT_STATUS_TYPES);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {
@@ -125,7 +124,6 @@ public class ModuleApiController {
             return Response.serverError().build();
         }
     }
-
 
     /**
      * Return the certificate identified by the given id as PDF.

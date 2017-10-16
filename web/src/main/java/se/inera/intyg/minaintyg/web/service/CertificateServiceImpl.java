@@ -18,27 +18,21 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
-import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Strings;
-
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
@@ -69,6 +63,17 @@ import se.riv.clinicalprocess.healthcond.certificate.setCertificateStatus.v2.Set
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -90,6 +95,9 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private SetCertificateStatusResponderInterface setCertificateStatusService;
+
+    @Autowired
+    private ListRelationsForCertificateResponderInterface listRelationsService;
 
     @Autowired
     private MonitoringLogService monitoringService;
@@ -179,7 +187,12 @@ public class CertificateServiceImpl implements CertificateService {
 
         switch (response.getResult().getResultCode()) {
         case OK:
-            return utlatandeMetaDataConverter.convert(response.getIntygsLista().getIntyg(), arkiverade);
+            List<Intyg> intygList = response.getIntygsLista().getIntyg();
+            List<IntygRelations> intygRelations = getRelationsForCertificates(intygList.stream()
+                    .map(intyg -> intyg.getIntygsId().getExtension())
+                    .collect(Collectors.toList())
+            );
+            return utlatandeMetaDataConverter.convert(intygList, intygRelations, arkiverade);
         default:
             LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash()
                     + " from Intygstjänsten. WS call result is "
@@ -187,6 +200,19 @@ public class CertificateServiceImpl implements CertificateService {
             throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
                     response.getResult().getErrorId() != null ? response.getResult().getErrorId().name() : "");
         }
+    }
+
+    @Override
+    public List<IntygRelations> getRelationsForCertificates(List<String> intygsId) {
+        if (intygsId == null || intygsId.size() == 0) {
+            return Collections.emptyList();
+        }
+        ListRelationsForCertificateType request = new ListRelationsForCertificateType();
+        request.getIntygsId().addAll(intygsId);
+        ListRelationsForCertificateResponseType response = listRelationsService.listRelationsForCertificate(logicalAddress, request);
+
+        return response.getIntygRelation();
+
     }
 
     @Override

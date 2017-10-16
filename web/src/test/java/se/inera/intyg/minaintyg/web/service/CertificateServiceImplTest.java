@@ -18,21 +18,6 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.apache.cxf.binding.soap.SoapFault;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +30,9 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.integration.converter.util.ResultTypeUtil;
 import se.inera.intyg.common.support.model.CertificateState;
@@ -85,9 +73,26 @@ import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
 
 import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CertificateServiceImplTest {
@@ -110,6 +115,9 @@ public class CertificateServiceImplTest {
 
     @Mock
     private GetRecipientsForCertificateResponderInterface getRecipientsService;
+
+    @Mock
+    private ListRelationsForCertificateResponderInterface listRelationsService;
 
     @Mock
     private IntygTextsService intygTextsService;
@@ -140,6 +148,13 @@ public class CertificateServiceImplTest {
     @Before
     public void mockObjectMapper() {
         CertificateServiceImpl.objectMapper = mock(CustomObjectMapper.class);
+    }
+
+    @Before
+    public void mockListRelationsService() {
+        ListRelationsForCertificateResponseType resp = new ListRelationsForCertificateResponseType();
+        when(listRelationsService.listRelationsForCertificate(anyString(), any(ListRelationsForCertificateType.class)))
+                .thenReturn(resp);
     }
 
     @Test
@@ -261,7 +276,7 @@ public class CertificateServiceImplTest {
         service.getCertificates(new Personnummer(pnr), false);
 
         ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
-        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), eq(false));
+        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), anyList(), eq(false));
 
         assertEquals(1, listCaptor.getValue().size());
         assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
@@ -287,7 +302,7 @@ public class CertificateServiceImplTest {
         service.getCertificates(new Personnummer(pnr), true);
 
         ArgumentCaptor<List> listCaptor = ArgumentCaptor.forClass(List.class);
-        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), eq(true));
+        verify(utlatandeMetaDataConverter).convert(listCaptor.capture(), anyList(), eq(true));
 
         assertEquals(1, listCaptor.getValue().size());
         assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
@@ -357,8 +372,8 @@ public class CertificateServiceImplTest {
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
-        when(utlatandeMetaDataConverter.convert(any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, new ArrayList<>());
+        when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(false))).thenReturn(Arrays.asList(umd));
 
         UtlatandeMetaData result = service.archiveCertificate(CERTIFICATE_ID, new Personnummer(pnr));
         assertEquals(CERTIFICATE_ID, result.getId());
@@ -391,8 +406,8 @@ public class CertificateServiceImplTest {
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
-        when(utlatandeMetaDataConverter.convert(any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
+        when(utlatandeMetaDataConverter.convert(any(List.class), any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
 
         service.archiveCertificate(CERTIFICATE_ID, new Personnummer(pnr));
     }
@@ -434,8 +449,8 @@ public class CertificateServiceImplTest {
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
         when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null);
-        when(utlatandeMetaDataConverter.convert(any(List.class), eq(true))).thenReturn(Arrays.asList(umd));
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
+        when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(true))).thenReturn(Arrays.asList(umd));
 
         UtlatandeMetaData result = service.restoreCertificate(CERTIFICATE_ID, new Personnummer(pnr));
         assertEquals(CERTIFICATE_ID, result.getId());

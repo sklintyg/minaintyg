@@ -18,14 +18,18 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Converts meta data from the internal {@link UtlatandeMetaData} and {@link CertificateMetaData} to the REST service
@@ -36,7 +40,7 @@ public final class CertificateMetaConverter {
     private CertificateMetaConverter() {
     }
 
-    public static CertificateMeta toCertificateMeta(UtlatandeMetaData meta) {
+    public static CertificateMeta toCertificateMetaFromUtlatandeMeta(UtlatandeMetaData meta) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(meta.getId());
@@ -48,15 +52,15 @@ public final class CertificateMetaConverter {
         result.setArchived(!Boolean.parseBoolean(meta.getAvailable()));
         result.setComplementaryInfo(meta.getComplemantaryInfo());
         result.getStatuses().addAll(meta.getStatuses());
-
+        result.setRelations(meta.getRelations());
         return result;
     }
 
-    public static List<CertificateMeta> toCertificateMeta(List<UtlatandeMetaData> metas) {
+    public static List<CertificateMeta> toCertificateMetaFromUtlatandeMetaList(List<UtlatandeMetaData> metas) {
         List<CertificateMeta> result = new ArrayList<>();
 
         for (UtlatandeMetaData certificateMetaType : metas) {
-            result.add(toCertificateMeta(certificateMetaType));
+            result.add(toCertificateMetaFromUtlatandeMeta(certificateMetaType));
         }
 
         return result;
@@ -71,7 +75,8 @@ public final class CertificateMetaConverter {
      *            - List of CertificateState types to keep
      * @return
      */
-    public static CertificateMeta toCertificateMeta(CertificateMetaData metaData, List<CertificateState> statusFilter) {
+    public static CertificateMeta toCertificateMetaFromCertMetaData(CertificateMetaData metaData, List<IntygRelations> relations,
+            List<CertificateState> statusFilter) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(metaData.getCertificateId());
@@ -84,14 +89,20 @@ public final class CertificateMetaConverter {
         result.setComplementaryInfo(metaData.getAdditionalInfo());
 
         for (Status status : metaData.getStatus()) {
-
             // Obey any status filter restrictions
             if (statusFilter == null || statusFilter.contains(status.getType())) {
                 result.getStatuses().add(status);
             }
-
         }
+
+        result.setRelations(relations.stream()
+                .filter(ir -> ir.getIntygsId().getExtension().equals(result.getId()))
+                .flatMap(ir -> ir.getRelation().stream())
+                .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
+                        RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
+                .collect(Collectors.toList()));
 
         return result;
     }
+
 }

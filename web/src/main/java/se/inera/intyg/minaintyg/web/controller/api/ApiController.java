@@ -18,24 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.controller.api;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
@@ -48,6 +33,19 @@ import se.inera.intyg.minaintyg.web.service.ConsentService;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class ApiController {
 
@@ -69,7 +67,7 @@ public class ApiController {
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
+                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
     }
 
     @GET
@@ -78,7 +76,7 @@ public class ApiController {
     public List<CertificateMeta> listArchivedCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMeta(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
+                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
     }
 
     @GET
@@ -96,7 +94,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
+                .toCertificateMetaFromUtlatandeMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     @PUT
@@ -106,7 +104,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
+                .toCertificateMetaFromUtlatandeMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
     }
 
     /**

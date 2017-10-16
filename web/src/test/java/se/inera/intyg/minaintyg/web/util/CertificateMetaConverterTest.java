@@ -18,18 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.time.LocalDateTime;
-
-import org.junit.*;
-
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
+
+import java.time.LocalDateTime;
+
+import static org.junit.Assert.assertEquals;
 
 public class CertificateMetaConverterTest {
 
@@ -67,7 +66,7 @@ public class CertificateMetaConverterTest {
 
     @Test
     public void testComplementaryInfo() {
-        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
+        CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromUtlatandeMeta(builder.build());
         UtlatandeMetaData utlatandeMeta = builder.build();
 
         assertEquals("2013-01-01 till 2014-01-01", utlatandeMeta.getComplemantaryInfo());

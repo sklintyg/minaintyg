@@ -37,7 +37,7 @@
           <tbody>
           <tr ng-repeat="cert in archivedCertificates | archived">
             <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
-            <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
+            <td headers="type">{{ getTypeOrReplacedText(cert) }}</td>
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
             <td headers="restore">
@@ -64,7 +64,7 @@
                 <span message key="archived-cert-table.headers.type"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{moduleService.getModuleName(cert.type)}}
+                {{ getTypeOrReplacedText(cert) }}
               </div>
             </div>
 
