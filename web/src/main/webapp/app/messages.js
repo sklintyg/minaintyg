@@ -22,8 +22,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'sv': {
         'label.showall': 'Visa alla',
         'label.showfewer': 'Visa färre',
-        'label.status.false': 'Visa alla händelser',
-        'label.status.true': 'Visa färre händelser',
+        'label.event.false': 'Visa alla händelser',
+        'label.event.true': 'Visa färre händelser',
         'label.restore': 'Återställ',
         'label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
         'label.archivedcertificatesloading': 'Arkiverade intyg laddas. Vänligen vänta... ',
