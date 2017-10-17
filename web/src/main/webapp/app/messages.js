@@ -230,14 +230,14 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'certificates.label.replaced': 'ERSATT INTYG',
 
         'error.pagetitle': 'Tekniskt fel',
-        'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
-        'error.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg.</p><p><ul><li><a href="/web/start">Gå till Inkorgen och försök igen</a></li><li>Kontakta <a href="/web/start/#/hjalp">support</a></li></ul></p>',
-        'error.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen.</p><p><ul><li><a href="/web/start/#/arkiverade">Gå till Arkiverade intyg och försök igen</a></li><li>Kontakta <a href="/web/start/#/hjalp">support</a></li></ul></p>',
-        'error.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Vänta några minuter och försök igen.</p><p><ul><li><a href="/web/start/#/omminaintyg">Gå till Om mina sidor och försök igen</a></li><li><a href="/web/start/#/hjalp">Kontakta support</a></li></ul></p>',
-        'error.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Vänta några minuter och försök att ge ditt samtycke igen.</p><p><ul><li><a href="/web/visa-ge-samtycke#/start">Försök igen</a></li><li>Om felet kvarstår kan du kontakta support på telefon 0771-25 10 10</li><li>Om du inte kan nå ditt intyg i Mina intyg så kan du kontakta din läkare för att få en kopia av intyget.</li></ul></p>',
+        'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+        'error.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
+        'error.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
+        'error.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt></p>',
+        'error.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'error.generic': '<p>Tekniskt fel</p>Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>',
-        'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.'
-
+        'error.certnotfound': 'Intyget kunde inta hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.',
+        'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.'
     },
     'en': {
         'label.showall': 'Show all',
