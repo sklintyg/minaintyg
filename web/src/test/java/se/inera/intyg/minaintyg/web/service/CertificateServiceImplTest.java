@@ -30,6 +30,7 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateType;
@@ -75,6 +76,7 @@ import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -613,6 +615,25 @@ public class CertificateServiceImplTest {
 
         String res = service.getQuestions(type, version);
         assertEquals(questionString, res);
+    }
+
+    @Test
+    public void testGetRelationsForCertificate() {
+        ListRelationsForCertificateResponseType resp = new ListRelationsForCertificateResponseType();
+        IntygRelations ir = new IntygRelations();
+
+        resp.getIntygRelation().add(ir);
+        when(listRelationsService.listRelationsForCertificate(anyString(), any(ListRelationsForCertificateType.class)))
+                .thenReturn(resp);
+
+        List<IntygRelations> relationsForCertificates = service.getRelationsForCertificates(Arrays.asList("intyg-123"));
+        assertEquals(1, relationsForCertificates.size());
+    }
+
+    @Test
+    public void testGetRelationsForCertificateNoIds() {
+        List<IntygRelations> relationsForCertificates = service.getRelationsForCertificates(Collections.emptyList());
+        assertEquals(0, relationsForCertificates.size());
     }
 
     private Intyg buildIntyg() {

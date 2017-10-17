@@ -24,6 +24,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.Relation;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
@@ -33,6 +36,7 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvRelation;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Enhet;
 import se.riv.clinicalprocess.healthcond.certificate.v3.HosPersonal;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
@@ -67,7 +71,8 @@ public class UtlatandeMetaDataConverterTest {
     @Before
     public void setup() throws ModuleNotFoundException {
         when(moduleRegistry.getModuleApi(anyString())).thenReturn(moduleApi);
-        when(moduleRegistry.getModuleIdFromExternalId(anyString())).thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
+        when(moduleRegistry.getModuleIdFromExternalId(anyString()))
+                .thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
     }
 
     @Test
@@ -143,7 +148,7 @@ public class UtlatandeMetaDataConverterTest {
         final boolean arkiverade = false;
         Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
 
-        //Mock up a certificate that has a cancelled status. It should be discarded early in the conversion process.
+        // Mock up a certificate that has a cancelled status. It should be discarded early in the conversion process.
         Intyg intyg2 = buildIntyg(intygId2, intygstyp2, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
         IntygsStatus cancelledStatus = new IntygsStatus();
         cancelledStatus.setStatus(new Statuskod());
@@ -154,7 +159,8 @@ public class UtlatandeMetaDataConverterTest {
 
         Intyg intyg3 = buildIntyg(intygId3, intygstyp3, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
 
-        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3), new ArrayList<>(), arkiverade);
+        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3),
+                buildRelations(intyg1.getIntygsId().getExtension()), arkiverade);
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(intygId3, result.get(0).getId());
@@ -164,9 +170,40 @@ public class UtlatandeMetaDataConverterTest {
         assertEquals(intygstyp1.toLowerCase(), result.get(1).getType());
         assertEquals(signeringstidpunkt1, result.get(1).getSignDate());
 
+        // Assert relation exist on expected result.
+        assertEquals(1, result.get(1).getRelations().size());
+        assertEquals(RelationKod.ERSATT, result.get(1).getRelations().get(0).getRelationKod());
+        assertEquals(result.get(1).getId(), result.get(1).getRelations().get(0).getToIntygsId());
+
         verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase());
         verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase());
         verify(moduleApi, times(2)).getAdditionalInfo(any(Intyg.class));
+    }
+
+    private List<IntygRelations> buildRelations(String targetIntygsId) {
+        List<IntygRelations> intygRelations = new ArrayList<>();
+        IntygRelations ir = new IntygRelations();
+        ir.setIntygsId(buildIntygId(targetIntygsId));
+        ir.getRelation().add(buildRelation("sourceId", targetIntygsId));
+        intygRelations.add(ir);
+        return intygRelations;
+    }
+
+    private Relation buildRelation(String fromIntyg, String toIntyg) {
+        Relation r = new Relation();
+        r.setFranIntygsId(buildIntygId(fromIntyg));
+        r.setTillIntygsId(buildIntygId(toIntyg));
+        r.setSkapad(LocalDateTime.now().minusDays(3L));
+        TypAvRelation typ = new TypAvRelation();
+        typ.setCode("ERSATT");
+        r.setTyp(typ);
+        return r;
+    }
+
+    private IntygId buildIntygId(String intygsId) {
+        IntygId intygId = new IntygId();
+        intygId.setExtension(intygsId);
+        return intygId;
     }
 
     @Test

@@ -19,10 +19,7 @@
 package se.inera.intyg.minaintyg.web.util;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 
@@ -38,19 +35,7 @@ public class CertificateMetaConverterTest {
     private static final String FACILITY_NAME = "facilityName";
     private static final String ISSUER_NAME = "issuerName";
 
-    private static final LocalDateTime FIRST_TIMESTAMP = LocalDateTime.of(2013, 1, 2, 20, 0);
-    private static final LocalDateTime LATER_TIMESTAMP = LocalDateTime.of(2013, 1, 3, 20, 0);
-    private static final String TARGET = "FK";
-
-    private static Status sentStatus;
-    private static Status cancelledStatus;
-
     private UtlatandeMetaBuilder builder;
-
-    @BeforeClass
-    public static void setup() {
-        sentStatus = new Status(CertificateState.SENT, TARGET, FIRST_TIMESTAMP);
-    }
 
     @Before
     public void setupCertificateMetaTypeBuilder() {
