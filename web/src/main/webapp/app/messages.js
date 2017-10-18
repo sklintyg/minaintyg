@@ -209,6 +209,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
+        'certificates.events.ersatt.warn': 'OBS! Intyget har ersatts av vården med <a href="/web/start#/{1}/view/{0}">detta intyg</a>.',
+
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',
 
