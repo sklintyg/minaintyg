@@ -1,12 +1,12 @@
 <div class="container">
-  <h1>
-    <span message key="error.pagetitle"></span>
-  </h1>
 
   <div class="row">
 
-    <div id="errorMessage" class="alert alert-danger">
-      <span message key="error.{{errorCode}}"></span>
-    </div>
+    <mi-page-message-icon
+        id="errorMessage"
+        img-path="/img/error.png"
+        msg-key="error.{{errorCode}}">
+    </mi-page-message-icon>
+
   </div>
 </div>

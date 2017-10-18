@@ -68,57 +68,54 @@
       <div class="row">
         <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
+          <noscript>
+            <div>
+              <spring:message code="error.noscript.text" />
+            </div>
+          </noscript>
+
           <c:choose>
             <c:when test="${param.reason eq 'logout'}">
-              <h1>
-                <spring:message code="info.loggedout.title" />
-              </h1>
-              <div id="loggedOut" class="alert alert-info">
-                <spring:message code="info.loggedout.text" />
-              </div>
-              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
+              <mi-page-message-icon
+                  id="loggedOut"
+                  img-path="/img/404.png"
+                  msg-key="info.loggedout.text">
+              </mi-page-message-icon>
               <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
-                    code="info.loggedout.fk.loginagain" /></a>
+                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
               </div>
             </c:when>
 
             <c:when test="${param.reason eq 'denied'}">
-              <h1>
-                <spring:message code="error.noauth.title" />
-              </h1>
-              <div id="noAuth" class="alert alert-info">
-                <spring:message code="error.noauth.text" />
-              </div>
-              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
-              <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
-                    code="info.loggedout.fk.loginagain" /></a>
-              </div>
+              <mi-page-message-icon
+                  id="noAuth"
+                  img-path="/img/404.png"
+                  msg-key="error.noauth.text">
+              </mi-page-message-icon>
             </c:when>
 
             <c:when test="${param.reason eq 'notfound'}">
-              <h1>
-                <spring:message code="error.notfound.title" />
-              </h1>
-              <div id="notFound" class="alert alert-danger">
-                <spring:message code="error.notfound.text" />
-              </div>
+              <mi-page-message-icon
+                  id="notFound"
+                  img-path="/img/404.png"
+                  msg-key="error.notfound.text">
+              </mi-page-message-icon>
             </c:when>
 
             <c:otherwise>
-              <h1>
-                <spring:message code="error.generictechproblem.title" />
-              </h1>
-              <div id="genericTechProblem" class="alert alert-danger">
-                <spring:message code="error.generictechproblem.text" />
-              </div>
+              <mi-page-message-icon
+                  id="genericTechProblem"
+                  img-path="/img/404.png"
+                  msg-key="error.generictechproblem.text">
+              </mi-page-message-icon>
             </c:otherwise>
           </c:choose>
         </div>
       </div>
     </div>
   </div>
+
+  <mi-footer></mi-footer>
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
