@@ -36,7 +36,6 @@ angular.module('minaintyg').directive('miHeader', ['MIUser', 'common.ObjectHelpe
                 $scope.showSekretessInfoMessage = function() {
                     $uibModal.open({
                         templateUrl: '/app/components/miHeader/miHeaderSekretess.dialog.html',
-                        backdrop: 'static',
                         keyboard: false,
                         controller: function($scope, $uibModalInstance) {
                             $scope.gotoAbout = function() {
