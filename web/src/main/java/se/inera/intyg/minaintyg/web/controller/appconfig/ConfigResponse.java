@@ -34,6 +34,7 @@ import java.util.Map;
 public class ConfigResponse implements Serializable {
 
     // system properties
+    private String version;
     private String buildNumber;
     private boolean useMinifiedJavascript;
     private String elva77MainUrl;
@@ -41,9 +42,10 @@ public class ConfigResponse implements Serializable {
     private List<UtlatandeRecipient> knownRecipients;
     private Map<String, DynamicLink> links;
 
-    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
+    public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
             List<UtlatandeRecipient> knownRecipients,
             Map<String, DynamicLink> links) {
+        this.version = version;
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
         this.elva77MainUrl = elva77MainUrl;
@@ -74,5 +76,13 @@ public class ConfigResponse implements Serializable {
 
     public Map<String, DynamicLink> getLinks() {
         return links;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

@@ -31,6 +31,9 @@ public class SystemPropertiesConfig {
 
     public static final String USE_MINIFIED_JAVA_SCRIPT_ENV_KEY = "minaintyg.useMinifiedJavaScript";
 
+    @Value("${project.version}")
+    private String version;
+
     @Value("${buildNumber}")
     private String buildNumber;
 
@@ -42,7 +45,6 @@ public class SystemPropertiesConfig {
 
     @Autowired
     private Environment environment;
-
 
     public String getBuildNumber() {
         return buildNumber;
@@ -62,5 +64,9 @@ public class SystemPropertiesConfig {
 
     public void setElva77LoginUrl(String elva77LoginUrl) {
         this.elva77LoginUrl = elva77LoginUrl;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }

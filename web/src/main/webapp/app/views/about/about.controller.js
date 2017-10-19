@@ -19,8 +19,8 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
-                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService) {
+        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService', 'MIConfig',
+                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService, MIConfig) {
                     'use strict';
 
 
@@ -56,6 +56,8 @@ angular.module('minaintyg').controller(
                             }
                         });
                     }
+
+                    $scope.version = MIConfig.version;
 
                     //faq's are actually arrays of faq items
                     $scope.faqs = messageService.getProperty('help.faq');
