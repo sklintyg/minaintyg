@@ -49,43 +49,43 @@
   },
   {
     "key": "ineraStartsida",
-    "url": "http://www.inera.se",
+    "url": "https://www.inera.se",
     "text": "Inera AB (extern länk)",
     "target": "_blank"
   },
   {
     "key": "ineraExternalLink",
-    "url": "http://www.inera.se",
+    "url": "https://www.inera.se",
     "text": "www.inera.se",
     "target": "_blank"
   },
   {
     "key": "ineraAb",
-    "url": "http://www.inera.se",
+    "url": "https://www.inera.se",
     "text": "Inera AB",
     "target": "_blank"
   },
   {
     "key": "ineraKontakt",
-    "url": "http://www.inera.se/kontakt",
+    "url": "https://www.inera.se/kundservice",
     "text": "Hjälp och support",
     "target": "_blank"
   },
   {
     "key": "ineraKundserviceKontakt",
-    "url": "http://www.inera.se/kontakt",
+    "url": "https://www.inera.se/kundservice",
     "text": "Ineras kundservice",
     "target": "_blank"
   },
   {
     "key": "ineraKundserviceFelanmalan",
-    "url": "http://www.inera.se/felanmalan",
+    "url": "https://www.inera.se/felanmalan",
     "text": "Kontaktinformation till kundservice (extern länk)",
     "target": "_blank"
   },
   {
     "key": "ineraKundserviceAnmalFel",
-    "url": "http://www.inera.se/felanmalan",
+    "url": "https://www.inera.se/felanmalan",
     "text": "Ineras kundservice",
     "target": "_blank"
   },
