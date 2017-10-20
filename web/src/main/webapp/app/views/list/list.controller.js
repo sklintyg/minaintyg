@@ -35,6 +35,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             $scope.messageService = messageService;
             $scope.moduleService = moduleService;
             $scope.pageTitle = 'Inkorgen';
+            $scope.errorMessage = null;
 
             var archiveDialog = {};
 
@@ -61,7 +62,14 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                         $scope.dialog.acceptprogressdone = true;
                     } else {
                         // show error view
-                        $state.go('fel', {errorCode: 'couldnotarchivecert'});
+                        archiveDialog.close();
+                        dialogService.showDialog( $scope, {
+                            dialogId: 'archive-error-dialog',
+                            titleId: 'error.generictechproblem.title',
+                            bodyTextId: 'error.modal.couldnotarchivecert',
+                            templateUrl: '/app/partials/error-dialog.html',
+                            autoClose: true
+                        });
                     }
                 });
             };
@@ -132,7 +140,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 });
 
             };
-            
+
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
@@ -140,14 +148,12 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 if (list !== null) {
                     $scope.activeCertificates = list;
                     $scope.refreshActiveCertificates();
-
+                    $scope.errorMessage = null;
                 } else {
                     // show error view
-                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
+                    $scope.errorMessage = 'error.couldnotloadcertlist';
                 }
             });
-
-
 
             // Set focus on new page so screen readers can announce it
             $scope.pagefocus = true;

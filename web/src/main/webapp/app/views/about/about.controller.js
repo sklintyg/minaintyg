@@ -52,7 +52,14 @@ angular.module('minaintyg').controller(
                             if (data !== null && data.result) {
                                 $window.location.href = '/web/start';
                             } else {
-                                $state.go('fel', {errorCode: 'couldnotrevokeconsent'});
+                                revokeDialog.close();
+                                dialogService.showDialog( $scope, {
+                                    dialogId: 'revoke-error-dialog',
+                                    titleId: 'error.generictechproblem.title',
+                                    bodyTextId: 'error.modal.couldnotrevokeconsent',
+                                    templateUrl: '/app/partials/error-dialog.html',
+                                    autoClose: true
+                                });
                             }
                         });
                     }

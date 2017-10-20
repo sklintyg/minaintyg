@@ -25,7 +25,9 @@ angular.module('minaintyg').directive('miPageMessageIcon',
             restrict: 'E',
             scope: {
                 imgPath: '@',
-                msgKey: '@'
+                msgKey: '@',
+                containerWrap: '=',
+                inModal: '='
             },
             templateUrl: '/app/components/miPageMessageIcon/miPageMessageIcon.directive.html'
         };

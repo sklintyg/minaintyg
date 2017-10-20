@@ -1,10 +1,11 @@
-<div class="container">
-  <div class="row">
+<div ng-class="{'container': containerWrap === undefined || containerWRap === false}">
+  <div ng-class="{'row': containerWrap === undefined || containerWRap === false}">
     <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 text-center">
       <img ng-src="{{imgPath}}">
     </div>
     <div class="col-xs-12 text-center text">
       <span message key="{{msgKey}}"></span>
     </div>
+    <div class="clearfix"></div>
   </div>
 </div>

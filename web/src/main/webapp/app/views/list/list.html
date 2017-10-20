@@ -48,3 +48,9 @@
     ng-if="doneLoading && activeCertificates.length<1">
 </mi-page-message-icon>
 
+<mi-page-message-icon
+    id="errorMessage"
+    img-path="/img/404.png"
+    msg-key="{{errorMessage}}"
+    ng-if="doneLoading && errorMessage">
+</mi-page-message-icon>

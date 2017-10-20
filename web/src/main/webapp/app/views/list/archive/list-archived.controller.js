@@ -19,7 +19,8 @@
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
     [ '$state', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
-        function($state, $log, $scope, IntygListService, moduleService, messageService) {
+        'common.dialogService',
+        function($state, $log, $scope, IntygListService, moduleService, messageService, dialogService) {
             'use strict';
 
             $scope.archivedCertificates = [];
@@ -28,9 +29,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
             $scope.messageService = messageService;
 
             $scope.restoreCert = function(item) {
-
                 $log.debug('Restore requested for cert:' + item.id);
-
                 IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
                     $log.debug('(restore) statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
@@ -38,7 +37,13 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                         oldItem.selected = false;
                     } else {
                         // show error view
-                        $state.go('fel', {errorCode: 'couldnotrestorecert'});
+                        dialogService.showDialog( $scope, {
+                            dialogId: 'restore-error-dialog',
+                            titleId: 'error.generictechproblem.title',
+                            bodyTextId: 'error.modal.couldnotrestorecert',
+                            templateUrl: '/app/partials/error-dialog.html',
+                            autoClose: true
+                        });
                     }
                 });
             };

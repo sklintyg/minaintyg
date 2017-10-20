@@ -1,9 +1,10 @@
 <div class="modal-header">
-    <h3><span message key="modal.tekniskt-fel.header"></span></h3>
+  <button type="button" class="close" ng-click="button2click()" ng-disabled="!dialog.acceptprogressdone">×</button>
+  <span message key="modal.tekniskt-fel.header"></span>
 </div>
 <div class="modal-body">
-  {{bodyText}}
+  <span message key="{{bodyTextId}}"></span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-click="$close()"><span message key="modal.button.tekniskt-fel.ok"></span></button>
+    <button id="close-button" type="button" class="btn btn-primary" ng-click="$close()"><span message key="common.close"></span></button>
 </div>

@@ -233,13 +233,13 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         //'error.pagetitle': 'Tekniskt fel',
         'error.generictechproblem.title': 'Tekniskt fel',
         'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+        'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+        'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.',
         'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt></p>',
         'error.modal.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'error.generic': '<p>Tekniskt fel</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p><a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
-        'error.certnotfound': 'Intyget kunde inte hämtas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.',
-        'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.',
 
         // Errors in error app (error.jsp)
         'info.loggedout.text': 'För att använda Mina intyg måste du logga in igen.',
