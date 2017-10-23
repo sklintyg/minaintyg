@@ -22,8 +22,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'sv': {
         'label.showall': 'Visa alla',
         'label.showfewer': 'Visa färre',
-        'label.status.false': 'Visa alla händelser',
-        'label.status.true': 'Visa färre händelser',
+        'label.event.false': 'Visa alla händelser',
+        'label.event.true': 'Visa färre händelser',
         'label.restore': 'Återställ',
         'label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
         'label.archivedcertificatesloading': 'Arkiverade intyg laddas. Vänligen vänta... ',
@@ -209,13 +209,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         'common.module.message.sendingcertificate': 'Skickar intyg...',
 
-        'certificates.events.received': 'Mottagits av {0}',
-        'certificates.events.sent': 'Skickat till {0}',
-        'certificates.events.noevents': 'Inga händelser',
-        'certificates.events.unknowndatetime': 'Okänd tid',
-        'certificates.events.eventsshown': '(Visar {0} av {1})',
-        'certificates.events.ersatt': 'Ersattes av vården med ett nytt <a href="/web/start#/{1}/view/{0}">intyg</a>',
-        'certificates.events.ersatter': 'Ersätter ett <a href="/web/start#/{1}/view/{0}">intyg</a> som inte längre är aktuellt',
+        'certificates.events.ersatt.warn': 'OBS! Intyget har ersatts av vården med <a href="/web/start#/{1}/view/{0}">detta intyg</a>.',
 
         'certificates.target.fk': 'Försäkringskassan',
         'certificates.target.ts': 'Transportstyrelsen',

@@ -50,6 +50,7 @@ public class ConfigApiControllerTest {
     private static final String BUILD_NUMBER = "1.0";
     private static final String ELVA77_MAIN_URL = "http://mvk.se/ABC123?apa=bepa";
     private static final String ELVA77_LOGIN_URL = "/saml/login";
+    private static final java.lang.String VERSION = "1.2.3";
 
     @Mock
     private IntygModuleRegistry moduleRegistry;
@@ -69,6 +70,7 @@ public class ConfigApiControllerTest {
     @Test
     public void getConfig() throws Exception {
         when(certificateService.getAllRecipients()).thenReturn(Arrays.asList(mock(UtlatandeRecipient.class)));
+        when(systemConfigBean.getVersion()).thenReturn(VERSION);
         when(systemConfigBean.getBuildNumber()).thenReturn(BUILD_NUMBER);
         when(systemConfigBean.getElva77MainUrl()).thenReturn(ELVA77_MAIN_URL);
         when(systemConfigBean.getElva77LoginUrl()).thenReturn(ELVA77_LOGIN_URL);
@@ -82,6 +84,7 @@ public class ConfigApiControllerTest {
 
         assertNotNull(config);
         assertEquals(1, config.getKnownRecipients().size());
+        assertEquals(VERSION, config.getVersion());
         assertEquals(BUILD_NUMBER, config.getBuildNumber());
         assertEquals(ELVA77_MAIN_URL, config.getElva77MainUrl());
         assertEquals(ELVA77_LOGIN_URL, config.getElva77LoginUrl());

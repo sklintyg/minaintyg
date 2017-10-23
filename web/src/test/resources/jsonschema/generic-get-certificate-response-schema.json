@@ -183,6 +183,9 @@
         "events": {
           "type": "array",
           "items": {}
+        },
+        "isReplaced": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false,
@@ -195,7 +198,8 @@
         "sentDate",
         "archived",
         "statuses",
-        "events"
+        "events",
+        "isReplaced"
       ]
     }
   },

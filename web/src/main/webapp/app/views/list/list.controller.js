@@ -44,7 +44,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 IntygListService.selectedCertificate = item;
                 $rootScope.keepInboxTab = true;
                 $location.path('/' + item.type.toLowerCase() + '/view/' + item.id);
-                $log.info( 'item path str: /' + item.type.toLowerCase() + '/view/'  + item.id );
+                $log.debug( 'item path str: /' + item.type.toLowerCase() + '/view/'  + item.id );
 
             };
 

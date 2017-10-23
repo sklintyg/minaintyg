@@ -155,6 +155,15 @@ public class CertificateMeta {
     }
 
     /**
+     * Returns true if there exists a replacing relation on this certmeta.
+     *
+     * @return true or false.
+     */
+    public boolean getIsReplaced() {
+        return getReplacedBy() != null;
+    }
+
+    /**
      * Finds a ERSATT or KOMPLT relation where this certificate is the from-relation. If not found, null is returned.
      */
     public CertificateRelation getReplaces() {
