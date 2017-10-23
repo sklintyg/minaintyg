@@ -58,6 +58,7 @@ angular.module('minaintyg').directive('miFooter', [
                     button1click: function() {},
                     button1id: 'cookie-button-close',
                     button1text: 'common.close',
+                    button2visible: false,
                     autoClose: true
                 });
             };
