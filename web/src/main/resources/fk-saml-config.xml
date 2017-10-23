@@ -111,6 +111,7 @@
     <!-- SAML Authentication Provider responsible for validating of received SAML messages -->
     <bean id="samlAuthenticationProvider" class="org.springframework.security.saml.SAMLAuthenticationProvider">
         <property name="userDetails" ref="citizenAuthenticationService" />
+        <property name="forcePrincipalAsString" value="false" />
     </bean>
 
     <!-- Processing filter for WebSSO profile messages -->
