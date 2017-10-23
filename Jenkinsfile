@@ -1,6 +1,6 @@
 #!groovy
 
-def buildVersion = "3.3.${BUILD_NUMBER}"
+def buildVersion = "3.3.489" // Temporary hack to bypass buildnumber on jenkins
 def commonVersion = "3.3.+"
 def infraVersion = "3.3.+"
 
