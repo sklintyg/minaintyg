@@ -26,6 +26,10 @@
     // before we do anything...we need all modules
     var moduleArray = [];
 
+    app.value('scrollToTopConfig', {
+        excludedStates: ['index']
+    });
+
     app.value('networkConfig', {
         defaultTimeout: 30000
         // test: 1000
