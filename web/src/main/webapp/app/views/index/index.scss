@@ -18,6 +18,11 @@
     padding-bottom: 50px;
   }
 
+  .login-button {
+    position: relative;
+    bottom: 0;
+  }
+
   @media (max-width: $screen-xs-max) {
     .btn-primary {
       display: block;
