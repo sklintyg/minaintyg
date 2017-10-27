@@ -60,7 +60,7 @@ describe('Logga ut', function() {
             specHelper.logout();
             browser.driver.sleep(3000);
             expect(browser.getTitle()).toEqual('Mina intyg');
-            expect(browser.getCurrentUrl()).toContain('/saml/logout');
+            expect(browser.getCurrentUrl()).toContain('/error.jsp?reason=logout');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
@@ -131,7 +131,7 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             browser.driver.get('http://www.google.com');
             expect(browser.getTitle()).toEqual('Google');
-            browser.driver.sleep(5000);
+            browser.driver.sleep(7000);
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
