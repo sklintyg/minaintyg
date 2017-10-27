@@ -52,7 +52,7 @@
       <mvc:exclude-mapping path="/logga-ut-fk"/>
       <bean class="se.inera.intyg.minaintyg.web.security.BrowserClosedInterceptor">
         <property name="timeoutSeconds" value="5"/>
-        <property name="redirectLocation" value="/web/start"/>
+        <property name="redirectLocation" value="/"/>
         <property name="logoutHandler" ref="logoutHandler" />
       </bean>
     </mvc:interceptor>

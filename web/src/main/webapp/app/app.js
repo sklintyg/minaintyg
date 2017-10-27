@@ -83,7 +83,7 @@
             $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
                 // Configure 403 interceptor provider
-                http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
+                http403ResponseInterceptorProvider.setRedirectUrl('/error.jsp?reason=denied');
                 $httpProvider.interceptors.push('common.http403ResponseInterceptor');
 
                 // Configure default triggers for tooltipProvider to disable triggers for
