@@ -18,8 +18,8 @@
  */
 
 angular.module('minaintyg').directive('miFooter', [
-    '$window', 'common.dialogService',
-    function($window, dialogService) {
+    '$window', '$state', 'common.dialogService',
+    function($window, $state, dialogService) {
     'use strict';
 
     return {
@@ -27,28 +27,6 @@ angular.module('minaintyg').directive('miFooter', [
         scope: {},
         templateUrl: '/app/components/miFooter/miFooter.directive.html',
         link: function($scope) {
-
-            $scope.vm = {
-                visible: false
-            };
-
-            $scope.scrollToTop = function() {
-                $('body, html').animate({
-                    scrollTop: 0
-                }, 500);
-            };
-
-            function updateVisibility() {
-                $scope.vm.visible = $(window).scrollTop() > 0;
-            }
-
-            updateVisibility();
-
-            angular.element($window).on('resize scroll', function() {
-                updateVisibility();
-                //update angular scope
-                $scope.$apply();
-            });
 
             $scope.openCookieDialog = function(){
                 dialogService.showDialog($scope, {
