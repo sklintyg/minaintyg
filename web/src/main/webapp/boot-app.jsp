@@ -63,22 +63,14 @@
   <mi-scroll-to-top></mi-scroll-to-top>
   <mi-footer></mi-footer>
 
-  <div class="container">
-    <div class="">
-      <div class="row">
-        <div id="content-body" class="col-xs-12">
-          <%-- No script to show at least something when javascript is off --%>
-          <noscript>
-            <h1>
-              <span><spring:message code="error.noscript.title" /></span>
-            </h1>
-            <div class="alert alert-danger">
-              <spring:message code="error.noscript.text" />
-            </div>
-          </noscript>
-        </div>
-      </div>
-    </div>
+  <div id="content-body" style="text-align: center;">
+    <%-- No script to show at least something when javascript is off --%>
+    <noscript>
+      <h3>
+        <spring:message code="error.noscript.title" />
+      </h3>
+      <spring:message code="error.noscript.text" />
+    </noscript>
   </div>
 
   <c:choose>

@@ -67,6 +67,9 @@
 
     <noscript>
       <div>
+        <h3>
+          <spring:message code="error.noscript.title" />
+        </h3>
         <spring:message code="error.noscript.text" />
       </div>
     </noscript>
