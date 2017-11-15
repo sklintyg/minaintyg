@@ -152,7 +152,7 @@ h2 {
 
 // Remove tooltips on mobile
 @media all and (max-width: 728px) {
-  .popover {
+  [uib-popover-popup].popover, [uib-popover-html-popup].popover, [uib-popover-template-popup].popover {
     display: none !important;
   }
 }
