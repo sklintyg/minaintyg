@@ -227,7 +227,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         //'error.pagetitle': 'Tekniskt fel',
         'error.generictechproblem.title': 'Tekniskt fel',
         'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
-        'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+        'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.',
         'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',

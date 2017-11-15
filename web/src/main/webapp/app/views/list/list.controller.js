@@ -144,11 +144,10 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
-
+                $scope.errorMessage = null;
                 if (list !== null) {
                     $scope.activeCertificates = list;
                     $scope.refreshActiveCertificates();
-                    $scope.errorMessage = null;
                 } else {
                     // show error view
                     $scope.errorMessage = 'error.couldnotloadcertlist';
