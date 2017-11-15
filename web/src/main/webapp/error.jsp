@@ -56,62 +56,62 @@
 </head>
 
 <body>
+  <div class="content-wrapper">
+    <mvk-top-bar></mvk-top-bar>
 
-  <mvk-top-bar></mvk-top-bar>
+    <mi-header></mi-header>
 
-  <mi-header></mi-header>
+    <div id="navigation-container"></div>
 
-  <div id="navigation-container"></div>
+    <div id="content-body" style="text-align: center;">
 
-  <div id="content-body" style="text-align: center;">
-
-    <noscript>
-      <div>
-        <h3>
-          <spring:message code="error.noscript.title" />
-        </h3>
-        <spring:message code="error.noscript.text" />
-      </div>
-    </noscript>
-
-    <c:choose>
-      <c:when test="${param.reason eq 'logout'}">
-        <mi-page-message-icon
-            id="loggedOut"
-            img-path="/img/404.png"
-            msg-key="info.loggedout.text">
-        </mi-page-message-icon>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
+      <noscript>
+        <div>
+          <h3>
+            <spring:message code="error.noscript.title" />
+          </h3>
+          <spring:message code="error.noscript.text" />
         </div>
-      </c:when>
+      </noscript>
 
-      <c:when test="${param.reason eq 'denied'}">
-        <mi-page-message-icon
-            id="noAuth"
-            img-path="/img/404.png"
-            msg-key="error.noauth.text">
-        </mi-page-message-icon>
-      </c:when>
+      <c:choose>
+        <c:when test="${param.reason eq 'logout'}">
+          <mi-page-message-icon
+              id="loggedOut"
+              img-path="/img/404.png"
+              msg-key="info.loggedout.text">
+          </mi-page-message-icon>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
+          </div>
+        </c:when>
 
-      <c:when test="${param.reason eq 'notfound'}">
-        <mi-page-message-icon
-            id="notFound"
-            img-path="/img/404.png"
-            msg-key="error.notfound.text">
-        </mi-page-message-icon>
-      </c:when>
+        <c:when test="${param.reason eq 'denied'}">
+          <mi-page-message-icon
+              id="noAuth"
+              img-path="/img/404.png"
+              msg-key="error.noauth.text">
+          </mi-page-message-icon>
+        </c:when>
 
-      <c:otherwise>
-        <mi-page-message-icon
-            id="genericTechProblem"
-            img-path="/img/404.png"
-            msg-key="error.generictechproblem.text">
-        </mi-page-message-icon>
-      </c:otherwise>
-    </c:choose>
+        <c:when test="${param.reason eq 'notfound'}">
+          <mi-page-message-icon
+              id="notFound"
+              img-path="/img/404.png"
+              msg-key="error.notfound.text">
+          </mi-page-message-icon>
+        </c:when>
+
+        <c:otherwise>
+          <mi-page-message-icon
+              id="genericTechProblem"
+              img-path="/img/404.png"
+              msg-key="error.generictechproblem.text">
+          </mi-page-message-icon>
+        </c:otherwise>
+      </c:choose>
+    </div>
   </div>
-
   <mi-footer></mi-footer>
 
   <c:choose>

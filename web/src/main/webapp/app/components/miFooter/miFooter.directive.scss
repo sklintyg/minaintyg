@@ -4,6 +4,7 @@ mi-footer {
   background-color: #E5E8EE;
   padding-top: 20px;
   display: block;
+  min-height: $mi-footer-height;
 
   h3 {
     font-size: 14px;
@@ -16,11 +17,6 @@ mi-footer {
 
   .container {
     margin-top: 70px;
-  }
-
-  .scroll-to-top-div {
-    margin-top: 50px;
-    height: 23px;
   }
 
 }

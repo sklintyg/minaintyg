@@ -47,20 +47,22 @@
 
 </head>
 <body>
+  <div class="content-wrapper">
+    <mvk-top-bar></mvk-top-bar>
 
-  <mvk-top-bar></mvk-top-bar>
+    <mi-header></mi-header>
 
-  <mi-header></mi-header>
+    <mi-main-navigation></mi-main-navigation>
 
-  <mi-main-navigation></mi-main-navigation>
+    <mi-cookie-banner></mi-cookie-banner>
 
-  <mi-cookie-banner></mi-cookie-banner>
+    <%-- ng-view that holds dynamic content managed by angular app --%>
+    <div id="view" ui-view autoscroll="false"></div>
+    <mi-scroll-to-top-footer></mi-scroll-to-top-footer>
 
-  <%-- ng-view that holds dynamic content managed by angular app --%>
-  <div id="view" ui-view autoscroll="false"></div>
-
-  <%-- Add navigation aid directives --%>
-  <mi-scroll-to-top></mi-scroll-to-top>
+    <%-- Add navigation aid directives --%>
+    <mi-scroll-to-top></mi-scroll-to-top>
+  </div>
   <mi-footer></mi-footer>
 
   <div id="content-body" style="text-align: center;">

@@ -34,6 +34,11 @@ body {
   white-space: pre-line;
 }
 
+.content-wrapper {
+  min-height: calc(100vh -  #{$mi-footer-height});
+  padding-bottom: 120px;
+}
+
 /* Used to create a row with columns of equal height */
 .flex-row.row {
   display: flex;
