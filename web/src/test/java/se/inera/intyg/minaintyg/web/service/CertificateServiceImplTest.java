@@ -238,14 +238,15 @@ public class CertificateServiceImplTest {
         Utlatande utl = buildUtlatande(pnr);
         CertificateMetaData meta = new CertificateMetaData();
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
-        CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
+        CertificateResponse cert = new CertificateResponse(document, utl, meta, true);
         ModuleApi api = mock(ModuleApi.class);
         when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
         Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, new Personnummer(pnr), CERTIFICATE_ID);
 
-        assertFalse(res.isPresent()); // don't return revoked certificate
+        assertTrue(res.isPresent());
+        assertTrue(res.get().isRevoked());
 
         verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
     }

@@ -110,6 +110,12 @@ public class ModuleApiController {
                 id);
         if (utlatande.isPresent()) {
             try {
+                if (utlatande.get().isRevoked()) {
+                    LOG.info("Revoked certificate " + id + " was requested - Responding with status "
+                            + Response.Status.GONE.getStatusCode());
+                    return Response.status(Response.Status.GONE).build();
+                }
+
                 JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
                 List<IntygRelations> relations = certificateService.getRelationsForCertificates(Arrays.asList(id));
                 CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande.get().getMetaData(), relations,
@@ -162,7 +168,7 @@ public class ModuleApiController {
     private Response getPdfInternal(String type, String id, List<String> optionalFields, boolean isEmployerCopy) {
         Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type,
                 new Personnummer(citizenService.getCitizen().getUsername()), id);
-        if (utlatande.isPresent()) {
+        if (utlatande.isPresent() && !utlatande.get().isRevoked()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);

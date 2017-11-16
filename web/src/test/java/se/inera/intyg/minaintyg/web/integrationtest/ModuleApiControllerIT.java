@@ -170,7 +170,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id)
-                .expect().statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                .expect().statusCode(HttpServletResponse.SC_GONE)
                 .when().get("moduleapi/certificate/{type}/{id}");
 
     }

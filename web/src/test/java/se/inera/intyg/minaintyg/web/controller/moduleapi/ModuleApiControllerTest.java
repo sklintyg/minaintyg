@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static javax.ws.rs.core.Response.Status.GONE;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
@@ -52,6 +53,7 @@ public abstract class ModuleApiControllerTest {
 
     static String certificateData;
     static CertificateResponse utlatandeHolder;
+    static CertificateResponse revokedUtlatandeHolder;
 
     private String personnummer;
     private String certificateId;
@@ -75,6 +77,8 @@ public abstract class ModuleApiControllerTest {
     @InjectMocks
     private ModuleApiController moduleApiController = new ModuleApiController();
 
+
+
     // - - - Setters - - -
 
     public void setPersonnummer(String personnummer) {
@@ -90,6 +94,34 @@ public abstract class ModuleApiControllerTest {
     }
 
     // - - - Test cases - - -
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testGetCertificate() throws Exception {
+        when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+
+        Citizen citizen = mockCitizen();
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        Response response = moduleApiController.getCertificate(certificateType, certificateId);
+
+        assertEquals(OK.getStatusCode(), response.getStatus());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testGetRevokedCertificate() throws Exception {
+        when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
+        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+
+        Citizen citizen = mockCitizen();
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        Response response = moduleApiController.getCertificate(certificateType, certificateId);
+
+        assertEquals(GONE.getStatusCode(), response.getStatus());
+    }
 
     @SuppressWarnings("unchecked")
     @Test
@@ -111,6 +143,19 @@ public abstract class ModuleApiControllerTest {
 
     @SuppressWarnings("unchecked")
     @Test
+    public void testGetCertificatePdfRevokedCertificate() throws Exception {
+        when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
+
+        Citizen citizen = mockCitizen();
+        when(citizenService.getCitizen()).thenReturn(citizen);
+
+        Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+
+        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
     public void testGetCertificateEmployerPdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, new Personnummer(personnummer), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
@@ -127,6 +172,7 @@ public abstract class ModuleApiControllerTest {
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals(bytes, response.getEntity());
     }
+
 
     @SuppressWarnings("unchecked")
     @Test
