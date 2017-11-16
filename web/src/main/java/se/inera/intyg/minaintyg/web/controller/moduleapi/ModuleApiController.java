@@ -180,9 +180,9 @@ public class ModuleApiController {
 
                 if (isEmployerCopy) {
                     pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG,
-                            optionalFields);
+                            optionalFields, false);
                 } else {
-                    pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG);
+                    pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, false);
                 }
 
                 return Response.ok(pdf.getPdfData())
