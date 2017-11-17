@@ -20,18 +20,13 @@
 /* jshint maxlen: false */
 angular.module('minaintyg').constant('minaintyg.messages', {
     'sv': {
-        'label.showall': 'Visa alla',
-        'label.showfewer': 'Visa färre',
+
         'label.event.false': 'Visa alla händelser',
         'label.event.true': 'Visa färre händelser',
-        'label.restore': 'Återställ',
-        'label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
-        'label.archivedcertificatesloading': 'Arkiverade intyg laddas. Vänligen vänta... ',
 
         'button.archive': 'Arkivera intyg',
         'button.archive.tooltip': 'Flyttar intyget till Arkiverade intyg.',
         'button.modal.archive.tooltip': 'Flytta intyget till Arkiverade intyg.',
-        'button.send': 'Skicka',
         'button.show': 'Visa intyg',
         'button.show.tooltip': 'Läs och hantera ditt intyg.',
         'button.goback': 'Tillbaka',
@@ -74,7 +69,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'pdf.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
 
         /* INBOX */
-
+        'inbox.label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
         'inbox.header': 'Översikt över dina intyg',
 
         'inbox.description.1': 'Här listas alla dina intyg med det senast utfärdade intyget överst. Läkarintyg i Mina intyg är kopior från din patientjournal och har lämnats ut till dig från din vårdgivare. I Mina intyg kan du skicka dina intyg till olika mottagare, som t.ex. Försäkringskassan, anpassa dina intyg för arbetsgivaren eller ladda ner intygen som PDF. Klicka på knappen Visa intyg för att hantera dina intyg.',
@@ -92,8 +87,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'inbox.list.issuer.label': 'Utfärdare',
 
         /* ARCHIVED */
-
+        'archived.label.archivedcertificatesloading': 'Arkiverade intyg laddas. Vänligen vänta... ',
         'archived.header': 'Arkiverade intyg',
+
 
         'archived.description': '<p>Ett läkarintyg i Mina intyg innehåller information som lämnats ut från din patientjournal. Du kan inte ta bort ditt intyg från Mina intyg, men du kan flytta dina gamla intyg hit till <i>Arkiverade intyg</i>.</p><p>Om du väljer att ta bort ditt samtycke för att använda Mina intyg, kommer din kopia av intyget att raderas. Oavsett om du arkiverar ett intyg eller om du tar bort ditt samtycke, är din vårdgivare enligt lag alltid skyldig att spara uppgifterna i din patientjournal i minst 10 år.</p>',
         'archived.description.part2': '<p><LINK:diPatientDataLagen>.</p><p>Om någon uppgift i ditt intyg är fel eller du har medicinska frågor angående intyget, ska du kontakta den som utfärdade ditt intyg, eller den mottagning du besökte när du fick ditt intyg utfärdat.</p><p>Ett arkiverat intyg kan flyttas tillbaka till inkorgen. Det gör du genom att klicka på Återställ intyg.</p>',
@@ -207,19 +203,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'common.title.helptext.moreinfo': 'Mer information',
         'common.title.helptext.lessinfo': 'Mindre information',
 
-        'common.module.message.sendingcertificate': 'Skickar intyg...',
-
-        'certificates.events.ersatt.warn': 'OBS! Intyget har ersatts av vården med <a href="/web/start#/{1}/view/{0}">detta intyg</a>.',
-
-        'certificates.target.fk': 'Försäkringskassan',
-        'certificates.target.ts': 'Transportstyrelsen',
-
-        'certificates.send.label.patientname': 'Patientens namn:',
-        'certificates.send.label.issued': 'Utfärdat:',
-        'certificates.send.label.civicnumber': 'Personnummer:',
-        'certificates.send.label.issuer': 'Utfärdare',
-        'certificates.send.label.period': 'Period:',
-        'certificates.send.label.unit': 'Enhet:',
 
         'certificates.label.replaced': 'ERSATT INTYG',
 
