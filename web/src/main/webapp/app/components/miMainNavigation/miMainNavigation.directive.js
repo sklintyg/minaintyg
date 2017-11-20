@@ -43,7 +43,7 @@ angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $
                 return (page === currentRootState) ? 'active' : '';
             };
             $scope.showMenu = function(){
-                return MIUser.consentGiven;
+                return MIUser.consentGiven && $state.current.name!=='index';
             };
         },
         templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'

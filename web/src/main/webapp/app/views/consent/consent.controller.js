@@ -36,6 +36,7 @@ angular.module('minaintyg').controller('minaintyg.ConsentCtrl',
                             dialogId: 'consent-error-dialog',
                             titleId: 'error.generictechproblem.title',
                             bodyTextId: 'error.modal.couldnotgiveconsent',
+                            button1text: 'common.close',
                             templateUrl: '/app/partials/error-dialog.html',
                             autoClose: true
                         });

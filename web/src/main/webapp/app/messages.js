@@ -31,9 +31,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'button.show.tooltip': 'Läs och hantera ditt intyg.',
         'button.goback': 'Tillbaka',
 
-        'modal.tekniskt-fel.header': 'Tekniskt fel',
-        'modal.button.tekniskt-fel.ok': 'OK',
-
         /* CONSENT */
 
         'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina intyg.',
@@ -218,6 +215,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.modal.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt></p>',
         'error.modal.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'error.generic': '<p>Tekniskt fel</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p><a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
+        'error.modal.btn.back-to-inkorg': 'Tillbaka till Inkorgen',
+        'error.modal.btn.back-to-archive-cert': 'Tillbaka till Arkiverade intyg',
+        'error.modal.btn.back-to-about': 'Tillbaka till Om Mina intyg',
 
         // Errors in error app (error.jsp)
         'info.loggedout.text': 'För att använda Mina intyg måste du logga in igen.',

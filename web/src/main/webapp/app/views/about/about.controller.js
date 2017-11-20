@@ -57,6 +57,7 @@ angular.module('minaintyg').controller(
                                     dialogId: 'revoke-error-dialog',
                                     titleId: 'error.generictechproblem.title',
                                     bodyTextId: 'error.modal.couldnotrevokeconsent',
+                                    button1text: 'error.modal.btn.back-to-about',
                                     templateUrl: '/app/partials/error-dialog.html',
                                     autoClose: true
                                 });
