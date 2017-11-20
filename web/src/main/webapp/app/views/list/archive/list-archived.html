@@ -104,7 +104,14 @@
           id="noCerts"
           img-path="/img/arkivtom.png"
           msg-key="archived.message.nocerts"
-          ng-if="doneLoading && (archivedCertificates | archived).length<1">
+          ng-if="!errorMessage && doneLoading && (archivedCertificates | archived).length<1">
+      </mi-page-message-icon>
+
+      <mi-page-message-icon
+          id="errorMessage"
+          img-path="/img/404.png"
+          msg-key="{{errorMessage}}"
+          ng-if="doneLoading && errorMessage">
       </mi-page-message-icon>
 
     </div>

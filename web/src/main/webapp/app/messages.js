@@ -207,6 +207,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         //'error.pagetitle': 'Tekniskt fel',
         'error.generictechproblem.title': 'Tekniskt fel',
         'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+        'error.couldnotloadarchivedlist': '<p>Dina arkiverade intyg kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'info.certrevoked': '<p>Intyget är makulerat och kan därför inte visas.</p><a href="/web/start/#/inkorg">Gå till inkorgen</a>',
         'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.',

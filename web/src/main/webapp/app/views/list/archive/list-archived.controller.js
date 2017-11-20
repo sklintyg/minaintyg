@@ -25,6 +25,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
 
             $scope.archivedCertificates = [];
             $scope.doneLoading = false;
+            $scope.errorMessage = null;
             $scope.moduleService = moduleService;
             $scope.messageService = messageService;
 
@@ -56,7 +57,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                     $scope.archivedCertificates = list;
                 } else {
                     // show error view
-                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
+                    $scope.errorMessage = 'error.couldnotloadarchivedlist';
                 }
             });
 
