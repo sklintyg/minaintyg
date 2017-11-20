@@ -154,13 +154,16 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
                 sendService.sendCertificate($scope.vm.id, selectedRecipients, function(results) {
 
-                    if (results) {
                         //Update status for each recipient
                         angular.forEach(dialogVm.recipients, function(recipient) {
                             //set a default status
                             recipient.status = {
                                 sent: false
                             };
+
+                            if (!results) {
+                                dialogVm.someFailed = true;
+                            }
                             angular.forEach(results, function(result) {
                                 if (result.recipientId === recipient.id) {
                                     recipient.status = result;
@@ -174,9 +177,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                         //reveal results
                         dialogVm.sending = false;
 
-                    } else {
-                        $state.go('fel', {errorCode: 'generic'});
-                    }
+
 
                 });
 
