@@ -75,42 +75,50 @@
     <div id="content-body" style="text-align: center;">
 
 
-      <c:choose>
-        <c:when test="${param.reason eq 'logout'}">
-          <mi-page-message-icon
-              id="loggedOut"
-              img-path="/img/404.png"
-              msg-key="info.loggedout.text">
-          </mi-page-message-icon>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
-          </div>
-        </c:when>
+        <c:choose>
+          <c:when test="${param.reason eq 'logout'}">
+            <mi-page-message-icon
+                id="loggedOut"
+                img-path="/img/404.png"
+                msg-key="info.loggedout.text">
+            </mi-page-message-icon>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
+            </div>
+          </c:when>
 
-        <c:when test="${param.reason eq 'denied'}">
-          <mi-page-message-icon
-              id="noAuth"
-              img-path="/img/404.png"
-              msg-key="error.noauth.text">
-          </mi-page-message-icon>
-        </c:when>
+          <c:when test="${param.reason eq 'denied'}">
+            <mi-page-message-icon
+                id="noAuth"
+                img-path="/img/404.png"
+                msg-key="error.noauth.text">
+            </mi-page-message-icon>
+          </c:when>
 
-        <c:when test="${param.reason eq 'notfound'}">
-          <mi-page-message-icon
-              id="notFound"
-              img-path="/img/404.png"
-              msg-key="error.notfound.text">
-          </mi-page-message-icon>
-        </c:when>
+          <c:when test="${param.reason eq 'notfound'}">
+              <mi-page-message-icon
+                  id="notFound"
+                  img-path="/img/404.png"
+                  msg-key="error.notfound-loggedin.text">
+              </mi-page-message-icon>
+          </c:when>
 
-        <c:otherwise>
-          <mi-page-message-icon
-              id="genericTechProblem"
-              img-path="/img/404.png"
-              msg-key="error.generictechproblem.text">
-          </mi-page-message-icon>
-        </c:otherwise>
-      </c:choose>
+          <c:when test="${param.reason eq 'login.failed'}">
+            <mi-page-message-icon
+                id="notFound"
+                img-path="/img/404.png"
+                msg-key="error.login.failed.text">
+            </mi-page-message-icon>
+          </c:when>
+
+          <c:otherwise>
+            <mi-page-message-icon
+                id="genericTechProblem"
+                img-path="/img/404.png"
+                msg-key="error.generictechproblem.text">
+            </mi-page-message-icon>
+          </c:otherwise>
+        </c:choose>
     </div>
   </div>
   <mi-footer class="ng-cloak"></mi-footer>

@@ -210,7 +210,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.couldnotloadarchivedlist': '<p>Dina arkiverade intyg kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'info.certrevoked': '<p>Intyget är makulerat och kan därför inte visas.</p><a href="/web/start/#/inkorg">Gå till inkorgen</a>',
-        'error.notfound-loggedin.text': 'Sidan du försöker nå finns inte.<br><br>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen. <a href="/web/start/#/inkorg">Gå till inkorgen</a>.',
         'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt></p>',
@@ -223,8 +222,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         // Errors in error app (error.jsp)
         'info.loggedout.text': 'För att använda Mina intyg måste du logga in igen.',
         'error.noauth.text': '<p>Du har blivit utloggad från tjänsten på grund av inaktivitet, eller så försöker du nå en sida som kräver inloggning. Gå till minaintyg.se för att logga in.</p><p><a href="/">Gå till minaintyg.se</a></p>',
-        'error.notfound.text': '<p>Sidan du försöker nå finns inte.</p><p>Kontrollera om du stavat fel i webbläsaren eller gå till minaintyg.se för att logga in.</p><p><a href="/">Gå till minaintyg.se</a></p>',
-        'error.generictechproblem.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att logga in just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><a href="/">Gå till minaintyg.se</a></p>'
+        'error.notfound-loggedin.text': '<p>Sidan du försöker nå finns inte.</p><p>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen.</p><p> <a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
+
+        'error.generictechproblem.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
+        'error.login.failed.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att logga in just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><a href="/">Gå till minaintyg.se</a></p>'
     },
     'en': {
         'label.showall': 'Show all',

@@ -18,10 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.exception;
 
+import org.springframework.security.core.AuthenticationException;
+
 /**
  * Created by PEBE on 2017-10-13.
  */
-public class PUServiceErrorException extends RuntimeException {
+public class PUServiceErrorException extends AuthenticationException {
 
     public PUServiceErrorException(String message) {
         super(message);

@@ -18,10 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.exception;
 
+import org.springframework.security.core.AuthenticationException;
+
 /**
  * Created by eriklupander on 2017-04-25.
  */
-public class PersonNotFoundException extends RuntimeException {
+public class PersonNotFoundException extends AuthenticationException {
 
     public PersonNotFoundException(String message) {
         super(message);
