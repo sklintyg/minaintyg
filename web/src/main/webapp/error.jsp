@@ -56,7 +56,16 @@
 </head>
 
 <body>
-  <div class="content-wrapper">
+  <noscript>
+    <div class="content-wrapper container">
+      <h3>
+        <spring:message code="error.noscript.title" />
+      </h3>
+      <spring:message code="error.noscript.text" />
+    </div>
+  </noscript>
+
+  <div class="content-wrapper ng-cloak">
     <mvk-top-bar></mvk-top-bar>
 
     <mi-header></mi-header>
@@ -65,14 +74,6 @@
 
     <div id="content-body" style="text-align: center;">
 
-      <noscript>
-        <div>
-          <h3>
-            <spring:message code="error.noscript.title" />
-          </h3>
-          <spring:message code="error.noscript.text" />
-        </div>
-      </noscript>
 
       <c:choose>
         <c:when test="${param.reason eq 'logout'}">
@@ -112,7 +113,7 @@
       </c:choose>
     </div>
   </div>
-  <mi-footer></mi-footer>
+  <mi-footer class="ng-cloak"></mi-footer>
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
