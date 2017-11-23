@@ -112,6 +112,11 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.isAt()).toBeTruthy();
         });
 
+        it('Verifiera att anpassa utskrift är disabled om smittskydd Ja', function() {
+            expect(viewPage.customizeCertificateIsDisplayed()).toBe(false);
+            expect(element(by.id('customize-disabled-message')).isPresent()).toBe(true);
+        });
+
         it('Verifiera smittbärarpenning är Ja', function() {
             expect(viewPage.getDynamicLabelText('KAT_10.RBK')).toBe(texts['KAT_10.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_27.RBK')).toBe(texts['FRG_27.RBK']);
@@ -193,6 +198,12 @@ describe('Verifiera Lisjp', function() {
             inboxPage.viewCertificate(intygsId2);
             expect(viewPage.isAt()).toBeTruthy();
         });
+
+        it('Verifiera att anpassa utskrift är enablat om smittskydd Nej', function() {
+            expect(viewPage.customizeCertificateIsDisplayed()).toBe(true);
+            expect(element(by.id('customize-disabled-message')).isPresent()).toBe(false);
+        });
+
         it('Verifiera smittbärarpenning är Nej', function() {
             expect(viewPage.getDynamicLabelText('KAT_10.RBK')).toBe(texts['KAT_10.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_27.RBK')).toBe(texts['FRG_27.RBK']);
