@@ -26,7 +26,7 @@ stage('build') {
 stage('deploy') {
    node {
        util.run {
-           ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false"], \
+           ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false", config_version: "MI-3.5"], \
                 installation: 'ansible-yum', inventory: 'ansible/inventory/minaintyg/test', playbook: 'ansible/deploy.yml'
            util.waitForServer('https://minaintyg.inera.nordicmedtest.se/version.jsp')
        }
