@@ -1,0 +1,38 @@
+<div class="faq-page">
+  <h1>Vanliga frågor och svar
+    <span class="toggle">
+      <a href ng-click="openAll()">Öppna alla</a>
+      <span class="divider">|</span>
+      <a href ng-click="closeAll()">Stäng alla</a>
+    </span>
+  </h1>
+
+
+  <p>Här kan du läsa vanliga frågor och svar om tjänsten Mina intyg. Om du inte hittar svar på din fråga kan du ringa
+    Ineras kundservice på telefonnummer: 0771-25 10 10 alla vardagar klockan 7-22. Om ditt ärende inte är akut kan du
+    fylla i formuläret på <span dynamiclink key="ineraKundserviceKontakt"></span> hemsida. </p>
+  <p>För medicinska frågor som rör ditt intyg ska du kontakta den som utfärdade ditt intyg, eller den mottagning du
+    besökte när du fick ditt intyg utfärdat.</p>
+
+
+  <div data-ng-repeat="c in faq">
+    <h2><i class="icon {{::c.icon}}"></i> {{::c.title}}</h2>
+    <div class="panel panel-default" data-ng-repeat="q in c.questions">
+      <div class="panel-heading" ng-click="q.closed = !q.closed">
+        <h3 class="panel-title">
+          <span message key="{{::q.title}}"></span>
+
+          <i class="glyphicon pull-right"
+             ng-class="{'glyphicon-chevron-up': !q.closed, 'glyphicon-chevron-down': q.closed}"
+             tooltip-class="popover-content" tooltip-append-to-body="true" tooltip-trigger="mouseenter">
+          </i>
+        </h3>
+      </div>
+      <div class="panel-body" uib-collapse="q.closed">
+        <div class="panel-content">
+          <p><span message key="{{::q.body}}"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -132,45 +132,35 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'about.ge.aterta.samtycke': '<h3>Ge och återta samtycke</h3><p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg    kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
         'about.samtycke.om.tjansten': '<h3>Om tjänsten Mina Intyg</h3><p>Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.</p>',
 
-/* HELP */
+        /* HELP */
 
-        'help.faq':[
-            {title:'',questions:[
-                {question: 'Varför kan jag inte se mitt intyg?', answer: 'help.faq.1.q1.answer'},
-                {question:'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',answer: 'help.faq.1.q2.answer'},
-                {question:'Vad betyder det när intyget är ersatt?', answer: 'help.faq.1.q4.answer'},
-                {question:'Varför kan jag inte se makulerade intyg?',answer: 'help.faq.1.q3.answer'}
-            ]},
-            {title:'Frågor och svar om samtycke',questions:[
-                {question:'Varför måste jag ge samtycke?',answer: 'help.faq.2.q1.answer'},
-                {question:'Vad innebär samtycke?',answer: 'help.faq.2.q2.answer'},
-                {question:'Kan jag ta tillbaka mitt samtycke?',answer: 'help.faq.2.q3.answer'}
-            ]},
-            {title:'Frågor och svar om säkerhet',questions:[
-                {question:'Är det säkert att använda Mina intyg?',answer: 'help.faq.3.q1.answer'},
-                {question:'Hur skyddas mina uppgifter?',answer: 'help.faq.3.q2.answer'},
-                {question:'Kan andra komma åt mina uppgifter?',answer: 'help.faq.3.q3.answer'},
-                {question:'Varför kan jag inte logga in med lösenord och sms?',answer: 'help.faq.3.q4.answer'},
-                {question:'Är det säkert med e-legitimation?',answer: 'help.faq.3.q5.answer'},
-                {question:'Hur skyddar jag min dator?',answer: 'help.faq.3.q6.answer'}
-            ]}
-        ],
+        // FAQ
+        'faq.intyg.1.title' : 'Varför kan jag inte se mitt intyg?',
+        'faq.intyg.1.body' : 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.',
+        'faq.intyg.2.title' : 'Jag har laddat ner mitt intyg på min dator men kan inte öppna filen.',
+        'faq.intyg.2.body' : 'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare, exempelvis <LINK:adobeReader>.',
+        'faq.intyg.3.title' : 'Vad betyder det när intyget är ersatt?',
+        'faq.intyg.3.body' : 'Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att Försäkringskassan har begärt en komplettering och vården har svarat med ett nytt intyg med de kompletterande uppgifterna. På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.',
+        'faq.intyg.4.title' : 'Varför kan jag inte se makulerade intyg?',
+        'faq.intyg.4.body' : 'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient. Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.',
 
-        'help.faq.1.q1.answer': 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.',
-        'help.faq.1.q2.answer': 'Intyget laddas ner som en PDF-fil. PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna PDF-filer behöver du en PDF-läsare, exempelvis <LINK:adobeReader>.',
-        'help.faq.1.q3.answer': 'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.<p>Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.</p>',
-        'help.faq.1.q4.answer': '<p>Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att försäkringskassan begärt en komplettering och vården svarat med ett nytt intyg med de kompletterande uppgifterna.</p><p>På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.</p>',
+        'faq.samtycke.1.title' : 'Varför måste jag ge samtycke?',
+        'faq.samtycke.1.body': 'För att kunna använda Mina intyg måste du först lämna ditt samtycke till att dina intyg får lagras i en lagringstjänst kopplad till Mina intyg, samt visas och hanteras i Mina intyg. Utan ditt samtycke till att dina personuppgifter i intygen hanteras i Mina intyg kan tjänsten inte användas.',
+        'faq.samtycke.2.title' : 'Vad innebär samtycke?',
+        'faq.samtycke.2.body': 'Läs mer om samtycke till att använda Mina intyg <a href="#/omminaintyg/samtycke">här.</a>',
+        'faq.samtycke.3.title' : 'Kan jag ta tillbaka mitt samtycke?',
+        'faq.samtycke.3.body': 'Du kan när som helst återta ditt samtycke. Det innebär att uppgifterna om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. Om du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
 
-        'help.faq.2.q1.answer': 'För att kunna använda Mina intyg måste du först lämna ditt samtycke till att dina intyg får lagras i en lagringstjänst kopplad till Mina intyg, samt visas och hanteras i Mina intyg. Utan ditt samtycke till att dina personuppgifter i intygen hanteras i Mina intyg kan tjänsten inte användas.',
-        'help.faq.2.q2.answer': 'Läs mer om samtycke till att använda Mina intyg <a href="#/omminaintyg/samtycke">här</a>.',
-        'help.faq.2.q3.answer': 'Du kan när som helst återta ditt samtycke. Det innebär att uppgifterna om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. Om du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
-
-        'help.faq.3.q1.answer': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
-        'help.faq.3.q2.answer': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PuL), Patientdatalagen (PDL) och av Datainspektionen.',
-        'help.faq.3.q3.answer': 'Nej, i och med att du bara kan logga in med e-legitimation, vars inloggning baseras på ditt personnummer, kan endast information om dig som loggar in visas.',
-        'help.faq.3.q4.answer': 'Lösenord och SMS uppfyller inte de krav som gäller för hantering av medicinsk information, som till exempel kan finnas i ett läkarintyg.',
-        'help.faq.3.q5.answer': 'Ja, en e-legitimation är ett säkert sätt att identifiera sig i Sverige, men glöm inte att även skydda din dator.',
-        'help.faq.3.q6.answer': '<ol><li>Håll din dator uppdaterad. Ditt operativsystem och din webbläsare bör alltid ha de senaste säkerhetsuppdateringarna installerade. Se också till att du alltid använder senaste versionen av säkerhetsprogrammet för din e-legitimation.</li><li>Använd ett uppdaterat antivirusprogram. Vi rekommenderar att du använder ett uppdaterat antivirusprogram som skyddar din dator från skadlig kod och automatiskt kontrollerar de filer som kommer till din dator.</li><li>Logga ut när du är klar. Avsluta varje besök i Mina intyg med att logga ut och stänga webbläsaren.</li></ol>',
+        'faq.sakerhet.1.title' : 'Är det säkert att använda Mina intyg?',
+        'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
+        'faq.sakerhet.2.title' : 'Kan andra komma åt mina uppgifter?',
+        'faq.sakerhet.2.body': 'Nej, i och med att du bara kan logga in med e-legitimation, vars inloggning baseras på ditt personnummer, kan endast information om dig som loggar in visas.',
+        'faq.sakerhet.3.title' : 'Varför kan jag inte logga in med lösenord och sms?',
+        'faq.sakerhet.3.body': 'Lösenord och SMS uppfyller inte de krav som gäller för hantering av medicinsk information, som till exempel kan finnas i ett läkarintyg.',
+        'faq.sakerhet.4.title' : 'Är det säkert med e-legitimation?',
+        'faq.sakerhet.4.body': 'Ja, en e-legitimation är ett säkert sätt att identifiera sig i Sverige, men glöm inte att även skydda din dator.',
+        'faq.sakerhet.5.title' : 'Hur skyddar jag min dator?',
+        'faq.sakerhet.5.body': '<ol><li>Håll din dator uppdaterad. Ditt operativsystem och din webbläsare bör alltid ha de senaste säkerhetsuppdateringarna installerade. Se också till att du alltid använder senaste versionen av säkerhetsprogrammet för din e-legitimation.</li><li>Använd ett uppdaterat antivirusprogram. Vi rekommenderar att du använder ett uppdaterat antivirusprogram som skyddar din dator från skadlig kod och automatiskt kontrollerar de filer som kommer till din dator.</li><li>Logga ut när du är klar. Avsluta varje besök i Mina intyg med att logga ut och stänga webbläsaren.</li></ol>',
 
         /* FOOTER */
         'footer.cookies.modal.title': 'Om kakor (cookies)',
