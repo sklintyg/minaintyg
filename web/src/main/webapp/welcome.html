@@ -34,42 +34,86 @@
         // Populate with some hard-coded data in case the request to the stub fails (i.e. we're running on demo or qa)
         var localData = [
             {
-              "sekretessmarkering": "N",
-              "personpost": {
-                  "personId": "201212121212",
-                  "namn": {
-                      "fornamn": "Lilltolvan",
-                      "efternamn": "Tolvansson",
-                      "any": []
-                  },
-                  "folkbokforingsadress": {
-                      "utdelningsadress1": "Storgatan 1",
-                      "postNr": "12345",
-                      "postort": "Småmåla"
-                  },
-                  "any": []
-              },
-              "any": []
-          },{
-              "sekretessmarkering": "N",
-              "personpost": {
-                  "personId": "191212121212",
-                  "namn": {
-                      "fornamn": "Tolvan",
-                      "efternamn": "Tolvansson",
-                      "any": []
-                  },
-                  "folkbokforingsadress": {
-                      "careOf": "Svensson",
-                      "utdelningsadress1": "Storgatan 1",
-                      "utdelningsadress2": "PL 1234",
-                      "postNr": "12345",
-                      "postort": "Småmåla"
-                  },
-                  "any": []
-              },
-              "any": []
-          }
+                "personalIdentity": {
+                    "extension": "201212121212",
+                    "any": []
+                },
+                "protectedPersonIndicator": false,
+                "testIndicator": false,
+                "primaryIdentity": false,
+                "name": {
+                    "givenName": {
+                        "name": "Lilltolvan",
+                        "any": []
+                    },
+                    "middleName": {
+                        "any": []
+                    },
+                    "surname": {
+                        "name": "Tolvansson",
+                        "any": []
+                    },
+                    "any": []
+                },
+                "linkedIdentity": [],
+                "addressInformation": {
+                    "residentialAddress": {
+                        "postalAddress1": "Storgatan 1",
+                        "postalCode": 12345,
+                        "city": "Småmåla",
+                        "any": []
+                    },
+                    "any": []
+                },
+                "contactInformation": [],
+                "contactPerson": [],
+                "confirmedIdentity": [],
+                "citizenship": [],
+                "relationship": [],
+                "attachment": [],
+                "any": []
+            },{
+                "personalIdentity": {
+                    "extension": "191212121212",
+                    "any": []
+                },
+                "protectedPersonIndicator": false,
+                "testIndicator": false,
+                "primaryIdentity": false,
+                "name": {
+                    "givenName": {
+                        "name": "Tolvan",
+                        "any": []
+                    },
+                    "middleName": {
+                        "any": []
+                    },
+                    "surname": {
+                        "name": "Tolvansson",
+                        "any": []
+                    },
+                    "any": []
+                },
+                "linkedIdentity": [],
+                "addressInformation": {
+                    "residentialAddress": {
+                        "careOf": "Svensson",
+                        "postalAddress1": "Storgatan 1",
+                        "postalAddress2": "PL 1234",
+                        "postalCode": 12345,
+                        "city": "Småmåla",
+                        "any": []
+                    },
+                    "any": []
+                },
+                "contactInformation": [],
+                "contactPerson": [],
+                "confirmedIdentity": [],
+                "citizenship": [],
+                "relationship": [],
+                "attachment": [],
+                "any": []
+            }
         ];
 
             function _fetchPuPersons() {
@@ -92,7 +136,7 @@
 
                     data
                         .sort(function(a, b) {
-                            return a.personpost.personId.localeCompare(b.personpost.personId);
+                            return a.personalIdentity.extension.localeCompare(b.personalIdentity.extension);
                         });
 
                     // Add an index property to all items
@@ -123,9 +167,10 @@
 
                 // Get the HSA person from model
                 var puPerson = {
-                    personnummer: login.personpost.personId,
-                    namn: login.personpost.namn.fornamn + ' ' + login.personpost.namn.efternamn,
-                    sekretessmarkering: login.sekretessmarkering
+                    personnummer: login.personalIdentity.extension,
+                    namn: login.name.givenName.name + ' '
+                    + login.name.surname.name,
+                    sekretessmarkering: login.protectedPersonIndicator
                 };
 
                 var loginJson = JSON.stringify(puPerson, '', 1);
@@ -164,9 +209,9 @@
 
             <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="18" class="form-control"
                     style="width: 100%;max-width:100%">
-              <option id="x{{login.personpost.personId}}" ng-repeat="login in loginModel" value="{{login.index}}">
-                {{login.personpost.personId}} - {{login.personpost.namn.fornamn}} {{login.personpost.namn.efternamn}}
-                {{login.sekretessmarkering == 'J' ? '(Sekretess)' :''}}
+              <option id="x{{login.personalIdentity.extension}}" ng-repeat="login in loginModel" value="{{login.index}}">
+                {{login.personalIdentity.extension}} - {{login.name.givenName.name}} {{login.name.surname.name}}
+                {{login.protectedPersonIndicator == 'true' ? '(Sekretess)' :''}}
               </option>
             </select>
 
