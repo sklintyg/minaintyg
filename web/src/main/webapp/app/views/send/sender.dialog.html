@@ -1,7 +1,7 @@
 <div id="mi-sending-dialog">
   <div mi-spinner label="sendpage.dialog.label.sending" show-spinner="vm.sending" show-content="!vm.sending">
 
-    <div class="modal-header" ng-class="{'bg-success':  !vm.someFailed}">
+    <div class="modal-header">
       <button type="button" class="close" ng-click="onBackToCertificate()">×</button>
       <h3 ng-if="vm.someFailed" class="modal-title">
         <span message key="sendpage.dialog.label.somefailed.title"></span>
