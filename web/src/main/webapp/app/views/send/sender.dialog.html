@@ -2,11 +2,19 @@
   <div mi-spinner label="sendpage.dialog.label.sending" show-spinner="vm.sending" show-content="!vm.sending">
 
     <div class="modal-header" ng-class="{'bg-danger': vm.someFailed, 'bg-success':  !vm.someFailed}">
-      <div ng-if="vm.someFailed" message key="sendpage.dialog.label.somefailed"></div>
-      <div ng-if="!vm.someFailed" message key="sendpage.dialog.label.nonefailed"></div>
+      <button type="button" class="close" ng-click="onBackToCertificate()">×</button>
+      <h3 ng-if="vm.someFailed" class="modal-title">
+        <span message key="sendpage.dialog.label.somefailed.title"></span>
+      </h3>
+      <h3 ng-if="!vm.someFailed" class="modal-title">
+        <span message key="sendpage.dialog.label.nonefailed.title"></span>
+      </h3>
     </div>
 
     <div class="modal-body">
+      <div ng-if="vm.someFailed" message key="sendpage.dialog.label.somefailed.body"></div>
+      <div ng-if="!vm.someFailed" message key="sendpage.dialog.label.nonefailed.body"></div>
+      <br><br>
       <div ng-repeat="r in vm.recipients" class="row result-rows">
 
         <div class="col-sm-6">
@@ -28,7 +36,7 @@
     </div>
 
     <div class="modal-footer">
-      <button id="back-to-intyg-btn" ng-click="onBackToCertificate()" class="btn btn-primary" type="button">
+      <button id="back-to-intyg-btn" ng-click="onBackToCertificate()" class="btn" ng-class="{'btn-secondary': vm.someFailed, 'btn-primary': !vm.someFailed}" type="button">
         <i class="icon icon-left-1"></i> <span message key="sendpage.dialog.btn.back-to-intyg"></span>
       </button>
     </div>
