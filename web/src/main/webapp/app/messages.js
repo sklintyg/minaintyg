@@ -115,8 +115,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'sendpage.dialog.label.sending': 'Dina intyg skickas nu!<br>Det kan ta några sekunder.',
         'sendpage.dialog.label.received-by': 'Mottaget av',
         'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
-        'sendpage.dialog.label.somefailed': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen senare. Om det fortfarande inte fungerar, kontakta <LINK:ineraKundserviceKontakt>.',
-        'sendpage.dialog.label.nonefailed': 'Intyget är nu inskickat och mottaget av:',
+        'sendpage.dialog.label.somefailed.title': 'Tekniskt fel',
+        'sendpage.dialog.label.somefailed.body': 'Intyget kunde inte tas emot av alla mottagare på grund av ett tekniskt fel. Försök igen om några minuter.<br>Om felet kvarstår kontakta Ineras kundservice. Ring 0771-25 10 10 eller besök <LINK:ineraKontakt>',
+        'sendpage.dialog.label.nonefailed.title': 'Intyget skickat',
+        'sendpage.dialog.label.nonefailed.body': 'Intyget är nu inskickat och mottaget av:',
         'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
 
         'info.loggedout.fk.title': 'Du är utloggad ur Mina intyg',
