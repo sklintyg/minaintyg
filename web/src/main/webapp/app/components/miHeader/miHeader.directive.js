@@ -17,19 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miHeader', ['MIUser', 'common.ObjectHelper',
-    function(MIUser, objectHelper) {
+angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common.ObjectHelper',
+    function(MIConfig, MIUser, objectHelper) {
         'use strict';
 
         return {
             restrict: 'E',
             templateUrl: '/app/components/miHeader/miHeader.directive.html',
             link: function($scope) {
+
                 if (!objectHelper.isEmpty(MIUser.fullName)) {
                     $scope.authUserDescription = MIUser.fullName;
                 } else {
                     $scope.authUserDescription = MIUser.personId;
                 }
+
+                $scope.applicationLogoutUrl = MIConfig.applicationLogoutUrl;
+
             }
         };
     }]);

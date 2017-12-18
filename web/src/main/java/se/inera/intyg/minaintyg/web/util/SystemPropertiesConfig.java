@@ -31,6 +31,9 @@ public class SystemPropertiesConfig {
 
     public static final String USE_MINIFIED_JAVA_SCRIPT_ENV_KEY = "minaintyg.useMinifiedJavaScript";
 
+    @Value("${project.version}")
+    private String version;
+
     @Value("${buildNumber}")
     private String buildNumber;
 
@@ -40,9 +43,22 @@ public class SystemPropertiesConfig {
     @Value("${elva77.url.login}")
     private String elva77LoginUrl;
 
+    @Value("${application.logout.url}")
+    private String applicationLogoutUrl;
+
     @Autowired
     private Environment environment;
 
+
+    // getters
+
+    public boolean getUseMinifiedJavascript() {
+        return environment.getProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, Boolean.class, true);
+    }
+
+    public String getVersion() {
+        return version;
+    }
 
     public String getBuildNumber() {
         return buildNumber;
@@ -52,15 +68,11 @@ public class SystemPropertiesConfig {
         return elva77MainUrl;
     }
 
-    public boolean getUseMinifiedJavascript() {
-        return environment.getProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, Boolean.class, true);
-    }
-
     public String getElva77LoginUrl() {
         return elva77LoginUrl;
     }
 
-    public void setElva77LoginUrl(String elva77LoginUrl) {
-        this.elva77LoginUrl = elva77LoginUrl;
+    public String getApplicationLogoutUrl() {
+        return applicationLogoutUrl;
     }
 }
