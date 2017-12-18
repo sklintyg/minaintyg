@@ -50,6 +50,7 @@ public class ConfigApiControllerTest {
     private static final String BUILD_NUMBER = "1.0";
     private static final String ELVA77_MAIN_URL = "http://mvk.se/ABC123?apa=bepa";
     private static final String ELVA77_LOGIN_URL = "/saml/login";
+    private static final String APP_LOGOUT_URL = "/web/logg-ut";
     private static final java.lang.String VERSION = "1.2.3";
 
     @Mock
@@ -74,6 +75,7 @@ public class ConfigApiControllerTest {
         when(systemConfigBean.getBuildNumber()).thenReturn(BUILD_NUMBER);
         when(systemConfigBean.getElva77MainUrl()).thenReturn(ELVA77_MAIN_URL);
         when(systemConfigBean.getElva77LoginUrl()).thenReturn(ELVA77_LOGIN_URL);
+        when(systemConfigBean.getApplicationLogoutUrl()).thenReturn(APP_LOGOUT_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
         when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
 
@@ -88,6 +90,7 @@ public class ConfigApiControllerTest {
         assertEquals(BUILD_NUMBER, config.getBuildNumber());
         assertEquals(ELVA77_MAIN_URL, config.getElva77MainUrl());
         assertEquals(ELVA77_LOGIN_URL, config.getElva77LoginUrl());
+        assertEquals(APP_LOGOUT_URL, config.getApplicationLogoutUrl());
         assertEquals(false, config.isUseMinifiedJavascript());
 
         verify(certificateService).getAllRecipients();

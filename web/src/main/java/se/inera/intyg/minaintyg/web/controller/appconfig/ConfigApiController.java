@@ -57,10 +57,16 @@ public class ConfigApiController {
     public Response getConfig() {
 
         Response.ResponseBuilder builder = Response
-                .ok(new ConfigResponse(systemConfigBean.getVersion(), systemConfigBean.getBuildNumber(),
+                .ok(new ConfigResponse(
+                        systemConfigBean.getVersion(),
+                        systemConfigBean.getBuildNumber(),
                         systemConfigBean.getUseMinifiedJavascript(),
-                        systemConfigBean.getElva77MainUrl(), systemConfigBean.getElva77LoginUrl(), certificateService.getAllRecipients(),
+                        systemConfigBean.getElva77MainUrl(),
+                        systemConfigBean.getElva77LoginUrl(),
+                        systemConfigBean.getApplicationLogoutUrl(),
+                        certificateService.getAllRecipients(),
                         dynamicLinkService.getAllAsMap()));
+
         return builder.cacheControl(getNoCacheControl()).build();
     }
 
