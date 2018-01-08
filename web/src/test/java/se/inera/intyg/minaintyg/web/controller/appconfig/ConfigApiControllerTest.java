@@ -50,7 +50,7 @@ public class ConfigApiControllerTest {
     private static final String BUILD_NUMBER = "1.0";
     private static final String ELVA77_MAIN_URL = "http://mvk.se/ABC123?apa=bepa";
     private static final String ELVA77_LOGIN_URL = "/saml/login";
-    private static final String APP_LOGOUT_URL = "/web/logg-ut";
+    private static final String APP_LOGOUT_URL = "/web/logga-ut";
     private static final java.lang.String VERSION = "1.2.3";
 
     @Mock
