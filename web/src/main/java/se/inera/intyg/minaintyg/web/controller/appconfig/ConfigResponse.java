@@ -46,7 +46,7 @@ public class ConfigResponse implements Serializable {
 
     private Map<String, DynamicLink> links;
 
-
+    //CHECKSTYLE:OFF ParameterNumberCheck
     public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
             String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
 
@@ -59,6 +59,7 @@ public class ConfigResponse implements Serializable {
         this.knownRecipients = knownRecipients;
         this.links = links;
     }
+    //CHECKSTYLE:ON ParameterNumberCheck
 
     public String getVersion() {
         return version;
