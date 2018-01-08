@@ -33,6 +33,10 @@ public class ConfigApiControllerTest {
     private static final String ELVA77_MAIN_URL = "http://mvk.se/ABC123?apa=bepa";
     private static final String ELVA77_LOGIN_URL = "/saml/login";
     private static final String APP_LOGOUT_URL = "/web/logga-ut";
+<<<<<<< HEAD
+=======
+    private static final java.lang.String VERSION = "1.2.3";
+>>>>>>> 6551f8a7... INTYG-4666: Justerade applicatino logout url i test
 
     @Mock
     private IntygModuleRegistry moduleRegistry;
