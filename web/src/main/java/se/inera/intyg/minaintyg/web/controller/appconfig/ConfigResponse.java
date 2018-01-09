@@ -34,24 +34,38 @@ import java.util.Map;
 public class ConfigResponse implements Serializable {
 
     // system properties
+    private boolean useMinifiedJavascript;
+
     private String version;
     private String buildNumber;
-    private boolean useMinifiedJavascript;
     private String elva77MainUrl;
     private String elva77LoginUrl;
+    private String applicationLogoutUrl;
+
     private List<UtlatandeRecipient> knownRecipients;
+
     private Map<String, DynamicLink> links;
 
+
     public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
-            List<UtlatandeRecipient> knownRecipients,
-            Map<String, DynamicLink> links) {
+            String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
+
         this.version = version;
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
         this.elva77MainUrl = elva77MainUrl;
         this.elva77LoginUrl = elva77LoginUrl;
+        this.applicationLogoutUrl = applicationLogoutUrl;
         this.knownRecipients = knownRecipients;
         this.links = links;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public String getBuildNumber() {
@@ -70,6 +84,10 @@ public class ConfigResponse implements Serializable {
         return elva77LoginUrl;
     }
 
+    public String getApplicationLogoutUrl() {
+        return applicationLogoutUrl;
+    }
+
     public List<UtlatandeRecipient> getKnownRecipients() {
         return knownRecipients;
     }
@@ -78,11 +96,4 @@ public class ConfigResponse implements Serializable {
         return links;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }
