@@ -1,6 +1,6 @@
 #!groovy
 
-def buildVersion = "3.4.${BUILD_NUMBER}"
+def buildVersion = "3.4.146"
 def commonVersion = "3.4.+"
 def infraVersion = "3.4.+"
 
