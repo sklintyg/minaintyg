@@ -120,6 +120,16 @@ gretty {
 
 war.dependsOn createVersionPropertyFile
 
+license {
+    sourceSets {
+        main {
+            resources {
+                srcDirs  = ["src/main/webapp/app"]
+            }
+        }
+    }
+}
+
 dependencies {
     compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:${intygInsuranceprocessSchemasVersion}"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
