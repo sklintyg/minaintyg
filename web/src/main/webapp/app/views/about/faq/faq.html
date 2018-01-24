@@ -20,7 +20,7 @@
     <div class="panel panel-default" data-ng-repeat="q in c.questions">
       <div class="panel-heading" ng-click="q.closed = !q.closed">
         <h3 class="panel-title">
-          <span message key="{{::q.title}}"></span>
+          <span dynamic-label key="{{::q.title}}"></span>
 
           <i class="glyphicon pull-right"
              ng-class="{'glyphicon-chevron-up': !q.closed, 'glyphicon-chevron-down': q.closed}"
@@ -30,7 +30,7 @@
       </div>
       <div class="panel-body" uib-collapse="q.closed">
         <div class="panel-content">
-          <p><span message key="{{::q.body}}"></span></p>
+          <p><span dynamic-label key="{{::q.body}}"></span></p>
         </div>
       </div>
     </div>

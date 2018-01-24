@@ -12,26 +12,26 @@
             där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina
             intyg.</p>
         </div>
-        <h3><span message key="consent.aboutheader"></span></h3>
-        <p><span message key="consent.abouttext"></span></p>
+        <h3><span dynamic-label key="consent.aboutheader"></span></h3>
+        <p><span dynamic-label key="consent.abouttext"></span></p>
 
         <div ng-include="'/app/views/about/section-samtycke-common-partial.html'"></div>
 
-        <span message key="about.dina.rattigheter"></span>
-        <span message key="about.ge.aterta.samtycke"></span>
+        <span dynamic-label key="about.dina.rattigheter"></span>
+        <span dynamic-label key="about.ge.aterta.samtycke"></span>
 
 
         <hr class="divider">
         <p class="consent-button-pretext checkbox">
           <label for="giveConsentCheckbox" class="">
             <input type="checkbox" id="giveConsentCheckbox" ng-model="consentConfirmed">
-            <span message key="consent.confirmtext"></span>
+            <span dynamic-label key="consent.confirmtext"></span>
           </label>
         </p>
         <p>
           <button type="button" id="giveConsentButton" ng-click="giveConsent()" ng-disabled="!consentConfirmed" class="btn btn-primary">
             <i class="icon icon-lock-open"></i>
-            <span message key='consent.giveconsent'></span>
+            <span dynamic-label key='consent.giveconsent'></span>
           </button>
         </p>
       </div>
