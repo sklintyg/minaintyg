@@ -117,7 +117,7 @@
         ];
 
             function _fetchPuPersons() {
-                $http.get('/services/pu-api/person').success(function(data) {
+                $http.get('/services/api/pu-api/person').success(function(data) {
                     $scope.loginModel = _loginModel(data);
                     $scope.selectedIndex = '0';
                 }).error(function() {
