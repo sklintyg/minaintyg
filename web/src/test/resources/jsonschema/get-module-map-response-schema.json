@@ -31,6 +31,9 @@
       },
       "defaultRecipient": {
         "type": "string"
+      },
+      "deprecated": {
+        "type": "boolean"
       }
     },
     "additionalProperties": false,
