@@ -67,7 +67,7 @@ public class ApiController {
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(new Personnummer(citizen.getUsername()), false));
+                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), false));
     }
 
     @GET
@@ -76,7 +76,7 @@ public class ApiController {
     public List<CertificateMeta> listArchivedCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(new Personnummer(citizen.getUsername()), true));
+                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), true));
     }
 
     @GET
@@ -94,7 +94,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMeta(certificateService.archiveCertificate(id, new Personnummer(citizen.getUsername())));
+                .toCertificateMetaFromUtlatandeMeta(certificateService.archiveCertificate(id, createPnr(citizen.getUsername())));
     }
 
     @PUT
@@ -104,7 +104,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMeta(certificateService.restoreCertificate(id, new Personnummer(citizen.getUsername())));
+                .toCertificateMetaFromUtlatandeMeta(certificateService.restoreCertificate(id, createPnr(citizen.getUsername())));
     }
 
     /**
@@ -123,7 +123,7 @@ public class ApiController {
     public List<SendToRecipientResult> send(@PathParam("id") final String id, final List<String> recipients) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to recipients {}", id, recipients);
-        return certificateService.sendCertificate(new Personnummer(citizen.getUsername()), id, recipients);
+        return certificateService.sendCertificate(createPnr(citizen.getUsername()), id, recipients);
     }
 
     @POST
@@ -131,8 +131,9 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public ConsentResponse giveConsent() {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'giveConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
-        citizen.setConsent(consentService.setConsent(new Personnummer(citizen.getUsername())));
+        Personnummer pnr = createPnr(citizen.getUsername());
+        LOG.debug("Requesting 'giveConsent' for citizen {}", pnr.getPersonnummerHash());
+        citizen.setConsent(consentService.setConsent(pnr));
         return new ConsentResponse(true);
     }
 
@@ -141,8 +142,9 @@ public class ApiController {
     @Produces(JSON_UTF8)
     public ConsentResponse revokeConsent() {
         Citizen citizen = citizenService.getCitizen();
-        LOG.debug("Requesting 'revokeConsent' for citizen {}", new Personnummer(citizen.getUsername()).getPnrHash());
-        boolean revokedSuccessfully = consentService.revokeConsent(new Personnummer(citizen.getUsername()));
+        Personnummer pnr = createPnr(citizen.getUsername());
+        LOG.debug("Requesting 'revokeConsent' for citizen {}", pnr.getPersonnummerHash());
+        boolean revokedSuccessfully = consentService.revokeConsent(pnr);
         if (revokedSuccessfully) {
             citizen.setConsent(false);
         }
@@ -183,11 +185,16 @@ public class ApiController {
     public UserInfo getUser() {
         Citizen citizen = citizenService.getCitizen();
         if (citizen != null) {
-            return new UserInfo(citizen.getUsername(), citizen.getFullName(), citizen.getLoginMethod().name(),
+            return new UserInfo(citizen.getUsername(),
+                    citizen.getFullName(), citizen.getLoginMethod().name(),
                     citizen.isSekretessmarkering(), citizen.hasConsent());
         } else {
             throw new IllegalStateException("No citizen in securityContext");
         }
+    }
+
+    private Personnummer createPnr(String personId) {
+        return Personnummer.createValidatedPersonnummer(personId).orElse(null);
     }
 
 }

@@ -44,6 +44,9 @@ import static org.mockito.Mockito.when;
 public class VerifyConsentJAXRSInvokerTest {
 
     private static final String PERSON_FULL_NAME = "Tolvan Tolvansson";
+    private static final String PNR_TOLVAN = "19121212-1212";
+    private static final String PNR_OTHER = "20121212-1212";
+
 
     @Mock
     private CitizenService service;
@@ -51,12 +54,13 @@ public class VerifyConsentJAXRSInvokerTest {
     @Mock
     private ConsentService consentService;
 
+
     @InjectMocks
     private VerifyConsentJAXRSInvoker invoker;
 
     @Test
     public void testPrehandleNoConsentJson() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl(PNR_TOLVAN, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -67,7 +71,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleNoConsentMethodAllowedWithoutConsent() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl(PNR_TOLVAN, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
         Exchange exchange = mock(Exchange.class);
@@ -86,7 +90,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
-        Citizen citizen = new CitizenImpl("123456789", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
+        Citizen citizen = new CitizenImpl(PNR_TOLVAN, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);
 
@@ -112,10 +116,9 @@ public class VerifyConsentJAXRSInvokerTest {
     }
 
     @Test
-    public void testInvokeConsentNotKnown() throws Exception {
-        final String personId = "19121212-1212";
-        final Personnummer pnr = new Personnummer(personId);
-        Citizen citizen = new CitizenImpl(personId, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
+    public void testInvokeConsentUnknown() throws Exception {
+        final Personnummer pnr = Personnummer.createValidatedPersonnummer(PNR_OTHER).get();
+        Citizen citizen = new CitizenImpl(PNR_OTHER, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         when(service.getCitizen()).thenReturn(citizen);
         when(consentService.fetchConsent(pnr)).thenReturn(true);
 

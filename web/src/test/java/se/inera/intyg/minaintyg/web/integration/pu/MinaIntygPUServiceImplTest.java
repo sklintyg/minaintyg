@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 public class MinaIntygPUServiceImplTest {
 
     private static final String PERSON_ID = "19121212-1212";
-    private Personnummer pnr = new Personnummer(PERSON_ID);
+    private Personnummer pnr = Personnummer.createValidatedPersonnummer(PERSON_ID).get();
 
     @Mock
     private PUService puService;
@@ -52,7 +52,7 @@ public class MinaIntygPUServiceImplTest {
     public void testGetPersonOk() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.FOUND));
         Person person = testee.getPerson(PERSON_ID);
-        assertEquals(pnr.getPersonnummerWithoutDash(), person.getPersonnummer().getPersonnummerWithoutDash());
+        assertEquals(pnr.getPersonnummer(), person.getPersonnummer().getPersonnummer());
     }
 
     @Test(expected = PersonNotFoundException.class)

@@ -128,8 +128,11 @@ public class CertificateServiceImpl implements CertificateService {
         for (String recipientId : recipients) {
             LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
             try {
-                SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(certificateId,
-                        civicRegistrationNumber, new Personnummer(citizenService.getCitizen().getUsername()), recipientId);
+                SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(
+                        certificateId,
+                        civicRegistrationNumber,
+                        Personnummer.createValidatedPersonnummer(citizenService.getCitizen().getUsername()).get(),
+                        recipientId);
 
                 final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
@@ -165,7 +168,7 @@ public class CertificateServiceImpl implements CertificateService {
 
         Personnummer certificateCivicRegistrationNumber = certificate.getUtlatande().getGrundData().getPatient().getPersonId();
         if (!civicRegistrationNumber.equals(certificateCivicRegistrationNumber)) {
-            LOGGER.warn("Certificate {} does not match user {}", certificateId, civicRegistrationNumber.getPnrHash());
+            LOGGER.warn("Certificate {} does not match user {}", certificateId, civicRegistrationNumber.getPersonnummerHash());
             return Optional.empty();
         }
 
@@ -192,7 +195,7 @@ public class CertificateServiceImpl implements CertificateService {
             );
             return utlatandeMetaDataConverter.convert(intygList, intygRelations, arkiverade);
         default:
-            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPnrHash()
+            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPersonnummerHash()
                     + " from Intygstjänsten. WS call result is "
                     + response.getResult());
             throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),

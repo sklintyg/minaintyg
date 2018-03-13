@@ -18,19 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoggingSessionRegistryImplTest {
@@ -50,7 +46,7 @@ public class LoggingSessionRegistryImplTest {
         when(principal.getLoginMethod()).thenReturn(LoginMethodEnum.FK);
         loggingSessionRegistry.registerNewSession(sessionId, principal);
 
-        verify(monitoringService).logCitizenLogin(new Personnummer(personId), "FK");
+        verify(monitoringService).logCitizenLogin(createPnr(personId), "FK");
     }
 
     @Test
@@ -62,7 +58,7 @@ public class LoggingSessionRegistryImplTest {
         when(principal.getLoginMethod()).thenReturn(null);
         loggingSessionRegistry.registerNewSession(sessionId, principal);
 
-        verify(monitoringService).logCitizenLogin(new Personnummer(personId), null);
+        verify(monitoringService).logCitizenLogin(createPnr(personId), null);
     }
 
     @Test
@@ -84,7 +80,7 @@ public class LoggingSessionRegistryImplTest {
 
         loggingSessionRegistry.removeSessionInformation(sessionId);
 
-        verify(monitoringService).logCitizenLogout(new Personnummer(personId), "FK");
+        verify(monitoringService).logCitizenLogout(createPnr(personId), "FK");
     }
 
     @Test
@@ -98,7 +94,7 @@ public class LoggingSessionRegistryImplTest {
 
         loggingSessionRegistry.removeSessionInformation(sessionId);
 
-        verify(monitoringService).logCitizenLogout(new Personnummer(personId), null);
+        verify(monitoringService).logCitizenLogout(createPnr(personId), null);
     }
 
     @Test
@@ -117,4 +113,10 @@ public class LoggingSessionRegistryImplTest {
 
         verifyZeroInteractions(monitoringService);
     }
+
+    private Personnummer createPnr(String pnr) {
+        return Personnummer.createValidatedPersonnummer(pnr)
+                .orElseThrow(() -> new IllegalArgumentException("Could not parse passed personnummer: " + pnr));
+    }
+
 }

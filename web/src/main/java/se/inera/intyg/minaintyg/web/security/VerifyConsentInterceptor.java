@@ -18,19 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.service.ConsentService;
+import se.inera.intyg.schemas.contract.Personnummer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
@@ -57,7 +55,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
         LOG.debug("Login from " + citizen.getLoginMethod().toString());
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
-            boolean consentResult = consentService.fetchConsent(new Personnummer(citizen.getUsername()));
+            boolean consentResult = consentService.fetchConsent(createPnr(citizen.getUsername()));
             LOG.debug("Consent result is {}", consentResult);
             // set the consent result so that we don't have to fetch it next time around
             citizen.setConsent(consentResult);
@@ -65,7 +63,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
         // Check consent state of citizen
         if (!citizen.hasConsent()) {
-            LOG.warn("User: {} does not have consent", new Personnummer(citizen.getUsername()).getPnrHash());
+            LOG.warn("User: {} does not have consent", createPnr(citizen.getUsername()).getPersonnummerHash());
             response.sendRedirect("/web/visa-ge-samtycke#/consent");
             // return false to indicate that the request/filter chain should stop here.
             // We have already taken care of a respone to the client.
@@ -73,6 +71,10 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
         }
         // We have a consent, let the request continue processing
         return true;
+    }
+
+    private Personnummer createPnr(String personId) {
+        return Personnummer.createValidatedPersonnummer(personId).orElse(null);
     }
 
 }

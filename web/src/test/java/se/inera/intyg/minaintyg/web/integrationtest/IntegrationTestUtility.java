@@ -88,7 +88,7 @@ public final class IntegrationTestUtility {
         certificate.setCareUnitId("CareUnitId");
         certificate.setCareUnitName("CareUnitName");
         certificate.setSigningDoctorName("Singing Doctor");
-        certificate.setCivicRegistrationNumber(new Personnummer(personId));
+        certificate.setCivicRegistrationNumber(Personnummer.createValidatedPersonnummer(personId).get());
         certificate.setCertificateStates(new ArrayList<>());
         certificate.getCertificateStates().add(new CertificateStateHolder("HV", CertificateState.RECEIVED, LocalDateTime.now()));
         if (revoked) {

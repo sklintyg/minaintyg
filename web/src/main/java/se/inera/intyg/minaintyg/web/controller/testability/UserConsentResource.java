@@ -43,7 +43,7 @@ public class UserConsentResource {
     @Path("/consent/give/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response giveConsent(@PathParam("userId") String userId) {
-        boolean result = consentService.setConsent(new Personnummer(userId));
+        boolean result = consentService.setConsent(createPnr(userId));
         if (result) {
             return Response.ok().build();
         }
@@ -55,12 +55,16 @@ public class UserConsentResource {
     @Path("/consent/revoke/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response revokeConsent(@PathParam("userId") String userId) {
-        boolean result = consentService.revokeConsent(new Personnummer(userId));
+        boolean result = consentService.revokeConsent(createPnr(userId));
         if (result) {
             return Response.ok().build();
         }
 
         return Response.serverError().build();
+    }
+
+    private Personnummer createPnr(String personId) {
+        return Personnummer.createValidatedPersonnummer(personId).orElse(null);
     }
 
 }

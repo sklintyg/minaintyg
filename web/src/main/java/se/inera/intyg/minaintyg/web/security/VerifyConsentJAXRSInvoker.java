@@ -18,13 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.ws.rs.core.Response;
-
+import com.google.common.collect.ImmutableSet;
 import org.apache.cxf.jaxrs.JAXRSInvoker;
 import org.apache.cxf.jaxrs.model.OperationResourceInfo;
 import org.apache.cxf.message.Exchange;
@@ -32,12 +26,15 @@ import org.apache.cxf.message.MessageContentsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.ImmutableSet;
-
 import se.inera.intyg.minaintyg.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.service.ConsentService;
 import se.inera.intyg.schemas.contract.Personnummer;
+
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by orjan on 14-08-19(34).
@@ -69,7 +66,7 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
         LOG.debug("Login from {} consentIsKnown: {} ", citizen.getLoginMethod().toString(), citizen.consentIsKnown());
 
-        final Personnummer citizenPersonnummer = new Personnummer(citizen.getUsername());
+        final Personnummer citizenPersonnummer = Personnummer.createValidatedPersonnummer(citizen.getUsername()).get();
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
             boolean consentResult = consentService.fetchConsent(citizenPersonnummer);
@@ -93,7 +90,7 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
             if (ALLOWED_METHODS.contains(methodName)) {
                 LOG.debug("Allowing method {} without consent", methodName);
             } else {
-                LOG.error("User: {} does not have consent", citizenPersonnummer.getPnrHash());
+                LOG.error("User: {} does not have consent", citizenPersonnummer.getPersonnummerHash());
                 try {
                     return new MessageContentsList(Response.status(Response.Status.FORBIDDEN)
                             .contentLocation(new URI("\\web\\visa-ge-samtycke#\\consent")).build());
