@@ -109,8 +109,8 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 6a: Rekommendationer', function() {
-            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Nej');
-            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Nej');
+            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Ej angivet');
             expect(viewPage.getTextContent('rekommendationOvrigt')).toEqual('Ej angivet');
         });
 
@@ -186,7 +186,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 1: Smittskydd', function() {
-            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Nej');
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 2: Diagnoskod och -beskrivning', function() {

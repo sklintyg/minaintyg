@@ -163,11 +163,11 @@ describe('Verifiera Lisjp', function() {
 
             expect(viewPage.showsNoValue('forsakringsmedicinsktBeslutsstod')).toBeTruthy();
 
-            expect(viewPage.getTextContent('arbetstidsforlaggning')).toEqual('Nej');
+            expect(viewPage.getTextContent('arbetstidsforlaggning')).toEqual('Ej angivet');
 
             expect(viewPage.showsNoValue('arbetstidsforlaggningMotivering')).toBeTruthy();
 
-            expect(viewPage.getTextContent('arbetsresor')).toEqual('Nej');
+            expect(viewPage.getTextContent('arbetsresor')).toEqual('Ej angivet');
 
             expect(viewPage.showsNoValue('prognos')).toBeTruthy();
 
@@ -207,7 +207,7 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera smittbärarpenning är Nej', function() {
             expect(viewPage.getDynamicLabelText('KAT_10.RBK')).toBe(texts['KAT_10.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_27.RBK')).toBe(texts['FRG_27.RBK']);
-            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Nej');
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ej angivet');
         });
 
         it('Verifiera att frågor under grund för medicinskt underlag är angivet', function() {
