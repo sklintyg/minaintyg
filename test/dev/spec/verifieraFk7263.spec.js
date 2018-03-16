@@ -145,7 +145,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 12: Kontakt önskas med FK', function() {
-            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Nej');
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 13: Övriga upplysningar', function() {
