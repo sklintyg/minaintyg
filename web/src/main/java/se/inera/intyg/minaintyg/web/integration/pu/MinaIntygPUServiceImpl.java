@@ -43,7 +43,7 @@ public class MinaIntygPUServiceImpl implements MinaIntygPUService {
 
     @Override
     public Person getPerson(String personId) {
-        Personnummer pnr = Personnummer.createValidatedPersonnummer(personId).get();
+        Personnummer pnr = Personnummer.createPersonnummer(personId).get();
         PersonSvar personSvar = puService.getPerson(pnr);
         if (personSvar.getStatus() == PersonSvar.Status.FOUND) {
             return personSvar.getPerson();

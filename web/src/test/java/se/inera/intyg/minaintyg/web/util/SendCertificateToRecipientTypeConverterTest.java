@@ -29,8 +29,8 @@ public class SendCertificateToRecipientTypeConverterTest {
 
     private final String intygsId = "intygsId";
 
-    private final Personnummer pnrPatient = Personnummer.createValidatedPersonnummer("19121212-1212").get();
-    private final Personnummer pnrSkickatAv = Personnummer.createValidatedPersonnummer("19101010-1010").get();
+    private final Personnummer pnrPatient = Personnummer.createPersonnummer("19121212-1212").get();
+    private final Personnummer pnrSkickatAv = Personnummer.createPersonnummer("19101010-1010").get();
 
 
     @Test

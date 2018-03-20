@@ -61,7 +61,7 @@ import static org.mockito.Mockito.when;
 public class ApiControllerTest {
 
     private static final String CIVIC_REGISTRATION_NUMBER = "19121212-1212";
-    private static final Personnummer PNR = Personnummer.createValidatedPersonnummer(CIVIC_REGISTRATION_NUMBER).get();
+    private static final Personnummer PNR = Personnummer.createPersonnummer(CIVIC_REGISTRATION_NUMBER).get();
     private static final String FKASSA_RECIPIENT_ID = "FKASSA";
     private static final String TRANSP_RECIPIENT_ID = "TRANSP";
     private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;

@@ -131,7 +131,7 @@ public class CertificateServiceImpl implements CertificateService {
                 SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(
                         certificateId,
                         civicRegistrationNumber,
-                        Personnummer.createValidatedPersonnummer(citizenService.getCitizen().getUsername()).get(),
+                        Personnummer.createPersonnummer(citizenService.getCitizen().getUsername()).get(),
                         recipientId);
 
                 final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);

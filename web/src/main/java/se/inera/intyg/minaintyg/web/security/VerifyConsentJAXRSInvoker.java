@@ -66,7 +66,7 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
         LOG.debug("Login from {} consentIsKnown: {} ", citizen.getLoginMethod().toString(), citizen.consentIsKnown());
 
-        final Personnummer citizenPersonnummer = Personnummer.createValidatedPersonnummer(citizen.getUsername()).get();
+        final Personnummer citizenPersonnummer = Personnummer.createPersonnummer(citizen.getUsername()).get();
         if (!citizen.consentIsKnown()) {
             LOG.debug("State of consent not known - fetching consent status...");
             boolean consentResult = consentService.fetchConsent(citizenPersonnummer);

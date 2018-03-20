@@ -66,7 +66,7 @@ public class PageController {
     public String sso() {
         LOG.debug("sso");
         Citizen citizen = citizenService.getCitizen();
-        Personnummer personnummer = Personnummer.createValidatedPersonnummer(citizen.getUsername()).get();
+        Personnummer personnummer = Personnummer.createPersonnummer(citizen.getUsername()).get();
 
         // fetch and set consent status
         citizen.setConsent(consentService.fetchConsent(personnummer));

@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ConsentServiceImplTest {
 
-    private final Personnummer pnr = Personnummer.createValidatedPersonnummer("20121212-1212").get();
+    private final Personnummer pnr = Personnummer.createPersonnummer("20121212-1212").get();
 
     @Mock
     private GetConsentResponderInterface getConsent = mock(GetConsentResponderInterface.class);

@@ -213,7 +213,7 @@ public abstract class ModuleApiControllerTest {
     }
 
     private Personnummer createPnr() {
-        return Personnummer.createValidatedPersonnummer(personnummer)
+        return Personnummer.createPersonnummer(personnummer)
                 .orElseThrow(() -> new IllegalArgumentException("Could not parse passed personnummer: " + personnummer));
     }
 

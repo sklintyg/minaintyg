@@ -204,7 +204,7 @@ public class ModuleApiController {
     }
 
     private Personnummer createPnr(String personId) {
-        return Personnummer.createValidatedPersonnummer(personId).orElse(null);
+        return Personnummer.createPersonnummer(personId).orElse(null);
     }
 
 }

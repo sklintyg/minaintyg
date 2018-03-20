@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 public class MinaIntygPUServiceImplTest {
 
     private static final String PERSON_ID = "19121212-1212";
-    private Personnummer pnr = Personnummer.createValidatedPersonnummer(PERSON_ID).get();
+    private Personnummer pnr = Personnummer.createPersonnummer(PERSON_ID).get();
 
     @Mock
     private PUService puService;

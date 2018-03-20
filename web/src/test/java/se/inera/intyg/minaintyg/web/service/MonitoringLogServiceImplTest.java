@@ -41,7 +41,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
 
-    private static final Personnummer USER_ID = Personnummer.createValidatedPersonnummer("20121212-1212").get();
+    private static final Personnummer USER_ID = Personnummer.createPersonnummer("20121212-1212").get();
 
     private static final String LOGIN_METHOD = "LOGIN_METHOD";
     private static final String CERTIFICATE_ID = "CERTIFICATE_ID";

@@ -117,7 +117,7 @@ public class VerifyConsentJAXRSInvokerTest {
 
     @Test
     public void testInvokeConsentUnknown() throws Exception {
-        final Personnummer pnr = Personnummer.createValidatedPersonnummer(PNR_OTHER).get();
+        final Personnummer pnr = Personnummer.createPersonnummer(PNR_OTHER).get();
         Citizen citizen = new CitizenImpl(PNR_OTHER, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         when(service.getCitizen()).thenReturn(citizen);
         when(consentService.fetchConsent(pnr)).thenReturn(true);
