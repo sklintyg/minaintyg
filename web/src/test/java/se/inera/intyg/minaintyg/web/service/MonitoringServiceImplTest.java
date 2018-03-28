@@ -18,30 +18,30 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.xml.ws.WebServiceException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.session.SessionRegistry;
-
 import se.inera.intyg.minaintyg.web.service.dto.HealthStatus;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
+
+import javax.xml.ws.WebServiceException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.AdditionalMatchers.or;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringServiceImplTest {
@@ -57,7 +57,10 @@ public class MonitoringServiceImplTest {
 
     @Test
     public void testCheckIntygstjanst() {
-        when(intygstjanstPingForConfiguration.pingForConfiguration(anyString(), any(PingForConfigurationType.class))).thenReturn(new PingForConfigurationResponseType());
+        when(intygstjanstPingForConfiguration.pingForConfiguration(
+                or(isNull(), anyString()),
+                any(PingForConfigurationType.class))
+        ).thenReturn(new PingForConfigurationResponseType());
 
         HealthStatus res = service.checkIntygstjanst();
 
@@ -68,7 +71,10 @@ public class MonitoringServiceImplTest {
 
     @Test
     public void testCheckIntygstjanstNoResponse() {
-        when(intygstjanstPingForConfiguration.pingForConfiguration(anyString(), any(PingForConfigurationType.class))).thenReturn(null);
+        when(intygstjanstPingForConfiguration.pingForConfiguration(
+                or(isNull(), anyString()),
+                any(PingForConfigurationType.class))
+        ).thenReturn(null);
 
         HealthStatus res = service.checkIntygstjanst();
 
@@ -79,7 +85,10 @@ public class MonitoringServiceImplTest {
 
     @Test
     public void testCheckIntygstjanstException() {
-        when(intygstjanstPingForConfiguration.pingForConfiguration(anyString(), any(PingForConfigurationType.class))).thenThrow(new WebServiceException());
+        when(intygstjanstPingForConfiguration.pingForConfiguration(
+                or(isNull(), anyString()),
+                any(PingForConfigurationType.class))
+        ).thenThrow(new WebServiceException());
 
         HealthStatus res = service.checkIntygstjanst();
 

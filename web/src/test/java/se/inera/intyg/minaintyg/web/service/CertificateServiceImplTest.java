@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.cxf.binding.soap.SoapFault;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
@@ -86,10 +87,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.AdditionalMatchers.or;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -274,7 +277,10 @@ public class CertificateServiceImplTest {
         response.getIntygsLista().getIntyg().add(buildIntyg());
         response.setResult(ResultTypeUtil.okResult());
 
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response);
 
         service.getCertificates(createPnr(pnr), false);
 
@@ -285,7 +291,7 @@ public class CertificateServiceImplTest {
         assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
 
         ArgumentCaptor<ListCertificatesForCitizenType> paramCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
-        verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
+        verify(listServiceMock).listCertificatesForCitizen(isNull(), paramCaptor.capture());
         assertFalse(paramCaptor.getValue().isArkiverade());
         assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
         assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
@@ -300,7 +306,10 @@ public class CertificateServiceImplTest {
         response.getIntygsLista().getIntyg().add(buildIntyg());
         response.setResult(ResultTypeUtil.okResult());
 
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response);
 
         service.getCertificates(createPnr(pnr), true);
 
@@ -311,7 +320,7 @@ public class CertificateServiceImplTest {
         assertEquals(CERTIFICATE_ID, ((Intyg) listCaptor.getValue().get(0)).getIntygsId().getExtension());
 
         ArgumentCaptor<ListCertificatesForCitizenType> paramCaptor = ArgumentCaptor.forClass(ListCertificatesForCitizenType.class);
-        verify(listServiceMock).listCertificatesForCitizen(anyString(), paramCaptor.capture());
+        verify(listServiceMock).listCertificatesForCitizen(or(isNull(), anyString()), paramCaptor.capture());
         assertTrue(paramCaptor.getValue().isArkiverade());
         assertNotNull(paramCaptor.getValue().getPersonId().getRoot());
         assertEquals(pnr.replace("-", ""), paramCaptor.getValue().getPersonId().getExtension());
@@ -323,7 +332,10 @@ public class CertificateServiceImplTest {
         response.setResult(ResultTypeUtil
                 .errorResult(se.riv.clinicalprocess.healthcond.certificate.v3.ErrorIdType.APPLICATION_ERROR, "an error"));
 
-        when(listServiceMock.listCertificatesForCitizen(any(String.class), any(ListCertificatesForCitizenType.class))).thenReturn(response);
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response);
 
         service.getCertificates(createPnr("19121212-1212"), false);
     }
@@ -367,16 +379,24 @@ public class CertificateServiceImplTest {
 
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
         response.setResult(ResultTypeUtil.okResult());
-        when(setCertificateStatusService.setCertificateStatus(anyString(), any(SetCertificateStatusType.class)))
-                .thenReturn(response);
+
+        when(setCertificateStatusService.setCertificateStatus(
+                or(isNull(), anyString()),
+                any(SetCertificateStatusType.class))
+        ).thenReturn(response);
 
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType());
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response2);
+
         UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, new ArrayList<>());
-        when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(false))).thenReturn(Arrays.asList(umd));
+        when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(false))).thenReturn(ImmutableList.of(umd));
 
         UtlatandeMetaData result = service.archiveCertificate(CERTIFICATE_ID, createPnr(pnr));
         assertEquals(CERTIFICATE_ID, result.getId());
@@ -401,16 +421,24 @@ public class CertificateServiceImplTest {
 
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "error"));
-        when(setCertificateStatusService.setCertificateStatus(anyString(), any(SetCertificateStatusType.class)))
-                .thenReturn(response);
+
+        when(setCertificateStatusService.setCertificateStatus(
+                or(isNull(), anyString()),
+                any(SetCertificateStatusType.class))
+        ).thenReturn(response);
 
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType());
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response2);
+
         UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
-        when(utlatandeMetaDataConverter.convert(any(List.class), any(List.class), eq(false))).thenReturn(Arrays.asList(umd));
+        when(utlatandeMetaDataConverter.convert(any(List.class), any(List.class), eq(false))).thenReturn(ImmutableList.of(umd));
 
         service.archiveCertificate(CERTIFICATE_ID, createPnr(pnr));
     }
@@ -421,12 +449,15 @@ public class CertificateServiceImplTest {
 
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
         response.setResult(ResultTypeUtil.okResult());
-        when(setCertificateStatusService.setCertificateStatus(anyString(), any(SetCertificateStatusType.class)))
-        .thenReturn(response);
+
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType()); // no certificates
         response2.setResult(ResultTypeUtil.okResult());
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response2);
 
         try {
             service.archiveCertificate(CERTIFICATE_ID, createPnr(pnr));
@@ -435,7 +466,7 @@ public class CertificateServiceImplTest {
             assertTrue(e.getMessage().contains("Invalid certificate"));
         }
 
-        verify(setCertificateStatusService, never()).setCertificateStatus(anyString(), any(SetCertificateStatusType.class));
+        verify(setCertificateStatusService, never()).setCertificateStatus(isNull(), any(SetCertificateStatusType.class));
     }
 
     @SuppressWarnings("unchecked")
@@ -445,13 +476,22 @@ public class CertificateServiceImplTest {
 
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
         response.setResult(ResultTypeUtil.okResult());
-        when(setCertificateStatusService.setCertificateStatus(anyString(), any(SetCertificateStatusType.class)))
-                .thenReturn(response);
+
+        when(setCertificateStatusService.setCertificateStatus(
+                or(isNull(), anyString()),
+                any(SetCertificateStatusType.class))
+        ).thenReturn(response);
+
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType());
         response2.getIntygsLista().getIntyg().add(buildIntyg());
         response2.setResult(ResultTypeUtil.okResult());
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response2);
+
         UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
         when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(true))).thenReturn(Arrays.asList(umd));
 
@@ -478,12 +518,15 @@ public class CertificateServiceImplTest {
 
         SetCertificateStatusResponseType response = new SetCertificateStatusResponseType();
         response.setResult(ResultTypeUtil.okResult());
-        when(setCertificateStatusService.setCertificateStatus(anyString(), any(SetCertificateStatusType.class)))
-        .thenReturn(response);
+
         ListCertificatesForCitizenResponseType response2 = new ListCertificatesForCitizenResponseType();
         response2.setIntygsLista(new ListaType()); // no certificates
         response2.setResult(ResultTypeUtil.okResult());
-        when(listServiceMock.listCertificatesForCitizen(anyString(), any(ListCertificatesForCitizenType.class))).thenReturn(response2);
+
+        when(listServiceMock.listCertificatesForCitizen(
+                or(isNull(), anyString()),
+                any(ListCertificatesForCitizenType.class))
+        ).thenReturn(response2);
 
         try {
             service.restoreCertificate(CERTIFICATE_ID, createPnr(pnr));
@@ -572,19 +615,14 @@ public class CertificateServiceImplTest {
 
     @Test
     public void testSendCertificateHandlesValidationError() {
-        /* Given */
         SendCertificateToRecipientResponseType response = new SendCertificateToRecipientResponseType();
         response.setResult(ResultTypeUtil.errorResult(
                 se.riv.clinicalprocess.healthcond.certificate.v3.ErrorIdType.VALIDATION_ERROR, "validation error"));
 
-        /* When */
-        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class))).thenReturn(response);
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
-        /* Then */
         final List<SendToRecipientResult> apiResponse = service.sendCertificate(createPnr("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
 
-        /* Verify */
         SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
                 .findFirst().get();
         assertFalse(fkResult.isSent());
@@ -593,15 +631,8 @@ public class CertificateServiceImplTest {
     @Test
     public void testSendCertificateHandlesSoapFault() {
 
-        /* When */
-        when(sendServiceMock.sendCertificateToRecipient(any(String.class), any(SendCertificateToRecipientType.class)))
-                .thenThrow(new SoapFault("server error", new QName("")));
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
-
-        /* Then */
         final List<SendToRecipientResult> apiResponse = service.sendCertificate(createPnr("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
-
-         /* Verify */
         SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
                 .findFirst().get();
         assertFalse(fkResult.isSent());

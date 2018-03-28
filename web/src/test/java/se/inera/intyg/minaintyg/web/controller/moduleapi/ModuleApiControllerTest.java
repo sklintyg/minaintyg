@@ -43,9 +43,9 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.refEq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -77,10 +77,6 @@ public abstract class ModuleApiControllerTest {
     @InjectMocks
     private ModuleApiController moduleApiController = new ModuleApiController();
 
-
-
-    // - - - Setters - - -
-
     public void setPersonnummer(String personnummer) {
         this.personnummer = personnummer;
     }
@@ -93,14 +89,10 @@ public abstract class ModuleApiControllerTest {
         this.certificateType = certificateType;
     }
 
-
-    // - - - Test cases - - -
-
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificate() throws Exception {
         when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
-        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -114,7 +106,6 @@ public abstract class ModuleApiControllerTest {
     @Test
     public void testGetRevokedCertificate() throws Exception {
         when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
-        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -193,8 +184,6 @@ public abstract class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingIntygstjanst() {
-        Response certificateResponse = mock(Response.class);
-        when(certificateResponse.getStatus()).thenReturn(Response.Status.FORBIDDEN.getStatusCode());
         when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.empty());
 
         Citizen citizen = mockCitizen();
