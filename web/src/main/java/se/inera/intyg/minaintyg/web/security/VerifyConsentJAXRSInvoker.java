@@ -18,23 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import com.google.common.collect.ImmutableSet;
+import javax.ws.rs.core.Response;
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.apache.cxf.jaxrs.JAXRSInvoker;
-import org.apache.cxf.jaxrs.model.OperationResourceInfo;
 import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.MessageContentsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.minaintyg.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.service.ConsentService;
-import se.inera.intyg.schemas.contract.Personnummer;
 
-import javax.ws.rs.core.Response;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.concurrent.atomic.AtomicLong;
+import se.inera.intyg.minaintyg.web.service.CitizenService;
 
 /**
  * Created by orjan on 14-08-19(34).
@@ -42,11 +36,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentJAXRSInvoker.class);
-    private static final ImmutableSet<String> ALLOWED_METHODS = ImmutableSet.of("getModulesMap", "getUser", "onbeforeunload",
-            "giveConsent");
 
-    @Autowired
-    private ConsentService consentService;
 
     @Autowired
     private CitizenService citizenService;
@@ -66,39 +56,6 @@ public class VerifyConsentJAXRSInvoker extends JAXRSInvoker {
 
         LOG.debug("Login from {} consentIsKnown: {} ", citizen.getLoginMethod().toString(), citizen.consentIsKnown());
 
-        final Personnummer citizenPersonnummer = Personnummer.createPersonnummer(citizen.getUsername()).get();
-        if (!citizen.consentIsKnown()) {
-            LOG.debug("State of consent not known - fetching consent status...");
-            boolean consentResult = consentService.fetchConsent(citizenPersonnummer);
-            LOG.debug("Consent result is {}", consentResult);
-            // set the consent result so that we don't have to fetch it next tinime around
-            citizen.setConsent(consentResult);
-        }
-
-        // Check consent state of citizen
-        if (!citizen.hasConsent()) {
-            final String methodName;
-            if (exchange != null) {
-                OperationResourceInfo ori = exchange.get(OperationResourceInfo.class);
-                Method m = ori.getMethodToInvoke();
-                LOG.debug("Method called is {} ", m.getName());
-                methodName = m.getName();
-            } else {
-                methodName = "";
-            }
-
-            if (ALLOWED_METHODS.contains(methodName)) {
-                LOG.debug("Allowing method {} without consent", methodName);
-            } else {
-                LOG.error("User: {} does not have consent", citizenPersonnummer.getPersonnummerHash());
-                try {
-                    return new MessageContentsList(Response.status(Response.Status.FORBIDDEN)
-                            .contentLocation(new URI("\\web\\visa-ge-samtycke#\\consent")).build());
-                } catch (URISyntaxException e) {
-                    return new MessageContentsList(Response.status(Response.Status.FORBIDDEN).build());
-                }
-            }
-        }
         // We have a consent, let the request continue processing
         consentCounter.incrementAndGet();
 
