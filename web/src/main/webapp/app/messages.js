@@ -111,9 +111,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'info.loggedout.fk.title': 'Du är utloggad ur Mina intyg',
         'info.loggedout.fk.text': 'Stäng detta webbfönster för att fortsätta till Försäkringskassans Mina sidor.',
 
-        /* ABOUT */
-        'about.dina.rattigheter': '<h3>Dina rättigheter</h3><p> Som användare av tjänsten Mina intyg har du bland annat rätt att: <ul> <li>varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB.</li> <li>när som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system  med stöd av patientdatalagen).</li><li>begära att tredje man till vilka personuppgifter lämnats ut underrättas om personuppgifter som rättats, blockerats eller utplånats. Någon sådan underrättelse behöver dock inte lämnas om detta visar sig vara omöjligt eller skulle innebära en oproportionerligt hög arbetsinsats.</li><li>kräva skadestånd enligt <LINK:pul48> vid behandling av personuppgifter i strid med lag.</li></ul></p>',
-
         /* HELP */
 
         // FAQ
