@@ -177,8 +177,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'error.certarchived': '<p>Intyget är arkiverat och kan därför inte visas. Återställ intyget till inkorgen för att kunna läsa det.</p>',
         'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
         'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
-        'error.modal.couldnotrevokeconsent': '<p>Det gick inte att återta ditt samtycke för tillfället. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt></p>',
-        'error.modal.couldnotgiveconsent': '<p>Ditt samtycke kunde inte registreras för tillfället. Det innebär att du inte kan börja använda tjänsten Mina intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
         'error.generic': '<p>Tekniskt fel</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p><a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
         'error.modal.btn.back-to-inkorg': 'Tillbaka till Inkorgen',
         'error.modal.btn.back-to-archive-cert': 'Tillbaka till Arkiverade intyg',

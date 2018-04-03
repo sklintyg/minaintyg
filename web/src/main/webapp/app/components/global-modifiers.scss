@@ -56,3 +56,19 @@ body {
 .flex-row.row:before {
   display: flex;
 }
+
+.page-title {
+  padding-top: 40px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0 0 0;
+  padding-bottom: 20px;
+}
+
+.alert {
+  padding: 15px 20px 15px 20px;
+  border-radius: 2px;
+}
