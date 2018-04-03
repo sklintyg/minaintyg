@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $state, MIUser) {
+angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $state) {
     'use strict';
 
     return {
@@ -43,7 +43,7 @@ angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $
                 return (page === currentRootState) ? 'active' : '';
             };
             $scope.showMenu = function(){
-                return MIUser.consentGiven && $state.current.name!=='index';
+                return $state.current.name !== 'index';
             };
         },
         templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'

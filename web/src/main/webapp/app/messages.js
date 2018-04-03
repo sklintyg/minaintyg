@@ -31,19 +31,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'button.show.tooltip': 'Läs och hantera ditt intyg.',
         'button.goback': 'Tillbaka',
 
-        /* CONSENT */
-
-        'consent.info': 'Innan du kan använda tjänsten Mina intyg måste du ge ditt samtycke till att dina intyg får hanteras och visas där. Läs igenom texten och ge ditt samtycke längst ner på denna sida. Sedan kan du direkt börja använda Mina intyg.',
-        'consent.aboutheader': 'Om tjänsten Mina intyg',
-        'consent.abouttext': 'Mina intyg är en webbtjänst där du enkelt kan hantera olika intyg som hälso- och sjukvården utfärdat till dig. Du kan läsa intygen, spara ner dem på din dator och skriva ut dem. Du kan även välja att skicka intygen vidare till de mottagare som är anslutna till Mina intyg, till exempel Försäkringskassan och Transportstyrelsen. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.',
-
-
-        'consent.confirmtext': 'Jag har läst och förstått ovanstående och lämnar mitt samtycke till hantering av mina personuppgifter i Mina intyg.',
-        'consent.giveconsent': 'Jag ger mitt samtycke',
-        'consent.continue': 'Fortsätt',
-        'consent.givenhead': 'Du har nu gett samtycke - välj hur du vill fortsätta',
-        'consent.giventext': '<h2>Kom du ifrån annan aktör än 1177 Vårdguiden? (tex Försäkringskassan)</h2> <p>Du kan nu börja bifoga intyg hos din aktör och <strong>stänga detta fönster.</strong></p> <p><span style="font-style:italic">Exempel:</span> För att bifoga ditt intyg till ett ärende i Försäkringskassans Mina sidor behöver du endast ge ditt samtycke, vilket du gjorde på föregående sida. Därför behöver du inte gå vidare till tjänsten Mina intyg utan kan stänga detta fönster.</p> <h2>Kom du till Mina intyg ifrån 1177 Vårdguiden?</h2> <p>Om du kom till Mina intyg från 1177 Vårdguiden, <strong>välj fortsätt</strong>.</p>',
-
         /* NAVIGATION */
 
         'nav.label.inbox': 'Inkorgen',
@@ -125,14 +112,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'info.loggedout.fk.text': 'Stäng detta webbfönster för att fortsätta till Försäkringskassans Mina sidor.',
 
         /* ABOUT */
-
-        'about.revokeconsent.button.label': 'Återta samtycke',
-        'about.revokemodal.header': 'Du har angett att du vill återta ditt samtycke',
-        'about.revokemodal.text': 'När du återtar samtycke innebär det att du inte längre kan använda tjänsten. Du kan när som helst aktivera tjänsten igen genom att lämna ett nytt samtycke.',
-
         'about.dina.rattigheter': '<h3>Dina rättigheter</h3><p> Som användare av tjänsten Mina intyg har du bland annat rätt att: <ul> <li>varje år begära kostnadsfri information om hur dina personuppgifter behandlas av Inera AB.</li> <li>när som helst begära att dina uppgifter rättas, blockeras eller utplånas om sådana uppgifter är felaktiga eller inte har behandlats i enlighet med personuppgiftslagen (detta hindrar dock inte din vårdgivare från att fortsätta behandla uppgifterna i sina system  med stöd av patientdatalagen).</li><li>begära att tredje man till vilka personuppgifter lämnats ut underrättas om personuppgifter som rättats, blockerats eller utplånats. Någon sådan underrättelse behöver dock inte lämnas om detta visar sig vara omöjligt eller skulle innebära en oproportionerligt hög arbetsinsats.</li><li>kräva skadestånd enligt <LINK:pul48> vid behandling av personuppgifter i strid med lag.</li></ul></p>',
-        'about.ge.aterta.samtycke': '<h3>Ge och återta samtycke</h3><p>När du ger ditt samtycke godkänner du att personuppgifterna som finns i intygen får lagras i en lagringstjänst kopplad till Mina intyg samt hanteras och visas i Mina intyg.</p><p>Du kan när som helst återta samtycket. Det innebär att de kopior av dina intyg som vården lämnat ut till Mina intyg    kommer att raderas, uppgifterna om dig kommer inte längre att visas eller på annat sätt behandlas i Mina intyg. När du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.</p>',
-        'about.samtycke.om.tjansten': '<h3>Om tjänsten Mina Intyg</h3><p>Mina intyg är en webbtjänst där du enkelt kan hantera intyg utfärdade av hälso- och sjukvården. Det är du själv som styr över allt som händer med intygen. All information är skyddad (krypterad) och uppfyller vårdens krav på säkerhet och sekretess.</p>',
 
         /* HELP */
 
@@ -145,13 +125,6 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'faq.intyg.3.body' : 'Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att Försäkringskassan har begärt en komplettering och vården har svarat med ett nytt intyg med de kompletterande uppgifterna. På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.',
         'faq.intyg.4.title' : 'Varför kan jag inte se makulerade intyg?',
         'faq.intyg.4.body' : 'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient. Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.',
-
-        'faq.samtycke.1.title' : 'Varför måste jag ge samtycke?',
-        'faq.samtycke.1.body': 'För att kunna använda Mina intyg måste du först lämna ditt samtycke till att dina intyg får lagras i en lagringstjänst kopplad till Mina intyg, samt visas och hanteras i Mina intyg. Utan ditt samtycke till att dina personuppgifter i intygen hanteras i Mina intyg kan tjänsten inte användas.',
-        'faq.samtycke.2.title' : 'Vad innebär samtycke?',
-        'faq.samtycke.2.body': 'Läs mer om samtycke till att använda Mina intyg <a href="#/omminaintyg/samtycke">här.</a>',
-        'faq.samtycke.3.title' : 'Kan jag ta tillbaka mitt samtycke?',
-        'faq.samtycke.3.body': 'Du kan när som helst återta ditt samtycke. Det innebär att uppgifterna om dig inte längre kommer att visas eller på annat sätt behandlas i Mina intyg. Om du återtar ditt samtycke kan du inte längre använda Mina intyg. Däremot kan du när som helst återaktivera tjänsten genom att lämna ett nytt samtycke.',
 
         'faq.sakerhet.1.title' : 'Är det säkert att använda Mina intyg?',
         'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
