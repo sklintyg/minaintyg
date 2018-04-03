@@ -30,12 +30,6 @@ module.exports = {
         debug(createJson);
         return restUtil.createIntyg(createJson);
     },
-    setConsent: function(userId) {
-        return restUtil.setConsent(userId || '191212121212');
-    },
-    deleteConsent: function(userId) {
-        return restUtil.deleteConsent(userId || '191212121212');
-    },
     deleteIntyg: function(id) {
         return restUtil.deleteIntyg(id);
     },

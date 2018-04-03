@@ -39,28 +39,8 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         specHelper.waitForAngularTestability();
         return isAt._super.call(this);
     },
-    viewConsent: function() {
-        element(by.id('link-about-samtycke')).click();
-    },
     aboutMinaIntygIsDisplayed: function() {
         return element(by.id('about-content-omminaintyg')).isDisplayed();
-    },
-    aboutConsentIsDisplayed: function() {
-        return element(by.id('about-content-samtycke')).isDisplayed();
-    },
-    revokeConsent: function() {
-        element(by.id('revokeConsentBtn')).click();
-    },
-    confirmRevokeConsent: function() {
-        element(by.id('revoke-consent-button')).click();
-
-        // Wait for page reload
-        specHelper.waitForUrlPattern('/.*web\/visa-ge-samtycke#\/consent');
-        specHelper.waitForAngularTestability();
-
-    },
-    revokeConsentDialogIsDisplayed: function() {
-        return element(by.id('revoke-consent-confirmation-dialog')).isDisplayed();
     }
 });
 

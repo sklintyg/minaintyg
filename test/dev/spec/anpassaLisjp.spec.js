@@ -42,19 +42,12 @@ describe('Anpassa lisjp intyg för utskrift till arbetsgivare', function() {
         // Rensa alla intyg för tolvan
         restHelper.deleteAllIntygForCitizen(personId);
 
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
-
         var intyg = genericTestdataBuilder.getLisjp();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
-
-        // Just set the consent, don't need to test it in every protractor test
-        restHelper.setConsent(personId);
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 

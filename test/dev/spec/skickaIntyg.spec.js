@@ -40,8 +40,6 @@ describe('Skicka intyg', function() {
 	var intygsId2 = null;
 
     beforeAll(function() {
-        restHelper.setConsent(personId);
-
         var intyg1 = genericTestDataBuilder.getLisjpSmittskydd();
         var intyg2 = genericTestDataBuilder.getLisjpSmittskydd();
         intygsId1 = intyg1.id;
@@ -51,7 +49,6 @@ describe('Skicka intyg', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
     });

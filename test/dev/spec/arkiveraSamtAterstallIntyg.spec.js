@@ -40,9 +40,6 @@ describe('Arkivera samt återställ intyg', function() {
 	var tsDiabetesIntygsId = null;
 
     beforeAll(function() {
-        // Givet samtycke
-        restHelper.setConsent(personId);
-
         var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
         fk7263IntygsId = fk7263Intyg.id;
         restHelper.createIntyg(fk7263Intyg);
@@ -57,7 +54,6 @@ describe('Arkivera samt återställ intyg', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(fk7263IntygsId);
         restHelper.deleteIntyg(tsBasIntygsId);
         restHelper.deleteIntyg(tsDiabetesIntygsId);

@@ -33,15 +33,6 @@ describe('Undantagshantering', function() {
 
 	var personId = '19010101-0101';
 
-    beforeAll(function() {
-        // Givet samtycke
-        restHelper.setConsent(personId);
-    });
-
-    afterAll(function() {
-        restHelper.deleteConsent(personId);
-    });
-
     describe('Sidan hittades ej', function() {
 
         beforeEach(function() {

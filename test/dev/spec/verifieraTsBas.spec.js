@@ -37,15 +37,12 @@ describe('Visa intyg ts-bas', function() {
     var intygsId = null;
 
     beforeAll(function() {
-        restHelper.setConsent(personId);
-
         var tsBasIntyg = genericTestDataBuilder.getTsBas(personId);
         intygsId = tsBasIntyg.id;
         restHelper.createIntyg(tsBasIntyg);
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 
