@@ -62,15 +62,11 @@ describe('Verifiera Lisjp', function() {
         restHelper.deleteIntyg(intygsId2);
     });
 
-    describe('Logga in', function() {
-        // Logga in
-        it('Logga in och ge samtycke', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
+    it('Logga in', function() {
+        welcomePage.get();
+        specHelper.waitForAngularTestability();
+        welcomePage.login();
+        specHelper.waitForAngularTestability();
     });
 
     describe('Kontrollera att bägge intygen finns i intygslistan', function() {
