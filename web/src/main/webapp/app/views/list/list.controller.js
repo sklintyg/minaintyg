@@ -18,10 +18,10 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListCtrl',
-    [ '$cookies', '$location', '$state', '$log', '$rootScope', '$scope', '$window', '$filter', 'common.IntygListService',
-        'common.dialogService', 'common.messageService', 'common.moduleService', 'MIUser',
-        function($cookies, $location, $state, $log, $rootScope, $scope, $window, $filter, IntygListService, dialogService,
-            messageService, moduleService, MIUser) {
+    [ '$location', '$log', '$rootScope', '$scope', '$filter', 'common.IntygListService', 'common.dialogService',
+        'common.messageService', 'common.moduleService',
+        function($location, $log, $rootScope, $scope, $filter, IntygListService, dialogService,
+            messageService, moduleService) {
             'use strict';
 
 
@@ -94,37 +94,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     button1tooltip: messageService.getProperty('button.modal.archive.tooltip'),
                     autoClose: false
                 });
-            };
-
-            // FK dialog
-            var fromConsentPage = $cookies.get('RedirectFromConsent');
-            if (fromConsentPage && (MIUser.loginMethod === 'FK')) {
-                dialogService.showDialog($scope, {
-                    dialogId: 'fk-login-consent-dialog',
-                    titleId: 'fkdialog.head',
-                    bodyTextId: 'fkdialog.text',
-                    button1click: function() {
-                        $scope.closeFKDialog(true);
-                    },
-                    button2click: function() {
-                        $scope.closeFKDialog(false);
-                    },
-                    button1id: 'close-fkdialog-logout-button',
-                    button2id: 'close-fkdialog-continue-button',
-                    button1text: 'fkdialog.button.returntofk',
-                    button2text: 'fkdialog.button.continueuse',
-                    autoClose: false
-                });
-            }
-
-            $scope.closeFKDialog = function(backtoFK) {
-                if (backtoFK) {
-                    $window.location.href = '/web/logga-ut-fk';
-                }
-                // no matter outcome of dialog, it should be a one time popup..
-                // remove flag indicating forwarded from consent page..
-                $cookies.remove('RedirectFromConsent');
-                // ...and close dialog
             };
 
             $scope.refreshActiveCertificates = function() {

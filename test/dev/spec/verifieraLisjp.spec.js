@@ -26,15 +26,12 @@ var restHelper = miTestTools.helpers.rest;
 var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera Lisjp', function() {
-
-    var personId = '191212121212';
 
     var texts = null;
 
@@ -51,9 +48,6 @@ describe('Verifiera Lisjp', function() {
             fail('Error during text lookup ' + err);
         });
 
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
-
         // Skapa intygen
         var intyg1 = genericTestdataBuilder.getLisjpSmittskydd();
         var intyg2 = genericTestdataBuilder.getLisjpFull();
@@ -66,24 +60,13 @@ describe('Verifiera Lisjp', function() {
     afterAll(function() {
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
-        restHelper.deleteConsent(personId);
     });
 
-    describe('Logga in', function() {
-        // Logga in
-        it('Logga in och ge samtycke', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickConfirmConsent();
-            consentPage.clickGiveConsent();
-        });
-
+    it('Logga in', function() {
+        welcomePage.get();
+        specHelper.waitForAngularTestability();
+        welcomePage.login();
+        specHelper.waitForAngularTestability();
     });
 
     describe('Kontrollera att bägge intygen finns i intygslistan', function() {

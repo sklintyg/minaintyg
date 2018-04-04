@@ -23,25 +23,14 @@
 'use strict';
 
 var specHelper = miTestTools.helpers.spec;
-var restHelper = miTestTools.helpers.rest;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
-var aboutPage = miTestTools.pages.aboutPage;
+var archivePage = miTestTools.pages.archivedPage;
 
 describe('Logga in som medborgare', function() {
 
     var personId = '19121212-1212';
-
-    beforeAll(function() {
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent(personId);
-    });
-
-    afterAll(function() {
-        restHelper.deleteConsent(personId);
-    });
 
     describe('Logga in och hamna på startsidan', function() {
 
@@ -57,19 +46,15 @@ describe('Logga in som medborgare', function() {
         });
 
         it('Acceptera cookie', function() {
-            consentPage.get();
+            archivePage.get();
+
             expect(element(by.id('cookie-usage-consent-btn')).isDisplayed()).toBeTruthy();
             element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
             expect(element(by.id('cookie-usage-consent-btn')).isPresent()).toBeFalsy();
         });
 
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickConfirmConsent();
-            consentPage.clickGiveConsent();
-        });
-
         it('Header ska var Inkorgen', function() {
+            inboxPage.get();
             expect(inboxPage.isAt()).toBeTruthy();
             expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
@@ -89,7 +74,6 @@ describe('Logga in som medborgare', function() {
 
         beforeEach(function() {
             browser.ignoreSynchronization = false;
-            restHelper.setConsent(personId);
         });
 
         it('Logga in', function() {
@@ -101,40 +85,6 @@ describe('Logga in som medborgare', function() {
 
         it('Inkorgen visas', function() {
             expect(inboxPage.isAt()).toBeTruthy();
-        });
-    });
-
-    describe('Återta samtycke', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-            restHelper.setConsent(personId);
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, false);
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Gå till om samtycke', function() {
-            expect(inboxPage.isAt()).toBeTruthy();
-            inboxPage.clickAbout();
-            expect(aboutPage.isAt()).toBeTruthy();
-            expect(aboutPage.aboutMinaIntygIsDisplayed()).toBeTruthy();
-            aboutPage.viewConsent();
-            expect(aboutPage.aboutConsentIsDisplayed()).toBeTruthy();
-        });
-
-        it('Återta samtycke', function() {
-            aboutPage.revokeConsent();
-            expect(aboutPage.revokeConsentDialogIsDisplayed()).toBeTruthy();
-            aboutPage.confirmRevokeConsent();
-        });
-
-        it('Verifiera att ge samtyckesidan visas', function() {
-            expect(consentPage.isAt()).toBeTruthy();
         });
     });
 

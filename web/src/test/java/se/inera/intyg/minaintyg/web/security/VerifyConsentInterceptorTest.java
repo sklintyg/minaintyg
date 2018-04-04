@@ -18,21 +18,19 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import se.inera.intyg.minaintyg.web.service.CitizenService;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,7 +46,7 @@ public class VerifyConsentInterceptorTest {
     private VerifyConsentInterceptor interceptor = new VerifyConsentInterceptor();
 
     @Test
-    public void testPrehandleNoConsentNoJson() throws Exception {
+    public void testPrehandleNoConsentNoJson() {
         Citizen citizen = new CitizenImpl(PNR_TOLVAN, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(false);
         when(service.getCitizen()).thenReturn(citizen);
@@ -56,13 +54,12 @@ public class VerifyConsentInterceptorTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         boolean preHandle = interceptor.preHandle(null, response, null);
-        assertFalse(preHandle);
-        verify(response).sendRedirect(Mockito.anyString());
-
+        assertTrue(preHandle);
+        Mockito.verifyZeroInteractions(response);
     }
 
     @Test
-    public void testPrehandleDoesNothingWhenConsentGiven() throws Exception {
+    public void testPrehandleDoesNothingWhenConsentGiven() {
         Citizen citizen = new CitizenImpl(PNR_TOLVAN, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         citizen.setConsent(true);
         when(service.getCitizen()).thenReturn(citizen);

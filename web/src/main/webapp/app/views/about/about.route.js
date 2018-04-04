@@ -13,13 +13,6 @@ angular.module('minaintyg').config(function($stateProvider) {
                 templateUrl: '/app/views/about/section-info.html'
             }
         }
-    }).state('omminaintyg.samtycke', {
-        url: '/samtycke',
-        views: {
-            'content@omminaintyg': {
-                templateUrl: '/app/views/about/section-samtycke.html'
-            }
-        }
     }).state('omminaintyg.help-info', {
         url: '/help-info',
         views: {

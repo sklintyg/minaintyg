@@ -52,12 +52,6 @@ angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.m
     });
 
     faq.push({
-        title: 'Samtycke',
-        icon: 'icon-lock',
-        questions: getQuestions('faq.samtycke.')
-    });
-
-    faq.push({
         title: 'Säkerhet',
         icon: 'icon-shield',
         questions: getQuestions('faq.sakerhet.')

@@ -37,8 +37,6 @@ describe('Visa intyg Fk7263', function() {
     var intygsId2 = null;
 
     beforeAll(function() {
-        restHelper.setConsent(personId);
-
         var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
         var fk7263Intyg2 = genericTestDataBuilder.getFk7263Smittskydd(personId);
         intygsId1 = fk7263Intyg.id;
@@ -48,7 +46,6 @@ describe('Visa intyg Fk7263', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
     });

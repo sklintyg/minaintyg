@@ -33,7 +33,6 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera LUSE', function() {
 
-    var personId = '191212121212';
     var intygsId = null;
     var texts = null;
 
@@ -47,9 +46,6 @@ describe('Verifiera LUSE', function() {
             fail('Error during text lookup ' + err);
         });
 
-        // Just set the consent, don't need to test it in every protractor test
-        restHelper.setConsent(personId);
-
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuse();
         intygsId = intyg.id;
@@ -57,7 +53,6 @@ describe('Verifiera LUSE', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 
