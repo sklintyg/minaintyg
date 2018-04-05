@@ -74,8 +74,10 @@
         });
     }
 
-    app.config(['$logProvider', '$uiViewScrollProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider', '$windowProvider', '$locationProvider', '$compileProvider',
-        function($logProvider, $uiViewScrollProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider, $windowProvider, $locationProvider, $compileProvider) {
+    app.config(['$logProvider', '$uiViewScrollProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider',
+        '$windowProvider', '$locationProvider', '$compileProvider',
+        function($logProvider, $uiViewScrollProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider,
+            $windowProvider, $locationProvider, $compileProvider) {
 
             // Set in boot-app.jsp
             var debugMode = angular.isDefined(MINA_INTYG_DEBUG_MODE) ? MINA_INTYG_DEBUG_MODE : true; //jshint ignore:line
