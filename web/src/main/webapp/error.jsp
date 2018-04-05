@@ -65,7 +65,7 @@
     </div>
   </noscript>
 
-  <div class="content-wrapper ng-cloak">
+  <div class="content-wrapper" ng-cloak>
     <mvk-top-bar></mvk-top-bar>
 
     <mi-header></mi-header>
@@ -121,11 +121,14 @@
         </c:choose>
     </div>
   </div>
-  <mi-footer class="ng-cloak"></mi-footer>
+  <mi-footer ng-cloak></mi-footer>
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">
-      <script type="text/javascript" src="/bower_components/jquery/jquery.min.js?<spring:message code="buildNumber" />"></script>
+      <script type="text/javascript">
+          var MINA_INTYG_DEBUG_MODE = false;
+      </script>
+      <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular/angular.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js?<spring:message code="buildNumber" />"></script>
       <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js?<spring:message code="buildNumber" />"></script>
@@ -138,8 +141,11 @@
       <script type="text/javascript" src="/app/app.min.js?<spring:message code="buildNumber" />"></script>
     </c:when>
     <c:otherwise>
+      <script type="text/javascript">
+          var MINA_INTYG_DEBUG_MODE = true;
+      </script>
       <!-- bower:js -->
-      <script type="text/javascript" src="/bower_components/jquery/jquery.js"></script>
+      <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
       <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
       <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
       <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>

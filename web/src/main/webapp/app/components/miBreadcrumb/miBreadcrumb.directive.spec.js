@@ -27,10 +27,9 @@ describe('miBreadcrumb', function() {
     var breadcrumbConfig;
 
     // Load the webcert module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('minaintyg', function($provide) {
-    }));
-
     beforeEach(angular.mock.module('htmlTemplates'));
+
+    beforeEach(angular.mock.module('minaintyg'));
 
     beforeEach(angular.mock.inject(['$window', '$state', 'minaintyg.BreadcrumbConfig',
         function(_$window_, _$state_, _breadcrumbConfig_) {
@@ -43,8 +42,8 @@ describe('miBreadcrumb', function() {
 
         describe('not provided', function() {
 
-            beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope',
-                function($controller, $compile, $rootScope) {
+            beforeEach(angular.mock.inject(['$compile', '$rootScope',
+                function($compile, $rootScope) {
                     $scope = $rootScope.$new();
                     element = $compile('<mi-breadcrumb></mi-breadcrumb>')($scope);
 
@@ -61,8 +60,8 @@ describe('miBreadcrumb', function() {
 
         describe('provided false', function() {
 
-            beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope',
-                function($controller, $compile, $rootScope) {
+            beforeEach(angular.mock.inject(['$compile', '$rootScope',
+                function($compile, $rootScope) {
                     $scope = $rootScope.$new();
                     element = $compile('<mi-breadcrumb></mi-breadcrumb>')($scope);
                     $scope.enableLinks = false;
@@ -105,8 +104,8 @@ describe('miBreadcrumb', function() {
 
         describe('provided', function() {
 
-            beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope',
-                function($controller, $compile, $rootScope) {
+            beforeEach(angular.mock.inject(['$compile', '$rootScope',
+                function($compile, $rootScope) {
                     $scope = $rootScope.$new();
                     $scope.enableLinks = true;
                     element = $compile('<mi-breadcrumb enable-links="enableLinks"></mi-breadcrumb>')($scope);

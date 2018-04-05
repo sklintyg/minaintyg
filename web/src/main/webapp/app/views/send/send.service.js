@@ -27,10 +27,10 @@ angular.module('minaintyg').factory('minaintyg.SendService', function($http, $lo
             recipientIds.push(recipient.id);
         });
 
-        $http.put('/api/certificates/' + certId + '/send' , recipientIds).success(function(data) {
-            callback(data);
-        }).error(function(data, status) {
-            $log.error('error ' + status);
+        $http.put('/api/certificates/' + certId + '/send' , recipientIds).then(function(response) {
+            callback(response.data);
+        }, function(response) {
+            $log.error('error ' + response.status);
             //give calling code a chance to handle error
             callback(null);
         });

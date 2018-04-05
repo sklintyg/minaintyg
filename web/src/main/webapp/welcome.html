@@ -29,7 +29,7 @@
     ]);
 
     angular.module('miWelcomeApp.controllers', []).controller('welcomeController',
-        ['$scope', '$http', '$log', function($scope, $http, $log) {
+        ['$scope', '$http', function($scope, $http) {
 
         // Populate with some hard-coded data in case the request to the stub fails (i.e. we're running on demo or qa)
         var localData = [
@@ -117,10 +117,10 @@
         ];
 
             function _fetchPuPersons() {
-                $http.get('/services/api/pu-api/person').success(function(data) {
-                    $scope.loginModel = _loginModel(data);
+                $http.get('/services/api/pu-api/person').then(function(response) {
+                    $scope.loginModel = _loginModel(response.data);
                     $scope.selectedIndex = '0';
-                }).error(function() {
+                }, function() {
                     $scope.stubActive = false;
                     $scope.loginModel = _loginModel(localData);
                     $scope.selectedIndex = '0';
@@ -154,7 +154,7 @@
             $scope.stubActive = true;
 
             $scope.$watch('selectedIndex', function(newSelected, oldVal) {
-                if (newSelected === undefined) {
+                if (newSelected === oldVal) {
                     return;
                 }
 

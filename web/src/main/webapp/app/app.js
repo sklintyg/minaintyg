@@ -74,30 +74,46 @@
         });
     }
 
-    app.config(['$logProvider', '$uiViewScrollProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider', '$windowProvider',
-        function($logProvider, $uiViewScrollProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider, $windowProvider) {
-            $logProvider.debugEnabled(false);
+    app.config(['$logProvider', '$uiViewScrollProvider', '$httpProvider', 'common.http403ResponseInterceptorProvider', '$uibTooltipProvider', '$windowProvider', '$locationProvider', '$compileProvider',
+        function($logProvider, $uiViewScrollProvider, $httpProvider, http403ResponseInterceptorProvider, $uibTooltipProvider, $windowProvider, $locationProvider, $compileProvider) {
+
+            // Set in boot-app.jsp
+            var debugMode = angular.isDefined(MINA_INTYG_DEBUG_MODE) ? MINA_INTYG_DEBUG_MODE : true; //jshint ignore:line
+
+            // START TEMP 1.6 migration compatibility flags
+            $compileProvider.preAssignBindingsEnabled(true);
+            $locationProvider.hashPrefix('');
+            // END
+
+            // Disable angular debug info.
+            $compileProvider.debugInfoEnabled(debugMode);
+
+            // Disable comment and css directives
+            $compileProvider.commentDirectivesEnabled(false);
+            $compileProvider.cssClassDirectivesEnabled(false);
+
+            $logProvider.debugEnabled(debugMode);
             $uiViewScrollProvider.useAnchorScroll();
 
             // Add cache buster interceptor
             $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
-                // Configure 403 interceptor provider
-                http403ResponseInterceptorProvider.setRedirectUrl('/error.jsp?reason=denied');
-                $httpProvider.interceptors.push('common.http403ResponseInterceptor');
+            // Configure 403 interceptor provider
+            http403ResponseInterceptorProvider.setRedirectUrl('/error.jsp?reason=denied');
+            $httpProvider.interceptors.push('common.http403ResponseInterceptor');
 
-                // Configure default triggers for tooltipProvider to disable triggers for
-                // devices supporting touch events (caused by INTYG-4301). These defaults can be overridden by explict
-                // directive attribute 'popover-trigger', but then it will be enabled for all devices.
-                if ('ontouchstart' in $windowProvider.$get()) {
-                    $uibTooltipProvider.options({
-                        trigger: 'dontTrigger'
-                    });
-                } else {
-                    $uibTooltipProvider.options({
-                        trigger: 'mouseenter'
-                    });
-                }
+            // Configure default triggers for tooltipProvider to disable triggers for
+            // devices supporting touch events (caused by INTYG-4301). These defaults can be overridden by explict
+            // directive attribute 'popover-trigger', but then it will be enabled for all devices.
+            if ('ontouchstart' in $windowProvider.$get()) {
+                $uibTooltipProvider.options({
+                    trigger: 'dontTrigger'
+                });
+            } else {
+                $uibTooltipProvider.options({
+                    trigger: 'mouseenter'
+                });
+            }
 
             } ]);
 
