@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,15 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.exception.ExternalWebServiceCallFailedException;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.schemas.contract.Personnummer;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface CertificateService {
 
@@ -78,4 +79,12 @@ public interface CertificateService {
      * @return
      */
     String getQuestions(String intygsTyp, String version);
+
+    /**
+     * Get relation for one or many intyg ids.
+     *
+     * @param intygIds
+     * @return
+     */
+    List<IntygRelations> getRelationsForCertificates(List<String> intygIds);
 }

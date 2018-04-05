@@ -75,6 +75,11 @@ describe('Visa intyg Fk7263', function() {
             expect(viewPage.isAtCert(intygsId2)).toBeTruthy();
         });
 
+        it('Verifiera att anpassa utskrift är disabled om smittskydd Ja', function() {
+            expect(viewPage.customizeCertificateIsDisplayed()).toBe(false);
+            expect(element(by.id('customize-disabled-message')).isPresent()).toBe(true);
+        });
+
         it('Verifiera fält 1: Smittskydd', function() {
             expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ja');
         });
@@ -173,6 +178,11 @@ describe('Visa intyg Fk7263', function() {
             expect(viewPage.isAt()).toBeTruthy();
             expect(browser.getCurrentUrl()).toContain('fk7263');
             expect(viewPage.isAtCert(intygsId1)).toBeTruthy();
+        });
+
+        it('Verifiera att anpassa utskrift är enablat om smittskydd Nej', function() {
+            expect(viewPage.customizeCertificateIsDisplayed()).toBe(true);
+            expect(element(by.id('customize-disabled-message')).isPresent()).toBe(false);
         });
 
         it('Verifiera fält 1: Smittskydd', function() {

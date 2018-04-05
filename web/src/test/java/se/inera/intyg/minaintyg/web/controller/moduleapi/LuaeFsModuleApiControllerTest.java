@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -60,7 +60,13 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
         CertificateMetaData meta = new CertificateMetaData();
         meta.setStatus(status);
 
+        List<Status> revokedStatus = new ArrayList<>();
+        status.add(new Status(CertificateState.CANCELLED, TARGET, LocalDateTime.now()));
+        CertificateMetaData revokedMeta = new CertificateMetaData();
+        revokedMeta.setStatus(revokedStatus);
+
         utlatandeHolder = new CertificateResponse(certificateData, utlatande, meta, false);
+        revokedUtlatandeHolder = new CertificateResponse(certificateData, utlatande, revokedMeta, true);
     }
 
     @Before

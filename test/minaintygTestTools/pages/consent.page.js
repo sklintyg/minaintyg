@@ -48,6 +48,8 @@ var MinaintygConsentPage = MinaintygBasePage._extend({
     },
     clickGiveConsent: function() {
         this.giveConsent.click();
+        // Wait for page reload
+        specHelper.waitForUrlPattern('/.*web\/start#\/inkorg');
         specHelper.waitForAngularTestability();
     }
 

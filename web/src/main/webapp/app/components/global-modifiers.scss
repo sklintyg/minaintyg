@@ -18,6 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -32,6 +36,11 @@ body {
 
 .multiline {
   white-space: pre-line;
+}
+
+.content-wrapper {
+  min-height: calc(100vh -  #{$mi-footer-height});
+  padding-bottom: 120px;
 }
 
 /* Used to create a row with columns of equal height */

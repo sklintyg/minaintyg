@@ -56,69 +56,72 @@
 </head>
 
 <body>
+  <noscript>
+    <div class="content-wrapper container">
+      <h3>
+        <spring:message code="error.noscript.title" />
+      </h3>
+      <spring:message code="error.noscript.text" />
+    </div>
+  </noscript>
 
-  <mvk-top-bar></mvk-top-bar>
+  <div class="content-wrapper ng-cloak">
+    <mvk-top-bar></mvk-top-bar>
 
-  <mi-header></mi-header>
+    <mi-header></mi-header>
 
-  <div class="container">
-    <div class="content">
-      <div id="navigation-container"></div>
+    <div id="navigation-container"></div>
 
-      <div class="row">
-        <div id="content-body" class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+    <div id="content-body" style="text-align: center;">
 
-          <c:choose>
-            <c:when test="${param.reason eq 'logout'}">
-              <h1>
-                <spring:message code="info.loggedout.title" />
-              </h1>
-              <div id="loggedOut" class="alert alert-info">
-                <spring:message code="info.loggedout.text" />
-              </div>
-              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
-              <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
-                    code="info.loggedout.fk.loginagain" /></a>
-              </div>
-            </c:when>
 
-            <c:when test="${param.reason eq 'denied'}">
-              <h1>
-                <spring:message code="error.noauth.title" />
-              </h1>
-              <div id="noAuth" class="alert alert-info">
-                <spring:message code="error.noauth.text" />
-              </div>
-              <p class="btn-row-desc"><spring:message code="info.loggedout.fk.mvkinfo" /></p>
-              <div class="btn-row">
-                <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message
-                    code="info.loggedout.fk.loginagain" /></a>
-              </div>
-            </c:when>
+        <c:choose>
+          <c:when test="${param.reason eq 'logout'}">
+            <mi-page-message-icon
+                id="loggedOut"
+                img-path="/img/404.png"
+                msg-key="info.loggedout.text">
+            </mi-page-message-icon>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
+            </div>
+          </c:when>
 
-            <c:when test="${param.reason eq 'notfound'}">
-              <h1>
-                <spring:message code="error.notfound.title" />
-              </h1>
-              <div id="notFound" class="alert alert-danger">
-                <spring:message code="error.notfound.text" />
-              </div>
-            </c:when>
+          <c:when test="${param.reason eq 'denied'}">
+            <mi-page-message-icon
+                id="noAuth"
+                img-path="/img/404.png"
+                msg-key="error.noauth.text">
+            </mi-page-message-icon>
+          </c:when>
 
-            <c:otherwise>
-              <h1>
-                <spring:message code="error.generictechproblem.title" />
-              </h1>
-              <div id="genericTechProblem" class="alert alert-danger">
-                <spring:message code="error.generictechproblem.text" />
-              </div>
-            </c:otherwise>
-          </c:choose>
-        </div>
-      </div>
+          <c:when test="${param.reason eq 'notfound'}">
+              <mi-page-message-icon
+                  id="notFound"
+                  img-path="/img/404.png"
+                  msg-key="error.notfound-loggedin.text">
+              </mi-page-message-icon>
+          </c:when>
+
+          <c:when test="${param.reason eq 'login.failed'}">
+            <mi-page-message-icon
+                id="notFound"
+                img-path="/img/404.png"
+                msg-key="error.login.failed.text">
+            </mi-page-message-icon>
+          </c:when>
+
+          <c:otherwise>
+            <mi-page-message-icon
+                id="genericTechProblem"
+                img-path="/img/404.png"
+                msg-key="error.generictechproblem.text">
+            </mi-page-message-icon>
+          </c:otherwise>
+        </c:choose>
     </div>
   </div>
+  <mi-footer class="ng-cloak"></mi-footer>
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">

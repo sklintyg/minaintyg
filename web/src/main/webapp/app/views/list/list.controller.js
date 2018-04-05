@@ -35,6 +35,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
             $scope.messageService = messageService;
             $scope.moduleService = moduleService;
             $scope.pageTitle = 'Inkorgen';
+            $scope.errorMessage = null;
 
             var archiveDialog = {};
 
@@ -43,7 +44,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 IntygListService.selectedCertificate = item;
                 $rootScope.keepInboxTab = true;
                 $location.path('/' + item.type.toLowerCase() + '/view/' + item.id);
-                $log.info( 'item path str: /' + item.type.toLowerCase() + '/view/'  + item.id );
+                $log.debug( 'item path str: /' + item.type.toLowerCase() + '/view/'  + item.id );
 
             };
 
@@ -61,7 +62,15 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                         $scope.dialog.acceptprogressdone = true;
                     } else {
                         // show error view
-                        $state.go('fel', {errorCode: 'couldnotarchivecert'});
+                        archiveDialog.close();
+                        dialogService.showDialog( $scope, {
+                            dialogId: 'archive-error-dialog',
+                            titleId: 'error.generictechproblem.title',
+                            bodyTextId: 'error.modal.couldnotarchivecert',
+                            button1text: 'error.modal.btn.back-to-inkorg',
+                            templateUrl: '/app/partials/error-dialog.html',
+                            autoClose: true
+                        });
                     }
                 });
             };
@@ -132,22 +141,19 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                 });
 
             };
-            
+
             // Fetch list of certs initially
             IntygListService.getCertificates(function(list) {
                 $scope.doneLoading = true;
-
+                $scope.errorMessage = null;
                 if (list !== null) {
                     $scope.activeCertificates = list;
                     $scope.refreshActiveCertificates();
-
                 } else {
                     // show error view
-                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
+                    $scope.errorMessage = 'error.couldnotloadcertlist';
                 }
             });
-
-
 
             // Set focus on new page so screen readers can announce it
             $scope.pagefocus = true;

@@ -59,6 +59,7 @@ $mi-modal-header-border-color: #333;
 // Intyg
 $mi-intyg-header-bg: #43799A;
 $mi-intyg-header-color: #fff;
+$mi-intyg-header-disabled-color: #777;
 
 $mi-intyg-body-bg: #fff;
 
@@ -72,8 +73,15 @@ $mi-intyg-table-bg-accent: #D9E2E6;
 $mi-nav-pills-active-link-hover-color: #333;
 $mi-nav-pills-active-link-hover-bg: #fff;
 $mi-nav-pills-border-color: #d7d7d7;
-$mi-nav-pills-link-active-bg: #e4eefa;
+$mi-nav-pills-link-active-bg: #e5eefa;
 
+// Panels
+$mi-panel-border-color: #A9C4D7;
+$mi-panel-heading-bg: #A9C4D7;
+$mi-panel-heading-color: #333;
+
+// Footer
+$mi-footer-height: 240px;
 
 
 // Bootstrap variables (Here we override bootstraps default values with MI custom variables defined above)
@@ -91,7 +99,7 @@ $navbar-default-link-hover-color: $mi-menu-hover-color;
 //Nav pills
 $nav-pills-active-link-hover-color: $mi-nav-pills-active-link-hover-color;
 $nav-pills-active-link-hover-bg: $mi-nav-pills-active-link-hover-bg;
-$nav-pills-border-radius: 0px;
+$nav-pills-border-radius: 0;
 
 $btn-primary-bg: $mi-button-bg;
 $btn-primary-color: $mi-button-primary;
@@ -102,11 +110,12 @@ $btn-border-radius-base: $mi-button-radius;
 $font-family-base: $mi-font;
 $font-size-h1: $mi-font-size-h1;
 $font-size-h2: $mi-font-size-h2;
-$font-size-h3: $mi-font-size-h2;
+$font-size-h3: $mi-font-size-h3;
 
 $headings-font-weight: $mi-heading-weight;
 
 $link-color: $mi-link-color;
+$link-hover-color: $mi-link-color;
 
 $modal-header-border-color: $mi-modal-header-border-color;
 
@@ -126,3 +135,9 @@ $alert-danger-text: $mi-alert-danger-text;
 //Hr
 $hr-border: $mi-hr-border-color;
 
+
+// Panel
+$panel-default-heading-bg: $mi-panel-heading-bg;
+$panel-default-text: $mi-panel-heading-color;
+$panel-default-border: $mi-panel-border-color;
+$panel-border-radius: 0;

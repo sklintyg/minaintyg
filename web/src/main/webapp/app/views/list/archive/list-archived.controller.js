@@ -19,18 +19,18 @@
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
     [ '$state', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
-        function($state, $log, $scope, IntygListService, moduleService, messageService) {
+        'common.dialogService',
+        function($state, $log, $scope, IntygListService, moduleService, messageService, dialogService) {
             'use strict';
 
             $scope.archivedCertificates = [];
             $scope.doneLoading = false;
+            $scope.errorMessage = null;
             $scope.moduleService = moduleService;
             $scope.messageService = messageService;
 
             $scope.restoreCert = function(item) {
-
                 $log.debug('Restore requested for cert:' + item.id);
-
                 IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
                     $log.debug('(restore) statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
@@ -38,7 +38,14 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                         oldItem.selected = false;
                     } else {
                         // show error view
-                        $state.go('fel', {errorCode: 'couldnotrestorecert'});
+                        dialogService.showDialog( $scope, {
+                            dialogId: 'restore-error-dialog',
+                            titleId: 'error.generictechproblem.title',
+                            bodyTextId: 'error.modal.couldnotrestorecert',
+                            button1text: 'error.modal.btn.back-to-archive-cert',
+                            templateUrl: '/app/partials/error-dialog.html',
+                            autoClose: true
+                        });
                     }
                 });
             };
@@ -50,9 +57,17 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                     $scope.archivedCertificates = list;
                 } else {
                     // show error view
-                    $state.go('fel', {errorCode: 'couldnotloadcertlist'});
+                    $scope.errorMessage = 'error.couldnotloadarchivedlist';
                 }
             });
 
             $scope.pagefocus = true;
+
+            $scope.getTypeOrReplacedText = function(item) {
+                if (item.replacedBy) {
+                    return 'ERSATT INTYG';
+                } else {
+                    return moduleService.getModuleName(item.type);
+                }
+            };
         }]);

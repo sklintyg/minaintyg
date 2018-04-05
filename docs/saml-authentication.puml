@@ -1,0 +1,33 @@
+
+@startuml
+autonumber
+actor Användare
+activate Användare
+Användare -> Webbläsare: Vill gå över till Mina Intyg
+activate Webbläsare
+
+Webbläsare -> "Mina Intyg": Login request
+activate "Mina Intyg"
+"Mina Intyg" --> Webbläsare: Omdirigering till CGIs IdP
+deactivate "Mina Intyg"
+Webbläsare -> "CGI funktionstjänster": SAML authentication request
+deactivate Webbläsare
+activate "CGI funktionstjänster"
+"CGI funktionstjänster" -> "CGI funktionstjänster": Verifierar session från 1177.se
+
+
+Webbläsare <-- "CGI funktionstjänster": SAML identitetsintyg
+deactivate "CGI funktionstjänster"
+
+activate Webbläsare
+
+Webbläsare -> "Mina Intyg": SAML identitetsintyg
+activate "Mina Intyg"
+"Mina Intyg" -> "Mina Intyg": Kontrollerar sekretessmarkering
+"Mina Intyg" --> Webbläsare: Begärd sida visas
+
+deactivate "Mina Intyg"
+Användare -> Webbläsare: Börjar arbeta
+deactivate Användare
+deactivate Webbläsare
+@enduml

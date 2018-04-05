@@ -3,6 +3,9 @@
   "title": "Schema for /appconfig/api/app",
   "type": "object",
   "properties": {
+    "version": {
+      "type": "string"
+    },
     "buildNumber": {
       "type": "string"
     },
@@ -32,6 +35,7 @@
     }
   },
   "required": [
+    "version",
     "buildNumber",
     "useMinifiedJavascript",
     "elva77MainUrl",

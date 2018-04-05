@@ -56,6 +56,16 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
     archiveDialogIsDisplayed: function() {
         return element(by.id('archive-confirmation-dialog')).isDisplayed();
     },
+    customizeCertificateIsDisplayed: function() {
+        var btn = this.customize;
+        return btn.isPresent().then(function (isPresent) {
+            if (isPresent) {
+                return btn.isDisplayed();
+            } else {
+                return Promise.resolve(false);
+            }
+        });
+    },
     clickCustomizeCertificate: function() {
         this.customize.click();
     },

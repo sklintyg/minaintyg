@@ -25,6 +25,9 @@
       },
       "dependencyDefinitionPath": {
         "type": "string"
+      },
+      "defaultRecipient": {
+        "type": "string"
       }
     },
     "additionalProperties": false,

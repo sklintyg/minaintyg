@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,14 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Builder object for creating immutable {@link UtlatandeMetaData} objects.
@@ -48,8 +49,10 @@ public class UtlatandeMetaBuilder {
 
     private List<Status> statuses = new ArrayList<>();
 
+    private List<CertificateRelation> relations = new ArrayList<>();
+
     public UtlatandeMetaData build() {
-        return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, additionalInfo, statuses);
+        return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, additionalInfo, statuses, relations);
     }
 
     public UtlatandeMetaBuilder id(String id) {
@@ -101,6 +104,11 @@ public class UtlatandeMetaBuilder {
     public UtlatandeMetaBuilder addStatus(Status status) {
         this.statuses.add(status);
 
+        return this;
+    }
+
+    public UtlatandeMetaBuilder addRelation(CertificateRelation certificateRelation) {
+        this.relations.add(certificateRelation);
         return this;
     }
 

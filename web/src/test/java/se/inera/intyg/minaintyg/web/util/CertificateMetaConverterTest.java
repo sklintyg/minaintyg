@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,18 +18,14 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 
 import java.time.LocalDateTime;
 
-import org.junit.*;
-
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.minaintyg.web.api.CertificateMeta;
-import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
+import static org.junit.Assert.assertEquals;
 
 public class CertificateMetaConverterTest {
 
@@ -39,19 +35,7 @@ public class CertificateMetaConverterTest {
     private static final String FACILITY_NAME = "facilityName";
     private static final String ISSUER_NAME = "issuerName";
 
-    private static final LocalDateTime FIRST_TIMESTAMP = LocalDateTime.of(2013, 1, 2, 20, 0);
-    private static final LocalDateTime LATER_TIMESTAMP = LocalDateTime.of(2013, 1, 3, 20, 0);
-    private static final String TARGET = "FK";
-
-    private static Status sentStatus;
-    private static Status cancelledStatus;
-
     private UtlatandeMetaBuilder builder;
-
-    @BeforeClass
-    public static void setup() {
-        sentStatus = new Status(CertificateState.SENT, TARGET, FIRST_TIMESTAMP);
-    }
 
     @Before
     public void setupCertificateMetaTypeBuilder() {
@@ -67,7 +51,7 @@ public class CertificateMetaConverterTest {
 
     @Test
     public void testComplementaryInfo() {
-        CertificateMeta meta = CertificateMetaConverter.toCertificateMeta(builder.build());
+        CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromUtlatandeMeta(builder.build());
         UtlatandeMetaData utlatandeMeta = builder.build();
 
         assertEquals("2013-01-01 till 2014-01-01", utlatandeMeta.getComplemantaryInfo());

@@ -48,38 +48,35 @@
 </head>
 <body>
 
-  <mvk-top-bar></mvk-top-bar>
-
-  <mi-header></mi-header>
-
-  <mi-main-navigation></mi-main-navigation>
-
-  <mi-cookie-banner></mi-cookie-banner>
-
-  <%-- ng-view that holds dynamic content managed by angular app --%>
-  <div id="view" ui-view autoscroll="false"></div>
-
-  <%-- Add navigation aid directives --%>
-  <mi-scroll-to-top></mi-scroll-to-top>
-  <mi-scroll-to-top-link></mi-scroll-to-top-link>
-
-  <div class="container">
-    <div class="">
-      <div class="row">
-        <div id="content-body" class="col-xs-12">
-          <%-- No script to show at least something when javascript is off --%>
-          <noscript>
-            <h1>
-              <span><spring:message code="error.noscript.title" /></span>
-            </h1>
-            <div class="alert alert-danger">
-              <spring:message code="error.noscript.text" />
-            </div>
-          </noscript>
-        </div>
+    <%-- No script to show at least something when javascript is off --%>
+    <noscript>
+      <div class="content-wrapper container">
+      <h3>
+        <spring:message code="error.noscript.title" />
+      </h3>
+      <spring:message code="error.noscript.text" />
       </div>
-    </div>
+    </noscript>
+
+
+  <div class="content-wrapper ng-cloak">
+    <mvk-top-bar></mvk-top-bar>
+
+    <mi-header></mi-header>
+
+    <mi-main-navigation></mi-main-navigation>
+
+    <mi-cookie-banner></mi-cookie-banner>
+
+    <%-- ng-view that holds dynamic content managed by angular app --%>
+    <div id="view" ui-view autoscroll="false"></div>
+    <mi-scroll-to-top-footer></mi-scroll-to-top-footer>
+
+    <%-- Add navigation aid directives --%>
+    <mi-scroll-to-top></mi-scroll-to-top>
   </div>
+  <mi-footer class="ng-cloak"></mi-footer>
+
 
   <c:choose>
     <c:when test="${useMinifiedJavaScript == 'true'}">

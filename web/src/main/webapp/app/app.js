@@ -26,6 +26,10 @@
     // before we do anything...we need all modules
     var moduleArray = [];
 
+    app.value('scrollToTopConfig', {
+        excludedStates: ['index']
+    });
+
     app.value('networkConfig', {
         defaultTimeout: 30000
         // test: 1000
@@ -33,9 +37,16 @@
 
     //http://stackoverflow.com/a/29153678/411284
     // This method method works BUT runs on back/forward buttons too
-    app.run(function ($rootScope, $state, $stateParams, $anchorScroll) {
-        $rootScope.$on('$stateChangeStart', function () {
+    app.run(function ($rootScope, $state, $stateParams, $anchorScroll, $uibModalStack) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $anchorScroll();
+            // INTYG-4465: prevent state change when user press 'backwards' if modal is open, but close modal.
+            if($uibModalStack.getTop()) {
+                event.preventDefault();
+                $uibModalStack.dismissAll();
+                // Restore original state in order to make it work for DJUPINTEGRATION and avoid messing up the history.
+                $state.go(fromState, fromParams);
+            }
         });
     });
 
@@ -72,7 +83,7 @@
             $httpProvider.interceptors.push('common.httpRequestInterceptorCacheBuster');
 
                 // Configure 403 interceptor provider
-                http403ResponseInterceptorProvider.setRedirectUrl('/web/start');
+                http403ResponseInterceptorProvider.setRedirectUrl('/error.jsp?reason=denied');
                 $httpProvider.interceptors.push('common.http403ResponseInterceptor');
 
                 // Configure default triggers for tooltipProvider to disable triggers for

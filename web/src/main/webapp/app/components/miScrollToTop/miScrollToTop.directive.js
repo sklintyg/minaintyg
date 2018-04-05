@@ -4,12 +4,24 @@ angular.module('minaintyg').directive('miScrollToTop', function() {
     return {
         restrict: 'E',
         templateUrl: '/app/components/miScrollToTop/miScrollToTop.directive.html',
-        controller: function($scope, $window, $document) {
+        controller: function($log, $timeout, $scope, $window, $document, scrollToTopConfig, $state) {
 
             $scope.lowerHalf = false;
 
-            $scope.$on('$locationChangeStart', function(event) {
+            $scope.showComponent = true;
+
+            $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $scope.lowerHalf = false;
+
+                // Check if directive should be used on this state (config in app.js)
+                $scope.showComponent = true;
+                for (var i = 0; i < scrollToTopConfig.excludedStates.length; i++){
+                    var excludedState = scrollToTopConfig.excludedStates[i];
+                    var currentStateName = $state.current.name;
+                    if(excludedState === currentStateName){
+                        $scope.showComponent = false;
+                    }
+                }
             });
 
             $document.on('scroll', function() {

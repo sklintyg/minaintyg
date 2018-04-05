@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.web.integration.pu;
 
 import org.junit.Test;
@@ -8,6 +26,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.infra.integration.pu.model.Person;
 import se.inera.intyg.infra.integration.pu.model.PersonSvar;
 import se.inera.intyg.infra.integration.pu.services.PUService;
+import se.inera.intyg.minaintyg.web.exception.PUServiceErrorException;
 import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
 import se.inera.intyg.schemas.contract.Personnummer;
 
@@ -42,11 +61,10 @@ public class MinaIntygPUServiceImplTest {
         testee.getPerson(PERSON_ID);
     }
 
-    @Test
-    public void testGetPersonErrorAllowsLoginAnyway() {
+    @Test(expected = PUServiceErrorException.class)
+    public void testGetPersonErrorStopsLoggingIn() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.ERROR));
-        Person person = testee.getPerson(PERSON_ID);
-        assertEquals(PERSON_ID, person.getPersonnummer().getPersonnummer());
+        testee.getPerson(PERSON_ID);
     }
 
     private PersonSvar buildOkPUSvar(PersonSvar.Status status) {

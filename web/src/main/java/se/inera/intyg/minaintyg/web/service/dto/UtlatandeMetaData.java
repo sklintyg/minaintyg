@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.service.dto;
 
-import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.notNull;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,7 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import se.inera.intyg.common.support.model.Status;
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
 
 /**
  * Meta data describing a utlatande.
@@ -58,19 +59,17 @@ public class UtlatandeMetaData {
     /** A list of statuses of the utlatande. */
     private final List<Status> statuses;
 
+    /** A list of relations where this certificate is the parent. */
+    private final List<CertificateRelation> relations;
+
     /**
      * Compare status newest first.
      */
-    private static final Comparator<Status> STATUS_COMPARATOR = new Comparator<Status>() {
-        @Override
-        public int compare(Status o1, Status o2) {
-            return o2.getTimestamp().compareTo(o1.getTimestamp());
-        }
-    };
+    private static final Comparator<Status> STATUS_COMPARATOR = (o1, o2) -> o2.getTimestamp().compareTo(o1.getTimestamp());
 
     // CHECKSTYLE:OFF ParameterNumber
     public UtlatandeMetaData(String id, String type, String issuerName, String facilityName, LocalDateTime signDate, String available,
-            String complemantaryInfo, List<Status> statuses) {
+            String complemantaryInfo, List<Status> statuses, List<CertificateRelation> relations) {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");
         hasText(issuerName, "'issuerName' must not be empty");
@@ -88,6 +87,12 @@ public class UtlatandeMetaData {
             Collections.sort(this.statuses, STATUS_COMPARATOR);
         } else {
             this.statuses = Collections.emptyList();
+        }
+
+        if (relations != null) {
+            this.relations = new ArrayList<>(relations);
+        } else {
+            this.relations = Collections.emptyList();
         }
     }
     // CHECKSTYLE:ON ParameterNumber
@@ -127,4 +132,9 @@ public class UtlatandeMetaData {
     public List<Status> getStatuses() {
         return Collections.unmodifiableList(statuses);
     }
+
+    public List<CertificateRelation> getRelations() {
+        return relations;
+    }
+
 }

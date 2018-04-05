@@ -9,6 +9,8 @@ body {
 
 a {
   color: #378998;
+  cursor: pointer;
+
   &:visited {
     color: #378998;
   }
@@ -33,6 +35,11 @@ h2 {
 
 .h3, h3 {
   margin-top: 25px;
+}
+
+.container>.navbar-collapse {
+  padding-right: 0;
+  margin-right: 0;
 }
 
 .alert .alert-heading {
@@ -109,7 +116,7 @@ h2 {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $screen-sm-max) {
   .modal-footer {
     .btn {
       width: 100%;
@@ -120,6 +127,13 @@ h2 {
     }
   }
 
+}
+
+.panel-heading {
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 //Tables
@@ -133,5 +147,12 @@ h2 {
 
   > tbody > tr:nth-of-type(even) {
     background-color: $mi-intyg-table-bg;
+  }
+}
+
+// Remove tooltips on mobile
+@media all and (max-width: 728px) {
+  [uib-popover-popup].popover, [uib-popover-html-popup].popover, [uib-popover-template-popup].popover {
+    display: none !important;
   }
 }

@@ -19,8 +19,8 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService',
-                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService) {
+        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService', 'MIConfig',
+                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService, MIConfig) {
                     'use strict';
 
 
@@ -52,10 +52,20 @@ angular.module('minaintyg').controller(
                             if (data !== null && data.result) {
                                 $window.location.href = '/web/start';
                             } else {
-                                $state.go('fel', {errorCode: 'couldnotrevokeconsent'});
+                                revokeDialog.close();
+                                dialogService.showDialog( $scope, {
+                                    dialogId: 'revoke-error-dialog',
+                                    titleId: 'error.generictechproblem.title',
+                                    bodyTextId: 'error.modal.couldnotrevokeconsent',
+                                    button1text: 'error.modal.btn.back-to-about',
+                                    templateUrl: '/app/partials/error-dialog.html',
+                                    autoClose: true
+                                });
                             }
                         });
                     }
+
+                    $scope.version = MIConfig.version;
 
                     //faq's are actually arrays of faq items
                     $scope.faqs = messageService.getProperty('help.faq');

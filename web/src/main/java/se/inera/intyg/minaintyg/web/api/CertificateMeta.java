@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,16 +18,26 @@
  */
 package se.inera.intyg.minaintyg.web.api;
 
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
+import se.inera.intyg.minaintyg.web.service.dto.CertificateEvent;
+import se.inera.intyg.minaintyg.web.service.dto.CertificateEventType;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import se.inera.intyg.common.support.model.Status;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * DTO representing metadata of a signed certificate in the MI rest API.
  */
 public class CertificateMeta {
+
+    private static final String EVENT_TYPE_ERSATT = "ERSATT";
+    private static final String EVENT_TYPE_ERSATTER = "ERSATTER";
 
     private String id;
     private Boolean selected;
@@ -38,6 +48,7 @@ public class CertificateMeta {
     private Boolean archived;
     private String complementaryInfo;
     private List<Status> statuses = new ArrayList<>();
+    private List<CertificateRelation> relations = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -109,5 +120,57 @@ public class CertificateMeta {
 
     public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
+    }
+
+    public void setRelations(List<CertificateRelation> relations) {
+        this.relations = relations;
+    }
+
+    /**
+     * Builds a list of {@link CertificateEvent} based on the statuses and relations of this certificate.
+     */
+    public List<CertificateEvent> getEvents() {
+        Stream<CertificateEvent> s1 = Stream.of(getReplacedBy()).filter(Objects::nonNull).map(
+                r -> new CertificateEvent(CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType()));
+        Stream<CertificateEvent> s2 = Stream.of(getReplaces()).filter(Objects::nonNull).map(
+                r -> new CertificateEvent(CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType()));
+        Stream<CertificateEvent> relationStream = Stream.concat(s1, s2);
+        Stream<CertificateEvent> statusStream = statuses.stream()
+                .map(s -> new CertificateEvent(CertificateEventType.STATUS, s.getType().name(), s.getTarget(), s.getTimestamp()));
+
+        return Stream.concat(relationStream, statusStream)
+                .sorted((e1, e2) -> e2.getTimestamp().compareTo(e1.getTimestamp()))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Finds a ERSATT or KOMPLT relation where this certificate is the to-relation. If not found, null is returned.
+     */
+    public CertificateRelation getReplacedBy() {
+        return relations.stream()
+                .filter(cr -> cr.getToIntygsId().equals(id))
+                .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Returns true if there exists a replacing relation on this certmeta.
+     *
+     * @return true or false.
+     */
+    public boolean getIsReplaced() {
+        return getReplacedBy() != null;
+    }
+
+    /**
+     * Finds a ERSATT or KOMPLT relation where this certificate is the from-relation. If not found, null is returned.
+     */
+    public CertificateRelation getReplaces() {
+        return relations.stream()
+                .filter(cr -> cr.getFromIntygsId().equals(id))
+                .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
+                .findFirst()
+                .orElse(null);
     }
 }

@@ -1,0 +1,22 @@
+mi-footer {
+
+  color: #22263E;
+  background-color: #E5E8EE;
+  padding-top: 20px;
+  display: block;
+  min-height: $mi-footer-height;
+
+  h3 {
+    font-size: 14px;
+    margin: 0 0 5px 0;
+  }
+
+  .mi-footer__cookie-link {
+    padding: 20px 0;
+  }
+
+  .container {
+    margin-top: 70px;
+  }
+
+}

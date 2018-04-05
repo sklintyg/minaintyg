@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,6 +18,35 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.Relation;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
+import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvRelation;
+import se.riv.clinicalprocess.healthcond.certificate.v3.Enhet;
+import se.riv.clinicalprocess.healthcond.certificate.v3.HosPersonal;
+import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v3.IntygsStatus;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -26,25 +55,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.types.v3.*;
-import se.riv.clinicalprocess.healthcond.certificate.v3.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UtlatandeMetaDataConverterTest {
@@ -61,7 +71,8 @@ public class UtlatandeMetaDataConverterTest {
     @Before
     public void setup() throws ModuleNotFoundException {
         when(moduleRegistry.getModuleApi(anyString())).thenReturn(moduleApi);
-        when(moduleRegistry.getModuleIdFromExternalId(anyString())).thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
+        when(moduleRegistry.getModuleIdFromExternalId(anyString()))
+                .thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
     }
 
     @Test
@@ -75,7 +86,7 @@ public class UtlatandeMetaDataConverterTest {
         final boolean arkiverade = false;
         when(moduleApi.getAdditionalInfo(any(Intyg.class))).thenReturn(additionalInfo);
         Intyg intyg = buildIntyg(intygId, intygstyp, fullstandigtNamn, enhetsnamn, signeringstidpunkt);
-        UtlatandeMetaData result = converter.convert(intyg, arkiverade);
+        UtlatandeMetaData result = converter.convertIntyg(intyg, new ArrayList<>(), arkiverade);
         assertNotNull(result);
         assertEquals(intygId, result.getId());
         assertEquals(intygstyp.toLowerCase(), result.getType());
@@ -104,7 +115,7 @@ public class UtlatandeMetaDataConverterTest {
         Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
         Intyg intyg2 = buildIntyg(intygId2, intygstyp2, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
         Intyg intyg3 = buildIntyg(intygId3, intygstyp3, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
-        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3), arkiverade);
+        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3), new ArrayList<>(), arkiverade);
         assertNotNull(result);
         assertEquals(3, result.size());
         assertEquals(intygId3, result.get(0).getId());
@@ -137,7 +148,7 @@ public class UtlatandeMetaDataConverterTest {
         final boolean arkiverade = false;
         Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
 
-        //Mock up a certificate that has a cancelled status. It should be discarded early in the conversion process.
+        // Mock up a certificate that has a cancelled status. It should be discarded early in the conversion process.
         Intyg intyg2 = buildIntyg(intygId2, intygstyp2, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
         IntygsStatus cancelledStatus = new IntygsStatus();
         cancelledStatus.setStatus(new Statuskod());
@@ -148,7 +159,8 @@ public class UtlatandeMetaDataConverterTest {
 
         Intyg intyg3 = buildIntyg(intygId3, intygstyp3, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
 
-        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3), arkiverade);
+        List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3),
+                buildRelations(intyg1.getIntygsId().getExtension()), arkiverade);
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(intygId3, result.get(0).getId());
@@ -158,9 +170,40 @@ public class UtlatandeMetaDataConverterTest {
         assertEquals(intygstyp1.toLowerCase(), result.get(1).getType());
         assertEquals(signeringstidpunkt1, result.get(1).getSignDate());
 
+        // Assert relation exist on expected result.
+        assertEquals(1, result.get(1).getRelations().size());
+        assertEquals(RelationKod.ERSATT, result.get(1).getRelations().get(0).getRelationKod());
+        assertEquals(result.get(1).getId(), result.get(1).getRelations().get(0).getToIntygsId());
+
         verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase());
         verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase());
         verify(moduleApi, times(2)).getAdditionalInfo(any(Intyg.class));
+    }
+
+    private List<IntygRelations> buildRelations(String targetIntygsId) {
+        List<IntygRelations> intygRelations = new ArrayList<>();
+        IntygRelations ir = new IntygRelations();
+        ir.setIntygsId(buildIntygId(targetIntygsId));
+        ir.getRelation().add(buildRelation("sourceId", targetIntygsId));
+        intygRelations.add(ir);
+        return intygRelations;
+    }
+
+    private Relation buildRelation(String fromIntyg, String toIntyg) {
+        Relation r = new Relation();
+        r.setFranIntygsId(buildIntygId(fromIntyg));
+        r.setTillIntygsId(buildIntygId(toIntyg));
+        r.setSkapad(LocalDateTime.now().minusDays(3L));
+        TypAvRelation typ = new TypAvRelation();
+        typ.setCode("ERSATT");
+        r.setTyp(typ);
+        return r;
+    }
+
+    private IntygId buildIntygId(String intygsId) {
+        IntygId intygId = new IntygId();
+        intygId.setExtension(intygsId);
+        return intygId;
     }
 
     @Test
@@ -176,7 +219,7 @@ public class UtlatandeMetaDataConverterTest {
         intygsstatus.getPart().setCode(recipient);
         intyg.getStatus().add(intygsstatus);
 
-        UtlatandeMetaData result = converter.convert(intyg, false);
+        UtlatandeMetaData result = converter.convertIntyg(intyg, new ArrayList<>(), false);
         assertNotNull(result);
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
@@ -198,7 +241,7 @@ public class UtlatandeMetaDataConverterTest {
         intygsstatus.getPart().setCode(recipient);
         intyg.getStatus().add(intygsstatus);
 
-        UtlatandeMetaData result = converter.convert(intyg, false);
+        UtlatandeMetaData result = converter.convertIntyg(intyg, new ArrayList<>(), false);
         assertNotNull(result);
         assertNotNull(result.getStatuses());
         assertEquals(1, result.getStatuses().size());
@@ -218,7 +261,7 @@ public class UtlatandeMetaDataConverterTest {
         intygsstatus.getPart().setCode("recipient");
         intyg.getStatus().add(intygsstatus);
 
-        UtlatandeMetaData result = converter.convert(intyg, false);
+        UtlatandeMetaData result = converter.convertIntyg(intyg, new ArrayList<>(), false);
         assertNotNull(result);
         assertTrue(result.getStatuses().isEmpty());
     }

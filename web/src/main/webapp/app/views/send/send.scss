@@ -9,10 +9,10 @@
   .modal-body {
     min-height: 180px;
 
-    padding: 20px 30px;
+    padding: 20px 15px;
 
     @media (min-width: $screen-sm-min) {
-      padding: 20px 60px;
+      padding: 20px 15px;
     }
 
     .result-rows {

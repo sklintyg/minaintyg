@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miHeader', ['MIUser', 'common.ObjectHelper',
-    function(MIUser, objectHelper) {
+angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common.ObjectHelper', '$uibModal', '$state',
+    function(MIConfig, MIUser, objectHelper, $uibModal, $state) {
         'use strict';
 
         return {
@@ -30,6 +30,26 @@ angular.module('minaintyg').directive('miHeader', ['MIUser', 'common.ObjectHelpe
                 } else {
                     $scope.authUserDescription = MIUser.personId;
                 }
+
+                $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
+
+                $scope.applicationLogoutUrl = MIConfig.applicationLogoutUrl;
+
+                $scope.showSekretessInfoMessage = function() {
+                    $uibModal.open({
+                        templateUrl: '/app/components/miHeader/miHeaderSekretess.dialog.html',
+                        keyboard: false,
+                        controller: function($scope, $uibModalInstance) {
+                            $scope.gotoAbout = function() {
+                                $uibModalInstance.close();
+                                $state.go('omminaintyg.juridik');
+                            };
+                            $scope.close = function() {
+                                $uibModalInstance.close();
+                            };
+                        }
+                    });
+                };
             }
         };
     }]);

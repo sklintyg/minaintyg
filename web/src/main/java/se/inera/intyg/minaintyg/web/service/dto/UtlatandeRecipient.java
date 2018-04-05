@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -24,12 +24,14 @@ public class UtlatandeRecipient {
 
     private final String id;
     private final String name;
+    private final boolean trusted;
 
-    public UtlatandeRecipient(String id, String name) {
+    public UtlatandeRecipient(String id, String name, boolean trusted) {
         hasText(id, "recipient id must not be empty");
         hasText(name, "recipient name must not be empty");
         this.id = id;
         this.name = name;
+        this.trusted = trusted;
     }
 
     public String getId() {
@@ -38,5 +40,9 @@ public class UtlatandeRecipient {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isTrusted() {
+        return trusted;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,25 +18,28 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v3.IntygsStatus;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UtlatandeMetaDataConverter {
@@ -49,7 +52,7 @@ public class UtlatandeMetaDataConverter {
     @Autowired
     private IntygModuleRegistry moduleRegistry;
 
-    public UtlatandeMetaData convert(Intyg intyg, boolean arkiverade) {
+    public UtlatandeMetaData convertIntyg(Intyg intyg, List<CertificateRelation> relationsForCertificate, boolean arkiverade) {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
 
         builder.id(intyg.getIntygsId().getExtension())
@@ -69,6 +72,10 @@ public class UtlatandeMetaDataConverter {
             }
         }
 
+        for (CertificateRelation cr : relationsForCertificate) {
+            builder.addRelation(cr);
+        }
+
         return builder.build();
     }
 
@@ -82,7 +89,7 @@ public class UtlatandeMetaDataConverter {
         return null;
     }
 
-    public List<UtlatandeMetaData> convert(List<Intyg> intygList, boolean arkiverade) {
+    public List<UtlatandeMetaData> convert(List<Intyg> intygList, List<IntygRelations> intygRelations, boolean arkiverade) {
         List<UtlatandeMetaData> result = new ArrayList<>();
 
         // Copy and sort
@@ -92,11 +99,18 @@ public class UtlatandeMetaDataConverter {
         for (Intyg intyg : input) {
             //Enforce business rule GE-013 (no revoked certificates should be accessible in Mina Intyg)
             if (intyg.getStatus().stream().noneMatch(is -> StatusKod.CANCEL.equals(StatusKod.valueOf(is.getStatus().getCode())))) {
-                result.add(convert(intyg, arkiverade));
+                result.add(convertIntyg(intyg, extractRelationsForCertificate(intygRelations, intyg), arkiverade));
             }
         }
-
         return result;
     }
 
+    private List<CertificateRelation> extractRelationsForCertificate(List<IntygRelations> intygRelations, Intyg intyg) {
+        return intygRelations.stream()
+                .filter(ir -> ir.getIntygsId().getExtension().equals(intyg.getIntygsId().getExtension()))
+                .flatMap(ir -> ir.getRelation().stream())
+                .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
+                        RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
+                .collect(Collectors.toList());
+    }
 }

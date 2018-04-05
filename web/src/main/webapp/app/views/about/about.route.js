@@ -31,7 +31,8 @@ angular.module('minaintyg').config(function($stateProvider) {
         url: '/faq',
         views: {
             'content@omminaintyg': {
-                templateUrl: '/app/views/about/section-faq.html'
+                templateUrl: '/app/views/about/faq/faq.html',
+                controller: 'AboutFaqPageCtrl'
             }
         }
     }).state('omminaintyg.juridik', {

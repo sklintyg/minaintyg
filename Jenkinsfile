@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion = "3.4.${BUILD_NUMBER}"
-def commonVersion = "3.4.+"
-def infraVersion = "3.4.+"
+def buildVersion = "3.5.0.${BUILD_NUMBER}"
+def commonVersion = "3.5.0.+"
+def infraVersion = "3.5.0.+"
 
 stage('checkout') {
     node {
@@ -26,7 +26,7 @@ stage('build') {
 stage('deploy') {
    node {
        util.run {
-           ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false", config_version: "MI-3.4"], \
+           ansiblePlaybook extraVars: [version: buildVersion, ansible_ssh_port: "22", deploy_from_repo: "false", config_version: "MI-3.5"], \
                 installation: 'ansible-yum', inventory: 'ansible/inventory/minaintyg/test', playbook: 'ansible/deploy.yml'
            util.waitForServer('https://minaintyg.inera.nordicmedtest.se/version.jsp')
        }

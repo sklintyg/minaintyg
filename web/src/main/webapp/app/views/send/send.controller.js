@@ -19,7 +19,8 @@
 
 angular.module('minaintyg').controller('minaintyg.SendCtrl',
     [ '$filter', '$location', '$state', '$stateParams', '$scope', '$uibModal', 'minaintyg.SendService', 'common.IntygService',
-        function($filter, $location, $state, $stateParams, $scope, $uibModal, sendService, intygService) {
+        'MIUser', 'common.dialogService',
+        function($filter, $location, $state, $stateParams, $scope, $uibModal, sendService, intygService, MIUser, dialogService) {
             'use strict';
 
             var dialogInstance;
@@ -33,7 +34,8 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                 defaultRecipient: $stateParams.defaultRecipient,
                 recipients: [],
                 sendingInProgress: false,
-                initializing: true
+                initializing: true,
+                userHasSekretessmarkering: MIUser.sekretessmarkering
             };
 
             function _decorateWithSentStatus(statuses, recipient) {
@@ -87,8 +89,43 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
 
 
+            $scope.checkSekretessBeforeSend = function(selectedRecipients) {
+                if (MIUser.sekretessmarkering) {
 
-            $scope.doSend = function(selectedRecipients) {
+                    var allTrusted = true;
+                    angular.forEach(selectedRecipients, function(recipient) {
+                        if (!recipient.trusted) {
+                            allTrusted = false;
+                        }
+                    });
+
+                    if (!allTrusted) {
+                        dialogService.showDialog($scope, {
+                            dialogId: 'mi-send-sekretess-dialog',
+                            titleId: 'send.sekretessmarkeringmodal.header',
+                            bodyTextId: 'send.sekretessmarkeringmodal.body',
+                            button1click: function() {
+                                doSend(selectedRecipients);
+                            },
+                            button2click: function() {
+                            },
+                            button1id: 'close-fkdialog-logout-button',
+                            button1text: 'send.sekretessmarkeringmodal.button1',
+                            button2text: 'send.sekretessmarkeringmodal.button2',
+                            button2visible: true,
+                            autoClose: true
+                        });
+                    }
+                    else {
+                        doSend(selectedRecipients);
+                    }
+                }
+                else {
+                    doSend(selectedRecipients);
+                }
+            };
+
+            function doSend(selectedRecipients) {
                 var dialogVm = {
                     sending: true,
                     recipients: selectedRecipients,
@@ -104,7 +141,6 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                         $scope.vm = vm;
                         $scope.onBackToCertificate = onBackToCertificate;
 
-
                     },
                     resolve: {
                         onBackToCertificate: function() {
@@ -118,13 +154,16 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
                 sendService.sendCertificate($scope.vm.id, selectedRecipients, function(results) {
 
-                    if (results) {
                         //Update status for each recipient
                         angular.forEach(dialogVm.recipients, function(recipient) {
                             //set a default status
                             recipient.status = {
                                 sent: false
                             };
+
+                            if (!results) {
+                                dialogVm.someFailed = true;
+                            }
                             angular.forEach(results, function(result) {
                                 if (result.recipientId === recipient.id) {
                                     recipient.status = result;
@@ -138,17 +177,20 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                         //reveal results
                         dialogVm.sending = false;
 
-                    } else {
-                        $state.go('fel', {errorCode: 'generic'});
-                    }
+
 
                 });
 
-            };
+            }
 
 
 
             $scope.backToViewCertificate = function () {
+                if (dialogInstance) {
+                    dialogInstance.close();
+                    dialogInstance = undefined;
+                }
+
                 $location.path($scope.vm.type + '/view/' + $scope.vm.id).search({});
             };
             // expose calculated static link for pdf download

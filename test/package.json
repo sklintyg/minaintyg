@@ -11,7 +11,7 @@
         "grunt-cli": "^1.2.0",
         "grunt-contrib-jshint": "^1.0.0",
         "grunt-env": "^0.4.4",
-        "grunt-protractor-runner": "^4.0.0",
+        "grunt-protractor-runner": "^5.0.0",
         "grunt-protractor-webdriver": "^0.2.5",
         "http-backend-proxy": "^1.4.3",
         "jasmine-reporters": "^2.0.7",

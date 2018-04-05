@@ -21,7 +21,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <div mi-spinner label="label.archivedcertificatesloading" show-spinner="!doneLoading"
+      <div mi-spinner label="archived.label.archivedcertificatesloading" show-spinner="!doneLoading"
            show-content="doneLoading && (archivedCertificates | archived).length>0">
         <table id="archived-cert-table" class="table table-striped hidden-xs hidden-sm" aria-labelledby="archivedHeader">
           <thead>
@@ -37,7 +37,7 @@
           <tbody>
           <tr ng-repeat="cert in archivedCertificates | archived">
             <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
-            <td headers="type">{{moduleService.getModuleName(cert.type)}}</td>
+            <td headers="type">{{ getTypeOrReplacedText(cert) }}</td>
             <td headers="certinfo">{{cert.complementaryInfo}}</td>
             <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
             <td headers="restore">
@@ -64,7 +64,7 @@
                 <span message key="archived-cert-table.headers.type"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{moduleService.getModuleName(cert.type)}}
+                {{ getTypeOrReplacedText(cert) }}
               </div>
             </div>
 
@@ -100,11 +100,20 @@
         <span class="text-muted">Inga fler intyg</span>
       </div>
       <!-- eof spinner -->
-      <div class="table-bottom" ng-hide="(archivedCertificates | archived).length<1"></div>
+      <mi-page-message-icon
+          id="noCerts"
+          img-path="/img/arkivtom.png"
+          msg-key="archived.message.nocerts"
+          ng-if="!errorMessage && doneLoading && (archivedCertificates | archived).length<1">
+      </mi-page-message-icon>
 
-      <div id="noCerts" class="alert alert-info" ng-show="doneLoading && (archivedCertificates | archived).length<1">
-        <span message key="error.noarchivedcerts"></span>
-      </div>
+      <mi-page-message-icon
+          id="errorMessage"
+          img-path="/img/404.png"
+          msg-key="{{errorMessage}}"
+          ng-if="doneLoading && errorMessage">
+      </mi-page-message-icon>
+
     </div>
   </div>
 </div>

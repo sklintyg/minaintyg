@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -34,22 +34,39 @@ import java.util.Map;
 public class ConfigResponse implements Serializable {
 
     // system properties
-    private String buildNumber;
     private boolean useMinifiedJavascript;
+
+    private String version;
+    private String buildNumber;
     private String elva77MainUrl;
     private String elva77LoginUrl;
+    private String applicationLogoutUrl;
+
     private List<UtlatandeRecipient> knownRecipients;
+
     private Map<String, DynamicLink> links;
 
-    public ConfigResponse(String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
-            List<UtlatandeRecipient> knownRecipients,
-            Map<String, DynamicLink> links) {
+    //CHECKSTYLE:OFF ParameterNumberCheck
+    public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
+            String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
+
+        this.version = version;
         this.buildNumber = buildNumber;
         this.useMinifiedJavascript = useMinifiedJavascript;
         this.elva77MainUrl = elva77MainUrl;
         this.elva77LoginUrl = elva77LoginUrl;
+        this.applicationLogoutUrl = applicationLogoutUrl;
         this.knownRecipients = knownRecipients;
         this.links = links;
+    }
+    //CHECKSTYLE:ON ParameterNumberCheck
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public String getBuildNumber() {
@@ -68,6 +85,10 @@ public class ConfigResponse implements Serializable {
         return elva77LoginUrl;
     }
 
+    public String getApplicationLogoutUrl() {
+        return applicationLogoutUrl;
+    }
+
     public List<UtlatandeRecipient> getKnownRecipients() {
         return knownRecipients;
     }
@@ -75,4 +96,5 @@ public class ConfigResponse implements Serializable {
     public Map<String, DynamicLink> getLinks() {
         return links;
     }
+
 }

@@ -1,0 +1,47 @@
+.faq-page {
+
+  .toggle {
+    display: inline-block;
+    margin-left: 20px;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .panel-title {
+    cursor: pointer;
+    font-size: $mi-font-size-h3;
+
+    .glyphicon {
+      margin-top: 3px;
+    }
+  }
+
+  h2 {
+    padding-top:30px;
+    i {
+      color: #333;
+      font-size: 18px;
+    }
+  }
+
+  .panel-heading {
+    border-bottom: 0;
+    background-color: #fff;
+    border-color: #E4E4E4;
+  }
+  .panel-default {
+    border-color: #E4E4E4;
+  }
+
+  .panel {
+    margin-bottom: 10px;
+  }
+
+  .panel-body {
+    padding: 0;
+
+    .panel-content {
+      margin: 0 15px 15px;
+    }
+  }
+}

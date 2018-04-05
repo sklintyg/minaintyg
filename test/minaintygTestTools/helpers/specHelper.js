@@ -97,5 +97,13 @@ module.exports = {
 
             angular.module('httpBackendMock', ['ngMockE2E']);
         });
+    },
+
+    waitForUrlPattern: function(pattern) {
+        browser.driver.wait(function() {
+            return browser.driver.getCurrentUrl().then(function(url) {
+                return new RegExp(pattern).test(url);
+            });
+        }, 10000);
     }
 };

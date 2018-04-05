@@ -179,6 +179,13 @@
         "statuses": {
           "type": "array",
           "items": {}
+        },
+        "events": {
+          "type": "array",
+          "items": {}
+        },
+        "isReplaced": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false,
@@ -190,7 +197,9 @@
         "careunitName",
         "sentDate",
         "archived",
-        "statuses"
+        "statuses",
+        "events",
+        "isReplaced"
       ]
     }
   },

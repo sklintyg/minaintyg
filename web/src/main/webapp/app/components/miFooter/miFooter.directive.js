@@ -17,37 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miScrollToTopLink', function($window) {
+angular.module('minaintyg').directive('miFooter', [
+    '$window', '$state', 'common.dialogService',
+    function($window, $state, dialogService) {
     'use strict';
 
     return {
         restrict: 'E',
         scope: {},
-        templateUrl: '/app/components/miScrollToTopLink/miScrollToTopLink.directive.html',
+        templateUrl: '/app/components/miFooter/miFooter.directive.html',
         link: function($scope) {
 
-            $scope.vm = {
-                visible: false
+            $scope.openCookieDialog = function(){
+                dialogService.showDialog($scope, {
+                    dialogId: 'cookie-footer-dialog',
+                    titleId: 'footer.cookies.modal.title',
+                    bodyTextId: 'footer.cookies.modal.body',
+                    button1click: function() {},
+                    button1id: 'cookie-button-close',
+                    button1text: 'common.close',
+                    button2visible: false,
+                    autoClose: true
+                });
             };
-
-            $scope.scrollToTop = function() {
-                $('body, html').animate({
-                    scrollTop: 0
-                }, 500);
-            };
-
-            function updateVisibility() {
-                $scope.vm.visible = $(window).scrollTop() > 0;
-            }
-
-            updateVisibility();
-
-            angular.element($window).on('resize scroll', function() {
-                updateVisibility();
-                //update angular scope
-                $scope.$apply();
-            });
-
         }
     };
-});
+}]);

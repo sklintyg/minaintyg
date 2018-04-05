@@ -4,7 +4,8 @@ mi-header {
   // Define local variables for directive
   $mi-header-bg: #21263D;
   $mi-header-text-color: #fff;
-  $mi-header-link-color: #FFF0C3;
+  $mi-header-link-color: #F5CBA3;
+  $mi-header-logout-link-color: #FFF0C3;
   $mi-header-height: 80px;
 
   //Set default values of directive
@@ -15,12 +16,12 @@ mi-header {
   .mi-header-col {
     height: $mi-header-height;
 
-    @media (max-width: 768px) {
-       height: $mi-header-height*0.75;
-       &.user-info > div {
-         top:30%;
-       }
+    @media (max-width: $screen-xs-max) {
+      height: $mi-header-height * 0.75;
+      &.user-info > div {
+        top: 30%;
       }
+    }
 
     //Vertically align column content
     > div {
@@ -44,8 +45,28 @@ mi-header {
 
     a {
       color: $mi-header-link-color;
+
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .user-logout {
+    text-align: right;
+    a {
+      color: $mi-header-logout-link-color;
+
+      &:hover {
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
       }
     }
   }
