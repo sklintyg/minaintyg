@@ -39,6 +39,7 @@
 
     <import resource="classpath*:module-config.xml" />
     <import resource="classpath*:mi-module-cxf-servlet.xml" />
+    <import resource="classpath*:/basic-cache-config.xml" />
     <import resource="classpath*:pu-services-config.xml" />
     <import resource="classpath*:/pu-ignite-config.xml" />
 
