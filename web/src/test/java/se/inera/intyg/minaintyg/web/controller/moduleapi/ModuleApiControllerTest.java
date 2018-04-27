@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import se.inera.intyg.common.support.model.UtkastStatus;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -122,7 +123,7 @@ public abstract class ModuleApiControllerTest {
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(false))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
+        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(UtkastStatus.SIGNED))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
@@ -153,7 +154,7 @@ public abstract class ModuleApiControllerTest {
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
-        when(moduleApi.pdfEmployer(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(List.class), eq(false)))
+        when(moduleApi.pdfEmployer(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(List.class), eq(UtkastStatus.SIGNED)))
                 .thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
 
         Citizen citizen = mockCitizen();
@@ -171,7 +172,7 @@ public abstract class ModuleApiControllerTest {
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
-        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(false))).thenThrow(new ModuleSystemException("error"));
+        when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(UtkastStatus.SIGNED))).thenThrow(new ModuleSystemException("error"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
