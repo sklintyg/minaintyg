@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: minaintyg
+  name: minaintyg
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 5005-tcp
+    port: 5005
+    protocol: TCP
+    targetPort: 5005
+  selector:
+    deploymentconfig: minaintyg
+  sessionAffinity: None
+  type: ClusterIP

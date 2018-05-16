@@ -1,0 +1,748 @@
+apiVersion: v1
+data:
+  texterMU_LISJP_v1.0.properties: |
+    #Properties for LISJP 1.0 pdf generation
+
+    formId=FK 7804 (001 F 001) Fastst\u00E4lld av F\u00F6rs\u00E4kringskassan
+    blankettId=7804
+    blankettVersion=01
+  texterMU_LISJP_v1.0.xml: >
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+    <texter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    giltigFrom="2016-10-25" typ="LISJP" version="1.0"
+    xsi:schemaLocation="http://schema.forsakringskassan.se/vardgivare_sjukvard/texterMU_v1.0.xsd"
+    xmlns="http://schema.forsakringskassan.se/vardgivare_sjukvard">
+
+    <text id="DFR_1.3.RBK">Ange vad annat är</text>
+
+    <text id="DFR_17.1.HLP">Ge konkreta exempel på situationer och aktiviteter i
+    patientens sysselsättning där svårigheter uppstår. Beskriv hur ofta dessa
+    situationer uppstår och graden av svårigheterna.
+
+
+    Beskriv hur du själv har observerat begränsningarna. Om uppgiften baseras på
+    anamnes/intervju eller någon annans observationer anger du det.
+
+
+    Ange även om det finns någon typ av aktivitet som patienten bör undvika på
+    grund av betydande medicinsk risk eller allvarlig olycksrisk.</text>
+
+    <text id="DFR_17.1.RBK">Beskriv vad patienten inte kan göra på grund av sin
+    sjukdom. Ange vad uppgiften grundas på.</text>
+
+    <text id="DFR_19.1.RBK">Ange vad syftet är och om möjligt tidplan samt
+    ansvarig vårdenhet.</text>
+
+    <text id="DFR_20.1.RBK">Ange vad syftet är och om möjligt tidplan samt
+    ansvarig vårdenhet.</text>
+
+    <text id="DFR_26.1.RBK">Jag önskar att Försäkringskassan kontaktar
+    mig.</text>
+
+    <text id="DFR_26.2.RBK">Ange gärna varför du vill ha kontakt.</text>
+
+    <text id="DFR_33.2.RBK">Beskriv medicinska skäl till annan förläggning av
+    arbetstiden</text>
+
+    <text id="DFR_35.1.HLP">Ange observerade nedsättningar (direkt och
+    indirekt), exempelvis
+
+    -   avvikelser i somatiskt och psykiskt status
+
+    -   röntgen- och laboratoriefynd
+
+    -   resultat av kliniskt fysiologiska undersökningar
+
+    -   andra testresultat, exempelvis neuropsykologiska.
+
+
+    Vid psykisk sjukdom, ange förutom basalt psykiskt status även den del av
+    anamnesen som du bedömer talar för ett psykiatriskt tillstånd.</text>
+
+    <text id="DFR_35.1.RBK">Beskriv undersökningsfynd, testresultat och
+    observationer</text>
+
+    <text id="DFR_6.2.RBK">Diagnoskod enligt  ICD-10 SE</text>
+
+    <text id="FRG_1.HLP">Enligt Socialstyrelsens föreskrifter (SOSFS 2005:29) om
+    utfärdande av intyg inom hälso- och sjukvården med mera ska ett intyg som
+    regel utfärdas efter en personlig undersökning av intygspersonen. Om ett
+    intyg inte grundas på en personlig undersökning, ska skälet till detta anges
+    i intyget.
+
+
+    Att intyget grundas på det som framkommit vid en personlig undersökning är
+    också viktigt för att Försäkringskassan ska kunna bedöma om din patient har
+    rätt till sjukpenning.
+
+
+    Om intyget inte grundas på en personlig undersökning ska du förklara under
+    "Övriga upplysningar" hur du ändå har kunnat bedöma din patients
+    sjukdomstillstånd och arbetsförmåga.</text>
+
+    <text id="FRG_1.RBK">Intyget är baserat på</text>
+
+    <text id="FRG_17.RBK">Aktivitetsbegränsning</text>
+
+    <text id="FRG_19.RBK">Pågående medicinska behandlingar/åtgärder</text>
+
+    <text id="FRG_20.RBK">Planerade medicinska behandlingar/åtgärder. </text>
+
+    <text id="FRG_25.RBK">Övriga upplysningar</text>
+
+    <text id="FRG_26.HLP">Försäkringskassans handläggare tar kontakt med dig när
+    underlaget har kommit in och handläggningen kan påbörjas.</text>
+
+    <text id="FRG_26.RBK">Kontakt med Försäkringskassan</text>
+
+    <text id="FRG_27.RBK">Avstängning enligt smittskyddslagen på grund av
+    smitta. (Fortsätt till frågorna "Diagnos" och "Nedsättning av
+    arbetsförmåga".)</text>
+
+    <text id="FRG_28.HLP">Om du kryssar i flera val är det viktigt att du
+    tydliggör under "Övriga upplysningar" om sjukskrivningens omfattning eller
+    period skiljer sig åt mellan olika sysselsättningar.</text>
+
+    <text id="FRG_28.RBK">I relation till vilken sysselsättning bedömer du
+    arbetsförmågan?</text>
+
+    <text id="FRG_29.RBK">Ange yrke och arbetsuppgifter</text>
+
+    <text id="FRG_30.HLP">Denna ruta markeras när patienten deltar i ett
+    arbetsmarknadspolitiskt program som Arbetsförmedlingen beslutat om. Det ska
+    tydligt framgå vad patienten har för aktivitet i programmet och vad
+    arbetsuppgifterna består av.</text>
+
+    <text id="FRG_30.RBK">Ange aktiviteter i det arbetsmarknadspolitiska
+    programmet</text>
+
+    <text id="FRG_32.HLP">Utgångspunkten är att patientens arbetsförmåga ska
+    bedömas i förhållande till hens normala arbetstid.</text>
+
+    <text id="FRG_32.RBK">Min bedömning av patientens nedsättning av
+    arbetsförmågan</text>
+
+    <text id="FRG_33.HLP">Frågorna besvaras endast vid partiellt nedsatt
+    arbetsförmåga.</text>
+
+    <text id="FRG_33.RBK">Finns det medicinska skäl att förlägga arbetstiden på
+    något annat sätt än att minska arbetstiden lika mycket varje dag?</text>
+
+    <text id="FRG_34.RBK">Resor till och från arbetet med annat färdmedel än
+    normalt kan göra det möjligt för patienten att återgå till arbetet under
+    sjukskrivningsperioden.</text>
+
+    <text id="FRG_35.RBK">Funktionsnedsättning</text>
+
+    <text id="FRG_37.HLP"> - Om sjukdomen inte följer förväntat förlopp ska det
+    framgå på vilket sätt.
+     - Om det inträffar komplikationer som gör att det tar längre tid att återfå arbetsförmåga ska du beskriva komplikationerna eller sjukdomstillstånden och skriva en förklaring till varför dessa fördröjer tillfrisknandet.
+     - Om sjukskrivningstidens längd påverkas av flera sjukdomar som orsakar en längre period med aktivitetsbegränsning än varje sjukdom för sig, samsjuklighet, ska du beskriva och förklara detta.</text>
+    <text id="FRG_37.RBK">Patientens arbetsförmåga bedöms nedsatt längre tid än
+    den som Socialstyrelsens försäkringsmedicinska beslutsstöd anger, därför
+    att</text>
+
+    <text id="FRG_39.HLP">En viktig information för att underlätta
+    planeringen.</text>
+
+    <text id="FRG_39.RBK">Prognos för arbetsförmåga utifrån aktuellt
+    undersökningstillfälle</text>
+
+    <text id="FRG_40.RBK">Här kan du ange åtgärder som du tror skulle göra det
+    lättare för patienten att återgå i arbete</text>
+
+    <text id="FRG_44.RBK">Här kan du ange fler åtgärder. Du kan också beskriva
+    hur åtgärderna kan underlätta återgång i arbete.</text>
+
+    <text id="FRG_6.HLP">Ange vilken eller vilka sjukdomar som orsakar nedsatt
+    arbetsförmåga. Den sjukdom som påverkar arbetsförmågan mest anges först.
+    Diagnoskoden anges alltid med så många positioner som möjligt.
+
+
+    Om patienten har fler än tre sjukdomar som påverkar arbetsförmågan anges
+    dessa under "övriga upplysningar".</text>
+
+    <text id="FRG_6.RBK">Diagnos/diagnoser för sjukdom som orsakar nedsatt
+    arbetsförmåga</text>
+
+    <text id="FRM_1.RBK">Vad är sjukpenning?
+
+    Sjukpenning är en ersättning för personer som arbetar i Sverige och har en
+    nedsatt arbetsförmåga på grund av sjukdom. Beroende på hur mycket
+    arbetsförmågan är nedsatt kan man få en fjärdedels, halv, tre fjärdedels
+    eller hel sjukpenning.
+
+
+    Andra förmåner som detta läkarintyg används till
+
+    Om du stänger av patienten enligt smittskyddslagen ska du även använda detta
+    intyg
+
+    Om din patient får ersättning aktivitetsstöd eller utvecklingsersättning för
+    deltagande i arbetsmaknadspolitiskt program ska du även använda detta
+    intyg.</text>
+
+    <text id="FRM_2.RBK">Om du inte känner patienten ska hen styrka sin
+    identitet genom legitimation med foto (SOSFS 2005:29).
+
+
+    Vad är sjukpenning?
+
+    Sjukpenning är en ersättning för personer som har en nedsatt arbetsförmåga
+    på grund av sjukdom. Beroende på hur mycket arbetsförmågan är nedsatt kan
+    man få en fjärdedels, halv, tre fjärdedels eller hel sjukpenning.
+
+
+    Förutsättningar för att få sjukpenning
+
+    Arbetsförmågan bedöms i förhållande till personens sysselsättning som kan
+    vara nuvarande arbete, föräldraledighet för vård av barn eller deltagande i
+    arbetsmarknadspolitiskt program. För personer som är arbetslösa bedöms
+    arbetsförmågan i förhållandet till att utföra sådant arbete som är normalt
+    förekommande på arbetsmarknaden.
+
+
+    Förutsättningar förutom nedsatt arbetsförmåga är att tillhöra svensk
+    socialförsäkring och ha inkomst från arbete. Försäkringskassan beslutar hur
+    mycket sjukpenning personen kan få.
+
+
+    Från den åttonde dagen i en sjukperiod måste det finnas ett läkarintyg.
+    Läkarintyget ska tydligt beskriva hur patientens sjukdom påverkar patientens
+    förmåga att utföra sin sysselsättning.
+
+
+    Studerande
+
+    En person kan få behålla sitt studiemedel om förmågan att studera är helt
+    nedsatt. Försäkringskassan bedömer i vilken omfattning förmågan bedöms
+    nedsatt.
+
+
+    Den som ansöker om att få behålla sitt studiemedel ska från och med den
+    femtonde dagen i sjukperioden styrka sin nedsatta studieförmåga med ett
+    läkarintyg.
+
+
+    Deltagande i arbetsmarknadspolitiskt program
+
+    En person kan få behålla sin ersättning (aktivitetsstöd eller
+    utvecklingsersättning) om förmågan att delta i sitt arbetsmarknadspolitiska
+    program är nedsatt. Förmågan ska då vara nedsatt gentemot de aktiviteter som
+    personen utför i sitt arbetsmarknadspolitiska program. Försäkringskassan
+    bedömer i vilken omfattning förmågan är nedsatt.
+
+
+    Den som ansöker om aktivitetsstöd vid sjukdom ska från och med den åttonde
+    dagen i sjukperioden styrka sin nedsatta arbetsförmåga med ett läkarintyg.
+
+
+    Smittbärarpenning
+
+    En person kan få ersättning om hen måste avstå från sin sysselsättning på
+    grund av läkarens beslut om avstängning enligt smittskyddslagen eller
+    läkarundersökning alternativt hälsokontroll som syftar till att klarlägga
+    sjukdom, smitta, sår eller annan skada som gör att hen inte får hantera
+    livsmedel.
+
+
+    Den som ansöker om smittbärarpenning ska skicka med ett läkarintyg.
+
+
+    Mer om Bedömning av arbetsförmåga
+
+    Försäkringskassan bedömer arbetsförmågan enligt rehabiliteringskedjan, som
+    innebär följande:
+
+    - Under de första 90 dagarna som patienten är sjukskriven kan
+    Försäkringskassan betala sjukpenning om patienten inte kan utföra sitt
+    vanliga arbete eller ett annat tillfälligt arbete hos sin arbetsgivare.
+
+    - Efter 90 dagar kan Försäkringskassan betala sjukpenning om patienten inte
+    kan utföra något arbete alls hos sin arbetsgivare.
+
+    - Efter 180 dagar kan Försäkringskassan betala ut sjukpenning om patienten
+    inte kan utföra sådant arbete som är normalt förekommande på
+    arbetsmarknaden. Men detta gäller inte om Försäkringskassan bedömer att
+    patienten med stor sannolikhet kommer att kunna gå tillbaka till ett arbete
+    hos sin arbetsgivare före dag 366. I dessa fall bedöms arbetsförmågan i
+    förhållande till ett arbete hos arbetsgivaren även efter dag 180. Regeln
+    gäller inte heller om det kan anses oskäligt att bedöma patientens
+    arbetsförmåga i förhållande till arbete som är normalt förekommande på
+    arbetsmarknaden.
+
+    - Efter 365 dagar kan Försäkringskassan betala ut sjukpenning om patienten
+    inte kan utföra sådant arbete som är normalt förekommande på
+    arbetsmarknaden. Undantag från detta kan göras om det kan anses oskäligt att
+    bedöma patientens arbetsförmåga i förhållande till sådant arbete som normalt
+    förekommer på arbetsmarknaden.
+
+
+    Rehabiliteringskedjan gäller fullt ut bara för den som har en anställning.
+
+
+    Egna företagares arbetsförmåga bedöms i förhållande till de vanliga
+    arbetsuppgifterna fram till och med dag 180. Sedan bedöms arbetsförmågan i
+    förhållande till sådant arbete som normalt förekommer på arbetsmarknaden.
+
+
+    För arbetslösa bedöms arbetsförmågan i förhållande till arbeten som normalt
+    förekommer på arbetsmarknaden redan från första dagen i sjukperioden.</text>
+
+    <text id="KAT_1.RBK">Grund för medicinskt underlag</text>
+
+    <text id="KAT_10.HLP">Fylls i om hon eller han måste avstå från sitt arbete
+    på grund av:
+
+    - Intygsskrivande läkares beslut enligt smittskyddslagen
+
+    - Läkarundersökning eller hälsokontroll som syftar till att klarlägga om hon
+    eller han är smittad av en allmänfarlig sjukdom eller om personen har en
+    sjukdom, en smitta, ett sår eller annan skada som gör att hon eller han inte
+    får hantera livsmedel.</text>
+
+    <text id="KAT_10.RBK">Smittbärarpenning</text>
+
+    <text id="KAT_2.RBK">Sysselsättning</text>
+
+    <text id="KAT_3.RBK">Diagnos</text>
+
+    <text id="KAT_4.RBK">Sjukdomens konsekvenser för patienten</text>
+
+    <text id="KAT_5.RBK">Medicinsk behandling</text>
+
+    <text id="KAT_6.RBK">Bedömning</text>
+
+    <text id="KAT_7.RBK">Åtgärder</text>
+
+    <text id="KAT_8.RBK">Övriga upplysningar</text>
+
+    <text id="KAT_9.RBK">Kontakt</text>
+
+    <text id="KV_FKMU_0001.ANNAT.RBK">Annat</text>
+
+    <text id="KV_FKMU_0001.JOURNALUPPGIFTER.RBK">Journaluppgifter från
+    den</text>
+
+    <text id="KV_FKMU_0001.TELEFONKONTAKT.RBK">Min telefonkontakt med
+    patienten</text>
+
+    <text id="KV_FKMU_0001.UNDERSOKNING.RBK">Min undersökning av
+    patienten</text>
+
+    <text id="KV_FKMU_0002.ARBETSSOKANDE.RBK">Arbetssökande - att utföra sådant
+    arbete som är normalt förekommande på arbetsmarknaden</text>
+
+    <text id="KV_FKMU_0002.FORALDRALEDIG.RBK">Föräldraledighet för vård av
+    barn</text>
+
+    <text id="KV_FKMU_0002.NUVARANDE_ARBETE.RBK">Nuvarande arbete</text>
+
+    <text id="KV_FKMU_0002.PROGRAM.RBK">Deltagande i arbetsmarknadspolitiskt
+    program</text>
+
+    <text id="KV_FKMU_0002.STUDIER.RBK">Studier</text>
+
+    <text id="KV_FKMU_0003.EN_FJARDEDEL.RBK">25 procent</text>
+
+    <text id="KV_FKMU_0003.HALFTEN.RBK">50 procent</text>
+
+    <text id="KV_FKMU_0003.HELT_NEDSATT.RBK">100 procent</text>
+
+    <text id="KV_FKMU_0003.TRE_FJARDEDEL.RBK">75 procent</text>
+
+    <text id="KV_FKMU_0004.ARBETSANPASSNING.RBK">Arbetsanspassning</text>
+
+    <text id="KV_FKMU_0004.ARBETSTRANING.RBK">Arbetsträning</text>
+
+    <text id="KV_FKMU_0004.BESOK_ARBETSPLATS.RBK">Besök på arbetsplatsen</text>
+
+    <text id="KV_FKMU_0004.EJ_AKTUELLT.RBK">Inte aktuellt</text>
+
+    <text id="KV_FKMU_0004.ERGONOMISK.RBK">Ergonomisk bedömning</text>
+
+    <text id="KV_FKMU_0004.HJALPMEDEL.RBK">Hjälpmedel</text>
+
+    <text id="KV_FKMU_0004.KONFLIKTHANTERING.RBK">Konflikthantering</text>
+
+    <text id="KV_FKMU_0004.KONTAKT_FHV.RBK">Kontakt med företagshälsovård</text>
+
+    <text id="KV_FKMU_0004.OMFORDELNING.RBK">Omfördelning av
+    arbetsuppgifter</text>
+
+    <text id="KV_FKMU_0004.OVRIGA_ATGARDER.RBK">Övrigt</text>
+
+    <text id="KV_FKMU_0004.SOKA_NYTT_ARBETE.RBK">Söka nytt arbete</text>
+
+    <text id="KV_FKMU_0006.ATER_X_ANTAL_DGR.RBK">Patienten kommer med stor
+    sannolikhet att kunna återgå helt i nuvarande sysselsättning inom</text>
+
+    <text id="KV_FKMU_0006.PROGNOS_OKLAR.RBK">Återgång i nuvarande
+    sysselsättning är oklar.</text>
+
+    <text id="KV_FKMU_0006.SANNOLIKT_INTE.RBK">Patienten kommer med stor
+    sannolikhet inte att kunna återgå helt i nuvarande sysselsättning inom 12
+    månader.</text>
+
+    <text id="KV_FKMU_0006.STOR_SANNOLIKHET.RBK">Patienten kommer med stor
+    sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna
+    sjukskrivning.</text>
+
+    <text id="KV_FKMU_0007.HUNDRAATTIO_DAGAR.RBK">6 månader.</text>
+
+    <text id="KV_FKMU_0007.NITTIO_DGR.RBK">3 månader.</text>
+
+    <text id="KV_FKMU_0007.SEXTIO_DGR.RBK">2 månader.</text>
+
+    <text id="KV_FKMU_0007.TREHUNDRASEXTIOFEM_DAGAR.RBK">12 månader.</text>
+
+    <text id="KV_FKMU_0007.TRETTIO_DGR.RBK">1 månad.</text>
+
+     <!-- Manuellt tillagda tilläggsfrågor så att vi kan testa den funktionaliteten -->
+     <text id="KAT_9999.RBK">Tilläggsfrågor</text>
+     <text id="KAT_9999.HLP">TBD</text>
+
+     <tillagg>
+      <tillaggsfraga id="9001">
+       <text id="DFR_9001.1.RBK">Tycker du att denna tilläggsfråga är meningfull?</text>
+       <text id="DFR_9001.1.HLP">Beskriv i detalj varför du anser detta. Ge exempel på värdet det tillför patienten.
+       </text>
+      </tillaggsfraga>
+      <tillaggsfraga id="9002">
+       <text id="DFR_9002.1.RBK">Är raktvål bättre än rakskum?</text>
+       <text id="DFR_9002.1.HLP">Motivera varför och hur detta påverkar patientens vardag.</text>
+      </tillaggsfraga>
+     </tillagg>
+
+    </texter>
+  texterMU_LUAE_FS_v1.0.properties: |
+    #Properties for LUAE_FS 1.0 pdf generation
+
+    formId=FK 7802 (001 F 001) Fastst\u00E4lld av F\u00F6rs\u00E4kringskassan
+    blankettId=7802
+    blankettVersion=01
+  texterMU_LUAE_FS_v1.0.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\r\n<texter xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" giltigFrom=\"2016-11-29\" typ=\"LUAE_FS\" version=\"1.0\" xsi:schemaLocation=\"http://schema.forsakringskassan.se/vardgivare_sjukvard/texterMU_v1.0.xsd\" xmlns=\"http://schema.forsakringskassan.se/vardgivare_sjukvard\">\r\n<text id=\"DFR_1.3.RBK\">Ange vad annat är:</text>\r\n<text id=\"DFR_26.1.RBK\">Jag önskar att Försäkringskassan kontaktar mig</text>\r\n<text id=\"DFR_26.2.RBK\">Ange gärna varför du vill ha kontakt</text>\r\n<text id=\"DFR_4.3.HLP\">Skriv exempelvis Neuropsykiatriska kliniken på X-stads sjukhus eller om patienten själv kommer att bifoga utredningen till sin ansökan.</text>\r\n<text id=\"DFR_4.3.RBK\">Från vilken vårdgivare kan Försäkringskassan hämta information om utredningen/underlaget?</text>\r\n<text id=\"DFR_6.2.RBK\">Diagnoskod enligt ICD-10 SE</text>\r\n<text id=\"FRG_1.RBK\">Utlåtandet är baserat på</text>\r\n<text id=\"FRG_15.RBK\">Beskriv när och hur patientens funktionsnedsättning debuterat, utvecklats och visar sig för närvarande</text>\r\n<text id=\"FRG_16.HLP\">Beskriv om det finns ett direkt samband mellan funktionsnedsättningen och behovet av förlängd skolgång och att det inte finns några andra skäl än rent medicinska som är orsaken till de förlängda studierna.\r\nFunktionsnedsättning behöver inte finnas kvar när studierna påbörjas,\r\ndet är tillräckligt att den orsakat behovet av förlängd skolgång.</text>\r\n<text id=\"FRG_16.RBK\">Beskriv på vilket sätt funktionsnedsättningen påverkar eller har påverkat patientens förmåga att klara sin skolgång</text>\r\n<text id=\"FRG_2.RBK\">Jag har känt patienten sedan den</text>\r\n<text id=\"FRG_25.RBK\">Övriga upplysningar</text>\r\n<text id=\"FRG_26.HLP\">Försäkringskassans handläggare tar kontakt med dig när underlaget har kommit in och handläggningen kan påbörjas.</text>\r\n<text id=\"FRG_26.RBK\">Kontakt med Försäkringskassan</text>\r\n<text id=\"FRG_3.RBK\">Är utlåtandet även baserat på andra medicinska utredningar eller underlag?</text>\r\n<text id=\"FRG_4.RBK\">Ange utredning eller underlag</text>\r\n<text id=\"FRG_6.RBK\">Diagnos/diagnoser för sjukdom som orsakar eller har orsakat funktionsnedsättning</text>\r\n<text id=\"FRM_1.RBK\">Vad är aktivitetsersättning vid förlängd skolgång?\r\nAktivitetsersättning vid förlängd skolgång är en ersättning för unga personer, som på grund av funktionsnedsättning måste förlänga sin skolgång för att slutföra grundskola eller gymnasium. Det är möjligt att ansöka om ersättning även om studietiden är kortare än ett år. Man kan få ersättningen från juli månad det år man fyller 19 år fram till och med månaden innan man fyller 30 år. Ersättningen betalas alltid ut som hel ersättning, även om studierna till följd av funktionsnedsättningen måste bedrivas på deltid.</text>\r\n<text id=\"FRM_2.RBK\">Vad är aktivitetsersättning vid förlängd skolgång?\r\nAktivitetsersättning vid förlängd skolgång är en ersättning för unga personer, som på grund av funktionsnedsättning måste förlänga sin skolgång för att slutföra grundskola eller gymnasium. Det är möjligt att ansöka om ersättning även om studietiden är kortare än ett år. Man kan få ersättningen från juli månad det år man fyller 19 år fram till och med månaden innan man fyller 30 år. Ersättningen betalas alltid ut som hel ersättning, även om studierna till följd av funktionsnedsättningen måste bedrivas på deltid.\r\n\r\nFörutsättningar för att få aktivitetsersättning vid förlängd skolgång.\r\nFörsäkringskassan bedömer om det finns ett direkt samband mellan funktionsnedsättningen och behovet av förlängd skolgång.\r\n\r\nDen som ansöker om aktivitetsersättning vid förlängd skolgång och studerar i ordinarie skolform ska, på begäran av Försäkringskassan, ge in ett medicinskt underlag som beskriver funktionsnedsättningen.\r\n\r\nOm du inte känner patienten ska hen styrka sin identitet genom legitimation med foto (SOSFS 2005:29).</text>\r\n<text id=\"KAT_1.RBK\">Grund för medicinskt underlag</text>\r\n<text id=\"KAT_3.RBK\">Diagnos</text>\r\n<text id=\"KAT_4.RBK\">Funktionsnedsättning</text>\r\n<text id=\"KAT_5.RBK\">Övrigt</text>\r\n<text id=\"KAT_6.RBK\">Kontakt</text>\r\n<text id=\"KV_FKMU_0001.ANHORIG.RBK\">Anhörigs beskrivning av patienten</text>\r\n<text id=\"KV_FKMU_0001.ANNAT.RBK\">Annat</text>\r\n<text id=\"KV_FKMU_0001.JOURNALUPPGIFTER.RBK\">Journaluppgifter från den</text>\r\n<text id=\"KV_FKMU_0001.UNDERSOKNING.RBK\">Min undersökning av patienten</text>\r\n<text id=\"KV_FKMU_0005.ARBETSTERAPEUT.RBK\">Underlag från arbetsterapeut</text>\r\n<text id=\"KV_FKMU_0005.FYSIOTERAPEUT.RBK\">Underlag från fysioterapeut</text>\r\n<text id=\"KV_FKMU_0005.HABILITERING.RBK\">Underlag från habiliteringen</text>\r\n<text id=\"KV_FKMU_0005.LOGOPED.RBK\">Underlag från logoped</text>\r\n<text id=\"KV_FKMU_0005.NEUROPSYKIATRISKT.RBK\">Neuropsykiatriskt utlåtande</text>\r\n<text id=\"KV_FKMU_0005.OVRIGT_UTLATANDE.RBK\">Övrigt</text>\r\n<text id=\"KV_FKMU_0005.PSYKOLOG.RBK\">Underlag från psykolog</text>\r\n<text id=\"KV_FKMU_0005.SKOLHALSOVARD.RBK\">Underlag från skolhälsovård</text>\r\n<text id=\"KV_FKMU_0005.SPECIALISTKLINIK.RBK\">Utredning av annan specialistklinik</text>\r\n<text id=\"KV_FKMU_0005.VARD_UTOMLANDS.RBK\">Utredning från vårdinrättning utomlands</text>\r\n\r\n  <!-- Manuellt tillagda tilläggsfrågor så att vi kan testa den funktionaliteten -->\r\n  <text id=\"KAT_9999.RBK\">Tilläggsfrågor</text>\r\n  <text id=\"KAT_9999.HLP\">TBD</text>\r\n\r\n  <tillagg>\r\n    <tillaggsfraga id=\"9001\">\r\n      <text id=\"DFR_9001.1.RBK\">Tycker du att denna tilläggsfråga är meningfull?</text>\r\n      <text id=\"DFR_9001.1.HLP\">Beskriv i detalj varför du anser detta. Ge exempel på värdet det tillför patienten.\r\n      </text>\r\n    </tillaggsfraga>\r\n    <tillaggsfraga id=\"9002\">\r\n      <text id=\"DFR_9002.1.RBK\">Är raktvål bättre än rakskum?</text>\r\n      <text id=\"DFR_9002.1.HLP\">Motivera varför och hur detta påverkar patientens vardag.</text>\r\n    </tillaggsfraga>\r\n  </tillagg>\r\n</texter>\r\n"
+  texterMU_LUAE_NA_v1.0.properties: |
+    #Properties for LUAE_NA 1.0 pdf generation
+
+    formId=FK 7801 (001 F 001) Fastst\u00E4lld av F\u00F6rs\u00E4kringskassan
+    blankettId=7801
+    blankettVersion=01
+  texterMU_LUAE_NA_v1.0.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\r\n<texter xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" giltigFrom=\"2016-11-29\" typ=\"LUAE_NA\" version=\"1.0\" xsi:schemaLocation=\"http://schema.forsakringskassan.se/vardgivare_sjukvard/texterMU_v1.0.xsd\" xmlns=\"http://schema.forsakringskassan.se/vardgivare_sjukvard\">\r\n<text id=\"DFR_1.3.RBK\">Ange vad annat är:</text>\r\n<text id=\"DFR_10.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"DFR_11.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"DFR_12.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"DFR_13.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"DFR_14.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"DFR_17.1.RBK\">Ge konkreta exempel</text>\r\n<text id=\"DFR_18.1.RBK\">Ange under vilka perioder de pågick och vilka resultat de gav. Ange även erbjudna men inte genomförda/avböjda behandlingar/åtgärder.</text>\r\n<text id=\"DFR_19.1.RBK\">Ange vad syftet är och om möjligt tidplan samt ansvarig vårdenhet</text>\r\n<text id=\"DFR_20.1.RBK\">Ange vad syftet är och om möjligt tidplan samt ansvarig vårdenhet</text>\r\n<text id=\"DFR_21.1.RBK\">Ordinerade läkemedel, alkohol, tobak och övriga substansintag</text>\r\n<text id=\"DFR_26.1.RBK\">Jag önskar att Försäkringskassan kontaktar mig</text>\r\n<text id=\"DFR_26.2.RBK\">Ange gärna varför du vill ha kontakt</text>\r\n<text id=\"DFR_4.3.HLP\">Skriv exempelvis Neuropsykiatriska kliniken på X-stads sjukhus eller om patienten själv kommer att bifoga utredningen till sin ansökan.</text>\r\n<text id=\"DFR_4.3.RBK\">Från vilken vårdgivare kan Försäkringskassan hämta information om utredningen/underlaget?</text>\r\n<text id=\"DFR_45.2.RBK\">Beskriv vilken eller vilka diagnoser som avses.</text>\r\n<text id=\"DFR_6.2.RBK\">Diagnoskod enligt ICD-10 SE</text>\r\n<text id=\"DFR_8.1.RBK\">Beskriv eventuella iakttagelser alternativt testresultat från psykologutredning</text>\r\n<text id=\"DFR_9.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\r\n<text id=\"FRG_1.RBK\">Underlaget är baserat på</text>\r\n<text id=\"FRG_10.HLP\">Uppmärksamhet, koncentration och exekutiv funktion\r\n\r\nFörmågan till uppmärksamhet handlar om att rikta sitt fokus på rätt sak vid rätt tillfälle samt att skifta, fördela och vidmakthålla uppmärksamhet. I förmågan ingår även en tidsaspekt. En person behöver viljemässigt kunna rikta sin uppmärksamhet under lång tid, alltså vara uthållig.\r\n\r\nMed exekutiv funktion avses förmågan att planera, initiera, genomföra, korrigera och avsluta en handling.\r\n\r\nExempel: Att rikta, reglera och uthålligt bevara uppmärksamheten är en stor svårighet för en person med ADHD/ADD. Tillfälliga svårigheter kan bero på sjukdom (till exempel sömnstörning, depression eller utmattning) eller skada (till exempel hjärnskakning) och uppkomma när som helst under livet.\r\nÄven svårigheter med exekutiva funktioner är vanliga vid ADHD/ADD men förekommer även vid andra tillstånd.</text>\r\n<text id=\"FRG_10.RBK\">Uppmärksamhet, koncentration och exekutiv funktion</text>\r\n<text id=\"FRG_11.HLP\">Annan psykisk funktion\r\n\r\nMed annan psykisk funktion avses övriga psykiska funktioner, som berör energinivå, förmågan till impulskontroll, motivation, omdöme, medvetenhet om det egna beteendet samt att vara orienterad till tid, plats, situation och person.\r\n\r\nExempel: I denna ruta kan till exempel affektiva svårigheter, svårigheter att reglera sitt temperament, beteendestörningar och missbruk ingå. Även påverkan på medvetande och orienteringsförmåga samt förvirring sekundärt till kroppslig sjukdom kan ingå.</text>\r\n<text id=\"FRG_11.RBK\">Annan psykisk funktion</text>\r\n<text id=\"FRG_12.HLP\">Sinnesfunktioner och smärta \r\nMed sinnesfunktion avses förmågan att tolka de fem sinnena, syn, hörsel, känsel, lukt och smak. Begreppet sinnesfunktion används oftast synonymt med perception. Man kan vara särskilt känslig och uppleva obehag\r\nvid ljud, ljus, temperatur, beröring, smak eller lukt eller vara mindre känslig.\r\n\r\nMed smärta avses här förnimmelse av obehaglig känsla som tyder på tänkbar eller faktisk skada i någon del av kroppen. Det innefattar förnimmelser av generell eller lokal smärta i en eller flera kroppsdelar, smärta i ett dermatom (hudavsnitt), huggande, brännande, molande smärta och värk samt funktionsnedsättningar såsom myalgi (muskelsmärta), analgesi (okänslighet för smärta) och hyperalgesi (överkänslighet för smärta).\r\n\r\nExempel: Avvikelser vad gäller sinnesfunktion (perception) är vanligt till exempel inom det neuropsykiatriska området men saknar ofta specifik medicinsk diagnos. Smärtproblematik är dock mycket vanligt och kan utgöra\r\nbåde en primär svårighet och sekundär till annan sjukdom.</text>\r\n<text id=\"FRG_12.RBK\">Sinnesfunktioner och smärta</text>\r\n<text id=\"FRG_13.HLP\">Balans, koordination och motorik\r\n\r\nMed balans avses kroppens balansfunktion och förnimmelse av kroppsställning (positionsuppfattning). Med koordination avses till exempel öga-handkoordination, gångkoordination och att samordna rörelser\r\nav armar och ben. Med motorik avses svårigheter med finmotorik, grovmotorik eller till exempel munmotorik.\r\n\r\nExempel: Svårigheter med dessa områden kan ha uppstått tidigt som till exempel vid en CP-skada eller uppkommit senare i livet till följd av till exempel en stroke eller neurologisk sjukdom.</text>\r\n<text id=\"FRG_13.RBK\">Balans, koordination och motorik</text>\r\n<text id=\"FRG_14.HLP\">Annan kroppslig funktion\r\n\r\nMed annan kroppslig funktion avses här avvikelser eller förlust i kroppsfunktion och fysiologiska funktioner utifrån ICF:s intentioner. Här beskrivs observerade funktionsnedsättningar (direkt/indirekt) med avvikelser i status men även sådana som framkommit i annan medicinsk utredning.\r\n\r\nExempel: Med annan kroppslig funktion avses konsekvenser av somatisk sjukdom som till exempel avvikelser i kroppsligt status, röntgen- och laboratoriefynd samt kliniskt fysiologiska undersökningar.</text>\r\n<text id=\"FRG_14.RBK\">Annan kroppslig funktion</text>\r\n<text id=\"FRG_17.HLP\">Ge konkreta exempel på situationer och aktiviteter i patientens sysselsättning där svårigheter uppstår. Beskriv\r\n-    hur ofta dessa situationer uppstår och graden av svårigheterna\r\n-    om begränsningarna har observerats själv eller av någon annan, till  \r\n      exempel i en testsituation, samt vad som är grundat på anamnes/intervju\r\n-    om det finns någon typ av aktivitet som patienten bör undvika på grund av\r\n      betydande medicinsk risk eller allvarlig olycksrisk.</text>\r\n<text id=\"FRG_17.RBK\">Aktivitetsbegränsningar - beskriv vad har patienten svårt att göra på grund av den eller de funktionsnedsättningar som beskrivs ovan?</text>\r\n<text id=\"FRG_18.RBK\">Avslutade medicinska behandlingar/åtgärder</text>\r\n<text id=\"FRG_19.RBK\">Pågående medicinska behandlingar/åtgärder</text>\r\n<text id=\"FRG_2.RBK\">Jag har känt patienten sedan den</text>\r\n<text id=\"FRG_20.RBK\">Planerade medicinska behandlingar/åtgärder</text>\r\n<text id=\"FRG_21.RBK\">Substansintag</text>\r\n<text id=\"FRG_22.HLP\">Särskilda arbetstider kan vara annan än ordinarie förläggning av arbetstiden, till skillnad från att minska arbetstiden lika mycket varje dag.</text>\r\n<text id=\"FRG_22.RBK\">Hur bedömer du att patientens medicinska förutsättningar för arbete, helt eller delvis, kan utvecklas över tid? Beskriv även om det finns medicinska skäl till särskilda arbetstider.</text>\r\n<text id=\"FRG_23.HLP\">Beskriv här om patienten har särskilt goda resurser inom något område eller har några speciella förmågor som kan tas till vara. Informationen är till för att hjälpa Försäkringskassan som, utöver att bedöma rätten till ersättning, även ansvarar för att samordna rehabilitering och andra aktiva insatser.</text>\r\n<text id=\"FRG_23.RBK\">Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar</text>\r\n<text id=\"FRG_24.HLP\">Exempel på vad som kan underlätta att komma ut i arbete:\r\n-    arbetsförberedande insatser\r\n-    delta i fysisk eller social träning\r\n-    olika lokala samverkansaktiviteter\r\n-    utbildningsinsatser\r\n-    olika typer av hjälpmedel.</text>\r\n<text id=\"FRG_24.RBK\">Beskriv eller lämna förslag på vad som kan underlätta för patienten att komma ut i arbete</text>\r\n<text id=\"FRG_25.RBK\">Övriga upplysningar</text>\r\n<text id=\"FRG_26.HLP\">Försäkringskassans handläggare tar kontakt med dig när underlaget har kommit in och handläggningen kan påbörjas.</text>\r\n<text id=\"FRG_26.RBK\">Kontakt med Försäkringskassan</text>\r\n<text id=\"FRG_3.RBK\">Är utlåtandet även baserat på andra medicinska utredningar eller underlag?</text>\r\n<text id=\"FRG_4.RBK\">Ange utredning eller underlag</text>\r\n<text id=\"FRG_45.HLP\">Möjliga anledningar kan vara:\r\n- att det var länge sedan utredningen gjordes\r\n- att ny bedömning har rekommenderats i tidigare utlåtande eller\r\n- att den kliniska bilden avviker från vad som kan förväntas utifrån ställd \r\n   diagnos</text>\r\n<text id=\"FRG_45.RBK\">Finns skäl till att revidera/uppdatera tidigare satt diagnos?</text>\r\n<text id=\"FRG_5.RBK\">Bakgrund - beskriv kortfattat förloppet för aktuella sjukdomar</text>\r\n<text id=\"FRG_6.HLP\">Ange diagnoser för sjukdom som orsakar nedsatt arbetsförmåga. Huvuddiagnosen för arbetsförmågans nedsättning anges först.</text>\r\n<text id=\"FRG_6.RBK\">Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga</text>\r\n<text id=\"FRG_7.RBK\">När och var ställdes diagnosen/diagnoserna?</text>\r\n<text id=\"FRG_8.HLP\">Intellektuell funktion\r\n\r\nMed intellektuell funktion, teoretisk begåvning eller intelligens avses förmågan att tänka logiskt. För att lösa ett problem på ett logiskt vis gör vi det genom att föreställa oss det i tankarna snarare än att pröva oss fram konkret.\r\n\r\nExempel: En vuxen som klarat skolgång med normalbetyg och klarar vardagliga krav i arbete och privatliv är i regel normalbegåvad. För en noggrannare nivåbedömning krävs testning utförd av psykolog.</text>\r\n<text id=\"FRG_8.RBK\">Intellektuell funktion</text>\r\n<text id=\"FRG_9.HLP\">Kommunikation och social interaktion\r\n\r\nMed kommunikation avses att kunna uttrycka och ta emot verbala, skrivna eller andra former av information/meddelanden.\r\n\r\nMed social interaktion avses förmågan att på ett teoretiskt plan sätta sig in i hur andra människor tänker och känner, även om man inte varit med om samma situation själv. Bristande förmåga till social interaktion leder lätt till missförstånd, konflikter och svårigheter med relationer i privatliv och arbetsliv.\r\n\r\nExempel: Svårigheter som till exempel uppmärksamhetsbrister, impulskontrollbrist, personlighetsstörningar och affektiva sjukdomar kan leda till svårigheter med social interaktion. Om svårigheterna med social interaktion är omfattande ställs diagnos inom det så kallade autismspektrat.</text>\r\n<text id=\"FRG_9.RBK\">Kommunikation och social interaktion</text>\r\n<text id=\"FRM_1.RBK\">Vad är aktivitetsersättning vid nedsatt arbetsförmåga?\r\nAktivitetsersättning vid nedsatt arbetsförmåga är en tidsbegränsad ersättning för unga personer som har nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning.\r\n\r\nMan kan få ersättningen från juli månad det år man fyller 19 år fram till och med månaden innan man fyller 30 år. Beroende på hur mycket arbetsförmågan är nedsatt kan man få en fjärdedels, halv, tre fjärdedels ellerhel aktivitetsersättning</text>\r\n<text id=\"FRM_2.RBK\">Vad är aktivitetsersättning vid nedsatt arbetsförmåga?\r\nAktivitetsersättning vid nedsatt arbetsförmåga är en tidsbegränsad ersättning för unga personer som har nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning.\r\n\r\nMan kan få ersättningen från juli månad det år man fyller 19 år fram till och med månaden innan man fyller 30 år. Beroende på hur mycket arbetsförmågan är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel aktivitetsersättning.\r\n\r\nFörutsättningar för att få aktivitetsersättning vid nedsatt arbetsförmåga.\r\nFörsäkringskassan bedömer arbetsförmågan i förhållande till alla arbeten på hela arbetsmarknaden, alltså även till särskilt anpassade arbeten och anställningar med lönebidrag. Man kan få aktivitetsersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent under minst ett år.\r\nDen som ansöker om aktivitetsersättning ska skicka med ett läkarutlåtande. I ett pågående sjukpenningärende kan också Försäkringskassan på eget initiativ begära ett läkarutlåtande från behandlande läkare.\r\n\r\nOm du inte känner patienten ska hen styrka sin identitet genom legitimation med foto (SOSFS 2005:29).</text>\r\n<text id=\"KAT_1.RBK\">Grund för medicinskt underlag</text>\r\n<text id=\"KAT_10.RBK\">Kontakt</text>\r\n<text id=\"KAT_3.RBK\">Bakgrund</text>\r\n<text id=\"KAT_4.RBK\">Diagnos</text>\r\n<text id=\"KAT_5.HLP\">Ange observerade nedsättningar (direkt och indirekt)\r\n- avvikelser i somatiskt och psykiskt status\r\n- röntgen- och laboratoriefynd\r\n- resultat av kliniskt fysiologiska undersökningar\r\n- andra testresultat, exempelvis neuropsykologiska.\r\n\r\nVid psykisk sjukdom, ange förutom basalt psykiskt status även den del av anamnesen som läkaren bedömer tala för ett psykiatriskt tillstånd.\r\n\r\nKällhänvisning funktionsområden\r\nFunktionsområdenas hjälptexter följer väsentligen ICF men då kategorierna i läkarutlåtandena är färre har vissa förenklingar gjorts. Texterna avseende de psykiska funktionsområdena är till största del hämtade ur boken \"Neuropsykiatriska funktioner hos barn, ungdomar och unga vuxna\".\r\nBoken är skriven av psykolog Viveca Ernmark i utbildningssyfte för Försäkringskassan.</text>\r\n<text id=\"KAT_5.RBK\">Funktionsnedsättningar</text>\r\n<text id=\"KAT_6.RBK\">Aktivitetsbegränsningar</text>\r\n<text id=\"KAT_7.RBK\">Medicinsk behandling</text>\r\n<text id=\"KAT_8.RBK\">Medicinska förutsättningar för arbete</text>\r\n<text id=\"KAT_9.RBK\">Övrigt</text>\r\n<text id=\"KV_FKMU_0001.ANHORIG.RBK\">Anhörigs beskrivning av patienten</text>\r\n<text id=\"KV_FKMU_0001.ANNAT.RBK\">Annat</text>\r\n<text id=\"KV_FKMU_0001.JOURNALUPPGIFTER.RBK\">Journaluppgifter från den</text>\r\n<text id=\"KV_FKMU_0001.UNDERSOKNING.RBK\">Min undersökning av patienten</text>\r\n<text id=\"KV_FKMU_0005.ARBETSTERAPEUT.RBK\">Underlag från arbetsterapeut</text>\r\n<text id=\"KV_FKMU_0005.FORETAGSHALSOVARD.RBK\">Underlag från företagshälsovård</text>\r\n<text id=\"KV_FKMU_0005.FYSIOTERAPEUT.RBK\">Underlag från fysioterapeut</text>\r\n<text id=\"KV_FKMU_0005.HABILITERING.RBK\">Underlag från habiliteringen</text>\r\n<text id=\"KV_FKMU_0005.LOGOPED.RBK\">Underlag från logoped</text>\r\n<text id=\"KV_FKMU_0005.NEUROPSYKIATRISKT.RBK\">Neuropsykiatriskt utlåtande</text>\r\n<text id=\"KV_FKMU_0005.OVRIGT_UTLATANDE.RBK\">Övrigt</text>\r\n<text id=\"KV_FKMU_0005.PSYKOLOG.RBK\">Underlag från psykolog</text>\r\n<text id=\"KV_FKMU_0005.SKOLHALSOVARD.RBK\">Underlag från skolhälsovård</text>\r\n<text id=\"KV_FKMU_0005.SPECIALISTKLINIK.RBK\">Utredning av annan specialistklinik</text>\r\n<text id=\"KV_FKMU_0005.VARD_UTOMLANDS.RBK\">Utredning från vårdinrättning utomlands</text>\r\n</texter>\r\n"
+  texterMU_LUSE_EXEMPEL.properties: |
+    #Properties for LUSE EXEMPEL pdf generation
+
+    formId=FK 7800 (001 F 001) Fastst\u00E4lld av F\u00F6rs\u00E4kringskassan
+    blankettId=7800
+    blankettVersion=01
+  texterMU_LUSE_EXEMPEL.xml: >-
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <texter typ="LUSE" giltigFrom="2015-12-15" version="0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.forsakringskassan.se/vardgivare_sjukvard
+    texterMU_v1.0.xsd"
+    xmlns="http://schema.forsakringskassan.se/vardgivare_sjukvard">
+
+      <!-- Text före val av elektroniskt formulär -->
+      <text id="FRM_1">Vad är sjukersättning? Sjukersättning är en ersättning för personer mellan 30 och 64 år som har
+        nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning. Beroende på hur mycket arbetsförmågan
+        är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel sjukersättning. Man kan få sjukersättning om
+        Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig framtid och att
+        alla rehabiliteringsmöjligheter är uttömda.
+      </text>
+      <!-- Text efter val av elektroniskt formulär, visas tillsammans med formulärat -->
+      <text id="FRM_2">Vad är sjukersättning? Sjukersättning är en ersättning för personer mellan 30 och 64 år som har
+        nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning. Beroende på hur mycket arbetsförmågan
+        är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel sjukersättning.
+
+        Förutsättningar för att få sjukersättning Försäkringskassan bedömer arbetsförmågan i förhållande till alla arbeten
+        på hela arbetsmarknaden, alltså även till särskilt anpassade arbeten och anställningar med lönebidrag. Man kan få
+        sjukersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig
+        framtid och att alla rehabiliteringsmöjligheter är uttömda. Den som ansöker om sjukersättning ska skicka med ett
+        läkarutlåtande. I pågående sjukpenningärende kan också Försäkringskassan på eget initiativ begära ett läkarutlåtande
+        från behandlande läkare.
+      </text>
+
+      <!--
+      ===============================================
+      KATEGORI 1: Grund för medicinskt underlag
+      ===============================================
+      -->
+      <text id="KAT_1.RBK">Utlåtandet är baserat på</text>
+      <text id="KAT_1.HLP">Motivera under "Övriga upplysningar" i de fall någon undersökning av patienten inte varit
+        aktuell.
+      </text>
+
+      <text id="FRG_1.RBK">Välj typ av underlag för utlåtandet och datum</text>
+      <text id="FRG_1.HLP">TBD</text>
+
+      <text id="DFR_1.1.RBK">Typ av underlag för utlåtandet</text>
+      <text id="DFR_1.1.HLP">TBD</text>
+
+      <!-- EXEMPEL på syftesspecifik text och hjälptext för typ av underlag ur kodverk -->
+      <text id="KV_FKMU_0001.1.RBK">Min undersökning av patienten.</text>
+      <text id="KV_FKMU_0001.1.HLP">Här finns en hjälptext för min undersökning av patienten.</text>
+      <text id="KV_FKMU_0001.2.RBK">Min telefonkontakt med patienten</text>
+      <text id="KV_FKMU_0001.2.HLP">Här finns en hjälptext för min telefonkontakt med patienten.</text>
+      <text id="KV_FKMU_0001.3.RBK">Journaluppgifter från den</text>
+      <text id="KV_FKMU_0001.3.HLP">Här finns en hjälptext för journaluppgifter från den.</text>
+      <text id="KV_FKMU_0001.4.RBK">Anhörigs beskrivning av patienten</text>
+      <text id="KV_FKMU_0001.4.HLP">Här finns en hjälptext för anhörigs beskrivning av patienten.</text>
+      <text id="KV_FKMU_0001.5.RBK">Annat</text>
+      <text id="KV_FKMU_0001.5.HLP">Här finns en hjälptext för Annat.</text>
+
+      <text id="KV_FKMU_0005.1.RBK">Neuropsykiatriskt utlåtande</text>
+      <text id="KV_FKMU_0005.1.HLP">TBD</text>
+      <text id="KV_FKMU_0005.2.RBK">Underlag från habiliteringen</text>
+      <text id="KV_FKMU_0005.2.HLP">TBD</text>
+      <text id="KV_FKMU_0005.3.RBK">Underlag från arbetsterapeut</text>
+      <text id="KV_FKMU_0005.3.HLP">TBD</text>
+      <text id="KV_FKMU_0005.4.RBK">Underlag från fysioterapeut</text>
+      <text id="KV_FKMU_0005.4.HLP">TBD</text>
+      <text id="KV_FKMU_0005.5.RBK">Underlag från logoped</text>
+      <text id="KV_FKMU_0005.5.HLP">TBD</text>
+      <text id="KV_FKMU_0005.6.RBK">Underlag från psykolog</text>
+      <text id="KV_FKMU_0005.6.HLP">TBD</text>
+      <text id="KV_FKMU_0005.7.RBK">Underlag från företagshälsovård</text>
+      <text id="KV_FKMU_0005.7.HLP">TBD</text>
+      <text id="KV_FKMU_0005.9.RBK">Underlag från skolhälsovård</text>
+      <text id="KV_FKMU_0005.9.HLP">TBD</text>
+      <text id="KV_FKMU_0005.10.RBK">Utredning av annan specialistklinik</text>
+      <text id="KV_FKMU_0005.10.HLP">TBD</text>
+      <text id="KV_FKMU_0005.11.RBK">Övrigt</text>
+      <text id="KV_FKMU_0005.11.HLP">TBD</text>
+
+      <text id="DFR_1.2.RBK">Datum</text>
+      <text id="DFR_1.2.HLP">TBD</text>
+      <text id="DFR_1.3.RBK">Annat underlag för utlåtandet</text>
+      <text id="DFR_1.3.HLP">TBD</text>
+
+      <text id="DFR_2.1.RBK">Jag har känt patienten seden den</text>
+      <text id="DFR_2.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 2: Andra medicinska utredningar och underlag
+      ===============================================
+      -->
+      <text id="KAT_2.RBK">Andra medicinska utredningar och underlag</text>
+      <text id="KAT_2.HLP">TBD</text>
+
+      <text id="DFR_3.1.RBK">Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen?</text>
+      <text id="DFR_3.1.HLP">TBD</text>
+
+      <text id="DFR_4.1.RBK">Ange utredning och underlag</text>
+      <text id="DFR_4.1.HLP">TBD</text>
+
+      <text id="DFR_4.2.RBK">Datum</text>
+
+      <text id="DFR_4.3.RBK">Var kan Försäkringskassan få information om utredningen?</text>
+      <text id="DFR_4.3.HLP">Skriv exempelvis Neuropsykiatriska kliniken på X-stads sjukhus eller om patienten själv kommer
+        att bifoga utredningen till sin ansökan.
+      </text>
+
+      <!--
+      ===============================================
+      KATEGORI 3: Sjukdomsförlopp
+      ===============================================
+      -->
+      <text id="KAT_3.RBK">Sjukdomsförlopp</text>
+      <text id="KAT_3.HLP">TBD</text>
+
+      <text id="DFR_5.1.RBK">Sjukdomsförlopp för aktuella sjukdomar av betydelse</text>
+      <text id="DFR_5.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 4: Diagnos
+      ===============================================
+      -->
+      <text id="KAT_4.RBK">Diagnos/diagnoser som orsakar nedsatt arbetsförmåga</text>
+      <text id="KAT_4.HLP">Ange samtliga diagnoser som orsakar nedsatt arbetsförmåga.Huvuddiagnosen för arbetsförmågans
+        nedsättning anges först.
+      </text>
+
+      <text id="DFR_6.1.RBK">Diagnostext</text>
+      <text id="DFR_6.1.HLP">TBD</text>
+
+      <text id="DFR_6.2.RBK">Diagnoskod enligt ICD-10 SE</text>
+      <text id="DFR_6.2.HLP">TBD</text>
+
+      <text id="DFR_7.1.RBK">När och var ställdes diagnosen/diagnoserna?</text>
+      <text id="DFR_7.1.HLP">TBD</text>
+
+      <text id="DFR_7.2.RBK">Finns det skäl att göra en ny bedömning av diagnosen/diagnoserna?</text>
+      <text id="DFR_7.2.HLP">Möjliga anledningar kan vara: - att det var länge sedan utredningen gjordes - att ny bedömning
+        har rekommenderats i tidigare utlåtande eller - att den kliniska bilden avviker från vad som kan förväntas utifrån
+        ställd diagnos
+      </text>
+
+      <!--
+      ===============================================
+      KATEGORI 5: Funktionsnedsättning
+      ===============================================
+      -->
+      <text id="KAT_5.RBK">Funktionsnedsättning - beskriv patientens funktionsnedsättning inom de områden som är relevanta
+        för arbetsförmågan.
+      </text>
+      <text id="KAT_5.HLP">Den information som Försäkringskassan efterfrågar inom de olika områdena är de av läkaren
+        observerade funktionsnedsättningar (direkt/indirekt) med avvikelser i status men även sådana som framkommit hos
+        psykolog eller i annan medicinsk utredning.
+      </text>
+
+      <text id="DFR_8.1.RBK">Intellektuell funktion</text>
+      <text id="DFR_8.1.HLP">TBD</text>
+
+      <text id="DFR_9.1.RBK">Kommunikation och social interaktion</text>
+      <text id="DFR_9.1.HLP">TBD</text>
+
+      <text id="DFR_10.1.RBK">Uppmärksamhet och koncentration</text>
+      <text id="DFR_10.1.HLP">TBD</text>
+
+      <text id="DFR_11.1.RBK">Annan psykisk funktion</text>
+      <text id="DFR_11.1.HLP">TBD</text>
+
+      <text id="DFR_12.1.RBK">Syn, hörsel och tal</text>
+      <text id="DFR_12.1.HLP">TBD</text>
+
+      <text id="DFR_13.1.RBK">Balans/koordination, motorik och smärta</text>
+      <text id="DFR_13.1.HLP">TBD</text>
+
+      <text id="DFR_14.1.RBK">Annan kroppslig funktion</text>
+      <text id="DFR_14.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 6: Aktivitetsbegränsning
+      ===============================================
+      -->
+      <text id="KAT_6.RBK">Aktivitetsbegränsning</text>
+      <text id="KAT_6.HLP">Ge konkreta exempel på situationer och aktiviteter i patientens sysselsättning där svårigheter
+        uppstår. Beskriv hur ofta dessa situationer uppstår och graden av patientens besvär.
+      </text>
+
+      <text id="DFR_17.1.RBK">Vad har patienten svårt att göra på grund av den eller de funktionsnedsättningar som beskrivs
+        ovan? Ge konkreta exempel
+      </text>
+      <text id="DFR_17.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 7: Medicinska behandlingar/åtgärder
+      ===============================================
+      -->
+      <text id="KAT_7.RBK">Medicinsk behandling</text>
+      <text id="KAT_7.HLP">TBD</text>
+
+      <text id="DFR_18.1.RBK">Avslutade medicinska behandlingar/åtgärder. Ange också under vilka perioder de pågick och
+        vilka resultat de gav.
+      </text>
+      <text id="DFR_18.1.HLP">TBD</text>
+
+      <text id="DFR_19.1.RBK">Pågående medicinska behandlingar/åtgärder och ansvarig vårdenhet.</text>
+      <text id="DFR_19.1.HLP">TBD</text>
+
+      <text id="DFR_20.1.RBK">Planerade medicinska behandlingar/åtgärder. Ange om möjligt tidplan och ansvarig vårdenhet.
+      </text>
+      <text id="DFR_20.1.HLP">TBD</text>
+
+      <text id="DFR_21.1.RBK">Substansintag (ordinerade läkemedel, alkohol, tobak och övriga substansintag)</text>
+      <text id="DFR_21.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 8: Medicinska förutsättningar för arbete
+      ===============================================
+      -->
+      <text id="KAT_8.RBK">Medicinska förutsättningar för arbete</text>
+      <text id="KAT_8.HLP">TBD</text>
+
+      <text id="DFR_22.1.RBK">Hur bedömer du att patientens medicinska förutsättningar för arbete, helt eller delvis, kan
+        utvecklas över tid?
+      </text>
+      <text id="DFR_22.1.HLP">TBD</text>
+
+      <text id="DFR_23.1.RBK">Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar.</text>
+      <text id="DFR_23.1.HLP">Beskriv här om patienten har särskilt goda resurser inom något område eller har några
+        speciella förmågor som kan tas till vara.
+      </text>
+
+      <!--
+      ===============================================
+      KATEGORI 9: Övrigt
+      ===============================================
+      -->
+      <text id="KAT_9.RBK">Övriga upplysningar</text>
+      <text id="KAT_9.HLP">TBD</text>
+
+      <text id="DFR_25.1.RBK">Övriga upplysningar</text>
+      <text id="DFR_25.1.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 10: Kontakt
+      ===============================================
+      -->
+      <text id="KAT_10.RBK">Vill du att Försäkringskassan kontaktar dig?</text>
+      <text id="KAT_10.HLP">Försäkringskassans handläggare tar kontakt med dig när underlaget har kommit in och
+        handläggningen kan påbörjas.
+      </text>
+
+      <text id="DFR_26.1.RBK">Jag önskar att Försökringskassan kontaktar mig.</text>
+      <text id="DFR_26.1.HLP">TBD</text>
+
+      <text id="DFR_26.2.RBK">Ange gärna varför du vill ha kontakt.</text>
+      <text id="DFR_26.2.HLP">TBD</text>
+
+      <!--
+      ===============================================
+      KATEGORI 9999: Tilläggsfrågor
+      ===============================================
+      -->
+      <text id="KAT_9999.RBK">Tilläggsfrågor</text>
+      <text id="KAT_9999.HLP">TBD</text>
+
+      <tillagg>
+        <tillaggsfraga id="9001">
+          <text id="DFR_9001.1.RBK">Vilken skostorlek har du?</text>
+          <text id="DFR_9001.1.HLP">Ange din skostorlek.</text>
+        </tillaggsfraga>
+        <tillaggsfraga id="9002">
+          <text id="DFR_9002.1.RBK">Hur lång är du?</text>
+          <text id="DFR_9002.1.HLP">Ange din längd i centimeter (cm).</text>
+        </tillaggsfraga>
+      </tillagg>
+
+    </texter>
+  texterMU_LUSE_v1.0.properties: |
+    #Properties for LUSE 1.0 pdf generation
+
+    formId=FK 7800 (001 F 001) Fastst\u00E4lld av F\u00F6rs\u00E4kringskassan
+    blankettId=7800
+    blankettVersion=01
+  texterMU_LUSE_v1.0.xml: "\uFEFF<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<texter xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" giltigFrom=\"2016-09-23\" typ=\"LUSE\" version=\"1.0\" xsi:schemaLocation=\"http://schema.forsakringskassan.se/vardgivare_sjukvard/texterMU_v1.0.xsd\" xmlns=\"http://schema.forsakringskassan.se/vardgivare_sjukvard\">\n<text id=\"DFR_1.3.RBK\">Ange vad annat är:</text>\n<text id=\"DFR_10.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"DFR_11.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"DFR_12.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"DFR_13.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"DFR_14.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"DFR_17.1.RBK\">Ge konkreta exempel</text>\n<text id=\"DFR_18.1.RBK\">Ange under vilka perioder de pågick och vilka resultat de gav. Ange även erbjudna men inte genomförda/avböjda behandlingar/åtgärder.</text>\n<text id=\"DFR_19.1.RBK\">Ange vad syftet är och om möjligt tidplan samt ansvarig vårdenhet</text>\n<text id=\"DFR_20.1.RBK\">Ange vad syftet är och om möjligt tidplan samt ansvarig vårdenhet</text>\n<text id=\"DFR_21.1.RBK\">Ordinerade läkemedel, alkohol, tobak och övriga substansintag</text>\n<text id=\"DFR_26.1.RBK\">Jag önskar att Försäkringskassan kontaktar mig</text>\n<text id=\"DFR_26.2.RBK\">Ange gärna varför du vill ha kontakt</text>\n<text id=\"DFR_4.3.HLP\">Skriv exempelvis Neuropsykiatriska kliniken på X-stads sjukhus eller om patienten själv kommer att bifoga utredningen till sin ansökan.</text>\n<text id=\"DFR_4.3.RBK\">Från vilken vårdgivare kan Försäkringskassan hämta information om utredningen/underlaget?</text>\n<text id=\"DFR_45.2.RBK\">Beskriv vilken eller vilka diagnoser som avses</text>\n<text id=\"DFR_6.2.RBK\">Diagnoskod enligt ICD-10 SE</text>\n<text id=\"DFR_8.1.RBK\">Beskriv eventuella iakttagelser alternativt testresultat från psykologutredning</text>\n<text id=\"DFR_9.1.RBK\">Beskriv eventuella undersökningsfynd och grad av funktionsnedsättning (lätt, måttlig, stor, total)</text>\n<text id=\"FRG_1.RBK\">Utlåtandet är baserat på</text>\n<text id=\"FRG_10.HLP\">Uppmärksamhet, koncentration och exekutiv funktion\n\nFörmågan till uppmärksamhet handlar om att rikta sitt fokus på rätt sak vid rätt tillfälle samt att skifta, fördela och vidmakthålla uppmärksamhet. I förmågan ingår även en tidsaspekt. En person behöver viljemässigt kunna rikta sin uppmärksamhet under lång tid, alltså vara uthållig.\n\nMed exekutiv funktion avses förmågan att planera, initiera, genomföra, korrigera och avsluta en handling.\n\nExempel: Att rikta, reglera och uthålligt bevara uppmärksamheten är en stor svårighet för en person med ADHD/ADD. Tillfälliga svårigheter kan bero på sjukdom (till exempel sömnstörning, depression eller utmattning) eller skada (till exempel hjärnskakning) och uppkomma när som helst under livet.\nÄven svårigheter med exekutiva funktioner är vanliga vid ADHD/ADD men förekommer även vid andra tillstånd.</text>\n<text id=\"FRG_10.RBK\">Uppmärksamhet, koncentration och exekutiv funktion</text>\n<text id=\"FRG_11.HLP\">Annan psykisk funktion\n\nMed annan psykisk funktion avses övriga psykiska funktioner, som berör energinivå, förmågan till impulskontroll, motivation, omdöme, medvetenhet om det egna beteendet samt att vara orienterad till tid, plats, situation och person.\n\nExempel: I denna ruta kan till exempel affektiva svårigheter, svårigheter att reglera sitt temperament, beteendestörningar och missbruk ingå. Även påverkan på medvetande och orienteringsförmåga samt förvirring sekundärt till kroppslig sjukdom kan ingå.</text>\n<text id=\"FRG_11.RBK\">Annan psykisk funktion</text>\n<text id=\"FRG_12.HLP\">Sinnesfunktioner och smärta\n\nMed sinnesfunktion avses förmågan att tolka de fem sinnena, syn, hörsel, känsel, lukt och smak. Begreppet sinnesfunktion används oftast synonymt med perception. Man kan vara särskilt känslig och uppleva obehag vid ljud, ljus, temperatur, beröring, smak eller lukt eller vara mindre känslig.\n\nMed smärta avses här förnimmelse av obehaglig känsla som tyder på tänkbar eller faktisk skada i någon del av kroppen. Det innefattar förnimmelser av generell eller lokal smärta i en eller flera kroppsdelar, smärta i ett dermatom (hudavsnitt), huggande, brännande, molande smärta och värk samt funktionsnedsättningar såsom myalgi (muskelsmärta), analgesi (okänslighet för smärta) och hyperalgesi (överkänslighet för smärta).\n\nExempel: Avvikelser vad gäller sinnesfunktion (perception) är vanligt till exempel inom det neuropsykiatriska området men saknar ofta specifik medicinsk diagnos. Smärtproblematik är dock mycket vanligt och kan utgöra både en primär svårighet och sekundär till annan sjukdom.</text>\n<text id=\"FRG_12.RBK\">Sinnesfunktioner och smärta</text>\n<text id=\"FRG_13.HLP\">Balans, koordination och motorik\n\nMed balans avses kroppens balansfunktion och förnimmelse av kroppsställning (positionsuppfattning). Med koordination avses till exempel öga-handkoordination, gångkoordination och att samordna rörelser av armar och ben. Med motorik avses svårigheter med finmotorik, grovmotorik eller till exempel munmotorik.\n\nExempel: Svårigheter med dessa områden kan ha uppstått tidigt som till exempel vid en CP-skada eller uppkommit senare i livet till följd av till exempel en stroke eller neurologisk sjukdom.</text>\n<text id=\"FRG_13.RBK\">Balans, koordination och motorik</text>\n<text id=\"FRG_14.HLP\">Annan kroppslig funktion\n\nMed annan kroppslig funktion avses här avvikelser eller förlust i kroppsfunktion och fysiologiska funktioner utifrån ICF:s intentioner. Här beskrivs observerade funktionsnedsättningar (direkt/indirekt) med avvikelser i status men även sådana som framkommit i annan medicinsk utredning.\n\nExempel: Med annan kroppslig funktion avses konsekvenser av somatisk sjukdom som till exempel avvikelser i kroppsligt status, röntgen- och laboratoriefynd samt kliniskt fysiologiska undersökningar.</text>\n<text id=\"FRG_14.RBK\">Annan kroppslig funktion</text>\n<text id=\"FRG_17.HLP\">Ge konkreta exempel på situationer och aktiviteter i patientens sysselsättning där svårigheter uppstår. Beskriv \n- hur ofta dessa situationer uppstår och graden av svårigheterna\n- om begränsningarna har observerats själv eller av någon annan, till exempel i en testsituation, samt vad som är grundat på anamnes/intervju\n- om det finns någon typ av aktivitet som patienten bör undvika på grund av betydande medicinsk risk eller allvarlig olycksrisk.</text>\n<text id=\"FRG_17.RBK\">Aktivitetsbegränsningar - beskriv vad har patienten svårt att göra på grund av den eller de funktionsnedsättningar som beskrivs ovan</text>\n<text id=\"FRG_18.RBK\">Avslutade medicinska behandlingar/åtgärder</text>\n<text id=\"FRG_19.RBK\">Pågående medicinska behandlingar/åtgärder</text>\n<text id=\"FRG_2.RBK\">Jag har känt patienten sedan den</text>\n<text id=\"FRG_20.RBK\">Planerade medicinska behandlingar/åtgärder</text>\n<text id=\"FRG_21.RBK\">Substansintag</text>\n<text id=\"FRG_22.HLP\">Särskilda arbetstider kan vara annan än ordinarie förläggning av arbetstiden, till skillnad från att minska arbetstiden lika mycket varje dag.</text>\n<text id=\"FRG_22.RBK\">Hur bedömer du att patientens medicinska förutsättningar för arbete, helt eller delvis, kan utvecklas över tid? Beskriv även om det finns medicinska skäl till särskilda arbetstider.</text>\n<text id=\"FRG_23.HLP\">Beskriv här om patienten har några speciella förmågor som kan tas till vara även om det inte är i en arbetssituation. Informationen är till för att hjälpa Försäkringskassan som, utöver att bedöma rätten till ersättning, även ansvarar för att samordna rehabilitering och andra aktiva insatser.</text>\n<text id=\"FRG_23.RBK\">Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar</text>\n<text id=\"FRG_25.RBK\">Övriga upplysningar</text>\n<text id=\"FRG_26.HLP\">Försäkringskassans handläggare tar kontakt med dig när underlaget har kommit in och handläggningen kan påbörjas.</text>\n<text id=\"FRG_26.RBK\">Kontakt med Försäkringskassan</text>\n<text id=\"FRG_3.RBK\">Är utlåtandet även baserat på andra medicinska utredningar eller underlag?</text>\n<text id=\"FRG_4.RBK\">Ange utredning eller underlag</text>\n<text id=\"FRG_45.HLP\">Möjliga anledningar kan vara:\n- att det var länge sedan utredningen gjordes\n- att ny bedömning har rekommenderats i tidigare utlåtande eller\n- att den kliniska bilden avviker från vad som kan förväntas utifrån ställd diagnos.</text>\n<text id=\"FRG_45.RBK\">Finns skäl till att revidera/uppdatera tidigare satt diagnos?</text>\n<text id=\"FRG_5.RBK\">Bakgrund - beskriv kortfattat förloppet för aktuella sjukdomar</text>\n<text id=\"FRG_6.HLP\">Ange diagnoser för sjukdom som orsakar nedsatt arbetsförmåga. Huvuddiagnosen för arbetsförmågans nedsättning anges först.</text>\n<text id=\"FRG_6.RBK\">Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga</text>\n<text id=\"FRG_7.RBK\">När och var ställdes diagnosen/diagnoserna?</text>\n<text id=\"FRG_8.HLP\">Intellektuell funktion\n\nMed intellektuell funktion, teoretisk begåvning eller intelligens avses förmågan att tänka logiskt. För att lösa ett problem på ett logiskt vis gör vi det genom att föreställa oss det i tankarna snarare än att pröva oss fram konkret.\n\nExempel: En vuxen som klarat skolgång med normalbetyg och klarar vardagliga krav i arbete och privatliv är i regel normalbegåvad. För en noggrannare nivåbedömning krävs testning utförd av psykolog.</text>\n<text id=\"FRG_8.RBK\">Intellektuell funktion</text>\n<text id=\"FRG_9.HLP\">Kommunikation och social interaktion\n\nMed kommunikation avses att kunna uttrycka och ta emot verbala, skrivna eller andra former av Information/meddelanden.\n\nMed social interaktion avses förmågan att på ett teoretiskt plan sätta sig in i hur andra människor tänker och känner, även om man inte varit med om samma situation själv. Bristande förmåga till social interaktion leder lätt till missförstånd, konflikter och svårigheter med relationer i privatliv och arbetsliv.\n\nExempel: Svårigheter som till exempel uppmärksamhetsbrister, impulskontrollbrist, personlighetsstörningar och affektiva sjukdomar kan leda till svårigheter med social interaktion. Om svårigheterna med social interaktion är omfattande ställs diagnos inom det så kallade autismspektrat.</text>\n<text id=\"FRG_9.RBK\">Kommunikation och social interaktion</text>\n<text id=\"FRM_1.RBK\">Vad är sjukersättning?\nSjukersättning är en ersättning för personer mellan 30 och 64 år som har nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning. Beroende på hur mycket arbetsförmågan är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel sjukersättning. Man kan få sjukersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig framtid och att alla rehabiliteringsmöjligheter bedöms uttömda.</text>\n<text id=\"FRM_2.RBK\">Vad är sjukersättning?\nSjukersättning är en ersättning för personer mellan 30 och 64 år som har nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning. Beroende på hur mycket arbetsförmågan är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel sjukersättning. Man kan få sjukersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig framtid och att alla rehabiliteringsmöjligheter bedöms uttömda.\n\nFörutsättningar för att få sjukersättning\nFörsäkringskassan bedömer arbetsförmågan i förhållande till alla arbeten på hela arbetsmarknaden, alltså även till särskilt anpassade arbeten och anställningar med lönebidrag. Man kan få sjukersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig framtid och att alla rehabiliteringsmöjligheter är uttömda. Den som ansöker om sjukersättning ska skicka med ett läkarutlåtande. I ett pågående sjukpenningärende kan också Försäkringskassan på eget initiativ begära ett läkarutlåtande från behandlande läkare.\n\nOm du inte känner patienten ska hen styrka sin identitet genom legitimation med foto (SOSFS 2005:29).</text>\n<text id=\"KAT_1.RBK\">Grund för medicinskt underlag</text>\n<text id=\"KAT_10.RBK\">Kontakt</text>\n<text id=\"KAT_3.RBK\">Bakgrund</text>\n<text id=\"KAT_4.RBK\">Diagnos</text>\n<text id=\"KAT_5.HLP\">Ange observerade nedsättningar (direkt och indirekt)\n- avvikelser i somatiskt och psykiskt status\n- röntgen- och laboratoriefynd\n- resultat av kliniskt fysiologiska undersökningar\n- andra testresultat, exempelvis neuropsykologiska.\n\nVid psykisk sjukdom, ange förutom basalt psykiskt status även den del av anamnesen som läkaren bedömer tala för ett psykiatriskt tillstånd.\n\nKällhänvisning funktionsområden\nFunktionsområdenas hjälptexter följer väsentligen ICF men då kategorierna i läkarutlåtandena är färre har vissa förenklingar gjorts. Texterna avseende de psykiska funktionsområdena är till största del hämtade ur boken \"Neuropsykiatriska funktioner hos barn, ungdomar och unga vuxna\".\nBoken är skriven av psykolog Viveca Ernmark i utbildningssyfte för Försäkringskassan.</text>\n<text id=\"KAT_5.RBK\">Funktionsnedsättningar</text>\n<text id=\"KAT_6.RBK\">Aktivitetsbegränsningar</text>\n<text id=\"KAT_7.RBK\">Medicinsk behandling</text>\n<text id=\"KAT_8.RBK\">Medicinska förutsättningar för arbete</text>\n<text id=\"KAT_9.RBK\">Övrigt</text>\n<text id=\"KV_FKMU_0001.ANHORIG.RBK\">Anhörigs beskrivning av patienten</text>\n<text id=\"KV_FKMU_0001.ANNAT.RBK\">Annat</text>\n<text id=\"KV_FKMU_0001.JOURNALUPPGIFTER.RBK\">Journaluppgifter från den</text>\n<text id=\"KV_FKMU_0001.UNDERSOKNING.RBK\">Min undersökning av patienten</text>\n<text id=\"KV_FKMU_0005.ARBETSTERAPEUT.RBK\">Underlag från arbetsterapeut</text>\n<text id=\"KV_FKMU_0005.FORETAGSHALSOVARD.RBK\">Underlag från företagshälsovård</text>\n<text id=\"KV_FKMU_0005.FYSIOTERAPEUT.RBK\">Underlag från fysioterapeut</text>\n<text id=\"KV_FKMU_0005.HABILITERING.RBK\">Underlag från habiliteringen</text>\n<text id=\"KV_FKMU_0005.LOGOPED.RBK\">Underlag från logoped</text>\n<text id=\"KV_FKMU_0005.NEUROPSYKIATRISKT.RBK\">Neuropsykiatriskt utlåtande</text>\n<text id=\"KV_FKMU_0005.OVRIGT_UTLATANDE.RBK\">Övrigt</text>\n<text id=\"KV_FKMU_0005.PSYKOLOG.RBK\">Underlag från psykolog</text>\n<text id=\"KV_FKMU_0005.SPECIALISTKLINIK.RBK\">Utredning av annan specialistklinik</text>\n<text id=\"KV_FKMU_0005.VARD_UTOMLANDS.RBK\">Utredning från vårdinrättning utomlands</text>\n</texter>\n"
+  texterTS_TSTRK_1007_v6.7.properties: |
+    #Properties for TS 1007 v 6.7 pdf generation
+
+    pdfPath=pdf/TSTRK1007-V0607.pdf
+  texterTS_TSTRK_1007_v6.7.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<texter typ=\"TS-BAS\" giltigFrom=\"2016-04-01\" version=\"6.7\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\t<!--\n\t===============================================\n\tKATEGORI: Intyg avser\n\t===============================================\n\t-->\n\t<text id=\"KAT_99.RBK\">Intyg avser</text>\n  <text id=\"KAT_99.HLP\"><![CDATA[<span style=\"text-align:left\">C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Annat = (AM,A1,A2,A,B,BE eller Traktor)</span>]]></text>\n  <text id=\"FRG_1.RBK\">Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</text>\n  <text id=\"FRG_1.HLP\">Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.</text>\n  <text id=\"FRG_1.2.RBK\">Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</text>\n  <text id=\"KORKORT_C1.RBK\">C1</text>\n  <text id=\"KORKORT_C1E.RBK\">C1E</text>\n  <text id=\"KORKORT_C.RBK\">C</text>\n  <text id=\"KORKORT_CE.RBK\">CE</text>\n  <text id=\"KORKORT_D1.RBK\">D1</text>\n  <text id=\"KORKORT_D1E.RBK\">D1E</text>\n  <text id=\"KORKORT_D.RBK\">D</text>\n  <text id=\"KORKORT_DE.RBK\">DE</text>\n  <text id=\"KORKORT_TAXI.RBK\">Taxi</text>\n  <text id=\"KORKORT_ANNAT.RBK\">Annat</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Identitet styrkt genom\n\t===============================================\n\t-->\n\t<text id=\"KAT_100.RBK\">Identitet styrkt genom</text>\n  <text id=\"IDENTITET_ID_KORT.RBK\">ID-kort</text>\n  <text id=\"IDENTITET_FORETAG_ELLER_TJANSTEKORT.RBK\">Företagskort eller tjänstekort.</text>\n  <text id=\"IDENTITET_KORKORT.RBK\">Svenskt körkort</text>\n  <text id=\"IDENTITET_PERS_KANNEDOM.RBK\">Personlig kännedom</text>\n  <text id=\"IDENTITET_FORSAKRAN_KAP18.RBK\">Försäkran enligt 18 kap 4 §</text>\n  <text id=\"IDENTITET_PASS.RBK\">Pass</text>\n\n  <text id=\"FRM_1.RBK\">&#185; SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.\n&#178; SIS-märkt företagskort eller tjänstekort.\n&#179; Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.\n&#8308; Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>\n\n  <text id=\"FRM_2.RBK\"><![CDATA[Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.\nSe: <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">http://www.transportstyrelsen.se</a>.]]></text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 1: Synfuntioner\n\t===============================================\n\t-->\n\t<text id=\"KAT_1.RBK\">1. Synfunktioner</text>\n\n\t<text id=\"FRG_3.RBK\">a) Tecken på synfältsdefekter vid undesökning enligt Donders konfrontationsmetod?</text>\n\t<text id=\"FRG_4.RBK\">b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</text>\n\t<text id=\"FRG_5.RBK\">c) Har patienten någon progressiv ögonsjukdom?</text>\n  <text id=\"FRG_3-5.INF\">Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.</text>\n\t<text id=\"FRG_6.RBK\">d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?</text>\n\t<text id=\"FRG_7.RBK\">e) Förekommer nystagmus?</text>\n\t<text id=\"FRG_8.RBK\">f) Värden för synskärpa</text>\n  <text id=\"FRG_8.INF\"><![CDATA[Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0<br/><br/> OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.]]></text>\n  <text id=\"FRG_9.RBK\">Högsta styrka i något av glasen överskrider plus 8 dioptrier</text>\n  <text id=\"FRG_9.INF\">Intyg om korrektionsglasens styrka måste skickas in.</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 2: Hörsel- och balanssinne\n\t===============================================\n\t-->\n\t<text id=\"KAT_2.RBK\">2. Hörsel och balanssinne</text>\n\n\t<text id=\"FRG_10.RBK\">a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</text>\n\t<text id=\"FRG_11.RBK\">b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?</text>\n\t<!--\n\t===============================================\n\tKATEGORI 3: Rörelseorganens funktioner\n\t===============================================\n\t-->\n\t<text id=\"KAT_3.RBK\">3. Rörelseorganens funktioner</text>\n\n\t<text id=\"FRG_12.RBK\">a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?</text>\n\t<text id=\"DFR_12.2.RBK\">Ange vilken typ av nedsättning eller sjukdom:</text>\n\t<text id=\"FRG_13.RBK\">b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 4: Hjärt- och kärlsjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_4.RBK\">4. Hjärt- och kärlsjukdomar</text>\n\n\t<text id=\"FRG_14.RBK\">a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</text>\n\t<text id=\"FRG_15.RBK\">b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</text>\n\t<text id=\"FRG_16.RBK\">c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</text>\n\t<text id=\"DFR_16.2.RBK\">Typ av sjukdom:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 5: Diabetes\n\t===============================================\n\t-->\n\t<text id=\"KAT_5.RBK\">5. Diabetes</text>\n\n\t<text id=\"FRG_17.RBK\">Har patienten diabetes?</text>\n\n\t<text id=\"FRG_18.RBK\">Vilken typ?</text>\n\n\t<text id=\"FRG_19.RBK\">Ange behandling:</text>\n\t<text id=\"DFR_19.1.RBK\">Kost</text>\n\t<text id=\"DFR_19.2.RBK\">Tabletter</text>\n\t<text id=\"DFR_19.3.RBK\">Insulin</text>\n  <text id=\"DFR_19.3.INF\">Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 6: Neurologiska sjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_6.RBK\">6. Neurologiska sjukdomar</text>\n\n\t<text id=\"FRG_20.RBK\">Finns tecken på neurologisk sjukdom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 7: Epilepsi, epileptiskt anfall och annan medvetandestörning\n\t===============================================\n\t-->\n\t<text id=\"KAT_7.RBK\">7. Epilepsi, epileptiskt anfall och annan medvetandestörning</text>\n\n\t<text id=\"FRG_21.RBK\">Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</text>\n\t<text id=\"DFR_21.2.RBK\">Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak: </text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 8: Njursjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_8.RBK\">8. Njursjukdomar</text>\n\n\t<text id=\"FRG_22.RBK\">Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 9: Demens och andra kognitiva störningar\n\t===============================================\n\t-->\n\t<text id=\"KAT_9.RBK\">9. Demens och andra kognitiva störningar</text>\n\n\t<text id=\"FRG_23.RBK\">Finns tecken på sviktande kognitiv funktion?</text>\n\n\n\t<!--\n\t===============================================\n\tKATEGORI 10: Sömn- och vakenhetsstörningar\n\t===============================================\n\t-->\n\t<text id=\"KAT_10.RBK\">10. Sömn- och vakenhetsstörningar</text>\n\n\t<text id=\"FRG_24.RBK\">Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 11: Alkohol, narkotika och läkemedel\n\t=============================================\n\t-->\n\t<text id=\"KAT_11.RBK\">11. Alkohol, narkotika och läkemedel</text>\n\n\t<text id=\"DFR_25.1.RBK\">a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?</text>\n\t<text id=\"DFR_25.2.RBK\">b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?</text>\n\t<text id=\"DFR_25.3.RBK\">Om någon av frågorna 11a) eller 11b) besvaras med ja, behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</text>\n  <text id=\"DFR_25.3.INF\">Om provtagning görs ska resultatet redovisas separat.</text>\n\n\t<text id=\"FRG_26.RBK\">c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</text>\n\t<text id=\"DFR_26.1.RBK\">Läkemedel och ordinerad dos:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 12: Psykiska sjukdomar och störningar\n\t=============================================\n\t-->\n\t<text id=\"KAT_12.RBK\">12. Psykiska sjukdomar och störningar</text>\n\n\t<text id=\"FRG_27.RBK\">Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 13: ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning\n\t=============================================\n\t-->\n\t<text id=\"KAT_13.RBK\">13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning</text>\n\n\t<text id=\"FRG_28.RBK\">a) Har patienten någon psykisk utvecklingsstörning?</text>\n\t<text id=\"FRG_29.RBK\">b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 14:  Sjukhusvård\n\t=============================================\n\t-->\n\t<text id=\"KAT_14.RBK\">14. Sjukhusvård</text>\n\n\t<text id=\"FRG_30.RBK\">Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av fälten 1-13?</text>\n\t<text id=\"DFR_30.2.RBK\">Om frågan besvarats med ja, när?</text>\n\t<text id=\"DFR_30.3.RBK\">Vårdinrättningens namn och klinik/er:</text>\n\t<text id=\"DFR_30.4.RBK\">För vad?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 15: Övrig medicinering\n\t=============================================\n\t-->\n\t<text id=\"KAT_15.RBK\">15. Övrig medicinering</text>\n\t<text id=\"FRG_31.RBK\">Har patienten någon stadigvarande medicinering?</text>\n\t<text id=\"DFR_31.2.RBK\">Vilken eller vilka mediciner?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 16: Övrig kommentar\n\t=============================================\n\t-->\n\t<text id=\"KAT_16.RBK\">16. Övrig kommentar</text>\n\t<text id=\"FRG_32.RBK\">Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Bedömning\n\t=============================================\n\t-->\n\t<text id=\"KAT_101.RBK\">Bedömning</text>\n\n  <text id=\"FRG_33.RBK\">Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</text>\n\t<text id=\"DFR_33.1.RBK\">Någon av följande behörigheter:</text>\n  <text id=\"DFR_33.2.RBK\">Kan inte ta ställning</text>\n\t<text id=\"FRG_34.RBK\">Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</text>\n\n</texter>\n"
+  texterTS_TSTRK_1007_v6.8.properties: |
+    #Properties for TS 1007 v 6.8 pdf generation
+
+    pdfPath=pdf/TSTRK1007-V06U08.pdf
+  texterTS_TSTRK_1007_v6.8.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<texter typ=\"TS-BAS\" giltigFrom=\"2016-04-01\" version=\"6.8\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\t<!--\n\t===============================================\n\tKATEGORI: Intyg avser\n\t===============================================\n\t-->\n\t<text id=\"KAT_99.RBK\">Intyg avser</text>\n  <text id=\"KAT_99.HLP\"><![CDATA[<span style=\"text-align:left\">C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Annat = (AM,A1,A2,A,B,BE eller Traktor)</span>]]></text>\n  <text id=\"FRG_1.RBK\">Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</text>\n  <text id=\"FRG_1.HLP\">Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.</text>\n  <text id=\"FRG_1.2.RBK\">Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</text>\n  <text id=\"KORKORT_C1.RBK\">C1</text>\n  <text id=\"KORKORT_C1E.RBK\">C1E</text>\n  <text id=\"KORKORT_C.RBK\">C</text>\n  <text id=\"KORKORT_CE.RBK\">CE</text>\n  <text id=\"KORKORT_D1.RBK\">D1</text>\n  <text id=\"KORKORT_D1E.RBK\">D1E</text>\n  <text id=\"KORKORT_D.RBK\">D</text>\n  <text id=\"KORKORT_DE.RBK\">DE</text>\n  <text id=\"KORKORT_TAXI.RBK\">Taxi</text>\n  <text id=\"KORKORT_ANNAT.RBK\">Annat</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Identitet styrkt genom\n\t===============================================\n\t-->\n\t<text id=\"KAT_100.RBK\">Identitet styrkt genom</text>\n  <text id=\"IDENTITET_ID_KORT.RBK\">ID-kort</text>\n  <text id=\"IDENTITET_FORETAG_ELLER_TJANSTEKORT.RBK\">Företagskort eller tjänstekort.</text>\n  <text id=\"IDENTITET_KORKORT.RBK\">Svenskt körkort</text>\n  <text id=\"IDENTITET_PERS_KANNEDOM.RBK\">Personlig kännedom</text>\n  <text id=\"IDENTITET_FORSAKRAN_KAP18.RBK\">Försäkran enligt 18 kap 4 §</text>\n  <text id=\"IDENTITET_PASS.RBK\">Pass</text>\n\n  <text id=\"FRM_1.RBK\">&#185; SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.\n&#178; SIS-märkt företagskort eller tjänstekort.\n&#179; Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter och allmänna råd (TSFS 2010:125) om medicinska krav för innehav av körkort m.m.\n&#8308; Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>\n\n    <text id=\"FRM_2.RBK\">Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd (TSFS 2010:125) om medicinska krav för innehav av körkort m.m.</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 1: Synfuntioner\n\t===============================================\n\t-->\n\t<text id=\"KAT_1.RBK\">1. Synfunktioner</text>\n\n\t<text id=\"FRG_3.RBK\">a) Tecken på synfältsdefekter vid undesökning enligt Donders konfrontationsmetod?</text>\n\t<text id=\"FRG_4.RBK\">b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</text>\n\t<text id=\"FRG_5.RBK\">c) Har patienten någon progressiv ögonsjukdom?</text>\n  <text id=\"FRG_3-5.INF\">Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.</text>\n\t<text id=\"FRG_6.RBK\">d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?</text>\n\t<text id=\"FRG_7.RBK\">e) Förekommer nystagmus?</text>\n\t<text id=\"FRG_8.RBK\">f) Värden för synskärpa</text>\n  <text id=\"FRG_8.INF\"><![CDATA[Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0<br/><br/> OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.]]></text>\n  <text id=\"FRG_9.RBK\">Högsta styrka i något av glasen överskrider plus 8 dioptrier</text>\n  <text id=\"FRG_9.INF\">Intyg om korrektionsglasens styrka måste skickas in.</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 2: Hörsel- och balanssinne\n\t===============================================\n\t-->\n\t<text id=\"KAT_2.RBK\">2. Hörsel och balanssinne</text>\n\n\t<text id=\"FRG_10.RBK\">a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</text>\n\t<text id=\"FRG_11.RBK\">b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?</text>\n\t<!--\n\t===============================================\n\tKATEGORI 3: Rörelseorganens funktioner\n\t===============================================\n\t-->\n\t<text id=\"KAT_3.RBK\">3. Rörelseorganens funktioner</text>\n\n\t<text id=\"FRG_12.RBK\">a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?</text>\n\t<text id=\"DFR_12.2.RBK\">Ange vilken typ av nedsättning eller sjukdom:</text>\n\t<text id=\"FRG_13.RBK\">b) För innehav av behörigheterna D1, D1E, D, DE eller taxi: Finns en nedsättning av rörelseförmågan som gör att patienten inte kan hjälpa passagerare in och ut ur fordonet samt med bilbälte?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 4: Hjärt- och kärlsjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_4.RBK\">4. Hjärt- och kärlsjukdomar</text>\n\n\t<text id=\"FRG_14.RBK\">a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</text>\n\t<text id=\"FRG_15.RBK\">b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</text>\n\t<text id=\"FRG_16.RBK\">c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</text>\n\t<text id=\"DFR_16.2.RBK\">Typ av sjukdom:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 5: Diabetes\n\t===============================================\n\t-->\n\t<text id=\"KAT_5.RBK\">5. Diabetes</text>\n\n\t<text id=\"FRG_17.RBK\">Har patienten diabetes?</text>\n\n\t<text id=\"FRG_18.RBK\">Vilken typ?</text>\n\n\t<text id=\"FRG_19.RBK\">Ange behandling:</text>\n\t<text id=\"DFR_19.1.RBK\">Kost</text>\n\t<text id=\"DFR_19.2.RBK\">Tabletter</text>\n\t<text id=\"DFR_19.3.RBK\">Insulin</text>\n  <text id=\"DFR_19.3.INF\">Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 6: Neurologiska sjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_6.RBK\">6. Neurologiska sjukdomar</text>\n\n\t<text id=\"FRG_20.RBK\">Finns tecken på neurologisk sjukdom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 7: Epilepsi, epileptiskt anfall och annan medvetandestörning\n\t===============================================\n\t-->\n\t<text id=\"KAT_7.RBK\">7. Epilepsi, epileptiskt anfall och annan medvetandestörning</text>\n\n\t<text id=\"FRG_21.RBK\">Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</text>\n\t<text id=\"DFR_21.2.RBK\">Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak: </text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 8: Njursjukdomar\n\t===============================================\n\t-->\n\t<text id=\"KAT_8.RBK\">8. Njursjukdomar</text>\n\n\t<text id=\"FRG_22.RBK\">Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 9: Demens och andra kognitiva störningar\n\t===============================================\n\t-->\n\t<text id=\"KAT_9.RBK\">9. Demens och andra kognitiva störningar</text>\n\n\t<text id=\"FRG_23.RBK\">Finns tecken på sviktande kognitiv funktion?</text>\n\n\n\t<!--\n\t===============================================\n\tKATEGORI 10: Sömn- och vakenhetsstörningar\n\t===============================================\n\t-->\n\t<text id=\"KAT_10.RBK\">10. Sömn- och vakenhetsstörningar</text>\n\n\t<text id=\"FRG_24.RBK\">Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 11: Alkohol, narkotika och läkemedel\n\t=============================================\n\t-->\n\t<text id=\"KAT_11.RBK\">11. Alkohol, narkotika och läkemedel</text>\n\n\t<text id=\"DFR_25.1.RBK\">a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?</text>\n\t<text id=\"DFR_25.2.RBK\">b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?</text>\n\t<text id=\"DFR_25.3.RBK\">Om någon av frågorna 11a) eller 11b) besvaras med ja, behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</text>\n  <text id=\"DFR_25.3.INF\">Om provtagning görs ska resultatet redovisas separat.</text>\n\n\t<text id=\"FRG_26.RBK\">c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</text>\n\t<text id=\"DFR_26.1.RBK\">Läkemedel och ordinerad dos:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 12: Psykiska sjukdomar och störningar\n\t=============================================\n\t-->\n\t<text id=\"KAT_12.RBK\">12. Psykiska sjukdomar och störningar</text>\n\n\t<text id=\"FRG_27.RBK\">Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 13: ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning\n\t=============================================\n\t-->\n\t<text id=\"KAT_13.RBK\">13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning</text>\n\n\t<text id=\"FRG_28.RBK\">a) Har patienten någon psykisk utvecklingsstörning?</text>\n\t<text id=\"FRG_29.RBK\">b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 14:  Sjukhusvård\n\t=============================================\n\t-->\n\t<text id=\"KAT_14.RBK\">14. Sjukhusvård</text>\n\n\t<text id=\"FRG_30.RBK\">Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av fälten 1-13?</text>\n\t<text id=\"DFR_30.2.RBK\">Om frågan besvarats med ja, när?</text>\n\t<text id=\"DFR_30.3.RBK\">Vårdinrättningens namn och klinik/er:</text>\n\t<text id=\"DFR_30.4.RBK\">För vad?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 15: Övrig medicinering\n\t=============================================\n\t-->\n\t<text id=\"KAT_15.RBK\">15. Övrig medicinering</text>\n\t<text id=\"FRG_31.RBK\">Har patienten någon stadigvarande medicinering?</text>\n\t<text id=\"DFR_31.2.RBK\">Vilken eller vilka mediciner?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 16: Övrig kommentar\n\t=============================================\n\t-->\n\t<text id=\"KAT_16.RBK\">16. Övrig kommentar</text>\n\t<text id=\"FRG_32.RBK\">Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt:</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Bedömning\n\t=============================================\n\t-->\n\t<text id=\"KAT_101.RBK\">Bedömning</text>\n\n  <text id=\"FRG_33.RBK\">Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</text>\n\t<text id=\"DFR_33.1.RBK\">Någon av följande behörigheter:</text>\n  <text id=\"DFR_33.2.RBK\">Kan inte ta ställning</text>\n\t<text id=\"FRG_34.RBK\">Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</text>\n\n</texter>\n"
+  texterTS_TSTRK_1031_v2.6.properties: |
+    #Properties for TS 1031 v2.6 pdf generation
+
+    pdfPath=pdf/TSTRK1031-V02U06.pdf
+  texterTS_TSTRK_1031_v2.6.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<texter typ=\"TS-DIABETES\" giltigFrom=\"2016-04-01\" version=\"2.6\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\n\t<!--\n\t===============================================\n\tKATEGORI: Intyg avser\n\t===============================================\n\t-->\n\t<text id=\"KAT_99.RBK\">Intyg avser</text>\n  <text id=\"KORKORT_AM.RBK\">AM</text>\n  <text id=\"KORKORT_A1.RBK\">A1</text>\n  <text id=\"KORKORT_A2.RBK\">A2</text>\n  <text id=\"KORKORT_A.RBK\">A</text>\n  <text id=\"KORKORT_B.RBK\">B</text>\n  <text id=\"KORKORT_BE.RBK\">BE</text>\n  <text id=\"KORKORT_TRAKTOR.RBK\">Traktor</text>\n  <text id=\"KORKORT_C1.RBK\">C1</text>\n  <text id=\"KORKORT_C1E.RBK\">C1E</text>\n  <text id=\"KORKORT_C.RBK\">C</text>\n  <text id=\"KORKORT_CE.RBK\">CE</text>\n  <text id=\"KORKORT_D1.RBK\">D1</text>\n  <text id=\"KORKORT_D1E.RBK\">D1E</text>\n  <text id=\"KORKORT_D.RBK\">D</text>\n  <text id=\"KORKORT_DE.RBK\">DE</text>\n  <text id=\"KORKORT_TAXI.RBK\">Taxi</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Identitet styrkt genom\n\t===============================================\n\t-->\n\t<text id=\"KAT_100.RBK\">Identitet styrkt genom</text>\n\n  <text id=\"IDENTITET_ID_KORT.RBK\">ID-kort</text>\n  <text id=\"IDENTITET_FORETAG_ELLER_TJANSTEKORT.RBK\">Företagskort eller tjänstekort.</text>\n  <text id=\"IDENTITET_KORKORT.RBK\">Svenskt körkort</text>\n  <text id=\"IDENTITET_PERS_KANNEDOM.RBK\">Personlig kännedom</text>\n  <text id=\"IDENTITET_FORSAKRAN_KAP18.RBK\">Försäkran enligt 18 kap 4 §</text>\n  <text id=\"IDENTITET_PASS.RBK\">Pass</text>\n\n\t<text id=\"FRM_1.RBK\">&#185; SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.\n&#178; SIS-märkt företagskort eller tjänstekort.\n&#179; Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.\n&#8308; Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>\n\n\t<text id=\"FRM_2.RBK\"><![CDATA[Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.\n\tSe: <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">http://www.transportstyrelsen.se</a>.]]></text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 1: Allmänt\n\t===============================================\n\t-->\n\t<text id=\"KAT_1.RBK\">1. Allmänt</text>\n\n\t<text id=\"FRG_35.RBK\">Vilket år ställdes diagnosen diabetes?</text>\n\t<text id=\"FRG_18.RBK\">Patienten har diabetes</text>\n\t<text id=\"FRG_19.RBK\">Behandling</text>\n\t<text id=\"DFR_19.1.RBK\">Endast kost</text>\n\t<text id=\"DFR_19.2.RBK\">Tabletter</text>\n\t<text id=\"DFR_19.3.RBK\">Insulin</text>\n\t<text id=\"DFR_19.4.RBK\">Insulin sedan år</text>\n\t<text id=\"DFR_19.5.RBK\">Annan behandling, vilken?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 2: Hypoglykemier (lågt blodsocker)\n\t===============================================\n\t-->\n\t<text id=\"KAT_2.RBK\">2. Hypoglykemier (lågt blodsocker)</text>\n\n\t<text id=\"FRG_36.RBK\">a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</text>\n\t<text id=\"FRG_37.RBK\">b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) som bedöms kunna innebära en trafiksäkerhetsrisk?</text>\n\t<text id=\"FRG_38.RBK\">c) Saknar patienten förmåga att känna varningstecken på hypoglykemi (\"unawareness\")?</text>\n\t<text id=\"FRG_39.RBK\">d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</text>\n\t<text id=\"DFR_39.2.RBK\">Hur många sådana episoder?</text>\n\t<text id=\"FRG_40.RBK\">e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</text>\n\t<text id=\"DFR_40.2.RBK\">Hur många sådana episoder och när inträffade de?</text>\n\t<text id=\"FRG_41.RBK\">f) Genomför patienten egenkontroller av blodsocker?</text>\n\t<text id=\"FRG_42.RBK\">g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</text>\n  <text id=\"DFR_42.2.RBK\">När?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 3: Synintyg\n\t===============================================\n\t-->\n\t<text id=\"KAT_3.RBK\">3. Synintyg</text>\n\n\t<text id=\"FRG_43.RBK\">a) Ögonläkarintyg kommer att skickas in separat</text>\n\t<text id=\"FRG_44.RBK\">b) Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</text>\n\t<text id=\"FRG_8.RBK\">c) Värden för synskärpa</text>\n\t<text id=\"FRG_6.RBK\">d) Förekommer dubbelseende?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 4: Bedömning\n\t===============================================\n\t-->\n\t<text id=\"KAT_4.RBK\">4. Bedömning</text>\n  <text id=\"KAT_4.HLP\"><![CDATA[<span style=\"text-align:left\">AM = moped klass I<br/>A1 = lätt motorcykel<br/>A2 = mellanstor motorcykel<br/>A = motorcykel<br/>B = personbil, lätt lastbil och enbart ett lätt släpfordon<br/>BE = personbil, lätt lastbil och ett eller flera släpfordon. Släpens totalvikt får inte överstiga 3,5 ton.<br/>C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation</span>]]></text>\n\n  <text id=\"FRG_33.RBK\"><![CDATA[Patienten uppfyller kraven enligt 6 kap. i Transportstyrelsens föreskrifter och allmänna\n    råd om\n    medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS\n    2013:2).\n    Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom anges i 17 kap.\n    Se <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">www.transportstyrelsen.se</a>.]]></text>\n\t<text id=\"DFR_33.1.RBK\">Någon av följande behörighetstyper</text>\n  <text id=\"DFR_33.2.RBK\">Kan inte ta ställning</text>\n  <text id=\"FRG_45.RBK\">Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</text>\n\n\t<text id=\"FRG_32.RBK\">Övriga kommentarer och upplysningar</text>\n\t<text id=\"FRG_34.RBK\">Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</text>\n\n</texter>\n"
+  texterTS_TSTRK_1031_v2.8.properties: |
+    #Properties for TS 1031 v2.8 pdf generation
+
+    pdfPath=pdf/TSTRK1031-V02U08.pdf
+  texterTS_TSTRK_1031_v2.8.xml: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<texter typ=\"TS-DIABETES\" giltigFrom=\"2016-04-01\" version=\"2.8\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n\n\t<!--\n\t===============================================\n\tKATEGORI: Intyg avser\n\t===============================================\n\t-->\n\t<text id=\"KAT_99.RBK\">Intyg avser</text>\n  <text id=\"KORKORT_AM.RBK\">AM</text>\n  <text id=\"KORKORT_A1.RBK\">A1</text>\n  <text id=\"KORKORT_A2.RBK\">A2</text>\n  <text id=\"KORKORT_A.RBK\">A</text>\n  <text id=\"KORKORT_B.RBK\">B</text>\n  <text id=\"KORKORT_BE.RBK\">BE</text>\n  <text id=\"KORKORT_TRAKTOR.RBK\">Traktor</text>\n  <text id=\"KORKORT_C1.RBK\">C1</text>\n  <text id=\"KORKORT_C1E.RBK\">C1E</text>\n  <text id=\"KORKORT_C.RBK\">C</text>\n  <text id=\"KORKORT_CE.RBK\">CE</text>\n  <text id=\"KORKORT_D1.RBK\">D1</text>\n  <text id=\"KORKORT_D1E.RBK\">D1E</text>\n  <text id=\"KORKORT_D.RBK\">D</text>\n  <text id=\"KORKORT_DE.RBK\">DE</text>\n  <text id=\"KORKORT_TAXI.RBK\">Taxi</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI: Identitet styrkt genom\n\t===============================================\n\t-->\n\t<text id=\"KAT_100.RBK\">Identitet styrkt genom</text>\n\n  <text id=\"IDENTITET_ID_KORT.RBK\">ID-kort</text>\n  <text id=\"IDENTITET_FORETAG_ELLER_TJANSTEKORT.RBK\">Företagskort eller tjänstekort.</text>\n  <text id=\"IDENTITET_KORKORT.RBK\">Svenskt körkort</text>\n  <text id=\"IDENTITET_PERS_KANNEDOM.RBK\">Personlig kännedom</text>\n  <text id=\"IDENTITET_FORSAKRAN_KAP18.RBK\">Försäkran enligt 18 kap 4 §</text>\n  <text id=\"IDENTITET_PASS.RBK\">Pass</text>\n\n\t<text id=\"FRM_1.RBK\">&#185; SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.\n&#178; SIS-märkt företagskort eller tjänstekort.\n&#179; Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter och allmänna råd (TSFS 2010:125) om medicinska krav för innehav av körkort m.m.\n&#8308; Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>\n\n\t<text id=\"FRM_2.RBK\"><![CDATA[Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.\n\tSe: <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">http://www.transportstyrelsen.se</a>.]]></text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 1: Allmänt\n\t===============================================\n\t-->\n\t<text id=\"KAT_1.RBK\">1. Allmänt</text>\n\n\t<text id=\"FRG_35.RBK\">Vilket år ställdes diagnosen diabetes?</text>\n\t<text id=\"FRG_18.RBK\">Patienten har diabetes</text>\n\t<text id=\"FRG_19.RBK\">Behandling</text>\n\t<text id=\"DFR_19.1.RBK\">Endast kost</text>\n\t<text id=\"DFR_19.2.RBK\">Tabletter</text>\n\t<text id=\"DFR_19.3.RBK\">Insulin</text>\n\t<text id=\"DFR_19.4.RBK\">Insulin sedan år</text>\n\t<text id=\"DFR_19.5.RBK\">Annan behandling, vilken?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 2: Hypoglykemier (lågt blodsocker)\n\t===============================================\n\t-->\n\t<text id=\"KAT_2.RBK\">2. Hypoglykemier (lågt blodsocker)</text>\n\n\t<text id=\"FRG_36.RBK\">a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</text>\n\t<text id=\"FRG_37.RBK\">b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) som bedöms kunna innebära en trafiksäkerhetsrisk?</text>\n\t<text id=\"FRG_38.RBK\">c) Saknar patienten förmåga att känna varningstecken på hypoglykemi (\"unawareness\")?</text>\n\t<text id=\"FRG_39.RBK\">d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</text>\n\t<text id=\"DFR_39.2.RBK\">Hur många sådana episoder?</text>\n\t<text id=\"FRG_40.RBK\">e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</text>\n\t<text id=\"DFR_40.2.RBK\">Hur många sådana episoder och när inträffade de?</text>\n\t<text id=\"FRG_41.RBK\">f) Genomför patienten egenkontroller av blodsocker?</text>\n\t<text id=\"FRG_42.RBK\">g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</text>\n  <text id=\"DFR_42.2.RBK\">När?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 3: Synintyg\n\t===============================================\n\t-->\n\t<text id=\"KAT_3.RBK\">3. Synintyg</text>\n\n\t<text id=\"FRG_43.RBK\">a) Ögonläkarintyg kommer att skickas in separat</text>\n\t<text id=\"FRG_44.RBK\">b) Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</text>\n\t<text id=\"FRG_8.RBK\">c) Värden för synskärpa</text>\n\t<text id=\"FRG_6.RBK\">d) Förekommer dubbelseende?</text>\n\n\t<!--\n\t===============================================\n\tKATEGORI 4: Bedömning\n\t===============================================\n\t-->\n\t<text id=\"KAT_4.RBK\">4. Bedömning</text>\n  <text id=\"KAT_4.HLP\"><![CDATA[<span style=\"text-align:left\">AM = moped klass I<br/>A1 = lätt motorcykel<br/>A2 = mellanstor motorcykel<br/>A = motorcykel<br/>B = personbil, lätt lastbil och enbart ett lätt släpfordon<br/>BE = personbil, lätt lastbil och ett eller flera släpfordon. Släpens totalvikt får inte överstiga 3,5 ton.<br/>C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation</span>]]></text>\n\n  <text id=\"FRG_33.RBK\"><![CDATA[Patienten uppfyller kraven enligt 6 kap. i Transportstyrelsens föreskrifter och allmänna råd (TSFS 2010:125) om\n  medicinska krav för innehav av körkort m.m. Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom\n  anges i 17 kap.\n  Se <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">www.transportstyrelsen.se</a>.]]></text>\n\t<text id=\"DFR_33.1.RBK\">Någon av följande behörighetstyper</text>\n  <text id=\"DFR_33.2.RBK\">Kan inte ta ställning</text>\n\t<text id=\"FRG_45.RBK\">Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</text>\n\n\t<text id=\"FRG_32.RBK\">Övriga kommentarer och upplysningar</text>\n\t<text id=\"FRG_34.RBK\">Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</text>\n\n</texter>\n"
+kind: ConfigMap
+metadata:
+  name: minaintyg-resources-texts
