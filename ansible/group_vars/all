@@ -15,7 +15,7 @@ profiles: test
 # Configuration repository
 config_repository: https://github.com/sklintyg/minaintyg-konfiguration.git
 config_folder: "{{ inera_root }}/minaintyg-konfiguration"
-config_version: "master"
+config_version: "MI-3.6"
 gitcrypt_key_name: "git-crypt4.key"
 gitcrypt_key_file: "./{{ gitcrypt_key_name }}"
 
