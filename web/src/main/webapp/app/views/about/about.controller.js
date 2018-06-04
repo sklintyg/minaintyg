@@ -55,4 +55,10 @@ angular.module('minaintyg').controller(
                         label: 'Hjälp och support'
                     });
 
+                    $scope.menuItems.push({
+                        id: 'link-about-personuppgifter',
+                        link: 'omminaintyg.personuppgifter-info',
+                        label: 'Om behandling av personuppgifter'
+                    });
+
                 } ]);
