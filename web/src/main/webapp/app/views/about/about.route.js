@@ -35,5 +35,12 @@ angular.module('minaintyg').config(function($stateProvider) {
                 templateUrl: '/app/views/about/section-juridik.html'
             }
         }
+    }).state('omminaintyg.personuppgifter-info', {
+        url: '/personuppgifter',
+        views: {
+            'content@omminaintyg': {
+                templateUrl: '/app/views/about/section-personuppgifter.html'
+            }
+        }
     });
 });
