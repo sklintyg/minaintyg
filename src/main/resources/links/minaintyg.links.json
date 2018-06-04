@@ -148,5 +148,11 @@
     "url": "https://www.forsakringskassan.se/sjuk",
     "text": "www.forsakringskassan.se/sjuk",
     "target": "_blank"
+  },
+  {
+    "key": "ineraPersonuppgifter",
+    "url": "https://www.inera.se/om-inera/behandling-av-personuppgifter/",
+    "text": "Ineras hemsida",
+    "target": "_blank"
   }
 ]
