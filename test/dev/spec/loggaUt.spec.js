@@ -82,7 +82,6 @@ describe('Logga ut', function() {
             specHelper.backToMvk();
             browser.driver.sleep(3000);
             expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
-            expect(browser.getCurrentUrl()).toContain('https://kontakt.minavardkontakter.se/mvk/login/login.xhtml');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
