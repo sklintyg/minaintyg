@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common.ObjectHelper', '$uibModal', '$state',
-    function(MIConfig, MIUser, objectHelper, $uibModal, $state) {
+angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common.ObjectHelper', '$uibModal', '$state', 'sessionCheckService',
+    function(MIConfig, MIUser, objectHelper, $uibModal, $state, sessionCheckService) {
         'use strict';
 
         return {
@@ -29,6 +29,10 @@ angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common
                     $scope.authUserDescription = MIUser.fullName;
                 } else {
                     $scope.authUserDescription = MIUser.personId;
+                }
+
+                if ($scope.authUserDescription) {
+                    sessionCheckService.startPolling();
                 }
 
                 $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;

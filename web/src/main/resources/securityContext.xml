@@ -65,6 +65,7 @@
 
   <security:http security="none" pattern="/web/resources/**" />
   <security:http security="none" pattern="/ws/**" />
+  <security:http security="none" create-session="never" pattern="/session/session-auth-check/**" />
 
 
   <!-- Logger for SAML messages and events -->
