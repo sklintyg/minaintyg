@@ -28,13 +28,13 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
         url :'/',
         templateUrl: '/app/views/index/index.html',
         controller: 'minaintyg.IndexCtrl',
-        data:{title: 'Mina Intyg', keepInboxTabActive: false}
+        data:{title: 'Mina intyg', keepInboxTabActive: false}
     }).
     state('fk-logged-out', {
         url :'/fk-logged-out',
         templateUrl: '/app/views/fk-logged-out/fk-logged-out.html',
         controller: 'minaintyg.FkLoggedOutCtrl',
-        data:{title: 'Mina Intyg', keepInboxTabActive: false}
+        data:{title: 'Mina intyg', keepInboxTabActive: false}
     }).
         state('inkorg', {
             url : '/inkorg',
