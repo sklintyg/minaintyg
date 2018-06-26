@@ -17,15 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.messageService', function($scope, messageService) {
+angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.messageService', '$window', 'smoothScroll',
+    function($scope, messageService, $window, smoothScroll) {
     'use strict';
 
-    function getQuestions(prefix) {
+    function getQuestions(prefix, idPrefix) {
         var questions = [];
         var numberOfQuestions = 1;
 
         while (hasQuestion(prefix, numberOfQuestions)) {
             questions.push({
+                id: 'faq-' + idPrefix + '-' + numberOfQuestions,
                 title: prefix + numberOfQuestions + '.title',
                 closed: true,
                 body: prefix + numberOfQuestions + '.body'
@@ -48,13 +50,13 @@ angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.m
     faq.push({
         title: 'Intyg',
         icon: 'icon-doc-text',
-        questions: getQuestions('faq.intyg.')
+        questions: getQuestions('faq.intyg.', 'intyg')
     });
 
     faq.push({
         title: 'Säkerhet',
         icon: 'icon-shield',
-        questions: getQuestions('faq.sakerhet.')
+        questions: getQuestions('faq.sakerhet.', 'sakerhet')
     });
 
     $scope.faq = faq;
@@ -65,6 +67,31 @@ angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.m
 
     $scope.closeAll = function() {
         toggleQuestions(true);
+    };
+
+    $scope.toggleQuestion = function(question) {
+        question.closed = !question.closed;
+
+        if (!question.closed) {
+            var elementToScrollTo = $('#' + question.id);
+
+            var windowElement = $($window);
+            var windowHeight = windowElement.height() / 2;
+            var scrollTop = windowElement.scrollTop();
+            var elementPosition = elementToScrollTo.offset().top;
+
+            if (elementPosition - scrollTop > windowHeight) {
+                var offset = 100;
+                var options = {
+                    duration: 500,
+                    easing: 'easeInOutQuart',
+                    offset: offset
+                };
+
+                //scroll to this questions panel heading, centered vertically
+                smoothScroll(elementToScrollTo[0], options);
+            }
+        }
     };
 
     function toggleQuestions(closed) {

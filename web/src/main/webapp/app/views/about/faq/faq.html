@@ -15,8 +15,8 @@
 
   <div data-ng-repeat="c in faq">
     <h2><i class="icon {{::c.icon}}"></i> {{::c.title}}</h2>
-    <div class="panel panel-default" data-ng-repeat="q in c.questions">
-      <div class="panel-heading" ng-click="q.closed = !q.closed">
+    <div class="panel panel-default" data-ng-repeat="q in c.questions"  data-ng-attr-id="{{::q.id}}">
+      <div class="panel-heading" ng-click="toggleQuestion(q)">
         <h3 class="panel-title">
           <span dynamic-label key="{{::q.title}}"></span>
 

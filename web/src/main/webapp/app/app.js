@@ -21,7 +21,7 @@
     'use strict';
 
     var app = angular.module('minaintyg',
-        ['ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common']);
+        ['ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'ngAnimate', 'common', 'smoothScroll']);
 
     // before we do anything...we need all modules
     var moduleArray = [];
