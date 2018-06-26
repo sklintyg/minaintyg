@@ -154,5 +154,29 @@
     "url": "https://www.inera.se/om-inera/behandling-av-personuppgifter/",
     "text": "Ineras hemsida",
     "target": "_blank"
+  },
+  {
+    "key": "1177",
+    "url": "https://www.1177.se/",
+    "text": "1177",
+    "target": "_blank"
+  },
+  {
+    "key": "socialstyrelsen",
+    "url": "http://www.socialstyrelsen.se/sosfs",
+    "text": "Socialstyrelsen",
+    "target": "_blank"
+  },
+  {
+    "key": "pdl",
+    "url": "http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/patientdatalag-2008355_sfs-2008-355",
+    "text": "Patientdatalagen (2008:355)",
+    "target": "_blank"
+  },
+  {
+    "key": "gdpr",
+    "url": "http://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32016R0679",
+    "text": "Dataskyddsförordningen (EU) 2016/679",
+    "target": "_blank"
   }
 ]
