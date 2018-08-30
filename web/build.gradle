@@ -129,6 +129,7 @@ dependencies {
 
     compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
+    compile "se.inera.intyg.infra:security-filter:${infraVersion}"
 
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
