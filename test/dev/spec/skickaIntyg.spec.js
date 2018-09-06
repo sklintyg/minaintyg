@@ -33,7 +33,7 @@ var welcomePage = miTestTools.pages.welcomePage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Skicka intyg', function() {
+xdescribe('Skicka intyg', function() {
 
 	var personId = '191212121212';
 	var intygsId1 = null;
