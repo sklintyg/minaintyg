@@ -37,10 +37,10 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.RecipientType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
@@ -217,10 +217,10 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType) {
+    public List<UtlatandeRecipient> getRecipientsForCertificate(String certificateId) {
         // Setup request
         GetRecipientsForCertificateType request = new GetRecipientsForCertificateType();
-        request.setCertificateType(certificateType);
+        request.setCertificateId(certificateId);
 
         // Call service and get recipients
         GetRecipientsForCertificateResponseType response = getRecipientsService.getRecipientsForCertificate(logicalAddress, request);
@@ -229,15 +229,16 @@ public class CertificateServiceImpl implements CertificateService {
         case OK:
             List<UtlatandeRecipient> recipientList = new ArrayList<>();
             for (RecipientType recipientType : response.getRecipient()) {
-                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(recipientType.getId(), recipientType.getName(),
+                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(
+                        recipientType.getId(),
+                        recipientType.getName(),
                         recipientType.isTrusted());
                 recipientList.add(utlatandeRecipient);
             }
             return recipientList;
-
         default:
-            LOGGER.error("Failed to fetch recipient list for cert type: {} from Intygstjänsten. WS call result is {}", certificateType,
-                    response.getResult());
+            LOGGER.error("Failed to fetch recipient list for certificate-id: {} from Intygstjänsten. WS call result is {}",
+                    certificateId, response.getResult());
             throw new ResultTypeErrorException(response.getResult());
         }
     }

@@ -36,9 +36,9 @@ angular.module('minaintyg').factory('minaintyg.SendService', function($http, $lo
         });
     }
 
-    function _getRecipients(type) {
-        $log.debug('_getRecipients type: ' + type);
-        var restPath = '/api/certificates/' + type + '/recipients';
+    function _getRecipients(certId) {
+        $log.debug('_getRecipients type: ' + certId);
+        var restPath = '/api/certificates/' + certId + '/recipients';
         var ret = $http.get(restPath);
         angular.forEach(ret, function(utlatandeRecipient) {
            $log.debug('Recipient: ' + utlatandeRecipient.name);

@@ -45,6 +45,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -61,11 +62,13 @@ import static org.mockito.Mockito.when;
 public class ApiControllerTest {
 
     private static final String CIVIC_REGISTRATION_NUMBER = "19121212-1212";
-    private static final Personnummer PNR = Personnummer.createPersonnummer(CIVIC_REGISTRATION_NUMBER).get();
     private static final String FKASSA_RECIPIENT_ID = "FKASSA";
     private static final String TRANSP_RECIPIENT_ID = "TRANSP";
-    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;
     private static final String PERSON_FULLNAME = "Tolvan Tolvansson";
+
+    private static final Personnummer PNR = Personnummer.createPersonnummer(CIVIC_REGISTRATION_NUMBER).get();
+
+    private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;
 
     @Mock
     private CertificateService certificateService;
@@ -108,38 +111,41 @@ public class ApiControllerTest {
 
     @Test
     public void testRecipients() throws Exception {
-        final String type = "fk7263";
-        when(certificateService.getRecipientsForCertificate(type)).thenReturn(Arrays.asList(mock(UtlatandeRecipient.class)));
-        List<UtlatandeRecipient> res = apiController.listRecipients(type);
+        final String intygsId = UUID.randomUUID().toString();
+        when(certificateService.getRecipientsForCertificate(intygsId)).thenReturn(Arrays.asList(mock(UtlatandeRecipient.class)));
+
+        List<UtlatandeRecipient> res = apiController.listRecipients(intygsId);
 
         assertNotNull(res);
         assertEquals(1, res.size());
 
-        verify(certificateService).getRecipientsForCertificate(type);
+        verify(certificateService).getRecipientsForCertificate(intygsId);
     }
 
     @Test
     public void testArchive() throws Exception {
-        final String id = "intyg-id";
-        when(certificateService.archiveCertificate(id, PNR)).thenReturn(mock(UtlatandeMetaData.class));
+        final String intygsId = UUID.randomUUID().toString();
+        when(certificateService.archiveCertificate(intygsId, PNR)).thenReturn(mock(UtlatandeMetaData.class));
         mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        CertificateMeta res = apiController.archive(id);
+
+        CertificateMeta res = apiController.archive(intygsId);
 
         assertNotNull(res);
 
-        verify(certificateService).archiveCertificate(id, PNR);
+        verify(certificateService).archiveCertificate(intygsId, PNR);
     }
 
     @Test
     public void testRestore() throws Exception {
-        final String id = "intyg-id";
-        when(certificateService.restoreCertificate(id, PNR)).thenReturn(mock(UtlatandeMetaData.class));
+        final String intygsId = UUID.randomUUID().toString();
+        when(certificateService.restoreCertificate(intygsId, PNR)).thenReturn(mock(UtlatandeMetaData.class));
         mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        CertificateMeta res = apiController.restore(id);
+
+        CertificateMeta res = apiController.restore(intygsId);
 
         assertNotNull(res);
 
-        verify(certificateService).restoreCertificate(id, PNR);
+        verify(certificateService).restoreCertificate(intygsId, PNR);
     }
 
     @Test

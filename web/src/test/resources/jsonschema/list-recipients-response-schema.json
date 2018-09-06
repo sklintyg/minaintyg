@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Schema for /api/certificates/<type>/recipients",
+  "title": "Schema for /api/certificates/<id>/recipients",
   "type": "array",
   "items": {
     "type": "object",

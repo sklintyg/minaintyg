@@ -18,10 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.ReceiverApprovalStatus;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
+import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.schemas.contract.Personnummer;
+import se.riv.clinicalprocess.healthcond.certificate.receiver.types.v1.ApprovalStatusType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -30,11 +36,14 @@ import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
+import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 
 public final class IntegrationTestUtility {
 
-    public static String certificateBaseUrl;
+    public static final String FKASSA = "FKASSA";
+    public static final String FBA = "FBA";
 
+    public static String certificateBaseUrl;
     public static String routeId;
 
     private IntegrationTestUtility() {
@@ -74,14 +83,19 @@ public final class IntegrationTestUtility {
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    public static void givenIntyg(String intygId, String intygTyp, String personId, boolean revoked, boolean archived) {
-        given().baseUri(certificateBaseUrl).body(certificate(intygId, intygTyp, personId, revoked, archived))
+    public static void givenIntyg(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
+        given().baseUri(certificateBaseUrl).body(certificate(intygsId, intygTyp, personId, revoked, archived))
             .post("resources/certificate/").then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    private static CertificateHolder certificate(String intygId, String intygTyp, String personId, boolean revoked, boolean archived) {
+    public static void givenReceivers(String intygsId){
+        given().body(approvedReceivers(intygsId, FKASSA, FBA))
+                .post("testability/receiver/" + intygsId).then().statusCode(HttpServletResponse.SC_OK);
+    }
+
+    private static CertificateHolder certificate(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
         CertificateHolder certificate = new CertificateHolder();
-        certificate.setId(intygId);
+        certificate.setId(intygsId);
         certificate.setType(intygTyp);
         certificate.setSignedDate(LocalDateTime.now());
         certificate.setCareGiverId("CareGiverId");
@@ -100,4 +114,36 @@ public final class IntegrationTestUtility {
         certificate.setRevoked(revoked);
         return certificate;
     }
+
+    private static RegisterApprovedReceiversType approvedReceivers(String intygsId, String... receivers) {
+        final String intygsTyp = LisjpEntryPoint.MODULE_ID;
+        final String displayName = LisjpEntryPoint.MODULE_NAME;
+
+        IntygId intygId = new IntygId();
+        intygId.setExtension(intygsId);
+        intygId.setRoot("some root");
+
+        TypAvIntyg typAvIntyg = new TypAvIntyg();
+        typAvIntyg.setCode(intygsTyp);
+        typAvIntyg.setCodeSystem(KV_INTYGSTYP_CODE_SYSTEM);
+        typAvIntyg.setDisplayName(displayName);
+
+        RegisterApprovedReceiversType type = new RegisterApprovedReceiversType();
+        type.setIntygId(intygId);
+        type.setTypAvIntyg(typAvIntyg);
+
+        for (String receiver : receivers) {
+            type.getApprovedReceivers().add(createReceiverApprovalStatus(receiver, ApprovalStatusType.YES));
+        }
+
+        return type;
+    }
+
+    private static ReceiverApprovalStatus createReceiverApprovalStatus(String receiverId, ApprovalStatusType statusType) {
+        ReceiverApprovalStatus approvalStatus = new ReceiverApprovalStatus();
+        approvalStatus.setReceiverId(receiverId);
+        approvalStatus.setApprovalStatus(statusType);
+        return approvalStatus;
+    }
+
 }

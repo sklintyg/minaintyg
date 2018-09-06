@@ -58,7 +58,7 @@
       address="${certificates.getcertificate.url}"/>
 
   <jaxws:client id="getRecipientsForCertificateClient"
-      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface"
+      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponderInterface"
       address="${certificates.getrecipientforcertificate.url}"/>
 
   <jaxws:client id="listKnownRecipientsClient"

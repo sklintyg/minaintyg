@@ -19,7 +19,6 @@
 package se.inera.intyg.minaintyg.web.service;
 
 import com.google.common.collect.ImmutableList;
-import org.apache.cxf.binding.soap.SoapFault;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +26,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateResponseType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.GetRecipientsForCertificateType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v1.RecipientType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.RecipientType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
@@ -73,7 +72,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v3.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v3.HosPersonal;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
 
-import javax.xml.namespace.QName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -342,17 +340,21 @@ public class CertificateServiceImplTest {
 
     @Test
     public void testGetRecipientsForCertificate() {
-        final String type = "fk7263";
+        final String intygsId = "intygs-id";
         final String recipientId = "recipient-id";
         final String recipientName = "recipient-name";
+
         GetRecipientsForCertificateResponseType responseType = new GetRecipientsForCertificateResponseType();
-        responseType.setResult(se.inera.intyg.common.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.okResult());
+        responseType.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.v1.utils.ResultTypeUtil.okResult());
+
         RecipientType rt = new RecipientType();
         rt.setId(recipientId);
         rt.setName(recipientName);
         responseType.getRecipient().add(rt);
+
         when(getRecipientsService.getRecipientsForCertificate(anyString(), any(GetRecipientsForCertificateType.class))).thenReturn(responseType );
-        List<UtlatandeRecipient> recipientList = service.getRecipientsForCertificate(type);
+        List<UtlatandeRecipient> recipientList = service.getRecipientsForCertificate(intygsId);
+
         assertNotNull(recipientList);
         assertEquals(1, recipientList.size());
         assertEquals(recipientId, recipientList.get(0).getId());
@@ -360,14 +362,14 @@ public class CertificateServiceImplTest {
 
         ArgumentCaptor<GetRecipientsForCertificateType> requestCaptor = ArgumentCaptor.forClass(GetRecipientsForCertificateType.class);
         verify(getRecipientsService).getRecipientsForCertificate(anyString(), requestCaptor.capture());
-        assertEquals(type, requestCaptor.getValue().getCertificateType());
+        assertEquals(intygsId, requestCaptor.getValue().getCertificateId());
     }
 
     @Test(expected = ResultTypeErrorException.class)
     public void testGetRecipientsForCertificateErrorResponse() {
         final String type = "fk7263";
         GetRecipientsForCertificateResponseType responseType = new GetRecipientsForCertificateResponseType();
-        responseType.setResult(se.inera.intyg.common.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil.errorResult(se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
+        responseType.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.v1.utils.ResultTypeUtil.errorResult(se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
         when(getRecipientsService.getRecipientsForCertificate(anyString(), any(GetRecipientsForCertificateType.class))).thenReturn(responseType );
         service.getRecipientsForCertificate(type);
     }

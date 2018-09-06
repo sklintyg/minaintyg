@@ -65,7 +65,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                     $scope.vm.statuses = result.meta.statuses;
 
                     //Also need the list of recipients
-                    sendService.getRecipients($scope.vm.type).then(function(result) {
+                    sendService.getRecipients($scope.vm.id).then(function(result) {
                         if (result && result.data) {
                             angular.forEach(result.data, function(recipient) {
                                 _decorateWithSentStatus($scope.vm.statuses, recipient);
@@ -86,8 +86,6 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             }, function() {
                 $state.go('fel', {errorCode: 'certnotfound'});
             });
-
-
 
             $scope.checkSekretessBeforeSend = function(selectedRecipients) {
                 if (MIUser.sekretessmarkering) {

@@ -80,11 +80,11 @@ public class ApiController {
     }
 
     @GET
-    @Path("/{type}/recipients")
+    @Path("/{id}/recipients")
     @Produces(JSON_UTF8)
-    public List<UtlatandeRecipient> listRecipients(@PathParam("type") final String type) {
-        LOG.debug("Listing recipients for certificate type: {}", type);
-        return certificateService.getRecipientsForCertificate(type);
+    public List<UtlatandeRecipient> listRecipients(@PathParam("id") final String id) {
+        LOG.debug("Listing recipients for certificate-id: {}", id);
+        return certificateService.getRecipientsForCertificate(id);
     }
 
     @PUT

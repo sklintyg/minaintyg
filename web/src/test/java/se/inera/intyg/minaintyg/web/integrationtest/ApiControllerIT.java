@@ -18,15 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -34,6 +29,11 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -151,27 +151,21 @@ public class ApiControllerIT extends IntegrationTestBase {
     }
 
     @Test
-    public void testListRecipientsFK() {
+    @Ignore
+    public void testListRecipientsForCertificate() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", Fk7263EntryPoint.MODULE_ID)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/{type}/recipients")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/list-recipients-response-schema.json"));
-    }
+        final String intygsId = UUID.randomUUID().toString();
 
-    @Test
-    public void testListRecipientsTS() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
+        IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
+        IntegrationTestUtility.givenReceivers(intygsId);
+
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", TsBasEntryPoint.MODULE_ID)
+                .pathParams("id", intygsId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/{type}/recipients")
+                .when().get("api/certificates/{id}/recipients")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/list-recipients-response-schema.json"));
     }
