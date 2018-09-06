@@ -84,13 +84,17 @@ public final class IntegrationTestUtility {
     }
 
     public static void givenIntyg(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
-        given().baseUri(certificateBaseUrl).body(certificate(intygsId, intygTyp, personId, revoked, archived))
-            .post("resources/certificate/").then().statusCode(HttpServletResponse.SC_OK);
+        given().baseUri(certificateBaseUrl)
+                .body(certificate(intygsId, intygTyp, personId, revoked, archived))
+                .post("resources/certificate/")
+                .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void givenReceivers(String intygsId){
-        given().body(approvedReceivers(intygsId, FKASSA, FBA))
-                .post("testability/receiver/" + intygsId).then().statusCode(HttpServletResponse.SC_OK);
+        given().baseUri(certificateBaseUrl)
+                .body(createApprovedReceivers(intygsId, FKASSA, FBA))
+                .post("resources/certificate/" + intygsId + "/approvedreceivers/")
+                .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     private static CertificateHolder certificate(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
@@ -115,7 +119,7 @@ public final class IntegrationTestUtility {
         return certificate;
     }
 
-    private static RegisterApprovedReceiversType approvedReceivers(String intygsId, String... receivers) {
+    private static RegisterApprovedReceiversType createApprovedReceivers(String intygsId, String... receivers) {
         final String intygsTyp = LisjpEntryPoint.MODULE_ID;
         final String displayName = LisjpEntryPoint.MODULE_NAME;
 

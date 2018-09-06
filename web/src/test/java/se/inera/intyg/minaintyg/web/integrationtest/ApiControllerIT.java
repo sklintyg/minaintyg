@@ -20,7 +20,6 @@ package se.inera.intyg.minaintyg.web.integrationtest;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -151,7 +150,6 @@ public class ApiControllerIT extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore
     public void testListRecipientsForCertificate() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
@@ -160,7 +158,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
         IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
         IntegrationTestUtility.givenReceivers(intygsId);
-
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .pathParams("id", intygsId)
