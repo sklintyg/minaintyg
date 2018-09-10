@@ -71,3 +71,9 @@ stage('notify') {
         util.notifySuccess()
     }
 }
+
+stage('propagate') {
+    node {
+        build job: "minaintyg-dintyg-build", wait: false, parameters: [[$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion]]
+    }
+}
