@@ -39,6 +39,7 @@ public abstract class IntegrationTestBase {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = System.getProperty("integration.tests.baseUrl");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
+        RestAssured.config = RestAssured.config().sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
         IntegrationTestUtility.certificateBaseUrl = System.getProperty("integration.tests.certificate.baseUrl");
     }
 

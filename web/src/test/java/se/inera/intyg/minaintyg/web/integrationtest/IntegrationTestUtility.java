@@ -45,6 +45,7 @@ public final class IntegrationTestUtility {
 
     public static String certificateBaseUrl;
     public static String routeId;
+    public static String jsessionId;
 
     private IntegrationTestUtility() {
     }
@@ -55,7 +56,8 @@ public final class IntegrationTestUtility {
                 .when().get("web/sso?guid=" + personId).getCookies();
 
         routeId = cookies.containsKey("ROUTEID") ? cookies.get("ROUTEID") : "nah";
-        return cookies.get("JSESSIONID");
+        jsessionId = cookies.containsKey("JSESSIONID") ? cookies.get("JSESSIONID") : null;
+        return cookies.get("SESSION");
     }
 
     public static void logout() {
