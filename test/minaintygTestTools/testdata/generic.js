@@ -59,10 +59,12 @@ module.exports = {
 
         //Create a local copy that we are free to mutate
         var templateJsonObj = JSON.parse(JSON.stringify(templateJsonObjTemplate));
+
         //generate a new GUID as certificate id
         templateJsonObj.id = helpers.testdata.generateTestGuid();
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
         templateJsonObj.signedDate = signedDate || templateJsonObj.signedDate;
+
         var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
 
         //read xml doc into string variable

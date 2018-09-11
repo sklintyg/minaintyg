@@ -69,5 +69,21 @@ module.exports = {
             method: 'DELETE'
         };
         return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+    },
+    createApprovedReceivers: function(intygsId, createJson) {
+        var options = {
+            url: 'certificate/' + intygsId + '/approvedreceivers/',
+            method: 'POST',
+            body: createJson
+        };
+        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+    },
+    deleteApprovedReceivers: function(intygsId) {
+        var options = {
+            url: 'certificate/' + intygsId + '/approvedreceivers/',
+            method: 'DELETE'
+        };
+        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
     }
+
 };

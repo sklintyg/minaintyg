@@ -36,6 +36,13 @@ module.exports = {
     deleteAllIntygForCitizen: function(userId) {
         return restUtil.deleteAllIntyg(userId || '191212121212');
     },
+    createApprovedReceivers: function(intygsId, createJson) {
+        debug(createJson);
+        return restUtil.createApprovedReceivers(intygsId, createJson);
+    },
+    deleteApprovedReceivers: function(intygsId) {
+        return restUtil.deleteApprovedReceivers(intygsId);
+    },
     get: function(url, loggedIn) {
         return restUtil.get(url, loggedIn);
     }

@@ -32,25 +32,36 @@ var viewPage = miTestTools.pages.viewPage;
 var welcomePage = miTestTools.pages.welcomePage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
+var approvedReceiversTestDataBuilder = miTestTools.testdata.approvedReceivers;
 
-xdescribe('Skicka intyg', function() {
+fdescribe('Skicka intyg', function() {
 
 	var personId = '191212121212';
 	var intygsId1 = null;
 	var intygsId2 = null;
+	var intygsTyp = 'lisjp';
+	var receiverIds = ['FKASSA','FBA'];
 
     beforeAll(function() {
         var intyg1 = genericTestDataBuilder.getLisjpSmittskydd();
         var intyg2 = genericTestDataBuilder.getLisjpSmittskydd();
-        intygsId1 = intyg1.id;
-        intygsId2 = intyg2.id;
         restHelper.createIntyg(intyg1);
         restHelper.createIntyg(intyg2);
+
+        intygsId1 = intyg1.id;
+        intygsId2 = intyg2.id;
+
+        var approvedReceivers1 = approvedReceiversTestDataBuilder.getApprovedReceivers(intygsId1, intygsTyp, receiverIds);
+        var approvedReceivers2 = approvedReceiversTestDataBuilder.getApprovedReceivers(intygsId2, intygsTyp, receiverIds);
+        restHelper.createApprovedReceivers(intygsId1, approvedReceivers1);
+        restHelper.createApprovedReceivers(intygsId2, approvedReceivers2);
     });
 
     afterAll(function() {
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
+        restHelper.deleteApprovedReceivers(intygsId1);
+        restHelper.deleteApprovedReceivers(intygsId2);
     });
 
     describe('Skicka lisjpintyg', function() {
