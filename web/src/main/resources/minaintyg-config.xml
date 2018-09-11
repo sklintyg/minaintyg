@@ -31,8 +31,8 @@
           <!-- Order matters - last value wins -->
           <value>classpath:default.properties</value>
           <value>classpath:version.properties</value>
-          <value>file:${minaintyg.config.file}</value>
-          <value>file:${minaintyg.credentials.file}</value>
+          <value>file:${config.file}</value>
+          <value>file:${credentials.file}</value>
         </list>
       </property>
     </bean>

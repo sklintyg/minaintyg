@@ -29,7 +29,7 @@
 
   <context-param>
       <param-name>logbackConfigParameter</param-name>
-      <param-value>minaintyg.logback.file</param-value>
+      <param-value>logback.file</param-value>
   </context-param>
 
   <!-- Listener for external logback configuration file -->
