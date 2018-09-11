@@ -95,7 +95,7 @@ gretty {
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev",
+               "-Dspring.profiles.active=dev,caching-enabled",
                "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
                "-Dminaintyg.credentials.file=${projectDir}/minaintyg-credentials.properties",
@@ -147,6 +147,7 @@ dependencies {
     compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
     compile "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
+    compile "org.springframework.session:spring-session:${springSessionVersion}"
     compile "org.opensaml:openws:${openWsVersion}"
     compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
