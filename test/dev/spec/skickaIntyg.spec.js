@@ -34,7 +34,7 @@ var welcomePage = miTestTools.pages.welcomePage;
 var genericTestDataBuilder = miTestTools.testdata.generic;
 var approvedReceiversTestDataBuilder = miTestTools.testdata.approvedReceivers;
 
-fdescribe('Skicka intyg', function() {
+describe('Skicka intyg', function() {
 
 	var personId = '191212121212';
 	var intygsId1 = null;
@@ -89,7 +89,6 @@ fdescribe('Skicka intyg', function() {
         });
 
         it('Välj att skicka intyget', function() {
-browser.pause();
             expect(viewPage.isAt()).toBeTruthy();
             viewPage.sendCertificate();
             expect(sendPage.isAt()).toBeTruthy();
