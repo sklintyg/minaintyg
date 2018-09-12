@@ -43,7 +43,7 @@ describe('Lista intyg', function() {
         fk7263IntygsId = fk7263Intyg.id;
         restHelper.createIntyg(fk7263Intyg);
 
-        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01.234');
+        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01');
         tsBasIntygsId = tsBasIntyg.id;
         restHelper.createIntyg(tsBasIntyg);
 
