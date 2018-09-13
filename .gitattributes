@@ -1,4 +1,0 @@
-*.jks filter=git-crypt diff=git-crypt
-*.p12 filter=git-crypt diff=git-crypt
-secrets-*.yaml filter=git-crypt diff=git-crypt
-secret-env.* filter=git-crypt diff=git-crypt
