@@ -46,6 +46,9 @@ public class SystemPropertiesConfig {
     @Value("${application.logout.url}")
     private String applicationLogoutUrl;
 
+    @Value("${certificate.baseUrl}")
+    private String intygstjanstBaseUrl;
+
     @Autowired
     private Environment environment;
 
@@ -76,4 +79,7 @@ public class SystemPropertiesConfig {
         return applicationLogoutUrl;
     }
 
+    public String getIntygstjanstBaseUrl() {
+        return intygstjanstBaseUrl;
+    }
 }
