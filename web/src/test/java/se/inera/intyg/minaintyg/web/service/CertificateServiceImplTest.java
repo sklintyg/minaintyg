@@ -104,8 +104,9 @@ public class CertificateServiceImplTest {
     private static final String FACILITY_NAME = "facilityName";
     private static final String CERTIFICATE_ID = "certificateId";
     private static final String CERTIFICATE_TYPE = "certificateType";
-    private static final String INTYGSTJANST_LOGICAL_ADDRESS = "INTYGSTJANST_LOGICAL_ADDRESS";
+    private static final String CERTIFICATE_TYPE_VERSION = "1.0";
 
+    private static final String INTYGSTJANST_LOGICAL_ADDRESS = "INTYGSTJANST_LOGICAL_ADDRESS";
     private static final String MINAINTYG_RECIPIENT_ID = "INVANA";
     private static final String FK_RECIPIENT_ID = "FKASSA";
     private static final String TS_RECIPIENT_ID = "TRANSP";
@@ -171,10 +172,10 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString())).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, createPnr(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, createPnr(pnr), CERTIFICATE_ID);
 
         assertTrue(res.isPresent());
 
@@ -183,7 +184,7 @@ public class CertificateServiceImplTest {
         assertEquals(part, res.get().getMetaData().getStatus().get(0).getTarget());
         assertEquals(document, res.get().getInternalModel());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString());
     }
 
     @Test
@@ -198,14 +199,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString())).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, createPnr(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, createPnr(pnr), CERTIFICATE_ID);
 
         assertTrue(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString());
     }
 
     @Test
@@ -220,14 +221,14 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.SENT, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, false);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString())).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, createPnr(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, createPnr(pnr), CERTIFICATE_ID);
 
         assertFalse(res.isPresent());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString());
     }
 
     @Test
@@ -241,15 +242,15 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         CertificateResponse cert = new CertificateResponse(document, utl, meta, true);
         ModuleApi api = mock(ModuleApi.class);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenReturn(cert);
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString())).thenReturn(cert);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
 
-        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, createPnr(pnr), CERTIFICATE_ID);
+        Optional<CertificateResponse> res = service.getUtlatande(CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, createPnr(pnr), CERTIFICATE_ID);
 
         assertTrue(res.isPresent());
         assertTrue(res.get().isRevoked());
 
-        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID));
+        verify(api, times(1)).getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString());
     }
 
     @Test(expected = ExternalWebServiceCallFailedException.class)
@@ -261,9 +262,9 @@ public class CertificateServiceImplTest {
         meta.setStatus(Arrays.asList(new Status(CertificateState.CANCELLED, part, LocalDateTime.now())));
         ModuleApi api = mock(ModuleApi.class);
         when(moduleRegistry.getModuleApi(CERTIFICATE_TYPE)).thenReturn(api);
-        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID))).thenThrow(new ModuleException("error"));
+        when(api.getCertificate(eq(CERTIFICATE_ID), anyString(), eq(MINAINTYG_RECIPIENT_ID), anyString())).thenThrow(new ModuleException("error"));
 
-        service.getUtlatande(CERTIFICATE_TYPE, createPnr(pnr), CERTIFICATE_ID);
+        service.getUtlatande(CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, createPnr(pnr), CERTIFICATE_ID);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -397,7 +398,7 @@ public class CertificateServiceImplTest {
                 any(ListCertificatesForCitizenType.class))
         ).thenReturn(response2);
 
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, new ArrayList<>());
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, new ArrayList<>());
         when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(false))).thenReturn(ImmutableList.of(umd));
 
         UtlatandeMetaData result = service.archiveCertificate(CERTIFICATE_ID, createPnr(pnr));
@@ -439,7 +440,8 @@ public class CertificateServiceImplTest {
                 any(ListCertificatesForCitizenType.class))
         ).thenReturn(response2);
 
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, ISSUER_NAME,
+                FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
         when(utlatandeMetaDataConverter.convert(any(List.class), any(List.class), eq(false))).thenReturn(ImmutableList.of(umd));
 
         service.archiveCertificate(CERTIFICATE_ID, createPnr(pnr));
@@ -494,7 +496,8 @@ public class CertificateServiceImplTest {
                 any(ListCertificatesForCitizenType.class))
         ).thenReturn(response2);
 
-        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, ISSUER_NAME, FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
+        UtlatandeMetaData umd = new UtlatandeMetaData(CERTIFICATE_ID, CERTIFICATE_TYPE, CERTIFICATE_TYPE_VERSION, ISSUER_NAME,
+                FACILITY_NAME, LocalDateTime.now(), "true", "", null, null);
         when(utlatandeMetaDataConverter.convert(any(List.class), anyList(), eq(true))).thenReturn(Arrays.asList(umd));
 
         UtlatandeMetaData result = service.restoreCertificate(CERTIFICATE_ID, createPnr(pnr));

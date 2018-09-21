@@ -35,6 +35,8 @@ import se.inera.intyg.schemas.contract.Personnummer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
+
 @Controller
 @RequestMapping(value = "")
 public class PageController {
@@ -112,6 +114,6 @@ public class PageController {
     }
 
     public void populateUseMinifiedJavaScript(ModelAndView model) {
-        model.addObject("useMinifiedJavaScript", environment.getProperty("minaintyg.useMinifiedJavaScript", "true"));
+        model.addObject("useMinifiedJavaScript", environment.getProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, Boolean.class, true).toString());
     }
 }

@@ -37,6 +37,8 @@ public class UtlatandeMetaBuilder {
 
     private String type;
 
+    private String typeVersion;
+
     private String issuerName;
 
     private String facilityName;
@@ -52,7 +54,7 @@ public class UtlatandeMetaBuilder {
     private List<CertificateRelation> relations = new ArrayList<>();
 
     public UtlatandeMetaData build() {
-        return new UtlatandeMetaData(id, type, issuerName, facilityName, signDate, available, additionalInfo, statuses, relations);
+        return new UtlatandeMetaData(id, type, typeVersion, issuerName, facilityName, signDate, available, additionalInfo, statuses, relations);
     }
 
     public UtlatandeMetaBuilder id(String id) {
@@ -63,6 +65,12 @@ public class UtlatandeMetaBuilder {
 
     public UtlatandeMetaBuilder type(String type) {
         this.type = type;
+
+        return this;
+    }
+
+    public UtlatandeMetaBuilder typeVersion(String typeVersion) {
+        this.typeVersion = typeVersion;
 
         return this;
     }
@@ -133,6 +141,7 @@ public class UtlatandeMetaBuilder {
         String id = utlatande.getId();
         builder.id(id)
                 .type(utlatande.getTyp())
+                .typeVersion(utlatande.getTextVersion())
                 .issuerName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn())
                 .facilityName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn())
                 .signDate(utlatande.getGrundData().getSigneringsdatum());

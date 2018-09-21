@@ -42,6 +42,7 @@ public class CertificateMeta {
     private String id;
     private Boolean selected;
     private String type;
+    private String typeVersion;
     private String caregiverName;
     private String careunitName;
     private LocalDateTime sentDate;
@@ -64,6 +65,14 @@ public class CertificateMeta {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTypeVersion() {
+        return typeVersion;
+    }
+
+    public void setTypeVersion(String typeVersion) {
+        this.typeVersion = typeVersion;
     }
 
     public String getCaregiverName() {

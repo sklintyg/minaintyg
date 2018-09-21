@@ -59,6 +59,7 @@ public abstract class ModuleApiControllerTest {
     private String personnummer;
     private String certificateId;
     private String certificateType;
+    private String certificateTypeVersion;
 
     @Mock
     private CertificateService certificateService = mock(CertificateService.class);
@@ -90,15 +91,19 @@ public abstract class ModuleApiControllerTest {
         this.certificateType = certificateType;
     }
 
+    public void setCertificateTypeVersion(String certificateTypeVersion) {
+        this.certificateTypeVersion = certificateTypeVersion;
+    }
+
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificate() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificate(certificateType, certificateId);
+        Response response = moduleApiController.getCertificate(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
     }
@@ -106,12 +111,12 @@ public abstract class ModuleApiControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testGetRevokedCertificate() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificate(certificateType, certificateId);
+        Response response = moduleApiController.getCertificate(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(GONE.getStatusCode(), response.getStatus());
     }
@@ -119,7 +124,7 @@ public abstract class ModuleApiControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdf() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
@@ -128,7 +133,7 @@ public abstract class ModuleApiControllerTest {
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+        Response response = moduleApiController.getCertificatePdf(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals(bytes, response.getEntity());
@@ -137,12 +142,12 @@ public abstract class ModuleApiControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdfRevokedCertificate() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(revokedUtlatandeHolder));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+        Response response = moduleApiController.getCertificatePdf(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
     }
@@ -150,7 +155,7 @@ public abstract class ModuleApiControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificateEmployerPdf() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
@@ -160,7 +165,7 @@ public abstract class ModuleApiControllerTest {
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdfEmployerCopy(certificateType, certificateId, new ArrayList<>());
+        Response response = moduleApiController.getCertificatePdfEmployerCopy(certificateType, certificateTypeVersion, certificateId, new ArrayList<>());
 
         assertEquals(OK.getStatusCode(), response.getStatus());
         assertEquals(bytes, response.getEntity());
@@ -170,14 +175,14 @@ public abstract class ModuleApiControllerTest {
     @SuppressWarnings("unchecked")
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
         when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
         when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(UtkastStatus.SIGNED))).thenThrow(new ModuleSystemException("error"));
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+        Response response = moduleApiController.getCertificatePdf(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());
@@ -185,12 +190,12 @@ public abstract class ModuleApiControllerTest {
 
     @Test
     public void testGetCertificatePdfWithFailingIntygstjanst() {
-        when(certificateService.getUtlatande(certificateType, createPnr(), certificateId)).thenReturn(Optional.empty());
+        when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.empty());
 
         Citizen citizen = mockCitizen();
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        Response response = moduleApiController.getCertificatePdf(certificateType, certificateId);
+        Response response = moduleApiController.getCertificatePdf(certificateType, certificateTypeVersion, certificateId);
 
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatus());
         assertNull(response.getEntity());

@@ -45,6 +45,7 @@ public class Fk7263ModuleApiControllerTest extends ModuleApiControllerTest {
 
     private static final String JSON_PATH = "lakarutlatande/maximalt-fk7263.json";
     private static final String TARGET    = "FK";
+    private static final String CERTIFICATE_TYPE_VERSION    = "1.0";
 
     @BeforeClass
     public static void setupCertificateData() throws IOException {
@@ -73,6 +74,7 @@ public class Fk7263ModuleApiControllerTest extends ModuleApiControllerTest {
         setPersonnummer("19121212-1212");
         setCertificateId("123456");
         setCertificateType("fk7263");
+        setCertificateTypeVersion(CERTIFICATE_TYPE_VERSION);
     }
 
 }

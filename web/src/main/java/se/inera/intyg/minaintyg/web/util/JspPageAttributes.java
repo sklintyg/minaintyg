@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 public class JspPageAttributes {
 
     private static final Logger LOG = LoggerFactory.getLogger(JspPageAttributes.class);
-
-    private static final String USE_MINIFIED_JAVA_SCRIPT = "minaintyg.useMinifiedJavaScript";
 
     @Autowired
     @Value("${elva77.url.login}")
@@ -46,7 +46,7 @@ public class JspPageAttributes {
     }
 
     public String getUseMinifiedJavaScript() {
-        String useMinifiedJavaScript = System.getProperty(USE_MINIFIED_JAVA_SCRIPT);
+        String useMinifiedJavaScript = System.getProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY);
         if (useMinifiedJavaScript == null) {
             return Boolean.TRUE.toString();
         }

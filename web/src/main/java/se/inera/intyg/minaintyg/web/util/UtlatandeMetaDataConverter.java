@@ -57,6 +57,7 @@ public class UtlatandeMetaDataConverter {
 
         builder.id(intyg.getIntygsId().getExtension())
                 .type(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()))
+                .typeVersion(intyg.getVersion())
                 .issuerName(intyg.getSkapadAv().getFullstandigtNamn())
                 .facilityName(intyg.getSkapadAv().getEnhet().getEnhetsnamn())
                 .signDate(intyg.getSigneringstidpunkt())

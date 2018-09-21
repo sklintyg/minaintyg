@@ -101,13 +101,16 @@ public class ModuleApiController {
      * @return The certificate in JSON format
      */
     @GET
-    @Path("/{type}/{id}")
+    @Path("/{type}/{intygTypeVersion}/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
+    public final Response getCertificate(
+            @PathParam("type") final String type,
+            @PathParam("intygTypeVersion") final String intygTypeVersion,
+            @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
         Optional<CertificateResponse> utlatande =
-                certificateService.getUtlatande(type, createPnr(citizenService.getCitizen().getUsername()), id);
+                certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
 
         if (utlatande.isPresent()) {
             try {
@@ -140,11 +143,14 @@ public class ModuleApiController {
      * @return The certificate in PDF format
      */
     @GET
-    @Path("/{type}/{id}/pdf")
+    @Path("/{type}/{intygTypeVersion}/{id}/pdf")
     @Produces("application/pdf")
-    public final Response getCertificatePdf(@PathParam(value = "type") final String type, @PathParam(value = "id") final String id) {
+    public final Response getCertificatePdf(
+            @PathParam(value = "type") final String type,
+            @PathParam("intygTypeVersion") final String intygTypeVersion,
+            @PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
-        return getPdfInternal(type, id, null, false);
+        return getPdfInternal(type, intygTypeVersion, id, null, false);
     }
 
     /**
@@ -155,21 +161,23 @@ public class ModuleApiController {
      * @return The certificate in PDF format
      */
     @POST
-    @Path("/{type}/{id}/pdf/arbetsgivarutskrift")
+    @Path("/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/pdf")
-    public final Response getCertificatePdfEmployerCopy(@PathParam(value = "type") final String type,
+    public final Response getCertificatePdfEmployerCopy(
+            @PathParam(value = "type") final String type,
+            @PathParam("intygTypeVersion") final String intygTypeVersion,
             @PathParam(value = "id") final String id,
             @FormParam("selectedOptionalFields") List<String> selectedOptionalFields) {
         LOG.debug("getCertificatePdfEmployerCopy: id {}, selectedOptionalFields {}", id, selectedOptionalFields);
-        return getPdfInternal(type, id, selectedOptionalFields, true);
+        return getPdfInternal(type, intygTypeVersion, id, selectedOptionalFields, true);
 
     }
 
-    private Response getPdfInternal(String type, String id, List<String> optionalFields, boolean isEmployerCopy) {
+    private Response getPdfInternal(String type, String intygTypeVersion, String id, List<String> optionalFields, boolean isEmployerCopy) {
 
         Optional<CertificateResponse> utlatande =
-                certificateService.getUtlatande(type, createPnr(citizenService.getCitizen().getUsername()), id);
+                certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
 
         if (utlatande.isPresent() && !utlatande.get().isRevoked()) {
             String typ = utlatande.get().getUtlatande().getTyp();

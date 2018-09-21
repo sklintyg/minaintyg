@@ -46,6 +46,7 @@ public final class CertificateMetaConverter {
         result.setId(meta.getId());
         result.setSelected(false);
         result.setType(meta.getType());
+        result.setTypeVersion(meta.getTypeVersion());
         result.setCaregiverName(meta.getIssuerName());
         result.setCareunitName(meta.getFacilityName());
         result.setSentDate(meta.getSignDate());

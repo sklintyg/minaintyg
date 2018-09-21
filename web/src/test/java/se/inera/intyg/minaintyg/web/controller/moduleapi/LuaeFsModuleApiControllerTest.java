@@ -46,6 +46,7 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
 
     private static final String JSON_PATH = "lakarutlatande/minimalt-luae_fs.json";
     private static final String TARGET = "FK";
+    private static final String CERTIFICATE_TYPE_VERSION = "1.0";
 
     @BeforeClass
     public static void loadCertificateData() throws IOException {
@@ -74,6 +75,7 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
         setPersonnummer("19121212-1212");
         setCertificateId("123456");
         setCertificateType("luae_fs");
+        setCertificateTypeVersion(CERTIFICATE_TYPE_VERSION);
     }
 
 }

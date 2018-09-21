@@ -58,10 +58,12 @@ module.exports = function(grunt) {
         'fk7263':      { base: 'common/fk7263' },
         'ts-bas':      { base: 'common/ts/ts-bas' },
         'ts-diabetes': { base: 'common/ts/ts-diabetes' },
+        'ts-diabetes-2': { base: 'common/ts/ts-diabetes-2' },
         'luse':        { base: 'common/fk/luse', angularModule:'luse' },
         'lisjp':       { base: 'common/fk/lisjp', angularModule:'lisjp' },
         'luae_na':     { base: 'common/fk/luae_na', angularModule:'luae_na' },
-        'luae_fs':     { base: 'common/fk/luae_fs', angularModule:'luae_fs' }
+        'luae_fs':     { base: 'common/fk/luae_fs', angularModule:'luae_fs' },
+        'af00213':     { base: 'common/af/af00213', angularModule:'af00213' }
     };
     Object.keys(modules).forEach(function(moduleName) {
         var module = modules[moduleName];

@@ -44,7 +44,7 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
                 breadcrumb: ['inkorg']}
         }).
         state('send', {
-            url : '/send/:type/:certificateId/:defaultRecipient',
+            url : '/send/:type/:intygTypeVersion/:certificateId/:defaultRecipient',
             templateUrl: '/app/views/send/send.page.html',
             controller: 'minaintyg.SendCtrl',
             data:{title: 'Skicka intyg till mottagare', keepInboxTabActive: true,

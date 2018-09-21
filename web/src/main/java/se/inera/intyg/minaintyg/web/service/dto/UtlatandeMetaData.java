@@ -41,6 +41,9 @@ public class UtlatandeMetaData {
     /** The type of utlatande. */
     private final String type;
 
+    /** The type version of utlatande. */
+    private final String typeVersion;
+
     /** The name of the HoS-personal who signed the utlatande. */
     private final String issuerName;
 
@@ -68,15 +71,17 @@ public class UtlatandeMetaData {
     private static final Comparator<Status> STATUS_COMPARATOR = (o1, o2) -> o2.getTimestamp().compareTo(o1.getTimestamp());
 
     // CHECKSTYLE:OFF ParameterNumber
-    public UtlatandeMetaData(String id, String type, String issuerName, String facilityName, LocalDateTime signDate, String available,
+    public UtlatandeMetaData(String id, String type, String typeVersion, String issuerName, String facilityName, LocalDateTime signDate, String available,
             String complemantaryInfo, List<Status> statuses, List<CertificateRelation> relations) {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");
+        hasText(typeVersion, "'typeVersion' must not be empty");
         hasText(issuerName, "'issuerName' must not be empty");
         hasText(facilityName, "'facilityName' must not be empty");
         notNull(signDate, "'signDate' must not be null");
         this.id = id;
         this.type = type;
+        this.typeVersion = typeVersion;
         this.issuerName = issuerName;
         this.facilityName = facilityName;
         this.signDate = signDate;
@@ -103,6 +108,10 @@ public class UtlatandeMetaData {
 
     public String getType() {
         return type;
+    }
+
+    public String getTypeVersion() {
+        return typeVersion;
     }
 
     public String getIssuerName() {

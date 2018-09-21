@@ -31,6 +31,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                 meta: null,
                 statuses: null,
                 type: $stateParams.type,
+                intygTypeVersion: $stateParams.intygTypeVersion,
                 defaultRecipient: $stateParams.defaultRecipient,
                 recipients: [],
                 sendingInProgress: false,
@@ -58,7 +59,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                 }
             }
 
-            intygService.getCertificate($scope.vm.type, $scope.vm.id, function(result) {
+            intygService.getCertificate($scope.vm.type, $scope.vm.intygTypeVersion, $scope.vm.id, function(result) {
                 if (result !== null) {
                     $scope.vm.cert = result.utlatande;
                     $scope.vm.meta = result.meta;
