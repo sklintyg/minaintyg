@@ -32,6 +32,7 @@ public class CertificateMetaConverterTest {
     private static final String AVAILABLE = "available";
     private static final String CERTIFIED_ID = "certifiedId";
     private static final String TYPE = "type";
+    private static final String TYPE_VERSION = "type";
     private static final String FACILITY_NAME = "facilityName";
     private static final String ISSUER_NAME = "issuerName";
 
@@ -42,6 +43,7 @@ public class CertificateMetaConverterTest {
         builder = new UtlatandeMetaBuilder();
         builder.id(CERTIFIED_ID)
                 .type(TYPE)
+                .typeVersion(TYPE_VERSION)
                 .issuerName(ISSUER_NAME)
                 .facilityName(FACILITY_NAME)
                 .signDate(LocalDateTime.now())

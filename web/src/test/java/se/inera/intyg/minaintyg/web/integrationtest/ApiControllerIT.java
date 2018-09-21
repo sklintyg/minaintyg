@@ -45,6 +45,7 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     private static final String CITIZEN_CIVIC_REGISTRATION_NUMBER = "19010101-0101";
 
+
     @Before
     public void setup() {
         cleanup();
@@ -60,19 +61,19 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testListCertificates() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER,
                 false, false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -88,11 +89,11 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testListCertificatesFiltersRevokedCertificates() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -106,7 +107,7 @@ public class ApiControllerIT extends IntegrationTestBase {
     @Test
     public void testListCertificatesWithoutConsent() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -117,7 +118,7 @@ public class ApiControllerIT extends IntegrationTestBase {
     @Test
     public void testListCertificatesWithoutSession() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         given().redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
@@ -128,19 +129,19 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testListArchivedCertificates() {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER,
                 false, true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -158,7 +159,7 @@ public class ApiControllerIT extends IntegrationTestBase {
 
         final String intygsId = UUID.randomUUID().toString();
 
-        IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
+        IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
         IntegrationTestUtility.givenReceivers(intygsId);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -175,7 +176,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygId = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(intygId, LuseEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(intygId, LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .pathParams("id", intygId)
@@ -191,7 +192,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygId = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
+        IntegrationTestUtility.givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .pathParams("id", intygId)
@@ -266,7 +267,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         List<String> recipientList = Arrays.asList("FKASSA", "FAKE");
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)

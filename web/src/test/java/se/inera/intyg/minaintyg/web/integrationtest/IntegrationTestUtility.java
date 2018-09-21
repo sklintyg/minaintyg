@@ -85,9 +85,9 @@ public final class IntegrationTestUtility {
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    public static void givenIntyg(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
+    public static void givenIntyg(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {
         given().baseUri(certificateBaseUrl)
-                .body(certificate(intygsId, intygTyp, personId, revoked, archived))
+                .body(certificate(intygsId, intygTyp, intygTypVersion, personId, revoked, archived))
                 .post("resources/certificate/")
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
@@ -99,10 +99,11 @@ public final class IntegrationTestUtility {
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    private static CertificateHolder certificate(String intygsId, String intygTyp, String personId, boolean revoked, boolean archived) {
+    private static CertificateHolder certificate(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {
         CertificateHolder certificate = new CertificateHolder();
         certificate.setId(intygsId);
         certificate.setType(intygTyp);
+        certificate.setTypeVersion(intygTypVersion);
         certificate.setSignedDate(LocalDateTime.now());
         certificate.setCareGiverId("CareGiverId");
         certificate.setCareUnitId("CareUnitId");

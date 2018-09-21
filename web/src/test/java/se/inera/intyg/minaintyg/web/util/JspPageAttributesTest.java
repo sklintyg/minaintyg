@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.util;
 
 import static org.junit.Assert.assertEquals;
+import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class JspPageAttributesTest {
 
     @Test
     public void testGetUseMinifiedJavaScript() {
-        System.setProperty("minaintyg.useMinifiedJavaScript", "true");
+        System.setProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, "true");
         String res = jspPageAttributes.getUseMinifiedJavaScript();
 
         assertEquals("true", res);
@@ -39,7 +40,7 @@ public class JspPageAttributesTest {
 
     @Test
     public void testGetUseMinifiedJavaScriptFalse() {
-        System.setProperty("minaintyg.useMinifiedJavaScript", "false");
+        System.setProperty(USE_MINIFIED_JAVA_SCRIPT_ENV_KEY, "false");
         String res = jspPageAttributes.getUseMinifiedJavaScript();
 
         assertEquals("false", res);

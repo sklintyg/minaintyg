@@ -31,6 +31,13 @@ import com.jayway.restassured.http.ContentType;
  */
 public abstract class IntegrationTestBase {
 
+    protected static final String LUSE_VERSION = "1.0";
+    protected static final String FK7263_VERSION = "1.0";
+    protected static final String TS_BAS_VERSION = "6.8";
+    protected static final String TS_DIABETES_VERSION = "2.7";
+    protected static final String LISJP_VERSION = "1.0";
+    protected static final String LUAE_NA_VERSION = "1.0";
+    protected static final String LUAE_FS_VERSION = "1.0";
     /**
      * Common setup for all tests
      */

@@ -58,37 +58,37 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetCertificateFk7263() {
-        testGetCertificate(Fk7263EntryPoint.MODULE_ID);
+        testGetCertificate(Fk7263EntryPoint.MODULE_ID, FK7263_VERSION);
     }
 
     @Test
     public void testGetCertificateTsBas() {
-        testGetCertificate(TsBasEntryPoint.MODULE_ID);
+        testGetCertificate(TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION);
     }
 
     @Test
     public void testGetCertificateTsDiabetes() {
-        testGetCertificate(TsDiabetesEntryPoint.MODULE_ID);
+        testGetCertificate(TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION);
     }
 
     @Test
     public void testGetCertificateLuse() {
-        testGetCertificate(LuseEntryPoint.MODULE_ID);
+        testGetCertificate(LuseEntryPoint.MODULE_ID, LUSE_VERSION);
     }
 
     @Test
     public void testGetCertificateLisjp() {
-        testGetCertificate(LisjpEntryPoint.MODULE_ID);
+        testGetCertificate(LisjpEntryPoint.MODULE_ID, LISJP_VERSION);
     }
 
     @Test
     public void testGetCertificateLuaena() {
-        testGetCertificate(LuaenaEntryPoint.MODULE_ID);
+        testGetCertificate(LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION);
     }
 
     @Test
     public void testGetCertificateLuaefs() {
-        testGetCertificate(LuaefsEntryPoint.MODULE_ID);
+        testGetCertificate(LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION);
     }
 
     @Test
@@ -97,12 +97,12 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         final String type = LuseEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .redirects().follow(false).and().pathParams("type", type, "id", id)
+                .redirects().follow(false).and().pathParams("type", type, "id", id, "intygTypeVersion", LUSE_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{id}");
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
     }
 
     @Test
@@ -111,11 +111,11 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         final String type = LuseEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().redirects().follow(false).and().pathParams("type", type, "id", id)
+        given().redirects().follow(false).and().pathParams("type", type, "id", id, "intygTypeVersion", LUSE_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
-                .when().get("moduleapi/certificate/{type}/{id}");
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
     }
 
     @Test
@@ -125,12 +125,12 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         final String type = TsBasEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         Response response = given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", type, "id", id)
+                .pathParams("type", type, "id", id, "intygTypeVersion", TS_BAS_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{id}/pdf");
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf");
 
         assertNotNull(response.getBody().asByteArray());
         String contentHeader = response.getHeader(HttpHeaders.CONTENT_DISPOSITION);
@@ -145,13 +145,13 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         final String type = Fk7263EntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         Response response = given()
                 .contentType(ContentType.URLENC).and().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", type, "id", id)
+                .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().post("moduleapi/certificate/{type}/{id}/pdf/arbetsgivarutskrift");
+                .when().post("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift");
 
         assertNotNull(response.getBody().asByteArray());
         String contentHeader = response.getHeader(HttpHeaders.CONTENT_DISPOSITION);
@@ -165,26 +165,26 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
+        IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id)
+                .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id, "intygTypeVersion", LUAE_NA_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_GONE)
-                .when().get("moduleapi/certificate/{type}/{id}");
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
 
     }
 
-    private void testGetCertificate(String type) {
+    private void testGetCertificate(String type, String intygTypeVersion) {
         IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, intygTypeVersion, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .pathParams("type", type, "id", id)
+                .pathParams("type", type, "id", id, "intygTypeVersion", intygTypeVersion)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{id}")
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"));
 
@@ -197,7 +197,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         final String type = Fk7263EntryPoint.MODULE_ID;
 
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         // Note! The extra JSESSIONID cookie is to workaround a (testing) issue where the server responds
         // with a Set-Cookie: JSESSIONID=..... which also means that the server will NOT include and Cache-Control header
@@ -206,9 +206,9 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         // that's easier said than done with Spring Security + Spring Session...
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .cookie("JSESSIONID", IntegrationTestUtility.jsessionId)
-                .pathParams("type", type, "id", id)
+                .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{id}")
+                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"))
                 .header("x-frame-options", equalTo("DENY"))

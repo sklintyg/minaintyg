@@ -59,6 +59,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UtlatandeMetaDataConverterTest {
 
+    private static final String INTYG_VERSION = "1.0";
     @Mock
     private ModuleApi moduleApi;
 
@@ -85,7 +86,7 @@ public class UtlatandeMetaDataConverterTest {
         final LocalDateTime signeringstidpunkt = LocalDateTime.now();
         final boolean arkiverade = false;
         when(moduleApi.getAdditionalInfo(any(Intyg.class))).thenReturn(additionalInfo);
-        Intyg intyg = buildIntyg(intygId, intygstyp, fullstandigtNamn, enhetsnamn, signeringstidpunkt);
+        Intyg intyg = buildIntyg(intygId, intygstyp, INTYG_VERSION, fullstandigtNamn, enhetsnamn, signeringstidpunkt);
         UtlatandeMetaData result = converter.convertIntyg(intyg, new ArrayList<>(), arkiverade);
         assertNotNull(result);
         assertEquals(intygId, result.getId());
@@ -112,9 +113,9 @@ public class UtlatandeMetaDataConverterTest {
         final String intygstyp3 = "LISJP";
         final LocalDateTime signeringstidpunkt3 = signeringstidpunkt1.plusDays(3);
         final boolean arkiverade = false;
-        Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
-        Intyg intyg2 = buildIntyg(intygId2, intygstyp2, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
-        Intyg intyg3 = buildIntyg(intygId3, intygstyp3, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
+        Intyg intyg1 = buildIntyg(intygId1, intygstyp1, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
+        Intyg intyg2 = buildIntyg(intygId2, intygstyp2, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
+        Intyg intyg3 = buildIntyg(intygId3, intygstyp3, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
         List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3), new ArrayList<>(), arkiverade);
         assertNotNull(result);
         assertEquals(3, result.size());
@@ -146,10 +147,10 @@ public class UtlatandeMetaDataConverterTest {
         final String intygstyp3 = "LISJP";
         final LocalDateTime signeringstidpunkt3 = signeringstidpunkt1.plusDays(3);
         final boolean arkiverade = false;
-        Intyg intyg1 = buildIntyg(intygId1, intygstyp1, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
+        Intyg intyg1 = buildIntyg(intygId1, intygstyp1, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt1);
 
         // Mock up a certificate that has a cancelled status. It should be discarded early in the conversion process.
-        Intyg intyg2 = buildIntyg(intygId2, intygstyp2, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
+        Intyg intyg2 = buildIntyg(intygId2, intygstyp2, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt2);
         IntygsStatus cancelledStatus = new IntygsStatus();
         cancelledStatus.setStatus(new Statuskod());
         cancelledStatus.getStatus().setCode("CANCEL");
@@ -157,7 +158,7 @@ public class UtlatandeMetaDataConverterTest {
         cancelledStatus.setPart(new Part());
         intyg2.getStatus().add(cancelledStatus);
 
-        Intyg intyg3 = buildIntyg(intygId3, intygstyp3, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
+        Intyg intyg3 = buildIntyg(intygId3, intygstyp3, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
 
         List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3),
                 buildRelations(intyg1.getIntygsId().getExtension()), arkiverade);
@@ -210,7 +211,7 @@ public class UtlatandeMetaDataConverterTest {
     public void convertStatusSentTest() {
         final LocalDateTime statusTidpunkt = LocalDateTime.now().minusDays(4);
         final String recipient = "FKASSA";
-        Intyg intyg = buildIntyg("intygId", "intygstyp", "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
+        Intyg intyg = buildIntyg("intygId", "intygstyp", INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
         IntygsStatus intygsstatus = new IntygsStatus();
         intygsstatus.setStatus(new Statuskod());
         intygsstatus.getStatus().setCode("SENTTO");
@@ -232,7 +233,7 @@ public class UtlatandeMetaDataConverterTest {
     public void convertStatusCancelledTest() {
         final LocalDateTime statusTidpunkt = LocalDateTime.now().minusDays(4);
         final String recipient = "TRANSP";
-        Intyg intyg = buildIntyg("intygId", "intygstyp", "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
+        Intyg intyg = buildIntyg("intygId", "intygstyp", INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
         IntygsStatus intygsstatus = new IntygsStatus();
         intygsstatus.setStatus(new Statuskod());
         intygsstatus.getStatus().setCode("CANCEL");
@@ -252,7 +253,7 @@ public class UtlatandeMetaDataConverterTest {
 
     @Test
     public void convertOtherStatusTest() {
-        Intyg intyg = buildIntyg("intygId", "intygstyp", "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
+        Intyg intyg = buildIntyg("intygId", "intygstyp", INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", LocalDateTime.now());
         IntygsStatus intygsstatus = new IntygsStatus();
         intygsstatus.setStatus(new Statuskod());
         intygsstatus.getStatus().setCode("DELETE");
@@ -266,13 +267,15 @@ public class UtlatandeMetaDataConverterTest {
         assertTrue(result.getStatuses().isEmpty());
     }
 
-    private Intyg buildIntyg(final String intygsId, final String intygstyp, final String fullstandigtNamn, final String enhetsnamn,
+    private Intyg buildIntyg(final String intygsId, final String intygstyp, final String intygTypeVersion, final String fullstandigtNamn,
+            final String enhetsnamn,
             final LocalDateTime signeringstidpunkt) {
         Intyg intyg = new Intyg();
         intyg.setIntygsId(new IntygId());
         intyg.getIntygsId().setExtension(intygsId);
         intyg.setTyp(new TypAvIntyg());
         intyg.getTyp().setCode(intygstyp);
+        intyg.setVersion(intygTypeVersion);
         intyg.setSkapadAv(new HosPersonal());
         intyg.getSkapadAv().setFullstandigtNamn(fullstandigtNamn);
         intyg.getSkapadAv().setEnhet(new Enhet());
