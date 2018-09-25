@@ -91,7 +91,7 @@ gretty {
     debugPort = 5006
     debugSuspend = false
 
-    def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
+    def minified = System.properties['useMinifiedJavaScript'] ?: false
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",

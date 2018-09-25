@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemPropertiesConfig {
 
-    public static final String USE_MINIFIED_JAVA_SCRIPT_ENV_KEY = "minaintyg.useMinifiedJavaScript";
+    public static final String USE_MINIFIED_JAVA_SCRIPT_ENV_KEY = "useMinifiedJavaScript";
 
     @Value("${project.version}")
     private String version;

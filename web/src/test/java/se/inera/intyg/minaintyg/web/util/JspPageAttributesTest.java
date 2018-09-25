@@ -31,7 +31,7 @@ public class JspPageAttributesTest {
 
     @Test
     public void testGetUseMinifiedJavaScript() {
-        System.setProperty("minaintyg.useMinifiedJavaScript", "true");
+        System.setProperty("useMinifiedJavaScript", "true");
         String res = jspPageAttributes.getUseMinifiedJavaScript();
 
         assertEquals("true", res);
@@ -39,7 +39,7 @@ public class JspPageAttributesTest {
 
     @Test
     public void testGetUseMinifiedJavaScriptFalse() {
-        System.setProperty("minaintyg.useMinifiedJavaScript", "false");
+        System.setProperty("useMinifiedJavaScript", "false");
         String res = jspPageAttributes.getUseMinifiedJavaScript();
 
         assertEquals("false", res);

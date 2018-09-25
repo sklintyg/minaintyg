@@ -112,6 +112,6 @@ public class PageController {
     }
 
     public void populateUseMinifiedJavaScript(ModelAndView model) {
-        model.addObject("useMinifiedJavaScript", environment.getProperty("minaintyg.useMinifiedJavaScript", "true"));
+        model.addObject("useMinifiedJavaScript", environment.getProperty("useMinifiedJavaScript", "true"));
     }
 }

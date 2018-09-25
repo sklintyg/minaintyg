@@ -27,7 +27,7 @@ public class JspPageAttributes {
 
     private static final Logger LOG = LoggerFactory.getLogger(JspPageAttributes.class);
 
-    private static final String USE_MINIFIED_JAVA_SCRIPT = "minaintyg.useMinifiedJavaScript";
+    private static final String USE_MINIFIED_JAVA_SCRIPT = "useMinifiedJavaScript";
 
     @Autowired
     @Value("${elva77.url.login}")

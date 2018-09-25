@@ -22,7 +22,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%
-  String useMinifiedJavaScript = System.getProperty("minaintyg.useMinifiedJavaScript");
+  String useMinifiedJavaScript = System.getProperty("useMinifiedJavaScript");
   if (useMinifiedJavaScript == null) {
     useMinifiedJavaScript = "true";
   }
