@@ -11,7 +11,7 @@
     },
     "test-pipeline": {
         "MINAINTYG_URL": "http://minaintyg-test:8080/",
-        "INTYGTJANST_URL": "http://intygstjanst-minaintyg-test:8080/inera-certificate",
+        "INTYGTJANST_URL": "http://intygstjanst-test-minaintyg-test:8080/inera-certificate",
         "SELENIUM_ADDRESS": ""
     }
 }
