@@ -182,7 +182,7 @@ public class ModuleApiController {
         if (utlatande.isPresent() && !utlatande.get().isRevoked()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
-                ModuleApi moduleApi = moduleRegistry.getModuleApi(typ);
+                ModuleApi moduleApi = moduleRegistry.getModuleApi(typ, intygTypeVersion);
                 List<Status> statusList = utlatande.get().getMetaData().getStatus().stream()
                         .filter(s -> CertificateState.SENT.equals(s.getType()))
                         .collect(Collectors.toList());

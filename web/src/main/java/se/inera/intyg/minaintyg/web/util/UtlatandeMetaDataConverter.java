@@ -82,7 +82,8 @@ public class UtlatandeMetaDataConverter {
 
     private String getAdditionalInfo(Intyg intyg) {
         try {
-            ModuleApi moduleApi = moduleRegistry.getModuleApi(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()));
+            ModuleApi moduleApi = moduleRegistry.getModuleApi(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()),
+                    intyg.getVersion());
             return moduleApi.getAdditionalInfo(intyg);
         } catch (ModuleNotFoundException | ModuleException e) {
             LOGGER.error("Error retrieving additional info from module registry: {}", e.getMessage());

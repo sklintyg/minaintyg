@@ -125,7 +125,7 @@ public abstract class ModuleApiControllerTest {
     @Test
     public void testGetCertificatePdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
-        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+        when(moduleRegistry.getModuleApi(certificateType, certificateTypeVersion)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
         when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(UtkastStatus.SIGNED))).thenReturn(new PdfResponse(bytes, "pdf-filename.pdf"));
@@ -156,7 +156,7 @@ public abstract class ModuleApiControllerTest {
     @Test
     public void testGetCertificateEmployerPdf() throws Exception {
         when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
-        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+        when(moduleRegistry.getModuleApi(certificateType, certificateTypeVersion)).thenReturn(moduleApi);
 
         byte[] bytes = "<pdf-file>".getBytes();
         when(moduleApi.pdfEmployer(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), any(List.class), eq(UtkastStatus.SIGNED)))
@@ -176,7 +176,7 @@ public abstract class ModuleApiControllerTest {
     @Test
     public void testGetCertificatePdfWithFailingModule() throws Exception {
         when(certificateService.getUtlatande(certificateType, certificateTypeVersion, createPnr(), certificateId)).thenReturn(Optional.of(utlatandeHolder));
-        when(moduleRegistry.getModuleApi(certificateType)).thenReturn(moduleApi);
+        when(moduleRegistry.getModuleApi(certificateType, certificateTypeVersion)).thenReturn(moduleApi);
         when(moduleApi.pdf(eq(certificateData), any(List.class), refEq(ApplicationOrigin.MINA_INTYG), eq(UtkastStatus.SIGNED))).thenThrow(new ModuleSystemException("error"));
 
         Citizen citizen = mockCitizen();

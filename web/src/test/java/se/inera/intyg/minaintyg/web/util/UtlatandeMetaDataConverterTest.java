@@ -71,7 +71,7 @@ public class UtlatandeMetaDataConverterTest {
 
     @Before
     public void setup() throws ModuleNotFoundException {
-        when(moduleRegistry.getModuleApi(anyString())).thenReturn(moduleApi);
+        when(moduleRegistry.getModuleApi(anyString(), anyString())).thenReturn(moduleApi);
         when(moduleRegistry.getModuleIdFromExternalId(anyString()))
                 .thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
     }
@@ -97,7 +97,7 @@ public class UtlatandeMetaDataConverterTest {
         assertEquals("true", result.getAvailable());
         assertEquals(additionalInfo, result.getComplemantaryInfo());
 
-        verify(moduleRegistry).getModuleApi(intygstyp.toLowerCase());
+        verify(moduleRegistry).getModuleApi(intygstyp.toLowerCase(), INTYG_VERSION);
         verify(moduleApi).getAdditionalInfo(any(Intyg.class));
     }
 
@@ -129,9 +129,9 @@ public class UtlatandeMetaDataConverterTest {
         assertEquals(intygstyp2.toLowerCase(), result.get(2).getType());
         assertEquals(signeringstidpunkt2, result.get(2).getSignDate());
 
-        verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase());
-        verify(moduleRegistry).getModuleApi(intygstyp2.toLowerCase());
-        verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase());
+        verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase(), INTYG_VERSION);
+        verify(moduleRegistry).getModuleApi(intygstyp2.toLowerCase(), INTYG_VERSION);
+        verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase(), INTYG_VERSION);
         verify(moduleApi, times(3)).getAdditionalInfo(any(Intyg.class));
     }
 
@@ -176,8 +176,8 @@ public class UtlatandeMetaDataConverterTest {
         assertEquals(RelationKod.ERSATT, result.get(1).getRelations().get(0).getRelationKod());
         assertEquals(result.get(1).getId(), result.get(1).getRelations().get(0).getToIntygsId());
 
-        verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase());
-        verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase());
+        verify(moduleRegistry).getModuleApi(intygstyp1.toLowerCase(), INTYG_VERSION);
+        verify(moduleRegistry).getModuleApi(intygstyp3.toLowerCase(), INTYG_VERSION);
         verify(moduleApi, times(2)).getAdditionalInfo(any(Intyg.class));
     }
 

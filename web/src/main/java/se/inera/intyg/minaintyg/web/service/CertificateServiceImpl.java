@@ -161,8 +161,8 @@ public class CertificateServiceImpl implements CertificateService {
             String certificateId) {
         CertificateResponse certificate;
         try {
-            certificate = moduleRegistry.getModuleApi(type).getCertificate(certificateId, logicalAddress, RECIPIENT_INVANA,
-                    intygTypeVersion);
+            certificate = moduleRegistry.getModuleApi(type, intygTypeVersion).getCertificate(certificateId, logicalAddress, RECIPIENT_INVANA
+            );
         } catch (ModuleException | ModuleNotFoundException e) {
             LOGGER.error("Failed to fetch utlatande '{}' from Intygstjänsten: {}", certificateId, e.getMessage());
             throw new ExternalWebServiceCallFailedException(e.getMessage(), null);
