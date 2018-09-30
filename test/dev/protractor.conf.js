@@ -31,7 +31,7 @@
 var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 var screenshotReporter = new HtmlScreenshotReporter({
-    dest: 'dev/report',
+    dest: 'reports/',
     filename: 'index.html',
     ignoreSkippedSpecs: true,
     captureOnlyFailedSpecs: true
@@ -149,7 +149,7 @@ exports.config = {
         var reporters = require('jasmine-reporters');
         jasmine.getEnv().addReporter(
             new reporters.JUnitXmlReporter({
-                savePath:'dev/report/',
+                savePath:'reports/',
                 filePrefix: 'junit',
                 consolidateAll:true}));
 

@@ -30,6 +30,8 @@ module.exports = function(grunt) {
         sasslint: 'grunt-sass-lint'
     });
 
+    var sass = require('node-sass');
+
     var WEB_DIR = 'src/main/webapp';
     var SRC_DIR = WEB_DIR + '/app/';
     var CSS_MICOMMON_DEST_DIR = '/../../common/web/build/resources/main/META-INF/resources/webjars/common/minaintyg/';
@@ -213,6 +215,7 @@ module.exports = function(grunt) {
         // Compiles Sass to CSS
         sass: {
             options: {
+                implementation: sass,
                 sourceMap: false
             },
             dist: {

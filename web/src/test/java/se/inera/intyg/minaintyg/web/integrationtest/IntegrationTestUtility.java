@@ -43,7 +43,7 @@ public final class IntegrationTestUtility {
     public static final String FKASSA = "FKASSA";
     public static final String FBA = "FBA";
 
-    public static String certificateBaseUrl;
+    // public static String certificateBaseUrl;
     public static String routeId;
     public static String jsessionId;
 
@@ -76,26 +76,26 @@ public final class IntegrationTestUtility {
     }
 
     public static void deleteIntyg(String id) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/" + id)
+        given().delete("testability/resources/certificate/" + id)
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void deleteCertificatesForCitizen(String personId) {
-        given().baseUri(certificateBaseUrl).delete("resources/certificate/citizen/" + personId)
+        given().delete("testability/resources/certificate/citizen/" + personId)
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void givenIntyg(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {
-        given().baseUri(certificateBaseUrl)
+        given()
                 .body(certificate(intygsId, intygTyp, intygTypVersion, personId, revoked, archived))
-                .post("resources/certificate/")
+                .post("testability/resources/certificate/")
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void givenReceivers(String intygsId){
-        given().baseUri(certificateBaseUrl)
+        given()
                 .body(createApprovedReceivers(intygsId, FKASSA, FBA))
-                .post("resources/certificate/" + intygsId + "/approvedreceivers/")
+                .post("testability/resources/certificate/" + intygsId + "/approvedreceivers/")
                 .then().statusCode(HttpServletResponse.SC_OK);
     }
 

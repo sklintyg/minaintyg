@@ -10,7 +10,7 @@ grunt {
 }
 
 node {
-    version = '6.11.3'
+    version = '10.10.0'
     download = true
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
     workDir = projectDir
@@ -91,7 +91,7 @@ gretty {
     debugPort = 5006
     debugSuspend = false
 
-    def minified = System.properties['minaintyg.useMinifiedJavaScript'] ?: false
+    def minified = System.properties['useMinifiedJavaScript'] ?: false
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",

@@ -27,3 +27,5 @@ devops/openshift/test/env/fk-*
 devops/openshift/test/env/*.p12
 devops/openshift/test/env/*.properties
 devops/openshift/test/env/test.intygstjanster.*
+
+test/reports

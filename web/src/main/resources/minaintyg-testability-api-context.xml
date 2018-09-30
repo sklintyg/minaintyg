@@ -18,34 +18,36 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-  xmlns:cxf="http://cxf.apache.org/core"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd"
-  profile="!prod">
+       profile="!prod">
 
-  <!-- REST services for inserting questions and certificate drafts directly
-    into the database for testing purposes -->
+    <!-- REST services for inserting questions and certificate drafts directly
+      into the database for testing purposes -->
 
-  <jaxrs:server address="/">
-    <jaxrs:serviceBeans>
-      <!--<bean class="se.inera.intyg.minaintyg.web.controller.testability.RegisterApprovedReceiverResource" />-->
-      <bean class="se.inera.intyg.minaintyg.web.controller.testability.UserConsentResource" />
-    </jaxrs:serviceBeans>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 
-    <jaxrs:providers>
-      <ref bean="jacksonJsonProvider" />
-    </jaxrs:providers>
+    <jaxrs:server address="/">
+        <jaxrs:serviceBeans>
+            <bean class="se.inera.intyg.minaintyg.web.controller.testability.UserConsentResource"/>
+            <bean class="se.inera.intyg.minaintyg.web.controller.testability.IntygstjanstTestabilityProxy"/>
+        </jaxrs:serviceBeans>
 
-    <jaxrs:features>
-     <cxf:logging/>
-    </jaxrs:features>
+        <jaxrs:providers>
+            <ref bean="jacksonJsonProvider"/>
+        </jaxrs:providers>
 
-    <jaxrs:extensionMappings>
-      <entry key="json" value="application/json" />
-    </jaxrs:extensionMappings>
-  </jaxrs:server>
+        <jaxrs:features>
+            <cxf:logging/>
+        </jaxrs:features>
+
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+        </jaxrs:extensionMappings>
+    </jaxrs:server>
 
 </beans>
