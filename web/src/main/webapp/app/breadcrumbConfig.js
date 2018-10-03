@@ -25,7 +25,8 @@ angular.module('minaintyg').constant('minaintyg.BreadcrumbConfig', {
             return {
                 stateName: stateParams.type + '-view',
                 stateParams: {
-                    certificateId: stateParams.certificateId }
+                    certificateId: stateParams.certificateId,
+                    intygTypeVersion: stateParams.intygTypeVersion}
             };
         }
     },

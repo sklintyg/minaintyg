@@ -12,50 +12,50 @@ var templateJsonObjTemplate = require('./generic-metadata.json');
 module.exports = {
 
     getFk7263: function(userId, signDate) {
-        return this.getIntyg('fk7263', 'fk7263', userId, signDate);
+        return this.getIntyg('fk7263', '1.0', 'fk7263', userId, signDate);
     },
 
     getFk7263Smittskydd: function(userId, signDate) {
-        return this.getIntyg('fk7263', 'fk7263-smittskydd', userId, signDate);
+        return this.getIntyg('fk7263', '1.0', 'fk7263-smittskydd', userId, signDate);
     },
 
     getTsBas: function(userId, signDate) {
-        return this.getIntyg('ts-bas','ts-bas', userId, signDate);
+        return this.getIntyg('ts-bas', '6.8', 'ts-bas', userId, signDate);
     },
 
     getTsDiabetes: function(userId, signDate) {
-        return this.getIntyg('ts-diabetes', 'ts-diabetes', userId, signDate);
+        return this.getIntyg('ts-diabetes', '2.8', 'ts-diabetes', userId, signDate);
     },
 
     getLuse: function(userId) {
-        return this.getIntyg('luse', 'luse', userId);
+        return this.getIntyg('luse', '1.0', 'luse', userId);
     },
 
     getLisjp: function(userId) {
-        return this.getIntyg('lisjp', 'lisjp', userId);
+        return this.getIntyg('lisjp', '1.0', 'lisjp', userId);
     },
 
     getLuaena: function(userId) {
-        return this.getIntyg('luae_na', 'luae_na', userId);
+        return this.getIntyg('luae_na', '1.0', 'luae_na', userId);
     },
 
     getLuaefs: function(userId) {
-        return this.getIntyg('luae_fs', 'luae_fs', userId);
+        return this.getIntyg('luae_fs', '1.0', 'luae_fs', userId);
     },
 
     getLisjpSmittskydd: function(userId) {
-        return this.getIntyg('lisjp', 'lisjp-smittskydd', userId);
+        return this.getIntyg('lisjp', '1.0', 'lisjp-smittskydd', userId);
     },
 
     getLisjpFull: function(userId) {
-        return this.getIntyg('lisjp', 'lisjp-full', userId);
+        return this.getIntyg('lisjp', '1.0', 'lisjp-full', userId);
     },
 
     getLisjpSmittskyddOvrigt: function(userId) {
-        return this.getIntyg('lisjp', 'lisjp-smittskydd-ovrigt', userId);
+        return this.getIntyg('lisjp', '1.0', 'lisjp-smittskydd-ovrigt', userId);
     },
 
-    getIntyg: function(type, file, userId, signedDate) {
+    getIntyg: function(type, typeVersion, file, userId, signedDate) {
 
         //Create a local copy that we are free to mutate
         var templateJsonObj = JSON.parse(JSON.stringify(templateJsonObjTemplate));
@@ -84,6 +84,7 @@ module.exports = {
         return {
             id: templateJsonObj.id,
             type: type,
+            typeVersion: typeVersion,
             civicRegistrationNumber: templateJsonObj.civicRegistrationNumber,
             signedDate: templateJsonObj.signedDate,
             signingDoctorName: templateJsonObj.signingDoctorName,

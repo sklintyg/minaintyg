@@ -190,10 +190,10 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                     dialogInstance = undefined;
                 }
 
-                $location.path($scope.vm.type + '/view/' + $scope.vm.id).search({});
+                $location.path($scope.vm.type + '/' + $scope.vm.intygTypeVersion + '/view/' + $scope.vm.id).search({});
             };
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $scope.vm.type + '/' + $scope.vm.id + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $scope.vm.type + '/' + $scope.vm.intygTypeVersion + '/' + $scope.vm.id + '/pdf';
 
 
             // Cleanup ---------------
