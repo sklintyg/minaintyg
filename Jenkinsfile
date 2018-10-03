@@ -74,6 +74,13 @@ stage('notify') {
 
 stage('propagate') {
     node {
-        build job: "minaintyg-dintyg-build", wait: false, parameters: [[$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion]]
+        gitRef = "v${buildVersion}"
+        build job: "minaintyg-dintyg-build", wait: false, parameters: [
+                [$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion],
+                [$class: 'StringParameterValue', name: 'COMMON_VERSION', value: commonVersion],
+                [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
+                [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef]
+        ]
     }
 }
+
