@@ -54,7 +54,8 @@ public class UtlatandeMetaBuilder {
     private List<CertificateRelation> relations = new ArrayList<>();
 
     public UtlatandeMetaData build() {
-        return new UtlatandeMetaData(id, type, typeVersion, issuerName, facilityName, signDate, available, additionalInfo, statuses, relations);
+        return new UtlatandeMetaData(id, type, typeVersion, issuerName, facilityName, signDate, available, additionalInfo, statuses,
+                relations);
     }
 
     public UtlatandeMetaBuilder id(String id) {

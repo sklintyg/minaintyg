@@ -71,7 +71,8 @@ public class UtlatandeMetaData {
     private static final Comparator<Status> STATUS_COMPARATOR = (o1, o2) -> o2.getTimestamp().compareTo(o1.getTimestamp());
 
     // CHECKSTYLE:OFF ParameterNumber
-    public UtlatandeMetaData(String id, String type, String typeVersion, String issuerName, String facilityName, LocalDateTime signDate, String available,
+    public UtlatandeMetaData(String id, String type, String typeVersion, String issuerName, String facilityName, LocalDateTime signDate,
+            String available,
             String complemantaryInfo, List<Status> statuses, List<CertificateRelation> relations) {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");

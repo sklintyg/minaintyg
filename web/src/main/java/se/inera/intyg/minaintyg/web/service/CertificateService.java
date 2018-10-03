@@ -31,7 +31,8 @@ import java.util.Optional;
 
 public interface CertificateService {
 
-    Optional<CertificateResponse> getUtlatande(String type, String intygTypeVersion, Personnummer civicRegistrationNumber, String certificateId)
+    Optional<CertificateResponse> getUtlatande(String type, String intygTypeVersion, Personnummer civicRegistrationNumber,
+            String certificateId)
             throws ExternalWebServiceCallFailedException;
 
     /**
