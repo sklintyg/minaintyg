@@ -1,8 +1,8 @@
 #!groovy
 
-def buildVersion = "3.7.0.${BUILD_NUMBER}"
-def commonVersion = "3.7.0.+"
-def infraVersion = "3.7.0.+"
+def buildVersion = "3.8.0.${BUILD_NUMBER}"
+def commonVersion = "3.8.0.+"
+def infraVersion = "3.8.0.+"
 
 stage('checkout') {
     node {
@@ -74,6 +74,13 @@ stage('notify') {
 
 stage('propagate') {
     node {
-        build job: "minaintyg-dintyg-build", wait: false, parameters: [[$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion]]
+        gitRef = "v${buildVersion}"
+        build job: "minaintyg-dintyg-build", wait: false, parameters: [
+                [$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion],
+                [$class: 'StringParameterValue', name: 'COMMON_VERSION', value: commonVersion],
+                [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
+                [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef]
+        ]
     }
 }
+
