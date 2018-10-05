@@ -37,8 +37,8 @@
           <tbody>
           <tr ng-repeat="cert in archivedCertificates | archived">
             <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
-            <td headers="type">{{ getTypeOrReplacedText(cert) }}</td>
-            <td headers="certinfo">{{cert.complementaryInfo}}</td>
+            <td headers="type">{{ getIntygTypeName(cert) }}</td>
+            <td headers="certinfo">{{getAdditionalInfoOrReplacedText(cert)}}</td>
             <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
             <td headers="restore">
               <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}"
@@ -64,7 +64,7 @@
                 <span dynamic-label key="archived-cert-table.headers.type"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{ getTypeOrReplacedText(cert) }}
+                {{ getIntygTypeName(cert) }}
               </div>
             </div>
 
@@ -73,7 +73,7 @@
                 <span dynamic-label key="archived-cert-table.headers.complementary-info"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{cert.complementaryInfo}}
+                {{getAdditionalInfoOrReplacedText(cert)}}
               </div>
             </div>
 

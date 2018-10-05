@@ -63,11 +63,16 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
 
             $scope.pagefocus = true;
 
-            $scope.getTypeOrReplacedText = function(item) {
+            $scope.getIntygTypeName = function(item) {
+                return moduleService.getModuleName(item.type);
+
+            };
+
+            $scope.getAdditionalInfoOrReplacedText = function(item) {
                 if (item.replacedBy) {
                     return 'ERSATT INTYG';
                 } else {
-                    return moduleService.getModuleName(item.type);
+                    return item.complementaryInfo;
                 }
             };
         }]);
