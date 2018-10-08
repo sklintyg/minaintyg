@@ -113,7 +113,7 @@
                 });
             } else {
                 $uibTooltipProvider.options({
-                    trigger: 'mouseenter'
+                    trigger: 'mouseenter : mouseleave click'
                 });
             }
 

@@ -92,7 +92,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
                     button1id: 'archive-button',
                     button1text: 'button.archive',
                     button1icon: 'icon-box',
-                    button1tooltip: messageService.getProperty('button.modal.archive.tooltip'),
                     autoClose: false
                 });
             };
