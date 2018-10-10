@@ -22,6 +22,7 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcer
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
@@ -75,13 +76,13 @@ public final class CertificateMetaConverter {
      *            - List of CertificateState types to keep
      * @return
      */
-    public static CertificateMeta toCertificateMetaFromCertMetaData(CertificateMetaData metaData, List<IntygRelations> relations,
-            List<CertificateState> statusFilter) {
+    public static CertificateMeta toCertificateMetaFromCertMetaData(Utlatande utlatande, CertificateMetaData metaData,
+                                                    List<IntygRelations> relations, List<CertificateState> statusFilter) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(metaData.getCertificateId());
         result.setSelected(false);
-        result.setType(metaData.getCertificateType());
+        result.setType(utlatande.getTyp());
         result.setCaregiverName(metaData.getIssuerName());
         result.setCareunitName(metaData.getFacilityName());
         result.setSentDate(metaData.getSignDate());

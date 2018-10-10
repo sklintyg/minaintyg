@@ -18,19 +18,37 @@
  */
 package se.inera.intyg.minaintyg.web.controller.moduleapi;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.UtkastStatus;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
@@ -41,21 +59,6 @@ import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
@@ -106,20 +109,23 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Optional<CertificateResponse> utlatande =
+        Optional<CertificateResponse> certificateResponse =
                 certificateService.getUtlatande(type, createPnr(citizenService.getCitizen().getUsername()), id);
 
-        if (utlatande.isPresent()) {
+        if (certificateResponse.isPresent()) {
             try {
-                if (utlatande.get().isRevoked()) {
+                if (certificateResponse.get().isRevoked()) {
                     LOG.info("Revoked certificate " + id + " was requested - Responding with status "
                             + Response.Status.GONE.getStatusCode());
                     return Response.status(Response.Status.GONE).build();
                 }
 
-                JsonNode utlatandeJson = objectMapper.readTree(utlatande.get().getInternalModel());
+                JsonNode utlatandeJson = objectMapper.readTree(certificateResponse.get().getInternalModel());
                 List<IntygRelations> relations = certificateService.getRelationsForCertificates(Arrays.asList(id));
-                CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande.get().getMetaData(), relations,
+                Utlatande utlatande = certificateResponse.get().getUtlatande();
+                CertificateMetaData metaData = certificateResponse.get().getMetaData();
+
+                CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande, metaData, relations,
                         RELEVANT_STATUS_TYPES);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
