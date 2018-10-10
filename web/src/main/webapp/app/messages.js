@@ -48,7 +48,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'send.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
 
         'pdf.sekretessmarkeringmodal.header': 'Ladda ner intyg som PDF',
-        'pdf.sekretessmarkeringmodal.body': '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p><p>När du laddar ner ditt intyg som PDF kommer det att sparas till den page/enhet du använder. Om du till exempel använder en offentlig dator kan det vara bra att radera det nerladdade intyget innan du lämnar datorn/enheten.</p>',
+        'pdf.sekretessmarkeringmodal.body': '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p><p>När du laddar ner ditt intyg som PDF kommer det att sparas till den dator/enhet du använder. Om du till exempel använder en offentlig dator kan det vara bra att radera det nerladdade intyget innan du lämnar datorn/enheten.</p>',
         'pdf.sekretessmarkeringmodal.button1': '<i class="icon icon-download-1"></i> Ladda ner intyg som PDF',
         'pdf.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
 
