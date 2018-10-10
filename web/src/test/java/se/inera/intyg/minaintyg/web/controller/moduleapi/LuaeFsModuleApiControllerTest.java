@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import se.inera.intyg.common.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.common.luae_fs.v1.model.internal.LuaefsUtlatandeV1;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -54,7 +54,7 @@ public class LuaeFsModuleApiControllerTest extends ModuleApiControllerTest {
         certificateData = Resources.toString(new ClassPathResource(JSON_PATH).getURL(), Charsets.UTF_8);
 
         // Map JSON to an LuaefsUtlatande object
-        Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, LuaefsUtlatande.class);
+        Utlatande utlatande = new CustomObjectMapper().readValue(certificateData, LuaefsUtlatandeV1.class);
 
         List<Status> status = new ArrayList<>();
         status.add(new Status(CertificateState.SENT, TARGET, LocalDateTime.now()));
