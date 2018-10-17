@@ -32,6 +32,9 @@
       "defaultRecipient": {
         "type": "string"
       },
+      "displayDeprecated": {
+        "type": "boolean"
+      },
       "deprecated": {
         "type": "boolean"
       }
@@ -45,7 +48,9 @@
       "issuerTypeId",
       "cssPath",
       "scriptPath",
-      "dependencyDefinitionPath"
+      "dependencyDefinitionPath",
+      "displayDeprecated",
+      "deprecated"
     ]
   }
 }
