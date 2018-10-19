@@ -25,7 +25,8 @@ out
 
 *.p12
 *.jks
-secret-*
+devops/openshift/test/secret-vars.yaml
+devops/openshift/demo/secret-vars.yaml
 
 test/reports
 
