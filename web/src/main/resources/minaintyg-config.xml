@@ -41,7 +41,7 @@
     <import resource="classpath*:pu-services-config.xml" />
     <import resource="classpath*:/pu-ignite-config.xml" />
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
+    <context:component-scan base-package="se.inera.intyg.infra.monitoring, se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
