@@ -129,7 +129,7 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
 
     REDIS_HOST: <value>
     REDIS_PORT: <value>
-    REDIS.SENTINEL.MASTER.NAME: <value>
+    REDIS_SENTINEL_MASTER_NAME: <value>
     CERTIFICATE_BASEURL: http://intygstjanst-stage:8080
     NTJP_WS_CERTIFICATE_TYPE: JKS
     NTJP_WS_TRUSTSTORE_TYPE: JKS
