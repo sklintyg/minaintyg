@@ -111,6 +111,7 @@ public class UtlatandeMetaDataConverter {
         return intygRelations.stream()
                 .filter(ir -> ir.getIntygsId().getExtension().equals(intyg.getIntygsId().getExtension()))
                 .flatMap(ir -> ir.getRelation().stream())
+                .filter(relation -> !relation.isFranIntygMakulerat())
                 .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
                         RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
                 .collect(Collectors.toList());
