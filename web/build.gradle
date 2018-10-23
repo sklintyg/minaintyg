@@ -95,7 +95,7 @@ gretty {
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev,caching-enabled",
+               "-Dspring.profiles.active=dev,testability-api,caching-enabled,wc-pu-stub",
                "-Dresources.folder=${projectDir}/../src/main/resources",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",

@@ -1,5 +1,4 @@
 # OPENSHIFT INSTALLATION GUIDE
->>>>>>> INTYG-6519: Mer generell installationsanvisning, och mindre strukturändringar
 
 Installation of web application minaintyg on openshift.
 
@@ -15,6 +14,7 @@ Provided by operations (execution environment):
 
 * Redis Sentinel (provided)
 * Redis Server (provided)
+* Inera Certificate Service (Intygstjänst)
 
 Provided elsewhere:
 
@@ -130,7 +130,7 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
     REDIS_HOST: <value>
     REDIS_PORT: <value>
     REDIS_SENTINEL_MASTER_NAME: <value>
-    CERTIFICATE_BASEURL: http://intygstjanst-stage:8080
+    CERTIFICATE_BASEURL: http://intygstjanst-<env>:8080
     NTJP_WS_CERTIFICATE_TYPE: JKS
     NTJP_WS_TRUSTSTORE_TYPE: JKS
    
@@ -203,6 +203,5 @@ The pod(s) running minaintyg should become available within a few minutes use **
 	> oc logs dc/minaintyg-<env>
 
 ### 2.9 Routes
-Mina Intyg should _only_ be accessible from inside of the OpenShift project using its _service_ name (e.g. http://minaintyg-&lt;env>:8080) and from Nationella tjänsteplattformen. E.g. take care when setting up an OpenShift route so the intygsyjanst servcie isn't publicly addressable from the Internet.
-
-The security measures based on mutual TLS and PKI should nevertheless stop any attempts from unsolicited callers.
+To publish Mina Intyg externally a corresponding OCP route has to be created. 
+The internal service address is _http://minaintyg-&lt;env>:8080_. The route should only accept `HTTPS` and is responsible of TLS termination.
