@@ -117,33 +117,36 @@ For security reasons, no secret properties or configuration may be checked into 
 
 Open _&lt;env>/secret-vars.yaml_ and replace `<value>` with expected values:
 
-    NTJP_WS_CERTIFICATE_PASSWORD: <value>
-    NTJP_WS_KEY_MANAGER_PASSWORD: <value>
-    NTJP_WS_TRUSTSTORE_PASSWORD: <value>
-    MVK_TRUSTSTORE_PASSWORD: <value>
-    MVK_KEYSTORE_PASSWORD: <value>
-    MVK_KEYSTORE_KEYPASSWORD: <value>
-    FK_SAML_KEYSTORE_PASSWORD: <value>
+    NTJP_WS_CERTIFICATE_PASSWORD: "<replaceme>"
+    NTJP_WS_KEY_MANAGER_PASSWORD: "<replaceme>"
+    NTJP_WS_TRUSTSTORE_PASSWORD: "<replaceme>"
+    FK_SAML_KEYSTORE_PASSWORD: "<replaceme>"
 
 Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. You may also need to update name of keystore/truststore files as well as their type (JKS or PKCS12)
 
-    REDIS_HOST: <value>
-    REDIS_PORT: <value>
-    REDIS_SENTINEL_MASTER_NAME: <value>
-    CERTIFICATE_BASEURL: http://intygstjanst-<env>:8080
-    NTJP_WS_CERTIFICATE_TYPE: JKS
-    NTJP_WS_TRUSTSTORE_TYPE: JKS
+    REDIS_HOST: "<value>"
+    REDIS_PORT: "<value>"
+    REDIS_SENTINEL_MASTER_NAME: "<value>"
+    SPRING_PROFILES_ACTIVE: ""<value>"
+    CERTIFICATE_BASEURL: "http://intygstjanst[-<env>]:8080"
+    NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/<value>"
+    NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
+    NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/<value>"
+    NTJP_WS_TRUSTSTORE_TYPE: "JKS"
+    FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/<value>"
+    FK_SAML_KEYSTORE_ALIAS: "<value>"
+    FK_SAML_METADATA_FILE: "file//:${config.dir}/<value>"
    
 Note: Other properties might be used to define a `<value>`. As an example is the path to certificates indicated by the `CERTIFICATE_FOLDER` property and the truststore file might be defined like:
  
-	NTJP_WS_TRUSTSTORE_FILE: ${CERTIFICATE_FOLDER}/truststore.jks
+	NTJP_WS_TRUSTSTORE_FILE: ${certificate.folder}/truststore.jks
         
 ##### 2.4.1 Redis Sentinel Configuration
 
 Redis sentinel needs at least three URL:s passed in order to work correctly. These are specified in the _redis.host_ and _redis.port_ properties respectively:
 
-    redis.host=host1;host2;host3
-    redis.port=26379;26379;26379
+    REDIS_HOST: "host1;host2;host3"
+    REDIS_PORT: "26379;26379;26379"
     
 ### 2.5 Prepare Certificates
 
