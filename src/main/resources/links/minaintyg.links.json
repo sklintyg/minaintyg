@@ -178,5 +178,29 @@
     "url": "http://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32016R0679",
     "text": "Dataskyddsförordningen (EU) 2016/679",
     "target": "_blank"
+  },
+  {
+    "key": "iText7",
+    "url": "https://itextpdf.com",
+    "text": "iText7",
+    "target": "_blank"
+  },
+  {
+    "key": "agpl30",
+    "url": "https://www.gnu.org/licenses/agpl-3.0.en.html",
+    "text": "gnu.org",
+    "target": "_blank"
+  },
+  {
+    "key": "miGithub",
+    "url": "https://github.com/sklintyg/minaintyg",
+    "text": "Github",
+    "target": "_blank"
+  },
+  {
+    "key": "miLicenseGithub",
+    "url": "https://github.com/sklintyg/minaintyg/blob/develop/LICENSE.md",
+    "text": "Github",
+    "target": "_blank"
   }
 ]
