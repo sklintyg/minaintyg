@@ -100,6 +100,7 @@ public final class CertificateMetaConverter {
         result.setRelations(relations.stream()
                 .filter(ir -> ir.getIntygsId().getExtension().equals(result.getId()))
                 .flatMap(ir -> ir.getRelation().stream())
+                .filter(relation -> !relation.isFranIntygMakulerat())
                 .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
                         RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
                 .collect(Collectors.toList()));
