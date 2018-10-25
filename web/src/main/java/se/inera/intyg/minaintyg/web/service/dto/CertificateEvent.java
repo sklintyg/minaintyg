@@ -30,6 +30,7 @@ public class CertificateEvent {
     private String target;
     private LocalDateTime timestamp;
     private String intygsTyp;
+    private String intygsTypVersion;
 
     public CertificateEvent(CertificateEventType eventType, String type, String target, LocalDateTime timestamp) {
         this.eventType = eventType;
@@ -38,12 +39,14 @@ public class CertificateEvent {
         this.timestamp = timestamp;
     }
 
-    public CertificateEvent(CertificateEventType eventType, String type, String target, LocalDateTime timestamp, String intygsTyp) {
+    public CertificateEvent(CertificateEventType eventType, String type, String target, LocalDateTime timestamp, String intygsTyp,
+                            String intygsTypVersion) {
         this.eventType = eventType;
         this.type = type;
         this.target = target;
         this.timestamp = timestamp;
         this.intygsTyp = intygsTyp;
+        this.intygsTypVersion = intygsTypVersion;
     }
 
     public CertificateEventType getEventType() {
@@ -80,5 +83,9 @@ public class CertificateEvent {
 
     public void setIntygsTyp(String intygsTyp) {
         this.intygsTyp = intygsTyp;
+    }
+
+    public String getIntygsTypVersion() {
+        return intygsTypVersion;
     }
 }

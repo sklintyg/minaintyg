@@ -18,18 +18,18 @@
  */
 package se.inera.intyg.minaintyg.web.api;
 
-import se.inera.intyg.common.support.common.enumerations.RelationKod;
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
-import se.inera.intyg.minaintyg.web.service.dto.CertificateEvent;
-import se.inera.intyg.minaintyg.web.service.dto.CertificateEventType;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
+import se.inera.intyg.minaintyg.web.service.dto.CertificateEvent;
+import se.inera.intyg.minaintyg.web.service.dto.CertificateEventType;
 
 /**
  * DTO representing metadata of a signed certificate in the MI rest API.
@@ -140,9 +140,13 @@ public class CertificateMeta {
      */
     public List<CertificateEvent> getEvents() {
         Stream<CertificateEvent> s1 = Stream.of(getReplacedBy()).filter(Objects::nonNull).map(
-                r -> new CertificateEvent(CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType()));
+                r -> new CertificateEvent(
+                        CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+                ));
         Stream<CertificateEvent> s2 = Stream.of(getReplaces()).filter(Objects::nonNull).map(
-                r -> new CertificateEvent(CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType()));
+                r -> new CertificateEvent(
+                        CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+                ));
         Stream<CertificateEvent> relationStream = Stream.concat(s1, s2);
         Stream<CertificateEvent> statusStream = statuses.stream()
                 .map(s -> new CertificateEvent(CertificateEventType.STATUS, s.getType().name(), s.getTarget(), s.getTimestamp()));
