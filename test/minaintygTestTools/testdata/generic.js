@@ -23,8 +23,9 @@ module.exports = {
         return this.getIntyg('ts-bas', '6.8', 'ts-bas', userId, signDate);
     },
 
-    getTsDiabetes: function(userId, signDate) {
-        return this.getIntyg('ts-diabetes', '2.8', 'ts-diabetes', userId, signDate);
+    getTsDiabetes: function(userId, version) {
+        version = version || '2.8';
+        return this.getIntyg('ts-diabetes', version, 'ts-diabetes', userId);
     },
 
     getLuse: function(userId) {
@@ -65,7 +66,7 @@ module.exports = {
         templateJsonObj.civicRegistrationNumber = userId || '191212121212';
         templateJsonObj.signedDate = signedDate || templateJsonObj.signedDate;
 
-        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-content.xml');
+        var fullPath = path.join(process.cwd(), 'minaintygTestTools/testdata/intyg-' + file + '-' + typeVersion + '-content.xml');
 
         //read xml doc into string variable
         var xmlString = fs.readFileSync(fullPath, 'utf8')

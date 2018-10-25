@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:RegisterCertificate xmlns:ns6="urn:riv:clinicalprocess:healthcond:certificate:3.2"
+    xmlns:ns5="urn:riv:clinicalprocess:healthcond:certificate:types:3"
+    xmlns:dsf="http://www.w3.org/2002/06/xmldsig-filter2"
+    xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:3">
+    <ns4:intyg>
+        <ns3:intygs-id>
+            <ns5:root>TSTNMT2321000156-1077</ns5:root>
+            <ns5:extension>CERTIFICATE_ID</ns5:extension>
+        </ns3:intygs-id>
+        <ns3:typ>
+            <ns5:code>TSTRK1031</ns5:code>
+            <ns5:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns5:codeSystem>
+            <ns5:displayName>Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.</ns5:displayName>
+        </ns3:typ>
+        <ns3:version>3.0</ns3:version>
+        <ns3:signeringstidpunkt>SIGNED_DATE</ns3:signeringstidpunkt>
+        <ns3:skickatTidpunkt>2018-07-06T15:49:09</ns3:skickatTidpunkt>
+        <ns3:patient>
+            <ns3:person-id>
+                <ns5:root>1.2.752.129.2.1.3.1</ns5:root>
+                <ns5:extension>PATIENT_CRN</ns5:extension>
+            </ns3:person-id>
+            <ns3:fornamn></ns3:fornamn>
+            <ns3:efternamn></ns3:efternamn>
+            <ns3:postadress></ns3:postadress>
+            <ns3:postnummer></ns3:postnummer>
+            <ns3:postort></ns3:postort>
+        </ns3:patient>
+        <ns3:skapadAv>
+            <ns3:personal-id>
+                <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                <ns5:extension>TSTNMT2321000156-1079</ns5:extension>
+            </ns3:personal-id>
+            <ns3:fullstandigtNamn>DOCTOR_NAME</ns3:fullstandigtNamn>
+            <ns3:forskrivarkod>0000000</ns3:forskrivarkod>
+            <ns3:enhet>
+                <ns3:enhets-id>
+                    <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                    <ns5:extension>CAREUNIT_ID</ns5:extension>
+                </ns3:enhets-id>
+                <ns3:arbetsplatskod>
+                    <ns5:root>1.2.752.29.4.71</ns5:root>
+                    <ns5:extension>1234567890</ns5:extension>
+                </ns3:arbetsplatskod>
+                <ns3:enhetsnamn>CAREUNIT_NAME</ns3:enhetsnamn>
+                <ns3:postadress>Enhetsvägen 12</ns3:postadress>
+                <ns3:postnummer>54321</ns3:postnummer>
+                <ns3:postort>Tumba</ns3:postort>
+                <ns3:telefonnummer>08-1337</ns3:telefonnummer>
+                <ns3:epost>enhet3@webcert.invalid.se</ns3:epost>
+                <ns3:vardgivare>
+                    <ns3:vardgivare-id>
+                        <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                        <ns5:extension>CAREGIVER_ID</ns5:extension>
+                    </ns3:vardgivare-id>
+                    <ns3:vardgivarnamn>CAREGIVER_NAME</ns3:vardgivarnamn>
+                </ns3:vardgivare>
+            </ns3:enhet>
+        </ns3:skapadAv>
+        <ns3:svar id="1">
+            <ns3:instans>1</ns3:instans>
+            <ns3:delsvar id="1.1">
+                <ns5:cv>
+                    <ns5:code>IAV12</ns5:code>
+                    <ns5:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns5:codeSystem>
+                    <ns5:displayName>A1</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="2">
+            <ns3:delsvar id="2.1">
+                <ns5:cv>
+                    <ns5:code>IDK1</ns5:code>
+                    <ns5:codeSystem>e7cc8f30-a353-4c42-b17a-a189b6876647</ns5:codeSystem>
+                    <ns5:displayName>ID-kort</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="35">
+            <ns3:delsvar id="35.1">
+                <ns5:partialDate>
+                    <ns5:format>YYYY</ns5:format>
+                    <ns5:value>2018</ns5:value>
+                </ns5:partialDate>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="18">
+            <ns3:delsvar id="18.1">
+                <ns5:cv>
+                    <ns5:code>E10</ns5:code>
+                    <ns5:codeSystem>1.2.752.116.1.1.1.1.3</ns5:codeSystem>
+                    <ns5:displayName>Diabetes mellitus typ 1</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="109">
+            <ns3:delsvar id="109.1">true</ns3:delsvar>
+            <ns3:delsvar id="109.2">true</ns3:delsvar>
+            <ns3:delsvar id="109.3">true</ns3:delsvar>
+            <ns3:delsvar id="109.4">true</ns3:delsvar>
+            <ns3:delsvar id="109.5">
+                <ns5:partialDate>
+                    <ns5:format>YYYY</ns5:format>
+                    <ns5:value>2017</ns5:value>
+                </ns5:partialDate>
+            </ns3:delsvar>
+            <ns3:delsvar id="109.6">true</ns3:delsvar>
+            <ns3:delsvar id="109.7">Hypnos</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="100">
+            <ns3:delsvar id="100.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="37">
+            <ns3:delsvar id="37.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="101">
+            <ns3:delsvar id="101.1">false</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="102">
+            <ns3:delsvar id="102.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="38">
+            <ns3:delsvar id="38.1">false</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="36">
+            <ns3:delsvar id="36.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="105">
+            <ns3:delsvar id="105.1">false</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="106">
+            <ns3:delsvar id="106.1">true</ns3:delsvar>
+            <ns3:delsvar id="106.2">2018-10-17</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="107">
+            <ns3:delsvar id="107.1">true</ns3:delsvar>
+            <ns3:delsvar id="107.2">2018-10-09</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="108">
+            <ns3:delsvar id="108.1">true</ns3:delsvar>
+            <ns3:delsvar id="108.2">2018-10-11</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="103">
+            <ns3:delsvar id="103.1">false</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="104">
+            <ns3:delsvar id="104.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="8">
+            <ns3:delsvar id="8.1">1.0</ns3:delsvar>
+            <ns3:delsvar id="8.4">0.0</ns3:delsvar>
+            <ns3:delsvar id="8.2">1.0</ns3:delsvar>
+            <ns3:delsvar id="8.5">0.0</ns3:delsvar>
+            <ns3:delsvar id="8.3">1.0</ns3:delsvar>
+            <ns3:delsvar id="8.6">0.0</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="32">
+            <ns3:delsvar id="32.1">Kommentarer av det viktiga slaget</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="33">
+            <ns3:instans>1</ns3:instans>
+            <ns3:delsvar id="33.1">
+                <ns5:cv>
+                    <ns5:code>VAR2</ns5:code>
+                    <ns5:codeSystem>e889fa20-1dee-4f79-8b37-03853e75a9f8</ns5:codeSystem>
+                    <ns5:displayName>C1E</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="33">
+            <ns3:instans>2</ns3:instans>
+            <ns3:delsvar id="33.1">
+                <ns5:cv>
+                    <ns5:code>VAR8</ns5:code>
+                    <ns5:codeSystem>e889fa20-1dee-4f79-8b37-03853e75a9f8</ns5:codeSystem>
+                    <ns5:displayName>DE</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="45">
+            <ns3:delsvar id="45.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="34">
+            <ns3:delsvar id="34.1">Kronologisk bastuberedning</ns3:delsvar>
+        </ns3:svar>
+    </ns4:intyg>
+</ns4:RegisterCertificate>

@@ -37,7 +37,7 @@ describe('Visa intyg ts-diabetes', function() {
     var intygsId = null;
 
     beforeAll(function() {
-        var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
+        var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId, '2.8');
         intygsId = tsDiabetesIntyg.id;
         restHelper.createIntyg(tsDiabetesIntyg);
     });

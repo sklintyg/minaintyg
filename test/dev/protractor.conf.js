@@ -42,12 +42,10 @@ exports.config = {
     seleniumAddress: require('./../minaintygTestTools/environment.js').envConfig.SELENIUM_ADDRESS,
     baseUrl: require('./../minaintygTestTools/environment.js').envConfig.MINAINTYG_URL,
 
-    specs: ['./spec/*.spec.js'],
+    specs: ['./spec/**/*.spec.js'],
 
     suites: {
-        //testdata: './spec/generateTestData/**/*.spec.js',
-        //clean: './spec/cleanTestData/**/*.spec.js',
-        app: ['./spec/*.spec.js']
+        app: ['./spec/**/*.spec.js']
     },
 
     // If chromeOnly is true, we dont need to start the selenium server. (seems we don't need to anyway? can this be removed?)
@@ -56,11 +54,6 @@ exports.config = {
 
     // Capabilities to be passed to the webdriver instance. (ignored if multiCapabilities is used)
     capabilities: {
-
-        // IE11
-        /*browserName: 'internet explorer',
-        platform: 'ANY',
-        version: '11',*/
 
         // Any other browser
         browserName: 'chrome', // possible values: phantomjs, firefox, chrome
