@@ -66,7 +66,10 @@
   <security:http security="none" pattern="/ws/**" />
   <security:http security="none" create-session="never" pattern="/session/session-auth-check/**" />
 
-  <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+  <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+    <property name="redisNamespace" value="${app.name}"/>
+    <property name="redisFlushMode" value="IMMEDIATE" />
+  </bean>
 
   <!-- Logger for SAML messages and events -->
   <bean id="samlLogger" class="org.springframework.security.saml.log.SAMLDefaultLogger">

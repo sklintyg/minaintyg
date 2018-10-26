@@ -18,12 +18,13 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Implementation of the @see CitizenDetails interface.
@@ -54,6 +55,24 @@ public class CitizenImpl implements Citizen {
             return Boolean.FALSE;
         }
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+        final Citizen that = (Citizen) o;
+        return Objects.equals(this.username, that.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + Objects.hash(this.username, this.consent);
+    }
+
 
     @Override
     public boolean consentIsKnown() {
