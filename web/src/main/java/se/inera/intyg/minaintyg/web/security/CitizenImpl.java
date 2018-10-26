@@ -65,12 +65,13 @@ public class CitizenImpl implements Citizen {
             return true;
         }
         final Citizen that = (Citizen) o;
-        return Objects.equals(this.username, that.getUsername());
+        return Objects.equals(this.username, that.getUsername())
+                && Objects.equals(this.loginMethod, that.getLoginMethod());
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + Objects.hash(this.username, this.consent);
+        return super.hashCode() + Objects.hash(this.username, this.loginMethod, this.consent);
     }
 
 
