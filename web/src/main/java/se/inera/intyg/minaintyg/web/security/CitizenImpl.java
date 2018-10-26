@@ -64,9 +64,12 @@ public class CitizenImpl implements Citizen {
         if (this == o) {
             return true;
         }
-        final Citizen that = (Citizen) o;
-        return Objects.equals(this.username, that.getUsername())
-                && Objects.equals(this.loginMethod, that.getLoginMethod());
+        if (o instanceof  Citizen) {
+            final Citizen that = (Citizen) o;
+            return Objects.equals(this.username, that.getUsername())
+                    && Objects.equals(this.loginMethod, that.getLoginMethod());
+        }
+        return false;
     }
 
     @Override
