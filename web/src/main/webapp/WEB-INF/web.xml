@@ -161,15 +161,6 @@
   </servlet-mapping>
 
   <filter>
-    <filter-name>LogMDCFilter</filter-name>
-    <filter-class>se.inera.intyg.infra.monitoring.logging.LogMDCServletFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>LogMDCFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
-  <filter>
     <filter-name>springSessionRepositoryFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>
@@ -195,15 +186,6 @@
   </filter>
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
-  <filter>
-    <filter-name>principalUpdatedFilter</filter-name>
-    <filter-class>se.inera.intyg.infra.security.filter.PrincipalUpdatedFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>principalUpdatedFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
