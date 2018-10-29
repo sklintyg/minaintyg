@@ -208,7 +208,7 @@
             <h4 id="header" ng-if="loginModel.length > 0">Mallar</h4>
 
             <select id="jsonSelect" name="jsonSelect" ng-model="selectedIndex" size="18" class="form-control"
-                    style="width: 100%;max-width:100%">
+                    style="width: 100%;max-width:100%" autofocus>
               <option id="x{{login.personalIdentity.extension}}" ng-repeat="login in loginModel" value="{{login.index}}">
                 {{login.personalIdentity.extension}} - {{login.name.givenName.name}} {{login.name.surname.name}}
                 {{login.protectedPersonIndicator == 'true' ? '(Sekretess)' :''}}
