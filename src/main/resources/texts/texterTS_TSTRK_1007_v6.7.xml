@@ -10,16 +10,17 @@
   <text id="FRG_1.RBK">Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</text>
   <text id="FRG_1.HLP">Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.</text>
   <text id="FRG_1.2.RBK">Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</text>
-  <text id="KORKORT_C1.RBK">C1</text>
-  <text id="KORKORT_C1E.RBK">C1E</text>
-  <text id="KORKORT_C.RBK">C</text>
-  <text id="KORKORT_CE.RBK">CE</text>
-  <text id="KORKORT_D1.RBK">D1</text>
-  <text id="KORKORT_D1E.RBK">D1E</text>
-  <text id="KORKORT_D.RBK">D</text>
-  <text id="KORKORT_DE.RBK">DE</text>
-  <text id="KORKORT_TAXI.RBK">Taxi</text>
-  <text id="KORKORT_ANNAT.RBK">Annat</text>
+  <text id="KORKORT.C1.RBK">C1</text>
+  <text id="KORKORT.C1E.RBK">C1E</text>
+  <text id="KORKORT.C.RBK">C</text>
+  <text id="KORKORT.CE.RBK">CE</text>
+  <text id="KORKORT.D1.RBK">D1</text>
+  <text id="KORKORT.D1E.RBK">D1E</text>
+  <text id="KORKORT.D.RBK">D</text>
+  <text id="KORKORT.DE.RBK">DE</text>
+  <text id="KORKORT.TAXI.RBK">Taxi</text>
+  <text id="KORKORT.ANNAT.RBK">Annat</text>
+	<text id="KORKORT.KAN_INTE_TA_STALLNING.RBK">Kan inte ta ställning</text>
 
 	<!--
 	===============================================
@@ -34,13 +35,12 @@
   <text id="IDENTITET_FORSAKRAN_KAP18.RBK">Försäkran enligt 18 kap 4 §</text>
   <text id="IDENTITET_PASS.RBK">Pass</text>
 
-  <text id="FRM_1.RBK">&#185; SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.
-&#178; SIS-märkt företagskort eller tjänstekort.
-&#179; Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.
-&#8308; Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.</text>
+  <text id="FRM_1.RBK"><![CDATA[Transportstyrelsens läkarintyg ska användas vid förlängd giltighet av högre behörighet från 45 år, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation. Transportstyrelsens läkarintyg kan även användas när Transportstyrelsen i annat fall begärt ett allmänt läkarintyg avseende lämplighet att inneha körkort.
+
+  Specialistintyg finns bl.a. för alkohol, läkemedel, synfunktion, Alkolås m.m. Se <LINK:transportstyrelsen>.]]></text>
 
   <text id="FRM_2.RBK"><![CDATA[Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.
-Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>.]]></text>
+  Se: <LINK:transportstyrelsen>.]]></text>
 
 	<!--
 	===============================================
