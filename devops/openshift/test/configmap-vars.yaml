@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
   CERTIFICATE_BASEURL: "http://intygstjanst-test-minaintyg-test:8080"
-  NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.minaintyg.sjunet.org.p12"
-  NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
+  NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/test.intygstjanster.sjunet.org.jks"
+  NTJP_WS_CERTIFICATE_TYPE: "JKS"
   NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore-ntjp.jks"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
 kind: ConfigMap
