@@ -8,7 +8,7 @@
     <typ>
       <ns3:code>AG1-14</ns3:code>
       <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
-      <ns3:displayName>Läkarintyg om arbetsförmåga – sjuklöneperiod (AG1-14)</ns3:displayName>
+      <ns3:displayName>Läkarintyg om arbetsförmåga – sjuklöneperiod</ns3:displayName>
     </typ>
     <version>1</version>
     <signeringstidpunkt>SIGNED_DATE</signeringstidpunkt>
