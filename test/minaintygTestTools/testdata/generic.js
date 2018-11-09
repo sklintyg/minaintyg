@@ -56,6 +56,10 @@ module.exports = {
         return this.getIntyg('lisjp', '1.0', 'lisjp-smittskydd-ovrigt', userId);
     },
 
+    getAg114: function(userId) {
+        return this.getIntyg('ag114', '1.0', 'ag114-full', userId);
+    },
+
     getIntyg: function(type, typeVersion, file, userId, signedDate) {
 
         //Create a local copy that we are free to mutate

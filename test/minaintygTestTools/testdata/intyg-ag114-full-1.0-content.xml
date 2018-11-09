@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:RegisterCertificate xmlns="urn:riv:clinicalprocess:healthcond:certificate:3" xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:3">
+  <ns2:intyg>
+    <intygs-id>
+      <ns3:root>123456789</ns3:root>
+      <ns3:extension>CERTIFICATE_ID</ns3:extension>
+    </intygs-id>
+    <typ>
+      <ns3:code>AG1-14</ns3:code>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
+      <ns3:displayName>Läkarintyg om arbetsförmåga – sjuklöneperiod (AG1-14)</ns3:displayName>
+    </typ>
+    <version>1</version>
+    <signeringstidpunkt>SIGNED_DATE</signeringstidpunkt>
+    <skickatTidpunkt>2015-12-07T15:48:05</skickatTidpunkt>
+    <patient>
+      <person-id>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
+        <ns3:extension>PATIENT_CRN</ns3:extension>
+      </person-id>
+      <fornamn/>
+      <efternamn/>
+      <postadress/>
+      <postnummer/>
+      <postort/>
+    </patient>
+    <skapadAv>
+      <personal-id>
+        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+        <ns3:extension>IFV1239877878-1049</ns3:extension>
+      </personal-id>
+      <fullstandigtNamn>DOCTOR_NAME</fullstandigtNamn>
+      <forskrivarkod>0000000</forskrivarkod>
+      <enhet>
+        <enhets-id>
+          <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+          <ns3:extension>CAREUNIT_ID</ns3:extension>
+        </enhets-id>
+        <arbetsplatskod>
+          <ns3:root>1.2.752.29.4.71</ns3:root>
+          <ns3:extension>1234567890</ns3:extension>
+        </arbetsplatskod>
+        <enhetsnamn>CAREUNIT_NAME</enhetsnamn>
+        <postadress>NMT gata 3</postadress>
+        <postnummer>12345</postnummer>
+        <postort>Testhult</postort>
+        <telefonnummer>0101112131416</telefonnummer>
+        <epost>enhet3@webcert.invalid.se</epost>
+        <vardgivare>
+          <vardgivare-id>
+            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+            <ns3:extension>CAREGIVER_ID</ns3:extension>
+          </vardgivare-id>
+          <vardgivarnamn>NMT vg3</vardgivarnamn>
+        </vardgivare>
+      </enhet>
+    </skapadAv>
+    <svar id="1">
+      <instans>1</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>NUVARANDE_ARBETE</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Nuvarande arbete</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="2">
+      <delsvar id="2.1">nuvarande yrkesbeskrivning</delsvar>
+    </svar>
+    <svar id="3">
+      <delsvar id="3.1">true</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>1</instans>
+      <delsvar id="4.1">Diagnos S47</delsvar>
+      <delsvar id="4.2">
+        <ns3:cv>
+          <ns3:code>S47</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="4">
+      <instans>2</instans>
+      <delsvar id="4.1">Diagnos S48</delsvar>
+      <delsvar id="4.2">
+        <ns3:cv>
+          <ns3:code>S48</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="4">
+      <instans>3</instans>
+      <delsvar id="4.1">Diagnos S49</delsvar>
+      <delsvar id="4.2">
+        <ns3:cv>
+          <ns3:code>S49</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="5">
+      <delsvar id="5.1">Kan jobba halvtid numera.</delsvar>
+    </svar>
+    <svar id="6">
+      <delsvar id="6.1">true</delsvar>
+      <delsvar id="6.2">Beskrivning av förmåga</delsvar>
+    </svar>
+    <svar id="7">
+      <delsvar id="7.1">70</delsvar>
+      <delsvar id="7.2">
+        <ns3:datePeriod>
+          <ns3:start>2018-11-01</ns3:start>
+          <ns3:end>2018-11-20</ns3:end>
+        </ns3:datePeriod>
+      </delsvar>
+    </svar>
+    <svar id="8">
+      <delsvar id="8.1">Övriga upplysningar text</delsvar>
+    </svar>
+    <svar id="9">
+      <delsvar id="9.1">true</delsvar>
+      <delsvar id="9.2">Gillar kontakt</delsvar>
+    </svar>
+  </ns2:intyg>
+</ns2:RegisterCertificate>
