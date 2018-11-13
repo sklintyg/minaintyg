@@ -18,32 +18,14 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serializable;
+
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * The details of a citizen.
  */
 public interface Citizen extends UserDetails, Serializable {
-
-    /**
-     * Does the citizen have consent?
-     * @return a boolean
-     */
-    Boolean hasConsent();
-
-    /**
-     * Do we actually have a value for consent?
-     * @return
-     */
-    boolean consentIsKnown();
-
-    /**
-     * Set consent.
-     * @param consent
-     */
-    void setConsent(boolean consent);
 
     /**
      * Should return the login methos used to access the application.

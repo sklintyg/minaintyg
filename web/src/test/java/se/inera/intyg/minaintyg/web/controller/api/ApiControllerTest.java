@@ -18,15 +18,23 @@
  */
 package se.inera.intyg.minaintyg.web.controller.api;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
-import se.inera.intyg.minaintyg.web.api.ConsentResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.api.UserInfo;
 import se.inera.intyg.minaintyg.web.security.BrowserClosedInterceptor;
@@ -34,21 +42,11 @@ import se.inera.intyg.minaintyg.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
 import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.service.ConsentService;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.schemas.contract.Personnummer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyObject;
@@ -72,9 +70,6 @@ public class ApiControllerTest {
 
     @Mock
     private CertificateService certificateService;
-
-    @Mock
-    private ConsentService consentService;
 
     @Mock
     private CitizenService citizenService;
@@ -149,58 +144,6 @@ public class ApiControllerTest {
     }
 
     @Test
-    public void testGiveConsent() throws Exception {
-        when(consentService.setConsent(PNR)).thenReturn(true);
-        mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        ConsentResponse res = apiController.giveConsent();
-
-        assertNotNull(res);
-        assertTrue(res.getResult());
-
-        verify(citizenService.getCitizen()).setConsent(true); // verify user is updated
-        verify(consentService).setConsent(PNR);
-    }
-
-    @Test
-    public void testGiveConsentFailed() throws Exception {
-        when(consentService.setConsent(PNR)).thenReturn(false);
-        mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        ConsentResponse res = apiController.giveConsent();
-
-        assertNotNull(res);
-        assertTrue(res.getResult());
-
-        verify(citizenService.getCitizen()).setConsent(false); // verify user is updated
-        verify(consentService).setConsent(PNR);
-    }
-
-    @Test
-    public void testRevokeConsent() throws Exception {
-        when(consentService.revokeConsent(PNR)).thenReturn(true);
-        mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        ConsentResponse res = apiController.revokeConsent();
-
-        assertNotNull(res);
-        assertTrue(res.getResult());
-
-        verify(citizenService.getCitizen()).setConsent(false); // verify user is updated
-        verify(consentService).revokeConsent(PNR);
-    }
-
-    @Test
-    public void testRevokeFailed() throws Exception {
-        when(consentService.revokeConsent(PNR)).thenReturn(false);
-        mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        ConsentResponse res = apiController.revokeConsent();
-
-        assertNotNull(res);
-        assertFalse(res.getResult());
-
-        verify(citizenService.getCitizen(), never()).setConsent(false); // verify user is never updated
-        verify(consentService).revokeConsent(PNR);
-    }
-
-    @Test
     public void testOnBeforeUnload() throws Exception {
         HttpServletRequest req = mock(HttpServletRequest.class);
         when(req.getSession()).thenReturn(mock(HttpSession.class));
@@ -268,7 +211,6 @@ public class ApiControllerTest {
         when(citizen.getLoginMethod()).thenReturn(LOGIN_METHOD);
         when(citizen.getFullName()).thenReturn(PERSON_FULLNAME);
         when(citizen.isSekretessmarkering()).thenReturn(true);
-        when(citizen.hasConsent()).thenReturn(true);
 
         when(citizenService.getCitizen()).thenReturn(citizen);
 
@@ -278,10 +220,7 @@ public class ApiControllerTest {
         assertEquals(CIVIC_REGISTRATION_NUMBER, user.getPersonId());
         assertEquals(LOGIN_METHOD.name(), user.getLoginMethod());
         assertEquals(PERSON_FULLNAME, user.getFullName());
-        assertEquals(true, user.isSekretessmarkering());
-        assertEquals(true, user.isConsentGiven());
-
-
+        assertTrue(user.isSekretessmarkering());
     }
 
     private void mockCitizen(String personId) {

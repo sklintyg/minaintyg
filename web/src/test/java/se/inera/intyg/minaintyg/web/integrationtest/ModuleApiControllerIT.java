@@ -18,12 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
+import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
+
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -31,9 +35,6 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -52,7 +53,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @After
     public void cleanup() {
-        IntegrationTestUtility.revokeConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.deleteCertificatesForCitizen(CITIZEN_CIVIC_REGISTRATION_NUMBER);
     }
 
@@ -107,8 +107,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetCertificateWithoutSession() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
         final String type = LuseEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(id, type, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
@@ -120,7 +118,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetCertificatePdf() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String type = TsBasEntryPoint.MODULE_ID;
@@ -140,7 +137,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetCertificatePdfEmployerCopy() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String type = Fk7263EntryPoint.MODULE_ID;
@@ -161,7 +157,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetRevokedCertificate() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
@@ -175,7 +170,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
     }
 
     private void testGetCertificate(String type, String intygTypeVersion) {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
@@ -192,7 +186,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testModuleApiResponseNotCacheable() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         final String type = Fk7263EntryPoint.MODULE_ID;
 

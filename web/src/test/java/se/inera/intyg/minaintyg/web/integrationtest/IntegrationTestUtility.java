@@ -18,6 +18,11 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.ReceiverApprovalStatus;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -28,11 +33,6 @@ import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.receiver.types.v1.ApprovalStatusType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
-
-import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
@@ -64,15 +64,6 @@ public final class IntegrationTestUtility {
         given().redirects().follow(false).and()
                 .expect().statusCode(lessThan(404)) //statusCode(HttpServletResponse.SC_FOUND)
                 .when().get("web/logga-ut");
-    }
-
-    public static void addConsent(String personId){
-        given().get("testability/anvandare/consent/give/" + personId).then().statusCode(HttpServletResponse.SC_OK);
-    }
-
-    public static void revokeConsent(String personId){
-        given().get("testability/anvandare/consent/revoke/" + personId)
-                .then().statusCode(200);
     }
 
     public static void deleteIntyg(String id) {

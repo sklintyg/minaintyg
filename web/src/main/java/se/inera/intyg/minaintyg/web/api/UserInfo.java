@@ -29,14 +29,12 @@ public class UserInfo implements Serializable {
     private String fullName;
     private String loginMethod;
     private boolean sekretessmarkering;
-    private boolean consentGiven;
 
-    public UserInfo(String personId, String fullName, String loginMethod, boolean sekretessmarkering, boolean consentGiven) {
+    public UserInfo(String personId, String fullName, String loginMethod, boolean sekretessmarkering) {
         this.personId = personId;
         this.fullName = fullName;
         this.loginMethod = loginMethod;
         this.sekretessmarkering = sekretessmarkering;
-        this.consentGiven = consentGiven;
     }
 
     public String getPersonId() {
@@ -53,9 +51,5 @@ public class UserInfo implements Serializable {
 
     public boolean isSekretessmarkering() {
         return sekretessmarkering;
-    }
-
-    public boolean isConsentGiven() {
-        return consentGiven;
     }
 }

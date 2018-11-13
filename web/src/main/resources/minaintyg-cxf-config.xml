@@ -33,14 +33,6 @@
 
   <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
-  <jaxws:client id="getConsentClient"
-      serviceClass="se.inera.intyg.insuranceprocess.healthreporting.getconsent.rivtabp20.v1.GetConsentResponderInterface"
-      address="${consent.get.url}"/>
-
-  <jaxws:client id="setConsentClient"
-      serviceClass="se.inera.intyg.insuranceprocess.healthreporting.setconsent.rivtabp20.v1.SetConsentResponderInterface"
-      address="${consent.set.url}"/>
-
   <jaxws:client id="listCertificatesClientV3"
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponderInterface"
       address="${certificates.list.v3.url}"/>

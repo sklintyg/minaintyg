@@ -18,34 +18,32 @@
  */
 package se.inera.intyg.minaintyg.web.controller.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.minaintyg.web.api.CertificateMeta;
-import se.inera.intyg.minaintyg.web.api.ConsentResponse;
-import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
-import se.inera.intyg.minaintyg.web.api.UserInfo;
-import se.inera.intyg.minaintyg.web.security.BrowserClosedInterceptor;
-import se.inera.intyg.minaintyg.web.security.Citizen;
-import se.inera.intyg.minaintyg.web.service.CertificateService;
-import se.inera.intyg.minaintyg.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.service.ConsentService;
-import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
-import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
-import se.inera.intyg.schemas.contract.Personnummer;
-
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDateTime;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.intyg.minaintyg.web.api.CertificateMeta;
+import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
+import se.inera.intyg.minaintyg.web.api.UserInfo;
+import se.inera.intyg.minaintyg.web.security.BrowserClosedInterceptor;
+import se.inera.intyg.minaintyg.web.security.Citizen;
+import se.inera.intyg.minaintyg.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
+import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
+import se.inera.intyg.schemas.contract.Personnummer;
 
 public class ApiController {
 
@@ -55,9 +53,6 @@ public class ApiController {
 
     @Autowired
     private CertificateService certificateService;
-
-    @Autowired
-    private ConsentService consentService;
 
     @Autowired
     private CitizenService citizenService;
@@ -126,31 +121,6 @@ public class ApiController {
         return certificateService.sendCertificate(createPnr(citizen.getUsername()), id, recipients);
     }
 
-    @POST
-    @Path("/consent/give")
-    @Produces(JSON_UTF8)
-    public ConsentResponse giveConsent() {
-        Citizen citizen = citizenService.getCitizen();
-        Personnummer pnr = createPnr(citizen.getUsername());
-        LOG.debug("Requesting 'giveConsent' for citizen {}", pnr.getPersonnummerHash());
-        citizen.setConsent(consentService.setConsent(pnr));
-        return new ConsentResponse(true);
-    }
-
-    @POST
-    @Path("/consent/revoke")
-    @Produces(JSON_UTF8)
-    public ConsentResponse revokeConsent() {
-        Citizen citizen = citizenService.getCitizen();
-        Personnummer pnr = createPnr(citizen.getUsername());
-        LOG.debug("Requesting 'revokeConsent' for citizen {}", pnr.getPersonnummerHash());
-        boolean revokedSuccessfully = consentService.revokeConsent(pnr);
-        if (revokedSuccessfully) {
-            citizen.setConsent(false);
-        }
-        return new ConsentResponse(revokedSuccessfully);
-    }
-
     /**
      * Endpoint used by client to notify server that onbeforeunload is triggered.
      *
@@ -187,7 +157,7 @@ public class ApiController {
         if (citizen != null) {
             return new UserInfo(citizen.getUsername(),
                     citizen.getFullName(), citizen.getLoginMethod().name(),
-                    citizen.isSekretessmarkering(), citizen.hasConsent());
+                    citizen.isSekretessmarkering());
         } else {
             throw new IllegalStateException("No citizen in securityContext");
         }

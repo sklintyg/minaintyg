@@ -27,14 +27,6 @@
   <mvc:annotation-driven/>
   <mvc:default-servlet-handler/>
 
-  <mvc:interceptors>
-    <mvc:interceptor>
-      <mvc:mapping path="/**"/>
-      <bean class="se.inera.intyg.minaintyg.web.security.VerifyConsentInterceptor">
-      </bean>
-    </mvc:interceptor>
-  </mvc:interceptors>
-
   <context:annotation-config/>
   <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller.moduleapi"/>
 
@@ -49,9 +41,6 @@
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
-      <jaxrs:invoker>
-          <bean class="se.inera.intyg.minaintyg.web.security.VerifyConsentJAXRSInvoker"/>
-      </jaxrs:invoker>
   </jaxrs:server>
 
   <beans profile="dev">

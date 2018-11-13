@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import se.inera.intyg.minaintyg.web.security.Citizen;
-import se.inera.intyg.minaintyg.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.service.ConsentService;
-import se.inera.intyg.schemas.contract.Personnummer;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
 
@@ -46,32 +42,15 @@ public class PageController {
     @Autowired
     private Environment environment;
 
-    @Autowired
-    private ConsentService consentService;
-
-    @Autowired
-    private CitizenService citizenService;
-
-    @Autowired
-    @Value("${elva77.url.start}")
-    private String elva77StartUrl;
-
-    @Autowired
     @Value("${elva77.url.main}")
     private String elva77MainUrl;
 
-    @Autowired
     @Value("${elva77.url.logout}")
     private String elva77LogoutUrl;
 
     @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
-        Citizen citizen = citizenService.getCitizen();
-        Personnummer personnummer = Personnummer.createPersonnummer(citizen.getUsername()).get();
-
-        // fetch and set consent status
-        citizen.setConsent(consentService.fetchConsent(personnummer));
 
         return "redirect:/web/start";
     }

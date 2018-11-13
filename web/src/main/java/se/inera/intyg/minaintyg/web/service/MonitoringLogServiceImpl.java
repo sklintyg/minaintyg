@@ -43,16 +43,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logCitizenConsentGiven(Personnummer userId) {
-        logEvent(MonitoringEvent.CONSENT_GIVEN, Personnummer.getPersonnummerHashSafe(userId));
-    }
-
-    @Override
-    public void logCitizenConsentRevoked(Personnummer userId) {
-        logEvent(MonitoringEvent.CONSENT_REVOKED, Personnummer.getPersonnummerHashSafe(userId));
-    }
-
-    @Override
     public void logCertificateRead(String certificateId, String certificateType) {
         logEvent(MonitoringEvent.CERTIFICATE_READ, certificateId, certificateType);
     }
@@ -86,9 +76,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
         CERTIFICATE_SEND("Certificate '{}' sent to '{}'"),
         CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
-        CERTIFICATE_RESTORED("Certificate '{}' restored"),
-        CONSENT_GIVEN("Consent given by citizen '{}'"),
-        CONSENT_REVOKED("Consent revoked by citizen '{}'");
+        CERTIFICATE_RESTORED("Certificate '{}' restored");
 
         private final String msg;
 

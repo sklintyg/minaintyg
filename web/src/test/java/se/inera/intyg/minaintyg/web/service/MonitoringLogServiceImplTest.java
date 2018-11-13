@@ -18,11 +18,6 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.Appender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +27,12 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.Appender;
 import se.inera.intyg.schemas.contract.Personnummer;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -54,7 +55,7 @@ public class MonitoringLogServiceImplTest {
     @Captor
     private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
 
-    MonitoringLogService logService = new MonitoringLogServiceImpl();
+    private MonitoringLogService logService = new MonitoringLogServiceImpl();
 
     @Before
     public void setup() {
@@ -90,20 +91,6 @@ public class MonitoringLogServiceImplTest {
     public void shouldCitizenLogout() {
         logService.logCitizenLogout(USER_ID, LOGIN_METHOD);
         verifyLog(Level.INFO, "CITIZEN_LOGOUT Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged out using login method 'LOGIN_METHOD'");
-    }
-
-    @Test
-    public void shouldLogCitizenConsentGiven() {
-        logService.logCitizenConsentGiven(USER_ID);
-        verifyLog(
-                Level.INFO,
-                "CONSENT_GIVEN Consent given by citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381'");
-    }
-
-    @Test
-    public void shouldLogCitizenConsentRevoked() {
-        logService.logCitizenConsentRevoked(USER_ID);
-        verifyLog(Level.INFO, "CONSENT_REVOKED Consent revoked by citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381'");
     }
 
     @Test

@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Implementation of the @see CitizenDetails interface.
@@ -31,7 +31,6 @@ import java.util.Set;
 @SuppressWarnings("serial")
 public class CitizenImpl implements Citizen {
 
-    private Boolean consent;
     private String username;
     private LoginMethodEnum loginMethod;
     private String fullName;
@@ -44,25 +43,6 @@ public class CitizenImpl implements Citizen {
         this.loginMethod = loginMethod;
         this.fullName = fullName;
         this.sekretessmarkering = sekretessmarkering;
-    }
-
-    @Override
-    public Boolean hasConsent() {
-        if (consentIsKnown()) {
-            return consent;
-        } else {
-            return Boolean.FALSE;
-        }
-    }
-
-    @Override
-    public boolean consentIsKnown() {
-        return consent != null;
-    }
-
-    @Override
-    public void setConsent(boolean consent) {
-        this.consent = consent;
     }
 
     @Override

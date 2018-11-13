@@ -30,23 +30,6 @@ public class CitizenImplTest {
     private static final String USERNAME = "username";
 
     @Test
-    public void testHasNoConsent() throws Exception {
-        Citizen citizen = new CitizenImpl(USERNAME, LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
-        Assert.assertFalse(citizen.hasConsent());
-        Assert.assertFalse(citizen.consentIsKnown());
-    }
-
-    @Test
-    public void testHasConsentSet() throws Exception {
-        Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
-        citizen.setConsent(false);
-        Assert.assertTrue(citizen.consentIsKnown());
-        Assert.assertFalse(citizen.hasConsent());
-        citizen.setConsent(true);
-        Assert.assertTrue(citizen.hasConsent());
-    }
-
-    @Test
     public void testReturnsDefaultRole() {
         Citizen citizen = new CitizenImpl("username", LoginMethodEnum.ELVA77, PERSON_FULL_NAME, false);
         Assert.assertTrue(citizen.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CITIZEN")));

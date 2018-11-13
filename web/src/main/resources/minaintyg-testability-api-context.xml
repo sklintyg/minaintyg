@@ -33,7 +33,6 @@
 
     <jaxrs:server address="/">
         <jaxrs:serviceBeans>
-            <bean class="se.inera.intyg.minaintyg.web.controller.testability.UserConsentResource"/>
             <bean class="se.inera.intyg.minaintyg.web.controller.testability.IntygstjanstTestabilityProxy"/>
         </jaxrs:serviceBeans>
 

@@ -18,9 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -28,11 +34,6 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -53,13 +54,11 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @After
     public void cleanup() {
-        IntegrationTestUtility.revokeConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.deleteCertificatesForCitizen(CITIZEN_CIVIC_REGISTRATION_NUMBER);
     }
 
     @Test
     public void testListCertificates() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
@@ -87,7 +86,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testListCertificatesFiltersRevokedCertificates() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
                 false);
@@ -117,7 +115,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testListCertificatesWithoutSession() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
@@ -127,7 +124,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testListArchivedCertificates() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
@@ -154,7 +150,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testListRecipientsForCertificate() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygsId = UUID.randomUUID().toString();
@@ -172,7 +167,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testArchive() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygId = UUID.randomUUID().toString();
@@ -188,7 +182,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testRestore() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygId = UUID.randomUUID().toString();
@@ -200,29 +193,6 @@ public class ApiControllerIT extends IntegrationTestBase {
                 .when().put("api/certificates/{id}/restore")
                 .then()
                 .body(matchesJsonSchemaInClasspath("jsonschema/certificate-meta-response-schema.json"));
-    }
-
-    @Test
-    public void testGiveConsent() {
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().post("api/certificates/consent/give")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/consent-response-schema.json"));
-    }
-
-    @Test
-    public void testRevokeConsent() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().post("api/certificates/consent/revoke")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/consent-response-schema.json"));
     }
 
     @Test
@@ -238,7 +208,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetUser() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -250,7 +219,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testGetQuestions() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
@@ -263,7 +231,6 @@ public class ApiControllerIT extends IntegrationTestBase {
 
     @Test
     public void testSend() {
-        IntegrationTestUtility.addConsent(CITIZEN_CIVIC_REGISTRATION_NUMBER);
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();

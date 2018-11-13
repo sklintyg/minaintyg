@@ -14,16 +14,12 @@
     },
     "sekretessmarkering": {
       "type": "boolean"
-    },
-    "consentGiven": {
-      "type": "boolean"
     }
   },
   "required": [
     "personId",
     "fullName",
     "loginMethod",
-    "sekretessmarkering",
-    "consentGiven"
+    "sekretessmarkering"
   ]
 }
