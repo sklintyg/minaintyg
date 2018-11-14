@@ -18,8 +18,18 @@ mi-header {
 
     @media (max-width: $screen-xs-max) {
       height: $mi-header-height * 0.75;
-      &.user-info > div {
-        top: 30%;
+
+      &.user-logout {
+        height: $mi-header-height * 0.5;
+        margin-bottom: 10px;
+      }
+
+      &.user-info {
+        height: $mi-header-height * 0.5;
+
+        > div {
+          top: 30%;
+        }
       }
     }
 
