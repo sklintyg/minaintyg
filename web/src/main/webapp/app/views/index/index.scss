@@ -5,12 +5,13 @@
   }
 
   a {
-    color: #009200;
     &:visited {
       color: #009200;
-    }
-    &:hover {
-      color: #ffffff;
+      &:hover,
+      &:focus,
+      &:active {
+        color: #ffffff;
+      }
     }
   }
 
