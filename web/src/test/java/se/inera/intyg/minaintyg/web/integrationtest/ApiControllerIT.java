@@ -103,17 +103,6 @@ public class ApiControllerIT extends IntegrationTestBase {
     }
 
     @Test
-    public void testListCertificatesWithoutConsent() {
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
-                false);
-
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .redirects().follow(false).expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates");
-    }
-
-    @Test
     public void testListCertificatesWithoutSession() {
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);

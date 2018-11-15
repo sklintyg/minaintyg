@@ -92,20 +92,6 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
     }
 
     @Test
-    public void testGetCertificateWithoutConsent() {
-        createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-
-        final String type = LuseEntryPoint.MODULE_ID;
-        final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
-
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .redirects().follow(false).and().pathParams("type", type, "id", id, "intygTypeVersion", LUSE_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
-    }
-
-    @Test
     public void testGetCertificateWithoutSession() {
         final String type = LuseEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
