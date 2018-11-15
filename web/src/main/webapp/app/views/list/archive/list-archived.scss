@@ -21,6 +21,10 @@
 
 .archived-mobile-list {
 
+  .bold-text {
+    font-weight: bold;
+  }
+
   .archived-cert {
     display: table;
     width: 100%;
@@ -39,4 +43,8 @@
   }
 
   margin-bottom: 20px;
+
+  .bold-text {
+    font-weight: bold;
+  }
 }
