@@ -52,7 +52,7 @@
           <div class="archived-cert" ng-repeat="cert in archivedCertificates | archived">
             <div class="row">
               <div class="col-xs-4 col-sm-3 bold-text">
-                <span dynamic-labelclass="text-nowrap" key="archived-cert-table.headers.issued"></span>
+                <span dynamic-labelclass="text-nowrap" dynamic-label key="archived-cert-table.headers.issued"></span>
               </div>
               <div class="col-xs-8 col-sm-9 text-nowrap">
                 {{cert.sentDate | date:'shortDate'}}
