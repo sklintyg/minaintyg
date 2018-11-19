@@ -36,7 +36,8 @@ body {
 
 .multiline {
   white-space: pre-line;
-  word-break: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .content-wrapper {
