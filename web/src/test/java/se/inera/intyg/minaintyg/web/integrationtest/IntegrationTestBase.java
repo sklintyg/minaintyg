@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import com.jayway.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 
@@ -25,6 +26,8 @@ import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
+
+import static com.jayway.restassured.RestAssured.given;
 
 /**
  * Base class for REST / SOAP in-container tests.
@@ -38,6 +41,7 @@ public abstract class IntegrationTestBase {
     protected static final String LISJP_VERSION = "1.0";
     protected static final String LUAE_NA_VERSION = "1.0";
     protected static final String LUAE_FS_VERSION = "1.0";
+
     /**
      * Common setup for all tests
      */

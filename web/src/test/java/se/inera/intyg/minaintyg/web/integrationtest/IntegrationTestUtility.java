@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.base.Strings;
+import com.jayway.restassured.specification.RequestSpecification;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.ReceiverApprovalStatus;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -40,12 +42,13 @@ import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 
 public final class IntegrationTestUtility {
 
-    public static final String FKASSA = "FKASSA";
-    public static final String FBA = "FBA";
+    private static final String FKASSA = "FKASSA";
+    private static final String FBA = "FBA";
 
     // public static String certificateBaseUrl;
     public static String routeId;
     public static String jsessionId;
+    public static String csrfToken;
 
     private IntegrationTestUtility() {
     }
@@ -57,6 +60,7 @@ public final class IntegrationTestUtility {
 
         routeId = cookies.containsKey("ROUTEID") ? cookies.get("ROUTEID") : "nah";
         jsessionId = cookies.containsKey("JSESSIONID") ? cookies.get("JSESSIONID") : null;
+        csrfToken = cookies.containsKey("XSRF-TOKEN") ? cookies.get("XSRF-TOKEN") : null;
         return cookies.get("SESSION");
     }
 
@@ -88,6 +92,24 @@ public final class IntegrationTestUtility {
                 .body(createApprovedReceivers(intygsId, FKASSA, FBA))
                 .post("testability/resources/certificate/" + intygsId + "/approvedreceivers/")
                 .then().statusCode(HttpServletResponse.SC_OK);
+    }
+
+    /**
+     * Returns a request spec prefix with needed headers and cookies.
+     *
+     * @return the spec.
+     */
+    public static RequestSpecification spec() {
+        RequestSpecification spec = given();
+        if (!Strings.isNullOrEmpty(IntegrationTestUtility.csrfToken)) {
+            // Needed for post/put/delete if csrf-protection is enabled.
+            spec
+                    .cookie("XSRF-TOKEN", IntegrationTestUtility.csrfToken)
+                    // Usually set by angularjs, using value from cookie.
+                    .header("X-XSRF-TOKEN", IntegrationTestUtility.csrfToken);
+        }
+        return spec
+                .cookie("ROUTEID", IntegrationTestUtility.routeId);
     }
 
     private static CertificateHolder certificate(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {

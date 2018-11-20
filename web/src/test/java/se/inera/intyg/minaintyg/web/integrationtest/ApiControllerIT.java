@@ -41,6 +41,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
+import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
 
 public class ApiControllerIT extends IntegrationTestBase {
 
@@ -75,7 +76,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates")
                 .then()
@@ -94,7 +95,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates")
                 .then()
@@ -129,7 +130,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/archived")
                 .then()
@@ -146,7 +147,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
         IntegrationTestUtility.givenReceivers(intygsId);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("id", intygsId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/{id}/recipients")
@@ -161,7 +162,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         final String intygId = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(intygId, LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("id", intygId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("api/certificates/{id}/archive")
@@ -176,7 +177,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         final String intygId = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("id", intygId)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("api/certificates/{id}/restore")
@@ -188,7 +189,7 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testOnBeforeUnload() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        String res = given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        String res = spec()
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/onbeforeunload").getBody().asString();
 
@@ -199,7 +200,7 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testGetUser() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/user")
                 .then()
@@ -210,7 +211,7 @@ public class ApiControllerIT extends IntegrationTestBase {
     public void testGetQuestions() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("type", LuseEntryPoint.MODULE_ID, "version", "1.0")
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates/questions/{type}/{version}")
@@ -226,7 +227,7 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         List<String> recipientList = Arrays.asList("FKASSA", "FAKE");
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("id", id).and().body(recipientList)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().put("api/certificates/{id}/send")

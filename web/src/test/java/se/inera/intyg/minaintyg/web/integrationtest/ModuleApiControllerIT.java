@@ -41,6 +41,7 @@ import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonS
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
 
 public class ModuleApiControllerIT extends IntegrationTestBase {
 
@@ -110,7 +111,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(id, type, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        Response response = given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        Response response = spec()
                 .pathParams("type", type, "id", id, "intygTypeVersion", TS_BAS_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf");
@@ -129,8 +130,8 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(id, type, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        Response response = given()
-                .contentType(ContentType.URLENC).and().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        Response response = spec()
+                .contentType(ContentType.URLENC)
                 .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().post("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift");
@@ -148,7 +149,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id, "intygTypeVersion", LUAE_NA_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_GONE)
                 .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
@@ -161,7 +162,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         final String id = UUID.randomUUID().toString();
         IntegrationTestUtility.givenIntyg(id, type, intygTypeVersion, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .pathParams("type", type, "id", id, "intygTypeVersion", intygTypeVersion)
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
@@ -183,7 +184,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         // in that particular response. This is not an issue when running in a browser where both JSESSIONID and SESSION
         // are included in each request. We want to get rid of the JSESSIONID since we're relying on SESSION but
         // that's easier said than done with Spring Security + Spring Session...
-        given().cookie("ROUTEID", IntegrationTestUtility.routeId)
+        spec()
                 .cookie("JSESSIONID", IntegrationTestUtility.jsessionId)
                 .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
                 .expect().statusCode(HttpServletResponse.SC_OK)
