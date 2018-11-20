@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.integration.pu;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,9 +32,6 @@ import se.inera.intyg.infra.integration.pu.services.PUService;
 import se.inera.intyg.minaintyg.web.exception.PUServiceErrorException;
 import se.inera.intyg.minaintyg.web.exception.PersonNotFoundException;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by eriklupander on 2017-04-25.
@@ -50,25 +50,20 @@ public class MinaIntygPUServiceImplTest {
 
     @Test
     public void testGetPersonOk() {
-        when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.FOUND));
+        when(puService.getPerson(pnr)).thenReturn(PersonSvar.found(new Person(pnr, false, false, "", "", "", "" ,"" ,"")));
         Person person = testee.getPerson(PERSON_ID);
         assertEquals(pnr.getPersonnummer(), person.getPersonnummer().getPersonnummer());
     }
 
     @Test(expected = PersonNotFoundException.class)
     public void testGetPersonNotFoundStopsLoggingIn() {
-        when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.NOT_FOUND));
+        when(puService.getPerson(pnr)).thenReturn(PersonSvar.notFound());
         testee.getPerson(PERSON_ID);
     }
 
     @Test(expected = PUServiceErrorException.class)
     public void testGetPersonErrorStopsLoggingIn() {
-        when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.ERROR));
+        when(puService.getPerson(pnr)).thenReturn(PersonSvar.error());
         testee.getPerson(PERSON_ID);
-    }
-
-    private PersonSvar buildOkPUSvar(PersonSvar.Status status) {
-        Person person = new Person(pnr, false, false, "", "", "", "" ,"" ,"");
-        return new PersonSvar(person, status);
     }
 }
