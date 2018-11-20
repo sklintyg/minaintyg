@@ -475,5 +475,5 @@ module.exports = function(grunt) {
         'uglify' ]);
     grunt.registerTask('lint', [ 'jshint' ]);
     grunt.registerTask('test', [ 'bower', 'karma' ]);
-    grunt.registerTask('server', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
+    grunt.registerTask('serve', [ 'configureProxies:server', 'connect:server', 'generateModuleDeps', 'watch' ]);
 };

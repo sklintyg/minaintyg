@@ -230,7 +230,9 @@
                                 // Add module to array as is
                                 moduleArray.push(module);
 
-                                loadCssFromUrl(module.cssPath + '?' + miConfig.buildNumber);
+                                if(module.cssPath && module.cssPath !== ''){
+                                    loadCssFromUrl(module.cssPath + '?' + miConfig.buildNumber);
+                                }
 
                                 if (miConfig.useMinifiedJavascript) {
                                     modulePromises.push(
