@@ -126,7 +126,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'faq.sakerhet.1.title' : 'Är det säkert att använda Mina intyg?',
         'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
         'faq.sakerhet.2.title' : 'Hur skyddas mina uppgifter?',
-        'faq.sakerhet.2.body': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Personuppgiftslagen (PuL), Patientdatalagen (PDL) och av Datainspektionen.',
+        'faq.sakerhet.2.body': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Dataskyddsförordningen (GDPR), Patientdatalagen (PDL) och av Datainspektionen.',
         'faq.sakerhet.3.title' : 'Kan andra komma åt mina uppgifter?',
         'faq.sakerhet.3.body': 'Nej, i och med att du bara kan logga in med e-legitimation, vars inloggning baseras på ditt personnummer, kan endast information om dig som loggar in visas.',
         'faq.sakerhet.4.title' : 'Varför kan jag inte logga in med lösenord och sms?',
