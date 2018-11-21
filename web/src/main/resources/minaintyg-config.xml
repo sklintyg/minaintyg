@@ -44,7 +44,7 @@
     <!-- Load version helper -->
     <context:component-scan base-package="se.inera.intyg.common.support.modules.support.api.versions" />
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu" />
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu, se.inera.intyg.infra.monitoring" />
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">

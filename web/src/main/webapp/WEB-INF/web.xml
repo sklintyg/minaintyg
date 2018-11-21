@@ -127,6 +127,12 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <!-- Prometheus, metrics -->
+  <servlet>
+    <servlet-name>metrics</servlet-name>
+    <servlet-class>io.prometheus.client.exporter.MetricsServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>web</servlet-name>
     <url-pattern>/web/*</url-pattern>
@@ -158,6 +164,10 @@
   <servlet-mapping>
     <servlet-name>sessionapi</servlet-name>
     <url-pattern>/session/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>metrics</servlet-name>
+    <url-pattern>/metrics</url-pattern>
   </servlet-mapping>
 
   <filter>
