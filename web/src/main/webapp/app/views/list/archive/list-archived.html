@@ -39,7 +39,7 @@
             <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
             <td headers="type">{{ getIntygTypeName(cert) }}</td>
             <td headers="certinfo">{{getAdditionalInfoOrReplacedText(cert)}}</td>
-            <td headers="issuedby">{{cert.careunitName}}, {{cert.caregiverName}}</td>
+            <td headers="issuedby">{{cert.careunitName}}<br>{{cert.caregiverName}}</td>
             <td headers="restore">
               <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}"
                      popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top"><span dynamic-label key="btn-link.restore"></span></button>
@@ -82,7 +82,7 @@
                 <span dynamic-label key="archived-cert-table.headers.issuedby"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{cert.careunitName}}, {{cert.caregiverName}}
+                {{cert.careunitName}}<br>{{cert.caregiverName}}
               </div>
             </div>
 
