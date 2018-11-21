@@ -121,7 +121,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'faq.intyg.3.title' : 'Vad betyder det när intyget är ersatt?',
         'faq.intyg.3.body' : 'Vårdgivaren kan ersätta ett intyg om till exempel intyget innehåller felaktig information, ny information tillkommit eller att Försäkringskassan har begärt en komplettering och vården har svarat med ett nytt intyg med de kompletterande uppgifterna. På ett ersatt intyg framgår vilken som är den nya versionen av intyget. Ett ersatt intyg går inte att skicka eller spara som PDF.',
         'faq.intyg.4.title' : 'Varför kan jag inte se makulerade intyg?',
-        'faq.intyg.4.body' : 'Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient. Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.',
+        'faq.intyg.4.body' : '<p>Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.</p>Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.',
 
         'faq.sakerhet.1.title' : 'Är det säkert att använda Mina intyg?',
         'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
