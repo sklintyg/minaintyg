@@ -1,7 +1,7 @@
 <div id="mi-sekretess-dialog" class="modal-header">
   <button type="button" class="close" ng-click="close()">×</button>
   <h3 ng-focus="dialog.focus" class="modal-title" tabindex="-1">
-    <span message key="user.sekretessmarkeringmodal.header"></span>
+    <span dynamic-label key="user.sekretessmarkeringmodal.header"></span>
   </h3>
 </div>
 <div class="modal-body">
@@ -10,6 +10,6 @@
 </div>
 <div class="modal-footer">
   <button type="button" id="close-sekretessdialog-button" class="btn btn-primary" ng-click="close()">
-    <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span message key="user.sekretessmarkeringmodal.button"></span>
+    <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span dynamic-label key="user.sekretessmarkeringmodal.button"></span>
   </button>
 </div>

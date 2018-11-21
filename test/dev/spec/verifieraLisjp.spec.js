@@ -26,15 +26,12 @@ var restHelper = miTestTools.helpers.rest;
 var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
-var consentPage = miTestTools.pages.consentPage;
 var inboxPage = miTestTools.pages.inboxPage;
 var viewPage = miTestTools.pages.viewPage;
 
 var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera Lisjp', function() {
-
-    var personId = '191212121212';
 
     var texts = null;
 
@@ -51,9 +48,6 @@ describe('Verifiera Lisjp', function() {
             fail('Error during text lookup ' + err);
         });
 
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
-
         // Skapa intygen
         var intyg1 = genericTestdataBuilder.getLisjpSmittskydd();
         var intyg2 = genericTestdataBuilder.getLisjpFull();
@@ -66,24 +60,13 @@ describe('Verifiera Lisjp', function() {
     afterAll(function() {
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
-        restHelper.deleteConsent(personId);
     });
 
-    describe('Logga in', function() {
-        // Logga in
-        it('Logga in och ge samtycke', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Ge samtycke', function() {
-            expect(consentPage.isAt()).toBeTruthy();
-            consentPage.clickConfirmConsent();
-            consentPage.clickGiveConsent();
-        });
-
+    it('Logga in', function() {
+        welcomePage.get();
+        specHelper.waitForAngularTestability();
+        welcomePage.login();
+        specHelper.waitForAngularTestability();
     });
 
     describe('Kontrollera att bägge intygen finns i intygslistan', function() {
@@ -163,11 +146,11 @@ describe('Verifiera Lisjp', function() {
 
             expect(viewPage.showsNoValue('forsakringsmedicinsktBeslutsstod')).toBeTruthy();
 
-            expect(viewPage.getTextContent('arbetstidsforlaggning')).toEqual('Nej');
+            expect(viewPage.getTextContent('arbetstidsforlaggning')).toEqual('Ej angivet');
 
             expect(viewPage.showsNoValue('arbetstidsforlaggningMotivering')).toBeTruthy();
 
-            expect(viewPage.getTextContent('arbetsresor')).toEqual('Nej');
+            expect(viewPage.getTextContent('arbetsresor')).toEqual('Ej angivet');
 
             expect(viewPage.showsNoValue('prognos')).toBeTruthy();
 
@@ -207,7 +190,7 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera smittbärarpenning är Nej', function() {
             expect(viewPage.getDynamicLabelText('KAT_10.RBK')).toBe(texts['KAT_10.RBK']);
             expect(viewPage.getDynamicLabelText('FRG_27.RBK')).toBe(texts['FRG_27.RBK']);
-            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Nej');
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ej angivet');
         });
 
         it('Verifiera att frågor under grund för medicinskt underlag är angivet', function() {

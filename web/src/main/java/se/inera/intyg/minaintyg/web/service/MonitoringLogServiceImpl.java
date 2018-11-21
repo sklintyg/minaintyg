@@ -34,22 +34,22 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
     @Override
     public void logCitizenLogin(Personnummer userId, String loginMethod) {
-        logEvent(MonitoringEvent.CITIZEN_LOGIN, Personnummer.getPnrHashSafe(userId), loginMethod);
+        logEvent(MonitoringEvent.CITIZEN_LOGIN, Personnummer.getPersonnummerHashSafe(userId), loginMethod);
     }
 
     @Override
     public void logCitizenLogout(Personnummer userId, String loginMethod) {
-        logEvent(MonitoringEvent.CITIZEN_LOGOUT, Personnummer.getPnrHashSafe(userId), loginMethod);
+        logEvent(MonitoringEvent.CITIZEN_LOGOUT, Personnummer.getPersonnummerHashSafe(userId), loginMethod);
     }
 
     @Override
     public void logCitizenConsentGiven(Personnummer userId) {
-        logEvent(MonitoringEvent.CONSENT_GIVEN, Personnummer.getPnrHashSafe(userId));
+        logEvent(MonitoringEvent.CONSENT_GIVEN, Personnummer.getPersonnummerHashSafe(userId));
     }
 
     @Override
     public void logCitizenConsentRevoked(Personnummer userId) {
-        logEvent(MonitoringEvent.CONSENT_REVOKED, Personnummer.getPnrHashSafe(userId));
+        logEvent(MonitoringEvent.CONSENT_REVOKED, Personnummer.getPersonnummerHashSafe(userId));
     }
 
     @Override

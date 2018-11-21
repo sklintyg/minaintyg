@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,22 +26,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import se.inera.intyg.schemas.contract.Personnummer;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
-import se.inera.intyg.minaintyg.web.service.ConsentService;
 
 public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifyConsentInterceptor.class);
 
     @Autowired
-    private ConsentService consentService;
-
-    @Autowired
     private CitizenService citizenService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         LOG.debug("Verifying citizen consent...");
 
@@ -55,22 +48,7 @@ public class VerifyConsentInterceptor extends HandlerInterceptorAdapter {
         }
 
         LOG.debug("Login from " + citizen.getLoginMethod().toString());
-        if (!citizen.consentIsKnown()) {
-            LOG.debug("State of consent not known - fetching consent status...");
-            boolean consentResult = consentService.fetchConsent(new Personnummer(citizen.getUsername()));
-            LOG.debug("Consent result is {}", consentResult);
-            // set the consent result so that we don't have to fetch it next time around
-            citizen.setConsent(consentResult);
-        }
 
-        // Check consent state of citizen
-        if (!citizen.hasConsent()) {
-            LOG.warn("User: {} does not have consent", new Personnummer(citizen.getUsername()).getPnrHash());
-            response.sendRedirect("/web/visa-ge-samtycke#/consent");
-            // return false to indicate that the request/filter chain should stop here.
-            // We have already taken care of a respone to the client.
-            return false;
-        }
         // We have a consent, let the request continue processing
         return true;
     }

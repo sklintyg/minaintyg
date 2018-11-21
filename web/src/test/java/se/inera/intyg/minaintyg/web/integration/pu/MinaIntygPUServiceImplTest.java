@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import se.inera.intyg.infra.integration.pu.model.Person;
 import se.inera.intyg.infra.integration.pu.model.PersonSvar;
 import se.inera.intyg.infra.integration.pu.services.PUService;
@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 public class MinaIntygPUServiceImplTest {
 
     private static final String PERSON_ID = "19121212-1212";
-    private Personnummer pnr = new Personnummer(PERSON_ID);
+    private Personnummer pnr = Personnummer.createPersonnummer(PERSON_ID).get();
 
     @Mock
     private PUService puService;
@@ -52,7 +52,7 @@ public class MinaIntygPUServiceImplTest {
     public void testGetPersonOk() {
         when(puService.getPerson(pnr)).thenReturn(buildOkPUSvar(PersonSvar.Status.FOUND));
         Person person = testee.getPerson(PERSON_ID);
-        assertEquals(pnr.getPersonnummerWithoutDash(), person.getPersonnummer().getPersonnummerWithoutDash());
+        assertEquals(pnr.getPersonnummer(), person.getPersonnummer().getPersonnummer());
     }
 
     @Test(expected = PersonNotFoundException.class)

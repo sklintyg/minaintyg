@@ -26,8 +26,6 @@
 var aboutPage = require('./about.page.js');
 var accessdeniedPage = require('./accessdenied.page.js');
 var archivedPage = require('./archived.page.js');
-var consentPage = require('./consent.page.js');
-var customPage = require('./custom.page.js');
 var errorPage = require('./error.page.js');
 var inboxPage = require('./inbox.page.js');
 var mvkloginPage = require('./mvklogin.page.js');
@@ -43,8 +41,6 @@ module.exports = {
     'aboutPage': aboutPage,
     'accessdeniedPage': accessdeniedPage,
     'archivedPage': archivedPage,
-    'consentPage': consentPage,
-    'customPage': customPage,
     'errorPage': errorPage,
     'inboxPage': inboxPage,
     'mvkloginPage': mvkloginPage,

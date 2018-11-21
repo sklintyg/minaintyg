@@ -18,12 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
+
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -31,9 +35,6 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -101,7 +102,7 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
                 .redirects().follow(false).and().pathParams("type", type, "id", id)
-                .expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
+                .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("moduleapi/certificate/{type}/{id}");
     }
 

@@ -39,10 +39,6 @@ describe('Lista intyg', function() {
 	var tsDiabetesIntygsId = null;
 
     beforeAll(function() {
-        // Givet samtycke
-        restHelper.setConsent(personId);
-        restHelper.setConsent(personIdNoCertificates);
-
         var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
         fk7263IntygsId = fk7263Intyg.id;
         restHelper.createIntyg(fk7263Intyg);
@@ -63,8 +59,6 @@ describe('Lista intyg', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
-        restHelper.deleteConsent(personIdNoCertificates);
         restHelper.deleteIntyg(fk7263IntygsId);
         restHelper.deleteIntyg(tsBasIntygsId);
         restHelper.deleteIntyg(tsDiabetesIntygsId);

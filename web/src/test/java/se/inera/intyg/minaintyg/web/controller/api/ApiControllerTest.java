@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.ConsentResponse;
@@ -50,8 +50,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -61,7 +61,7 @@ import static org.mockito.Mockito.when;
 public class ApiControllerTest {
 
     private static final String CIVIC_REGISTRATION_NUMBER = "19121212-1212";
-    private static final Personnummer PNR = new Personnummer(CIVIC_REGISTRATION_NUMBER);
+    private static final Personnummer PNR = Personnummer.createPersonnummer(CIVIC_REGISTRATION_NUMBER).get();
     private static final String FKASSA_RECIPIENT_ID = "FKASSA";
     private static final String TRANSP_RECIPIENT_ID = "TRANSP";
     private static final LoginMethodEnum LOGIN_METHOD = LoginMethodEnum.ELVA77;
@@ -238,7 +238,6 @@ public class ApiControllerTest {
     public void testSendCertificate() throws Exception {
 
         // When
-        Personnummer personNummer = new Personnummer(CIVIC_REGISTRATION_NUMBER);
         String certificateId = "abc-123";
         List<String> recipients = Arrays.asList(FKASSA_RECIPIENT_ID, TRANSP_RECIPIENT_ID);
         List<SendToRecipientResult> expectedResponse = new ArrayList<>();
@@ -246,14 +245,14 @@ public class ApiControllerTest {
         expectedResponse.add(new SendToRecipientResult(TRANSP_RECIPIENT_ID, true, LocalDateTime.now()));
 
         mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        when(certificateService.sendCertificate(personNummer, certificateId, recipients)).thenReturn(expectedResponse);
+        when(certificateService.sendCertificate(PNR, certificateId, recipients)).thenReturn(expectedResponse);
 
         // Then
         final List<SendToRecipientResult> actualResult = apiController.send(certificateId, recipients);
 
         // Verify
         assertEquals(actualResult, expectedResponse);
-        verify(certificateService).sendCertificate(eq(personNummer), eq(certificateId), eq(recipients));
+        verify(certificateService).sendCertificate(eq(PNR), eq(certificateId), eq(recipients));
     }
 
     @Test

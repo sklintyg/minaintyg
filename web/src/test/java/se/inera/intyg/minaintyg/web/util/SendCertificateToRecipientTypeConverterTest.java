@@ -18,46 +18,45 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
-
 import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public class SendCertificateToRecipientTypeConverterTest {
+
+    private final String intygsId = "intygsId";
+
+    private final Personnummer pnrPatient = Personnummer.createPersonnummer("19121212-1212").get();
+    private final Personnummer pnrSkickatAv = Personnummer.createPersonnummer("19101010-1010").get();
+
 
     @Test
     public void testConvert() {
-        final String intygsId = "intygsId";
-        final String personnummer = "personnummer";
-        final String skickatAvPersonId = "skickatavpid";
         final String recipient = "TRANSP";
 
-        SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
-                new Personnummer(skickatAvPersonId), recipient);
+        SendCertificateToRecipientType result =
+                SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
 
         assertNotNull(result.getSkickatTidpunkt());
         assertNotNull(result.getIntygsId().getRoot());
         assertEquals(intygsId, result.getIntygsId().getExtension());
         assertNotNull(result.getPatientPersonId().getRoot());
-        assertEquals(personnummer, result.getPatientPersonId().getExtension());
+        assertEquals(pnrPatient.getPersonnummer(), result.getPatientPersonId().getExtension());
         assertNotNull(result.getSkickatAv().getPersonId().getRoot());
-        assertEquals(skickatAvPersonId, result.getSkickatAv().getPersonId().getExtension());
-        assertEquals("TRANSP", result.getMottagare().getCode());
+        assertEquals(pnrSkickatAv.getPersonnummer(), result.getSkickatAv().getPersonId().getExtension());
+        assertEquals(recipient, result.getMottagare().getCode());
         assertNotNull(result.getMottagare().getCodeSystem());
     }
 
     @Test
     public void testConvertRemovesDash() {
-        final String intygsId = "intygsId";
-        final String personnummer = "19121212-1212";
-        final String skickatAvPersonId = "19101010-1010";
         final String recipient = "TS";
 
-        SendCertificateToRecipientType result = SendCertificateToRecipientTypeConverter.convert(intygsId, new Personnummer(personnummer),
-                new Personnummer(skickatAvPersonId), recipient);
+        SendCertificateToRecipientType result =
+                SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
 
         assertEquals("191212121212", result.getPatientPersonId().getExtension());
         assertEquals("191010101010", result.getSkickatAv().getPersonId().getExtension());

@@ -19,51 +19,10 @@
 
 angular.module('minaintyg').controller(
         'minaintyg.AboutCtrl',
-        [ '$filter', '$state', '$log', '$scope', '$window', 'minaintyg.consentService', 'common.dialogService', 'common.messageService', 'MIConfig',
-                function($filter, $state, $log, $scope, $window, consentService, dialogService, messageService, MIConfig) {
+        ['$scope', 'common.messageService', 'MIConfig',
+                function($scope, messageService, MIConfig) {
                     'use strict';
 
-
-                    // Revoke dialog
-
-                    var revokeDialog = {};
-
-                    $scope.openRevokeDialog = function() {
-                        revokeDialog = dialogService.showDialog($scope, {
-                            dialogId: 'revoke-consent-confirmation-dialog',
-                            titleId: 'about.revokemodal.header',
-                            bodyTextId: 'about.revokemodal.text',
-                            button1click: function() {
-                                $log.debug('revoking consent..');
-                                $scope.dialog.acceptprogressdone = true;
-                                revokeConsent();
-                            },
-                            button1id: 'revoke-consent-button',
-                            button1icon: 'icon icon-lock',
-                            button1text: 'about.revokeconsent.button.label',
-                            autoClose: false
-                        });
-                    };
-
-                    function revokeConsent() {
-                        consentService.revokeConsent(function(data) {
-                            $log.debug('revokeConsent callback:' + data);
-                            $scope.dialog.acceptprogressdone = false;
-                            if (data !== null && data.result) {
-                                $window.location.href = '/web/start';
-                            } else {
-                                revokeDialog.close();
-                                dialogService.showDialog( $scope, {
-                                    dialogId: 'revoke-error-dialog',
-                                    titleId: 'error.generictechproblem.title',
-                                    bodyTextId: 'error.modal.couldnotrevokeconsent',
-                                    button1text: 'error.modal.btn.back-to-about',
-                                    templateUrl: '/app/partials/error-dialog.html',
-                                    autoClose: true
-                                });
-                            }
-                        });
-                    }
 
                     $scope.version = MIConfig.version;
 
@@ -82,12 +41,6 @@ angular.module('minaintyg').controller(
                         id: 'link-help-faq',
                         link: 'omminaintyg.faq',
                         label: 'Vanliga frågor och svar'
-                    });
-
-                    $scope.menuItems.push({
-                        id: 'link-about-samtycke',
-                        link: 'omminaintyg.samtycke',
-                        label: 'Samtycke'
                     });
 
                     $scope.menuItems.push({

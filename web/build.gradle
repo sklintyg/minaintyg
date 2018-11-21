@@ -105,14 +105,14 @@ gretty {
 
     // SAML test settings for local testing
 //    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-//               "-Dspring.profiles.active=test,wc-pu-stub",
-//               "-Dconfig.dir=~/intyg/minaintyg-konfiguration/test",
+//               "-Dspring.profiles.active=test,wc-pu-stub,mi-security-test",
+//               "-Dconfig.dir=/Users/username/intyg/minaintyg-konfiguration/test",
 //               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
 //               "-Djetty.port=8088",
 //               "-Dminaintyg.stubs.port=8088",
-//               "-Dminaintyg.credentials.file=~/intyg/minaintyg-konfiguration/test/credentials.properties",
-//               "-Dminaintyg.config.file=~/intyg/minaintyg-konfiguration/test/minaintyg.properties",
-//               "-Dminaintyg.logback.file=~/intyg/minaintyg-konfiguration/test/minaintyg-logback.xml",
+//               "-Dminaintyg.credentials.file=/Users/username/intyg/minaintyg-konfiguration/test/credentials.properties",
+//               "-Dminaintyg.config.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg.properties",
+//               "-Dminaintyg.logback.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg-logback.xml",
 //               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
@@ -121,11 +121,14 @@ gretty {
 war.dependsOn createVersionPropertyFile
 
 dependencies {
+    compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
+
     compile "se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:${intygInsuranceprocessSchemasVersion}"
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
     compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:${intygClinicalprocessSchemasVersion}"
 
-    compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
+    compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
+    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
 
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
@@ -134,9 +137,6 @@ dependencies {
     compile "se.inera.intyg.common:luae_na:${commonVersion}"
     compile "se.inera.intyg.common:luae_fs:${commonVersion}"
     compile "se.inera.intyg.common:fk7263:${commonVersion}"
-
-    compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
-    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
 
     compile "org.springframework:spring-web:${springVersion}"
     compile "org.springframework:spring-webmvc:${springVersion}"

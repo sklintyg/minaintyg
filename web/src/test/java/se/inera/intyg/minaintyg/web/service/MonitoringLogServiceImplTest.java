@@ -18,10 +18,11 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.Appender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,20 +30,19 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.Appender;
 import se.inera.intyg.schemas.contract.Personnummer;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
 
-    private static final Personnummer USER_ID = new Personnummer("USER_ID");
+    private static final Personnummer USER_ID = Personnummer.createPersonnummer("20121212-1212").get();
+
     private static final String LOGIN_METHOD = "LOGIN_METHOD";
     private static final String CERTIFICATE_ID = "CERTIFICATE_ID";
     private static final String CERTIFICATE_TYPE = "CERTIFICATE_TYPE";
@@ -72,7 +72,7 @@ public class MonitoringLogServiceImplTest {
     @Test
     public void shouldLogCitizenLogin() {
         logService.logCitizenLogin(USER_ID, LOGIN_METHOD);
-        verifyLog(Level.INFO, "CITIZEN_LOGIN Citizen 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' logged in using login method 'LOGIN_METHOD'");
+        verifyLog(Level.INFO, "CITIZEN_LOGIN Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged in using login method 'LOGIN_METHOD'");
     }
 
     private void verifyLog(Level logLevel, String logMessage) {
@@ -89,7 +89,7 @@ public class MonitoringLogServiceImplTest {
     @Test
     public void shouldCitizenLogout() {
         logService.logCitizenLogout(USER_ID, LOGIN_METHOD);
-        verifyLog(Level.INFO, "CITIZEN_LOGOUT Citizen 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361' logged out using login method 'LOGIN_METHOD'");
+        verifyLog(Level.INFO, "CITIZEN_LOGOUT Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged out using login method 'LOGIN_METHOD'");
     }
 
     @Test
@@ -97,13 +97,13 @@ public class MonitoringLogServiceImplTest {
         logService.logCitizenConsentGiven(USER_ID);
         verifyLog(
                 Level.INFO,
-                "CONSENT_GIVEN Consent given by citizen 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361'");
+                "CONSENT_GIVEN Consent given by citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381'");
     }
 
     @Test
     public void shouldLogCitizenConsentRevoked() {
         logService.logCitizenConsentRevoked(USER_ID);
-        verifyLog(Level.INFO, "CONSENT_REVOKED Consent revoked by citizen 'e5bb97d1792ff76e360cd8e928b6b9b53bda3e4fe88b026e961c2facf963a361'");
+        verifyLog(Level.INFO, "CONSENT_REVOKED Consent revoked by citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381'");
     }
 
     @Test

@@ -4,26 +4,26 @@
     <div class="modal-header">
       <button type="button" class="close" ng-click="onBackToCertificate()">×</button>
       <h3 ng-if="vm.someFailed" class="modal-title">
-        <span message key="sendpage.dialog.label.somefailed.title"></span>
+        <span dynamic-label key="sendpage.dialog.label.somefailed.title"></span>
       </h3>
       <h3 ng-if="!vm.someFailed" class="modal-title">
-        <span message key="sendpage.dialog.label.nonefailed.title"></span>
+        <span dynamic-label key="sendpage.dialog.label.nonefailed.title"></span>
       </h3>
     </div>
 
     <div class="modal-body">
-      <div ng-if="vm.someFailed" message key="sendpage.dialog.label.somefailed.body"></div>
-      <div ng-if="!vm.someFailed" message key="sendpage.dialog.label.nonefailed.body"></div>
+      <div ng-if="vm.someFailed" dynamic-label key="sendpage.dialog.label.somefailed.body"></div>
+      <div ng-if="!vm.someFailed" dynamic-label key="sendpage.dialog.label.nonefailed.body"></div>
       <br><br>
       <div ng-repeat="r in vm.recipients" class="row result-rows">
 
         <div class="col-sm-6">
           <span ng-if="r.status.sent" class="text-nowrap">
             {{r.status.timestamp | date:'short'}}
-            <span ng-attr-id="{{'success-result-' + r.id}}" message key="sendpage.dialog.label.received-by"></span>
+            <span ng-attr-id="{{'success-result-' + r.id}}" dynamic-label key="sendpage.dialog.label.received-by"></span>
           </span>
           <span ng-if="!r.status.sent">
-            <span ng-attr-id="{{'fail-result-' + r.id}}" message key="sendpage.dialog.label.not-received-by"></span>
+            <span ng-attr-id="{{'fail-result-' + r.id}}" dynamic-label key="sendpage.dialog.label.not-received-by"></span>
           </span>
         </div>
         <div class="col-sm-6">
@@ -37,7 +37,7 @@
 
     <div class="modal-footer">
       <button id="back-to-intyg-btn" ng-click="onBackToCertificate()" class="btn" ng-class="{'btn-secondary': vm.someFailed, 'btn-primary': !vm.someFailed}" type="button">
-        <i class="icon icon-left-1"></i> <span message key="sendpage.dialog.btn.back-to-intyg"></span>
+        <i class="icon icon-left-1"></i> <span dynamic-label key="sendpage.dialog.btn.back-to-intyg"></span>
       </button>
     </div>
 

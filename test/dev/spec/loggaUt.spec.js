@@ -33,14 +33,6 @@ describe('Logga ut', function() {
 
     var personId = '19010101-0101';
 
-    beforeAll(function() {
-        restHelper.setConsent(personId);
-    });
-
-    afterAll(function() {
-        restHelper.deleteConsent(personId);
-    });
-
     describe('Logga ut', function() {
 
         beforeEach(function() {

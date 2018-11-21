@@ -4,16 +4,16 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h1 ng-focus="pagefocus" tabindex="0" xmlns="http://www.w3.org/1999/html">
-        <span id="inboxHeader" message key="inbox.header"></span>
+        <span id="inboxHeader" dynamic-label key="inbox.header"></span>
       </h1>
-      <span message key="inbox.description.1"></span>
+      <span dynamic-label key="inbox.description.1"></span>
     </div>
 
     <div class="col-xs-12 col-sm-6">
       <h1>&nbsp;</h1>
-      <i class="icon icon-box"></i><span message key="inbox.description.archive.title"></span>
+      <i class="icon icon-box"></i><span dynamic-label key="inbox.description.archive.title"></span>
 
-      <span message key="inbox.description.archive"></span>
+      <span dynamic-label key="inbox.description.archive"></span>
     </div>
 
   </div>
@@ -33,7 +33,7 @@
               <mi-compact-certificate-body cert-meta-model="cert" on-view-click="sendSelected(cert)"
                                            on-archive-click="openArchiveDialog(cert)"></mi-compact-certificate-body>
             </div>
-            <p ng-if="$last"><span class="text-muted last-intyg" message key="inbox.message.no-more-certificates"></span></p>
+            <p ng-if="$last"><span class="text-muted last-intyg" dynamic-label key="inbox.message.no-more-certificates"></span></p>
           </div>
         </div>
       </div>

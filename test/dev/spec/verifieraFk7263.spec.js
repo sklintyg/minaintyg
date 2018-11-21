@@ -37,8 +37,6 @@ describe('Visa intyg Fk7263', function() {
     var intygsId2 = null;
 
     beforeAll(function() {
-        restHelper.setConsent(personId);
-
         var fk7263Intyg = genericTestDataBuilder.getFk7263(personId);
         var fk7263Intyg2 = genericTestDataBuilder.getFk7263Smittskydd(personId);
         intygsId1 = fk7263Intyg.id;
@@ -48,7 +46,6 @@ describe('Visa intyg Fk7263', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
     });
@@ -109,8 +106,8 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 6a: Rekommendationer', function() {
-            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Nej');
-            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Nej');
+            expect(viewPage.getTextContent('rekommendationKontaktArbetsformedlingen')).toEqual('Ej angivet');
+            expect(viewPage.getTextContent('rekommendationKontaktForetagshalsovarden')).toEqual('Ej angivet');
             expect(viewPage.getTextContent('rekommendationOvrigt')).toEqual('Ej angivet');
         });
 
@@ -145,7 +142,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 12: Kontakt önskas med FK', function() {
-            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Nej');
+            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 13: Övriga upplysningar', function() {
@@ -186,7 +183,7 @@ describe('Visa intyg Fk7263', function() {
         });
 
         it('Verifiera fält 1: Smittskydd', function() {
-            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Nej');
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ej angivet');
         });
 
         it('Verifiera fält 2: Diagnoskod och -beskrivning', function() {

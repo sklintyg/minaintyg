@@ -39,19 +39,14 @@ describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
 
     beforeAll(function() {
         // Rensa alla intyg för tolvan
-        restHelper.deleteAllIntygForCitizen('19121212-1212');
-
-        // Ta bort tidigare samtycken
-        restHelper.deleteConsent();
+        restHelper.deleteAllIntygForCitizen(personId);
 
         var intyg = genericTestdataBuilder.getFk7263();
         intygsId = intyg.id;
         restHelper.createIntyg(intyg);
-        restHelper.setConsent(personId);
     });
 
     afterAll(function() {
-       restHelper.deleteConsent(personId);
        restHelper.deleteIntyg(intygsId);
     });
 

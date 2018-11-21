@@ -34,7 +34,6 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera LUAE_FS', function() {
 
-    var personId = '191212121212';
     var intygsId = null;
     var texts = null;
 
@@ -48,9 +47,6 @@ describe('Verifiera LUAE_FS', function() {
             fail('Error during text lookup ' + err);
         });
 
-        // Just set the consent, don't need to test it in every protractor test
-        restHelper.setConsent(personId);
-
         // Skapa intygen
         var intyg = genericTestdataBuilder.getLuaefs();
         intygsId = intyg.id;
@@ -59,7 +55,6 @@ describe('Verifiera LUAE_FS', function() {
     });
 
     afterAll(function() {
-        restHelper.deleteConsent(personId);
         restHelper.deleteIntyg(intygsId);
     });
 

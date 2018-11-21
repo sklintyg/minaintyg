@@ -43,7 +43,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
         if (principal != null && principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
-            monitoringService.logCitizenLogin(new Personnummer(user.getUsername()),
+            monitoringService.logCitizenLogin(createPnr(user.getUsername()),
                     user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
         }
         super.registerNewSession(sessionId, principal);
@@ -65,11 +65,15 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
 
         if (principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
-            monitoringService.logCitizenLogout(new Personnummer(user.getUsername()),
+            monitoringService.logCitizenLogout(createPnr(user.getUsername()),
                     user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
         }
 
         super.removeSessionInformation(sessionId);
+    }
+
+    private Personnummer createPnr(String personId) {
+        return Personnummer.createPersonnummer(personId).orElse(null);
     }
 
 }

@@ -105,9 +105,9 @@ public class ModuleApiController {
     public final Response getCertificate(@PathParam("type") final String type, @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
-        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type,
-                new Personnummer(citizenService.getCitizen().getUsername()),
-                id);
+        Optional<CertificateResponse> utlatande =
+                certificateService.getUtlatande(type, createPnr(citizenService.getCitizen().getUsername()), id);
+
         if (utlatande.isPresent()) {
             try {
                 if (utlatande.get().isRevoked()) {
@@ -166,8 +166,10 @@ public class ModuleApiController {
     }
 
     private Response getPdfInternal(String type, String id, List<String> optionalFields, boolean isEmployerCopy) {
-        Optional<CertificateResponse> utlatande = certificateService.getUtlatande(type,
-                new Personnummer(citizenService.getCitizen().getUsername()), id);
+
+        Optional<CertificateResponse> utlatande =
+                certificateService.getUtlatande(type, createPnr(citizenService.getCitizen().getUsername()), id);
+
         if (utlatande.isPresent() && !utlatande.get().isRevoked()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
@@ -200,4 +202,9 @@ public class ModuleApiController {
             return Response.status(INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    private Personnummer createPnr(String personId) {
+        return Personnummer.createPersonnummer(personId).orElse(null);
+    }
+
 }
