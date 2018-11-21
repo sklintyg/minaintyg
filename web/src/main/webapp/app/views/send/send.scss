@@ -32,3 +32,17 @@
     }
   }
 }
+
+.mi-sending-dialog{
+
+  .sent-status {
+    position: relative;
+    padding-left: 28px;
+
+    i{
+      position: absolute;
+      top: -5px;
+      left: 0;
+    }
+  }
+}
