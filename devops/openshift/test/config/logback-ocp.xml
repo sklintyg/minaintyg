@@ -18,18 +18,18 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <configuration>
-    <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
+  <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
 
-    <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
 
-    <include resource="logback-ocp-base.xml"/>
+  <include resource="logback-ocp-base.xml"/>
 
-    <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
-        <appender-ref ref="MONITORING" />
-    </logger>
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
+    <appender-ref ref="MONITORING" />
+  </logger>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+  <root level="WARN">
+    <appender-ref ref="CONSOLE"/>
+  </root>
 
 </configuration>
