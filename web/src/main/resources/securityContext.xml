@@ -59,7 +59,7 @@
   <!-- Allow access to healthcheck and monitoring services without being logged in -->
   <security:http security="none" pattern="/monitoring/**" />
   <security:http security="none" pattern="/health-check/health-check.jsp" />
-  <security:http security="none" pattern="/metrics" />
+  <security:http security="none" create-session="never" pattern="/metrics" />
 
   <security:http security="none" pattern="/favicon.ico"/>
 

@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.service;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -30,10 +31,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
 import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
 import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
@@ -51,13 +51,10 @@ import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
  *
  * @author eriklupander
  */
-@EnableScheduling
 @Component
-public class HealthMonitor {
+public class HealthMonitor extends Collector {
 
     private static final Logger LOG = LoggerFactory.getLogger(HealthMonitor.class);
-
-    private static final long DELAY = 30000L;
 
     private static final String PREFIX = "health_";
     private static final String NORMAL = "_normal";
@@ -102,15 +99,18 @@ public class HealthMonitor {
     @PostConstruct
     public void init() {
         redisScript = new DefaultRedisScript<>(
-                "return #redis.call('keys','spring:session:"  + appName + ":index:*')", Long.class);
+                "return #redis.call('keys','spring:session:" + appName + ":index:*')", Long.class);
+        this.register();
     }
 
-    @Scheduled(fixedDelay = DELAY)
-    public void healthCheck() {
+    @Override
+    public List<MetricFamilySamples> collect() {
         long secondsSinceStart = (System.currentTimeMillis() - START_TIME) / MILLIS_PER_SECOND;
         UPTIME.set(secondsSinceStart);
         LOGGED_IN_USERS.set(countSessions());
         IT_ACCESSIBLE.set(pingIntygstjanst() ? 0 : 1);
+
+        return Collections.emptyList();
     }
 
     private int countSessions() {
@@ -133,4 +133,5 @@ public class HealthMonitor {
             return false;
         }
     }
+
 }
