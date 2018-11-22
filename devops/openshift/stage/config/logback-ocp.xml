@@ -22,6 +22,8 @@
 
   <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
 
+  <include resource="logback-ocp-base.xml"/>
+
   <!-- ST Is not using IntygUser from infra -->
   <appender name="MI_MONITORING" class="ch.qos.logback.core.ConsoleAppender">
     <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
@@ -33,8 +35,6 @@
       <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE}] ${LINE}</pattern>
     </encoder>
   </appender>
-
-  <include resource="logback-ocp-base.xml"/>
 
   <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
     <appender-ref ref="MI_MONITORING" />
