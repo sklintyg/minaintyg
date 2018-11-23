@@ -30,9 +30,9 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         this.at = element(by.id('send-certificate-page'));
         this.confirmRecipientSelectionBtn = element(by.id('send-to-recipients-btn'));
         this.sendingDialog = element(by.id('mi-sending-dialog'));
-
         this.backToIntygBtn = element(by.id('back-to-intyg-btn'));
     },
+    
     isAt: function isAt() {
         return isAt._super.call(this);
     },
@@ -61,13 +61,24 @@ var MinaintygStartPageBase = MinaintygBasePage._extend({
         return element(by.id((success ? 'success':'fail') + '-result-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
     },
 
-
     confirmRecipientSelection: function() {
         this.confirmRecipientSelectionBtn.click();
     },
 
     sendDialogIsShown: function() {
         return this.sendingDialog.isDisplayed();
+    },
+
+    sendSekretessDialogIsPresent: function() {
+        return element(by.id('mi-send-sekretess-dialog')).isPresent();
+    },
+
+    sendSekretessDialogAbortClick: function() {
+        element(by.id('sekretessDialog-button--cancel')).click();
+    },
+
+    sendSekretessDialogConfirmClick: function() {
+        element(by.id('sekretessDialog-button--confirm')).click();
     },
 
     backToViewCertificate: function() {
