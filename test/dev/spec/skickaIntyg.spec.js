@@ -17,9 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*globals browser,protractor */
-/*globals pages */
-/*globals describe,it,helpers */
+/*globals browser,describe,it,miTestTools */
 'use strict';
 
 var specHelper = miTestTools.helpers.spec;
@@ -37,31 +35,44 @@ var approvedReceiversTestDataBuilder = miTestTools.testdata.approvedReceivers;
 describe('Skicka intyg', function() {
 
 	var personId = '191212121212';
+	var sekretessPersonId = '195401232540'; // Maj Pärsson, sekretessmarkerad
 	var intygsId1 = null;
 	var intygsId2 = null;
+    var intygsId3 = null;
 	var intygsTyp = 'lisjp';
 	var receiverIds = ['FKASSA','FBA'];
 
     beforeAll(function() {
         var intyg1 = genericTestDataBuilder.getLisjpSmittskydd();
         var intyg2 = genericTestDataBuilder.getLisjpSmittskydd();
+        var intyg3 = genericTestDataBuilder.getLisjpSmittskydd(sekretessPersonId);
+
         restHelper.createIntyg(intyg1);
         restHelper.createIntyg(intyg2);
+        restHelper.createIntyg(intyg3);
 
         intygsId1 = intyg1.id;
         intygsId2 = intyg2.id;
+        intygsId3 = intyg3.id;
 
         var approvedReceivers1 = approvedReceiversTestDataBuilder.getApprovedReceivers(intygsId1, intygsTyp, receiverIds);
         var approvedReceivers2 = approvedReceiversTestDataBuilder.getApprovedReceivers(intygsId2, intygsTyp, receiverIds);
+        var approvedReceivers3 = approvedReceiversTestDataBuilder.getApprovedReceivers(intygsId3, intygsTyp, receiverIds);
+
         restHelper.createApprovedReceivers(intygsId1, approvedReceivers1);
         restHelper.createApprovedReceivers(intygsId2, approvedReceivers2);
+        restHelper.createApprovedReceivers(intygsId3, approvedReceivers3);
+
     });
 
     afterAll(function() {
         restHelper.deleteIntyg(intygsId1);
         restHelper.deleteIntyg(intygsId2);
+        restHelper.deleteIntyg(intygsId3);
+
         restHelper.deleteApprovedReceivers(intygsId1);
         restHelper.deleteApprovedReceivers(intygsId2);
+        restHelper.deleteApprovedReceivers(intygsId3);
     });
 
     describe('Skicka lisjpintyg', function() {
@@ -186,6 +197,79 @@ describe('Skicka intyg', function() {
             expect(sendPage.activeTab()).toEqual('inboxTab');
             sendPage.clickArchived();
             expect(archivedPage.activeTab()).toEqual('archivedTab');
+        });
+
+    });
+
+
+    describe('Skicka lisjpintyg som sekretessmarkerad person', function() {
+
+        beforeEach(function() {
+            browser.ignoreSynchronization = false;
+        });
+
+        it('Logga in', function() {
+            welcomePage.get();
+            specHelper.waitForAngularTestability();
+            welcomePage.login(sekretessPersonId, false);
+            specHelper.waitForAngularTestability();
+            expect(inboxPage.isAt()).toBeTruthy();
+        });
+
+        it('Navigera till intyget', function() {
+            expect(inboxPage.isAt()).toBeTruthy();
+            expect(inboxPage.certificateExists(intygsId3)).toBeTruthy();
+            inboxPage.viewCertificate(intygsId3);
+            expect(viewPage.isAt()).toBeTruthy();
+        });
+
+        it('Välj att skicka intyget', function() {
+            expect(viewPage.isAt()).toBeTruthy();
+            viewPage.sendCertificate();
+            expect(sendPage.isAt()).toBeTruthy();
+        });
+
+        it('Välj mottagare, verifiera att sekretessdialog synd samt skicka intyget', function() {
+            expect(sendPage.isAt()).toBeTruthy();
+
+            //Default recipient (FK) skall vara förvald..
+            expect(sendPage.recipientIsDeselectable('FKASSA')).toBeTruthy();
+
+            //Den fejkade mottagaren FBA skall däremot vara valbar..
+            //Toggla lite fram och tillbaka..
+            expect(sendPage.recipientIsSelectable('FBA')).toBeTruthy();
+            sendPage.selectRecipient('FBA');
+
+            //Nu skall båda vara valda, trigga skicka och en dialog ska dyka upp.
+            sendPage.confirmRecipientSelection();
+            expect(sendPage.sendSekretessDialogIsPresent()).toBeTruthy();
+
+            // Avbryt skickandet
+            sendPage.sendSekretessDialogAbortClick();
+            expect(sendPage.sendSekretessDialogIsPresent()).toBeFalsy();
+
+            // Vi ångrar oss och vill skicka ändå!
+            sendPage.confirmRecipientSelection();
+            expect(sendPage.sendSekretessDialogIsPresent()).toBeTruthy();
+
+            sendPage.sendSekretessDialogConfirmClick();
+
+            expect(sendPage.sendDialogIsShown()).toBeTruthy();
+
+            //FK skall gå bra, FBA skall misslyckas
+            expect(sendPage.verifySendResultForRecipient('FKASSA', true)).toBeTruthy();
+            expect(sendPage.verifySendResultForRecipient('FBA', false)).toBeTruthy();
+
+            //Klart, gå tillbaka till intyget..
+            sendPage.backToViewCertificate();
+        });
+
+
+        it('Verifiera att intyget nu har status "skickat"', function() {
+            expect(viewPage.isAt()).toBeTruthy();
+            expect(browser.getCurrentUrl()).toContain('lisjp');
+            expect(browser.getCurrentUrl()).toContain(intygsId3);
+            expect(viewPage.hasEvent(intygsId3, 'Skickat till Försäkringskassan')).toBeTruthy();
         });
 
     });

@@ -90,34 +90,22 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
             $scope.checkSekretessBeforeSend = function(selectedRecipients) {
                 if (MIUser.sekretessmarkering) {
-
-                    var allTrusted = true;
-                    angular.forEach(selectedRecipients, function(recipient) {
-                        if (!recipient.trusted) {
-                            allTrusted = false;
-                        }
+                    dialogService.showDialog($scope, {
+                        dialogId: 'mi-send-sekretess-dialog',
+                        titleId: 'send.sekretessmarkeringmodal.header',
+                        bodyTextId: 'send.sekretessmarkeringmodal.body',
+                        button1click: function() {
+                            doSend(selectedRecipients);
+                        },
+                        button2click: function() {
+                        },
+                        button1id: 'sekretessDialog-button--confirm',
+                        button2id: 'sekretessDialog-button--cancel',
+                        button1text: 'send.sekretessmarkeringmodal.button1',
+                        button2text: 'send.sekretessmarkeringmodal.button2',
+                        button2visible: true,
+                        autoClose: true
                     });
-
-                    if (!allTrusted) {
-                        dialogService.showDialog($scope, {
-                            dialogId: 'mi-send-sekretess-dialog',
-                            titleId: 'send.sekretessmarkeringmodal.header',
-                            bodyTextId: 'send.sekretessmarkeringmodal.body',
-                            button1click: function() {
-                                doSend(selectedRecipients);
-                            },
-                            button2click: function() {
-                            },
-                            button1id: 'close-fkdialog-logout-button',
-                            button1text: 'send.sekretessmarkeringmodal.button1',
-                            button2text: 'send.sekretessmarkeringmodal.button2',
-                            button2visible: true,
-                            autoClose: true
-                        });
-                    }
-                    else {
-                        doSend(selectedRecipients);
-                    }
                 }
                 else {
                     doSend(selectedRecipients);
