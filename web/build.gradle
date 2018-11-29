@@ -63,7 +63,7 @@ task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
 checkstyleMain.dependsOn jsCodeQuality
 jsCodeQuality.onlyIf { project.hasProperty('codeQuality') }
 
-task zipResources(type: ArchiveTask) {
+task zipResources(type: HashArchiveTask) {
     from '../src/main/resources'
     archiveName 'resources.zip'
     archivePath '../devops/openshift/test/env'
