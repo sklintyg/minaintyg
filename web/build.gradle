@@ -151,6 +151,7 @@ dependencies {
     compile "se.inera.intyg.common:fk7263:${commonVersion}"
     compile "se.inera.intyg.common:af00213:${commonVersion}"
     compile "se.inera.intyg.common:ag114:${commonVersion}"
+    compile "se.inera.intyg.common:ag7804:${commonVersion}"
 
     compile "org.springframework:spring-web:${springVersion}"
     compile "org.springframework:spring-webmvc:${springVersion}"
