@@ -13,7 +13,7 @@
   },
   {
     "key": "ptsCookiesModal",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Kommunikationsmyndigheten PTS sida om kakor",
     "target": "_blank"
   },
@@ -31,19 +31,19 @@
   },
   {
     "key": "ptsCookies",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Post- och telestyrelsens webbplats (extern länk).",
     "target": "_blank"
   },
   {
     "key": "ptsCookiesBanner",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Post- och telestyrelsens webbplats",
     "target": "_blank"
   },
   {
     "key": "ptsCookiesMerOm",
-    "url": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/",
+    "url": "https://pts.se/sv/privat/internet/integritet/kakor-cookies/",
     "text": "Mer om kakor (cookies) på Post- och telestyrelsens webbplats",
     "target": "_blank"
   },
@@ -67,7 +67,7 @@
   },
   {
     "key": "ineraKontakt",
-    "url": "https://www.inera.se/kontakt",
+    "url": "https://www.inera.se/kundservice/kontakta-oss/",
     "text": "Hjälp och support",
     "target": "_blank"
   },
@@ -163,19 +163,19 @@
   },
   {
     "key": "socialstyrelsen",
-    "url": "http://www.socialstyrelsen.se/sosfs",
+    "url": "https://www.socialstyrelsen.se/sosfs",
     "text": "Socialstyrelsen",
     "target": "_blank"
   },
   {
     "key": "pdl",
-    "url": "http://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/patientdatalag-2008355_sfs-2008-355",
+    "url": "https://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/patientdatalag-2008355_sfs-2008-355",
     "text": "Patientdatalagen (2008:355)",
     "target": "_blank"
   },
   {
     "key": "gdpr",
-    "url": "http://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32016R0679",
+    "url": "https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32016R0679",
     "text": "Dataskyddsförordningen (EU) 2016/679",
     "target": "_blank"
   }
