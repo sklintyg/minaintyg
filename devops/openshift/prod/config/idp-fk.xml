@@ -1,0 +1,104 @@
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_28f160045f6f0d7d6aa13e07903dc11c" cacheDuration="PT1H0M0.000S" entityID="sjalvbetjaningcs.sfa.se" validUntil="2017-03-31T08:42:53Z">
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <ds:SignedInfo>
+      <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+      <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+      <ds:Reference URI="#_28f160045f6f0d7d6aa13e07903dc11c">
+        <ds:Transforms>
+          <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+          <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+        </ds:Transforms>
+        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+        <ds:DigestValue>pCxh9zZKOEPiMQW9rAOx+7XdGIg=</ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+      jSHc4uji2ROXYAl2pgb8dh67QwlWWpYAkCnfrDZMSK54WrnFy0R2jDcQst9/zE3kvPP4N8NB8OU90fCfxfzz16KL84n7Wdrm5yhV4opxX9b0SvdNxmV4g93j4RZl1xB9w2cG73L2eJyVQGKQFkbfbGzEki+vESf9Cpb8zhzhJZE=
+    </ds:SignatureValue>
+    <ds:KeyInfo>
+      <ds:X509Data>
+        <ds:X509Certificate>
+          MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+          ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+          bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+          KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+          MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+          VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+          MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+          b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+          vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+          NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+          gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+          7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+          ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+        </ds:X509Certificate>
+      </ds:X509Data>
+    </ds:KeyInfo>
+  </ds:Signature>
+  <md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+            ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+            bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+            KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+            MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+            VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+            MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+            b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+            vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+            NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+            gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+            7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+            ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+          </ds:X509Certificate>
+        </ds:X509Data>
+        <ds:KeyName>e3018663635602d3500a3ade6058c7029a621bd8</ds:KeyName>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>
+      urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    </md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://auth2.forsakringskassan.se/necs/SAMLResponder"/>
+  </md:IDPSSODescriptor>
+  <md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>
+            MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+            ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+            bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+            KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+            MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+            VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+            MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+            b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+            vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+            NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+            gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+            7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+            ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+          </ds:X509Certificate>
+        </ds:X509Data>
+        <ds:KeyName>e3018663635602d3500a3ade6058c7029a621bd8</ds:KeyName>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>
+      urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    </md:NameIDFormat>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://auth2.forsakringskassan.se/necs/SAMLServiceProvider" index="0" isDefault="true"/>
+  </md:SPSSODescriptor>
+  <md:Organization>
+    <md:OrganizationName xml:lang="en">FKProd</md:OrganizationName>
+    <md:OrganizationDisplayName xml:lang="en">Forsakringskassan Produktion</md:OrganizationDisplayName>
+    <md:OrganizationURL xml:lang="en">http://www.forsakringskassan.se/</md:OrganizationURL>
+  </md:Organization>
+  <md:ContactPerson contactType="administrative">
+    <md:GivenName>Bjorn</md:GivenName>
+    <md:SurName>Blomgren</md:SurName>
+    <md:EmailAddress>sso@forsakringskassan.se</md:EmailAddress>
+  </md:ContactPerson>
+</md:EntityDescriptor>
