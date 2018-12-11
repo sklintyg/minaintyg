@@ -1,6 +1,6 @@
 # OPENSHIFT INSTALLATION GUIDE
 
-Installation of web application minaintyg on openshift.
+Installation of Web application minaintyg on openshift.
 
 ## 1 Pre-Installation Requirements
 
@@ -22,15 +22,15 @@ Provided elsewhere:
 
 For all backing services their actual addresses and user accounts have to be known prior to start the installation procedure.  
 
-### 1.3 Integration / Firewall
+### 1.2 Integration / Firewall
 
 Mina Intyg communicates in/out with the Inera Service Platform and thus needs firewall rules for that access.
 
-### 1.4 Certificates
+### 1.3 Certificates
 
 Mina Intyg needs certificates, keystores and truststores for communicating over Tjänsteplattformen. The operations provider is responsible for installing these certificates in the appropriate OpenShift "secret", see detailed instructions in the OpenShift section.
 
-### 1.5 Message Queues
+### 1.4 Message Queues
 
 Not applicable for Mina Intyg
 
@@ -70,7 +70,7 @@ To run database migration tool:
 
 1. All Pre-Installation Requirements are fulfilled, se above
 2. Check if a database migration is required
-3. Ensure that the env secret and secret-envvar are up to date
+3. Ensure that the secret env, certifikat and secret-envvar are up to date
 4. Ensure that the configmap and configmap-envvar are up to date
 5. Check that deployment works as expected 
 6. Fine-tune memory settings for container and java process
@@ -117,15 +117,15 @@ For security reasons, no secret properties or configuration may be checked into 
 
 Open _&lt;env>/secret-vars.yaml_ and replace `<value>` with expected values:
 
-    NTJP_WS_CERTIFICATE_PASSWORD: "<replaceme>"
-    NTJP_WS_KEY_MANAGER_PASSWORD: "<replaceme>"
-    NTJP_WS_TRUSTSTORE_PASSWORD: "<replaceme>"
-    FK_SAML_KEYSTORE_PASSWORD: "<replaceme>"
+    NTJP_WS_CERTIFICATE_PASSWORD: "<value>"
+    NTJP_WS_KEY_MANAGER_PASSWORD: "<value>"
+    NTJP_WS_TRUSTSTORE_PASSWORD: "<value>"
+    FK_SAML_KEYSTORE_PASSWORD: "<value>"
 
 Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. You may also need to update name of keystore/truststore files as well as their type (JKS or PKCS12)
 
-    REDIS_HOST: "<value>"
-    REDIS_PORT: "<value>"
+    REDIS_SERVICE_HOST: "<value>"
+    REDIS_SERVICE_PORT: "<value>"
     REDIS_SENTINEL_MASTER_NAME: "<value>"
     SPRING_PROFILES_ACTIVE: ""<value>"
     CERTIFICATE_BASEURL: "http://intygstjanst[-<env>]:8080"
@@ -135,18 +135,17 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
     NTJP_WS_TRUSTSTORE_TYPE: "JKS"
     FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/<value>"
     FK_SAML_KEYSTORE_ALIAS: "<value>"
-    FK_SAML_METADATA_FILE: "file//:${config.dir}/<value>"
    
 Note: Other properties might be used to define a `<value>`. As an example is the path to certificates indicated by the `CERTIFICATE_FOLDER` property and the truststore file might be defined like:
  
-	NTJP_WS_TRUSTSTORE_FILE: ${certificate.folder}/truststore.jks
+	NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
         
 ##### 2.4.1 Redis Sentinel Configuration
 
-Redis sentinel needs at least three URL:s passed in order to work correctly. These are specified in the _redis.host_ and _redis.port_ properties respectively:
+Redis sentinel needs at least three URL:s passed in order to work correctly. These are specified in the `REDIS_SERVICE_HOST` and `REDIS_SERVICE_PORT` properties respectively:
 
-    REDIS_HOST: "host1;host2;host3"
-    REDIS_PORT: "26379;26379;26379"
+    REDIS_SERVICE_HOST: "host1;host2;host3"
+    REDIS_SERVICE_PORT: "26379;26379;26379"
     
 ### 2.5 Prepare Certificates
 
