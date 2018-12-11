@@ -60,6 +60,10 @@ module.exports = {
         return this.getIntyg('ag114', '1.0', 'ag114-full', userId);
     },
 
+    getAg7804: function(userId) {
+        return this.getIntyg('ag7804', '1.0', 'ag7804-full', userId);
+    },
+
     getIntyg: function(type, typeVersion, file, userId, signedDate) {
 
         //Create a local copy that we are free to mutate

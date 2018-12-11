@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (C) 2018 Inera AB (http://www.inera.se)
+  ~
+  ~ This file is part of sklintyg (https://github.com/sklintyg).
+  ~
+  ~ sklintyg is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ sklintyg is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<ns4:RegisterCertificate xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:dsf="http://www.w3.org/2002/06/xmldsig-filter2" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:3" xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3" xmlns:ns5="urn:riv:clinicalprocess:healthcond:certificate:types:3" xmlns:ns6="urn:riv:clinicalprocess:healthcond:certificate:3.2">
+  <ns4:intyg>
+    <ns3:intygs-id>
+      <ns5:root>TSTNMT2321000156-1077</ns5:root>
+      <ns5:extension>CERTIFICATE_ID</ns5:extension>
+    </ns3:intygs-id>
+    <ns3:typ>
+      <ns5:code>AG7804</ns5:code>
+      <ns5:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns5:codeSystem>
+      <ns5:displayName>Läkarintyg om arbetsförmåga – arbetsgivare</ns5:displayName>
+    </ns3:typ>
+    <ns3:version>1.0</ns3:version>
+    <ns3:signeringstidpunkt>SIGNED_DATE</ns3:signeringstidpunkt>
+    <ns3:skickatTidpunkt>2018-12-11T10:24:48</ns3:skickatTidpunkt>
+    <ns3:patient>
+      <ns3:person-id>
+        <ns5:root>1.2.752.129.2.1.3.1</ns5:root>
+        <ns5:extension>PATIENT_CRN</ns5:extension>
+      </ns3:person-id>
+      <ns3:fornamn/>
+      <ns3:efternamn/>
+      <ns3:postadress/>
+      <ns3:postnummer/>
+      <ns3:postort/>
+    </ns3:patient>
+    <ns3:skapadAv>
+      <ns3:personal-id>
+        <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+        <ns5:extension>IFV1239877878-1049</ns5:extension>
+      </ns3:personal-id>
+      <ns3:fullstandigtNamn>DOCTOR_NAME</ns3:fullstandigtNamn>
+      <ns3:forskrivarkod>0000000</ns3:forskrivarkod>
+      <ns3:enhet>
+        <ns3:enhets-id>
+          <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+          <ns5:extension>CAREUNIT_ID</ns5:extension>
+        </ns3:enhets-id>
+        <ns3:arbetsplatskod>
+          <ns5:root>1.2.752.29.4.71</ns5:root>
+          <ns5:extension>1234567890</ns5:extension>
+        </ns3:arbetsplatskod>
+        <ns3:enhetsnamn>CAREUNIT_NAME</ns3:enhetsnamn>
+        <ns3:postadress>NMT gata 3</ns3:postadress>
+        <ns3:postnummer>12345</ns3:postnummer>
+        <ns3:postort>Testhult</ns3:postort>
+        <ns3:telefonnummer>0101112131416</ns3:telefonnummer>
+        <ns3:epost>enhet3@webcert.invalid.se</ns3:epost>
+        <ns3:vardgivare>
+          <ns3:vardgivare-id>
+            <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+            <ns5:extension>CAREGIVER_ID</ns5:extension>
+          </ns3:vardgivare-id>
+          <ns3:vardgivarnamn>NMT vg3</ns3:vardgivarnamn>
+        </ns3:vardgivare>
+      </ns3:enhet>
+    </ns3:skapadAv>
+    <ns3:svar id="1">
+      <ns3:instans>1</ns3:instans>
+      <ns3:delsvar id="1.1">
+        <ns5:cv>
+          <ns5:code>UNDERSOKNING</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0001</ns5:codeSystem>
+          <ns5:displayName>Min undersökning av patienten</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="1.2">2018-12-11</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="1">
+      <ns3:instans>2</ns3:instans>
+      <ns3:delsvar id="1.1">
+        <ns5:cv>
+          <ns5:code>TELEFONKONTAKT</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0001</ns5:codeSystem>
+          <ns5:displayName>Min telefonkontakt med patienten</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="1.2">2018-12-07</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="1">
+      <ns3:instans>3</ns3:instans>
+      <ns3:delsvar id="1.1">
+        <ns5:cv>
+          <ns5:code>JOURNALUPPGIFTER</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0001</ns5:codeSystem>
+          <ns5:displayName>Journaluppgifter från den</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="1.2">2018-12-10</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="1">
+      <ns3:instans>4</ns3:instans>
+      <ns3:delsvar id="1.1">
+        <ns5:cv>
+          <ns5:code>ANNAT</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0001</ns5:codeSystem>
+          <ns5:displayName>Annat</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="1.2">2018-12-11</ns3:delsvar>
+      <ns3:delsvar id="1.3">baserat på annat</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="29">
+      <ns3:delsvar id="29.1">nuvarande yrkesbeskrivning</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="6">
+      <ns3:delsvar id="6.2">
+        <ns5:cv>
+          <ns5:code>M234</ns5:code>
+          <ns5:codeSystem>1.2.752.116.1.1.1.1.3</ns5:codeSystem>
+          <ns5:displayName>Fri kropp i knäled</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="6.1">Fri kropp i knäled</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="17">
+      <ns3:delsvar id="17.1">Hen har svårt att sitta eftersom hen inte kan böja på knäna.</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="19">
+      <ns3:delsvar id="19.1">Syfte och tidplan</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="20">
+      <ns3:delsvar id="20.1">Införskaffa ståbord</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="25">
+      <ns3:delsvar id="25.1">Övriga upplysningar kan var nyttiga</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="27">
+      <ns3:delsvar id="27.1">false</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="28">
+      <ns3:instans>1</ns3:instans>
+      <ns3:delsvar id="28.1">
+        <ns5:cv>
+          <ns5:code>NUVARANDE_ARBETE</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0002</ns5:codeSystem>
+          <ns5:displayName>Nuvarande arbete</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="32">
+      <ns3:instans>1</ns3:instans>
+      <ns3:delsvar id="32.1">
+        <ns5:cv>
+          <ns5:code>TRE_FJARDEDEL</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0003</ns5:codeSystem>
+          <ns5:displayName>75%</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+      <ns3:delsvar id="32.2">
+        <ns5:datePeriod>
+          <ns5:start>2018-12-11</ns5:start>
+          <ns5:end>2018-12-31</ns5:end>
+        </ns5:datePeriod>
+      </ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="33">
+      <ns3:delsvar id="33.1">false</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="34">
+      <ns3:delsvar id="34.1">true</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="35">
+      <ns3:delsvar id="35.1">Stela knän</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="37">
+      <ns3:delsvar id="37.1">För att FMB har fel</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="39">
+      <ns3:delsvar id="39.1">
+        <ns5:cv>
+          <ns5:code>STOR_SANNOLIKHET</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0006</ns5:codeSystem>
+          <ns5:displayName>Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter
+            denna sjukskrivning
+          </ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="40">
+      <ns3:instans>1</ns3:instans>
+      <ns3:delsvar id="40.1">
+        <ns5:cv>
+          <ns5:code>ARBETSANPASSNING</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0004</ns5:codeSystem>
+          <ns5:displayName>Arbetsanpassning</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="40">
+      <ns3:instans>2</ns3:instans>
+      <ns3:delsvar id="40.1">
+        <ns5:cv>
+          <ns5:code>ERGONOMISK</ns5:code>
+          <ns5:codeSystem>KV_FKMU_0004</ns5:codeSystem>
+          <ns5:displayName>Ergonomisk bedömning</ns5:displayName>
+        </ns5:cv>
+      </ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="100">
+      <ns3:delsvar id="100.1">true</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="101">
+      <ns3:delsvar id="101.1">true</ns3:delsvar>
+    </ns3:svar>
+    <ns3:svar id="103">
+      <ns3:delsvar id="103.1">true</ns3:delsvar>
+      <ns3:delsvar id="103.2">Kontakt med arbetsgivaren</ns3:delsvar>
+    </ns3:svar>
+  </ns4:intyg>
+</ns4:RegisterCertificate>
