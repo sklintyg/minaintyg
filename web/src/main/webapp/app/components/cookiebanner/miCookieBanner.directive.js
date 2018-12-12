@@ -29,8 +29,6 @@ angular.module('minaintyg').directive('miCookieBanner',
                 $scope.isOpen = false;
                 $scope.showDetails = false;
 
-                var dialogInstance;
-
                 $scope.openCookieDialog = function(){
                     var dialogInstance = dialogService.showDialog($scope, {
                         dialogId: 'cookie-footer-dialog',
