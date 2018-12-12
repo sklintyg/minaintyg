@@ -1,0 +1,80 @@
+/*!
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+//Font priority
+$font-0: Arial;
+$font-1: sans-serif;
+
+@mixin font-variant-regular($font-size: 14px) {
+  font-family: $font-0, $font-1;
+  font-size: $font-size;
+  font-weight: normal;
+}
+
+@mixin font-variant-bold($font-size: 14px) {
+  font-family: $font-0, $font-1;
+  font-size: $font-size;
+  font-weight: bold;
+}
+
+
+
+/*
+Placeholders for the typography classes.
+
+Note that the typo classes does NOT specify color or background, as this is not part of
+the mi-typo-xx specs (https://inera-certificate.atlassian.net/wiki/spaces/IT/pages/112443342/A+-+MI+Typografi)
+
+Color and background should be specified at the extension point, eg:
+
+.class {
+      @extend %mi-typo-05;
+      color: $mi-color-09;
+}
+
+*/
+
+%mi-typo-01 {
+  @include font-variant-bold(18px);
+}
+
+%mi-typo-02 {
+  @include font-variant-regular(16px);
+}
+
+%mi-typo-03 {
+  @include font-variant-bold(14px);
+}
+
+%mi-typo-04 {
+  @include font-variant-regular(14px);
+}
+
+%mi-typo-05 {
+  @include font-variant-regular(18px);
+}
+
+%mi-typo-06 {
+  @include font-variant-regular(12px);
+}
+
+%mi-typo-07 {
+  @include font-variant-bold(12px);
+}

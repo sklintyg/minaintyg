@@ -1,5 +1,33 @@
 // Inera variables
 
+// Colors
+
+$mi-color-00: #FFFFFF;
+$mi-color-01: #333333;
+$mi-color-02: #777777;
+$mi-color-03: #0F6EDC;
+$mi-color-04: #42377D;
+$mi-color-05: #FFD3A8;
+$mi-color-06: #378998;
+$mi-color-07: #009200;
+$mi-color-08: #4A4A4A;
+$mi-color-10: #21263D;
+$mi-color-13: #E9EAF0;
+$mi-color-14: #FFF0C3;
+$mi-color-15: #F3F4F6;
+$mi-color-17: #777777;
+$mi-color-18: #D60E3B;
+$mi-color-19: #A9C4D7;
+$mi-color-20: #D9E2E6;
+$mi-color-22: #DDDDDD;
+$mi-color-23: #D8EEF7;
+$mi-color-24: #F2DEDE;
+$mi-color-25: #FFF8E4;
+$mi-color-26: #F0E1B4;
+$mi-color-27: #9A6C41;
+$mi-color-28: #751723;
+$mi-color-29: #E5E8EE;
+
 $mi-body-bg: #f3f4f6;
 $mi-text-color: #333;
 
@@ -15,13 +43,15 @@ $mi-box-shadow-color: #ddd;
 $mi-hr-border-color: #d7d7d7;
 $mi-spinner-color: #0F6EDC;
 
-
 // Font
 $mi-font: Arial, sans-serif;
 $mi-font-size-h1: 18px;
 $mi-font-size-h2: 16px;
 $mi-font-size-h3: 14px;
 $mi-heading-weight: bold;
+
+// bottom gradient height
+$mi-text-fadeout-height: 30px;
 
 // Buttons
 $mi-button-bg: #fff;
@@ -141,3 +171,4 @@ $panel-default-heading-bg: $mi-panel-heading-bg;
 $panel-default-text: $mi-panel-heading-color;
 $panel-default-border: $mi-panel-border-color;
 $panel-border-radius: 0;
+

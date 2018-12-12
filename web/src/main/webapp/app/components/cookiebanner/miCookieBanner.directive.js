@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,24 +16,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 angular.module('minaintyg').directive('miCookieBanner',
 
-    function($window) {
+    ['$window', 'common.dialogService', function($window, dialogService) {
         'use strict';
 
         return {
             restrict: 'E',
             scope: {},
-            templateUrl: '/app/components/miCookieBanner/miCookieBanner.directive.html',
+            templateUrl: '/app/components/cookiebanner/miCookieBanner.directive.html',
             controller: function($scope, $timeout) {
                 $scope.isOpen = false;
                 $scope.showDetails = false;
 
+                var dialogInstance;
+
+                $scope.openCookieDialog = function(){
+                    var dialogInstance = dialogService.showDialog($scope, {
+                        dialogId: 'cookie-footer-dialog',
+                        titleId: 'footer.cookies.modal.title',
+                        bodyTextId: 'footer.cookies.modal.body',
+                        button1click: function() {
+                            dialogInstance.close();
+                            $scope.onCookieConsentClick();
+                        },
+                        button2click: function() {
+                            dialogInstance.close();
+                        },
+                        button1text: 'common.iaccept',
+                        button2text: 'common.cancel',
+                        button2icon: '',
+                        autoClose: false
+                    });
+                };
+
                 function cookieConsentGiven() {
                     return $window.localStorage && $window.localStorage.getItem('mi-cookie-consent-given') === '1';
                 }
-
 
                 $timeout(function() {
                     if (!cookieConsentGiven()) {
@@ -51,30 +70,4 @@ angular.module('minaintyg').directive('miCookieBanner',
                 };
             }
         };
-    });
-
-angular.module('minaintyg').animation('.cookie-banner-directive-slide-animation', function() {
-    'use strict';
-    return {
-        enter: function(element, done) {
-
-            element.css({
-                opacity: 0,
-                top: '-80px'
-            }).animate({
-                opacity: 1,
-                top: '0px'
-            }, 500, done);
-        },
-        leave: function(element, done) {
-            element.css({
-                    opacity: 1,
-                    top: '0px'
-                })
-                .animate({
-                    opacity: 0,
-                    top: '-80px'
-                }, 500, done);
-        }
-    };
-});
+    }]);

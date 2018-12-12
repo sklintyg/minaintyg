@@ -138,7 +138,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
         /* FOOTER */
         'footer.cookies.modal.title': 'Om kakor (cookies)',
-        'footer.cookies.modal.body': '<p>En kaka är en textfil som webbsidan begär att få spara på din enhet för att möjliggöra automatisk inloggning i olika e-tjänster under 60 minuter efter det du identifierat dig med en e-legitimation.</p><p>Den här webbsidan innehåller två så kallade kakor (cookies):</p><ul><li>En sessionskaka som innehåller ett unikt slumptal för att identifiera just din inloggning och försvinner när webbläsaren stängs av.</li><li>En informationskaka om vilken av servrarna på vår webbplats som hanterade din inloggning och den kakan finns kvar i webbläsaren även efter omstart.</li></ul><p>Dessa två kakor behövs för att på ett säkert sätt låta dig komma åt olika e-tjänster som en inloggad och identifierad användare. Kakorna i sig innehåller inga personliga uppgifter och används inte av någon annan.</p><h3>Undvika kakor</h3><p>Vill du inte acceptera kakor kan din webbläsare ställas in så att du automatiskt nekar till lagring av kakor eller informeras varje gång en webbplats begär att få lagra en kaka. Genom webbläsaren kan också tidigare lagrade kakor raderas. Se webbläsarens hjälpsidor för mer information.</p><p>Väljer du att inte acceptera kakor så kan du inte identifiera dig med e-legitimation i denna e-tjänst.</p><p>Mer information om kakor kan du finna på <LINK:ptsCookiesModal>.</p>',
+        'footer.cookies.modal.body': '<p>Vi använder kakor (cookies) för att den här webbplatsen ska fungera på ett bra sätt för dig. Genom att logga in accepterar du vår användning av kakor.</p><h3>Så här använder vi kakor</h3><p>Den typ av kakor som används på den här webbplatsen kallas för sessionskakor. De lagras temporärt i din dators minne under tiden du är inne på webbplatsen. Sessionskakor sparar ingen personlig information om dig, och de försvinner när du stänger din webbläsare.</p><p>I <namn på tjänst> används sessionskakor för att du ska kunna navigera i tjänsten utan att behöva logga in på nytt varje gång du går till en ny sida. De används också för att de filterinställningar du gör ska finnas kvar under hela tiden du är inloggad. För att vara säker på att kakorna inte sparas i din dator efter avslutad session måste du stänga webbläsaren när du har loggat ut.</p><h3>Undvika kakor</h3><p>Vill du inte acceptera kakor kan din webbläsare ställas in så att du automatiskt nekar till lagring av kakor eller informeras varje gång en webbplats begär att få lagra en kaka. Genom webbläsaren kan också tidigare lagrade kakor raderas. Se webbläsarens hjälpsidor för mer information.</p><p>Väljer du att inte acceptera kakor så kan du inte identifiera dig med e-legitimation i denna e-tjänst.</p><p>Mer information om kakor kan du finna på <LINK:ptsCookiesModal>.</p>',
 
         /* LINKS */
         'links.inera.kundservice': '<LINK:ineraKundserviceKontakt>',
@@ -154,6 +154,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
         'common.no': 'Nej',
         'common.cancel': 'Avbryt',
         'common.goback': 'Tillbaka',
+        'common.iaccept': 'Jag godkänner',
         'common.nodontask': 'Nej, och fråga inte igen',
 
         'common.title.helptext.moreinfo': 'Mer information',

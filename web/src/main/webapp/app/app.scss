@@ -1,15 +1,18 @@
 @CHARSET "UTF-8";
 
+@import "mixins/fonts";
 @import "mixins/variables";
+@import "mixins/mixins";
 @import '../bower_components/bootstrap-sass/assets/stylesheets/bootstrap.scss';
 @import "mixins/bootstrap-override";
 
 // Component styles are injected through grunt
 // injector
+@import 'components/cookiebanner/miCookieBanner.directive.scss';
 @import 'components/global-modifiers.scss';
 @import 'components/icons.scss';
+@import 'components/miBottomFadeout/miBottomFadeout.directive.scss';
 @import 'components/miBreadcrumb/miBreadcrumb.directive.scss';
-@import 'components/miCookieBanner/miCookieBanner.directive.scss';
 @import 'components/miFooter/miFooter.directive.scss';
 @import 'components/miHeader/miHeader.directive.scss';
 @import 'components/miHelpNavigationMenu/miHelpNavigationMenu.directive.scss';

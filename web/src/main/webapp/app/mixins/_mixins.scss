@@ -1,0 +1,46 @@
+/*!
+ * Copyright (C) 2018 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+//absolutely positioned element with a gradient background.
+//The pointer-events:none is important, otherwise elements such as button below this can't be clicked.
+%bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 20px;
+  width: 100%;
+  height: $mi-text-fadeout-height;
+  pointer-events: none;
+
+  div {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  &.wc-color-02 div {
+    background-image: linear-gradient(to top, rgba($mi-color-00, 1) 0%, rgba($mi-color-00, 0) 100%);
+  }
+  &.wc-color-28 div {
+    background-image: linear-gradient(to top, rgba($mi-color-00, 1) 0%, rgba($mi-color-00, 0) 100%);
+  }
+  &.wc-color-27 div {
+    background-image: linear-gradient(to top, rgba($mi-color-00, 1) 0%, rgba($mi-color-00, 0) 100%);
+  }
+}
