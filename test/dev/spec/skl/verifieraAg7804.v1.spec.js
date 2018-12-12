@@ -33,7 +33,8 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera AG7804', function() {
 
-    var intygsId = null;
+    var intygsId1 = null;
+    var intygsId2 = null;
     var texts = null;
 
     beforeAll(function() {
@@ -46,14 +47,19 @@ describe('Verifiera AG7804', function() {
             fail('Error during text lookup ' + err);
         });
 
-        // Skapa intyget
-        var intyg = genericTestdataBuilder.getAg7804();
-        intygsId = intyg.id;
-        restHelper.createIntyg(intyg);
+        // Skapa intygen
+        var intyg1 = genericTestdataBuilder.getAg7804Smittskydd();
+        intygsId1 = intyg1.id;
+        restHelper.createIntyg(intyg1);
+
+        var intyg2 = genericTestdataBuilder.getAg7804();
+        intygsId2 = intyg2.id;
+        restHelper.createIntyg(intyg2);
     });
 
     afterAll(function() {
-        restHelper.deleteIntyg(intygsId);
+        restHelper.deleteIntyg(intygsId1);
+        restHelper.deleteIntyg(intygsId2);
     });
 
     describe('Logga in', function() {
@@ -70,16 +76,95 @@ describe('Verifiera AG7804', function() {
             expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
         });
 
-        it('Intyg ska finnas i listan', function() {
-            expect(element(by.id('certificate-' + intygsId)).isPresent());
-            expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
+        it('Intyg 1 ska finnas i listan', function() {
+            expect(element(by.id('certificate-' + intygsId1)).isPresent());
+            expect(element(by.id('viewCertificateBtn-' + intygsId1)).isPresent());
+        });
+
+        it('Intyg 2 ska finnas i listan', function() {
+            expect(element(by.id('certificate-' + intygsId2)).isPresent());
+            expect(element(by.id('viewCertificateBtn-' + intygsId2)).isPresent());
         });
     });
 
-    describe('Verifiera intyg', function() {
+    describe('Visa intyg med smittbärarpenning', function() {
+
+        it('Intyget visas', function() {
+            inboxPage.viewCertificate(intygsId1);
+            expect(viewPage.isAt()).toBeTruthy();
+        });
+
+        it('Verifiera smittbärarpenning är Ja', function() {
+            expect(viewPage.getDynamicLabelText('KAT_10.RBK')).toBe(texts['KAT_10.RBK']);
+            expect(viewPage.getTextContent('avstangningSmittskydd')).toEqual('Ja');
+        });
+
+        it('Verifiera grund för medicinskt underlag är ej angivet', function() {
+            expect(viewPage.showsNoValue('undersokningAvPatienten')).toBeTruthy();
+            expect(viewPage.showsNoValue('telefonkontaktMedPatienten')).toBeTruthy();
+            expect(viewPage.showsNoValue('journaluppgifter')).toBeTruthy();
+            expect(viewPage.showsNoValue('annatGrundForMU')).toBeTruthy();
+            expect(viewPage.showsNoValue('annatGrundForMUBeskrivning')).toBeTruthy();
+        });
+
+        it('Verifiera sysselsättning är ej angivet', function() {
+            expect(viewPage.showsNoValue('sysselsattning')).toBeTruthy();
+            expect(viewPage.showsNoValue('nuvarandeArbete')).toBeTruthy();
+        });
+
+        it('Verifiera diagnos', function() {
+            desktopSize();
+            expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
+
+            expect(viewPage.getTextContent('onskarFormedlaDiagnos')).toBe('Ja');
+            expect(viewPage.getTextContent('diagnoser-row0-col0')).toBe('M234');
+            expect(viewPage.getTextContent('diagnoser-row0-col1')).toBe('Fri kropp i knäled');
+            expect(viewPage.getTextContent('diagnoser-row1-col0')).toBe('K11');
+            expect(viewPage.getTextContent('diagnoser-row1-col1')).toBe('Sjukdomar i spottkörtlarna');
+        });
+
+        it('Verifiera att konsekvenser är ej angivet', function() {
+            expect(viewPage.showsNoValue('funktionsnedsattning')).toBeTruthy();
+            expect(viewPage.showsNoValue('aktivitetsbegransning')).toBeTruthy();
+        });
+
+        it('Verifiera att medicinsk behandling är ej angivet', function() {
+            expect(viewPage.showsNoValue('pagaendeBehandling')).toBeTruthy();
+            expect(viewPage.showsNoValue('planeradBehandling')).toBeTruthy();
+        });
+
+        it('Verifiera bedömning', function() {
+            expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
+
+            expect(viewPage.getTextContent('sjukskrivningar')).toContain('100 procent');
+            expect(viewPage.getTextContent('sjukskrivningar')).toContain('2018-12-12');
+            expect(viewPage.getTextContent('sjukskrivningar')).toContain('2018-12-21');
+
+            expect(viewPage.showsNoValue('forsakringsmedicinsktBeslutsstod')).toBeTruthy();
+            expect(viewPage.getTextContent('arbetstidsforlaggning')).toEqual('Ej angivet');
+            expect(viewPage.showsNoValue('arbetstidsforlaggningMotivering')).toBeTruthy();
+            expect(viewPage.getTextContent('arbetsresor')).toEqual('Ej angivet');
+            expect(viewPage.showsNoValue('prognos')).toBeTruthy();
+        });
+
+        it('Verifiera åtgärder är ej angivet', function() {
+            expect(viewPage.showsNoValue('arbetslivsinriktadeAtgarder')).toBeTruthy();
+            expect(viewPage.showsNoValue('arbetslivsinriktadeAtgarderBeskrivning')).toBeTruthy();
+        });
+
+        it('Verifiera att övriga upplysningar är ej angivet', function() {
+            expect(viewPage.showsNoValue('ovrigt')).toBeTruthy();
+        });
+
+    });
+
+    describe('Visa fullständigt ifyllt intyg', function() {
 
         it('Visa intyg', function() {
-            inboxPage.viewCertificate(intygsId);
+            // Navigera tillbaka till listan och välj den andra intyget
+            viewPage.backToList();
+            expect(inboxPage.isAt()).toBeTruthy();
+            inboxPage.viewCertificate(intygsId2);
             expect(viewPage.isAt()).toBeTruthy();
         });
 
@@ -138,7 +223,7 @@ describe('Verifiera AG7804', function() {
             expect(viewPage.getTextContent('planeradBehandling')).toEqual('Införskaffa ståbord');
         });
 
-        it('Verifiera sjukskrivning', function() {
+        it('Verifiera bedöming', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
 
             expect(viewPage.getTextContent('sjukskrivningar')).toContain('75 procent');
@@ -161,10 +246,8 @@ describe('Verifiera AG7804', function() {
             expect(viewPage.getTextContent('arbetslivsinriktadeAtgarderBeskrivning')).toEqual('Ej angivet');
         });
 
-
         it('Verifiera Övriga upplysningar', function() {
             expect(viewPage.getDynamicLabelText('KAT_8.RBK')).toBe(texts['KAT_8.RBK']);
-
             expect(viewPage.getTextContent('ovrigt')).toEqual('Övriga upplysningar kan var nyttiga');
         });
 

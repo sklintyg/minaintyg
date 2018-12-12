@@ -88,7 +88,7 @@ describe('Verifiera Lisjp', function() {
 
     });
 
-    describe('intyg med smittbärarpenning', function() {
+    describe('Intyg med smittbärarpenning', function() {
 
         it('intyget visas', function() {
             inboxPage.viewCertificate(intygsId1);
@@ -172,7 +172,7 @@ describe('Verifiera Lisjp', function() {
 
     });
 
-    describe('Visa fullt lisjp intyg (ej smittskydd)', function() {
+    describe('Visa fullt Lisjp intyg (ej smittskydd)', function() {
 
         it('Visa intyg', function() {
             // Navigera tillbaka till listan och välj den andra intyget
