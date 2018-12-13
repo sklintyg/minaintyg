@@ -49,7 +49,7 @@ import se.inera.intyg.schemas.contract.Personnummer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -166,7 +166,7 @@ public class ApiControllerTest {
 
         assertEquals("ok", res);
         verify(req.getSession()).getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP);
-        verify(req.getSession(), never()).setAttribute(eq(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP), anyObject()); // verify
+        verify(req.getSession(), never()).setAttribute(eq(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP), any()); // verify
                                                                                                                             // not
                                                                                                                             // overridden
     }
