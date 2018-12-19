@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:RegisterCertificate xmlns:ns6="urn:riv:clinicalprocess:healthcond:certificate:3.2"
+                         xmlns:ns5="urn:riv:clinicalprocess:healthcond:certificate:types:3"
+                         xmlns:dsf="http://www.w3.org/2002/06/xmldsig-filter2"
+                         xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3"
+                         xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                         xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:3">
+    <ns4:intyg>
+        <ns3:intygs-id>
+            <ns5:root>TSTNMT2321000156-1077</ns5:root>
+            <ns5:extension>CERTIFICATE_ID</ns5:extension>
+        </ns3:intygs-id>
+        <ns3:typ>
+            <ns5:code>AF00251</ns5:code>
+            <ns5:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns5:codeSystem>
+            <ns5:displayName>Läkarintyg för deltagare i arbetsmarknadspolitiska program</ns5:displayName>
+        </ns3:typ>
+        <ns3:version>1.0</ns3:version>
+        <ns3:signeringstidpunkt>SIGNED_DATE</ns3:signeringstidpunkt>
+        <ns3:skickatTidpunkt>2018-07-06T15:49:09</ns3:skickatTidpunkt>
+        <ns3:patient>
+            <ns3:person-id>
+                <ns5:root>1.2.752.129.2.1.3.1</ns5:root>
+                <ns5:extension>PATIENT_CRN</ns5:extension>
+            </ns3:person-id>
+            <ns3:fornamn></ns3:fornamn>
+            <ns3:efternamn></ns3:efternamn>
+            <ns3:postadress></ns3:postadress>
+            <ns3:postnummer></ns3:postnummer>
+            <ns3:postort></ns3:postort>
+        </ns3:patient>
+        <ns3:skapadAv>
+            <ns3:personal-id>
+                <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                <ns5:extension>TSTNMT2321000156-1079</ns5:extension>
+            </ns3:personal-id>
+            <ns3:fullstandigtNamn>DOCTOR_NAME</ns3:fullstandigtNamn>
+            <ns3:forskrivarkod>CAREUNIT_ID</ns3:forskrivarkod>
+            <ns3:enhet>
+                <ns3:enhets-id>
+                    <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                    <ns5:extension>TSTNMT2321000156-1077</ns5:extension>
+                </ns3:enhets-id>
+                <ns3:arbetsplatskod>
+                    <ns5:root>1.2.752.29.4.71</ns5:root>
+                    <ns5:extension>1234567890</ns5:extension>
+                </ns3:arbetsplatskod>
+                <ns3:enhetsnamn>CAREUNIT_NAME</ns3:enhetsnamn>
+                <ns3:postadress>NMT gata 3</ns3:postadress>
+                <ns3:postnummer>12345</ns3:postnummer>
+                <ns3:postort>Testhult</ns3:postort>
+                <ns3:telefonnummer>0101112131416</ns3:telefonnummer>
+                <ns3:epost>enhet3@webcert.invalid.se</ns3:epost>
+                <ns3:vardgivare>
+                    <ns3:vardgivare-id>
+                        <ns5:root>1.2.752.129.2.1.4.1</ns5:root>
+                        <ns5:extension>CAREGIVER_ID-102Q</ns5:extension>
+                    </ns3:vardgivare-id>
+                    <ns3:vardgivarnamn>NMT vg3</ns3:vardgivarnamn>
+                </ns3:vardgivare>
+            </ns3:enhet>
+        </ns3:skapadAv>
+        <ns3:svar id="1">
+            <ns3:instans>1</ns3:instans>
+            <ns3:delsvar id="1.1">
+                <ns5:cv>
+                    <ns5:code>ANNAT</ns5:code>
+                    <ns5:codeSystem>FKMU_0001</ns5:codeSystem>
+                    <ns5:displayName>Annat</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+            <ns3:delsvar id="1.2">2018-10-31</ns3:delsvar>
+            <ns3:delsvar id="1.3">Vi fikade tillsammans, han bjöd på kaffet!</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="1">
+            <ns3:instans>2</ns3:instans>
+            <ns3:delsvar id="1.1">
+                <ns5:cv>
+                    <ns5:code>UNDERSOKNING</ns5:code>
+                    <ns5:codeSystem>FKMU_0001</ns5:codeSystem>
+                    <ns5:displayName>Min undersokning av patienten</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+            <ns3:delsvar id="1.2">2018-10-30</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="2">
+            <ns3:delsvar id="2.1">Kan nästan jobba.</ns3:delsvar>
+            <ns3:delsvar id="2.2">
+                <ns5:cv>
+                    <ns5:code>DELTID</ns5:code>
+                    <ns5:codeSystem>kv-omfattning-arbetsmarknadspolitiskt-program</ns5:codeSystem>
+                    <ns5:displayName>Deltid</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+            <ns3:delsvar id="2.3">22</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="3">
+            <ns3:delsvar id="3.1">Ont i armen.</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="4">
+            <ns3:delsvar id="4.1">Använd bara höger arm.</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="5">
+            <ns3:delsvar id="5.1">true</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="6">
+            <ns3:instans>1</ns3:instans>
+            <ns3:delsvar id="6.1">44</ns3:delsvar>
+            <ns3:delsvar id="6.2">
+                <ns5:datePeriod>
+                    <ns5:start>2018-09-01</ns5:start>
+                    <ns5:end>2018-09-30</ns5:end>
+                </ns5:datePeriod>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="6">
+            <ns3:instans>2</ns3:instans>
+            <ns3:delsvar id="6.1">33</ns3:delsvar>
+            <ns3:delsvar id="6.2">
+                <ns5:datePeriod>
+                    <ns5:start>2018-10-01</ns5:start>
+                    <ns5:end>2018-10-31</ns5:end>
+                </ns5:datePeriod>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="6">
+            <ns3:instans>3</ns3:instans>
+            <ns3:delsvar id="6.1">22</ns3:delsvar>
+            <ns3:delsvar id="6.2">
+                <ns5:datePeriod>
+                    <ns5:start>2018-11-01</ns5:start>
+                    <ns5:end>2018-11-30</ns5:end>
+                </ns5:datePeriod>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="6">
+            <ns3:instans>4</ns3:instans>
+            <ns3:delsvar id="6.1">11</ns3:delsvar>
+            <ns3:delsvar id="6.2">
+                <ns5:datePeriod>
+                    <ns5:start>2018-12-01</ns5:start>
+                    <ns5:end>2018-12-31</ns5:end>
+                </ns5:datePeriod>
+            </ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="7">
+            <ns3:delsvar id="7.1">true</ns3:delsvar>
+            <ns3:delsvar id="7.2">Många fikapauser.</ns3:delsvar>
+        </ns3:svar>
+        <ns3:svar id="8">
+            <ns3:delsvar id="8.1">
+                <ns5:cv>
+                    <ns5:code>ATERGA_MED_ANPASSNING</ns5:code>
+                    <ns5:codeSystem>kv-prognos-återgång-arbetsmarknadspolitiskt-program</ns5:codeSystem>
+                    <ns5:displayName>Patienten kan återgå med anpassning</ns5:displayName>
+                </ns5:cv>
+            </ns3:delsvar>
+            <ns3:delsvar id="8.2">Behöver assistent.</ns3:delsvar>
+        </ns3:svar>
+        <ns6:underskrift>
+            <ds:Signature>
+                <ds:SignedInfo>
+                    <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                    <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+                    <ds:Reference URI="">
+                        <ds:Transforms>
+                            <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                            <ds:Transform Algorithm="http://www.w3.org/TR/1999/REC-xslt-19991116">
+                                <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                >
+                                    <xsl:output indent="no" omit-xml-declaration="yes"/>
+                                    <xsl:strip-space elements="*"/>
+                                    <xsl:param name="removeElementsNamed"
+                                               select="'|skickatTidpunkt|relation|status|underskrift|'"/>
+                                    <xsl:template match="*">
+                                        <xsl:choose>
+                                            <xsl:when
+                                                    test="contains($removeElementsNamed,concat('|',local-name(),'|' ))"/>
+                                            <xsl:otherwise>
+                                                <xsl:element name="{local-name(.)}">
+                                                    <xsl:apply-templates select="node()|@*"/>
+                                                </xsl:element>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:template>
+                                    <xsl:template match="@*">
+                                        <xsl:copy/>
+                                    </xsl:template>
+                                </xsl:stylesheet>
+                            </ds:Transform>
+                            <ds:Transform Algorithm="http://www.w3.org/2002/06/xmldsig-filter2">
+                                <dsf:XPath Filter="intersect">
+                                    //extension[text()='bdc70c9e-23b7-4d7a-9e6a-7f9b04c7cd27']/../..
+                                </dsf:XPath>
+                            </ds:Transform>
+                            <ds:Transform Algorithm="http://www.w3.org/2002/06/xmldsig-filter2">
+                                <dsf:XPath Filter="subtract">//*[local-name() = 'skickatTidpunkt']|//*[local-name() =
+                                    'relation']|//*[local-name() = 'status']|//*[local-name() = 'underskrift']
+                                </dsf:XPath>
+                            </ds:Transform>
+                            <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                        </ds:Transforms>
+                        <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                        <ds:DigestValue>H8BEFCMmYDI+aCir1BxgXYGMNNuqakRk7GgmHaEnbjY=</ds:DigestValue>
+                    </ds:Reference>
+                </ds:SignedInfo>
+                <ds:SignatureValue>
+                    HuuYFFiZp1UrPWMf3T/SA+tyDXRLgcV97QxSBcTe0SENHxZR6zBh1S3+//Y/U2MUkyCo3yRaThvAxvX3MVeC/eHlWdNl0yo2M7kk0qnXapJbnoVaeDJnvLEM9JywRNH0laNhzM7+DRVLA+J7HHF+CPQWF9OuK8otdLryvknYtwY=
+                </ds:SignatureValue>
+                <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>
+                            MIIB+zCCAWQCCQCUxqAHHrhg+jANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJTRTELMAkGA1UECAwCVkcxEzARBgNVBAcMCkdvdGhlbmJ1cmcxETAPBgNVBAoMCENhbGxpc3RhMB4XDTE4MDMxMDIwMDY0MFoXDTIxMTIwNDIwMDY0MFowQjELMAkGA1UEBhMCU0UxCzAJBgNVBAgMAlZHMRMwEQYDVQQHDApHb3RoZW5idXJnMREwDwYDVQQKDAhDYWxsaXN0YTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA4cB6VC0f9ne0UKC/XzsoP5ocv7WyGt5378f/DGnVAF3aWzderzLnXMqSdGbLOuEzUUdbjYgQkqQSs6wy872KLf0RzQzllxwpBQJ/2r+CrW6tROJa0FYEIhgWDdRGlS+9+hd3E9Ilz2PTZDF4c1C+4l/xq149OCgiAGfadeBZA5MCAwEAATANBgkqhkiG9w0BAQsFAAOBgQDU+Mrw98Qm8K0U8A208Ee01PZeIpqC9CIRIXJd0PFwXJjTlGIWckwrdsgbGtwOAlA2rzAx/FUhQD4/1F4G5mo/DrtOzzx9fKE0+MQreTC/HOm61ja3cWm4yI5G0W7bLTBBhsEoOzclycNK/QjeP+wYO+k11mtPM4SP4kCj3gh97g==
+                        </ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </ds:Signature>
+        </ns6:underskrift>
+    </ns4:intyg>
+</ns4:RegisterCertificate>

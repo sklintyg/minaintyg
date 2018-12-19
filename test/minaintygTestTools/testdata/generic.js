@@ -59,6 +59,9 @@ module.exports = {
     getAg114: function(userId) {
         return this.getIntyg('ag114', '1.0', 'ag114-full', userId);
     },
+    getAF00251: function(userId) {
+        return this.getIntyg('af00251', '1.0', 'af00251-full', userId);
+    },
 
     getAg7804: function(userId) {
         return this.getIntyg('ag7804', '1.0', 'ag7804-full', userId);

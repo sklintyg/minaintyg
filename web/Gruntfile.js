@@ -65,7 +65,8 @@ module.exports = function(grunt) {
         'luae_na':     { base: 'common/fk/luae_na', angularModule:'luae_na' },
         'luae_fs':     { base: 'common/fk/luae_fs', angularModule:'luae_fs' },
         'af00213':     { base: 'common/af/af00213', angularModule:'af00213' },
-        'ag114':     { base: 'common/skl/ag114', angularModule:'ag114' },
+        'af00251':     { base: 'common/af/af00251', angularModule:'af00251' },
+        'ag114':     { base: 'common/skl/ag114', angularModule:'ag114' }
         'ag7804':     { base: 'common/skl/ag7804', angularModule:'ag7804' }
     };
     Object.keys(modules).forEach(function(moduleName) {
