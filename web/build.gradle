@@ -116,14 +116,14 @@ gretty {
 
     // SAML test settings for local testing
 //    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-//               "-Dspring.profiles.active=test,wc-pu-stub,mi-security-test",
-//               "-Dconfig.dir=/Users/username/intyg/minaintyg-konfiguration/test",
-//               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
+//               "-Dspring.profiles.active=test,wc-pu-stub,mi-security-test,caching-enabled",
+//               "-Dconfig.dir=/Users/eriklupander/intyg/minaintyg-konfiguration/test",
+//               "-Dresources.folder=${projectDir}/../src/main/resources",
 //               "-Djetty.port=8088",
-//               "-Dminaintyg.stubs.port=8088",
-//               "-Dminaintyg.credentials.file=/Users/username/intyg/minaintyg-konfiguration/test/credentials.properties",
-//               "-Dminaintyg.config.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg.properties",
-//               "-Dminaintyg.logback.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg-logback.xml",
+//               "-Dstubs.port=8088",
+//               "-Dcredentials.file=/Users/eriklupander/intyg/minaintyg-konfiguration/test/credentials.properties",
+//               "-Dconfig.file=/Users/eriklupander/intyg/minaintyg-konfiguration/test/minaintyg.properties",
+//               "-Dlogback.file=/Users/eriklupander/intyg/minaintyg-konfiguration/test/minaintyg-logback.xml",
 //               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
