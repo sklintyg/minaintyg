@@ -27,12 +27,14 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
 
 import static org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFRAME_OPTIONS_HEADER;
 
 /**
- * Adds Content-Security-Policy frame-ancestors and X-Frame-Options: ALLOW-FROM headers
- * if the request has a referer from the configured domain.
+ * Adds Content-Security-Policy frame-ancestors if the request has a referer from the configured domain.
+ *
+ * Otherwise, a X-Frame-Options: DENY header is added.
  *
  * @author eriklupander
  */
@@ -41,18 +43,62 @@ public class CustomXFrameOptionsHeaderWriter implements HeaderWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomXFrameOptionsHeaderWriter.class);
 
+    private static final String CONTENT_SECURITY_POLICY = "Content-Security-Policy";
+    private static final String FRAME_ANCESTORS = "frame-ancestors ";
+    private static final String DENY = "DENY";
+
     @Value("${csp.frameancestor.allow.from}")
-    private String allowFrom;
+    private String allowedDomain;
+
+    @Value("${csp.frameancestor.allow.scheme}")
+    private String allowedScheme;
 
     @Override
     public void writeHeaders(HttpServletRequest request, HttpServletResponse response) {
         String referer = request.getHeader("Referer");
         if (Strings.isNullOrEmpty(referer)) {
+            response.addHeader(XFRAME_OPTIONS_HEADER, "DENY");
             return;
         }
-        if (referer.startsWith("https://") && referer.contains(allowFrom)) {
-            response.addHeader("Content-Security-Policy", "frame-ancestors " + referer);
-            response.addHeader(XFRAME_OPTIONS_HEADER, "ALLOW-FROM " + referer);
+
+        try {
+            URI uri = URI.create(referer);
+            if (isExpectedScheme(uri) && hostIsExpectedDomain(uri)) {
+                addContentSecurityPolicyHeader(response);
+                return;
+            }
+        } catch (Exception ignored) {
+
         }
+        // If the referer could not be parsed into an URI, did not match allowed scheme/domain
+        // or there were some error, just add DENY header.
+        response.addHeader(XFRAME_OPTIONS_HEADER, DENY);
+    }
+
+    // Adds three entries: Example: https://*.domain.com https://*.domain.com:* https://domain.com:*
+    private void addContentSecurityPolicyHeader(HttpServletResponse response) {
+        String subdomainAncestor = allowedScheme + "://*." + allowedDomain;
+        String subdomainWithPortAncestor = allowedScheme + "://*." + allowedDomain + ":*";
+        String withPortAncestor = allowedScheme + "://" + allowedDomain + ":*";
+
+        response.addHeader(CONTENT_SECURITY_POLICY,
+                FRAME_ANCESTORS + subdomainAncestor + " " + subdomainWithPortAncestor + " " + withPortAncestor);
+    }
+
+    private boolean hostIsExpectedDomain(URI uri) {
+        return uri.getHost() != null && uri.getHost().endsWith(allowedDomain);
+    }
+
+    private boolean isExpectedScheme(URI uri) {
+        return uri.getScheme() != null && uri.getScheme().equals(allowedScheme);
+    }
+
+    // Visible for testing.
+    void setAllowedDomain(String allowedDomain) {
+        this.allowedDomain = allowedDomain;
+    }
+
+    void setAllowedScheme(String allowedScheme) {
+        this.allowedScheme = allowedScheme;
     }
 }
