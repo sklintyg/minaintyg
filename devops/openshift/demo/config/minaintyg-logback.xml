@@ -1,83 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
-  of Inera Certificate Web (http://code.google.com/p/inera-certificate-web). 
-  Inera Certificate Web is free software: you can redistribute it and/or modify 
-  it under the terms of the GNU Affero General Public License as published 
-  by the Free Software Foundation, either version 3 of the License, or (at 
-  your option) any later version. Inera Certificate Web is distributed in the 
-  hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-  GNU Affero General Public License for more details. You should have received 
-  a copy of the GNU Affero General Public License along with this program. 
-  If not, see <http://www.gnu.org/licenses/>. -->
-<configuration scan="true" scanPeriod="30 seconds">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       ~ Copyright (C) 2019 Inera AB (http://www.inera.se)
+  ~
+  ~ This file is part of sklintyg (https://github.com/sklintyg).
+  ~
+  ~ sklintyg is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ sklintyg is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<configuration>
+  <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
 
-  <jmxConfigurator />
+  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.common.util.logging.MarkerFilter">
-      <markers>Monitoring</markers>
-      <onMatch>DENY</onMatch>
-      <onMismatch>ACCEPT</onMismatch>
-    </filter>
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      <Pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n
-      </Pattern>
-    </layout>
-  </appender>
+  <include resource="logback-ocp-base.xml"/>
 
-  <!--Daily rolling file appender -->
-  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <filter class="se.inera.intyg.common.util.logging.MarkerFilter">
-      <markers>Monitoring</markers>
-        <onMatch>DENY</onMatch>
-      <onMismatch>ACCEPT</onMismatch>
-    </filter>
-    <file>${catalina.base}/logs/minaintyg.log</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.base}/logs/minaintyg.%d{yyyy-MM-dd}.log
-      </fileNamePattern>
-    </rollingPolicy>
-    <encoder>
-      <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
-
-  <!--Daily rolling file appender for logging monitoring events -->
-  <appender name="MONITORING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <filter class="se.inera.intyg.common.util.logging.MarkerFilter">
+  <!-- ST Is not using IntygUser from infra -->
+  <appender name="MI_MONITORING" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
       <marker>Monitoring</marker>
       <onMatch>ACCEPT</onMatch>
       <onMismatch>DENY</onMismatch>
     </filter>
-    <file>${catalina.base}/logs/minaintyg-monitoring.log</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.base}/logs/minaintyg-monitoring.%d{yyyy-MM-dd}.log
-      </fileNamePattern>
-    </rollingPolicy>
-    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="se.inera.intyg.minaintyg.web.logging.PatternLayoutWithSessionContext">
-        <param name="Pattern" value="%date{ISO8601} %session - %msg%n"/>
-      </layout>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE}] ${LINE}</pattern>
     </encoder>
   </appender>
 
-  <logger name="org.springframework" level="WARN" />
-  <logger name="org.springframework.security" level="WARN" />
-  <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="WARN" />
-  <logger name="org.springframework.web" level="WARN" />
-  <logger name="org.springframework.http" level="WARN" />
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
+    <appender-ref ref="MI_MONITORING" />
+  </logger>
 
-  <logger name="org.apache.cxf" level="error" />
-
-  <logger name="se.inera.intyg.minaintyg.web" level="WARN" />
-  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO" />
-
-  <root level="WARN">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
-    <appender-ref ref="MONITORING" />
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
   </root>
 
 </configuration>

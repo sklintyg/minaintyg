@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  ~ Copyright (C) 2019 Inera AB (http://www.inera.se)
+       ~ Copyright (C) 2019 Inera AB (http://www.inera.se)
   ~
   ~ This file is part of sklintyg (https://github.com/sklintyg).
   ~
@@ -18,18 +18,30 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <configuration>
-    <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
+  <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
 
-    <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
 
-    <include resource="logback-ocp-base.xml"/>
+  <include resource="logback-ocp-base.xml"/>
 
-    <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
-        <appender-ref ref="MONITORING" />
-    </logger>
+  <!-- ST Is not using IntygUser from infra -->
+  <appender name="MI_MONITORING" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+      <marker>Monitoring</marker>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE}] ${LINE}</pattern>
+    </encoder>
+  </appender>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
+    <appender-ref ref="MI_MONITORING" />
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
 
 </configuration>
