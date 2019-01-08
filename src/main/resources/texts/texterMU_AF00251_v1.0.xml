@@ -2,29 +2,28 @@
 <texter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" giltigFrom="2016-10-25" typ="AF00251" version="1.0"
         xmlns="http://schema.forsakringskassan.se/vardgivare_sjukvard">
 
-    <text id="FRM_1.RBK">Läkarintyg för deltagare i arbetsmarknadspolitiska program med aktivitetsstöd, utvecklingsersättning eller
-        etableringsersättning
 
-        Om en programdeltagare är sjuk i mer än 7 dagar behöver hen lämna läkarintyg till Arbetsförmedlingen för att styrka att hen är
-        förhindrad att delta i programmet på grund av sjukdom.
+    <text id="FRM_1.RBK">Läkarintyg för deltagare i arbetsmarknadspolitiska program med aktivitetsstöd, utvecklingsersättning eller etableringsersättning
+
+        Om en programdeltagare är sjuk i mer än 7 dagar behöver hen lämna läkarintyg till Arbetsförmedlingen för att styrka att hen är förhindrad att delta i programmet på grund av sjukdom.
 
         Arbetsförmedlingen behöver få läkarintyget för att programdeltagaren ska kunna ha möjlighet att få ersättning under sjukfrånvaron.
-        Arbetsförmedlingen använder också informationen i läkarintyget för att utreda om det är möjligt att anpassa aktiviteter i
-        programmet så att programdeltagaren kan delta trots sin sjukdom.</text>
+        Arbetsförmedlingen använder också informationen i läkarintyget för att utreda om det är möjligt att anpassa aktiviteter i programmet så att programdeltagaren kan delta trots sin sjukdom.</text>
 
+    <!-- Kategorier -->
     <text id="KAT_1.RBK">Grund för medicinskt underlag</text>
     <text id="KAT_2.RBK">Arbetsmarknadspolitiskt program</text>
     <text id="KAT_3.RBK">Sjukdomens konsekvenser för patienten</text>
     <text id="KAT_4.RBK">Bedömning</text>
 
-    <!-- KAT 1 -->
+    <!-- Fråga 1 -->
     <text id="FRG_1.HLP">Här anger du på vilken grund du har gjort bedömningen. Flera alternativ kan väljas. Bedömningen ska i huvudsak baseras på din egen undersökning och grundar den sig på något annat så ange vad.</text>
     <text id="FRG_1.RBK">Intyget är baserat på?</text>
     <text id="KV_FKMU_0001.UNDERSOKNING.RBK">Min undersökning av patienten</text>
     <text id="KV_FKMU_0001.ANNAT.RBK">Annat</text>
     <text id="DFR_1.3.RBK">Ange vad annat är</text>
 
-    <!-- KAT 2 -->
+    <!-- Fråga 2 -->
     <text id="FRG_2.RBK">Patientens aktiviteter i programmet</text>
     <text id="FRG_2.HLP">Här anger du vad patienten har berättat att hen gör i sitt program. För en programdeltagare ska den medicinska bedömningen göras i förhållande till deltagarens förmåga att delta i aktiviteter i programmet.
         Exempel på aktiviteter är studier, arbetspraktik, jobbsökaraktiviteter och arbetslivsinriktad rehabilitering.
@@ -37,26 +36,26 @@
 
     <text id="DFR_2.3.RBK">Ange timmar/vecka.</text>
 
-    <!-- KAT 3 -->
+    <!-- Fråga 3 -->
     <text id="FRG_3.RBK">Jag bedömer att patienten har följande funktionsnedsättning</text>
     <text id="FRG_3.HLP">Här beskriver du funktionsnedsättningen och dess omfattning som orsakar nedsatt förmåga att delta i programmet och som observerats vid din och andra professioners undersökning och medicinsk utredning.
         Ange om beskrivningen bygger på iakttagelser, undersökningsfynd eller utredningsresultat. Ange även uppgifter om observerade funktionsnedsättningar i form av grader, mått och värden.
     </text>
 
-    <!-- KAT 4 -->
+    <!-- Fråga 4 -->
     <text id="FRG_4.RBK">Jag bedömer att patienten har följande aktivitetsbegränsning</text>
     <text id="FRG_4.HLP">Här värderar du och beskriver tydligt hur sjukdomen begränsar patientens förmåga till aktivitet, liksom hur omfattande konsekvenserna är.
         Aktivitetsbegränsningar i rörelseorganen ska beskrivas så att det framgår vad patienten inte kan göra, exempelvis om patienten har svårt att förflytta sig, inte klarar lyft eller långvarig statisk belastning av någon kroppsdel.
         Vid psykiska problem kan aktivitetsbegränsningen innebära att patienten har mer eller mindre svårt att vara uppmärksam, lära nytt, förstå instruktioner eller att påbörja, genomföra och avsluta en uppgift. Patienten kan också ha svårt att hantera stress, förändring och andra psykologiska krav.</text>
 
-    <!-- KAT 5 -->
-    <text id="FRG_5.RBK">Jag bedömer att patienten är förhindrad att delta i de aktiviteter som beskrivs ovan på grund av sin sjukdom/skada</text>
+    <!-- Fråga 5 -->
+    <text id="FRG_5.RBK">Jag bedömer att patienten är förhindrad att delta i aktiviteter i programmet på grund av sin sjukdom/skada</text>
     <text id="FRG_5.HLP">Här kan du ange om du bedömer att patienten är förhindrad att delta.</text>
 
     <text id="SVAR_JA.RBK">Ja</text>
     <text id="SVAR_NEJ.RBK">Nej</text>
 
-    <!-- KAT 6 -->
+    <!-- Fråga 6 -->
     <text id="FRG_6.RBK">Jag bedömer att patienten är förhindrad att delta i aktiviteter i följande omfattning och tidsperiod på grund av sin sjukdom/skada</text>
     <text id="FRG_6.HLP">Här sätter du de aktivitetsbegränsningarna i relation till de krav som patientens sysselsättning eller aktiviteter i programmet ställer. Graden av nedsättning och den tidsperiod läkarintyget gäller ska framgå. Gör din bedömning utifrån programmets omfattning. Vid behov kan du ange flera perioder med olika omfattning i samma läkarintyg.
         Om du inte vet omfattningen utgå ifrån att programmet är på heltid.
@@ -66,7 +65,7 @@
     <text id="DFR_6.1.FROM.RBK">Fr.o.m</text>
     <text id="DFR_6.1.TOM.RBK">T.o.m</text>
 
-    <!-- KAT 7 -->
+    <!-- Fråga 7 -->
     <text id="FRG_7.RBK">Jag bedömer att frånvaroperioden kan förkortas eller
         minskas i omfattning med anpassning</text>
     <text id="FRG_7.HLP">Här anger du din bedömning om frånvaroperioden kan förkortas eller minskas i omfattning med anpassning. Detta är en viktig impuls till Arbetsförmedlingen om att programmet kan behöva anpassas så att deltagaren kan delta trots sin sjukdom.
@@ -97,8 +96,7 @@
     </text>
 
 
-    <!-- KAT 8 -->
-
+    <!-- Fråga 8 -->
     <text id="FRG_8.RBK">Efter frånvaroperioden är min bedömning</text>
     <text id="FRG_8.HLP">Här beskriver du din bedömning av om patienten kan återgå till aktiviteter i programmet med eller utan anpassning efter frånvaroperioden. Detta är en viktig impuls till Arbetsförmedlingen om att programmet kan behöva anpassas så att deltagaren kan delta trots sin sjukdom.
 
