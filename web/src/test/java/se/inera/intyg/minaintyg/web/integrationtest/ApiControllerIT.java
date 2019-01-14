@@ -37,7 +37,6 @@ import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
@@ -80,7 +79,6 @@ public class ApiControllerIT extends IntegrationTestBase {
                 .expect().statusCode(HttpServletResponse.SC_OK)
                 .when().get("api/certificates")
                 .then()
-                .header("cache-control", equalTo("no-cache, no-store, max-age=0, must-revalidate"))
                 .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
                 .body("", hasSize(greaterThanOrEqualTo(7)));
     }
