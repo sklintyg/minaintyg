@@ -20,9 +20,11 @@
 /**
  * Created by BESA on 2015-11-25.
  */
+/*globals protractor */
 'use strict';
 
 var restUtil = require('./../util/rest.util.js');
+var textHelper =  require('./textHelper.js')
 
 module.exports = {
 
@@ -45,6 +47,23 @@ module.exports = {
     },
     get: function(url, loggedIn) {
         return restUtil.get(url, loggedIn);
+    },
+    getTextResource: function(name) {
+        var deferred = protractor.promise.defer();
+        // Load and cache expected dynamictext-values for this intygstype.
+        restUtil.getResource('classpath:texts/' + name).then(
+            function (response) {
+                textHelper.parseTextXml(response.body).then(
+                    function (response) {
+                        deferred.fulfill(response);
+                    }, function (err) {
+                        deferred.reject('Error during text parse: ' + JSON.stringify(err));
+                    });
+            }, function (err) {
+                deferred.reject('Error while fetching resource: ' + JSON.stringify(err));
+            });
+
+        return deferred.promise;
     }
 
 };

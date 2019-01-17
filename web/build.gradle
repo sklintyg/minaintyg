@@ -109,7 +109,7 @@ gretty {
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,caching-enabled",
-               "-Dresources.folder=${projectDir}/../src/main/resources",
+               "-Dresources.folder=classpath:",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
@@ -178,4 +178,6 @@ dependencies {
 
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
+
+    gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

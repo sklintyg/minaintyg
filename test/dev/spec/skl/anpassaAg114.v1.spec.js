@@ -23,7 +23,6 @@
 
 var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
-var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
@@ -41,8 +40,8 @@ describe('Anpassa AG1-14', function() {
         browser.ignoreSynchronization = false;
 
         // Load and cache expected dynamictext-values for this intygstype.
-        textHelper.readTextsFromFkTextFile('texterMU_AG114_v1.0.xml').then(function(textResources) {
-            texts = textResources;
+        restHelper.getTextResource('texterMU_AG114_v1.0.xml').then(function(textResource) {
+            texts = textResource;
         }, function(err) {
             fail('Error during text lookup ' + err);
         });
