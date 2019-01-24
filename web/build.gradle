@@ -1,5 +1,5 @@
 apply plugin: 'war'
-apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'org.gretty'
 apply plugin: 'com.moowork.grunt'
 
 def webappOutputDir = 'build/apps/'
@@ -94,6 +94,8 @@ task restAssuredTest(type: Test) {
 }
 
 gretty {
+    servletContainer = 'jetty9'
+    
     contextPath = '/'
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
     integrationTestTask = null
