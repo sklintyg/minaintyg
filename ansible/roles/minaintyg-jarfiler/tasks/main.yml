@@ -4,7 +4,7 @@
   shell: rm -f {{ tomcat_lib }}/refdata*.jar
 
 - name: Download refdata
-  get_url: url=https://build-inera.nordicmedtest.se/nexus/repository/public/se/inera/intyg/refdata/refdata/1.0.0.11/refdata-1.0.0.11.jar
+  get_url: url=https://build-inera.nordicmedtest.se/nexus/repository/public/se/inera/intyg/refdata/refdata/1.0.0.13/refdata-1.0.0.13.jar
            dest={{ tomcat_lib }}
 
 - name: Download javax.servlet.jsp.jstl-api-1.2.1.jar
