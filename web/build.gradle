@@ -109,7 +109,7 @@ gretty {
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,caching-enabled",
-               "-Dresources.folder=file://" + projectDir + "/../src/main/resources",
+               "-Dresources.folder=classpath:",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
@@ -179,6 +179,5 @@ dependencies {
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
 
-    // FIXME: activate when legacy handling of ref-data (src/main/resources) has been removed
-    // gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
+    gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }
