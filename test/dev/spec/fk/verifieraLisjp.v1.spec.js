@@ -164,11 +164,6 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeTruthy();
         });
 
-        it('Verifiera att tilläggsfrågorna är ej angivet', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeTruthy();
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeTruthy();
-        });
-
     });
 
     describe('Visa fullt Lisjp intyg (ej smittskydd)', function() {
@@ -321,15 +316,6 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera att Övriga upplysningar är  angivet', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeFalsy();
             expect(viewPage.getTextContent('ovrigt')).toEqual('En del övrigt om patienten');
-
-        });
-
-        it('Verifiera att tilläggsfrågorna är besvarade', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Nej, men rolig');
-
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Absolut');
 
         });
 
