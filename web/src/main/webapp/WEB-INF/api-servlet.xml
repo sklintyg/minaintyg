@@ -36,16 +36,11 @@
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
+      <ref bean="apiExceptionHandler" />
     </jaxrs:providers>
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
   </jaxrs:server>
-
-  <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
-    <property name="mapper">
-      <bean class="se.inera.intyg.common.util.integration.json.CustomObjectMapper"/>
-    </property>
-  </bean>
 
 </beans>
