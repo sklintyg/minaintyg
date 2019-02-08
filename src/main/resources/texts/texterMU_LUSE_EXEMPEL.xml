@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<texter typ="LUSE" giltigFrom="2015-12-15" version="0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schema.forsakringskassan.se/vardgivare_sjukvard texterMU_v1.0.xsd" xmlns="http://schema.forsakringskassan.se/vardgivare_sjukvard">
+<texter typ="LUSE" giltigFrom="2025-01-14" version="0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schema.forsakringskassan.se/vardgivare_sjukvard texterMU_v1.0.xsd" xmlns="http://schema.forsakringskassan.se/vardgivare_sjukvard">
 
   <!-- Text före val av elektroniskt formulär -->
   <text id="FRM_1">Vad är sjukersättning? Sjukersättning är en ersättning för personer mellan 30 och 64 år som har
@@ -63,9 +63,11 @@
   <text id="KV_FKMU_0005.6.HLP">TBD</text>
   <text id="KV_FKMU_0005.7.RBK">Underlag från företagshälsovård</text>
   <text id="KV_FKMU_0005.7.HLP">TBD</text>
-  <text id="KV_FKMU_0005.9.RBK">Underlag från skolhälsovård</text>
+  <text id="KV_FKMU_0005.8.RBK">Underlag från skolhälsovård</text>
+  <text id="KV_FKMU_0005.8.HLP">TBD</text>
+  <text id="KV_FKMU_0005.9.RBK">Utredning av annan specialistklinik</text>
   <text id="KV_FKMU_0005.9.HLP">TBD</text>
-  <text id="KV_FKMU_0005.10.RBK">Utredning av annan specialistklinik</text>
+  <text id="KV_FKMU_0005.10.RBK">Utredning från vårdinrättning utomlands</text>
   <text id="KV_FKMU_0005.10.HLP">TBD</text>
   <text id="KV_FKMU_0005.11.RBK">Övrigt</text>
   <text id="KV_FKMU_0005.11.HLP">TBD</text>
@@ -246,7 +248,7 @@
     handläggningen kan påbörjas.
   </text>
 
-  <text id="DFR_26.1.RBK">Jag önskar att Försökringskassan kontaktar mig.</text>
+  <text id="DFR_26.1.RBK">Jag önskar att Försäkringskassan kontaktar mig.</text>
   <text id="DFR_26.1.HLP">TBD</text>
 
   <text id="DFR_26.2.RBK">Ange gärna varför du vill ha kontakt.</text>
