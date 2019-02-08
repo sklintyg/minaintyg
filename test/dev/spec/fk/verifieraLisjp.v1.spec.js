@@ -165,11 +165,6 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeTruthy();
         });
 
-        it('Verifiera att tilläggsfrågorna är ej angivet', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeTruthy();
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeTruthy();
-        });
-
     });
 
     describe('Visa fullt lisjp intyg (ej smittskydd)', function() {
@@ -315,22 +310,11 @@ describe('Verifiera Lisjp', function() {
 
             expect(viewPage.showsNoValue('arbetslivsinriktadeAtgarderBeskrivning')).toBeFalsy();
             expect(viewPage.getTextContent('arbetslivsinriktadeAtgarderBeskrivning')).toEqual('Övriga åtgärder finns');
-
-
         });
 
         it('Verifiera att Övriga upplysningar är  angivet', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeFalsy();
             expect(viewPage.getTextContent('ovrigt')).toEqual('En del övrigt om patienten');
-
-        });
-
-        it('Verifiera att tilläggsfrågorna är besvarade', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Nej, men rolig');
-
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Absolut');
 
         });
 
@@ -340,8 +324,6 @@ describe('Verifiera Lisjp', function() {
             expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, NMT vg3');
             expect(viewPage.getTextContent('vardenhet-adress')).toEqual('NMT gata 3, 12345 Testhult');
         });
-
-
 
     });
 
