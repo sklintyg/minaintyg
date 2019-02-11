@@ -48,11 +48,8 @@ stage('restAssured') {
 stage('protractor') {
    node {
        try {
-           sh(script: 'rm -rf test/node_modules/minaintyg-testtools') // Without this, node does not always recognize that a new version is available.
-           wrap([$class: 'Xvfb']) {
-               shgradle "protractorTests -Dprotractor.env=build-server \
-                     -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
-           }
+           shgradle "protractorTests -Dprotractor.env=build-server \
+                 -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
        } finally {
            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/reports', \
                 reportFiles: 'index.html', reportName: 'Protractor results'
