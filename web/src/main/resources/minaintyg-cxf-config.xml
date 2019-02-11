@@ -61,11 +61,6 @@
       serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponderInterface"
       address="${certificates.listrelationsforcertificate.url}"/>
 
-  <!-- Client for the PingForConfiguration service on Intygstjanst -->
-  <jaxws:client id="pingIntygstjanstForConfigurationClient"
-      serviceClass="se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface"
-      address="${certificates.pingforconfiguration.url}"/>
-
   <cxf:bus>
     <cxf:features>
       <cxf:logging/>

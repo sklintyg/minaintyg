@@ -18,10 +18,14 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +39,6 @@ import org.springframework.stereotype.Component;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
-import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
-import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -82,12 +83,8 @@ public class HealthMonitor extends Collector {
     @Value("${app.name}")
     private String appName;
 
-    @Value("${intygstjanst.logicaladdress}")
-    private String intygstjanstLogicalAddress;
-
-    @Autowired
-    @Qualifier("pingIntygstjanstForConfigurationClient")
-    private PingForConfigurationResponderInterface intygstjanstPingForConfiguration;
+    @Value("${certificates.metrics.url}")
+    private String itMetricsUrl;
 
     @Autowired
     @Qualifier("rediscache")
@@ -123,14 +120,17 @@ public class HealthMonitor extends Collector {
     }
 
     private boolean pingIntygstjanst() {
+        return doHttpLookup(itMetricsUrl) == HttpServletResponse.SC_OK;
+    }
+
+    private int doHttpLookup(String url) {
         try {
-            PingForConfigurationType parameters = new PingForConfigurationType();
-            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(
-                    intygstjanstLogicalAddress,
-                    parameters);
-            return pingResponse != null;
-        } catch (Exception e) {
-            return false;
+            HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
+            int respCode = httpConnection.getResponseCode();
+            httpConnection.disconnect();
+            return respCode;
+        } catch (IOException e) {
+            return 0;
         }
     }
 
