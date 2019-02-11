@@ -8,5 +8,6 @@
     "{{ proxy_env }}"
 
   roles:
+    - app-resources
     - minaintyg
 
