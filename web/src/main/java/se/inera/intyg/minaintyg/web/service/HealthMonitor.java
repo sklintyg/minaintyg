@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +39,6 @@ import org.springframework.stereotype.Component;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import se.riv.itintegration.monitoring.rivtabp21.v1.PingForConfigurationResponderInterface;
-import se.riv.itintegration.monitoring.v1.PingForConfigurationResponseType;
-import se.riv.itintegration.monitoring.v1.PingForConfigurationType;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -122,7 +120,7 @@ public class HealthMonitor extends Collector {
     }
 
     private boolean pingIntygstjanst() {
-        return doHttpLookup(itMetricsUrl) == 200;
+        return doHttpLookup(itMetricsUrl) == HttpServletResponse.SC_OK;
     }
 
     private int doHttpLookup(String url) {
