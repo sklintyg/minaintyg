@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -82,12 +85,8 @@ public class HealthMonitor extends Collector {
     @Value("${app.name}")
     private String appName;
 
-    @Value("${intygstjanst.logicaladdress}")
-    private String intygstjanstLogicalAddress;
-
-    @Autowired
-    @Qualifier("pingIntygstjanstForConfigurationClient")
-    private PingForConfigurationResponderInterface intygstjanstPingForConfiguration;
+    @Value("${certificates.metrics.url}")
+    private String itMetricsUrl;
 
     @Autowired
     @Qualifier("rediscache")
@@ -123,14 +122,17 @@ public class HealthMonitor extends Collector {
     }
 
     private boolean pingIntygstjanst() {
+        return doHttpLookup(itMetricsUrl) == 200;
+    }
+
+    private int doHttpLookup(String url) {
         try {
-            PingForConfigurationType parameters = new PingForConfigurationType();
-            PingForConfigurationResponseType pingResponse = intygstjanstPingForConfiguration.pingForConfiguration(
-                    intygstjanstLogicalAddress,
-                    parameters);
-            return pingResponse != null;
-        } catch (Exception e) {
-            return false;
+            HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
+            int respCode = httpConnection.getResponseCode();
+            httpConnection.disconnect();
+            return respCode;
+        } catch (IOException e) {
+            return 0;
         }
     }
 
