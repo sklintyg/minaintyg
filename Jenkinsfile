@@ -61,7 +61,7 @@ stage('protractor') {
 
 stage('tag and upload') {
     node {
-        shgradle "uploadArchives tagRelease -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+        shgradle "uploadArchives tagRelease ${versionFlags}"
     }
 }
 
