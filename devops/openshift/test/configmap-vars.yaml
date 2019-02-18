@@ -3,6 +3,8 @@ data:
   CERTIFICATE_BASEURL: "http://intygstjanst-test-minaintyg-test:8080"
   NTJP_WS_CERTIFICATE_TYPE: "JKS"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
+  REFDATA_URL: "https://github.com/sklintyg/refdata/archive/devtest.zip"
+  RESOURCES_FOLDER: "classpath:refdata-devtest/src/main/resources"
 kind: ConfigMap
 metadata:
   name: minaintyg-test-configmap-envvar
