@@ -3,6 +3,8 @@
 def buildVersion = "3.10.0.${BUILD_NUMBER}"
 def commonVersion = "3.10.0.+"
 def infraVersion = "3.10.0.+"
+def refDataVersion = "1.0.0.+"
+def versionFlags = "-DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion} -DrefDataVersion=${refDataVersion}"
 
 stage('checkout') {
     node {
@@ -15,7 +17,7 @@ stage('build') {
     node {
         try {
             shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -PcodeCoverage -DgruntColors=false \
-                  -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+                  ${versionFlags}"
         } finally {
             publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
                  reportFiles: 'index.html', reportName: 'JUnit results'
@@ -37,7 +39,7 @@ stage('restAssured') {
    node {
        try {
            shgradle "restAssuredTest -DbaseUrl=http://minaintyg.inera.nordicmedtest.se/ -Dcertificate.baseUrl=http://minaintyg.inera.nordicmedtest.se/ \
-                 -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+                 ${versionFlags}"
        } finally {
            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/tests/restAssuredTest', \
                reportFiles: 'index.html', reportName: 'RestAssured results'
@@ -49,7 +51,7 @@ stage('protractor') {
    node {
        try {
            shgradle "protractorTests -Dprotractor.env=build-server \
-                 -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+                 ${versionFlags}"
        } finally {
            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'test/reports', \
                 reportFiles: 'index.html', reportName: 'Protractor results'
@@ -77,6 +79,7 @@ stage('propagate') {
                 [$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion],
                 [$class: 'StringParameterValue', name: 'COMMON_VERSION', value: commonVersion],
                 [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
+                [$class: 'StringParameterValue', name: 'REF_DATA_VERSION', value: refDataVersion],
                 [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef],
                 [$class: 'StringParameterValue', name: 'RELEASE_FLAG', value: releaseFlag]
         ]
