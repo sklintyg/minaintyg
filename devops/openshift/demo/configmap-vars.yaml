@@ -15,8 +15,6 @@ data:
   REDIS_HOST: "${redis.service.host}"
   REDIS_PORT: "${redis.service.port}"
   CONFIG_DIR: "${config.folder}"
-  REFDATA_URL: "https://github.com/sklintyg/refdata/archive/master.zip"
-  RESOURCES_FOLDER: "classpath:refdata-master/src/main/resources"
 kind: ConfigMap
 metadata:
   name: minaintyg-demo-configmap-envvar
