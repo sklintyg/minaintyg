@@ -138,7 +138,7 @@ describe('Verifiera AG1-14', function() {
         it('Verifiera att Kontakt är angivet', function() {
             expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
 
-            expect(viewPage.getDynamicLabelText('DFR_9.1.RBK')).toBe(texts['DFR_9.1.RBK']);
+            expect(viewPage.getDynamicLabelText('FRG_9.RBK')).toBe(texts['FRG_9.RBK']);
             expect(viewPage.getTextContent('kontaktMedArbetsgivaren')).toEqual('Ja');
             expect(viewPage.getDynamicLabelText('DFR_9.2.RBK')).toBe(texts['DFR_9.2.RBK']);
             expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Gillar kontakt');
