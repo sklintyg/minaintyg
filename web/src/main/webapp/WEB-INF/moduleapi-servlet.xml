@@ -37,15 +37,11 @@
 
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
+      <ref bean="apiExceptionHandler" />
     </jaxrs:providers>
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
   </jaxrs:server>
-
-  <beans profile="dev">
-    <context:property-placeholder location="classpath*:/services-local.properties" ignore-unresolvable="true"/>
-  </beans>
-
 
 </beans>

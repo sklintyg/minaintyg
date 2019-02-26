@@ -1,9 +1,0 @@
----
-
-# Configuration repository
-environment_name: "dev"
-
-# Spring profiles
-profiles: test
-
-deploy_from_repo: false

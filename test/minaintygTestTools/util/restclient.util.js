@@ -70,6 +70,10 @@ function _run(options, json, baseUrl) {
         };
     }
 
+    if (options.accept) {
+        options.headers.accept = options.accept;
+    }
+
     return browser.controlFlow().execute(function() {
         return post(options, baseUrl);
     });

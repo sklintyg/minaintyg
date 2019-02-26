@@ -1,20 +1,28 @@
 apply plugin: 'war'
-apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'org.gretty'
 apply plugin: 'com.moowork.grunt'
+apply plugin: 'idea'
 
 def webappOutputDir = 'build/apps/'
 def webappTestOutputDir = 'build/karma/'
+
+idea {
+    module {
+        excludeDirs += file('node_modules')
+    }
+}
 
 grunt {
     colors = System.properties['gruntColors'] ? System.properties['gruntColors'].toBoolean() : true
 }
 
 node {
-    version = '10.10.0'
+    version = "${nodeJsVersion}"
+    npmVersion = "${npmVersion}"
     download = true
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
-    workDir = projectDir
-    nodeModulesDir = projectDir
+    workDir = file("${rootProject.projectDir}/.gradle/nodejs")
+    npmWorkDir = file("${rootProject.projectDir}/.gradle/npm")
 }
 
 task jsTests(type: NodeTask, dependsOn: npmInstall) {
@@ -94,6 +102,8 @@ task restAssuredTest(type: Test) {
 }
 
 gretty {
+    servletContainer = 'jetty9'
+    
     contextPath = '/'
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
     integrationTestTask = null
@@ -107,7 +117,7 @@ gretty {
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,caching-enabled",
-               "-Dresources.folder=${projectDir}/../src/main/resources",
+               "-Dresources.folder=classpath:",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
@@ -144,6 +154,7 @@ dependencies {
 
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
+    compile "se.inera.intyg.common:tstrk1009:${commonVersion}"
     compile "se.inera.intyg.common:luse:${commonVersion}"
     compile "se.inera.intyg.common:lisjp:${commonVersion}"
     compile "se.inera.intyg.common:luae_na:${commonVersion}"
@@ -175,4 +186,6 @@ dependencies {
 
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
+
+    gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

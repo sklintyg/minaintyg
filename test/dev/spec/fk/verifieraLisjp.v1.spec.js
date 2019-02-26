@@ -23,7 +23,6 @@
 
 var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
-var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
@@ -42,7 +41,7 @@ describe('Verifiera Lisjp', function() {
         browser.ignoreSynchronization = false;
 
         //Load and cache expected dynamictext-values for this intygstype.
-        textHelper.readTextsFromFkTextFile('texterMU_LISJP_v1.0.xml').then(function(textResources) {
+        restHelper.getTextResource('texterMU_LISJP_v1.0.xml').then(function(textResources) {
             texts = textResources;
         }, function(err) {
             fail('Error during text lookup ' + err);
@@ -163,11 +162,6 @@ describe('Verifiera Lisjp', function() {
 
         it('Verifiera att Övriga upplysningar är ej angivet', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeTruthy();
-        });
-
-        it('Verifiera att tilläggsfrågorna är ej angivet', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeTruthy();
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeTruthy();
         });
 
     });
@@ -322,15 +316,6 @@ describe('Verifiera Lisjp', function() {
         it('Verifiera att Övriga upplysningar är  angivet', function() {
             expect(viewPage.showsNoValue('ovrigt')).toBeFalsy();
             expect(viewPage.getTextContent('ovrigt')).toEqual('En del övrigt om patienten');
-
-        });
-
-        it('Verifiera att tilläggsfrågorna är besvarade', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Nej, men rolig');
-
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
-            expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Absolut');
 
         });
 

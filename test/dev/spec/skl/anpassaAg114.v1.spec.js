@@ -23,7 +23,6 @@
 
 var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
-var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
@@ -41,8 +40,8 @@ describe('Anpassa AG1-14', function() {
         browser.ignoreSynchronization = false;
 
         // Load and cache expected dynamictext-values for this intygstype.
-        textHelper.readTextsFromFkTextFile('texterMU_AG114_v1.0.xml').then(function(textResources) {
-            texts = textResources;
+        restHelper.getTextResource('texterMU_AG114_v1.0.xml').then(function(textResource) {
+            texts = textResource;
         }, function(err) {
             fail('Error during text lookup ' + err);
         });
@@ -94,7 +93,7 @@ describe('Anpassa AG1-14', function() {
         it('Gå till summary sidan utan att toggla bort diagnos', function() {
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(10);
+            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(7);
             expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
         });
 
@@ -113,7 +112,7 @@ describe('Anpassa AG1-14', function() {
         });
 
         it('Nu skall 1 vara bortvalda', function() {
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(9);
+            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(6);
             expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
         });
 

@@ -18,34 +18,48 @@
  */
 package se.inera.intyg.minaintyg.web.controller.testability;
 
-import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.client.RestTemplate;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
-import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
+import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
+
+import io.swagger.annotations.Api;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
+import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
 
 @Api(value = "Proxy for intygstjanst testability API", description = "REST API för testbarhet - IT")
 @Path("/resources")
 public class IntygstjanstTestabilityProxy {
 
+
+    public static final Logger LOG = LoggerFactory.getLogger(IntygstjanstTestabilityProxy.class);
+
     private final RestTemplate restTemplate;
     private final SystemPropertiesConfig systemPropertiesConfig;
 
     private HttpHeaders headers = new HttpHeaders();
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     @Autowired
     public IntygstjanstTestabilityProxy(RestTemplate restTemplate, SystemPropertiesConfig systemPropertiesConfig) {
@@ -100,5 +114,14 @@ public class IntygstjanstTestabilityProxy {
         HttpEntity<RegisterApprovedReceiversType> entity = new HttpEntity<>(approvedReceiversType, headers);
         restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
         return Response.ok().build();
+    }
+
+    // returrns any resource from app env.
+    @GET
+    @Path("/resource")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response refData(@QueryParam("location") String location) throws IOException {
+        LOG.info("GET resources/resource?location={}", location);
+        return Response.ok(resourceLoader.getResource(location).getInputStream()).build();
     }
 }

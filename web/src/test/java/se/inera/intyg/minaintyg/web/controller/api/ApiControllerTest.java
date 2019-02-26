@@ -223,6 +223,13 @@ public class ApiControllerTest {
         assertTrue(user.isSekretessmarkering());
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testNoCitizenInSecurityContext() {
+        Citizen citizen = mock(Citizen.class);
+        when(citizenService.getCitizen()).thenReturn(null);
+        apiController.getUser();
+    }
+
     private void mockCitizen(String personId) {
         Citizen citizen = mock(Citizen.class);
         when(citizen.getUsername()).thenReturn(personId);

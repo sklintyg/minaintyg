@@ -24,7 +24,6 @@
 
 var specHelper = miTestTools.helpers.spec;
 var restHelper = miTestTools.helpers.rest;
-var textHelper = miTestTools.helpers.text;
 
 var welcomePage = miTestTools.pages.welcomePage;
 var inboxPage = miTestTools.pages.inboxPage;
@@ -41,7 +40,7 @@ describe('Verifiera LUAE_FS', function() {
         browser.ignoreSynchronization = false;
 
         // Load and cache expected dynamictext-values for this intygstype.
-        textHelper.readTextsFromFkTextFile('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
+        restHelper.getTextResource('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
             texts = textResources;
         }, function(err) {
             fail('Error during text lookup ' + err);
