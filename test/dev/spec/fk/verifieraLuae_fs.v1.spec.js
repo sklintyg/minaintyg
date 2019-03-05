@@ -166,6 +166,17 @@ describe('Verifiera LUAE_FS', function() {
 
         });
 
+        it('Verifiera att tilläggsfrågorna är besvarade och har rätt rubrik', function() {
+            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
+            expect(viewPage.getDynamicLabelText('DFR_9001.1.RBK')).toBe(texts['DFR_9001.1.RBK']);
+            expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Tämligen påverkad');
+
+            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
+            expect(viewPage.getDynamicLabelText('DFR_9002.1.RBK')).toBe(texts['DFR_9002.1.RBK']);
+            expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Minst 3 fot');
+
+        });
+
     });
 
 });
