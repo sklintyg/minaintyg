@@ -28,6 +28,10 @@ module.exports = {
         return this.getIntyg('ts-diabetes', version, 'ts-diabetes', userId);
     },
 
+    getTstrk1062: function(userId, version) {
+        return this.getIntyg('tstrk1062', version, 'tstrk1062', userId);
+    },
+
     getLuse: function(userId) {
         return this.getIntyg('luse', '1.0', 'luse', userId);
     },
