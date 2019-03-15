@@ -1,15 +1,15 @@
 apiVersion: v1
 data:
-  REDIS_SERVICE_HOST: ind-sint-redis1.ind1.sth.basefarm.net;ind-sint-redis2.ind1.sth.basefarm.net;ind-sint-redis3.ind1.sth.basefarm.net
-  REDIS_SERVICE_PORT: 26379;26379;26379
-  REDIS_SENTINEL_MASTER_NAME: ind-sint-redis
-  NTJP_WS_CERTIFICATE_FILE: ${certificate.folder}/qa.eintyg.inera.sjunet.org.p12
-  NTJP_WS_TRUSTSTORE_FILE: ${certificate.folder}/truststore-mvk-sso.jks
+  REDIS_SERVICE_HOST: "ind-sint-redis1.ind1.sth.basefarm.net;ind-sint-redis2.ind1.sth.basefarm.net;ind-sint-redis3.ind1.sth.basefarm.net"
+  REDIS_SERVICE_PORT: "26379;26379;26379"
+  REDIS_SENTINEL_MASTER_NAME: "ind-sint-redis"
+  NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.eintyg.inera.sjunet.org.p12"
+  NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore-mvk-sso.jks"
   FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/fk-saml-keystore.jks"
-  FK_SAML_KEYSTORE_ALIAS: minaintyg.se
-  CERTIFICATE_BASEURL: http://intygstjanst:8080
-  NTJP_WS_CERTIFICATE_TYPE: PKCS12
-  NTJP_WS_TRUSTSTORE_TYPE: JKS
+  FK_SAML_KEYSTORE_ALIAS: "minaintyg.se"
+  CERTIFICATE_BASEURL: "http://intygstjanst:8080"
+  NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
+  NTJP_WS_TRUSTSTORE_TYPE: "JKS"
 kind: ConfigMap
 metadata:
   name: minaintyg-configmap-envvar
