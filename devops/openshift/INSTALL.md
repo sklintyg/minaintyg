@@ -70,7 +70,7 @@ Software artifacts are located at, and downloaded from:
 
 ### 2.7 Access to OpenShift Cluster
 
-The OpenShift user account must haThe OpenShift user account must have the right permissions to process, create, delete and replace objects. A VPN account and connection is required in order to access the OpenShift Cluster.
+The OpenShift user account must have the right permissions to process, create, delete and replace objects, and most certainly a VPN account and connection is required in order to access the OpenShift Cluster.
 
 ### 2.8 Client Software Tools
 
@@ -160,7 +160,7 @@ Note: Parameters shall follow the Java naming convention when used as in the val
         
 ##### 3.4.1 Redis Sentinel Configuration
 
-Redis sentinel requires at least three URL:s passed in order to work correctly. These are specified in the `REDIS_SERVICE_HOST` and `REDIS_SERVICE_PORT` parameters respectively:
+Redis sentinel requires at least three URL:s passed in order to work correctly. These are specified in the `REDIS_HOST` and `REDIS_PORT` parameters respectively:
 
     REDIS_HOST: "host1;host2;host3"
     REDIS_PORT: "26379;26379;26379"
