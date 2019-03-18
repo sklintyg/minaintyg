@@ -68,7 +68,8 @@ module.exports = function(grunt) {
         'af00251':     { base: 'common/af/af00251' },
         'ag114':       { base: 'common/skl/ag114' },
         'ag7804':      { base: 'common/skl/ag7804' },
-        'tstrk1009':   { base: 'common/ts/tstrk1009' }
+        'tstrk1009':   { base: 'common/ts/tstrk1009' },
+        'tstrk1062':   { base: 'common/ts/tstrk1062' }
     };
     Object.keys(modules).forEach(function(moduleName) {
         var module = modules[moduleName];

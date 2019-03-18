@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:RegisterCertificate xmlns:ns5="urn:riv:clinicalprocess:healthcond:certificate:3.2"
+    xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:3"
+    xmlns:ns4="urn:riv:clinicalprocess:healthcond:certificate:types:3"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:3">
+    <ns3:intyg>
+        <ns2:intygs-id>
+            <ns4:root>TSTNMT2321000156-1077</ns4:root>
+            <ns4:extension>CERTIFICATE_ID</ns4:extension>
+        </ns2:intygs-id>
+        <ns2:typ>
+            <ns4:code>TSTRK1062</ns4:code>
+            <ns4:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns4:codeSystem>
+            <ns4:displayName>Transportstyrelsens ADHD-intyg</ns4:displayName>
+        </ns2:typ>
+        <ns2:version>1.0</ns2:version>
+        <ns2:signeringstidpunkt>SIGNED_DATE</ns2:signeringstidpunkt>
+        <ns2:skickatTidpunkt>2019-02-06T14:34:25</ns2:skickatTidpunkt>
+        <ns2:patient>
+            <ns2:person-id>
+                <ns4:root>1.2.752.129.2.1.3.1</ns4:root>
+                <ns4:extension>PATIENT_CRN</ns4:extension>
+            </ns2:person-id>
+            <ns2:fornamn></ns2:fornamn>
+            <ns2:efternamn></ns2:efternamn>
+            <ns2:postadress></ns2:postadress>
+            <ns2:postnummer></ns2:postnummer>
+            <ns2:postort></ns2:postort>
+        </ns2:patient>
+        <ns2:skapadAv>
+            <ns2:personal-id>
+                <ns4:root>1.2.752.129.2.1.4.1</ns4:root>
+                <ns4:extension>TSTNMT2321000156-1079</ns4:extension>
+            </ns2:personal-id>
+            <ns2:fullstandigtNamn>DOCTOR_NAME</ns2:fullstandigtNamn>
+            <ns2:forskrivarkod>0000000</ns2:forskrivarkod>
+            <ns2:enhet>
+                <ns2:enhets-id>
+                    <ns4:root>1.2.752.129.2.1.4.1</ns4:root>
+                    <ns4:extension>CAREUNIT_ID</ns4:extension>
+                </ns2:enhets-id>
+                <ns2:arbetsplatskod>
+                    <ns4:root>1.2.752.29.4.71</ns4:root>
+                    <ns4:extension>1234567890</ns4:extension>
+                </ns2:arbetsplatskod>
+                <ns2:enhetsnamn>CAREUNIT_NAME</ns2:enhetsnamn>
+                <ns2:postadress>NMT gata 3</ns2:postadress>
+                <ns2:postnummer>12345</ns2:postnummer>
+                <ns2:postort>Testhult</ns2:postort>
+                <ns2:telefonnummer>0101112131416</ns2:telefonnummer>
+                <ns2:epost>enhet3@webcert.invalid.se</ns2:epost>
+                <ns2:vardgivare>
+                    <ns2:vardgivare-id>
+                        <ns4:root>1.2.752.129.2.1.4.1</ns4:root>
+                        <ns4:extension>CAREGIVER_ID</ns4:extension>
+                    </ns2:vardgivare-id>
+                    <ns2:vardgivarnamn>CAREGIVER_NAME</ns2:vardgivarnamn>
+                </ns2:vardgivare>
+            </ns2:enhet>
+        </ns2:skapadAv>
+        <ns2:svar id="1">
+            <ns2:instans>1</ns2:instans>
+            <ns2:delsvar id="1.1">
+                <ns4:cv>
+                    <ns4:code>IAV11</ns4:code>
+                    <ns4:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns4:codeSystem>
+                    <ns4:displayName>AM</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="1">
+            <ns2:instans>2</ns2:instans>
+            <ns2:delsvar id="1.1">
+                <ns4:cv>
+                    <ns4:code>IAV12</ns4:code>
+                    <ns4:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns4:codeSystem>
+                    <ns4:displayName>A1</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="1">
+            <ns2:instans>3</ns2:instans>
+            <ns2:delsvar id="1.1">
+                <ns4:cv>
+                    <ns4:code>IAV13</ns4:code>
+                    <ns4:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns4:codeSystem>
+                    <ns4:displayName>A2</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="2">
+            <ns2:instans>4</ns2:instans>
+            <ns2:delsvar id="2.1">
+                <ns4:cv>
+                    <ns4:code>IDK1</ns4:code>
+                    <ns4:codeSystem>e7cc8f30-a353-4c42-b17a-a189b6876647</ns4:codeSystem>
+                    <ns4:displayName>ID-kort</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="51">
+            <ns2:instans>1</ns2:instans>
+            <ns2:delsvar id="51.1">
+                <ns4:cv>
+                    <ns4:code>A01</ns4:code>
+                    <ns4:codeSystem>1.2.752.116.1.1.1.1.3</ns4:codeSystem>
+                </ns4:cv>
+            </ns2:delsvar>
+            <ns2:delsvar id="51.2">Tyfoidfeber och paratyfoidfeber</ns2:delsvar>
+            <ns2:delsvar id="51.3">
+                <ns4:partialDate>
+                    <ns4:format>YYYY</ns4:format>
+                    <ns4:value>2018</ns4:value>
+                </ns4:partialDate>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="51">
+            <ns2:instans>2</ns2:instans>
+            <ns2:delsvar id="51.1">
+                <ns4:cv>
+                    <ns4:code>B02</ns4:code>
+                    <ns4:codeSystem>1.2.752.116.1.1.1.1.3</ns4:codeSystem>
+                </ns4:cv>
+            </ns2:delsvar>
+            <ns2:delsvar id="51.2">Bältros</ns2:delsvar>
+            <ns2:delsvar id="51.3">
+                <ns4:partialDate>
+                    <ns4:format>YYYY</ns4:format>
+                    <ns4:value>2017</ns4:value>
+                </ns4:partialDate>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="51">
+            <ns2:instans>3</ns2:instans>
+            <ns2:delsvar id="51.1">
+                <ns4:cv>
+                    <ns4:code>C03</ns4:code>
+                    <ns4:codeSystem>1.2.752.116.1.1.1.1.3</ns4:codeSystem>
+                </ns4:cv>
+            </ns2:delsvar>
+            <ns2:delsvar id="51.2">Malign tumör i tandköttet</ns2:delsvar>
+            <ns2:delsvar id="51.3">
+                <ns4:partialDate>
+                    <ns4:format>YYYY</ns4:format>
+                    <ns4:value>2018</ns4:value>
+                </ns4:partialDate>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="51">
+            <ns2:instans>4</ns2:instans>
+            <ns2:delsvar id="51.1">
+                <ns4:cv>
+                    <ns4:code>D04</ns4:code>
+                    <ns4:codeSystem>1.2.752.116.1.1.1.1.3</ns4:codeSystem>
+                </ns4:cv>
+            </ns2:delsvar>
+            <ns2:delsvar id="51.2">Cancer in situ i huden</ns2:delsvar>
+            <ns2:delsvar id="51.3">
+                <ns4:partialDate>
+                    <ns4:format>YYYY</ns4:format>
+                    <ns4:value>2011</ns4:value>
+                </ns4:partialDate>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="53">
+            <ns2:delsvar id="53.1">true</ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="54">
+            <ns2:delsvar id="54.1">false</ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="59">
+            <ns2:delsvar id="59.1">2019-01-10</ns2:delsvar>
+            <ns2:delsvar id="59.2">Behandlingen var fruktlös</ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="60">
+            <ns2:delsvar id="60.1">Bedömning av aktuella symptom</ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="61">
+            <ns2:delsvar id="61.1">
+                <ns4:cv>
+                    <ns4:code>NI</ns4:code>
+                    <ns4:codeSystem>2.16.840.1.113883.5.1008</ns4:codeSystem>
+                    <ns4:displayName>Kan ej bedöma</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="32">
+            <ns2:delsvar id="32.1">Inga övriga kommentarer</ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="33">
+            <ns2:instans>1</ns2:instans>
+            <ns2:delsvar id="33.1">
+                <ns4:cv>
+                    <ns4:code>VAR12</ns4:code>
+                    <ns4:codeSystem>e889fa20-1dee-4f79-8b37-03853e75a9f8</ns4:codeSystem>
+                    <ns4:displayName>AM</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="33">
+            <ns2:instans>2</ns2:instans>
+            <ns2:delsvar id="33.1">
+                <ns4:cv>
+                    <ns4:code>VAR13</ns4:code>
+                    <ns4:codeSystem>e889fa20-1dee-4f79-8b37-03853e75a9f8</ns4:codeSystem>
+                    <ns4:displayName>A1</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+        <ns2:svar id="33">
+            <ns2:instans>3</ns2:instans>
+            <ns2:delsvar id="33.1">
+                <ns4:cv>
+                    <ns4:code>VAR14</ns4:code>
+                    <ns4:codeSystem>e889fa20-1dee-4f79-8b37-03853e75a9f8</ns4:codeSystem>
+                    <ns4:displayName>A2</ns4:displayName>
+                </ns4:cv>
+            </ns2:delsvar>
+        </ns2:svar>
+    </ns3:intyg>
+</ns3:RegisterCertificate>
