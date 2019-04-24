@@ -1,0 +1,339 @@
+apiVersion: v1
+data:
+  idp-eleg.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_07401b0c9b6e30140cf31ac1d84046ce44" cacheDuration="PT12H0M0.000S" entityID="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/metadata/0/0"><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#_07401b0c9b6e30140cf31ac1d84046ce44"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>HmtpTgKBxOLSm9URf07gY6+tBpa57bVMrB/Sk5PvkeA=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>cSad7CaaYwtQTENvZ+KZUEH2vB9Q02CV3I0h3kBCCqd5aghJSOYLY975l26Q42f2gUSxg7OLYVJyhyJwZtQioV9mihXQRmn7R8fhl7nVwupNN5eVw9Sz9qqEmjuwIWummOXLymYUDRcyurVHKq8+OBd8rBSV5RSyh7ntzWq9AYe+y+la8bszVox0Xgouvl6Z+HtKKgAqYO97UhNNu1tBhSln4cazhzVWztQfYJCCqvgUQ0KxTDSPa9sp45aEl5uTL7cQdohz4m4tErl3RYrk4dUl5Mk6wd3BUGcVYSEEJ6RLoG+3caliTaSYk9UXCom1eCmcOgudmc/S6SqJdniJiA==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIG5zCCBc+gAwIBAgIMIGWIxqzx+2jNIW40MA0GCSqGSIb3DQEBCwUAMEwxCzAJBgNVBAYTAkJF
+    MRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSIwIAYDVQQDExlBbHBoYVNTTCBDQSAtIFNIQTI1
+    NiAtIEcyMB4XDTE2MTEyOTE1MDAwMloXDTE5MTEzMDE1MDAwMlowUzELMAkGA1UEBhMCU0UxITAf
+    BgNVBAsTGERvbWFpbiBDb250cm9sIFZhbGlkYXRlZDEhMB8GA1UEAwwYaWRwLmZ1bmt0aW9uc3Rq
+    YW5zdGVyLnNlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuOg5+n3YhAOGB5sxdLX0
+    9LalcElSEkwAnfB6ayw8Ek8sAqvscbd7OQYxw6VORoYBjqhC0lQOTw8+tw6ZRtp3RFH9rhhOMBDY
+    Ue76XK8zg3xvBx827GR6FJrDVF+tmfliIEC8/RBqAKWealWplPREbJXTwHRX+TSxwa53L/stTE7A
+    Ih4uEhFMHbPvC5Rqi0TLtPyo1PFs61wad6AJnMkQTQaKO17c+ntG0uUXzQplWOt5QeTzGpm+/tcc
+    N3lgZ1K7fq0jay3MyulzWsKe7+SWDohm5xmFo6rJwpONf5gqC5ueqferO9U3WIy1rAiLFHQPGcaq
+    /yNj0t7UxhFI/J3R8wIDAQABo4IDwDCCA7wwDgYDVR0PAQH/BAQDAgWgMIGJBggrBgEFBQcBAQR9
+    MHswQgYIKwYBBQUHMAKGNmh0dHA6Ly9zZWN1cmUyLmFscGhhc3NsLmNvbS9jYWNlcnQvZ3NhbHBo
+    YXNoYTJnMnIxLmNydDA1BggrBgEFBQcwAYYpaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL2dz
+    YWxwaGFzaGEyZzIwVwYDVR0gBFAwTjBCBgorBgEEAaAyAQoKMDQwMgYIKwYBBQUHAgEWJmh0dHBz
+    Oi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAgGBmeBDAECATAJBgNVHRMEAjAAMD4G
+    A1UdHwQ3MDUwM6AxoC+GLWh0dHA6Ly9jcmwyLmFscGhhc3NsLmNvbS9ncy9nc2FscGhhc2hhMmcy
+    LmNybDAjBgNVHREEHDAaghhpZHAuZnVua3Rpb25zdGphbnN0ZXIuc2UwHQYDVR0lBBYwFAYIKwYB
+    BQUHAwEGCCsGAQUFBwMCMB0GA1UdDgQWBBT4SY3iSBzJV9577ACLxAn4T7OaSjAfBgNVHSMEGDAW
+    gBT1zdU8CFD5ak86t5faVoPmadJo9zCCAfQGCisGAQQB1nkCBAIEggHkBIIB4AHeAHUA3esdK3oN
+    T6Ygi4GtgWhwfi6OnQHVXIiNPRHEzbbsvswAAAFYsJmPHQAABAMARjBEAiALaPh5rjJLn6B0naiF
+    tsrIurU+j9lKP5hOJ8v7GqdbxAIgedkHKCjNg2FCwUJXvHg3gwsU9frKVgRC7jbUgMPcSeMAdgBW
+    FAaaL9fC7NP14b1Esj7HRna5vJkRXMDvlJhV1onQ3QAAAViwmZG3AAAEAwBHMEUCIHVU7NB6wvDo
+    y9ijf+jNKDgVbIcQ4n9HhCyN3UXBOc+QAiEAoXKKffoBokfxg+c4XLgmhWTORFuzk3YHbmuaaggS
+    MrwAdgCkuQmQtBhYFIe7E6LMZ3AKPDWYBPkb37jjd80OyA3cEAAAAViwmZN2AAAEAwBHMEUCIDCy
+    S8ewRtfDb1qIXW6dWNCru4/lwLZtJZavNP/kMUzfAiEAvgmZZJhMEgomYWS7C+TcP4MtTd17utMN
+    jQxEHF1CML0AdQDuS723dc5guuFCaR+r4Z5mow9+X7By2IMAxHuJeqj9ywAAAViwmZUpAAAEAwBG
+    MEQCICe+/fAio+yXpdUB9uj9jXgEOiDRzfSlzLjRSUmBOb3vAiAY9qX/3FlT6rivR3Kh9n6qsWbO
+    L3nnOR9sQgAp5EhvMzANBgkqhkiG9w0BAQsFAAOCAQEAQznAn5ueKVvOa9E+FI2CKw3Y8BbLHTlr
+    7TYB2UZyPeBkPvFwjiSeuMh1FN7W98X8bo9NwPmtFIrghc9DcT0m8FnAqZDPD443rFS8iMfVGcoS
+    qZzJVPQ3mJWUDUNsNro3JnRFgdNjUOSIbewnD7gVJIyfw2B8SznvhunyVWqyrUUSnziecKAXPxFM
+    nxQ748H6glHMXzaL5T4hTHcib4K7tGckrJHo7YLqLsVnKhyh9xzGVJdD0pUgM1jPDE/4ASdjfkOn
+    z5DvjBF8L1sW1zND2jVKkPSi/ImgMrqdLiEMY2i1x/5EevEMZMqWJ4FMpNx14/0S/O0DM2qP1Bu4
+    XtucKw==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>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</ds:X509Certificate></ds:X509Data><ds:KeyName>IDP Funktionstjanster-2016-idp.funktionstjanster.se.crt</ds:KeyName></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/sloreq/0/0?mgvhostparam=0" ResponseLocation="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/sloresp/0/0?mgvhostparam=0"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/sloreq/0/0?mgvhostparam=0" ResponseLocation="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/sloresp/0/0?mgvhostparam=0"/><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/req/0/0?mgvhostparam=0"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/req/0/0?mgvhostparam=0"/></md:IDPSSODescriptor></md:EntityDescriptor>
+  idp-fk.xml: |-
+    <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="_28f160045f6f0d7d6aa13e07903dc11c" cacheDuration="PT1H0M0.000S" entityID="sjalvbetjaningcs.sfa.se" validUntil="2017-03-31T08:42:53Z">
+      <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+          <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+          <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+          <ds:Reference URI="#_28f160045f6f0d7d6aa13e07903dc11c">
+            <ds:Transforms>
+              <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+              <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </ds:Transforms>
+            <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+            <ds:DigestValue>pCxh9zZKOEPiMQW9rAOx+7XdGIg=</ds:DigestValue>
+          </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>
+          jSHc4uji2ROXYAl2pgb8dh67QwlWWpYAkCnfrDZMSK54WrnFy0R2jDcQst9/zE3kvPP4N8NB8OU90fCfxfzz16KL84n7Wdrm5yhV4opxX9b0SvdNxmV4g93j4RZl1xB9w2cG73L2eJyVQGKQFkbfbGzEki+vESf9Cpb8zhzhJZE=
+        </ds:SignatureValue>
+        <ds:KeyInfo>
+          <ds:X509Data>
+            <ds:X509Certificate>
+              MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+              ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+              bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+              KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+              MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+              VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+              MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+              b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+              vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+              NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+              gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+              7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+              ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+            </ds:X509Certificate>
+          </ds:X509Data>
+        </ds:KeyInfo>
+      </ds:Signature>
+      <md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+          <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <ds:X509Data>
+              <ds:X509Certificate>
+                MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+                ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+                bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+                KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+                MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+                VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+                MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+                b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+                vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+                NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+                gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+                7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+                ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+              </ds:X509Certificate>
+            </ds:X509Data>
+            <ds:KeyName>e3018663635602d3500a3ade6058c7029a621bd8</ds:KeyName>
+          </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:NameIDFormat>
+          urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+        </md:NameIDFormat>
+        <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://auth2.forsakringskassan.se/necs/SAMLResponder"/>
+      </md:IDPSSODescriptor>
+      <md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+          <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <ds:X509Data>
+              <ds:X509Certificate>
+                MIIC0zCCAjwCAQAwDQYJKoZIhvcNAQEEBQAwgbExCzAJBgNVBAYTAlNFMRcwFQYDVQQIEw5WYXN0
+                ZXJub3JybGFuZDESMBAGA1UEBxMJU3VuZHN2YWxsMRowGAYDVQQKExFGb3JzYWtyaW5nc2thc3Nh
+                bjELMAkGA1UECxMCSVQxIzAhBgNVBAMTGmF1dGgyLmZvcnNha3Jpbmdza2Fzc2FuLnNlMScwJQYJ
+                KoZIhvcNAQkBFhhzc29AZm9yc2FrcmluZ3NrYXNzYW4uc2UwHhcNMTExMTExMTIzNDM3WhcNMjAw
+                MTI4MTIzNDM3WjCBsTELMAkGA1UEBhMCU0UxFzAVBgNVBAgTDlZhc3Rlcm5vcnJsYW5kMRIwEAYD
+                VQQHEwlTdW5kc3ZhbGwxGjAYBgNVBAoTEUZvcnNha3Jpbmdza2Fzc2FuMQswCQYDVQQLEwJJVDEj
+                MCEGA1UEAxMaYXV0aDIuZm9yc2FrcmluZ3NrYXNzYW4uc2UxJzAlBgkqhkiG9w0BCQEWGHNzb0Bm
+                b3JzYWtyaW5nc2thc3Nhbi5zZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAqkRSvxxPBkFV
+                vjgHDnQcVQ2hZ58jyUwDP8XOjHs99NCjdlCeCBxW6FtA92bVXh9N94YkvXcYiMaJdmtD12ZJDFu7
+                NFhBsFEIQV7HsZppmHx+t+J++WAsYuIW1/5AQpEZRWJDYjtk49Hlc7rioA14GYLqHsJwKIMdddUd
+                gpQ5uLcCAwEAATANBgkqhkiG9w0BAQQFAAOBgQBYblipxlT35fEaCjowKyx74UxWpSHv5I8RuEDS
+                7ZMrji1ViydFRe/FkU0ef5w8e+Wc3Ogi1Pn4waybEbdXW6sPAKlKzxVPu2sPkQGht3Nu+Yx1C0Oh
+                ddI8KkUs3w+9XVl5BPqyZFEtZenaMEo7j9G2YhW/G9YywQNJSSIgWOguJg==
+              </ds:X509Certificate>
+            </ds:X509Data>
+            <ds:KeyName>e3018663635602d3500a3ade6058c7029a621bd8</ds:KeyName>
+          </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:NameIDFormat>
+          urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+        </md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://auth2.forsakringskassan.se/necs/SAMLServiceProvider" index="0" isDefault="true"/>
+      </md:SPSSODescriptor>
+      <md:Organization>
+        <md:OrganizationName xml:lang="en">FKProd</md:OrganizationName>
+        <md:OrganizationDisplayName xml:lang="en">Forsakringskassan Produktion</md:OrganizationDisplayName>
+        <md:OrganizationURL xml:lang="en">http://www.forsakringskassan.se/</md:OrganizationURL>
+      </md:Organization>
+      <md:ContactPerson contactType="administrative">
+        <md:GivenName>Bjorn</md:GivenName>
+        <md:SurName>Blomgren</md:SurName>
+        <md:EmailAddress>sso@forsakringskassan.se</md:EmailAddress>
+      </md:ContactPerson>
+    </md:EntityDescriptor>
+  minaintyg-logback.xml: |
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!--
+                ~ Copyright (C) 2018 Inera AB (http://www.inera.se)
+      ~
+      ~ This file is part of sklintyg (https://github.com/sklintyg).
+      ~
+      ~ sklintyg is free software: you can redistribute it and/or modify
+      ~ it under the terms of the GNU General Public License as published by
+      ~ the Free Software Foundation, either version 3 of the License, or
+      ~ (at your option) any later version.
+      ~
+      ~ sklintyg is distributed in the hope that it will be useful,
+      ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+      ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+      ~ GNU General Public License for more details.
+      ~
+      ~ You should have received a copy of the GNU General Public License
+      ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+      -->
+    <configuration>
+      <!-- logback config for the Openshift Container Platform (OCP). Stream to stdout, use layout and appenders from infra. -->
+
+      <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+
+      <!-- INTYG-7892: Ugly fix to avoid rebuild of infra and all applications for 2018-4 -->
+      <!-- The tags below comes from logback-ocp-base.xml in infra with changes to LINE -->
+      <!-- The changes to LINE will be implemented in 2019-1 and the block below will be removed -->
+      <property name="TIMESTAMP" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level"/>
+      <property name="SESSION" value="%X{req.sessionInfo:--}"/>
+      <property name="TRACE" value="%X{req.traceId:--}"/>
+      <property name="LINE" value="--- %-40.40logger{39} : %replace(%m%rEx){'[\r\n]+', '&#x000D;'}%nopex%n"/>
+
+      <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <markers>Monitoring,Validation</markers>
+          <onMatch>DENY</onMatch>
+          <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [console,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <appender name="MONITORING" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <marker>Monitoring</marker>
+          <onMatch>ACCEPT</onMatch>
+          <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="se.inera.intyg.infra.monitoring.logging.UserPatternLayout">
+          <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE},%user] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <appender name="VALIDATION" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <marker>Validation</marker>
+          <onMatch>ACCEPT</onMatch>
+          <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [validation,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <appender name="PROCESS" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <markers>Monitoring,Validation</markers>
+          <onMatch>DENY</onMatch>
+          <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [process,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <appender name="ACCESS" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <markers>Monitoring,Validation</markers>
+          <onMatch>DENY</onMatch>
+          <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [access,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <appender name="FRONTEND" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <markers>Monitoring,Validation</markers>
+          <onMatch>DENY</onMatch>
+          <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [frontend,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <!-- End of fix for INTYG-7893 -->
+
+      <!-- ST Is not using IntygUser from infra -->
+      <appender name="MI_MONITORING" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
+          <marker>Monitoring</marker>
+          <onMatch>ACCEPT</onMatch>
+          <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${TIMESTAMP} [monitoring,${SESSION},${TRACE}] ${LINE}</pattern>
+        </encoder>
+      </appender>
+
+      <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO">
+        <appender-ref ref="MI_MONITORING" />
+      </logger>
+
+      <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+      </root>
+
+    </configuration>
+  minaintyg.properties: |+
+    # Configuration folder
+    config.dir = ${config.folder}
+
+    # Base URLs to services provided by Intygstjansten
+    ntjp.base.url = https://esb.ntjp.se/vp
+    elva77.url.main = https://kontakt.minavardkontakter.se/mvk/
+
+    # Logical adresses
+    putjanst.logicaladdress=SE165565594230-1000
+    intygstjanst.logicaladdress = 5565594230
+
+    #################################################
+    #
+    # SAML config
+    #
+    #################################################
+    #fk.saml.keystore.file = file:${certificate.folder}/fk-saml-keystore.jks
+    #fk.saml.keystore.alias = minaintyg.se
+
+    ################################################
+    #
+    # NTjP WebService Configuration
+    #
+    ################################################
+    ntjp.ws.certificate.file = file:${certificate.folder}/eintyg.inera.sjunet.org.p12
+    ntjp.ws.certificate.type = PKCS12
+    ntjp.ws.truststore.file = file:${certificate.folder}/truststore-ntjp.jks
+    ntjp.ws.truststore.type = JKS
+
+    #################################################
+    #
+    # PU redis cache settings
+    #
+    #################################################
+    #redis.host=localhost
+    redis.cache.default_entry_expiry_time_in_seconds=1440
+    pu.cache.expiry=1440
+
+  sp-eleg.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="minaintyg.se" entityID="https://minaintyg.se/eleg">
+      <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://minaintyg.se/saml/SingleLogout/alias/eleg"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://minaintyg.se/saml/SingleLogout/alias/eleg"/>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://minaintyg.se/saml/SSO/alias/eleg" index="0" isDefault="true"/>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://minaintyg.se/saml/SSO/alias/eleg" index="1"/>
+      </md:SPSSODescriptor>
+    </md:EntityDescriptor>
+  sp-fk.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="minaintyg.se" entityID="https://minaintyg.se/defaultAlias">
+      <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://minaintyg.se/saml/SingleLogout/alias/defaultAlias"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://minaintyg.se/saml/SingleLogout/alias/defaultAlias"/>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://minaintyg.se/saml/SSO/alias/defaultAlias" index="0" isDefault="true"/>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://minaintyg.se/saml/SSO/alias/defaultAlias" index="1"/>
+      </md:SPSSODescriptor>
+    </md:EntityDescriptor>
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2019-04-16T17:51:33Z
+  name: minaintyg-config
+  namespace: pintyg
+  resourceVersion: "76017799"
+  selfLink: /api/v1/namespaces/pintyg/configmaps/minaintyg-config
+  uid: 45ec09db-6070-11e9-935a-005056a1387d
