@@ -33,7 +33,6 @@ import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
 import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
 import se.inera.intyg.minaintyg.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
-import se.inera.intyg.schemas.contract.util.HashUtility;
 
 /**
  * Created by eriklupander on 2017-03-09.
@@ -53,7 +52,7 @@ public class MinaIntygUserDetailsService implements SAMLUserDetailsService {
         Person person = minaIntygPUService.getPerson(personId);
         String personName = personNameUtil.buildFullName(person);
 
-        LOG.info("Got " + HashUtility.hash(personId) + " with name: " + personName);
+        LOG.info("Got {} with name: {}", person.getPersonnummer().getPersonnummerHash(), personName);
 
         return new CitizenImpl(personId, LoginMethodEnum.ELVA77, personName, person.isSekretessmarkering());
     }
