@@ -33,6 +33,7 @@ import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
@@ -159,7 +160,7 @@ public class ApiController {
                     citizen.getFullName(), citizen.getLoginMethod().name(),
                     citizen.isSekretessmarkering());
         } else {
-            throw new IllegalStateException("No citizen in securityContext");
+            throw new AccessDeniedException("No citizen in securityContext");
         }
     }
 
