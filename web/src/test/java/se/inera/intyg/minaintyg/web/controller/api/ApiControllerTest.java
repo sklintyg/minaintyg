@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Response;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -214,7 +215,8 @@ public class ApiControllerTest {
 
         when(citizenService.getCitizen()).thenReturn(citizen);
 
-        UserInfo user = apiController.getUser();
+        Response response = apiController.getUser();
+        UserInfo user = (UserInfo) response.getEntity();
 
         assertNotNull(user);
         assertEquals(CIVIC_REGISTRATION_NUMBER, user.getPersonId());
@@ -223,11 +225,14 @@ public class ApiControllerTest {
         assertTrue(user.isSekretessmarkering());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testNoCitizenInSecurityContext() {
         Citizen citizen = mock(Citizen.class);
         when(citizenService.getCitizen()).thenReturn(null);
-        apiController.getUser();
+        Response response = apiController.getUser();
+
+        assertNotNull(response);
+        assertEquals(Response.Status.FORBIDDEN.getStatusCode(), response.getStatus());
     }
 
     private void mockCitizen(String personId) {
