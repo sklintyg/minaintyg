@@ -29,11 +29,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
@@ -153,14 +153,18 @@ public class ApiController {
     @GET
     @Path("/user")
     @Produces(JSON_UTF8)
-    public UserInfo getUser() {
+    public Response getUser() {
         Citizen citizen = citizenService.getCitizen();
         if (citizen != null) {
-            return new UserInfo(citizen.getUsername(),
+            UserInfo userInfo = new UserInfo(citizen.getUsername(),
                     citizen.getFullName(), citizen.getLoginMethod().name(),
                     citizen.isSekretessmarkering());
+
+            return Response.ok(userInfo).build();
         } else {
-            throw new AccessDeniedException("No citizen in securityContext");
+            LOG.info("No citizen in securityContext");
+            return Response.status(Response.Status.FORBIDDEN).type("text/plain")
+                    .entity("No citizen in securityContext").build();
         }
     }
 
