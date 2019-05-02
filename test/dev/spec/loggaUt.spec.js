@@ -81,7 +81,7 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
             browser.driver.sleep(3000);
-            expect(browser.getTitle()).toEqual('Inloggning - 1177 Vårdguidens e-tjänster');
+            expect(browser.getCurrentUrl()).toEqual('https://url.to.elva77/');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
