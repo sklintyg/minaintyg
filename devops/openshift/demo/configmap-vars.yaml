@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   CERTIFICATE_BASEURL: "http://${intygstjanst.demo.service.host}:8080"
   NTJP_BASE_URL: "https://qa.esb.ntjp.se/vp"
-  ELVA77_URL_MAIN: "https://kontakt.minavardkontakter.se/mvk/"
+  ELVA77_URL_MAIN: "https://e-tjanster.1177.se/"
   NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
   NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.eintyg.inera.sjunet.org.p12"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"

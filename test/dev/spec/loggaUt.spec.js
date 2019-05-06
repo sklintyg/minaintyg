@@ -81,7 +81,7 @@ describe('Logga ut', function() {
             browser.ignoreSynchronization = true;
             specHelper.backToMvk();
             browser.driver.sleep(3000);
-            expect(browser.getCurrentUrl()).toEqual('https://url.to.elva77/');
+            expect(browser.getCurrentUrl()).toContain('https://e-tjanster.1177.se/');
         });
 
         it('Access denied visas om invånaren försöker navigera till startsidan', function() {
