@@ -3,6 +3,7 @@ data:
   CERTIFICATE_BASEURL: "http://${intygstjanst.test.minaintyg.test.service.host}:8080"
   NTJP_WS_CERTIFICATE_TYPE: "JKS"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
+  ELVA77_URL_MAIN: "https://e-tjanster.1177.se/"
 kind: ConfigMap
 metadata:
   name: minaintyg-test-configmap-envvar
