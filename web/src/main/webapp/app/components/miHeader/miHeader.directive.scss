@@ -4,6 +4,7 @@ mi-header {
   // Define local variables for directive
   $mi-header-bg: #21263D;
   $mi-header-text-color: #fff;
+  $mi-header-vl: #666;
   $mi-header-link-color: #F5CBA3;
   $mi-header-logout-link-color: #FFF0C3;
   $mi-header-height: 80px;
@@ -67,7 +68,13 @@ mi-header {
   }
 
   .user-logout {
+    border-left: 1px solid $mi-header-vl;
     text-align: right;
+
+    @media (max-width: $screen-xs-max) {
+      border-left: 0;
+    }
+
     a {
       color: $mi-header-logout-link-color;
 
@@ -80,4 +87,6 @@ mi-header {
       }
     }
   }
+
+
 }
