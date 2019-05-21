@@ -15,7 +15,7 @@
         <div class="sent">
           {{r.name}}
           <i ng-if="userHasSekretessmarkering && r.trusted" class="icon icon-shield"></i>
-          <span class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span>
+          <span class="padding-left timestamp">(Skickat {{r.sentTimestamp | date:'shortDate'}})</span>
         </div>
       </li>
     </ul>
