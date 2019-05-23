@@ -109,7 +109,12 @@
       <delsvar id="6.2">Beskrivning av förmåga</delsvar>
     </svar>
     <svar id="7">
-      <delsvar id="7.1">70</delsvar>
+      <delsvar id="7.1">
+        <ns3:pq>
+          <ns3:value>70.0</ns3:value>
+          <ns3:unit>%</ns3:unit>
+        </ns3:pq>
+      </delsvar>
       <delsvar id="7.2">
         <ns3:datePeriod>
           <ns3:start>2018-11-01</ns3:start>
