@@ -11,7 +11,7 @@ ext {
 
     schemasContractVersion = "2.1.8"
 
-    intygClinicalprocessSchemasVersion = "1.0.16"
+    intygClinicalprocessSchemasVersion = "1.0.21"
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.4"
 
     apacheJstlVersion = "9.3.6.v20151106"
