@@ -162,7 +162,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
 
         'certificates.label.replaced': 'ERSATT INTYG',
-
+        'certificates.label.dash': '-',
+        
         // Errors in main app (boot-app.jsp)
         //'error.pagetitle': 'Tekniskt fel',
         'error.generictechproblem.title': 'Tekniskt fel',

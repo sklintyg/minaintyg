@@ -67,12 +67,4 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
                 return moduleService.getModuleName(item.type);
 
             };
-
-            $scope.getAdditionalInfoOrReplacedText = function(item) {
-                if (item.replacedBy) {
-                    return 'ERSATT INTYG';
-                } else {
-                    return item.complementaryInfo;
-                }
-            };
         }]);
