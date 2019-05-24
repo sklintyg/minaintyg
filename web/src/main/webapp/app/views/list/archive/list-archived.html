@@ -38,7 +38,9 @@
           <tr ng-repeat="cert in archivedCertificates | archived">
             <td scope="row" headers="issued" class="text-nowrap">{{cert.sentDate | date:'shortDate'}}</td>
             <td headers="type">{{ getIntygTypeName(cert) }}</td>
-            <td headers="certinfo">{{getAdditionalInfoOrReplacedText(cert)}}</td>
+            <td ng-if="cert.replacedBy" headers="certinfo"><span dynamic-label key="certificates.label.replaced"></span></td>
+            <td ng-if="!cert.replacedBy && cert.complementaryInfo" headers="certinfo">{{cert.complementaryInfo}}</td>
+            <td ng-if="!cert.replacedBy && !cert.complementaryInfo" headers="certinfo"><span dynamic-label key="certificates.label.dash"></span></td>
             <td headers="issuedby">{{cert.careunitName}}<br>{{cert.caregiverName}}</td>
             <td headers="restore">
               <button id="restoreCertificate-{{cert.id}}" class="btn btn-link" ng-click="restoreCert(cert)" uib-popover="{{messageService.getProperty('btn-link.restore.tooltip')}}"
@@ -73,7 +75,9 @@
                 <span dynamic-label key="archived-cert-table.headers.complementary-info"></span>
               </div>
               <div class="col-xs-8 col-sm-9">
-                {{getAdditionalInfoOrReplacedText(cert)}}
+                <span ng-if="cert.replacedBy" headers="certinfo" dynamic-label key="certificates.label.replaced"></span>
+                <span ng-if="!cert.replacedBy && cert.complementaryInfo" headers="certinfo">{{cert.complementaryInfo}}</span>
+                <span ng-if="!cert.replacedBy && !cert.complementaryInfo" headers="certinfo" dynamic-label key="certificates.label.dash"></span>
               </div>
             </div>
 
