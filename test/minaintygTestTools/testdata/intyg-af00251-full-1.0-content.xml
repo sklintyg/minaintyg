@@ -95,7 +95,7 @@
             <ns3:delsvar id="2.3">
                 <ns5:pq>
                     <ns5:value>22.0</ns5:value>
-                    <ns5:unit>hour</ns5:unit>
+                    <ns5:unit>h</ns5:unit>
                 </ns5:pq>
             </ns3:delsvar>
         </ns3:svar>
