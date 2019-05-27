@@ -81,17 +81,24 @@ Must have:
 * oc
 * VPN Client (such as Cisco Any Connect) 
 
+### 2.9 Logstash filters (Inera Drift ELK stack)
+
+The application logs are written to stdout/console. All pod output will be processed by logstash, where relevant data is extracted to fields. The resulting log-records (json) are sent to Elasticsearch for persistence. Kibana is used to filter, search and visualize the persisted log data.
+
+The logstash filters and grok patterns need to be updated if any log formats are changed.
+https://github.com/sklintyg/monitoring/tree/develop/logstash/
 
 # 3 Installation Procedure
 
 ### 3.1 Installation Checklist
 
 1. All Pre-Installation Requirements are fulfilled, se above
-2. Ensure that the secrets `minaintyg-env`, `minaintyg-certifikat` and `minaintyg-secret-envvar` are up to date
-3. Ensure that the config maps `minaintyg-config` and `minaintyg-configmap-envvar` are up to date
-4. Check that deployment works as expected 
-5. Fine-tune memory settings for container and java process
-6. Setup policies for number of replicas, auto-scaling and rolling upgrade strategy
+2. Check if the logstash filter need to be updated
+3. Ensure that the secrets `minaintyg-env`, `minaintyg-certifikat` and `minaintyg-secret-envvar` are up to date
+4. Ensure that the config maps `minaintyg-config` and `minaintyg-configmap-envvar` are up to date
+5. Check that deployment works as expected
+6. Fine-tune memory settings for container and java process
+7. Setup policies for number of replicas, auto-scaling and rolling upgrade strategy
 
 
 ### 3.2 Migrate Database Schema
