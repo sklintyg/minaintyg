@@ -1,29 +1,24 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-3 col-xs-12 mi-header-col">
-      <div>
-        <a ng-href="{{authUserDescription.length ? '/web/start' : '/'}}">
-          <img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo"
-               src="/img/logo-minaintyg-white-retina.png" />
-        </a>
-      </div>
-    </div>
-    <div class="col-sm-7 col-xs-12 mi-header-col user-info" ng-if="authUserDescription">
-      <div>
-        <message class="hidden-xs" key="nav.label.loggedinas"></message>
-        &nbsp;<span class="user-name">{{authUserDescription}}</span><br>
-        <a ng-click="showSekretessInfoMessage()" ng-if="userHasSekretessmarkering">
-          <i class="icon icon-shield"></i><span dynamic-label key="user.label.sekrettessmarkering"></span>
-        </a>
-      </div>
-    </div>
-    <div class="col-sm-2 col-xs-12 mi-header-col user-logout" ng-if="authUserDescription">
-      <div>
-        <a href="{{applicationLogoutUrl}}" id="mvklogoutLink">
-          <dynamic-label key="mvk.header.logouttext"></dynamic-label>
-          <i class="icon icon-logout-1"></i>
-        </a>
-      </div>
-    </div>
+  <div class="mi-header-col header-logo">
+    <a ng-href="{{authUserDescription.length ? '/web/start' : '/'}}">
+      <img class="page-logo" alt="Gå till inkorgen i Mina intyg. Logo Mina intyg" id="logo"
+           src="/img/logo-minaintyg-white-retina.png" />
+    </a>
+  </div>
+
+  <div class="mi-header-col user-info" ng-if="authUserDescription">
+    <span>
+      <message class="hidden-xs" key="nav.label.loggedinas"></message>
+      <span class="user-name">{{authUserDescription}}</span>
+    </span>
+    <a ng-click="showSekretessInfoMessage()" ng-if="userHasSekretessmarkering">
+      <i class="icon icon-shield"></i><span dynamic-label key="user.label.sekrettessmarkering"></span>
+    </a>
+  </div>
+  <div class="mi-header-col user-logout" ng-if="authUserDescription">
+    <a href="{{applicationLogoutUrl}}" id="mvklogoutLink">
+      <dynamic-label key="mvk.header.logouttext"></dynamic-label>
+      <i class="icon icon-logout-1"></i>
+    </a>
   </div>
 </div>
