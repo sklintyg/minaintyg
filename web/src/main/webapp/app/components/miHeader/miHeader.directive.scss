@@ -10,45 +10,68 @@ mi-header {
   $mi-header-height: 80px;
 
   //Set default values of directive
-  display: block;
+  display: flex;
   background-color: $mi-header-bg;
   color: $mi-header-text-color;
+
+  .container {
+    display: flex;
+
+    @media (max-width: $screen-xs-max) {
+      flex-direction: column;
+      width: 100%
+    }
+  }
+
+  .mi-header-col {
+    //Act as a flex horizontal container
+    display: flex;
+    //where its items are vertically centered..
+    align-items: center;
+    white-space: nowrap;
+  }
+
+
+  .header-logo {
+    flex: 1;
+    min-width: 145px;
+    max-width: 145px;
+
+    img {
+      height: 27px;
+      width: 145px;
+    }
+  }
+
 
   .mi-header-col {
     height: $mi-header-height;
 
     @media (max-width: $screen-xs-max) {
       height: $mi-header-height * 0.75;
+      min-height: $mi-header-height * 0.75;
 
       &.user-logout {
         height: $mi-header-height * 0.5;
+        min-height: $mi-header-height * 0.5;
         margin-bottom: 10px;
       }
 
       &.user-info {
         height: $mi-header-height * 0.5;
-
-        > div {
-          top: 30%;
-        }
+        min-height: $mi-header-height * 0.5;
       }
     }
-
-    //Vertically align column content
-    > div {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-
-  .page-logo {
-    height: 27px;
-    width: 145px;
   }
 
   .user-info {
     text-align: right;
+    padding: 0 16px;
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
     .user-name {
       font-weight: bold;
@@ -69,7 +92,8 @@ mi-header {
 
   .user-logout {
     border-left: 1px solid $mi-header-vl;
-    text-align: right;
+    justify-content: flex-end;
+    padding-left: 16px;
 
     @media (max-width: $screen-xs-max) {
       border-left: 0;
