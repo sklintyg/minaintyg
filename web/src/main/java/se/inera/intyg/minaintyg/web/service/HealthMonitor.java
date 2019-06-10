@@ -66,10 +66,6 @@ public class HealthMonitor extends Collector {
 
     private static final long MILLIS_PER_SECOND = 1000L;
 
-    @Autowired
-    @Qualifier("rediscache")
-    private RedisTemplate<Object, Object> redisTemplate;
-
     @Value("${certificates.metrics.url}")
     private String itMetricsUrl;
 
