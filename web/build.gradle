@@ -103,7 +103,7 @@ task restAssuredTest(type: Test) {
 
 gretty {
     servletContainer = 'jetty9'
-    
+
     contextPath = '/'
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
     integrationTestTask = null
@@ -168,25 +168,26 @@ dependencies {
 
     compile "org.springframework:spring-web:${springVersion}"
     compile "org.springframework:spring-webmvc:${springVersion}"
-
     compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
     compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
     compile "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
     compile "org.springframework.session:spring-session:${springSessionVersion}"
-    compile "org.opensaml:openws:${openWsVersion}"
+
     compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
+    compile "org.opensaml:openws:${openWsVersion}"
     compile "org.opensaml:xmltooling:${xmlToolingVersion}"
+
     compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")
     }
 
-    testCompile "com.jayway.restassured:rest-assured:${restassuredVersion}"
-    testCompile "com.jayway.restassured:json-schema-validator:${jsonSchemaValidatorVersion}"
-
     compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
+
+    testCompile "com.jayway.restassured:rest-assured:${restassuredVersion}"
+    testCompile "com.jayway.restassured:json-schema-validator:${jsonSchemaValidatorVersion}"
 
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }
