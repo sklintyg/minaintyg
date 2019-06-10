@@ -18,27 +18,20 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.prometheus.client.Collector;
+import io.prometheus.client.Gauge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
-import io.prometheus.client.Collector;
-import io.prometheus.client.Gauge;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -55,8 +48,6 @@ import io.prometheus.client.Gauge;
 @Component
 public class HealthMonitor extends Collector {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HealthMonitor.class);
-
     private static final String PREFIX = "health_";
     private static final String NORMAL = "_normal";
     private static final String VALUE = "_value";
@@ -68,11 +59,6 @@ public class HealthMonitor extends Collector {
             .help("Current uptime in seconds")
             .register();
 
-    private static final Gauge LOGGED_IN_USERS = Gauge.build()
-            .name(PREFIX + "logged_in_users" + VALUE)
-            .help("Current number of logged in users")
-            .register();
-
     private static final Gauge IT_ACCESSIBLE = Gauge.build()
             .name(PREFIX + "intygstjanst_accessible" + NORMAL)
             .help("0 == OK 1 == NOT OK")
@@ -80,58 +66,61 @@ public class HealthMonitor extends Collector {
 
     private static final long MILLIS_PER_SECOND = 1000L;
 
-    @Value("${app.name}")
-    private String appName;
-
-    @Value("${certificates.metrics.url}")
-    private String itMetricsUrl;
-
     @Autowired
     @Qualifier("rediscache")
     private RedisTemplate<Object, Object> redisTemplate;
 
-    // Runs a lua script to count number of keys matching our session keys.
-    private RedisScript<Long> redisScript;
+    @Value("${certificates.metrics.url}")
+    private String itMetricsUrl;
 
+    @FunctionalInterface
+    interface Tester {
+        void run() throws Exception;
+    }
+
+    /**
+     * Registers this class as a prometheus collector.
+     */
     @PostConstruct
     public void init() {
-        redisScript = new DefaultRedisScript<>(
-                "return #redis.call('keys','spring:session:" + appName + ":index:*')", Long.class);
         this.register();
     }
 
+    /**
+     * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector),
+     * with this method always returning an empty list of MetricFamilySamples.
+     *
+     * @return
+     *      Always returns an empty list.
+     */
     @Override
     public List<MetricFamilySamples> collect() {
         long secondsSinceStart = (System.currentTimeMillis() - START_TIME) / MILLIS_PER_SECOND;
+
+        // Update the gauges.
         UPTIME.set(secondsSinceStart);
-        LOGGED_IN_USERS.set(countSessions());
         IT_ACCESSIBLE.set(pingIntygstjanst() ? 0 : 1);
 
         return Collections.emptyList();
     }
 
-    private int countSessions() {
-        if (redisScript == null) {
-            LOG.warn("Trying to count users from Redis before Redis script was initialized.");
-            return -1;
+    private boolean invoke(Tester tester) {
+        try {
+            tester.run();
+        } catch (Exception e) {
+            return false;
         }
-        Long numberOfUsers = redisTemplate.execute(redisScript, Collections.emptyList());
-        return numberOfUsers.intValue();
+        return true;
     }
 
     private boolean pingIntygstjanst() {
-        return doHttpLookup(itMetricsUrl) == HttpServletResponse.SC_OK;
-    }
-
-    private int doHttpLookup(String url) {
-        try {
-            HttpURLConnection httpConnection = (HttpURLConnection) new URL(url).openConnection();
+        return invoke(() -> {
+            HttpURLConnection httpConnection = (HttpURLConnection) new URL(itMetricsUrl).openConnection();
             int respCode = httpConnection.getResponseCode();
             httpConnection.disconnect();
-            return respCode;
-        } catch (IOException e) {
-            return 0;
-        }
+            if (respCode != HttpServletResponse.SC_OK) {
+                throw new RuntimeException();
+            }
+        });
     }
-
 }
