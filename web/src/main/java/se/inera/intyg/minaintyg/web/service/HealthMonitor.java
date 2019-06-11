@@ -20,10 +20,7 @@ package se.inera.intyg.minaintyg.web.service;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
