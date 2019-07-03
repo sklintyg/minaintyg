@@ -103,9 +103,9 @@ task restAssuredTest(type: Test) {
 
 gretty {
     servletContainer = 'jetty9'
-
     contextPath = '/'
     contextConfigFile = file("src/main/webapp/WEB-INF/jetty-context.xml")
+
     integrationTestTask = null
     scanInterval = 0
     httpPort = 8088
