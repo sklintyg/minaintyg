@@ -210,7 +210,6 @@ describe('Verifiera AG7804', function() {
         it('Verifiera sjukdomens konsekvenser', function() {
             expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
 
-            expect(viewPage.getTextContent('onskarFormedlaFunktionsnedsattning')).toEqual('Ja');
             expect(viewPage.getTextContent('funktionsnedsattning')).toEqual('Stela knän');
             expect(viewPage.getTextContent('aktivitetsbegransning')).toEqual('Hen har svårt att sitta eftersom hen inte kan böja på knäna.');
         });
