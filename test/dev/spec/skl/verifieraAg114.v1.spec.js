@@ -82,6 +82,22 @@ describe('Verifiera AG1-14', function() {
             expect(viewPage.isAt()).toBeTruthy();
         });
 
+        it('Verifiera grund för medicinskt underlag', function() {
+            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2015-12-09');
+            expect(viewPage.showsNoValue('undersokningAvPatienten')).toBeFalsy();
+
+            expect(viewPage.getTextContent('telefonkontaktMedPatienten')).toEqual('2015-12-08');
+            expect(viewPage.showsNoValue('telefonkontaktMedPatienten')).toBeFalsy();
+
+            expect(viewPage.getTextContent('journaluppgifter')).toEqual('2015-12-10');
+            expect(viewPage.showsNoValue('journaluppgifter')).toBeFalsy();
+
+            expect(viewPage.getTextContent('annatGrundForMU')).toEqual('2015-12-13');
+            expect(viewPage.showsNoValue('annatGrundForMU')).toBeFalsy();
+
+            expect(viewPage.getTextContent('annatGrundForMUBeskrivning')).toEqual('Annat grund för MU i MI');
+        });
+
 
         it('Verifiera sysselsättning', function() {
             expect(viewPage.getDynamicLabelText('KAT_1.RBK')).toBe(texts['KAT_1.RBK']);

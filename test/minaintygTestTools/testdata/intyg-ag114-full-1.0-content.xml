@@ -55,6 +55,51 @@
         </vardgivare>
       </enhet>
     </skapadAv>
+    <svar id="10">
+      <instans>1</instans>
+      <delsvar id="10.1">
+        <ns3:cv>
+          <ns3:code>UNDERSOKNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min undersökning av patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="10.2">2015-12-09</delsvar>
+    </svar>
+    <svar id="10">
+      <instans>2</instans>
+      <delsvar id="10.1">
+        <ns3:cv>
+          <ns3:code>TELEFONKONTAKT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min telefonkontakt med patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="10.2">2015-12-08</delsvar>
+    </svar>
+    <svar id="10">
+      <instans>3</instans>
+      <delsvar id="10.1">
+        <ns3:cv>
+          <ns3:code>JOURNALUPPGIFTER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Journaluppgifter från den</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="10.2">2015-12-10</delsvar>
+    </svar>
+    <svar id="10">
+      <instans>4</instans>
+      <delsvar id="10.1">
+        <ns3:cv>
+          <ns3:code>ANNAT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Annat</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="10.2">2015-12-13</delsvar>
+      <delsvar id="10.3">Annat grund för MU i MI</delsvar>
+    </svar>
     <svar id="1">
       <instans>1</instans>
       <delsvar id="1.1">
