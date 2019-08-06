@@ -93,7 +93,7 @@ describe('Anpassa AG1-14', function() {
         it('Gå till summary sidan utan att toggla bort diagnos', function() {
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(7);
+            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(8);
             expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
         });
 
@@ -112,7 +112,7 @@ describe('Anpassa AG1-14', function() {
         });
 
         it('Nu skall 1 vara bortvalda', function() {
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(6);
+            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(7);
             expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
         });
 
