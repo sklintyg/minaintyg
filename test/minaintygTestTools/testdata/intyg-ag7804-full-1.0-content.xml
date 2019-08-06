@@ -219,9 +219,6 @@
     <ns3:svar id="100">
       <ns3:delsvar id="100.1">true</ns3:delsvar>
     </ns3:svar>
-    <ns3:svar id="101">
-      <ns3:delsvar id="101.1">true</ns3:delsvar>
-    </ns3:svar>
     <ns3:svar id="103">
       <ns3:delsvar id="103.1">true</ns3:delsvar>
       <ns3:delsvar id="103.2">Kontakt med arbetsgivaren</ns3:delsvar>

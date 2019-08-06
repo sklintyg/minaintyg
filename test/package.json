@@ -15,13 +15,15 @@
         "http-backend-proxy": "^1.4.3",
         "jasmine-reporters": "^2.0.7",
         "jclass": "^1.1.9",
+        "protractor": "^5.4.2",
         "protractor-jasmine2-screenshot-reporter": "0.5.0",
         "request": "^2.65.0",
         "simple-xml-dom": "^1.0.0",
+        "webdriver-manager": "^12.1.6",
         "xml2js": "^0.4.4"
     },
     "engine": "node >= 4.2.1",
     "scripts": {
-        "install": "node node_modules/protractor/bin/webdriver-manager update"
+        "install": "node node_modules/webdriver-manager/bin/webdriver-manager update --gecko false --standalone false"
     }
 }
