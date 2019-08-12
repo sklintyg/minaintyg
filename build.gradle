@@ -31,8 +31,8 @@ ext {
 
     mockitoVersion = "2.16.0"
 
-    nodeJsVersion = "10.15.1"
-    npmVersion = "6.4.1"
+    nodeJsVersion = "10.16.2"
+    npmVersion = "6.10.3"
 }
 
 allprojects {
@@ -40,11 +40,20 @@ allprojects {
     apply plugin: 'maven'
 
     repositories {
-        jcenter()
         mavenLocal()
-        maven { url "https://build-inera.nordicmedtest.se/nexus/repository/snapshots/" }
-        maven { url "https://build-inera.nordicmedtest.se/nexus/repository/releases/" }
-        maven { url "http://repo.maven.apache.org/maven2" }
+        maven {
+            url "https://build-inera.nordicmedtest.se/nexus/repository/releases/"
+            mavenContent {
+                releasesOnly()
+            }
+        }
+        maven {
+            url "https://build-inera.nordicmedtest.se/nexus/repository/snapshots/"
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+        jcenter()
     }
 
     dependencies {
