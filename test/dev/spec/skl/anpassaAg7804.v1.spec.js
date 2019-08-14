@@ -92,7 +92,7 @@ describe('Anpassa AG7804', function() {
         it('Gå till summary sidan utan att toggla bort diagnos', function() {
             anpassaPage.clickShowSummary();
             expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-            expect(element.all(by.css('#ag7804-included-fields div.selectable-field-wrapper')).count()).toEqual(14);
+            expect(element.all(by.css('#ag7804-included-fields div.selectable-field-wrapper')).count()).toEqual(16);
             expect(element.all(by.css('#ag7804-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
         });
 
@@ -110,7 +110,7 @@ describe('Anpassa AG7804', function() {
         });
 
         it('Nu skall 1 fält vara bortvalt', function() {
-            expect(element.all(by.css('#ag7804-included-fields div.selectable-field-wrapper')).count()).toEqual(13);
+            expect(element.all(by.css('#ag7804-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
             expect(element.all(by.css('#ag7804-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
         });
 
