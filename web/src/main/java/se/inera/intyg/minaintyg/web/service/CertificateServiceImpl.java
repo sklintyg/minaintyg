@@ -21,22 +21,24 @@ package se.inera.intyg.minaintyg.web.service;
 import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
 import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Strings;
-
+import org.springframework.web.client.RestTemplate;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateType;
@@ -46,10 +48,12 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcer
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.ListRelationsForCertificateType;
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
+import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.json.CustomObjectMapper;
@@ -60,6 +64,7 @@ import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.service.repo.UtlatandeRecipientRepo;
 import se.inera.intyg.minaintyg.web.util.SendCertificateToRecipientTypeConverter;
+import se.inera.intyg.minaintyg.web.util.UtlatandeMetaBuilder;
 import se.inera.intyg.minaintyg.web.util.UtlatandeMetaDataConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.listCertificatesForCitizen.v3.ListCertificatesForCitizenResponderInterface;
@@ -117,6 +122,15 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private UtlatandeRecipientRepo recipientRepo;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${certificates.citizenApi.urlPattern}")
+    private String certificatesCitizenApiUrlPattern;
+
+    @Value("${certificates.citizenApi.active}")
+    private boolean certificatesCitizenApiActive;
 
     // This value is injected by the setter method
     private String logicalAddress;
@@ -179,7 +193,14 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<UtlatandeMetaData> getCertificates(Personnummer civicRegistrationNumber, boolean arkiverade) {
+    public List<UtlatandeMetaData> getCertificates(Personnummer pnr, boolean archived) {
+        return certificatesCitizenApiActive ? getCertificatesRestApi(pnr, archived) : getCertificatesWebServiceApi(pnr, archived);
+    }
+
+     // TODO; To be removed and replaced by #getCertificatesRestApi(), when it has been verified that the new REST API works
+     // with production data.
+    @Deprecated
+    protected List<UtlatandeMetaData> getCertificatesWebServiceApi(Personnummer civicRegistrationNumber, boolean arkiverade) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
         params.setPersonId(InternalConverterUtil.getPersonId(civicRegistrationNumber));
         params.setArkiverade(arkiverade);
@@ -204,6 +225,51 @@ public class CertificateServiceImpl implements CertificateService {
                     response.getResult().getErrorId() != null ? response.getResult().getErrorId().name() : "");
         }
     }
+
+    protected List<UtlatandeMetaData> getCertificatesRestApi(Personnummer pnr, boolean archived) {
+
+        final String url = String.format(certificatesCitizenApiUrlPattern, pnr.getPersonnummer(), archived);
+
+        final ResponseEntity<CertificateHolder[]> responseEntity = restTemplate.getForEntity(url, CertificateHolder[].class);
+
+        final HttpStatus httpStatus = responseEntity.getStatusCode();
+
+        if (httpStatus != HttpStatus.OK) {
+            LOGGER.error("Failed to fetch certificates for user #{}. HTTP Status is {}",
+                pnr.getPersonnummerHash(), httpStatus);
+            throw new ExternalWebServiceCallFailedException(httpStatus.getReasonPhrase(), "ERROR");
+        }
+
+        final String available = String.valueOf(!archived);
+
+        return Stream.of(responseEntity.getBody())
+            .map(this::toUtlatandeMetaData)
+            .peek(b -> b.available(available))
+            .map(b -> b.build())
+            .collect(Collectors.toList());
+    }
+
+    private UtlatandeMetaBuilder toUtlatandeMetaData(final CertificateHolder ch) {
+        final UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder()
+            .id(ch.getId())
+            .type(ch.getType())
+            .typeVersion(ch.getTypeVersion())
+            .signDate(ch.getSignedDate())
+            .issuerName(ch.getSigningDoctorName())
+            .facilityName(ch.getCareUnitName())
+            .additionalInfo(ch.getAdditionalInfo());
+
+        ch.getCertificateStates().stream()
+            .map(s -> new Status(s.getState(), s.getTarget(), s.getTimestamp()))
+            .forEach(builder::addStatus);
+
+        if (Objects.nonNull(ch.getCertificateRelation())) {
+            builder.addRelation(ch.getCertificateRelation());
+        }
+
+        return builder;
+    }
+
 
     @Override
     public List<IntygRelations> getRelationsForCertificates(List<String> intygsId) {
