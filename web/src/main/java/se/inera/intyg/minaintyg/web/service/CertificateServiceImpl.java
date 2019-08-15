@@ -31,11 +31,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -126,14 +130,44 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${certificates.citizenApi.urlPattern}")
-    private String certificatesCitizenApiUrlPattern;
+    @Value("${certificates.citizenApi.url}")
+    private String certificatesCitizenApiUrl;
 
     @Value("${certificates.citizenApi.active}")
     private boolean certificatesCitizenApiActive;
 
     // This value is injected by the setter method
     private String logicalAddress;
+
+    private HttpHeaders jsonPostHeaders;
+
+    //
+    public static class ListParameters {
+        private String id;
+        private boolean archived;
+
+        public String getId() {
+            return id;
+        }
+
+        public boolean isArchived() {
+            return archived;
+        }
+
+        public static ListParameters of(String id, boolean archived) {
+            final ListParameters p = new ListParameters();
+            p.id = id;
+            p.archived = archived;
+            return p;
+        }
+    }
+
+    @PostConstruct
+    public void init() {
+        jsonPostHeaders = new HttpHeaders();
+        jsonPostHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        jsonPostHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+    }
 
     @Override
     public List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
@@ -197,8 +231,7 @@ public class CertificateServiceImpl implements CertificateService {
         return certificatesCitizenApiActive ? getCertificatesRestApi(pnr, archived) : getCertificatesWebServiceApi(pnr, archived);
     }
 
-     // TODO; To be removed and replaced by #getCertificatesRestApi(), when it has been verified that the new REST API works
-     // with production data.
+     // TODO; To be removed and replaced by #getCertificatesRestApi(), when it has been verified that the new REST API works in prod.
     @Deprecated
     protected List<UtlatandeMetaData> getCertificatesWebServiceApi(Personnummer civicRegistrationNumber, boolean arkiverade) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
@@ -228,10 +261,10 @@ public class CertificateServiceImpl implements CertificateService {
 
     protected List<UtlatandeMetaData> getCertificatesRestApi(Personnummer pnr, boolean archived) {
 
-        final String url = String.format(certificatesCitizenApiUrlPattern, pnr.getPersonnummer(), archived);
-
-        final ResponseEntity<CertificateHolder[]> responseEntity = restTemplate.getForEntity(url, CertificateHolder[].class);
-
+        final HttpEntity<ListParameters> request = new HttpEntity<>(ListParameters.of(pnr.getPersonnummer(), archived), jsonPostHeaders);
+        final ResponseEntity<CertificateHolder[]> responseEntity = restTemplate.postForEntity(certificatesCitizenApiUrl,
+            request,
+            CertificateHolder[].class);
         final HttpStatus httpStatus = responseEntity.getStatusCode();
 
         if (httpStatus != HttpStatus.OK) {
