@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,6 +57,7 @@ import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.json.CustomObjectMapper;
@@ -141,8 +141,8 @@ public class CertificateServiceImpl implements CertificateService {
 
     private HttpHeaders jsonPostHeaders;
 
-    //
-    public static class ListParameters {
+    // dto
+    public static class ListRequestObject {
         private String id;
         private boolean archived;
 
@@ -154,11 +154,25 @@ public class CertificateServiceImpl implements CertificateService {
             return archived;
         }
 
-        public static ListParameters of(String id, boolean archived) {
-            final ListParameters p = new ListParameters();
+        public static ListRequestObject of(String id, boolean archived) {
+            final ListRequestObject p = new ListRequestObject();
             p.id = id;
             p.archived = archived;
             return p;
+        }
+    }
+
+    // dto
+    public static class ListResponseObject {
+        private CertificateHolder certificate;
+        private List<CertificateRelation> relations;
+
+        public CertificateHolder getCertificate() {
+            return certificate;
+        }
+
+        public List<CertificateRelation> getRelations() {
+            return relations;
         }
     }
 
@@ -261,10 +275,11 @@ public class CertificateServiceImpl implements CertificateService {
 
     protected List<UtlatandeMetaData> getCertificatesRestApi(Personnummer pnr, boolean archived) {
 
-        final HttpEntity<ListParameters> request = new HttpEntity<>(ListParameters.of(pnr.getPersonnummer(), archived), jsonPostHeaders);
-        final ResponseEntity<CertificateHolder[]> responseEntity = restTemplate.postForEntity(certificatesCitizenApiUrl,
+        final HttpEntity<ListRequestObject> request =
+            new HttpEntity<>(ListRequestObject.of(pnr.getPersonnummer(), archived), jsonPostHeaders);
+        final ResponseEntity<ListResponseObject[]> responseEntity = restTemplate.postForEntity(certificatesCitizenApiUrl,
             request,
-            CertificateHolder[].class);
+            ListResponseObject[].class);
         final HttpStatus httpStatus = responseEntity.getStatusCode();
 
         if (httpStatus != HttpStatus.OK) {
@@ -282,7 +297,9 @@ public class CertificateServiceImpl implements CertificateService {
             .collect(Collectors.toList());
     }
 
-    private UtlatandeMetaBuilder toUtlatandeMetaData(final CertificateHolder ch) {
+    private UtlatandeMetaBuilder toUtlatandeMetaData(final ListResponseObject response) {
+        final CertificateHolder ch = response.getCertificate();
+
         final UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder()
             .id(ch.getId())
             .type(ch.getType())
@@ -296,9 +313,7 @@ public class CertificateServiceImpl implements CertificateService {
             .map(s -> new Status(s.getState(), s.getTarget(), s.getTimestamp()))
             .forEach(builder::addStatus);
 
-        if (Objects.nonNull(ch.getCertificateRelation())) {
-            builder.addRelation(ch.getCertificateRelation());
-        }
+        builder.relations(response.getRelations());
 
         return builder;
     }

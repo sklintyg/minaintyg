@@ -106,6 +106,11 @@ public class UtlatandeMetaBuilder {
         return this;
     }
 
+    public UtlatandeMetaBuilder relations(List<CertificateRelation> relations) {
+        this.relations = relations;
+        return this;
+    }
+
     public UtlatandeMetaBuilder addStatus(CertificateState type, String target, LocalDateTime timestamp) {
         return addStatus(new Status(type, target, timestamp));
     }
