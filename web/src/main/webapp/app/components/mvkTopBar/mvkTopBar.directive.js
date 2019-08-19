@@ -19,10 +19,10 @@
 
 angular.module('minaintyg').directive('mvkTopBar',
     function() {
-        'use strict';
+      'use strict';
 
-        return {
-            restrict: 'E',
-            templateUrl: '/app/components/mvkTopBar/mvkTopBar.directive.html'
-        };
+      return {
+        restrict: 'E',
+        templateUrl: '/app/components/mvkTopBar/mvkTopBar.directive.html'
+      };
     });

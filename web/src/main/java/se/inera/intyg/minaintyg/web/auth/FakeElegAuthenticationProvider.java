@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import static se.inera.intyg.minaintyg.web.auth.CgiElegAssertion.FAKE_AUTHENTICATION_ELEG_CONTEXT_REF;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.AttributeStatement;
 import org.opensaml.saml2.core.NameID;
@@ -35,11 +39,6 @@ import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
 import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
 import se.inera.intyg.minaintyg.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static se.inera.intyg.minaintyg.web.auth.CgiElegAssertion.FAKE_AUTHENTICATION_ELEG_CONTEXT_REF;
 
 /**
  * Fake authentication provider for E-leg.
@@ -63,14 +62,14 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         // Set origin (FK or ELVA77) from fake credentials.
         if (authentication instanceof FakeElegAuthenticationToken && details instanceof CitizenImpl) {
             FakeElegCredentials credz = (FakeElegCredentials) authentication
-                    .getCredentials();
+                .getCredentials();
             Person person = minaIntygPUService.getPerson(credz.getPersonId());
             details = new CitizenImpl(credz.getPersonId(), LoginMethodEnum.fromValue(credz.getOrigin()),
-                    personNameUtil.buildFullName(person), person.isSekretessmarkering());
+                personNameUtil.buildFullName(person), person.isSekretessmarkering());
         }
 
         ExpiringUsernameAuthenticationToken result = new ExpiringUsernameAuthenticationToken(null, details, credential,
-                buildGrantedAuthorities(details));
+            buildGrantedAuthorities(details));
         result.setDetails(details);
 
         return result;
@@ -92,7 +91,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
 
     private SAMLCredential createSamlCredential(Authentication token) {
         FakeElegCredentials fakeCredentials = (FakeElegCredentials) token
-                .getCredentials();
+            .getCredentials();
 
         Assertion assertion = new AssertionBuilder().buildObject();
 
@@ -104,7 +103,7 @@ public class FakeElegAuthenticationProvider extends BaseFakeAuthenticationProvid
         attributeStatement.getAttributes().add(createAttribute(CgiElegAssertion.PERSON_ID_ATTRIBUTE, fakeCredentials.getPersonId()));
         attributeStatement.getAttributes().add(createAttribute(CgiElegAssertion.FORNAMN_ATTRIBUTE, fakeCredentials.getFirstName()));
         attributeStatement.getAttributes().add(
-                createAttribute(CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE, fakeCredentials.getLastName()));
+            createAttribute(CgiElegAssertion.MELLAN_OCH_EFTERNAMN_ATTRIBUTE, fakeCredentials.getLastName()));
 
         NameID nameId = new NameIDBuilder().buildObject();
         nameId.setValue(token.getCredentials().toString());

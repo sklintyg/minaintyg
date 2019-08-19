@@ -21,7 +21,6 @@ package se.inera.intyg.minaintyg.web.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.CertificateState;
@@ -72,13 +71,10 @@ public final class CertificateMetaConverter {
      * Converts CertificateMetaData types to Rest CertificateMeta, optionally filtering statuses to include only
      * selected statuses.
      *
-     * @param metaData
-     * @param statusFilter
-     *            - List of CertificateState types to keep
-     * @return
+     * @param statusFilter - List of CertificateState types to keep
      */
     public static CertificateMeta toCertificateMetaFromCertMetaData(Utlatande utlatande, CertificateMetaData metaData,
-                                                    List<IntygRelations> relations, List<CertificateState> statusFilter) {
+        List<IntygRelations> relations, List<CertificateState> statusFilter) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(metaData.getCertificateId());
@@ -99,12 +95,12 @@ public final class CertificateMetaConverter {
         }
 
         result.setRelations(relations.stream()
-                .filter(ir -> ir.getIntygsId().getExtension().equals(result.getId()))
-                .flatMap(ir -> ir.getRelation().stream())
-                .filter(relation -> !relation.isFranIntygMakulerat())
-                .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
-                        RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
-                .collect(Collectors.toList()));
+            .filter(ir -> ir.getIntygsId().getExtension().equals(result.getId()))
+            .flatMap(ir -> ir.getRelation().stream())
+            .filter(relation -> !relation.isFranIntygMakulerat())
+            .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
+                RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
+            .collect(Collectors.toList()));
 
         return result;
     }

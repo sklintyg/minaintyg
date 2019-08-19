@@ -18,28 +18,29 @@
  */
 
 angular.module('minaintyg').directive('miFooter', [
-    '$window', '$state', 'common.dialogService',
-    function($window, $state, dialogService) {
+  '$window', '$state', 'common.dialogService',
+  function($window, $state, dialogService) {
     'use strict';
 
     return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: '/app/components/miFooter/miFooter.directive.html',
-        link: function($scope) {
+      restrict: 'E',
+      scope: {},
+      templateUrl: '/app/components/miFooter/miFooter.directive.html',
+      link: function($scope) {
 
-            $scope.openCookieDialog = function(){
-                dialogService.showDialog($scope, {
-                    dialogId: 'cookie-footer-dialog',
-                    titleId: 'footer.cookies.modal.title',
-                    bodyTextId: 'footer.cookies.modal.body',
-                    button1click: function() {},
-                    button1id: 'cookie-button-close',
-                    button1text: 'common.close',
-                    button2visible: false,
-                    autoClose: true
-                });
-            };
-        }
+        $scope.openCookieDialog = function() {
+          dialogService.showDialog($scope, {
+            dialogId: 'cookie-footer-dialog',
+            titleId: 'footer.cookies.modal.title',
+            bodyTextId: 'footer.cookies.modal.body',
+            button1click: function() {
+            },
+            button1id: 'cookie-button-close',
+            button1text: 'common.close',
+            button2visible: false,
+            autoClose: true
+          });
+        };
+      }
     };
-}]);
+  }]);

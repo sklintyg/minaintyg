@@ -18,82 +18,84 @@
  */
 
 angular.module('minaintyg').directive('miSelectRecipients', function() {
-    'use strict';
+  'use strict';
 
-    return {
-        restrict: 'E',
-        scope: {
-            recipients: '=',
-            defaultRecipient: '@',
-            onSend: '&'
-        },
-        templateUrl: '/app/views/send/miSelectRecipients/miSelectRecipients.directive.html',
-        controller: function($scope, MIUser) {
+  return {
+    restrict: 'E',
+    scope: {
+      recipients: '=',
+      defaultRecipient: '@',
+      onSend: '&'
+    },
+    templateUrl: '/app/views/send/miSelectRecipients/miSelectRecipients.directive.html',
+    controller: function($scope, MIUser) {
 
-            $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
+      $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
 
-            //Private controller functions  ---------------------------------
-            function _select(index) {
-                if (index > -1) {
-                    $scope.selected.push($scope.recipients.splice(index, 1)[0]);
-                }
-
-            }
-            function _deselect(index) {
-                if (index > -1) {
-                    $scope.recipients.push($scope.selected.splice(index, 1)[0]);
-                }
-
-            }
-            function _deselectAll() {
-                //Move all selected back
-                while ($scope.selected.length > 0) {
-                    _deselect(0);
-                }
-            }
-
-            function _getIndexById(id, list) {
-                if (id && list) {
-                    for (var i = 0; i < list.length; i++) {
-                        if (id === list[i].id) {
-                            return i;
-                        }
-                    }
-                }
-                return -1;
-            }
-
-            //Expose functions to template ---------------------------------
-
-            $scope.select = function(event, recipient) {
-                if (event) {
-                    event.preventDefault();
-                }
-                var index = _getIndexById(recipient.id, $scope.recipients);
-                _select(index);
-            };
-
-            $scope.deselect = function(event, index) {
-                if (event) {
-                    event.preventDefault();
-                }
-                _deselect(index);
-            };
-
-            $scope.deselectAll = function() {
-                _deselectAll();
-            };
-
-            //Initialize ---------------------------------
-
-            $scope.selected = [];
-
-            //Handle default recipient selection (if not already sent)
-            var preselectionIndex = _getIndexById($scope.defaultRecipient, $scope.recipients);
-            if (preselectionIndex > -1 && !$scope.recipients[preselectionIndex].sentTimestamp) {
-                _select(preselectionIndex);
-            }
-
+      //Private controller functions  ---------------------------------
+      function _select(index) {
+        if (index > -1) {
+          $scope.selected.push($scope.recipients.splice(index, 1)[0]);
         }
-    };
+
+      }
+
+      function _deselect(index) {
+        if (index > -1) {
+          $scope.recipients.push($scope.selected.splice(index, 1)[0]);
+        }
+
+      }
+
+      function _deselectAll() {
+        //Move all selected back
+        while ($scope.selected.length > 0) {
+          _deselect(0);
+        }
+      }
+
+      function _getIndexById(id, list) {
+        if (id && list) {
+          for (var i = 0; i < list.length; i++) {
+            if (id === list[i].id) {
+              return i;
+            }
+          }
+        }
+        return -1;
+      }
+
+      //Expose functions to template ---------------------------------
+
+      $scope.select = function(event, recipient) {
+        if (event) {
+          event.preventDefault();
+        }
+        var index = _getIndexById(recipient.id, $scope.recipients);
+        _select(index);
+      };
+
+      $scope.deselect = function(event, index) {
+        if (event) {
+          event.preventDefault();
+        }
+        _deselect(index);
+      };
+
+      $scope.deselectAll = function() {
+        _deselectAll();
+      };
+
+      //Initialize ---------------------------------
+
+      $scope.selected = [];
+
+      //Handle default recipient selection (if not already sent)
+      var preselectionIndex = _getIndexById($scope.defaultRecipient, $scope.recipients);
+      if (preselectionIndex > -1 && !$scope.recipients[preselectionIndex].sentTimestamp) {
+        _select(preselectionIndex);
+      }
+
+    }
+  };
 });

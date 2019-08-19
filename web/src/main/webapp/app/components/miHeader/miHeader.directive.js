@@ -17,43 +17,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miHeader', ['MIConfig', 'MIUser', 'common.ObjectHelper', '$uibModal', '$state', 'sessionCheckService',
-    function(MIConfig, MIUser, objectHelper, $uibModal, $state, sessionCheckService) {
+angular.module('minaintyg').directive('miHeader',
+    ['MIConfig', 'MIUser', 'common.ObjectHelper', '$uibModal', '$state', 'sessionCheckService',
+      function(MIConfig, MIUser, objectHelper, $uibModal, $state, sessionCheckService) {
         'use strict';
 
         return {
-            restrict: 'E',
-            templateUrl: '/app/components/miHeader/miHeader.directive.html',
-            link: function($scope) {
-                if (!objectHelper.isEmpty(MIUser.fullName)) {
-                    $scope.authUserDescription = MIUser.fullName;
-                } else {
-                    $scope.authUserDescription = MIUser.personId;
-                }
-
-                if ($scope.authUserDescription) {
-                    sessionCheckService.startPolling();
-                }
-
-                $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
-
-                $scope.applicationLogoutUrl = MIConfig.applicationLogoutUrl;
-
-                $scope.showSekretessInfoMessage = function() {
-                    $uibModal.open({
-                        templateUrl: '/app/components/miHeader/miHeaderSekretess.dialog.html',
-                        keyboard: false,
-                        controller: function($scope, $uibModalInstance) {
-                            $scope.gotoAbout = function() {
-                                $uibModalInstance.close();
-                                $state.go('omminaintyg.juridik');
-                            };
-                            $scope.close = function() {
-                                $uibModalInstance.close();
-                            };
-                        }
-                    });
-                };
+          restrict: 'E',
+          templateUrl: '/app/components/miHeader/miHeader.directive.html',
+          link: function($scope) {
+            if (!objectHelper.isEmpty(MIUser.fullName)) {
+              $scope.authUserDescription = MIUser.fullName;
+            } else {
+              $scope.authUserDescription = MIUser.personId;
             }
+
+            if ($scope.authUserDescription) {
+              sessionCheckService.startPolling();
+            }
+
+            $scope.userHasSekretessmarkering = MIUser.sekretessmarkering;
+
+            $scope.applicationLogoutUrl = MIConfig.applicationLogoutUrl;
+
+            $scope.showSekretessInfoMessage = function() {
+              $uibModal.open({
+                templateUrl: '/app/components/miHeader/miHeaderSekretess.dialog.html',
+                keyboard: false,
+                controller: function($scope, $uibModalInstance) {
+                  $scope.gotoAbout = function() {
+                    $uibModalInstance.close();
+                    $state.go('omminaintyg.juridik');
+                  };
+                  $scope.close = function() {
+                    $uibModalInstance.close();
+                  };
+                }
+              });
+            };
+          }
         };
-    }]);
+      }]);

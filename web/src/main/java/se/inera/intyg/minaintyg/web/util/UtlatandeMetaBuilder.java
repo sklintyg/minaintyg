@@ -18,15 +18,14 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Builder object for creating immutable {@link UtlatandeMetaData} objects.
@@ -55,7 +54,7 @@ public class UtlatandeMetaBuilder {
 
     public UtlatandeMetaData build() {
         return new UtlatandeMetaData(id, type, typeVersion, issuerName, facilityName, signDate, available, additionalInfo, statuses,
-                relations);
+            relations);
     }
 
     public UtlatandeMetaBuilder id(String id) {
@@ -137,20 +136,18 @@ public class UtlatandeMetaBuilder {
      * <li>signDate
      * </ul>
      *
-     * @param utlatande
-     *            The utlatande to extract meta data from.
-     *
+     * @param utlatande The utlatande to extract meta data from.
      * @return A prepopulated builder.
      */
     public static UtlatandeMetaBuilder fromUtlatande(Utlatande utlatande) {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
         String id = utlatande.getId();
         builder.id(id)
-                .type(utlatande.getTyp())
-                .typeVersion(utlatande.getTextVersion())
-                .issuerName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn())
-                .facilityName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn())
-                .signDate(utlatande.getGrundData().getSigneringsdatum());
+            .type(utlatande.getTyp())
+            .typeVersion(utlatande.getTextVersion())
+            .issuerName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn())
+            .facilityName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn())
+            .signDate(utlatande.getGrundData().getSigneringsdatum());
 
         return builder;
     }

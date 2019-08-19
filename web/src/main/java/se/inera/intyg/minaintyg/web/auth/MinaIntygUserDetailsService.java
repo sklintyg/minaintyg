@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
-
 import se.inera.intyg.infra.integration.pu.model.Person;
 import se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUService;
 import se.inera.intyg.minaintyg.web.integration.pu.PersonNameUtil;
@@ -70,7 +69,7 @@ public class MinaIntygUserDetailsService implements SAMLUserDetailsService {
                             return xmlObject.getDOM().getTextContent();
                         }
                         throw new IllegalArgumentException(
-                                "Cannot parse SAML2 response attribute '" + attributeName + "', is not XSString or DOM is null");
+                            "Cannot parse SAML2 response attribute '" + attributeName + "', is not XSString or DOM is null");
                     }
                 }
             }

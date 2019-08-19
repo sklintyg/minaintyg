@@ -19,14 +19,12 @@
 package se.inera.intyg.minaintyg.web.security;
 
 import java.io.IOException;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -49,7 +47,7 @@ public class ClearSecurityContextFilter extends GenericFilterBean {
             filterChain.doFilter(request, response);
         } else {
             throw new RuntimeException("Unexpected classes. request.class: " + request.getClass()
-                    + ", response.class: " + response.getClass());
+                + ", response.class: " + response.getClass());
         }
     }
 

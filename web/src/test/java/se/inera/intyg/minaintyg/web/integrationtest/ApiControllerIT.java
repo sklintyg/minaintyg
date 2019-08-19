@@ -18,15 +18,20 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -34,13 +39,6 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
-
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
 
 public class ApiControllerIT extends IntegrationTestBase {
 
@@ -60,80 +58,98 @@ public class ApiControllerIT extends IntegrationTestBase {
     @Test
     public void testListCertificates() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER,
-                false, false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION,
+            CITIZEN_CIVIC_REGISTRATION_NUMBER,
+            false, false);
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         spec()
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
-                .body("", hasSize(greaterThanOrEqualTo(7)));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
+            .body("", hasSize(greaterThanOrEqualTo(7)));
     }
 
     @Test
     public void testListCertificatesFiltersRevokedCertificates() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true,
                 false);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         spec()
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
-                .body("", hasSize(1));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
+            .body("", hasSize(1));
     }
 
     @Test
     public void testListCertificatesWithoutSession() {
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 false);
 
         given().redirects().follow(false).expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
-                .when().get("api/certificates");
+            .when().get("api/certificates");
     }
 
     @Test
     public void testListArchivedCertificates() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), Fk7263EntryPoint.MODULE_ID, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), LuaefsEntryPoint.MODULE_ID, LUAE_FS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER,
-                false, true);
-        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
+        IntegrationTestUtility.givenIntyg(UUID.randomUUID().toString(), TsDiabetesEntryPoint.MODULE_ID, TS_DIABETES_VERSION,
+            CITIZEN_CIVIC_REGISTRATION_NUMBER,
+            false, true);
+        IntegrationTestUtility
+            .givenIntyg(UUID.randomUUID().toString(), TsBasEntryPoint.MODULE_ID, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,
                 true);
 
         spec()
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/archived")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
-                .body("", hasSize(greaterThanOrEqualTo(7)));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates/archived")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/list-certificates-response-schema.json"))
+            .body("", hasSize(greaterThanOrEqualTo(7)));
     }
 
     @Test
@@ -142,15 +158,16 @@ public class ApiControllerIT extends IntegrationTestBase {
 
         final String intygsId = UUID.randomUUID().toString();
 
-        IntegrationTestUtility.givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false,false);
+        IntegrationTestUtility
+            .givenIntyg(intygsId, LisjpEntryPoint.MODULE_ID, LISJP_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
         IntegrationTestUtility.givenReceivers(intygsId);
 
         spec()
-                .pathParams("id", intygsId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/{id}/recipients")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/list-recipients-response-schema.json"));
+            .pathParams("id", intygsId)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates/{id}/recipients")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/list-recipients-response-schema.json"));
     }
 
     @Test
@@ -161,11 +178,11 @@ public class ApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(intygId, LuseEntryPoint.MODULE_ID, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         spec()
-                .pathParams("id", intygId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().put("api/certificates/{id}/archive")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/certificate-meta-response-schema.json"));
+            .pathParams("id", intygId)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().put("api/certificates/{id}/archive")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/certificate-meta-response-schema.json"));
     }
 
     @Test
@@ -173,14 +190,15 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String intygId = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
+        IntegrationTestUtility
+            .givenIntyg(intygId, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, true);
 
         spec()
-                .pathParams("id", intygId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().put("api/certificates/{id}/restore")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/certificate-meta-response-schema.json"));
+            .pathParams("id", intygId)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().put("api/certificates/{id}/restore")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/certificate-meta-response-schema.json"));
     }
 
     @Test
@@ -188,8 +206,8 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         String res = spec()
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/onbeforeunload").getBody().asString();
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates/onbeforeunload").getBody().asString();
 
         assertEquals("ok", res);
     }
@@ -199,10 +217,10 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         spec()
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/user")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/get-user-response-schema.json"));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates/user")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/get-user-response-schema.json"));
     }
 
     @Test
@@ -210,11 +228,11 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         spec()
-                .pathParams("type", LuseEntryPoint.MODULE_ID, "version", "1.0")
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("api/certificates/questions/{type}/{version}")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/get-questions-response-schema.json"));
+            .pathParams("type", LuseEntryPoint.MODULE_ID, "version", "1.0")
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("api/certificates/questions/{type}/{version}")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/get-questions-response-schema.json"));
     }
 
     @Test
@@ -226,11 +244,11 @@ public class ApiControllerIT extends IntegrationTestBase {
 
         List<String> recipientList = Arrays.asList("FKASSA", "FAKE");
         spec()
-                .pathParams("id", id).and().body(recipientList)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().put("api/certificates/{id}/send")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/send-response-schema.json"));
+            .pathParams("id", id).and().body(recipientList)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().put("api/certificates/{id}/send")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/send-response-schema.json"));
     }
 
 }

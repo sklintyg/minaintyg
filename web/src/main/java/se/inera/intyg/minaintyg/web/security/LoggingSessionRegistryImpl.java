@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Service;
-
 import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
 import se.inera.intyg.schemas.contract.Personnummer;
 
@@ -44,7 +43,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
         if (principal != null && principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
             monitoringService.logCitizenLogin(createPnr(user.getUsername()),
-                    user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
+                user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
         }
         super.registerNewSession(sessionId, principal);
     }
@@ -66,7 +65,7 @@ public class LoggingSessionRegistryImpl extends SessionRegistryImpl {
         if (principal instanceof Citizen) {
             Citizen user = (Citizen) principal;
             monitoringService.logCitizenLogout(createPnr(user.getUsername()),
-                    user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
+                user.getLoginMethod() != null ? user.getLoginMethod().name() : null);
         }
 
         super.removeSessionInformation(sessionId);

@@ -29,55 +29,56 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('inboxHeader'));
+  },
+  get: function() {
+    this.getPage('start');
+  },
+  isAt: function isAt() {
+    specHelper.waitForAngularTestability();
+    return isAt._super.call(this);
+  },
+  certificateTableIsShown: function() {
+    return element(by.id('certTable')).isPresent();
+  },
+  noCertificatesIsShown: function() {
+    return element(by.id('noCerts')).isPresent();
+  },
+  certificateExists: function(intygId) {
+    return element(by.id('certificate-' + intygId)).isPresent();
+  },
+  complementaryInfo: function(intygId) {
+    return element(by.id('certificate-complementary-info-' + intygId)).getText();
+  },
+  viewCertificate: function(intygId) {
+    element(by.id('viewCertificateBtn-' + intygId)).click();
+  },
+  archiveCertificate: function(intygId) {
+    element(by.id('archiveCertificateBtn-' + intygId)).click();
+  },
+  confirmArchiveCertificate: function() {
+    element(by.id('archive-button')).click();
+  },
+  archiveDialogIsDisplayed: function() {
+    return element(by.id('archive-confirmation-dialog')).isDisplayed();
+  },
+  hasEvent: function(intygId, text, dateTime) {
+    var found = false;
+    var attrId = 'event-' + intygId;
 
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('inboxHeader'));
-    },
-    get: function () {
-        this.getPage('start');
-    },
-    isAt: function isAt() {
-        specHelper.waitForAngularTestability();
-        return isAt._super.call(this);
-    },
-    certificateTableIsShown: function() {
-        return element(by.id('certTable')).isPresent();
-    },
-    noCertificatesIsShown: function() {
-        return element(by.id('noCerts')).isPresent();
-    },
-    certificateExists: function(intygId) {
-        return element(by.id('certificate-' + intygId)).isPresent();
-    },
-    complementaryInfo: function(intygId) {
-        return element(by.id('certificate-complementary-info-' + intygId)).getText();
-    },
-    viewCertificate: function(intygId) {
-        element(by.id('viewCertificateBtn-' + intygId)).click();
-    },
-    archiveCertificate: function(intygId) {
-        element(by.id('archiveCertificateBtn-' + intygId)).click();
-    },
-    confirmArchiveCertificate: function() {
-        element(by.id('archive-button')).click();
-    },
-    archiveDialogIsDisplayed: function() {
-        return element(by.id('archive-confirmation-dialog')).isDisplayed();
-    },
-    hasEvent: function(intygId, text, dateTime) {
-        var found = false;
-        var attrId = 'event-' + intygId;
-
-        return element.all(by.css('div[id^=' + attrId + ']')).each(function(item) {
-            item.getText().then(function (txt) {
-                found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
-            })
-        }).then(function() { return found; });
-    },
-    showEvents: function(intygId) {
-        element(by.id('showEventsBtn-' + intygId)).click();
-    }
+    return element.all(by.css('div[id^=' + attrId + ']')).each(function(item) {
+      item.getText().then(function(txt) {
+        found = found || (txt.includes(text) && (!dateTime || txt.includes(dateTime)));
+      })
+    }).then(function() {
+      return found;
+    });
+  },
+  showEvents: function(intygId) {
+    element(by.id('showEventsBtn-' + intygId)).click();
+  }
 
 });
 

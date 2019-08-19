@@ -20,15 +20,14 @@ package se.inera.intyg.minaintyg.web.service;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Exposes health metrics as Prometheus values. To simplify any 3rd party scraping applications, all metrics produced
@@ -52,14 +51,14 @@ public class HealthMonitor extends Collector {
     private static final long START_TIME = System.currentTimeMillis();
 
     private static final Gauge UPTIME = Gauge.build()
-            .name(PREFIX + "uptime" + VALUE)
-            .help("Current uptime in seconds")
-            .register();
+        .name(PREFIX + "uptime" + VALUE)
+        .help("Current uptime in seconds")
+        .register();
 
     private static final Gauge IT_ACCESSIBLE = Gauge.build()
-            .name(PREFIX + "intygstjanst_accessible" + NORMAL)
-            .help("0 == OK 1 == NOT OK")
-            .register();
+        .name(PREFIX + "intygstjanst_accessible" + NORMAL)
+        .help("0 == OK 1 == NOT OK")
+        .register();
 
     private static final long MILLIS_PER_SECOND = 1000L;
 
@@ -68,6 +67,7 @@ public class HealthMonitor extends Collector {
 
     @FunctionalInterface
     interface Tester {
+
         void run() throws Exception;
     }
 
@@ -83,8 +83,7 @@ public class HealthMonitor extends Collector {
      * Somewhat hacky way of updating our gauges "on-demand" (each being registered itself as a collector),
      * with this method always returning an empty list of MetricFamilySamples.
      *
-     * @return
-     *      Always returns an empty list.
+     * @return Always returns an empty list.
      */
     @Override
     public List<MetricFamilySamples> collect() {

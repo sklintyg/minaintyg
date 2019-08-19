@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.controller.testability;
 
+import io.swagger.annotations.Api;
 import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,7 +31,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +39,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
-
-import io.swagger.annotations.Api;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
@@ -87,7 +84,7 @@ public class IntygstjanstTestabilityProxy {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteCertificatesForCitizen(@PathParam("personId") String personId) {
         restTemplate
-                .delete(systemPropertiesConfig.getIntygstjanstBaseUrl() + "/inera-certificate/resources/certificate/citizen/" + personId);
+            .delete(systemPropertiesConfig.getIntygstjanstBaseUrl() + "/inera-certificate/resources/certificate/citizen/" + personId);
         return Response.ok().build();
     }
 
@@ -109,7 +106,7 @@ public class IntygstjanstTestabilityProxy {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerApprovedReceivers(@PathParam("intygsId") String intygsId, RegisterApprovedReceiversType approvedReceiversType) {
         String url = systemPropertiesConfig.getIntygstjanstBaseUrl() + "/inera-certificate/resources/certificate/" + intygsId
-                + "/approvedreceivers";
+            + "/approvedreceivers";
 
         HttpEntity<RegisterApprovedReceiversType> entity = new HttpEntity<>(approvedReceiversType, headers);
         restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);

@@ -18,34 +18,34 @@
  */
 
 angular.module('minaintyg').directive('miMainNavigation', function($rootScope, $state) {
-    'use strict';
+  'use strict';
 
-    return {
-        restrict: 'E',
-        scope: {
-            linkPrefix: '@',
-            defaultActive: '@'
-        },
-        controller: function($scope) {
-            //The about section has substates, but this component is only interested in mathing against root states.
-            function _getRootStateName(stateName) {
-                return stateName.split('.')[0];
-            }
+  return {
+    restrict: 'E',
+    scope: {
+      linkPrefix: '@',
+      defaultActive: '@'
+    },
+    controller: function($scope) {
+      //The about section has substates, but this component is only interested in mathing against root states.
+      function _getRootStateName(stateName) {
+        return stateName.split('.')[0];
+      }
 
-            $scope.navClass = function(page) {
-                if (angular.isString($scope.defaultActive)) {
-                    if (page === $scope.defaultActive) {
-                        return 'active';
-                    }
-                }
-                var currentRootState = $rootScope.keepInboxTab ? 'inkorg' : _getRootStateName($state.current.name) || 'inkorg';
+      $scope.navClass = function(page) {
+        if (angular.isString($scope.defaultActive)) {
+          if (page === $scope.defaultActive) {
+            return 'active';
+          }
+        }
+        var currentRootState = $rootScope.keepInboxTab ? 'inkorg' : _getRootStateName($state.current.name) || 'inkorg';
 
-                return (page === currentRootState) ? 'active' : '';
-            };
-            $scope.showMenu = function(){
-                return $state.current.name !== 'index';
-            };
-        },
-        templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'
-    };
+        return (page === currentRootState) ? 'active' : '';
+      };
+      $scope.showMenu = function() {
+        return $state.current.name !== 'index';
+      };
+    },
+    templateUrl: '/app/components/miMainNavigation/miMainNavigation.directive.html'
+  };
 });

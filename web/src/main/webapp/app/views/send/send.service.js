@@ -18,37 +18,37 @@
  */
 
 angular.module('minaintyg').factory('minaintyg.SendService', function($http, $log) {
-    'use strict';
+  'use strict';
 
-    function _sendCertificate(certId, recipients, callback) {
-        var recipientIds = [];
+  function _sendCertificate(certId, recipients, callback) {
+    var recipientIds = [];
 
-        angular.forEach(recipients, function(recipient) {
-            recipientIds.push(recipient.id);
-        });
+    angular.forEach(recipients, function(recipient) {
+      recipientIds.push(recipient.id);
+    });
 
-        $http.put('/api/certificates/' + certId + '/send' , recipientIds).then(function(response) {
-            callback(response.data);
-        }, function(response) {
-            $log.error('error ' + response.status);
-            //give calling code a chance to handle error
-            callback(null);
-        });
-    }
+    $http.put('/api/certificates/' + certId + '/send', recipientIds).then(function(response) {
+      callback(response.data);
+    }, function(response) {
+      $log.error('error ' + response.status);
+      //give calling code a chance to handle error
+      callback(null);
+    });
+  }
 
-    function _getRecipients(certId) {
-        $log.debug('_getRecipients type: ' + certId);
-        var restPath = '/api/certificates/' + certId + '/recipients';
-        var ret = $http.get(restPath);
-        angular.forEach(ret, function(utlatandeRecipient) {
-           $log.debug('Recipient: ' + utlatandeRecipient.name);
-        });
-        return ret;
-    }
+  function _getRecipients(certId) {
+    $log.debug('_getRecipients type: ' + certId);
+    var restPath = '/api/certificates/' + certId + '/recipients';
+    var ret = $http.get(restPath);
+    angular.forEach(ret, function(utlatandeRecipient) {
+      $log.debug('Recipient: ' + utlatandeRecipient.name);
+    });
+    return ret;
+  }
 
-    // Return public API for our service
-    return {
-        sendCertificate: _sendCertificate,
-        getRecipients: _getRecipients
-    };
+  // Return public API for our service
+  return {
+    sendCertificate: _sendCertificate,
+    getRecipients: _getRecipients
+  };
 });

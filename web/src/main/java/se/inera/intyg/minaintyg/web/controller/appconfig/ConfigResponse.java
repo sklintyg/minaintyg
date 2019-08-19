@@ -18,12 +18,11 @@
  */
 package se.inera.intyg.minaintyg.web.controller.appconfig;
 
-import se.inera.intyg.infra.dynamiclink.model.DynamicLink;
-import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import se.inera.intyg.infra.dynamiclink.model.DynamicLink;
+import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 
 /**
  * DTO representing config metadata of a MI user session.
@@ -48,7 +47,7 @@ public class ConfigResponse implements Serializable {
 
     //CHECKSTYLE:OFF ParameterNumberCheck
     public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
-            String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
+        String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
 
         this.version = version;
         this.buildNumber = buildNumber;

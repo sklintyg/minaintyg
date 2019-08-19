@@ -18,18 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import static org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFRAME_OPTIONS_HEADER;
+
 import com.google.common.base.Strings;
+import java.net.URI;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.web.header.HeaderWriter;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.URI;
-
-import static org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFRAME_OPTIONS_HEADER;
 
 /**
  * Adds Content-Security-Policy frame-ancestors if the request has a referer from the configured domain.
@@ -82,7 +81,7 @@ public class CustomXFrameOptionsHeaderWriter implements HeaderWriter {
         String withPortAncestor = allowedScheme + "://" + allowedDomain + ":*";
 
         response.addHeader(CONTENT_SECURITY_POLICY,
-                FRAME_ANCESTORS + subdomainAncestor + " " + subdomainWithPortAncestor + " " + withPortAncestor);
+            FRAME_ANCESTORS + subdomainAncestor + " " + subdomainWithPortAncestor + " " + withPortAncestor);
     }
 
     private boolean hostIsExpectedDomain(URI uri) {

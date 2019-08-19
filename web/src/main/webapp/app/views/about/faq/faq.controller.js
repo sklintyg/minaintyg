@@ -17,89 +17,89 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').controller('AboutFaqPageCtrl', [ '$scope', 'common.messageService', '$window', 'smoothScroll',
-    function($scope, messageService, $window, smoothScroll) {
+angular.module('minaintyg').controller('AboutFaqPageCtrl', ['$scope', 'common.messageService', '$window', 'smoothScroll',
+  function($scope, messageService, $window, smoothScroll) {
     'use strict';
 
     function getQuestions(prefix, idPrefix) {
-        var questions = [];
-        var numberOfQuestions = 1;
+      var questions = [];
+      var numberOfQuestions = 1;
 
-        while (hasQuestion(prefix, numberOfQuestions)) {
-            questions.push({
-                id: 'faq-' + idPrefix + '-' + numberOfQuestions,
-                title: prefix + numberOfQuestions + '.title',
-                closed: true,
-                body: prefix + numberOfQuestions + '.body'
-            });
+      while (hasQuestion(prefix, numberOfQuestions)) {
+        questions.push({
+          id: 'faq-' + idPrefix + '-' + numberOfQuestions,
+          title: prefix + numberOfQuestions + '.title',
+          closed: true,
+          body: prefix + numberOfQuestions + '.body'
+        });
 
-            numberOfQuestions++;
-        }
+        numberOfQuestions++;
+      }
 
-        return questions;
+      return questions;
     }
 
     function hasQuestion(prefix, index) {
-        var key = prefix + index + '.title';
+      var key = prefix + index + '.title';
 
-        return messageService.propertyExists(key);
+      return messageService.propertyExists(key);
     }
 
     var faq = [];
 
     faq.push({
-        title: 'Intyg',
-        icon: 'icon-doc-text',
-        questions: getQuestions('faq.intyg.', 'intyg')
+      title: 'Intyg',
+      icon: 'icon-doc-text',
+      questions: getQuestions('faq.intyg.', 'intyg')
     });
 
     faq.push({
-        title: 'Säkerhet',
-        icon: 'icon-shield',
-        questions: getQuestions('faq.sakerhet.', 'sakerhet')
+      title: 'Säkerhet',
+      icon: 'icon-shield',
+      questions: getQuestions('faq.sakerhet.', 'sakerhet')
     });
 
     $scope.faq = faq;
 
     $scope.openAll = function() {
-        toggleQuestions(false);
+      toggleQuestions(false);
     };
 
     $scope.closeAll = function() {
-        toggleQuestions(true);
+      toggleQuestions(true);
     };
 
     $scope.toggleQuestion = function(question) {
-        question.closed = !question.closed;
+      question.closed = !question.closed;
 
-        if (!question.closed) {
-            var elementToScrollTo = $('#' + question.id);
+      if (!question.closed) {
+        var elementToScrollTo = $('#' + question.id);
 
-            var windowElement = $($window);
-            var windowHeight = windowElement.height() / 2;
-            var scrollTop = windowElement.scrollTop();
-            var elementPosition = elementToScrollTo.offset().top;
+        var windowElement = $($window);
+        var windowHeight = windowElement.height() / 2;
+        var scrollTop = windowElement.scrollTop();
+        var elementPosition = elementToScrollTo.offset().top;
 
-            if (elementPosition - scrollTop > windowHeight) {
-                var offset = 100;
-                var options = {
-                    duration: 500,
-                    easing: 'easeInOutQuart',
-                    offset: offset
-                };
+        if (elementPosition - scrollTop > windowHeight) {
+          var offset = 100;
+          var options = {
+            duration: 500,
+            easing: 'easeInOutQuart',
+            offset: offset
+          };
 
-                //scroll to this questions panel heading, centered vertically
-                smoothScroll(elementToScrollTo[0], options);
-            }
+          //scroll to this questions panel heading, centered vertically
+          smoothScroll(elementToScrollTo[0], options);
         }
+      }
     };
 
     function toggleQuestions(closed) {
-        angular.forEach(faq, function(category) {
-            angular.forEach(category.questions, function(question) {
-                question.closed = closed;
-            });
+      angular.forEach(faq, function(category) {
+        angular.forEach(category.questions, function(question) {
+          question.closed = closed;
         });
+      });
     }
 
-} ]);
+  }]);

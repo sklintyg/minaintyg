@@ -25,13 +25,13 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('noAuth'));
-    },
-    isAt: function isAt() {
-        return isAt._super.call(this);
-    }
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('noAuth'));
+  },
+  isAt: function isAt() {
+    return isAt._super.call(this);
+  }
 });
 
 module.exports = new MinaintygStartPageBase();

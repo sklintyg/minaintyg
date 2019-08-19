@@ -18,14 +18,13 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import static org.junit.Assert.assertEquals;
+
+import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
-
-import java.time.LocalDateTime;
-
-import static org.junit.Assert.assertEquals;
 
 public class CertificateMetaConverterTest {
 
@@ -42,13 +41,13 @@ public class CertificateMetaConverterTest {
     public void setupCertificateMetaTypeBuilder() {
         builder = new UtlatandeMetaBuilder();
         builder.id(CERTIFIED_ID)
-                .type(TYPE)
-                .typeVersion(TYPE_VERSION)
-                .issuerName(ISSUER_NAME)
-                .facilityName(FACILITY_NAME)
-                .signDate(LocalDateTime.now())
-                .available(AVAILABLE)
-                .additionalInfo("2013-01-01 till 2014-01-01");
+            .type(TYPE)
+            .typeVersion(TYPE_VERSION)
+            .issuerName(ISSUER_NAME)
+            .facilityName(FACILITY_NAME)
+            .signDate(LocalDateTime.now())
+            .available(AVAILABLE)
+            .additionalInfo("2013-01-01 till 2014-01-01");
     }
 
     @Test

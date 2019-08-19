@@ -19,13 +19,13 @@
 
 angular.module('minaintyg').directive('miPageHead',
     function() {
-        'use strict';
+      'use strict';
 
-        return {
-            restrict: 'E',
-            transclude: true,
-            scope: {},
-            templateUrl: '/app/components/miPageHead/miPageHead.directive.html'
-        };
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        templateUrl: '/app/components/miPageHead/miPageHead.directive.html'
+      };
     });
 

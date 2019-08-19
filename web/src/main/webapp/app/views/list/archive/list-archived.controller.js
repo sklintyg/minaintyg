@@ -18,53 +18,53 @@
  */
 
 angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
-    [ '$state', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
-        'common.dialogService',
-        function($state, $log, $scope, IntygListService, moduleService, messageService, dialogService) {
-            'use strict';
+    ['$state', '$log', '$scope', 'common.IntygListService', 'common.moduleService', 'common.messageService',
+      'common.dialogService',
+      function($state, $log, $scope, IntygListService, moduleService, messageService, dialogService) {
+        'use strict';
 
-            $scope.archivedCertificates = [];
-            $scope.doneLoading = false;
-            $scope.errorMessage = null;
-            $scope.moduleService = moduleService;
-            $scope.messageService = messageService;
+        $scope.archivedCertificates = [];
+        $scope.doneLoading = false;
+        $scope.errorMessage = null;
+        $scope.moduleService = moduleService;
+        $scope.messageService = messageService;
 
-            $scope.restoreCert = function(item) {
-                $log.debug('Restore requested for cert:' + item.id);
-                IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
-                    $log.debug('(restore) statusUpdate callback:' + fromServer);
-                    if (fromServer !== null) {
-                        oldItem.archived = fromServer.archived;
-                        oldItem.selected = false;
-                    } else {
-                        // show error view
-                        dialogService.showDialog( $scope, {
-                            dialogId: 'restore-error-dialog',
-                            titleId: 'error.generictechproblem.title',
-                            bodyTextId: 'error.modal.couldnotrestorecert',
-                            button1text: 'error.modal.btn.back-to-archive-cert',
-                            templateUrl: '/app/partials/error-dialog.html',
-                            autoClose: true
-                        });
-                    }
-                });
-            };
+        $scope.restoreCert = function(item) {
+          $log.debug('Restore requested for cert:' + item.id);
+          IntygListService.restoreCertificate(item, function(fromServer, oldItem) {
+            $log.debug('(restore) statusUpdate callback:' + fromServer);
+            if (fromServer !== null) {
+              oldItem.archived = fromServer.archived;
+              oldItem.selected = false;
+            } else {
+              // show error view
+              dialogService.showDialog($scope, {
+                dialogId: 'restore-error-dialog',
+                titleId: 'error.generictechproblem.title',
+                bodyTextId: 'error.modal.couldnotrestorecert',
+                button1text: 'error.modal.btn.back-to-archive-cert',
+                templateUrl: '/app/partials/error-dialog.html',
+                autoClose: true
+              });
+            }
+          });
+        };
 
-            // fetch list of archived certs initially
-            IntygListService.getArchivedCertificates(function(list) {
-                $scope.doneLoading = true;
-                if (list !== null) {
-                    $scope.archivedCertificates = list;
-                } else {
-                    // show error view
-                    $scope.errorMessage = 'error.couldnotloadarchivedlist';
-                }
-            });
+        // fetch list of archived certs initially
+        IntygListService.getArchivedCertificates(function(list) {
+          $scope.doneLoading = true;
+          if (list !== null) {
+            $scope.archivedCertificates = list;
+          } else {
+            // show error view
+            $scope.errorMessage = 'error.couldnotloadarchivedlist';
+          }
+        });
 
-            $scope.pagefocus = true;
+        $scope.pagefocus = true;
 
-            $scope.getIntygTypeName = function(item) {
-                return moduleService.getModuleName(item.type);
+        $scope.getIntygTypeName = function(item) {
+          return moduleService.getModuleName(item.type);
 
-            };
-        }]);
+        };
+      }]);

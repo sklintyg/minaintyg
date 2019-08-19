@@ -20,7 +20,6 @@ package se.inera.intyg.minaintyg.web.service;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import se.inera.intyg.minaintyg.web.security.Citizen;
 
 @Service

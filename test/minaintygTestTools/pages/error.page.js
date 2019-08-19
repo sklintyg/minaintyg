@@ -26,13 +26,13 @@
 var specHelper = require('./../helpers/specHelper.js')
 
 module.exports = {
-    isAt: function isAt() {
-        specHelper.waitForAngularTestability();
-        return element(by.id('miErrorApp')).isPresent();
-        //return true;
-    },
+  isAt: function isAt() {
+    specHelper.waitForAngularTestability();
+    return element(by.id('miErrorApp')).isPresent();
+    //return true;
+  },
 
-    isTeknisktFelShowing: function isTeknisktFelShowing() {
-        return element(by.id('genericTechProblem')).isPresent();
-    }
+  isTeknisktFelShowing: function isTeknisktFelShowing() {
+    return element(by.id('genericTechProblem')).isPresent();
+  }
 };

@@ -18,6 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -26,12 +32,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import se.inera.intyg.minaintyg.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.security.CitizenImpl;
 import se.inera.intyg.minaintyg.web.security.LoginMethodEnum;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CitizenServiceTest {

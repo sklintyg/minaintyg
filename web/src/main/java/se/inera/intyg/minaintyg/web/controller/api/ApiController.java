@@ -30,11 +30,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
 import se.inera.intyg.minaintyg.web.api.UserInfo;
@@ -63,7 +61,7 @@ public class ApiController {
     public List<CertificateMeta> listCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), false));
+            .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), false));
     }
 
     @GET
@@ -72,7 +70,7 @@ public class ApiController {
     public List<CertificateMeta> listArchivedCertificates() {
         Citizen citizen = citizenService.getCitizen();
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), true));
+            .toCertificateMetaFromUtlatandeMetaList(certificateService.getCertificates(createPnr(citizen.getUsername()), true));
     }
 
     @GET
@@ -90,7 +88,7 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'archive' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMeta(certificateService.archiveCertificate(id, createPnr(citizen.getUsername())));
+            .toCertificateMetaFromUtlatandeMeta(certificateService.archiveCertificate(id, createPnr(citizen.getUsername())));
     }
 
     @PUT
@@ -100,16 +98,14 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'restore' for certificate {}", id);
         return CertificateMetaConverter
-                .toCertificateMetaFromUtlatandeMeta(certificateService.restoreCertificate(id, createPnr(citizen.getUsername())));
+            .toCertificateMetaFromUtlatandeMeta(certificateService.restoreCertificate(id, createPnr(citizen.getUsername())));
     }
 
     /**
      * Send the certificate identified by the given id to the given recipients.
      *
-     * @param id
-     *            - the globally unique id of a certificate.
-     * @param recipients
-     *            - List of recipient ids that should receive the certificate.
+     * @param id - the globally unique id of a certificate.
+     * @param recipients - List of recipient ids that should receive the certificate.
      * @return The response of the send operation
      */
     @PUT
@@ -124,9 +120,6 @@ public class ApiController {
 
     /**
      * Endpoint used by client to notify server that onbeforeunload is triggered.
-     *
-     * @param req
-     * @return
      */
     @GET
     @Path("/onbeforeunload")
@@ -157,14 +150,14 @@ public class ApiController {
         Citizen citizen = citizenService.getCitizen();
         if (citizen != null) {
             UserInfo userInfo = new UserInfo(citizen.getUsername(),
-                    citizen.getFullName(), citizen.getLoginMethod().name(),
-                    citizen.isSekretessmarkering());
+                citizen.getFullName(), citizen.getLoginMethod().name(),
+                citizen.isSekretessmarkering());
 
             return Response.ok(userInfo).build();
         } else {
             LOG.info("No citizen in securityContext");
             return Response.status(Response.Status.FORBIDDEN).type("text/plain")
-                    .entity("No citizen in securityContext").build();
+                .entity("No citizen in securityContext").build();
         }
     }
 

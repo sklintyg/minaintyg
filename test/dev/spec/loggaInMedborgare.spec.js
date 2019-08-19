@@ -30,66 +30,66 @@ var archivePage = miTestTools.pages.archivedPage;
 
 describe('Logga in som medborgare', function() {
 
-    var personId = '19121212-1212';
+  var personId = '19121212-1212';
 
-    describe('Logga in och hamna på startsidan', function() {
+  describe('Logga in och hamna på startsidan', function() {
 
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, true);
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Acceptera cookie', function() {
-            archivePage.get();
-
-            expect(element(by.id('cookie-usage-consent-btn')).isDisplayed()).toBeTruthy();
-            element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
-            expect(element(by.id('cookie-usage-consent-btn')).isPresent()).toBeFalsy();
-        });
-
-        it('Header ska var Inkorgen', function() {
-            inboxPage.get();
-            expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
-        });
-
-        it('Logga in igen och verifiera att man då hamnar direkt på inkorgssidan', function() {
-            specHelper.logout();
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, false);
-            specHelper.waitForAngularTestability();
-            expect(inboxPage.isAt()).toBeTruthy();
-        });
-
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
     });
 
-    describe('Redan samtyckt', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, false);
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Inkorgen visas', function() {
-            expect(inboxPage.isAt()).toBeTruthy();
-        });
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personId, true);
+      specHelper.waitForAngularTestability();
     });
 
-    it('Logga ut', function() {
-        specHelper.logout();
+    it('Acceptera cookie', function() {
+      archivePage.get();
+
+      expect(element(by.id('cookie-usage-consent-btn')).isDisplayed()).toBeTruthy();
+      element(by.id('cookie-usage-consent-btn')).sendKeys(protractor.Key.SPACE);
+      expect(element(by.id('cookie-usage-consent-btn')).isPresent()).toBeFalsy();
     });
+
+    it('Header ska var Inkorgen', function() {
+      inboxPage.get();
+      expect(inboxPage.isAt()).toBeTruthy();
+      expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
+    });
+
+    it('Logga in igen och verifiera att man då hamnar direkt på inkorgssidan', function() {
+      specHelper.logout();
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personId, false);
+      specHelper.waitForAngularTestability();
+      expect(inboxPage.isAt()).toBeTruthy();
+    });
+
+  });
+
+  describe('Redan samtyckt', function() {
+
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
+    });
+
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personId, false);
+      specHelper.waitForAngularTestability();
+    });
+
+    it('Inkorgen visas', function() {
+      expect(inboxPage.isAt()).toBeTruthy();
+    });
+  });
+
+  it('Logga ut', function() {
+    specHelper.logout();
+  });
 
 });

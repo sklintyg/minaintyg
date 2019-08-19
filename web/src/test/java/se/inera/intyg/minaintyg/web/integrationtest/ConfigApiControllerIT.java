@@ -47,7 +47,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.junit.Test;
 
 public class ConfigApiControllerIT extends IntegrationTestBase {
@@ -56,37 +55,37 @@ public class ConfigApiControllerIT extends IntegrationTestBase {
     public void testGetConfig() {
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("appconfig/api/app")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/get-appconfig-response-schema.json"))
-                .body("knownRecipients", hasSize(greaterThanOrEqualTo(1)));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("appconfig/api/app")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/get-appconfig-response-schema.json"))
+            .body("knownRecipients", hasSize(greaterThanOrEqualTo(1)));
     }
 
     @Test
     public void testGetModulesMap() {
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("appconfig/api/map")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/get-module-map-response-schema.json"))
-                .body("", hasSize(greaterThanOrEqualTo(7)));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("appconfig/api/map")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/get-module-map-response-schema.json"))
+            .body("", hasSize(greaterThanOrEqualTo(7)));
     }
 
     @Test
     public void testApiResponseNotCacheable() {
 
         given().cookie("ROUTEID", IntegrationTestUtility.routeId)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("appconfig/api/map")
-                .then()
-                .header("Cache-Control", containsString("private"))
-                .header("Cache-Control", containsString("no-cache"))
-                .header("Cache-Control", containsString("no-store"))
-                .header("Cache-Control", containsString("no-transform"))
-                .header("Cache-Control", containsString("must-revalidate"))
-                .header("Cache-Control", containsString("max-age=0"));
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("appconfig/api/map")
+            .then()
+            .header("Cache-Control", containsString("private"))
+            .header("Cache-Control", containsString("no-cache"))
+            .header("Cache-Control", containsString("no-store"))
+            .header("Cache-Control", containsString("no-transform"))
+            .header("Cache-Control", containsString("must-revalidate"))
+            .header("Cache-Control", containsString("max-age=0"));
     }
 
 }

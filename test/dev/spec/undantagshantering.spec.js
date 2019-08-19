@@ -31,30 +31,30 @@ var notfoundPage = miTestTools.pages.notfoundPage;
 
 describe('Undantagshantering', function() {
 
-	var personId = '19010101-0101';
+  var personId = '19010101-0101';
 
-    describe('Sidan hittades ej', function() {
+  describe('Sidan hittades ej', function() {
 
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, false);
-            specHelper.waitForAngularTestability();
-            expect(inboxPage.isAt()).toBeTruthy();
-        });
-
-        it('Gå till sida som inte finns', function() {
-            browser.driver.get(browser.baseUrl + '../okändsida');
-        });
-
-        it('Verifiera att 404-sidan visas korrekt', function() {
-            expect(notfoundPage.isAt()).toBeTruthy();
-        });
-
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
     });
+
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personId, false);
+      specHelper.waitForAngularTestability();
+      expect(inboxPage.isAt()).toBeTruthy();
+    });
+
+    it('Gå till sida som inte finns', function() {
+      browser.driver.get(browser.baseUrl + '../okändsida');
+    });
+
+    it('Verifiera att 404-sidan visas korrekt', function() {
+      expect(notfoundPage.isAt()).toBeTruthy();
+    });
+
+  });
 
 });

@@ -21,7 +21,6 @@ package se.inera.intyg.minaintyg.web.security;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

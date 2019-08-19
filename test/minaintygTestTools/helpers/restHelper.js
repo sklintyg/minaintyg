@@ -24,46 +24,46 @@
 'use strict';
 
 var restUtil = require('./../util/rest.util.js');
-var textHelper =  require('./textHelper.js')
+var textHelper = require('./textHelper.js')
 
 module.exports = {
 
-    createIntyg: function(createJson) {
-        debug(createJson);
-        return restUtil.createIntyg(createJson);
-    },
-    deleteIntyg: function(id) {
-        return restUtil.deleteIntyg(id);
-    },
-    deleteAllIntygForCitizen: function(userId) {
-        return restUtil.deleteAllIntyg(userId || '191212121212');
-    },
-    createApprovedReceivers: function(intygsId, createJson) {
-        debug(createJson);
-        return restUtil.createApprovedReceivers(intygsId, createJson);
-    },
-    deleteApprovedReceivers: function(intygsId) {
-        return restUtil.deleteApprovedReceivers(intygsId);
-    },
-    get: function(url, loggedIn) {
-        return restUtil.get(url, loggedIn);
-    },
-    getTextResource: function(name) {
-        var deferred = protractor.promise.defer();
-        // Load and cache expected dynamictext-values for this intygstype.
-        restUtil.getResource('classpath:texts/' + name).then(
-            function (response) {
-                textHelper.parseTextXml(response.body).then(
-                    function (response) {
-                        deferred.fulfill(response);
-                    }, function (err) {
-                        deferred.reject('Error during text parse: ' + JSON.stringify(err));
-                    });
-            }, function (err) {
-                deferred.reject('Error while fetching resource: ' + JSON.stringify(err));
-            });
+  createIntyg: function(createJson) {
+    debug(createJson);
+    return restUtil.createIntyg(createJson);
+  },
+  deleteIntyg: function(id) {
+    return restUtil.deleteIntyg(id);
+  },
+  deleteAllIntygForCitizen: function(userId) {
+    return restUtil.deleteAllIntyg(userId || '191212121212');
+  },
+  createApprovedReceivers: function(intygsId, createJson) {
+    debug(createJson);
+    return restUtil.createApprovedReceivers(intygsId, createJson);
+  },
+  deleteApprovedReceivers: function(intygsId) {
+    return restUtil.deleteApprovedReceivers(intygsId);
+  },
+  get: function(url, loggedIn) {
+    return restUtil.get(url, loggedIn);
+  },
+  getTextResource: function(name) {
+    var deferred = protractor.promise.defer();
+    // Load and cache expected dynamictext-values for this intygstype.
+    restUtil.getResource('classpath:texts/' + name).then(
+        function(response) {
+          textHelper.parseTextXml(response.body).then(
+              function(response) {
+                deferred.fulfill(response);
+              }, function(err) {
+                deferred.reject('Error during text parse: ' + JSON.stringify(err));
+              });
+        }, function(err) {
+          deferred.reject('Error while fetching resource: ' + JSON.stringify(err));
+        });
 
-        return deferred.promise;
-    }
+    return deferred.promise;
+  }
 
 };

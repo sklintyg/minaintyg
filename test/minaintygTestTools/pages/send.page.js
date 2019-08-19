@@ -25,65 +25,73 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('send-certificate-page'));
-        this.confirmRecipientSelectionBtn = element(by.id('send-to-recipients-btn'));
-        this.sendingDialog = element(by.id('mi-sending-dialog'));
-        this.backToIntygBtn = element(by.id('back-to-intyg-btn'));
-    },
-    
-    isAt: function isAt() {
-        return isAt._super.call(this);
-    },
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('send-certificate-page'));
+    this.confirmRecipientSelectionBtn = element(by.id('send-to-recipients-btn'));
+    this.sendingDialog = element(by.id('mi-sending-dialog'));
+    this.backToIntygBtn = element(by.id('back-to-intyg-btn'));
+  },
 
-    selectRecipient: function(recipientId) {
-        element(by.id('selectable-recipient-' + recipientId)).click();
-    },
+  isAt: function isAt() {
+    return isAt._super.call(this);
+  },
 
-    recipientIsSelectable: function(recipientId) {
-        return element(by.id('selectable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
-    },
+  selectRecipient: function(recipientId) {
+    element(by.id('selectable-recipient-' + recipientId)).click();
+  },
 
-    deselectRecipient: function(recipientId) {
-        element(by.id('removable-recipient-' + recipientId)).click();
-    },
+  recipientIsSelectable: function(recipientId) {
+    return element(by.id('selectable-recipient-' + recipientId)).isDisplayed().then(function(isVisible) {
+      return isVisible;
+    });
+  },
 
-    recipientIsDeselectable: function(recipientId) {
-        return element(by.id('removable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
-    },
+  deselectRecipient: function(recipientId) {
+    element(by.id('removable-recipient-' + recipientId)).click();
+  },
 
-    recipientIsUnselectable: function(recipientId) {
-        return element(by.id('unselectable-recipient-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
-    },
+  recipientIsDeselectable: function(recipientId) {
+    return element(by.id('removable-recipient-' + recipientId)).isDisplayed().then(function(isVisible) {
+      return isVisible;
+    });
+  },
 
-    verifySendResultForRecipient: function(recipientId, success) {
-        return element(by.id((success ? 'success':'fail') + '-result-' + recipientId)).isDisplayed().then(function (isVisible) { return isVisible; });
-    },
+  recipientIsUnselectable: function(recipientId) {
+    return element(by.id('unselectable-recipient-' + recipientId)).isDisplayed().then(function(isVisible) {
+      return isVisible;
+    });
+  },
 
-    confirmRecipientSelection: function() {
-        this.confirmRecipientSelectionBtn.click();
-    },
+  verifySendResultForRecipient: function(recipientId, success) {
+    return element(by.id((success ? 'success' : 'fail') + '-result-' + recipientId)).isDisplayed().then(function(isVisible) {
+      return isVisible;
+    });
+  },
 
-    sendDialogIsShown: function() {
-        return this.sendingDialog.isDisplayed();
-    },
+  confirmRecipientSelection: function() {
+    this.confirmRecipientSelectionBtn.click();
+  },
 
-    sendSekretessDialogIsPresent: function() {
-        return element(by.id('mi-send-sekretess-dialog')).isPresent();
-    },
+  sendDialogIsShown: function() {
+    return this.sendingDialog.isDisplayed();
+  },
 
-    sendSekretessDialogAbortClick: function() {
-        element(by.id('sekretessDialog-button--cancel')).click();
-    },
+  sendSekretessDialogIsPresent: function() {
+    return element(by.id('mi-send-sekretess-dialog')).isPresent();
+  },
 
-    sendSekretessDialogConfirmClick: function() {
-        element(by.id('sekretessDialog-button--confirm')).click();
-    },
+  sendSekretessDialogAbortClick: function() {
+    element(by.id('sekretessDialog-button--cancel')).click();
+  },
 
-    backToViewCertificate: function() {
-        this.backToIntygBtn.click();
-    }
+  sendSekretessDialogConfirmClick: function() {
+    element(by.id('sekretessDialog-button--confirm')).click();
+  },
+
+  backToViewCertificate: function() {
+    this.backToIntygBtn.click();
+  }
 });
 
 module.exports = new MinaintygStartPageBase();

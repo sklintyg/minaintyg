@@ -19,7 +19,6 @@
 package se.inera.intyg.minaintyg.web.integration.pu;
 
 import com.google.common.base.Strings;
-
 import se.inera.intyg.infra.integration.pu.model.Person;
 
 /**

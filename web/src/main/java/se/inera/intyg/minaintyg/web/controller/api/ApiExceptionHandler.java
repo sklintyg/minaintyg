@@ -22,7 +22,6 @@ package se.inera.intyg.minaintyg.web.controller.api;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +30,7 @@ public class ApiExceptionHandler implements ExceptionMapper<Throwable> {
     private static final Logger LOG = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
     public static class ErrorResponse {
+
         String message;
 
         public ErrorResponse(String message) {
@@ -46,7 +46,7 @@ public class ApiExceptionHandler implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable t) {
         LOG.error("Unhandled error occured!", t);
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorResponse(t.toString()))
-                .type(MediaType.APPLICATION_JSON)
-                .build();
+            .type(MediaType.APPLICATION_JSON)
+            .build();
     }
 }

@@ -19,53 +19,52 @@
 angular.module('minaintyg').directive('miCookieBanner',
 
     ['$window', 'common.dialogService', function($window, dialogService) {
-        'use strict';
+      'use strict';
 
-        return {
-            restrict: 'E',
-            scope: {},
-            templateUrl: '/app/components/cookiebanner/miCookieBanner.directive.html',
-            controller: function($scope, $timeout) {
-                $scope.isOpen = false;
-                $scope.showDetails = false;
+      return {
+        restrict: 'E',
+        scope: {},
+        templateUrl: '/app/components/cookiebanner/miCookieBanner.directive.html',
+        controller: function($scope, $timeout) {
+          $scope.isOpen = false;
+          $scope.showDetails = false;
 
-                $scope.openCookieDialog = function(){
-                    var dialogInstance = dialogService.showDialog($scope, {
-                        dialogId: 'cookie-footer-dialog',
-                        titleId: 'footer.cookies.modal.title',
-                        bodyTextId: 'footer.cookies.modal.body',
-                        button1click: function() {
-                            dialogInstance.close();
-                            $scope.onCookieConsentClick();
-                        },
-                        button2click: function() {
-                            dialogInstance.close();
-                        },
-                        button1text: 'common.iaccept',
-                        button2text: 'common.cancel',
-                        button2icon: '',
-                        autoClose: false
-                    });
-                };
+          $scope.openCookieDialog = function() {
+            var dialogInstance = dialogService.showDialog($scope, {
+              dialogId: 'cookie-footer-dialog',
+              titleId: 'footer.cookies.modal.title',
+              bodyTextId: 'footer.cookies.modal.body',
+              button1click: function() {
+                dialogInstance.close();
+                $scope.onCookieConsentClick();
+              },
+              button2click: function() {
+                dialogInstance.close();
+              },
+              button1text: 'common.iaccept',
+              button2text: 'common.cancel',
+              button2icon: '',
+              autoClose: false
+            });
+          };
 
-                function cookieConsentGiven() {
-                    return $window.localStorage && $window.localStorage.getItem('mi-cookie-consent-given') === '1';
-                }
+          function cookieConsentGiven() {
+            return $window.localStorage && $window.localStorage.getItem('mi-cookie-consent-given') === '1';
+          }
 
-                $timeout(function() {
-                    if (!cookieConsentGiven()) {
-                        $scope.isOpen = true;
-                    }
-                }, 500);
-
-
-                $scope.onCookieConsentClick = function() {
-                    $scope.isOpen = false;
-                    if ($window.localStorage) {
-                        $window.localStorage.setItem('mi-cookie-consent-given', '1');
-                    }
-
-                };
+          $timeout(function() {
+            if (!cookieConsentGiven()) {
+              $scope.isOpen = true;
             }
-        };
+          }, 500);
+
+          $scope.onCookieConsentClick = function() {
+            $scope.isOpen = false;
+            if ($window.localStorage) {
+              $window.localStorage.setItem('mi-cookie-consent-given', '1');
+            }
+
+          };
+        }
+      };
     }]);

@@ -26,73 +26,72 @@ var restClient = require('./restclient.util.js');
 var env = require('./../environment.js').envConfig;
 
 module.exports = {
-    login: function(personId) {
-        var user = personId || '191212121212';
+  login: function(personId) {
+    var user = personId || '191212121212';
 
-        var options = {
-            url: 'web/sso?guid=' + user,
-            method: 'GET',
-        };
-        return restClient.run(options, 'urlenc');
-    },
-    get: function(url, loggedIn) {
-        if (loggedIn) {
-            this.login();
-        }
-        var options = {
-            url: url,
-            method: 'GET'
-        };
-        return restClient.run(options, 'json');
-    },
-    // get any kind of resource from the app environment
-    getResource: function(location) {
-        var options = {
-            url: 'testability/resources/resource?location=' + location,
-            method: 'GET',
-            accept: 'application/octet-stream'
-        };
-        return restClient.run(options);
-    },
-
-
-    // Intygstjänst - intyg
-
-    createIntyg: function(createJson) {
-        var options = {
-            url: 'certificate/',
-            method: 'POST',
-            body: createJson
-        };
-        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
-    },
-    deleteIntyg: function(intygId) {
-        var options = {
-            url: 'certificate/' + intygId,
-            method: 'DELETE'
-        };
-        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
-    },
-    deleteAllIntyg: function(userId) {
-        var options = {
-            url: 'certificate/citizen/' + userId,
-            method: 'DELETE'
-        };
-        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
-    },
-    createApprovedReceivers: function(intygsId, createJson) {
-        var options = {
-            url: 'certificate/' + intygsId + '/approvedreceivers/',
-            method: 'POST',
-            body: createJson
-        };
-        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
-    },
-    deleteApprovedReceivers: function(intygsId) {
-        var options = {
-            url: 'certificate/' + intygsId + '/approvedreceivers/',
-            method: 'DELETE'
-        };
-        return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+    var options = {
+      url: 'web/sso?guid=' + user,
+      method: 'GET',
+    };
+    return restClient.run(options, 'urlenc');
+  },
+  get: function(url, loggedIn) {
+    if (loggedIn) {
+      this.login();
     }
+    var options = {
+      url: url,
+      method: 'GET'
+    };
+    return restClient.run(options, 'json');
+  },
+  // get any kind of resource from the app environment
+  getResource: function(location) {
+    var options = {
+      url: 'testability/resources/resource?location=' + location,
+      method: 'GET',
+      accept: 'application/octet-stream'
+    };
+    return restClient.run(options);
+  },
+
+  // Intygstjänst - intyg
+
+  createIntyg: function(createJson) {
+    var options = {
+      url: 'certificate/',
+      method: 'POST',
+      body: createJson
+    };
+    return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+  },
+  deleteIntyg: function(intygId) {
+    var options = {
+      url: 'certificate/' + intygId,
+      method: 'DELETE'
+    };
+    return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+  },
+  deleteAllIntyg: function(userId) {
+    var options = {
+      url: 'certificate/citizen/' + userId,
+      method: 'DELETE'
+    };
+    return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+  },
+  createApprovedReceivers: function(intygsId, createJson) {
+    var options = {
+      url: 'certificate/' + intygsId + '/approvedreceivers/',
+      method: 'POST',
+      body: createJson
+    };
+    return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+  },
+  deleteApprovedReceivers: function(intygsId) {
+    var options = {
+      url: 'certificate/' + intygsId + '/approvedreceivers/',
+      method: 'DELETE'
+    };
+    return restClient.run(options, 'json', env.INTYGTJANST_URL + '/resources/');
+  }
 };

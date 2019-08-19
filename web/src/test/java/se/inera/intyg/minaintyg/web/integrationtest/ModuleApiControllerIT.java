@@ -18,16 +18,21 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
+
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
-
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -35,13 +40,6 @@ import se.inera.intyg.common.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.common.ts_diabetes.support.TsDiabetesEntryPoint;
-
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
 
 public class ModuleApiControllerIT extends IntegrationTestBase {
 
@@ -99,8 +97,8 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, type, LUSE_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         given().redirects().follow(false).and().pathParams("type", type, "id", id, "intygTypeVersion", LUSE_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
+            .expect().statusCode(HttpServletResponse.SC_FORBIDDEN)
+            .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
     }
 
     @Test
@@ -112,9 +110,9 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, type, TS_BAS_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         Response response = spec()
-                .pathParams("type", type, "id", id, "intygTypeVersion", TS_BAS_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf");
+            .pathParams("type", type, "id", id, "intygTypeVersion", TS_BAS_VERSION)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf");
 
         assertNotNull(response.getBody().asByteArray());
         String contentHeader = response.getHeader(HttpHeaders.CONTENT_DISPOSITION);
@@ -131,10 +129,10 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, type, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         Response response = spec()
-                .contentType(ContentType.URLENC)
-                .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().post("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift");
+            .contentType(ContentType.URLENC)
+            .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().post("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift");
 
         assertNotNull(response.getBody().asByteArray());
         String contentHeader = response.getHeader(HttpHeaders.CONTENT_DISPOSITION);
@@ -150,9 +148,9 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, true, false);
 
         spec()
-                .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id, "intygTypeVersion", LUAE_NA_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_GONE)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
+            .pathParams("type", LuaenaEntryPoint.MODULE_ID, "id", id, "intygTypeVersion", LUAE_NA_VERSION)
+            .expect().statusCode(HttpServletResponse.SC_GONE)
+            .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}");
 
     }
 
@@ -163,11 +161,11 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         IntegrationTestUtility.givenIntyg(id, type, intygTypeVersion, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         spec()
-                .pathParams("type", type, "id", id, "intygTypeVersion", intygTypeVersion)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"));
+            .pathParams("type", type, "id", id, "intygTypeVersion", intygTypeVersion)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"));
 
     }
 
@@ -185,14 +183,14 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
         // are included in each request. We want to get rid of the JSESSIONID since we're relying on SESSION but
         // that's easier said than done with Spring Security + Spring Session...
         spec()
-                .cookie("JSESSIONID", IntegrationTestUtility.jsessionId)
-                .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
-                .expect().statusCode(HttpServletResponse.SC_OK)
-                .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
-                .then()
-                .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"))
-                .header("x-frame-options", equalTo("DENY"))
-                .header("Cache-Control", equalTo("no-cache, no-store, max-age=0, must-revalidate"));
+            .cookie("JSESSIONID", IntegrationTestUtility.jsessionId)
+            .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
+            .expect().statusCode(HttpServletResponse.SC_OK)
+            .when().get("moduleapi/certificate/{type}/{intygTypeVersion}/{id}")
+            .then()
+            .body(matchesJsonSchemaInClasspath("jsonschema/generic-get-certificate-response-schema.json"))
+            .header("x-frame-options", equalTo("DENY"))
+            .header("Cache-Control", equalTo("no-cache, no-store, max-age=0, must-revalidate"));
 
     }
 }

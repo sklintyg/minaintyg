@@ -18,6 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import ch.qos.logback.core.Appender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,17 +36,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.classic.spi.LoggingEvent;
-import ch.qos.logback.core.Appender;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MonitoringLogServiceImplTest {
@@ -73,7 +72,8 @@ public class MonitoringLogServiceImplTest {
     @Test
     public void shouldLogCitizenLogin() {
         logService.logCitizenLogin(USER_ID, LOGIN_METHOD);
-        verifyLog(Level.INFO, "CITIZEN_LOGIN Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged in using login method 'LOGIN_METHOD'");
+        verifyLog(Level.INFO,
+            "CITIZEN_LOGIN Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged in using login method 'LOGIN_METHOD'");
     }
 
     private void verifyLog(Level logLevel, String logMessage) {
@@ -84,13 +84,14 @@ public class MonitoringLogServiceImplTest {
         // Verify log
         assertThat(loggingEvent.getLevel(), equalTo(logLevel));
         assertThat(loggingEvent.getFormattedMessage(),
-                equalTo(logMessage));
+            equalTo(logMessage));
     }
 
     @Test
     public void shouldCitizenLogout() {
         logService.logCitizenLogout(USER_ID, LOGIN_METHOD);
-        verifyLog(Level.INFO, "CITIZEN_LOGOUT Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged out using login method 'LOGIN_METHOD'");
+        verifyLog(Level.INFO,
+            "CITIZEN_LOGOUT Citizen 'aa9f5f25483e54eedd25f7a2a225b7834e54db9ee39695cf1c49881cf2bca381' logged out using login method 'LOGIN_METHOD'");
     }
 
     @Test

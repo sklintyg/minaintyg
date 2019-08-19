@@ -27,18 +27,18 @@ var aboutPage = pages.aboutPage;
 
 module.exports = {
 
-    goToAbout: function(success) {
-        startPage.clickAbout();
-        expect(aboutPage.isAt()).toBe(success || true);
-    }
+  goToAbout: function(success) {
+    startPage.clickAbout();
+    expect(aboutPage.isAt()).toBe(success || true);
+  }
 
-    //goToStart: function(success) {
-    //    startPage.clickSjukfall();
-    //    expect(startPage.isAt()).toBe(success || true);
-    //},
+  //goToStart: function(success) {
+  //    startPage.clickSjukfall();
+  //    expect(startPage.isAt()).toBe(success || true);
+  //},
 
-    //goBackToStart: function(success) {
-    //    sjukfallPage.clickGoBack();
-    //    expect(startPage.isAt()).toBe(success || true);
-    //}
+  //goBackToStart: function(success) {
+  //    sjukfallPage.clickGoBack();
+  //    expect(startPage.isAt()).toBe(success || true);
+  //}
 };

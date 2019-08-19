@@ -17,4 +17,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize' ]);
+angular.module('minaintyg', ['ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize']);

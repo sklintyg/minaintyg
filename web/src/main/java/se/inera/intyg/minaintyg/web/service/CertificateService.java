@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import java.util.List;
+import java.util.Optional;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.minaintyg.web.api.SendToRecipientResult;
@@ -26,14 +28,11 @@ import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.schemas.contract.Personnummer;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface CertificateService {
 
     Optional<CertificateResponse> getUtlatande(String type, String intygTypeVersion, Personnummer civicRegistrationNumber,
-            String certificateId)
-            throws ExternalWebServiceCallFailedException;
+        String certificateId)
+        throws ExternalWebServiceCallFailedException;
 
     /**
      * Retrives a list of certificates for the given civicRegistrationNumber.
@@ -44,13 +43,12 @@ public interface CertificateService {
      * Request to send a specific certificate to a specific recipient.
      */
     List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
-            List<String> recipientIds);
+        List<String> recipientIds);
 
     /**
      * Retrieves a list of possible recipients for the given certificate type.
      *
-     * @param certificateType
-     *            the type of certificate
+     * @param certificateType the type of certificate
      * @return a List of {@link UtlatandeRecipient}
      */
     List<UtlatandeRecipient> getRecipientsForCertificate(String certificateType);
@@ -74,18 +72,11 @@ public interface CertificateService {
 
     /**
      * Get all labels for intyg as json.
-     *
-     * @param intygsTyp
-     * @param version
-     * @return
      */
     String getQuestions(String intygsTyp, String version);
 
     /**
      * Get relation for one or many intyg ids.
-     *
-     * @param intygIds
-     * @return
      */
     List<IntygRelations> getRelationsForCertificates(List<String> intygIds);
 }

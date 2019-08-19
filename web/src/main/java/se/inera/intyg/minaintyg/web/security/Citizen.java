@@ -19,7 +19,6 @@
 package se.inera.intyg.minaintyg.web.security;
 
 import java.io.Serializable;
-
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -29,6 +28,7 @@ public interface Citizen extends UserDetails, Serializable {
 
     /**
      * Should return the login methos used to access the application.
+     *
      * @return {@link LoginMethodEnum} Login method used
      */
     LoginMethodEnum getLoginMethod();

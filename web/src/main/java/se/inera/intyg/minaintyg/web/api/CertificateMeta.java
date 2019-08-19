@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
@@ -140,20 +139,20 @@ public class CertificateMeta {
      */
     public List<CertificateEvent> getEvents() {
         Stream<CertificateEvent> s1 = Stream.of(getReplacedBy()).filter(Objects::nonNull).map(
-                r -> new CertificateEvent(
-                        CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType(), getTypeVersion()
-                ));
+            r -> new CertificateEvent(
+                CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+            ));
         Stream<CertificateEvent> s2 = Stream.of(getReplaces()).filter(Objects::nonNull).map(
-                r -> new CertificateEvent(
-                        CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType(), getTypeVersion()
-                ));
+            r -> new CertificateEvent(
+                CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+            ));
         Stream<CertificateEvent> relationStream = Stream.concat(s1, s2);
         Stream<CertificateEvent> statusStream = statuses.stream()
-                .map(s -> new CertificateEvent(CertificateEventType.STATUS, s.getType().name(), s.getTarget(), s.getTimestamp()));
+            .map(s -> new CertificateEvent(CertificateEventType.STATUS, s.getType().name(), s.getTarget(), s.getTimestamp()));
 
         return Stream.concat(relationStream, statusStream)
-                .sorted((e1, e2) -> e2.getTimestamp().compareTo(e1.getTimestamp()))
-                .collect(Collectors.toList());
+            .sorted((e1, e2) -> e2.getTimestamp().compareTo(e1.getTimestamp()))
+            .collect(Collectors.toList());
     }
 
     /**
@@ -161,10 +160,10 @@ public class CertificateMeta {
      */
     public CertificateRelation getReplacedBy() {
         return relations.stream()
-                .filter(cr -> cr.getToIntygsId().equals(id))
-                .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
-                .findFirst()
-                .orElse(null);
+            .filter(cr -> cr.getToIntygsId().equals(id))
+            .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
+            .findFirst()
+            .orElse(null);
     }
 
     /**
@@ -181,9 +180,9 @@ public class CertificateMeta {
      */
     public CertificateRelation getReplaces() {
         return relations.stream()
-                .filter(cr -> cr.getFromIntygsId().equals(id))
-                .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
-                .findFirst()
-                .orElse(null);
+            .filter(cr -> cr.getFromIntygsId().equals(id))
+            .filter(cr -> cr.getRelationKod() == RelationKod.ERSATT || cr.getRelationKod() == RelationKod.KOMPLT)
+            .findFirst()
+            .orElse(null);
     }
 }

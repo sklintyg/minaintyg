@@ -39,18 +39,18 @@ var anpassaAg114Page = require('./anpassa.ag114.page.js');
 var anpassaFk7263Page = require('./anpassa.fk7263.page.js');
 
 module.exports = {
-    'aboutPage': aboutPage,
-    'accessdeniedPage': accessdeniedPage,
-    'archivedPage': archivedPage,
-    'errorPage': errorPage,
-    'inboxPage': inboxPage,
-    'mvkloginPage': mvkloginPage,
-    'mvklogoutPage': mvklogoutPage,
-    'notfoundPage': notfoundPage,
-    'sendPage': sendPage,
-    'viewPage': viewPage,
-    'welcomePage': welcomePage,
-    'anpassaLisjpPage': anpassaLisjpPage,
-    'anpassaAg114Page': anpassaAg114Page,
-    'anpassaFk7263Page': anpassaFk7263Page
+  'aboutPage': aboutPage,
+  'accessdeniedPage': accessdeniedPage,
+  'archivedPage': archivedPage,
+  'errorPage': errorPage,
+  'inboxPage': inboxPage,
+  'mvkloginPage': mvkloginPage,
+  'mvklogoutPage': mvklogoutPage,
+  'notfoundPage': notfoundPage,
+  'sendPage': sendPage,
+  'viewPage': viewPage,
+  'welcomePage': welcomePage,
+  'anpassaLisjpPage': anpassaLisjpPage,
+  'anpassaAg114Page': anpassaAg114Page,
+  'anpassaFk7263Page': anpassaFk7263Page
 };

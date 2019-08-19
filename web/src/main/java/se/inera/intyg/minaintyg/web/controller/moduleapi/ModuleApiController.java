@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.controller.moduleapi;
 
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -32,13 +36,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
@@ -59,8 +59,6 @@ import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
 import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 
 /**
  * Controller that exposes a REST interface to functions common to certificate modules, such as get and send
@@ -99,27 +97,26 @@ public class ModuleApiController {
     /**
      * Return the certificate identified by the given id as JSON.
      *
-     * @param id
-     *            - the globally unique id of a certificate.
+     * @param id - the globally unique id of a certificate.
      * @return The certificate in JSON format
      */
     @GET
     @Path("/{type}/{intygTypeVersion}/{id}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public final Response getCertificate(
-            @PathParam("type") final String type,
-            @PathParam("intygTypeVersion") final String intygTypeVersion,
-            @PathParam("id") final String id) {
+        @PathParam("type") final String type,
+        @PathParam("intygTypeVersion") final String intygTypeVersion,
+        @PathParam("id") final String id) {
         LOG.debug("getCertificate: {}", id);
 
         Optional<CertificateResponse> certificateResponse =
-                certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
+            certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
 
         if (certificateResponse.isPresent()) {
             try {
                 if (certificateResponse.get().isRevoked()) {
                     LOG.info("Revoked certificate " + id + " was requested - Responding with status "
-                            + Response.Status.GONE.getStatusCode());
+                        + Response.Status.GONE.getStatusCode());
                     return Response.status(Response.Status.GONE).build();
                 }
 
@@ -129,7 +126,7 @@ public class ModuleApiController {
                 CertificateMetaData metaData = certificateResponse.get().getMetaData();
 
                 CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande, metaData, relations,
-                        RELEVANT_STATUS_TYPES);
+                    RELEVANT_STATUS_TYPES);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {
@@ -144,17 +141,16 @@ public class ModuleApiController {
     /**
      * Return the certificate identified by the given id as PDF.
      *
-     * @param id
-     *            - the globally unique id of a certificate.
+     * @param id - the globally unique id of a certificate.
      * @return The certificate in PDF format
      */
     @GET
     @Path("/{type}/{intygTypeVersion}/{id}/pdf")
     @Produces("application/pdf")
     public final Response getCertificatePdf(
-            @PathParam(value = "type") final String type,
-            @PathParam("intygTypeVersion") final String intygTypeVersion,
-            @PathParam(value = "id") final String id) {
+        @PathParam(value = "type") final String type,
+        @PathParam("intygTypeVersion") final String intygTypeVersion,
+        @PathParam(value = "id") final String id) {
         LOG.debug("getCertificatePdf: {}", id);
         return getPdfInternal(type, intygTypeVersion, id, null, false);
     }
@@ -162,8 +158,7 @@ public class ModuleApiController {
     /**
      * Return the certificate identified by the given id as customized employer copy PDF rendition.
      *
-     * @param id
-     *            - the globally unique id of a certificate.
+     * @param id - the globally unique id of a certificate.
      * @return The certificate in PDF format
      */
     @POST
@@ -171,10 +166,10 @@ public class ModuleApiController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("application/pdf")
     public final Response getCertificatePdfEmployerCopy(
-            @PathParam(value = "type") final String type,
-            @PathParam("intygTypeVersion") final String intygTypeVersion,
-            @PathParam(value = "id") final String id,
-            @FormParam("selectedOptionalFields") List<String> selectedOptionalFields) {
+        @PathParam(value = "type") final String type,
+        @PathParam("intygTypeVersion") final String intygTypeVersion,
+        @PathParam(value = "id") final String id,
+        @FormParam("selectedOptionalFields") List<String> selectedOptionalFields) {
         LOG.debug("getCertificatePdfEmployerCopy: id {}, selectedOptionalFields {}", id, selectedOptionalFields);
         return getPdfInternal(type, intygTypeVersion, id, selectedOptionalFields, true);
 
@@ -183,28 +178,28 @@ public class ModuleApiController {
     private Response getPdfInternal(String type, String intygTypeVersion, String id, List<String> optionalFields, boolean isEmployerCopy) {
 
         Optional<CertificateResponse> utlatande =
-                certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
+            certificateService.getUtlatande(type, intygTypeVersion, createPnr(citizenService.getCitizen().getUsername()), id);
 
         if (utlatande.isPresent() && !utlatande.get().isRevoked()) {
             String typ = utlatande.get().getUtlatande().getTyp();
             try {
                 ModuleApi moduleApi = moduleRegistry.getModuleApi(typ, intygTypeVersion);
                 List<Status> statusList = utlatande.get().getMetaData().getStatus().stream()
-                        .filter(s -> CertificateState.SENT.equals(s.getType()))
-                        .collect(Collectors.toList());
+                    .filter(s -> CertificateState.SENT.equals(s.getType()))
+                    .collect(Collectors.toList());
 
                 PdfResponse pdf;
 
                 if (isEmployerCopy) {
                     pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG,
-                            optionalFields, UtkastStatus.SIGNED);
+                        optionalFields, UtkastStatus.SIGNED);
                 } else {
                     pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, UtkastStatus.SIGNED);
                 }
 
                 return Response.ok(pdf.getPdfData())
-                        .header(CONTENT_DISPOSITION, "attachment; filename=" + pdf.getFilename())
-                        .build();
+                    .header(CONTENT_DISPOSITION, "attachment; filename=" + pdf.getFilename())
+                    .build();
 
             } catch (ModuleNotFoundException e) {
                 LOG.error("Module " + typ + " not found. Not loaded in application.");

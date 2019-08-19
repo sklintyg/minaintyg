@@ -28,38 +28,38 @@
 
 module.exports = {
 
-    get: function() {
-        browser.get('welcome.html');
-    },
+  get: function() {
+    browser.get('welcome.html');
+  },
 
-    isAt: function isAt() {
-        return element(by.id('jsonSelect')).isDisplayed();
-    },
+  isAt: function isAt() {
+    return element(by.id('jsonSelect')).isDisplayed();
+  },
 
-    disableCookieConsentBanner: function() {
-        //Having this flag in localStorage will suppress the cookieBanner.(This is what will be set
-        //when a user gives consent). We pre-set this before logging in to avoid having to click on that button
-        //for every test.
-        browser.executeScript('window.localStorage.setItem("mi-cookie-consent-given","1");');
-    },
+  disableCookieConsentBanner: function() {
+    //Having this flag in localStorage will suppress the cookieBanner.(This is what will be set
+    //when a user gives consent). We pre-set this before logging in to avoid having to click on that button
+    //for every test.
+    browser.executeScript('window.localStorage.setItem("mi-cookie-consent-given","1");');
+  },
 
-    enableCookieConsentBanner: function() {
-        browser.executeScript('window.localStorage.setItem("mi-cookie-consent-given","0");');
-    },
+  enableCookieConsentBanner: function() {
+    browser.executeScript('window.localStorage.setItem("mi-cookie-consent-given","0");');
+  },
 
-    login: function(userId, showCookieBanner) {
-        if (!showCookieBanner) {
-            this.disableCookieConsentBanner();
-        } else {
-            this.enableCookieConsentBanner();
-        }
-
-        userId = userId || '191212121212';
-        userId = userId.replace('-', '');
-        userId = 'x' + userId;
-        
-        element(by.id(userId)).click();
-        element(by.id('loginBtn')).click();
+  login: function(userId, showCookieBanner) {
+    if (!showCookieBanner) {
+      this.disableCookieConsentBanner();
+    } else {
+      this.enableCookieConsentBanner();
     }
+
+    userId = userId || '191212121212';
+    userId = userId.replace('-', '');
+    userId = 'x' + userId;
+
+    element(by.id(userId)).click();
+    element(by.id('loginBtn')).click();
+  }
 
 };

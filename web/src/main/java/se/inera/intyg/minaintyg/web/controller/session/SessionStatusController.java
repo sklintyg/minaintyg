@@ -25,10 +25,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-
 import se.inera.intyg.minaintyg.web.filters.SessionTimeoutFilter;
 
 /**
@@ -42,7 +40,7 @@ import se.inera.intyg.minaintyg.web.filters.SessionTimeoutFilter;
  * @see SessionTimeoutFilter
  * @see org.springframework.security.web.context.SecurityContextRepository SecurityContextRepository
  * @see org.springframework.security.web.context.HttpSessionSecurityContextRepository
- *      HttpSessionSecurityContextRepository
+ * HttpSessionSecurityContextRepository
  */
 
 public class SessionStatusController {
@@ -76,7 +74,7 @@ public class SessionStatusController {
         Long secondsLeft = (Long) request.getAttribute(SessionTimeoutFilter.SECONDS_UNTIL_SESSIONEXPIRE_ATTRIBUTE_KEY);
 
         return new GetSessionStatusResponse(session != null, hasAuthenticatedPrincipalSession(session),
-                secondsLeft == null ? 0 : secondsLeft);
+            secondsLeft == null ? 0 : secondsLeft);
     }
 
     private boolean hasAuthenticatedPrincipalSession(HttpSession session) {

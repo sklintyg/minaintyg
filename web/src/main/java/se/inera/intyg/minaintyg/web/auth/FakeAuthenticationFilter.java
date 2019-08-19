@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import java.io.IOException;
+import java.net.URLDecoder;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLDecoder;
 
 /**
  * @author andreaskaltenbach
@@ -44,7 +43,7 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException, IOException, ServletException {
+        throws AuthenticationException, IOException, ServletException {
 
         if (request.getCharacterEncoding() == null) {
             request.setCharacterEncoding("UTF-8");
@@ -52,8 +51,8 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
         String guid = request.getParameter("guid");
         String origin = request.getParameter("origin") != null && request.getParameter("origin").trim().length() > 0
-                ? request.getParameter("origin")
-                : "ELVA77";
+            ? request.getParameter("origin")
+            : "ELVA77";
 
         // we manually encode the json guid
         String json = URLDecoder.decode(guid, "UTF-8");
@@ -66,6 +65,6 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
         fakeElegCredentials.setOrigin(origin);
         LOG.info("Detected fake credentials " + fakeElegCredentials);
         return getAuthenticationManager()
-                .authenticate(new FakeElegAuthenticationToken(fakeElegCredentials));
+            .authenticate(new FakeElegAuthenticationToken(fakeElegCredentials));
     }
 }
