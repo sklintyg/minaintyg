@@ -18,50 +18,50 @@
  */
 
 angular.module('minaintyg').directive('miScrollToTopFooter', function() {
-    'use strict';
+  'use strict';
 
-    return {
-        restrict: 'E',
-        templateUrl: '/app/components/miScrollToTopFooter/miScrollToTopFooter.directive.html',
-        controller: function($log, $timeout, $scope, $window, $document, scrollToTopConfig, $state) {
+  return {
+    restrict: 'E',
+    templateUrl: '/app/components/miScrollToTopFooter/miScrollToTopFooter.directive.html',
+    controller: function($log, $timeout, $scope, $window, $document, scrollToTopConfig, $state) {
 
-            $scope.vm = {
-                visible: false
-            };
+      $scope.vm = {
+        visible: false
+      };
 
-            $scope.scrollToTop = function() {
-                $('body, html').animate({
-                    scrollTop: 0
-                }, 500);
-            };
+      $scope.scrollToTop = function() {
+        $('body, html').animate({
+          scrollTop: 0
+        }, 500);
+      };
 
-            $scope.showComponent = true;
-            $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      $scope.showComponent = true;
+      $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
-                // Check if directive should be used on this state (config in app.js)
-                $scope.showComponent = true;
-                for (var i = 0; i < scrollToTopConfig.excludedStates.length; i++){
-                    var excludedState = scrollToTopConfig.excludedStates[i];
-                    var currentStateName = $state.current.name;
-                    if(excludedState === currentStateName){
-                        $scope.showComponent = false;
-                    }
-                }
-            });
-
-            function updateVisibility() {
-                $scope.vm.visible = $(window).scrollTop() > 0;
-            }
-
-            updateVisibility();
-
-            angular.element($window).on('resize scroll', function() {
-                updateVisibility();
-                //update angular scope
-                $scope.$apply();
-            });
-
+        // Check if directive should be used on this state (config in app.js)
+        $scope.showComponent = true;
+        for (var i = 0; i < scrollToTopConfig.excludedStates.length; i++) {
+          var excludedState = scrollToTopConfig.excludedStates[i];
+          var currentStateName = $state.current.name;
+          if (excludedState === currentStateName) {
+            $scope.showComponent = false;
+          }
         }
+      });
 
-    };
+      function updateVisibility() {
+        $scope.vm.visible = $(window).scrollTop() > 0;
+      }
+
+      updateVisibility();
+
+      angular.element($window).on('resize scroll', function() {
+        updateVisibility();
+        //update angular scope
+        $scope.$apply();
+      });
+
+    }
+
+  };
 });

@@ -29,26 +29,26 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var anpassaLisjpPage = MinaintygBasePage._extend({
 
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('customizeCertificateHeader'));
-        this.showsummaryBtn = element(by.id('goto-step-2'));
-        this.showSelectionBtn = element(by.id('goto-step-1'));
-        this.showDownloadBtn = element(by.id('goto-step-3'));
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('customizeCertificateHeader'));
+    this.showsummaryBtn = element(by.id('goto-step-2'));
+    this.showSelectionBtn = element(by.id('goto-step-1'));
+    this.showDownloadBtn = element(by.id('goto-step-3'));
 
-    },
-    isAt: function isAt() {
-        specHelper.waitForAngularTestability();
-        return isAt._super.call(this);
-    },
+  },
+  isAt: function isAt() {
+    specHelper.waitForAngularTestability();
+    return isAt._super.call(this);
+  },
 
-    clickShowSummary: function() {
-        this.showsummaryBtn.click();
-    },
+  clickShowSummary: function() {
+    this.showsummaryBtn.click();
+  },
 
-    clickShowSelection: function() {
-        this.showSelectionBtn.click();
-    }
+  clickShowSelection: function() {
+    this.showSelectionBtn.click();
+  }
 });
 
 module.exports = new anpassaLisjpPage();

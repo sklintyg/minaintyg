@@ -19,13 +19,13 @@
 
 angular.module('minaintyg').directive('miHelpNavigationMenu',
     function() {
-        'use strict';
+      'use strict';
 
-        return {
-            restrict: 'E',
-            scope: {
-                menuItems: '='
-            },
-            templateUrl: '/app/components/miHelpNavigationMenu/miHelpNavigationMenu.directive.html'
-        };
+      return {
+        restrict: 'E',
+        scope: {
+          menuItems: '='
+        },
+        templateUrl: '/app/components/miHelpNavigationMenu/miHelpNavigationMenu.directive.html'
+      };
     });

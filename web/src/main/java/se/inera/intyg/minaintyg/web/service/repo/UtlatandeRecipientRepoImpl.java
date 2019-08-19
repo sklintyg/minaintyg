@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.service.repo;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.xml.ws.WebServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +34,6 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsType;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
-
-import javax.annotation.PostConstruct;
-import javax.xml.ws.WebServiceException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 @EnableScheduling
@@ -66,7 +65,7 @@ public class UtlatandeRecipientRepoImpl implements UtlatandeRecipientRepo {
             ListKnownRecipientsType request = new ListKnownRecipientsType();
 
             ListKnownRecipientsResponseType response =
-                    listKnownRecipientsClient.listKnownRecipients(logicalAddress, request);
+                listKnownRecipientsClient.listKnownRecipients(logicalAddress, request);
 
             // Always use intygstjansten as master
             if (response.getResult().getResultCode().equals(ResultCodeType.OK)) {
@@ -74,7 +73,7 @@ public class UtlatandeRecipientRepoImpl implements UtlatandeRecipientRepo {
                 response.getRecipient().forEach(r -> recipients.add(new UtlatandeRecipient(r.getId(), r.getName(), r.isTrusted())));
             } else {
                 LOG.error("Got error: {} when updating recipients from Intygstjansten.",
-                        response.getResult().getResultText());
+                    response.getResult().getResultText());
             }
         } catch (WebServiceException we) {
             LOG.error("Unable to contact Intygstjänsten while attempting to update recipients: {}", we.getMessage());

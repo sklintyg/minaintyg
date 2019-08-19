@@ -18,12 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.overvakning;
 
+import com.google.common.base.Stopwatch;
 import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Stopwatch;
 
 public class HealthCheck {
 
@@ -48,6 +46,7 @@ public class HealthCheck {
     }
 
     public static final class Status {
+
         private final long measurement;
         private final boolean ok;
 

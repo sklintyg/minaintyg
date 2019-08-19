@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
+ *
  */
 public class CitizenImplTest {
 

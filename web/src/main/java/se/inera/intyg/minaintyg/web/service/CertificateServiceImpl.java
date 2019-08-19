@@ -143,6 +143,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     // dto
     public static class ListRequestObject {
+
         private String id;
         private boolean archived;
 
@@ -164,6 +165,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     // dto
     public static class ListResponseObject {
+
         private CertificateHolder certificate;
         private List<CertificateRelation> relations;
 
@@ -185,22 +187,22 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
-            List<String> recipients) {
+        List<String> recipients) {
         List<SendToRecipientResult> batchResult = new ArrayList<>();
         for (String recipientId : recipients) {
             LOGGER.debug("sendCertificate {} to {}", certificateId, recipientId);
             try {
                 SendCertificateToRecipientType request = SendCertificateToRecipientTypeConverter.convert(
-                        certificateId,
-                        civicRegistrationNumber,
-                        Personnummer.createPersonnummer(citizenService.getCitizen().getUsername()).get(),
-                        recipientId);
+                    certificateId,
+                    civicRegistrationNumber,
+                    Personnummer.createPersonnummer(citizenService.getCitizen().getUsername()).get(),
+                    recipientId);
 
                 final SendCertificateToRecipientResponseType response = sendService.sendCertificateToRecipient(logicalAddress, request);
 
                 if (response.getResult().getResultCode().equals(se.riv.clinicalprocess.healthcond.certificate.v3.ResultCodeType.ERROR)) {
                     LOGGER.warn(String.format("SendCertificate error when sending certificate %s to recipient %s, errortext was '%s'",
-                            certificateId, recipientId, response.getResult().getResultText()));
+                        certificateId, recipientId, response.getResult().getResultText()));
                     batchResult.add(new SendToRecipientResult(recipientId, false, null));
                 } else {
                     batchResult.add(new SendToRecipientResult(recipientId, true, LocalDateTime.now()));
@@ -208,8 +210,8 @@ public class CertificateServiceImpl implements CertificateService {
                 }
             } catch (Exception e) {
                 LOGGER.error(
-                        String.format("SendCertificate exception when sending certificate %s to recipient %s", certificateId, recipientId),
-                        e);
+                    String.format("SendCertificate exception when sending certificate %s to recipient %s", certificateId, recipientId),
+                    e);
                 batchResult.add(new SendToRecipientResult(recipientId, false, null));
             }
 
@@ -220,7 +222,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public Optional<CertificateResponse> getUtlatande(String type, String intygTypeVersion, Personnummer civicRegistrationNumber,
-            String certificateId) {
+        String certificateId) {
         CertificateResponse certificate;
         try {
             certificate = moduleRegistry.getModuleApi(type, intygTypeVersion).getCertificate(certificateId, logicalAddress, RECIPIENT_INVANA
@@ -245,7 +247,7 @@ public class CertificateServiceImpl implements CertificateService {
         return certificatesCitizenApiActive ? getCertificatesRestApi(pnr, archived) : getCertificatesWebServiceApi(pnr, archived);
     }
 
-     // TODO; To be removed and replaced by #getCertificatesRestApi(), when it has been verified that the new REST API works in prod.
+    // TODO; To be removed and replaced by #getCertificatesRestApi(), when it has been verified that the new REST API works in prod.
     @Deprecated
     protected List<UtlatandeMetaData> getCertificatesWebServiceApi(Personnummer civicRegistrationNumber, boolean arkiverade) {
         final ListCertificatesForCitizenType params = new ListCertificatesForCitizenType();
@@ -257,18 +259,18 @@ public class CertificateServiceImpl implements CertificateService {
         ListCertificatesForCitizenResponseType response = listService.listCertificatesForCitizen(null, params);
 
         switch (response.getResult().getResultCode()) {
-        case OK:
-            List<Intyg> intygList = response.getIntygsLista().getIntyg();
-            List<IntygRelations> intygRelations = getRelationsForCertificates(intygList.stream()
+            case OK:
+                List<Intyg> intygList = response.getIntygsLista().getIntyg();
+                List<IntygRelations> intygRelations = getRelationsForCertificates(intygList.stream()
                     .map(intyg -> intyg.getIntygsId().getExtension())
                     .collect(Collectors.toList())
-            );
-            return utlatandeMetaDataConverter.convert(intygList, intygRelations, arkiverade);
-        default:
-            LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPersonnummerHash()
+                );
+                return utlatandeMetaDataConverter.convert(intygList, intygRelations, arkiverade);
+            default:
+                LOGGER.error("Failed to fetch cert list for user #" + civicRegistrationNumber.getPersonnummerHash()
                     + " from Intygstjänsten. WS call result is "
                     + response.getResult());
-            throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
+                throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
                     response.getResult().getErrorId() != null ? response.getResult().getErrorId().name() : "");
         }
     }
@@ -342,20 +344,20 @@ public class CertificateServiceImpl implements CertificateService {
         GetRecipientsForCertificateResponseType response = getRecipientsService.getRecipientsForCertificate(logicalAddress, request);
 
         switch (response.getResult().getResultCode()) {
-        case OK:
-            List<UtlatandeRecipient> recipientList = new ArrayList<>();
-            for (RecipientType recipientType : response.getRecipient()) {
-                UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(
+            case OK:
+                List<UtlatandeRecipient> recipientList = new ArrayList<>();
+                for (RecipientType recipientType : response.getRecipient()) {
+                    UtlatandeRecipient utlatandeRecipient = new UtlatandeRecipient(
                         recipientType.getId(),
                         recipientType.getName(),
                         recipientType.isTrusted());
-                recipientList.add(utlatandeRecipient);
-            }
-            return recipientList;
-        default:
-            LOGGER.error("Failed to fetch recipient list for certificate-id: {} from Intygstjänsten. WS call result is {}",
+                    recipientList.add(utlatandeRecipient);
+                }
+                return recipientList;
+            default:
+                LOGGER.error("Failed to fetch recipient list for certificate-id: {} from Intygstjänsten. WS call result is {}",
                     certificateId, response.getResult());
-            throw new ResultTypeErrorException(response.getResult());
+                throw new ResultTypeErrorException(response.getResult());
         }
     }
 
@@ -394,8 +396,8 @@ public class CertificateServiceImpl implements CertificateService {
         boolean arkiverade = !StatusKod.DELETE.equals(status);
         // first assert the certificate belongs to the user
         UtlatandeMetaData utlatande = getCertificates(civicRegistrationNumber, arkiverade).stream()
-                .filter(c -> certificateId.equals(c.getId())).findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
+            .filter(c -> certificateId.equals(c.getId())).findAny()
+            .orElseThrow(() -> new IllegalArgumentException("Invalid certificate for user"));
         SetCertificateStatusType parameters = new SetCertificateStatusType();
         parameters.setIntygsId(toIntygsId(certificateId));
         parameters.setPart(toPart(RECIPIENT_INVANA));
@@ -405,14 +407,15 @@ public class CertificateServiceImpl implements CertificateService {
         SetCertificateStatusResponseType response = setCertificateStatusService.setCertificateStatus(logicalAddress, parameters);
 
         switch (response.getResult().getResultCode()) {
-        case ERROR:
-            LOGGER.error("Failed to set certifiate '{}' as {}. WS call result is {}", certificateId, status.name(),
+            case ERROR:
+                LOGGER.error("Failed to set certifiate '{}' as {}. WS call result is {}", certificateId, status.name(),
                     response.getResult().getResultText());
-            throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(), response.getResult().getErrorId().name());
-        default:
-            // negate availability
-            utlatande.setAvailable(String.valueOf(arkiverade));
-            return utlatande;
+                throw new ExternalWebServiceCallFailedException(response.getResult().getResultText(),
+                    response.getResult().getErrorId().name());
+            default:
+                // negate availability
+                utlatande.setAvailable(String.valueOf(arkiverade));
+                return utlatande;
         }
     }
 

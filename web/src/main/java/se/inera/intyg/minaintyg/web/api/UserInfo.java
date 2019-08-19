@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class UserInfo implements Serializable {
+
     private String personId;
     private String fullName;
     private String loginMethod;

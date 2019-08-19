@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomXFrameOptionsHeaderWriterTest {
@@ -51,7 +50,7 @@ public class CustomXFrameOptionsHeaderWriterTest {
         when(req.getHeader("Referer")).thenReturn(REFERER);
         testee.writeHeaders(req, resp);
         verify(resp).addHeader("Content-Security-Policy",
-                "frame-ancestors https://*.funktionstjanster.se https://*.funktionstjanster.se:* https://funktionstjanster.se:*");
+            "frame-ancestors https://*.funktionstjanster.se https://*.funktionstjanster.se:* https://funktionstjanster.se:*");
     }
 
     @Test

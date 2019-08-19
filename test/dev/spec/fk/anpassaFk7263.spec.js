@@ -34,125 +34,121 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Anpassa FK7263 intyg för utskrift till arbetsgivare', function() {
 
-    var intygsId = null;
-    var personId = '19121212-1212';
+  var intygsId = null;
+  var personId = '19121212-1212';
 
-    beforeAll(function() {
-        // Rensa alla intyg för tolvan
-        restHelper.deleteAllIntygForCitizen(personId);
+  beforeAll(function() {
+    // Rensa alla intyg för tolvan
+    restHelper.deleteAllIntygForCitizen(personId);
 
-        var intyg = genericTestdataBuilder.getFk7263();
-        intygsId = intyg.id;
-        restHelper.createIntyg(intyg);
+    var intyg = genericTestdataBuilder.getFk7263();
+    intygsId = intyg.id;
+    restHelper.createIntyg(intyg);
+  });
+
+  afterAll(function() {
+    restHelper.deleteIntyg(intygsId);
+  });
+
+  describe('Logga in', function() {
+
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
     });
 
-    afterAll(function() {
-       restHelper.deleteIntyg(intygsId);
+    // Logga in
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login();
+      specHelper.waitForAngularTestability();
     });
 
-    describe('Logga in', function() {
+  });
 
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
+  describe('Verifiera intyg', function() {
 
-        // Logga in
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
+    it('Header ska var Inkorgen', function() {
+      expect(inboxPage.isAt()).toBeTruthy();
+      expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
     });
 
-    describe('Verifiera intyg', function() {
+    it('Intyget ska finnas i listan', function() {
+      expect(element(by.id('certificate-' + intygsId)).isPresent());
+      expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
+    });
 
-        it('Header ska var Inkorgen', function() {
-            expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
-        });
+    it('Visa intyg', function() {
+      inboxPage.viewCertificate(intygsId);
+      expect(viewPage.isAt()).toBeTruthy();
+    });
 
-        it('Intyget ska finnas i listan', function() {
-            expect(element(by.id('certificate-' + intygsId)).isPresent());
-            expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
-        });
+    it('Gå till anpassa intyg', function() {
+      viewPage.clickCustomizeCertificate();
+      expect(anpassaPage.isAt()).toBeTruthy();
+    });
 
-        it('Visa intyg', function() {
-            inboxPage.viewCertificate(intygsId);
-            expect(viewPage.isAt()).toBeTruthy();
-        });
+    it('Gå till summary sidan med alla valda', function() {
+      anpassaPage.clickShowSummary();
+      expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+      expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(17);
+      expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
+    });
 
-        it('Gå till anpassa intyg', function() {
-            viewPage.clickCustomizeCertificate();
-            expect(anpassaPage.isAt()).toBeTruthy();
-        });
+    it('Gå tillbaka till första sidan', function() {
+      anpassaPage.clickShowSelection();
+      expect(anpassaPage.isAt()).toBeTruthy();
+    });
 
-        it('Gå till summary sidan med alla valda', function() {
-            anpassaPage.clickShowSummary();
-            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-            expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(17);
-            expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
-        });
+    it('Bocka ur "aktuelltSjukdomsforlopp" samt "Rehabilitering" och gå till summary igen', function() {
+      element(by.id('toggle-select-option-aktuelltSjukdomsforlopp')).click();
+      element(by.id('toggle-select-option-rehabilitering')).click();
 
-        it('Gå tillbaka till första sidan', function() {
-            anpassaPage.clickShowSelection();
-            expect(anpassaPage.isAt()).toBeTruthy();
-        });
-
-
-        it('Bocka ur "aktuelltSjukdomsforlopp" samt "Rehabilitering" och gå till summary igen', function() {
-            element(by.id('toggle-select-option-aktuelltSjukdomsforlopp')).click();
-            element(by.id('toggle-select-option-rehabilitering')).click();
-
-            anpassaPage.clickShowSummary();
-            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-
-        });
-
-        it('Nu skall 2 vara bortvalda', function() {
-            expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
-            expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
-        });
-
-        it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
-            expect(element(by.id('warn-for-unselected-important-field')).isPresent()).toBeFalsy();
-        });
-
-        it('Gå tillbaka till första sidan igen', function() {
-            anpassaPage.clickShowSelection();
-            expect(anpassaPage.isAt()).toBeTruthy();
-        });
-
-        it('Bocka ur "aktivitetsbegransning" och en confirm-dialog skall visas', function() {
-            element(by.id('toggle-select-option-aktivitetsbegransning')).click();
-            expect(element(by.id('confirm-field-deselection-dialog')).isDisplayed());
-            expect(element(by.id('ok-to-deselect-button')).isDisplayed());
-        });
-
-        it('Godkänn bortval av fältet och gå till summary', function() {
-            expect(element(by.id('ok-to-deselect-button')).click());
-            anpassaPage.clickShowSummary();
-            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-        });
-
-        it('Nu skall 3 vara bortvalda', function() {
-            expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(14);
-            expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
-        });
-
-        it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
-            expect(element(by.id('warn-for-unselected-important-field')).isDisplayed());
-        });
-
-        it('gå till nedladdningssteget', function() {
-            anpassaPage.showDownloadBtn.click();
-            expect(element(by.id('downloadprint')).isDisplayed());
-        });
+      anpassaPage.clickShowSummary();
+      expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
 
     });
 
+    it('Nu skall 2 vara bortvalda', function() {
+      expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(15);
+      expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(2);
+    });
 
+    it('Nu skall varningstext om bortvalt viktigt fält INTE visas', function() {
+      expect(element(by.id('warn-for-unselected-important-field')).isPresent()).toBeFalsy();
+    });
 
+    it('Gå tillbaka till första sidan igen', function() {
+      anpassaPage.clickShowSelection();
+      expect(anpassaPage.isAt()).toBeTruthy();
+    });
+
+    it('Bocka ur "aktivitetsbegransning" och en confirm-dialog skall visas', function() {
+      element(by.id('toggle-select-option-aktivitetsbegransning')).click();
+      expect(element(by.id('confirm-field-deselection-dialog')).isDisplayed());
+      expect(element(by.id('ok-to-deselect-button')).isDisplayed());
+    });
+
+    it('Godkänn bortval av fältet och gå till summary', function() {
+      expect(element(by.id('ok-to-deselect-button')).click());
+      anpassaPage.clickShowSummary();
+      expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+    });
+
+    it('Nu skall 3 vara bortvalda', function() {
+      expect(element.all(by.css('#fk7263-included-fields div.selectable-field-wrapper')).count()).toEqual(14);
+      expect(element.all(by.css('#fk7263-excluded-fields div.selectable-field-wrapper')).count()).toEqual(3);
+    });
+
+    it('Nu skall varningstext om bortvalt viktigt fält visas', function() {
+      expect(element(by.id('warn-for-unselected-important-field')).isDisplayed());
+    });
+
+    it('gå till nedladdningssteget', function() {
+      anpassaPage.showDownloadBtn.click();
+      expect(element(by.id('downloadprint')).isDisplayed());
+    });
+
+  });
 
 });

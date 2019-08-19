@@ -20,60 +20,62 @@
 'use strict';
 
 module.exports = {
-    shuffle: function(o) {
-        for (var j, x, i = o.length; i;) {
-            j = Math.floor(Math.random() * i);
-            x = o[--i];
-            o[i] = o[j];
-            o[j] = x;
-        }
-        return o;
-    },
-    generateTestGuid: function() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
-    },
-    randomTrueFalse: function() {
-        return this.shuffle([true, false])[0];
-    },
-    randomTextString: function() {
-        var text = '';
-        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789';
-
-        for (var i = 0; i < 16; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-        return text;
-    },
-    dateFormat: function(date) {
-        var d = date.toISOString().slice(0, 10).replace(/-/g, '-');
-        return d;
-    },
-    dateToText: function(prop) {
-        if (prop) {
-            var date = new Date(prop);
-            var monthNames = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december'];
-            var month = monthNames[date.getUTCMonth()];
-            return date.getDate() + ' ' + month + ' ' + date.getFullYear();
-        }
-        return 'Ej angivet';
-    },
-    ejAngivetIfNull: function(prop) {
-        if (prop) {
-            return prop;
-        }
-        return 'Ej angivet';
-    },
-    boolTillJaNej: function(val) {
-        if (val) {
-            return 'Ja';
-        } else {
-            return 'Nej';
-        }
+  shuffle: function(o) {
+    for (var j, x, i = o.length; i;) {
+      j = Math.floor(Math.random() * i);
+      x = o[--i];
+      o[i] = o[j];
+      o[j] = x;
     }
+    return o;
+  },
+  generateTestGuid: function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+  },
+  randomTrueFalse: function() {
+    return this.shuffle([true, false])[0];
+  },
+  randomTextString: function() {
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789';
+
+    for (var i = 0; i < 16; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  },
+  dateFormat: function(date) {
+    var d = date.toISOString().slice(0, 10).replace(/-/g, '-');
+    return d;
+  },
+  dateToText: function(prop) {
+    if (prop) {
+      var date = new Date(prop);
+      var monthNames = ['januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november',
+        'december'];
+      var month = monthNames[date.getUTCMonth()];
+      return date.getDate() + ' ' + month + ' ' + date.getFullYear();
+    }
+    return 'Ej angivet';
+  },
+  ejAngivetIfNull: function(prop) {
+    if (prop) {
+      return prop;
+    }
+    return 'Ej angivet';
+  },
+  boolTillJaNej: function(val) {
+    if (val) {
+      return 'Ja';
+    } else {
+      return 'Nej';
+    }
+  }
 };

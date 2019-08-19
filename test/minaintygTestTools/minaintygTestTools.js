@@ -25,9 +25,9 @@ var testdata = require('./testdata/testdata.js');   // The order is important. T
 var restUtil = require('./util/rest.util.js');
 
 module.exports = {
-    envConfig: environment.envConfig,
-    pages: pages,
-    helpers: helpers,
-    testdata: testdata,
-    restUtil: restUtil
+  envConfig: environment.envConfig,
+  pages: pages,
+  helpers: helpers,
+  testdata: testdata,
+  restUtil: restUtil
 };

@@ -24,5 +24,4 @@ package se.inera.intyg.minaintyg.web.logging;
 public interface PuServiceClient {
 
 
-
 }

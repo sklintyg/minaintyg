@@ -33,93 +33,90 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Anpassa AG1-14', function() {
 
-    var intygsId = null;
-    var texts = null;
+  var intygsId = null;
+  var texts = null;
 
-    beforeAll(function() {
-        browser.ignoreSynchronization = false;
+  beforeAll(function() {
+    browser.ignoreSynchronization = false;
 
-        // Load and cache expected dynamictext-values for this intygstype.
-        restHelper.getTextResource('texterMU_AG114_v1.0.xml').then(function(textResource) {
-            texts = textResource;
-        }, function(err) {
-            fail('Error during text lookup ' + err);
-        });
-
-        // Skapa intyget
-        var intyg = genericTestdataBuilder.getAg114();
-        intygsId = intyg.id;
-        restHelper.createIntyg(intyg);
+    // Load and cache expected dynamictext-values for this intygstype.
+    restHelper.getTextResource('texterMU_AG114_v1.0.xml').then(function(textResource) {
+      texts = textResource;
+    }, function(err) {
+      fail('Error during text lookup ' + err);
     });
 
-    afterAll(function() {
-        restHelper.deleteIntyg(intygsId);
+    // Skapa intyget
+    var intyg = genericTestdataBuilder.getAg114();
+    intygsId = intyg.id;
+    restHelper.createIntyg(intyg);
+  });
+
+  afterAll(function() {
+    restHelper.deleteIntyg(intygsId);
+  });
+
+  describe('Logga in', function() {
+    // Logga in
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login();
+      specHelper.waitForAngularTestability();
     });
 
-    describe('Logga in', function() {
-        // Logga in
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Header ska var Inkorgen', function() {
-            expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
-        });
-
-        it('Intyg ska finnas i listan', function() {
-            expect(element(by.id('certificate-' + intygsId)).isPresent());
-            expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
-        });
+    it('Header ska var Inkorgen', function() {
+      expect(inboxPage.isAt()).toBeTruthy();
+      expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
     });
 
-
-    describe('Verifiera anpassad utskrift', function() {
-
-        it('Visa intyg', function() {
-            inboxPage.viewCertificate(intygsId);
-            expect(viewPage.isAt()).toBeTruthy();
-        });
-
-
-        it('Gå till anpassa intyg', function() {
-            viewPage.clickCustomizeCertificate();
-            expect(anpassaPage.isAt()).toBeTruthy();
-        });
-
-        it('Gå till summary sidan utan att toggla bort diagnos', function() {
-            anpassaPage.clickShowSummary();
-            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(8);
-            expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
-        });
-
-        it('Gå tillbaka till första sidan', function() {
-            anpassaPage.clickShowSelection();
-            expect(anpassaPage.isAt()).toBeTruthy();
-            expect(element(by.id('toggle-select-option-FRG_3.RBK')).isDisplayed());
-        });
-
-
-        it('Bocka ur "Diagnos" och gå till summary igen', function() {
-            element(by.id('toggle-select-option-FRG_3.RBK')).click();
-
-            anpassaPage.clickShowSummary();
-            expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
-        });
-
-        it('Nu skall 1 vara bortvalda', function() {
-            expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(7);
-            expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
-        });
-
-        it('gå till nedladdningssteget', function() {
-            anpassaPage.showDownloadBtn.click();
-            expect(element(by.id('downloadprint')).isDisplayed());
-        });
+    it('Intyg ska finnas i listan', function() {
+      expect(element(by.id('certificate-' + intygsId)).isPresent());
+      expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
     });
+  });
+
+  describe('Verifiera anpassad utskrift', function() {
+
+    it('Visa intyg', function() {
+      inboxPage.viewCertificate(intygsId);
+      expect(viewPage.isAt()).toBeTruthy();
+    });
+
+    it('Gå till anpassa intyg', function() {
+      viewPage.clickCustomizeCertificate();
+      expect(anpassaPage.isAt()).toBeTruthy();
+    });
+
+    it('Gå till summary sidan utan att toggla bort diagnos', function() {
+      anpassaPage.clickShowSummary();
+      expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+      expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(8);
+      expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(0);
+    });
+
+    it('Gå tillbaka till första sidan', function() {
+      anpassaPage.clickShowSelection();
+      expect(anpassaPage.isAt()).toBeTruthy();
+      expect(element(by.id('toggle-select-option-FRG_3.RBK')).isDisplayed());
+    });
+
+    it('Bocka ur "Diagnos" och gå till summary igen', function() {
+      element(by.id('toggle-select-option-FRG_3.RBK')).click();
+
+      anpassaPage.clickShowSummary();
+      expect(element(by.id('customizeCertificateSummaryHeader')).isDisplayed());
+    });
+
+    it('Nu skall 1 vara bortvalda', function() {
+      expect(element.all(by.css('#ag114-included-fields div.selectable-field-wrapper')).count()).toEqual(7);
+      expect(element.all(by.css('#ag114-excluded-fields div.selectable-field-wrapper')).count()).toEqual(1);
+    });
+
+    it('gå till nedladdningssteget', function() {
+      anpassaPage.showDownloadBtn.click();
+      expect(element(by.id('downloadprint')).isDisplayed());
+    });
+  });
 
 });

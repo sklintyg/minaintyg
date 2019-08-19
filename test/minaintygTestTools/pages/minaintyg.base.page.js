@@ -30,47 +30,47 @@ var Class = require('jclass');
  */
 var MinaIntygBasePage = Class._extend({
 
-    init: function() {
-        this.at = null;
-        this.citizen = element(by.css('.logged-in'));
-        this.header = element(by.css('.headerbox-user-profile'));
-        this.navBar = element(by.css('.navbar-header'));
-    },
-    isAt: function() {
-        return this.at.isDisplayed();
-    },
-    getPage: function(page) {
-        browser.setLocation(page);
-    },
-    clickAbout: function() {
-        this.navbarAbout().click();
-    },
-    clickInbox: function() {
-        this.navbarInbox().click();
-    },
-    clickArchived: function() {
-        this.navbarArchived().click();
-    },
-    navbarLocation: function() {
-        return element(by.id('location'));
-    },
-    navbarAbout: function() {
-        return element.all(by.id('aboutTab')).first();
-    },
-    navbarInbox: function() {
-        return element.all(by.id('inboxTab')).first();
-    },
-    navbarArchived: function() {
-        return element.all(by.id('archivedTab')).first();
-    },
-    activeTab: function() {
-        return element.all(by.css('.navbar-nav li.active > a')).first().getAttribute('id');
-    },
+  init: function() {
+    this.at = null;
+    this.citizen = element(by.css('.logged-in'));
+    this.header = element(by.css('.headerbox-user-profile'));
+    this.navBar = element(by.css('.navbar-header'));
+  },
+  isAt: function() {
+    return this.at.isDisplayed();
+  },
+  getPage: function(page) {
+    browser.setLocation(page);
+  },
+  clickAbout: function() {
+    this.navbarAbout().click();
+  },
+  clickInbox: function() {
+    this.navbarInbox().click();
+  },
+  clickArchived: function() {
+    this.navbarArchived().click();
+  },
+  navbarLocation: function() {
+    return element(by.id('location'));
+  },
+  navbarAbout: function() {
+    return element.all(by.id('aboutTab')).first();
+  },
+  navbarInbox: function() {
+    return element.all(by.id('inboxTab')).first();
+  },
+  navbarArchived: function() {
+    return element.all(by.id('archivedTab')).first();
+  },
+  activeTab: function() {
+    return element.all(by.css('.navbar-nav li.active > a')).first().getAttribute('id');
+  },
 
-    //Locates the dynamic text based on text-key
-    getDynamicLabelText: function(textKey) {
-        return element(by.xpath('//span[@key="' + textKey + '"]')).getText();
-    }
+  //Locates the dynamic text based on text-key
+  getDynamicLabelText: function(textKey) {
+    return element(by.xpath('//span[@key="' + textKey + '"]')).getText();
+  }
 });
 
 module.exports = MinaIntygBasePage;

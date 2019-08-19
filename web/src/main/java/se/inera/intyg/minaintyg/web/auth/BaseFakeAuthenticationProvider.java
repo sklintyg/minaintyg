@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AuthnContext;
@@ -33,15 +37,11 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 /**
  * Provides some common functionality for Fake authentication providers.
  */
 public abstract class BaseFakeAuthenticationProvider implements AuthenticationProvider {
+
     private static DocumentBuilder documentBuilder;
 
     static {

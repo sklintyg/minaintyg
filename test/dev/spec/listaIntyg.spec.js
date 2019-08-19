@@ -32,91 +32,91 @@ var genericTestDataBuilder = miTestTools.testdata.generic;
 
 describe('Lista intyg', function() {
 
-	var personId = '19010101-0101';
-	var personIdNoCertificates = '19121212-9999';
-	var fk7263IntygsId = null;
-	var tsBasIntygsId = null;
-	var tsDiabetesIntygsId = null;
+  var personId = '19010101-0101';
+  var personIdNoCertificates = '19121212-9999';
+  var fk7263IntygsId = null;
+  var tsBasIntygsId = null;
+  var tsDiabetesIntygsId = null;
 
-    beforeAll(function() {
-        var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
-        fk7263IntygsId = fk7263Intyg.id;
-        restHelper.createIntyg(fk7263Intyg);
+  beforeAll(function() {
+    var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
+    fk7263IntygsId = fk7263Intyg.id;
+    restHelper.createIntyg(fk7263Intyg);
 
-        var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01');
-        tsBasIntygsId = tsBasIntyg.id;
-        restHelper.createIntyg(tsBasIntyg);
+    var tsBasIntyg = genericTestDataBuilder.getTsBas(personId, '2016-03-18T00:00:01');
+    tsBasIntygsId = tsBasIntyg.id;
+    restHelper.createIntyg(tsBasIntyg);
 
-        var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
-        //this revoked certificate should not appear
-        tsDiabetesIntygsId = tsDiabetesIntyg.id;
-        tsDiabetesIntyg.certificateStates.push({
-             target: 'HSVARD',
-             state: 'CANCELLED',
-             timestamp: '2013-03-18T00:00:01.234'
-        });
-         restHelper.createIntyg(tsDiabetesIntyg);
+    var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId);
+    //this revoked certificate should not appear
+    tsDiabetesIntygsId = tsDiabetesIntyg.id;
+    tsDiabetesIntyg.certificateStates.push({
+      target: 'HSVARD',
+      state: 'CANCELLED',
+      timestamp: '2013-03-18T00:00:01.234'
+    });
+    restHelper.createIntyg(tsDiabetesIntyg);
+  });
+
+  afterAll(function() {
+    restHelper.deleteIntyg(fk7263IntygsId);
+    restHelper.deleteIntyg(tsBasIntygsId);
+    restHelper.deleteIntyg(tsDiabetesIntygsId);
+  });
+
+  describe('Invånare med intyg', function() {
+
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
     });
 
-    afterAll(function() {
-        restHelper.deleteIntyg(fk7263IntygsId);
-        restHelper.deleteIntyg(tsBasIntygsId);
-        restHelper.deleteIntyg(tsDiabetesIntygsId);
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personId, false);
+      specHelper.waitForAngularTestability();
+      expect(inboxPage.isAt()).toBeTruthy();
     });
 
-    describe('Invånare med intyg', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personId, false);
-            specHelper.waitForAngularTestability();
-            expect(inboxPage.isAt()).toBeTruthy();
-        });
-
-        it('Givet att användare har befintliga intyg så skall dessa visas i listan', function() {
-            expect(inboxPage.certificateTableIsShown()).toBeTruthy();
-            expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
-            expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
-            //revoked should NOT exist in list
-            expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
-        });
-
-        it('Listan skall innehålla en årsavskiljare för 2016', function() {
-            expect(element(by.id('mi-year-divider-2016')).isDisplayed()).toBeTruthy();
-        });
-
-        it('Intyg avser innehåller information för ett TS-intyg', function() {
-            expect(inboxPage.complementaryInfo(tsBasIntygsId).length).not.toEqual(0);
-        });
-
-        it('Verifiera text för intyg som inte har någon händelse', function() {
-            expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
-        });
-
+    it('Givet att användare har befintliga intyg så skall dessa visas i listan', function() {
+      expect(inboxPage.certificateTableIsShown()).toBeTruthy();
+      expect(inboxPage.certificateExists(fk7263IntygsId)).toBeTruthy();
+      expect(inboxPage.certificateExists(tsBasIntygsId)).toBeTruthy();
+      //revoked should NOT exist in list
+      expect(inboxPage.certificateExists(tsDiabetesIntygsId)).toBeFalsy();
     });
 
-    describe('Invånare utan intyg', function() {
-
-        beforeEach(function() {
-            browser.ignoreSynchronization = false;
-        });
-
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login(personIdNoCertificates, false);
-            specHelper.waitForAngularTestability();
-            expect(inboxPage.isAt()).toBeTruthy();
-        });
-
-        it('Givet att användaren EJ har intyg så skall det ej visas något', function() {
-            expect(inboxPage.noCertificatesIsShown()).toBeTruthy();
-        });
-
+    it('Listan skall innehålla en årsavskiljare för 2016', function() {
+      expect(element(by.id('mi-year-divider-2016')).isDisplayed()).toBeTruthy();
     });
+
+    it('Intyg avser innehåller information för ett TS-intyg', function() {
+      expect(inboxPage.complementaryInfo(tsBasIntygsId).length).not.toEqual(0);
+    });
+
+    it('Verifiera text för intyg som inte har någon händelse', function() {
+      expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
+    });
+
+  });
+
+  describe('Invånare utan intyg', function() {
+
+    beforeEach(function() {
+      browser.ignoreSynchronization = false;
+    });
+
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login(personIdNoCertificates, false);
+      specHelper.waitForAngularTestability();
+      expect(inboxPage.isAt()).toBeTruthy();
+    });
+
+    it('Givet att användaren EJ har intyg så skall det ej visas något', function() {
+      expect(inboxPage.noCertificatesIsShown()).toBeTruthy();
+    });
+
+  });
 });

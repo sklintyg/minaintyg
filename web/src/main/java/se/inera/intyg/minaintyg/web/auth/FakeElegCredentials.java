@@ -73,10 +73,10 @@ public class FakeElegCredentials {
     @Override
     public String toString() {
         return "FakeElegCredentials{"
-                + "personId='" + personId + '\''
-                + ", firstName='" + firstName + '\''
-                + ", lastName='" + lastName + '\''
-                + ", origin='" + origin + '\''
-                + '}';
+            + "personId='" + personId + '\''
+            + ", firstName='" + firstName + '\''
+            + ", lastName='" + lastName + '\''
+            + ", origin='" + origin + '\''
+            + '}';
     }
 }

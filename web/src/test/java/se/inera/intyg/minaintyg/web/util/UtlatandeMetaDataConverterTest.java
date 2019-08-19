@@ -18,6 +18,19 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,20 +55,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v3.HosPersonal;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v3.IntygsStatus;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class UtlatandeMetaDataConverterTest {
 
@@ -73,7 +72,7 @@ public class UtlatandeMetaDataConverterTest {
     public void setup() throws ModuleNotFoundException {
         when(moduleRegistry.getModuleApi(anyString(), anyString())).thenReturn(moduleApi);
         when(moduleRegistry.getModuleIdFromExternalId(anyString()))
-                .thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
+            .thenAnswer(invocation -> ((String) invocation.getArguments()[0]).toLowerCase());
     }
 
     @Test
@@ -161,7 +160,7 @@ public class UtlatandeMetaDataConverterTest {
         Intyg intyg3 = buildIntyg(intygId3, intygstyp3, INTYG_VERSION, "fullstandigtNamn", "enhetsnamn", signeringstidpunkt3);
 
         List<UtlatandeMetaData> result = converter.convert(Arrays.asList(intyg1, intyg2, intyg3),
-                buildRelations(intyg1.getIntygsId().getExtension()), arkiverade);
+            buildRelations(intyg1.getIntygsId().getExtension()), arkiverade);
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(intygId3, result.get(0).getId());
@@ -268,8 +267,8 @@ public class UtlatandeMetaDataConverterTest {
     }
 
     private Intyg buildIntyg(final String intygsId, final String intygstyp, final String intygTypeVersion, final String fullstandigtNamn,
-            final String enhetsnamn,
-            final LocalDateTime signeringstidpunkt) {
+        final String enhetsnamn,
+        final LocalDateTime signeringstidpunkt) {
         Intyg intyg = new Intyg();
         intyg.setIntygsId(new IntygId());
         intyg.getIntygsId().setExtension(intygsId);

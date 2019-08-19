@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.sendCertificateToRecipient.v2.SendCertificateToRecipientType;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class SendCertificateToRecipientTypeConverterTest {
 
@@ -38,7 +38,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String recipient = "TRANSP";
 
         SendCertificateToRecipientType result =
-                SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
+            SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
 
         assertNotNull(result.getSkickatTidpunkt());
         assertNotNull(result.getIntygsId().getRoot());
@@ -56,7 +56,7 @@ public class SendCertificateToRecipientTypeConverterTest {
         final String recipient = "TS";
 
         SendCertificateToRecipientType result =
-                SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
+            SendCertificateToRecipientTypeConverter.convert(intygsId, pnrPatient, pnrSkickatAv, recipient);
 
         assertEquals("191212121212", result.getPatientPersonId().getExtension());
         assertEquals("191010101010", result.getSkickatAv().getPersonId().getExtension());

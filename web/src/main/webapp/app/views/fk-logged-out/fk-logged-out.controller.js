@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').controller('minaintyg.FkLoggedOutCtrl', [ '$scope', 'MIConfig', function($scope, MIConfig) {
-    'use strict';
+angular.module('minaintyg').controller('minaintyg.FkLoggedOutCtrl', ['$scope', 'MIConfig', function($scope, MIConfig) {
+  'use strict';
 
-    $scope.config = MIConfig;
+  $scope.config = MIConfig;
 
-} ]);
+}]);

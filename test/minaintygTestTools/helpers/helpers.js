@@ -22,12 +22,12 @@
  */
 
 module.exports = {
-    'spec': require('./specHelper.js'),
-    'rest': require('./restHelper.js'),
-    'testdata': require('./testdataHelper.js'),
-    'navigation': require('./navigationHelper.js'),
-    'page': require('./pageHelper.js'),
-    'text': require('./textHelper.js')
+  'spec': require('./specHelper.js'),
+  'rest': require('./restHelper.js'),
+  'testdata': require('./testdataHelper.js'),
+  'navigation': require('./navigationHelper.js'),
+  'page': require('./pageHelper.js'),
+  'text': require('./textHelper.js')
 };
 
 

@@ -50,7 +50,7 @@ public class MinaIntygPUServiceImplTest {
 
     @Test
     public void testGetPersonOk() {
-        when(puService.getPerson(pnr)).thenReturn(PersonSvar.found(new Person(pnr, false, false, "", "", "", "" ,"" ,"")));
+        when(puService.getPerson(pnr)).thenReturn(PersonSvar.found(new Person(pnr, false, false, "", "", "", "", "", "")));
         Person person = testee.getPerson(PERSON_ID);
         assertEquals(pnr.getPersonnummer(), person.getPersonnummer().getPersonnummer());
     }

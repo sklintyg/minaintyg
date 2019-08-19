@@ -33,150 +33,150 @@ var genericTestdataBuilder = miTestTools.testdata.generic;
 
 describe('Verifiera LUAE_FS', function() {
 
-    var intygsId = null;
-    var texts = null;
+  var intygsId = null;
+  var texts = null;
 
-    beforeAll(function() {
-        browser.ignoreSynchronization = false;
+  beforeAll(function() {
+    browser.ignoreSynchronization = false;
 
-        // Load and cache expected dynamictext-values for this intygstype.
-        restHelper.getTextResource('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
-            texts = textResources;
-        }, function(err) {
-            fail('Error during text lookup ' + err);
-        });
-
-        // Skapa intygen
-        var intyg = genericTestdataBuilder.getLuaefs();
-        intygsId = intyg.id;
-        debug(intygsId);
-        restHelper.createIntyg(intyg);
+    // Load and cache expected dynamictext-values for this intygstype.
+    restHelper.getTextResource('texterMU_LUAE_FS_v1.0.xml').then(function(textResources) {
+      texts = textResources;
+    }, function(err) {
+      fail('Error during text lookup ' + err);
     });
 
-    afterAll(function() {
-        restHelper.deleteIntyg(intygsId);
+    // Skapa intygen
+    var intyg = genericTestdataBuilder.getLuaefs();
+    intygsId = intyg.id;
+    debug(intygsId);
+    restHelper.createIntyg(intyg);
+  });
+
+  afterAll(function() {
+    restHelper.deleteIntyg(intygsId);
+  });
+
+  describe('Logga in', function() {
+    // Logga in
+    it('Logga in', function() {
+      welcomePage.get();
+      specHelper.waitForAngularTestability();
+      welcomePage.login();
+      specHelper.waitForAngularTestability();
     });
 
-    describe('Logga in', function() {
-        // Logga in
-        it('Logga in', function() {
-            welcomePage.get();
-            specHelper.waitForAngularTestability();
-            welcomePage.login();
-            specHelper.waitForAngularTestability();
-        });
-
-        it('Header ska var Inkorgen', function() {
-            expect(inboxPage.isAt()).toBeTruthy();
-            expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
-        });
-
-        it('Intyg ska finnas i listan', function() {
-            expect(element(by.id('certificate-' + intygsId)).isPresent());
-            expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
-        });
+    it('Header ska var Inkorgen', function() {
+      expect(inboxPage.isAt()).toBeTruthy();
+      expect(element(by.id('inboxHeader')).getText()).toBe('Översikt över dina intyg');
     });
 
-    describe('Verifiera intyg', function() {
+    it('Intyg ska finnas i listan', function() {
+      expect(element(by.id('certificate-' + intygsId)).isPresent());
+      expect(element(by.id('viewCertificateBtn-' + intygsId)).isPresent());
+    });
+  });
 
-        it('Visa intyg', function() {
-            inboxPage.viewCertificate(intygsId);
-            expect(viewPage.isAt()).toBeTruthy();
-        });
+  describe('Verifiera intyg', function() {
 
-        it('Verifiera att frågor under grund för medicinskt underlag är angivet', function() {
-            expect(viewPage.getDynamicLabelText('KAT_1.RBK')).toBe(texts['KAT_1.RBK']);
+    it('Visa intyg', function() {
+      inboxPage.viewCertificate(intygsId);
+      expect(viewPage.isAt()).toBeTruthy();
+    });
 
-            expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2016-05-26');
-            expect(viewPage.getTextContent('journaluppgifter')).toEqual('2016-05-26');
-            expect(viewPage.getTextContent('anhorigsBeskrivningAvPatienten')).toEqual('2016-05-26');
-            expect(viewPage.getTextContent('annatGrundForMU')).toEqual('2016-05-26');
-            expect(viewPage.getTextContent('annatGrundForMUBeskrivning')).toEqual('Uppgifter från habiliteringscentrum.');
+    it('Verifiera att frågor under grund för medicinskt underlag är angivet', function() {
+      expect(viewPage.getDynamicLabelText('KAT_1.RBK')).toBe(texts['KAT_1.RBK']);
 
-            expect(viewPage.getTextContent('kannedomOmPatient')).toEqual('2016-05-20');
+      expect(viewPage.getTextContent('undersokningAvPatienten')).toEqual('2016-05-26');
+      expect(viewPage.getTextContent('journaluppgifter')).toEqual('2016-05-26');
+      expect(viewPage.getTextContent('anhorigsBeskrivningAvPatienten')).toEqual('2016-05-26');
+      expect(viewPage.getTextContent('annatGrundForMU')).toEqual('2016-05-26');
+      expect(viewPage.getTextContent('annatGrundForMUBeskrivning')).toEqual('Uppgifter från habiliteringscentrum.');
 
-            // Andra medicinska underlag
-            expect(viewPage.getTextContent('underlagFinns')).toEqual('Ja');
+      expect(viewPage.getTextContent('kannedomOmPatient')).toEqual('2016-05-20');
 
-            expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från psykolog');
-            expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2015-09-03');
-            expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('Skickas med posten');
+      // Andra medicinska underlag
+      expect(viewPage.getTextContent('underlagFinns')).toEqual('Ja');
 
-            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('notshown');
-            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('notshown');
-            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('notshown');
-        });
+      expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('Underlag från psykolog');
+      expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('2015-09-03');
+      expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('Skickas med posten');
 
-        it('Verifiera medicinskt underlag mobil ', function() {
-            mobileSize();
+      expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('notshown');
+      expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('notshown');
+      expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('notshown');
+    });
 
-            expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('Underlag från psykolog');
-            expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('2015-09-03');
-            expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('Skickas med posten');
+    it('Verifiera medicinskt underlag mobil ', function() {
+      mobileSize();
 
-            expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('notshown');
-            expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('notshown');
-            expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('notshown');
-        });
+      expect(viewPage.getTextContent('mobile-underlag-row0-col0')).toEqual('Underlag från psykolog');
+      expect(viewPage.getTextContent('mobile-underlag-row0-col1')).toEqual('2015-09-03');
+      expect(viewPage.getTextContent('mobile-underlag-row0-col2')).toEqual('Skickas med posten');
 
-        it('Verifiera att korrekta diagnoser är angivet', function() {
-            desktopSize();
+      expect(viewPage.getTextContent('underlag-row0-col0')).toEqual('notshown');
+      expect(viewPage.getTextContent('underlag-row0-col1')).toEqual('notshown');
+      expect(viewPage.getTextContent('underlag-row0-col2')).toEqual('notshown');
+    });
 
-            expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
+    it('Verifiera att korrekta diagnoser är angivet', function() {
+      desktopSize();
 
-            expect(viewPage.getDynamicLabelText('FRG_6.RBK')).toBe(texts['FRG_6.RBK']);
-            expect(viewPage.getTextContent('diagnoser-row0-col0')).toBe('S47');
-            expect(viewPage.getTextContent('diagnoser-row0-col1'))
-                .toBe('Klämskada skuldra');
+      expect(viewPage.getDynamicLabelText('KAT_3.RBK')).toBe(texts['KAT_3.RBK']);
 
-        });
-
-        it('Verifiera att funktionsnedsättningar är angivet', function() {
-            expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
-
-            expect(viewPage.getDynamicLabelText('FRG_15.RBK')).toBe(texts['FRG_15.RBK']);
-            expect(viewPage.getTextContent('funktionsnedsattningDebut')).toBe('Skoldansen');
-
-            expect(viewPage.getDynamicLabelText('FRG_16.RBK')).toBe(texts['FRG_16.RBK']);
-            expect(viewPage.getTextContent('funktionsnedsattningPaverkan')).toBe('Haltar när han dansar');
-        });
-
-        it('Verifiera att Övriga upplysningar är angivet', function() {
-            expect(viewPage.getDynamicLabelText('KAT_5.RBK')).toBe(texts['KAT_5.RBK']);
-
-            expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
-            expect(viewPage.getTextContent('ovrigt')).toEqual('Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar');
-        });
-
-        it('Verifiera att Kontakt är angivet', function() {
-            expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
-            expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
-            expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
-            expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
-            expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
-            expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Vill stämma av ersättningen');
-            expect(viewPage.showsNoValue('anledningTillKontakt')).toBeFalsy();
-        });
-
-        it('Verifiera att skapad av är angivet', function() {
-            expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
-            expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 0812341234');
-            expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
-            expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Enhetsg. 1, 100 10 Stadby');
-
-        });
-
-        it('Verifiera att tilläggsfrågorna är besvarade och har rätt rubrik', function() {
-            expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
-            expect(viewPage.getDynamicLabelText('DFR_9001.1.RBK')).toBe(texts['DFR_9001.1.RBK']);
-            expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Tämligen påverkad');
-
-            expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
-            expect(viewPage.getDynamicLabelText('DFR_9002.1.RBK')).toBe(texts['DFR_9002.1.RBK']);
-            expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Minst 3 fot');
-
-        });
+      expect(viewPage.getDynamicLabelText('FRG_6.RBK')).toBe(texts['FRG_6.RBK']);
+      expect(viewPage.getTextContent('diagnoser-row0-col0')).toBe('S47');
+      expect(viewPage.getTextContent('diagnoser-row0-col1'))
+      .toBe('Klämskada skuldra');
 
     });
+
+    it('Verifiera att funktionsnedsättningar är angivet', function() {
+      expect(viewPage.getDynamicLabelText('KAT_4.RBK')).toBe(texts['KAT_4.RBK']);
+
+      expect(viewPage.getDynamicLabelText('FRG_15.RBK')).toBe(texts['FRG_15.RBK']);
+      expect(viewPage.getTextContent('funktionsnedsattningDebut')).toBe('Skoldansen');
+
+      expect(viewPage.getDynamicLabelText('FRG_16.RBK')).toBe(texts['FRG_16.RBK']);
+      expect(viewPage.getTextContent('funktionsnedsattningPaverkan')).toBe('Haltar när han dansar');
+    });
+
+    it('Verifiera att Övriga upplysningar är angivet', function() {
+      expect(viewPage.getDynamicLabelText('KAT_5.RBK')).toBe(texts['KAT_5.RBK']);
+
+      expect(viewPage.getDynamicLabelText('FRG_25.RBK')).toBe(texts['FRG_25.RBK']);
+      expect(viewPage.getTextContent('ovrigt')).toEqual('Detta skulle kunna innebära sämre möjlighet att få ställa upp i danstävlingar');
+    });
+
+    it('Verifiera att Kontakt är angivet', function() {
+      expect(viewPage.getDynamicLabelText('KAT_6.RBK')).toBe(texts['KAT_6.RBK']);
+      expect(viewPage.getDynamicLabelText('FRG_26.RBK')).toBe(texts['FRG_26.RBK']);
+      expect(viewPage.getDynamicLabelText('DFR_26.1.RBK')).toBe(texts['DFR_26.1.RBK']);
+      expect(viewPage.getTextContent('kontaktMedFk')).toEqual('Ja');
+      expect(viewPage.getDynamicLabelText('DFR_26.2.RBK')).toBe(texts['DFR_26.2.RBK']);
+      expect(viewPage.getTextContent('anledningTillKontakt')).toEqual('Vill stämma av ersättningen');
+      expect(viewPage.showsNoValue('anledningTillKontakt')).toBeFalsy();
+    });
+
+    it('Verifiera att skapad av är angivet', function() {
+      expect(viewPage.getTextContent('fullstandigtNamn')).toEqual('Jan Nilsson');
+      expect(viewPage.getTextContent('vardenhet-telefon')).toEqual('Tel: 0812341234');
+      expect(viewPage.getTextContent('vardenhet-namn')).toEqual('WebCert Enhet 1, WebCert Vårdgivare 1');
+      expect(viewPage.getTextContent('vardenhet-adress')).toEqual('Enhetsg. 1, 100 10 Stadby');
+
+    });
+
+    it('Verifiera att tilläggsfrågorna är besvarade och har rätt rubrik', function() {
+      expect(viewPage.showsNoValue('tillaggsfragor-0--svar')).toBeFalsy();
+      expect(viewPage.getDynamicLabelText('DFR_9001.1.RBK')).toBe(texts['DFR_9001.1.RBK']);
+      expect(viewPage.getTextContent('tillaggsfragor-0--svar')).toEqual('Tämligen påverkad');
+
+      expect(viewPage.showsNoValue('tillaggsfragor-1--svar')).toBeFalsy();
+      expect(viewPage.getDynamicLabelText('DFR_9002.1.RBK')).toBe(texts['DFR_9002.1.RBK']);
+      expect(viewPage.getTextContent('tillaggsfragor-1--svar')).toEqual('Minst 3 fot');
+
+    });
+
+  });
 
 });

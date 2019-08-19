@@ -25,32 +25,32 @@ var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
 
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('archivedHeader'));
-    },
-    get: function () {
-        browser.get('web/start/#/arkiverade');
-    },
-    isAt: function isAt() {
-        specHelper.waitForAngularTestability();
-        return isAt._super.call(this);
-    },
-    certificateRestoreLink: function(id) {
-        return element(by.id('restoreCertificate-' + id));
-    },
-    certificateRestoreMobileLink: function(id) {
-        return element(by.id('restoreCertificate-' + id + '-list'));
-    },
-    certificateExists: function(id) {
-        return this.certificateRestoreLink(id).isPresent();
-    },
-    restoreCertificate: function(intygId) {
-        this.certificateRestoreLink(intygId).click();
-    },
-    certificateExistsMobile: function(id) {
-        return this.certificateRestoreMobileLink(id).isDisplayed();
-    }
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('archivedHeader'));
+  },
+  get: function() {
+    browser.get('web/start/#/arkiverade');
+  },
+  isAt: function isAt() {
+    specHelper.waitForAngularTestability();
+    return isAt._super.call(this);
+  },
+  certificateRestoreLink: function(id) {
+    return element(by.id('restoreCertificate-' + id));
+  },
+  certificateRestoreMobileLink: function(id) {
+    return element(by.id('restoreCertificate-' + id + '-list'));
+  },
+  certificateExists: function(id) {
+    return this.certificateRestoreLink(id).isPresent();
+  },
+  restoreCertificate: function(intygId) {
+    this.certificateRestoreLink(intygId).click();
+  },
+  certificateExistsMobile: function(id) {
+    return this.certificateRestoreMobileLink(id).isDisplayed();
+  }
 });
 
 module.exports = new MinaintygStartPageBase();

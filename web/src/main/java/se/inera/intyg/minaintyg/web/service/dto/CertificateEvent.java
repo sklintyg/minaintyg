@@ -40,7 +40,7 @@ public class CertificateEvent {
     }
 
     public CertificateEvent(CertificateEventType eventType, String type, String target, LocalDateTime timestamp, String intygsTyp,
-                            String intygsTypVersion) {
+        String intygsTypVersion) {
         this.eventType = eventType;
         this.type = type;
         this.target = target;

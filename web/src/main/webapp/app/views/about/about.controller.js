@@ -18,47 +18,46 @@
  */
 
 angular.module('minaintyg').controller(
-        'minaintyg.AboutCtrl',
-        ['$scope', 'common.messageService', 'MIConfig',
-                function($scope, messageService, MIConfig) {
-                    'use strict';
+    'minaintyg.AboutCtrl',
+    ['$scope', 'common.messageService', 'MIConfig',
+      function($scope, messageService, MIConfig) {
+        'use strict';
 
+        $scope.version = MIConfig.version;
 
-                    $scope.version = MIConfig.version;
+        //faq's are actually arrays of faq items
+        $scope.faqs = messageService.getProperty('help.faq');
 
-                    //faq's are actually arrays of faq items
-                    $scope.faqs = messageService.getProperty('help.faq');
+        $scope.menuItems = [];
 
-                    $scope.menuItems = [];
+        $scope.menuItems.push({
+          id: 'link-about-omminaintyg',
+          link: 'omminaintyg.info',
+          label: 'Om Mina intyg'
+        });
 
-                    $scope.menuItems.push({
-                        id: 'link-about-omminaintyg',
-                        link: 'omminaintyg.info',
-                        label: 'Om Mina intyg'
-                    });
+        $scope.menuItems.push({
+          id: 'link-help-faq',
+          link: 'omminaintyg.faq',
+          label: 'Vanliga frågor och svar'
+        });
 
-                    $scope.menuItems.push({
-                        id: 'link-help-faq',
-                        link: 'omminaintyg.faq',
-                        label: 'Vanliga frågor och svar'
-                    });
+        $scope.menuItems.push({
+          id: 'link-about-juridik',
+          link: 'omminaintyg.juridik',
+          label: 'Lagring och hantering av intyg'
+        });
 
-                    $scope.menuItems.push({
-                        id: 'link-about-juridik',
-                        link: 'omminaintyg.juridik',
-                        label: 'Lagring och hantering av intyg'
-                    });
+        $scope.menuItems.push({
+          id: 'link-help-info',
+          link: 'omminaintyg.help-info',
+          label: 'Hjälp och support'
+        });
 
-                    $scope.menuItems.push({
-                        id: 'link-help-info',
-                        link: 'omminaintyg.help-info',
-                        label: 'Hjälp och support'
-                    });
+        $scope.menuItems.push({
+          id: 'link-about-personuppgifter',
+          link: 'omminaintyg.personuppgifter-info',
+          label: 'Om behandling av personuppgifter'
+        });
 
-                    $scope.menuItems.push({
-                        id: 'link-about-personuppgifter',
-                        link: 'omminaintyg.personuppgifter-info',
-                        label: 'Om behandling av personuppgifter'
-                    });
-
-                } ]);
+      }]);

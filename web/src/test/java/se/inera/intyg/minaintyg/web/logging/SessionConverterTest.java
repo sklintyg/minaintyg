@@ -22,12 +22,11 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ch.qos.logback.classic.spi.LoggingEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-
-import ch.qos.logback.classic.spi.LoggingEvent;
 
 public class SessionConverterTest {
 

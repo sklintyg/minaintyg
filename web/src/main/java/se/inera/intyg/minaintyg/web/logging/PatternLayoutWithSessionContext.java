@@ -27,8 +27,9 @@ import ch.qos.logback.classic.PatternLayout;
  * @author nikpet
  */
 public class PatternLayoutWithSessionContext extends PatternLayout {
+
     static {
         PatternLayout.defaultConverterMap.put(
-                "session", SessionConverter.class.getName());
+            "session", SessionConverter.class.getName());
     }
 }

@@ -18,18 +18,17 @@
  */
 package se.inera.intyg.minaintyg.web.controller.appconfig;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
-import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
-import se.inera.intyg.minaintyg.web.service.CertificateService;
-import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
+import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
+import se.inera.intyg.minaintyg.web.service.CertificateService;
+import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
 
 /**
  * Created by marced on 2017-05-12.
@@ -57,15 +56,15 @@ public class ConfigApiController {
     public Response getConfig() {
 
         Response.ResponseBuilder builder = Response
-                .ok(new ConfigResponse(
-                        systemConfigBean.getVersion(),
-                        systemConfigBean.getBuildNumber(),
-                        systemConfigBean.getUseMinifiedJavascript(),
-                        systemConfigBean.getElva77MainUrl(),
-                        systemConfigBean.getElva77LoginUrl(),
-                        systemConfigBean.getApplicationLogoutUrl(),
-                        certificateService.getAllRecipients(),
-                        dynamicLinkService.getAllAsMap()));
+            .ok(new ConfigResponse(
+                systemConfigBean.getVersion(),
+                systemConfigBean.getBuildNumber(),
+                systemConfigBean.getUseMinifiedJavascript(),
+                systemConfigBean.getElva77MainUrl(),
+                systemConfigBean.getElva77LoginUrl(),
+                systemConfigBean.getApplicationLogoutUrl(),
+                certificateService.getAllRecipients(),
+                dynamicLinkService.getAllAsMap()));
 
         return builder.cacheControl(getNoCacheControl()).build();
     }
@@ -80,7 +79,7 @@ public class ConfigApiController {
     @Produces(JSON_UTF8)
     public Response getModulesMap() {
         Response.ResponseBuilder builder = Response
-                .ok(moduleRegistry.listAllModules());
+            .ok(moduleRegistry.listAllModules());
         return builder.cacheControl(getNoCacheControl()).build();
     }
 

@@ -18,13 +18,13 @@
  */
 
 angular.module('minaintyg').directive('miYearDivider', function() {
-    'use strict';
+  'use strict';
 
-    return {
-        restrict: 'E',
-        scope: {
-            year: '='
-        },
-        templateUrl: '/app/components/miYearDivider/miYearDivider.directive.html'
-    };
+  return {
+    restrict: 'E',
+    scope: {
+      year: '='
+    },
+    templateUrl: '/app/components/miYearDivider/miYearDivider.directive.html'
+  };
 });

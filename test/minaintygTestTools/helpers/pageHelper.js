@@ -25,17 +25,17 @@
 'use strict';
 
 module.exports = {
-    clickAll: function(elementArray, elementTextsArray) {
-        // filter all elemenets matching elementTextsArray
-        elementArray.filter(function(elem) {
-            return elem.getText().then(function(text) {
-                return (elementTextsArray.indexOf(text) >= 0);
-            });
-        }).then(function(filteredElements) {
-            //filteredElements is the list of filtered elements
-            for (var i = 0; i < filteredElements.length; i++) {
-                filteredElements[i].sendKeys(protractor.Key.SPACE);
-            }
-        });
-    }
+  clickAll: function(elementArray, elementTextsArray) {
+    // filter all elemenets matching elementTextsArray
+    elementArray.filter(function(elem) {
+      return elem.getText().then(function(text) {
+        return (elementTextsArray.indexOf(text) >= 0);
+      });
+    }).then(function(filteredElements) {
+      //filteredElements is the list of filtered elements
+      for (var i = 0; i < filteredElements.length; i++) {
+        filteredElements[i].sendKeys(protractor.Key.SPACE);
+      }
+    });
+  }
 };

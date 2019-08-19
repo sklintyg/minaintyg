@@ -18,6 +18,11 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -25,8 +30,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
 import se.inera.intyg.schemas.contract.Personnummer;
-
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoggingSessionRegistryImplTest {
@@ -116,7 +119,7 @@ public class LoggingSessionRegistryImplTest {
 
     private Personnummer createPnr(String pnr) {
         return Personnummer.createPersonnummer(pnr)
-                .orElseThrow(() -> new IllegalArgumentException("Could not parse passed personnummer: " + pnr));
+            .orElseThrow(() -> new IllegalArgumentException("Could not parse passed personnummer: " + pnr));
     }
 
 }

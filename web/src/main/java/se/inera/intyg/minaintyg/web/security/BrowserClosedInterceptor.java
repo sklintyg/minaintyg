@@ -18,13 +18,13 @@
  */
 package se.inera.intyg.minaintyg.web.security;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.time.Clock;
 import java.time.LocalDateTime;
-
-import javax.servlet.http.*;
-
-import com.google.common.annotations.VisibleForTesting;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -38,6 +38,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * från session och requesten går igenom.
  */
 public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
+
     public static final String BROWSER_CLOSED_TIMESTAMP = "BROWSER_CLOSED_TIMESTAMP";
     private static final Logger LOG = LoggerFactory.getLogger(BrowserClosedInterceptor.class);
 
@@ -54,7 +55,7 @@ public class BrowserClosedInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) throws IOException {
+        HttpServletResponse response, Object handler) throws IOException {
 
         HttpSession session = request.getSession();
         LocalDateTime then = (LocalDateTime) session.getAttribute(BROWSER_CLOSED_TIMESTAMP);

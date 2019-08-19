@@ -18,13 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.auth;
 
+import java.util.HashSet;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.saml.SAMLEntryPoint;
 import org.springframework.security.saml.context.SAMLMessageContext;
 import org.springframework.security.saml.websso.WebSSOProfileOptions;
-
-import java.util.HashSet;
 
 /**
  * Custom SAMLEntryPoint for Mina Intyg that overrides the generation of AuthnContexts based on metadata alias:
@@ -39,17 +38,14 @@ public class MinaIntygSAMLEntryPoint extends SAMLEntryPoint {
     /**
      * Override from superclass, see class comment for details.
      *
-     * @param context
-     *            containing local entity
-     * @param exception
-     *            exception causing invocation of this entry point (can be null)
+     * @param context containing local entity
+     * @param exception exception causing invocation of this entry point (can be null)
      * @return populated webSSOprofile
-     * @throws MetadataProviderException
-     *             in case metadata loading fails
+     * @throws MetadataProviderException in case metadata loading fails
      */
     @Override
     protected WebSSOProfileOptions getProfileOptions(SAMLMessageContext context, AuthenticationException exception)
-            throws MetadataProviderException {
+        throws MetadataProviderException {
 
         WebSSOProfileOptions ssoProfileOptions;
         if (defaultOptions != null) {

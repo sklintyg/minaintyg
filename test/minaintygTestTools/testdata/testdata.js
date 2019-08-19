@@ -2,6 +2,6 @@
 'use strict';
 
 module.exports = {
-    generic: require('./generic.js'),
-    approvedReceivers: require('./approvedReceivers.js')
+  generic: require('./generic.js'),
+  approvedReceivers: require('./approvedReceivers.js')
 };

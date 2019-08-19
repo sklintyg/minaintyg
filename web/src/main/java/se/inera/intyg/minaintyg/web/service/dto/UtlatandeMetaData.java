@@ -18,51 +18,70 @@
  */
 package se.inera.intyg.minaintyg.web.service.dto;
 
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.notNull;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateRelation;
 
 /**
  * Meta data describing a utlatande.
  */
 public class UtlatandeMetaData {
 
-    /** The id of the utlatande. */
+    /**
+     * The id of the utlatande.
+     */
     private final String id;
 
-    /** The type of utlatande. */
+    /**
+     * The type of utlatande.
+     */
     private final String type;
 
-    /** The type version of utlatande. */
+    /**
+     * The type version of utlatande.
+     */
     private final String typeVersion;
 
-    /** The name of the HoS-personal who signed the utlatande. */
+    /**
+     * The name of the HoS-personal who signed the utlatande.
+     */
     private final String issuerName;
 
-    /** The name of the vardenhet at which the utlatande was signed. */
+    /**
+     * The name of the vardenhet at which the utlatande was signed.
+     */
     private final String facilityName;
 
-    /** The date and time at which the utlatande was signed. */
+    /**
+     * The date and time at which the utlatande was signed.
+     */
     private final LocalDateTime signDate;
 
-    /** Tells if the utlatande is available or not. */
+    /**
+     * Tells if the utlatande is available or not.
+     */
     private String available;
 
-    /** A short text describing the content of the utlatande. */
+    /**
+     * A short text describing the content of the utlatande.
+     */
     private final String complemantaryInfo;
 
-    /** A list of statuses of the utlatande. */
+    /**
+     * A list of statuses of the utlatande.
+     */
     private final List<Status> statuses;
 
-    /** A list of relations where this certificate is the parent. */
+    /**
+     * A list of relations where this certificate is the parent.
+     */
     private final List<CertificateRelation> relations;
 
     /**
@@ -72,8 +91,8 @@ public class UtlatandeMetaData {
 
     // CHECKSTYLE:OFF ParameterNumber
     public UtlatandeMetaData(String id, String type, String typeVersion, String issuerName, String facilityName, LocalDateTime signDate,
-            String available,
-            String complemantaryInfo, List<Status> statuses, List<CertificateRelation> relations) {
+        String available,
+        String complemantaryInfo, List<Status> statuses, List<CertificateRelation> relations) {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");
         hasText(typeVersion, "'typeVersion' must not be empty");

@@ -25,12 +25,14 @@ package se.inera.intyg.minaintyg.web.exception;
  * @author andreaskaltenbach
  */
 public class ExternalWebServiceCallFailedException extends RuntimeException {
+
     /**
      *
      */
     private static final long serialVersionUID = 6518728574652543260L;
     private final String resultText;
     private final String errorId;
+
     public ExternalWebServiceCallFailedException(String resultText, String errorId) {
         this.resultText = resultText;
         this.errorId = errorId;

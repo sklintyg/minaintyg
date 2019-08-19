@@ -52,7 +52,6 @@ public class SystemPropertiesConfig {
     @Autowired
     private Environment environment;
 
-
     // getters
 
     public boolean getUseMinifiedJavascript() {

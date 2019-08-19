@@ -21,63 +21,63 @@
 
 angular.module('minaintyg').factory('sessionCheckService',
     ['$http', '$log', '$interval', '$window', function($http, $log, $interval, $window) {
-        'use strict';
+      'use strict';
 
-        var pollPromise;
+      var pollPromise;
 
-        //one every minute
-        var msPollingInterval = 60 * 1000;
+      //one every minute
+      var msPollingInterval = 60 * 1000;
 
-        /*
-         * stop regular polling
-         */
-        function _stopPolling() {
-            if (pollPromise) {
-                $interval.cancel(pollPromise);
+      /*
+       * stop regular polling
+       */
+      function _stopPolling() {
+        if (pollPromise) {
+          $interval.cancel(pollPromise);
+        }
+      }
+
+      /*
+       * get session status from server
+       */
+      function _getSessionInfo() {
+        $log.debug('_getSessionInfo requesting session info =>');
+        $http.get('/session/session-auth-check/ping').then(function(response) {
+          $log.debug('<= _getSessionInfo success');
+          if (response.data) {
+            $log.debug('session status  = ' + JSON.stringify(response.data));
+            if (response.data.authenticated === false) {
+              $log.debug('No longer authenticated - redirecting to loggedout');
+              _stopPolling();
+              $window.location.href = '/error.jsp?reason=denied';
             }
-        }
+          } else {
+            $log.debug('_getSessionInfo returned unexpected data:' + response.data);
+          }
 
-        /*
-         * get session status from server
-         */
-        function _getSessionInfo() {
-            $log.debug('_getSessionInfo requesting session info =>');
-            $http.get('/session/session-auth-check/ping').then(function(response) {
-                $log.debug('<= _getSessionInfo success');
-                if (response.data) {
-                    $log.debug('session status  = ' + JSON.stringify(response.data));
-                    if (response.data.authenticated === false) {
-                        $log.debug('No longer authenticated - redirecting to loggedout');
-                        _stopPolling();
-                        $window.location.href = '/error.jsp?reason=denied';
-                    }
-                } else {
-                    $log.debug('_getSessionInfo returned unexpected data:' + response.data);
-                }
+          //Schedule new polling
+          _stopPolling();
+          pollPromise = $interval(_getSessionInfo, msPollingInterval);
+        }, function(response) {
+          $log.error('_getSessionInfo error ' + response.status);
 
-                //Schedule new polling
-                _stopPolling();
-                pollPromise = $interval(_getSessionInfo, msPollingInterval);
-            }, function(response) {
-                $log.error('_getSessionInfo error ' + response.status);
+          _stopPolling();
+          //Schedule a new check
+          pollPromise = $interval(_getSessionInfo, msPollingInterval);
+        });
+      }
 
-                _stopPolling();
-                //Schedule a new check
-                pollPromise = $interval(_getSessionInfo, msPollingInterval);
-            });
-        }
+      /*
+       * start regular polling of stats from server
+       */
+      function _startPolling() {
+        $log.debug('sessionCheckService -> Start polling');
+        _getSessionInfo();
+      }
 
-        /*
-         * start regular polling of stats from server
-         */
-        function _startPolling() {
-            $log.debug('sessionCheckService -> Start polling');
-            _getSessionInfo();
-        }
-
-        // Return public API for the service
-        return {
-            startPolling: _startPolling,
-            stopPolling: _stopPolling
-        };
+      // Return public API for the service
+      return {
+        startPolling: _startPolling,
+        stopPolling: _stopPolling
+      };
     }]);

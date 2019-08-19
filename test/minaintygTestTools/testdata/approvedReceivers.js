@@ -21,30 +21,30 @@
 'use strict';
 
 function _buildReceivers(receiverIds) {
-    var receivers = [];
+  var receivers = [];
 
-    receiverIds.forEach(function(elem) {
-        receivers.push({ 'receiverId':elem, 'approvalStatus':'YES' });
-    });
+  receiverIds.forEach(function(elem) {
+    receivers.push({'receiverId': elem, 'approvalStatus': 'YES'});
+  });
 
-    return receivers;
+  return receivers;
 }
 
 module.exports = {
 
-    getApprovedReceivers: function(intygsId, intygsTyp, receiverIds) {
-        return {
-            intygId: {
-                root: '',
-                extension: intygsId
-            },
-            typAvIntyg: {
-                code: intygsTyp,
-                codeSystem: ''
-            },
-            approvedReceivers: _buildReceivers(receiverIds)
-        };
-    }
+  getApprovedReceivers: function(intygsId, intygsTyp, receiverIds) {
+    return {
+      intygId: {
+        root: '',
+        extension: intygsId
+      },
+      typAvIntyg: {
+        code: intygsTyp,
+        codeSystem: ''
+      },
+      approvedReceivers: _buildReceivers(receiverIds)
+    };
+  }
 
 };
 

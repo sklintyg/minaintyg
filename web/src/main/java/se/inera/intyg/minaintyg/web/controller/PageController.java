@@ -18,8 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
 
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
 
 @Controller
 @RequestMapping(value = "")
@@ -48,7 +47,7 @@ public class PageController {
     @Value("${elva77.url.logout}")
     private String elva77LogoutUrl;
 
-    @RequestMapping(value = { "/sso" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/sso"}, method = RequestMethod.GET)
     public String sso() {
         LOG.debug("sso");
 
@@ -63,21 +62,21 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping(value = { "/tillbaka-till-mvk" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/tillbaka-till-mvk"}, method = RequestMethod.GET)
     public String tillbakaTillMvk(HttpServletRequest request) {
         LOG.debug("tillbakaTillMvk");
         invalidateSessionAndClearContext(request);
         return "redirect:" + elva77MainUrl;
     }
 
-    @RequestMapping(value = { "/logga-ut" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/logga-ut"}, method = RequestMethod.GET)
     public String loggaUt(HttpServletRequest request) {
         LOG.debug("loggaUt");
         invalidateSessionAndClearContext(request);
         return "redirect:" + elva77LogoutUrl;
     }
 
-    @RequestMapping(value = { "/logga-ut-fk" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/logga-ut-fk"}, method = RequestMethod.GET)
     public ModelAndView loggaUtFk(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("boot-app");
         populateUseMinifiedJavaScript(modelAndView);

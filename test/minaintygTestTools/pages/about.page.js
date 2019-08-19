@@ -28,20 +28,20 @@ var specHelper = require('./../helpers/specHelper.js')
 var MinaintygBasePage = require('./minaintyg.base.page.js');
 
 var MinaintygStartPageBase = MinaintygBasePage._extend({
-    init: function init() {
-        init._super.call(this);
-        this.at = element(by.id('about-mina-intyg-root'));
-    },
-    get: function () {
-        this.getPage('about');
-    },
-    isAt: function isAt() {
-        specHelper.waitForAngularTestability();
-        return isAt._super.call(this);
-    },
-    aboutMinaIntygIsDisplayed: function() {
-        return element(by.id('about-content-omminaintyg')).isDisplayed();
-    }
+  init: function init() {
+    init._super.call(this);
+    this.at = element(by.id('about-mina-intyg-root'));
+  },
+  get: function() {
+    this.getPage('about');
+  },
+  isAt: function isAt() {
+    specHelper.waitForAngularTestability();
+    return isAt._super.call(this);
+  },
+  aboutMinaIntygIsDisplayed: function() {
+    return element(by.id('about-content-omminaintyg')).isDisplayed();
+  }
 });
 
 module.exports = new MinaintygStartPageBase();

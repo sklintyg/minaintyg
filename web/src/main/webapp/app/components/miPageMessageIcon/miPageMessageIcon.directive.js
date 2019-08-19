@@ -19,16 +19,16 @@
 
 angular.module('minaintyg').directive('miPageMessageIcon',
     function() {
-        'use strict';
+      'use strict';
 
-        return {
-            restrict: 'E',
-            scope: {
-                imgPath: '@',
-                msgKey: '@',
-                inModal: '='
-            },
-            templateUrl: '/app/components/miPageMessageIcon/miPageMessageIcon.directive.html'
-        };
+      return {
+        restrict: 'E',
+        scope: {
+          imgPath: '@',
+          msgKey: '@',
+          inModal: '='
+        },
+        templateUrl: '/app/components/miPageMessageIcon/miPageMessageIcon.directive.html'
+      };
     });
 

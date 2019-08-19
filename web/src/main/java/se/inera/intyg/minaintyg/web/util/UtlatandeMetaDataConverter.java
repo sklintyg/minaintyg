@@ -18,6 +18,11 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,19 +40,13 @@ import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v3.IntygsStatus;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class UtlatandeMetaDataConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UtlatandeMetaDataConverter.class);
 
     private static final Comparator<? super Intyg> DESCENDING_DATE = Comparator.comparing(Intyg::getSigneringstidpunkt,
-            Comparator.reverseOrder());
+        Comparator.reverseOrder());
 
     @Autowired
     private IntygModuleRegistry moduleRegistry;
@@ -56,13 +55,13 @@ public class UtlatandeMetaDataConverter {
         UtlatandeMetaBuilder builder = new UtlatandeMetaBuilder();
 
         builder.id(intyg.getIntygsId().getExtension())
-                .type(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()))
-                .typeVersion(intyg.getVersion())
-                .issuerName(intyg.getSkapadAv().getFullstandigtNamn())
-                .facilityName(intyg.getSkapadAv().getEnhet().getEnhetsnamn())
-                .signDate(intyg.getSigneringstidpunkt())
-                .available(String.valueOf(!arkiverade))
-                .additionalInfo(getAdditionalInfo(intyg));
+            .type(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()))
+            .typeVersion(intyg.getVersion())
+            .issuerName(intyg.getSkapadAv().getFullstandigtNamn())
+            .facilityName(intyg.getSkapadAv().getEnhet().getEnhetsnamn())
+            .signDate(intyg.getSigneringstidpunkt())
+            .available(String.valueOf(!arkiverade))
+            .additionalInfo(getAdditionalInfo(intyg));
 
         if (intyg.getStatus() != null) {
             for (IntygsStatus statusType : intyg.getStatus()) {
@@ -83,7 +82,7 @@ public class UtlatandeMetaDataConverter {
     private String getAdditionalInfo(Intyg intyg) {
         try {
             ModuleApi moduleApi = moduleRegistry.getModuleApi(moduleRegistry.getModuleIdFromExternalId(intyg.getTyp().getCode()),
-                    intyg.getVersion());
+                intyg.getVersion());
             return moduleApi.getAdditionalInfo(intyg);
         } catch (ModuleNotFoundException | ModuleException e) {
             LOGGER.error("Error retrieving additional info from module registry: {}", e.getMessage());
@@ -109,11 +108,11 @@ public class UtlatandeMetaDataConverter {
 
     private List<CertificateRelation> extractRelationsForCertificate(List<IntygRelations> intygRelations, Intyg intyg) {
         return intygRelations.stream()
-                .filter(ir -> ir.getIntygsId().getExtension().equals(intyg.getIntygsId().getExtension()))
-                .flatMap(ir -> ir.getRelation().stream())
-                .filter(relation -> !relation.isFranIntygMakulerat())
-                .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
-                        RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
-                .collect(Collectors.toList());
+            .filter(ir -> ir.getIntygsId().getExtension().equals(intyg.getIntygsId().getExtension()))
+            .flatMap(ir -> ir.getRelation().stream())
+            .filter(relation -> !relation.isFranIntygMakulerat())
+            .map(r -> new CertificateRelation(r.getFranIntygsId().getExtension(), r.getTillIntygsId().getExtension(),
+                RelationKod.fromValue(r.getTyp().getCode()), r.getSkapad()))
+            .collect(Collectors.toList());
     }
 }

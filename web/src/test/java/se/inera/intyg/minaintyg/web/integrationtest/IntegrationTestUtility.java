@@ -18,13 +18,16 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.lessThan;
+import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
+
+import com.google.common.base.Strings;
+import com.jayway.restassured.specification.RequestSpecification;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.common.base.Strings;
-import com.jayway.restassured.specification.RequestSpecification;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.ReceiverApprovalStatus;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -35,10 +38,6 @@ import se.inera.intyg.schemas.contract.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.receiver.types.v1.ApprovalStatusType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
-
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.lessThan;
-import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 
 public final class IntegrationTestUtility {
 
@@ -55,8 +54,8 @@ public final class IntegrationTestUtility {
 
     public static String login(String personId) {
         Map<String, String> cookies = given().redirects().follow(false).and()
-                .expect().statusCode(HttpServletResponse.SC_FOUND)
-                .when().get("web/sso?guid=" + personId).getCookies();
+            .expect().statusCode(HttpServletResponse.SC_FOUND)
+            .when().get("web/sso?guid=" + personId).getCookies();
 
         routeId = cookies.containsKey("ROUTEID") ? cookies.get("ROUTEID") : "nah";
         jsessionId = cookies.containsKey("JSESSIONID") ? cookies.get("JSESSIONID") : null;
@@ -66,32 +65,33 @@ public final class IntegrationTestUtility {
 
     public static void logout() {
         given().redirects().follow(false).and()
-                .expect().statusCode(lessThan(404)) //statusCode(HttpServletResponse.SC_FOUND)
-                .when().get("web/logga-ut");
+            .expect().statusCode(lessThan(404)) //statusCode(HttpServletResponse.SC_FOUND)
+            .when().get("web/logga-ut");
     }
 
     public static void deleteIntyg(String id) {
         given().delete("testability/resources/certificate/" + id)
-                .then().statusCode(HttpServletResponse.SC_OK);
+            .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     public static void deleteCertificatesForCitizen(String personId) {
         given().delete("testability/resources/certificate/citizen/" + personId)
-                .then().statusCode(HttpServletResponse.SC_OK);
+            .then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    public static void givenIntyg(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {
+    public static void givenIntyg(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked,
+        boolean archived) {
         given()
-                .body(certificate(intygsId, intygTyp, intygTypVersion, personId, revoked, archived))
-                .post("testability/resources/certificate/")
-                .then().statusCode(HttpServletResponse.SC_OK);
+            .body(certificate(intygsId, intygTyp, intygTypVersion, personId, revoked, archived))
+            .post("testability/resources/certificate/")
+            .then().statusCode(HttpServletResponse.SC_OK);
     }
 
-    public static void givenReceivers(String intygsId){
+    public static void givenReceivers(String intygsId) {
         given()
-                .body(createApprovedReceivers(intygsId, FKASSA, FBA))
-                .post("testability/resources/certificate/" + intygsId + "/approvedreceivers/")
-                .then().statusCode(HttpServletResponse.SC_OK);
+            .body(createApprovedReceivers(intygsId, FKASSA, FBA))
+            .post("testability/resources/certificate/" + intygsId + "/approvedreceivers/")
+            .then().statusCode(HttpServletResponse.SC_OK);
     }
 
     /**
@@ -104,15 +104,16 @@ public final class IntegrationTestUtility {
         if (!Strings.isNullOrEmpty(IntegrationTestUtility.csrfToken)) {
             // Needed for post/put/delete if csrf-protection is enabled.
             spec
-                    .cookie("XSRF-TOKEN", IntegrationTestUtility.csrfToken)
-                    // Usually set by angularjs, using value from cookie.
-                    .header("X-XSRF-TOKEN", IntegrationTestUtility.csrfToken);
+                .cookie("XSRF-TOKEN", IntegrationTestUtility.csrfToken)
+                // Usually set by angularjs, using value from cookie.
+                .header("X-XSRF-TOKEN", IntegrationTestUtility.csrfToken);
         }
         return spec
-                .cookie("ROUTEID", IntegrationTestUtility.routeId);
+            .cookie("ROUTEID", IntegrationTestUtility.routeId);
     }
 
-    private static CertificateHolder certificate(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked, boolean archived) {
+    private static CertificateHolder certificate(String intygsId, String intygTyp, String intygTypVersion, String personId, boolean revoked,
+        boolean archived) {
         CertificateHolder certificate = new CertificateHolder();
         certificate.setId(intygsId);
         certificate.setType(intygTyp);
