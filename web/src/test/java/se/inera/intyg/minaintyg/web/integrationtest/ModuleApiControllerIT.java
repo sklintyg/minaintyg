@@ -33,6 +33,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
+import se.inera.intyg.common.ag7804.support.Ag7804EntryPoint;
 import se.inera.intyg.common.fk7263.support.Fk7263EntryPoint;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
 import se.inera.intyg.common.luae_fs.support.LuaefsEntryPoint;
@@ -91,6 +92,11 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
     }
 
     @Test
+    public void testGetCertificateAg7804() {
+        testGetCertificate(Ag7804EntryPoint.MODULE_ID, AG7804_VERSION);
+    }
+
+    @Test
     public void testGetCertificateWithoutSession() {
         final String type = LuseEntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
@@ -124,13 +130,13 @@ public class ModuleApiControllerIT extends IntegrationTestBase {
     public void testGetCertificatePdfEmployerCopy() {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
-        final String type = Fk7263EntryPoint.MODULE_ID;
+        final String type = Ag7804EntryPoint.MODULE_ID;
         final String id = UUID.randomUUID().toString();
-        IntegrationTestUtility.givenIntyg(id, type, FK7263_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
+        IntegrationTestUtility.givenIntyg(id, type, AG7804_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         Response response = spec()
             .contentType(ContentType.URLENC)
-            .pathParams("type", type, "id", id, "intygTypeVersion", FK7263_VERSION)
+            .pathParams("type", type, "id", id, "intygTypeVersion", AG7804_VERSION)
             .expect().statusCode(HttpServletResponse.SC_OK)
             .when().post("moduleapi/certificate/{type}/{intygTypeVersion}/{id}/pdf/arbetsgivarutskrift");
 

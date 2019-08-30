@@ -94,9 +94,8 @@ describe('Verifiera Lisjp', function() {
       expect(viewPage.isAt()).toBeTruthy();
     });
 
-    it('Verifiera att anpassa utskrift är disabled om smittskydd Ja', function() {
+    it('Verifiera att anpassa utskrift är disabled', function() {
       expect(viewPage.customizeCertificateIsDisplayed()).toBe(false);
-      expect(element(by.id('customize-disabled-message')).isPresent()).toBe(true);
     });
 
     it('Verifiera smittbärarpenning är Ja', function() {
@@ -175,9 +174,8 @@ describe('Verifiera Lisjp', function() {
       expect(viewPage.isAt()).toBeTruthy();
     });
 
-    it('Verifiera att anpassa utskrift är enablat om smittskydd Nej', function() {
-      expect(viewPage.customizeCertificateIsDisplayed()).toBe(true);
-      expect(element(by.id('customize-disabled-message')).isPresent()).toBe(false);
+    it('Verifiera att anpassa utskrift är disabled', function() {
+      expect(viewPage.customizeCertificateIsDisplayed()).toBe(false);
     });
 
     it('Verifiera smittbärarpenning är Nej', function() {
