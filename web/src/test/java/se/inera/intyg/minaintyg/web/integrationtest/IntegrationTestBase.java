@@ -37,6 +37,7 @@ public abstract class IntegrationTestBase {
     protected static final String LISJP_VERSION = "1.0";
     protected static final String LUAE_NA_VERSION = "1.0";
     protected static final String LUAE_FS_VERSION = "1.0";
+    protected static final String AG7804_VERSION = "1.0";
 
     /**
      * Common setup for all tests
