@@ -1,8 +1,10 @@
 apiVersion: v1
 data:
   CERTIFICATE_BASEURL: "http://${intygstjanst.test.minaintyg.test.service.host}:8081"
-  NTJP_WS_CERTIFICATE_TYPE: "JKS"
+  NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
+  NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/qa.eintyg.inera.sjunet.org.p12"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
+  NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore-ntjp.jks"
   ELVA77_URL_MAIN: "https://e-tjanster.1177.se/"
 kind: ConfigMap
 metadata:
