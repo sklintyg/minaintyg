@@ -37,6 +37,8 @@ public class CertificateMeta {
 
     private static final String EVENT_TYPE_ERSATT = "ERSATT";
     private static final String EVENT_TYPE_ERSATTER = "ERSATTER";
+    private static final String EVENT_TYPE_KOMPLETTERAT = "KOMPLETTERAT";
+    private static final String EVENT_TYPE_KOMPLETTERAR = "KOMPLETTERAR";
 
     private String id;
     private Boolean selected;
@@ -140,11 +142,15 @@ public class CertificateMeta {
     public List<CertificateEvent> getEvents() {
         Stream<CertificateEvent> s1 = Stream.of(getReplacedBy()).filter(Objects::nonNull).map(
             r -> new CertificateEvent(
-                CertificateEventType.RELATION, EVENT_TYPE_ERSATT, r.getFromIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+                CertificateEventType.RELATION,
+                r.getRelationKod().equals(RelationKod.KOMPLT) ? EVENT_TYPE_KOMPLETTERAT : EVENT_TYPE_ERSATT, r.getFromIntygsId(),
+                r.getSkapad(), getType(), getTypeVersion()
             ));
         Stream<CertificateEvent> s2 = Stream.of(getReplaces()).filter(Objects::nonNull).map(
             r -> new CertificateEvent(
-                CertificateEventType.RELATION, EVENT_TYPE_ERSATTER, r.getToIntygsId(), r.getSkapad(), getType(), getTypeVersion()
+                CertificateEventType.RELATION,
+                r.getRelationKod().equals(RelationKod.KOMPLT) ? EVENT_TYPE_KOMPLETTERAR : EVENT_TYPE_ERSATTER, r.getToIntygsId(),
+                r.getSkapad(), getType(), getTypeVersion()
             ));
         Stream<CertificateEvent> relationStream = Stream.concat(s1, s2);
         Stream<CertificateEvent> statusStream = statuses.stream()
