@@ -77,13 +77,18 @@
 
         <c:choose>
           <c:when test="${param.reason eq 'logout'}">
-            <mi-page-message-icon
-                id="loggedOut"
-                img-path="/img/404.png"
-                msg-key="info.loggedout.text">
-            </mi-page-message-icon>
-            <div class="btn-row">
-              <a class="btn btn-primary" href="${elva77LoginUrl}"><i class="icon icon-login"></i> <spring:message code="info.loggedout.fk.loginagain" /></a>
+            <div class="error-logout">
+              <h2 dynamic-label key="info.loggedout.header"></h2>
+              <p>
+                <div dynamic-label key="info.loggedout.text1"></div>
+                <div dynamic-label key="info.loggedout.text2"></div>
+              </p>
+              <br />
+              <p dynamic-label key="info.loggedout.text3"></p>
+
+              <div class="btn-row">
+                <a class="btn btn-primary" href="${elva77LoginUrl}"><spring:message code="info.loggedout.fk.loginagain" /></a>
+              </div>
             </div>
           </c:when>
 
