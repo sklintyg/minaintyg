@@ -180,7 +180,10 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'error.modal.btn.back-to-about': 'Tillbaka till Om Mina intyg',
 
     // Errors in error app (error.jsp)
-    'info.loggedout.text': 'För att använda Mina intyg måste du logga in igen.',
+    'info.loggedout.header': 'Utloggad',
+    'info.loggedout.text1': 'Din webbläsare kan hålla kvar information även efter utloggning.',
+    'info.loggedout.text2': 'Du bör därför stänga samtliga öppna webbläsarfönster.',
+    'info.loggedout.text3': 'För att logga in igen, klicka på nedanstående knapp.',
     'error.noauth.text': '<p>Du har blivit utloggad från tjänsten på grund av inaktivitet, eller så försöker du nå en sida som kräver inloggning. Gå till minaintyg.se för att logga in.</p><p><a href="/">Gå till minaintyg.se</a></p>',
     'error.notfound-loggedin.text': '<p>Sidan du försöker nå finns inte.</p><p>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen.</p><p> <a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
 
