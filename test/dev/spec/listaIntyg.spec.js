@@ -30,7 +30,7 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-fdescribe('Lista intyg', function() {
+describe('Lista intyg', function() {
 
   var personId = '19010101-0101';
   var personIdNoCertificates = '19121212-9999';
