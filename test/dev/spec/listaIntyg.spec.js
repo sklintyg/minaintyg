@@ -64,10 +64,10 @@ describe('Lista intyg', function() {
     toLisjpIntygsId = toLisjpIntyg.id;
     fromLisjpIntygsId = fromLisjpIntyg.id
     toLisjpIntyg.certificateRelation = {
-    fromIntygsId : toLisjpIntygsId,
-    toIntygsId : fromLisjpIntygsId,
-    relationKod : 'KOMPLT',
-    skapad : '2013-03-18T00:00:01.234'
+      fromIntygsId : toLisjpIntygsId,
+      toIntygsId : fromLisjpIntygsId,
+      relationKod : 'KOMPLT',
+      skapad : '2013-03-18T00:00:01.234'
     }
     restHelper.createIntyg(toLisjpIntyg);
     restHelper.createIntyg(fromLisjpIntyg);
@@ -116,8 +116,8 @@ describe('Lista intyg', function() {
     });
 
     it('Verifiera text för kompletterat lisjp-intyg', function() {
-    expect(inboxPage.hasEvent(fromLisjpIntygsId, 'Kompletterades av vården med ett nytt intyg.')).toBeTruthy;
-    })
+      expect(inboxPage.hasEvent(fromLisjpIntygsId, 'Kompletterades av vården med ett nytt intyg.')).toBeTruthy();
+    });
 
   });
 
