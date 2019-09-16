@@ -30,13 +30,15 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Lista intyg', function() {
+fdescribe('Lista intyg', function() {
 
   var personId = '19010101-0101';
   var personIdNoCertificates = '19121212-9999';
   var fk7263IntygsId = null;
   var tsBasIntygsId = null;
   var tsDiabetesIntygsId = null;
+  var toLisjpIntygsId = null;
+  var fromLisjpIntygsId = null;
 
   beforeAll(function() {
     var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
@@ -56,12 +58,27 @@ describe('Lista intyg', function() {
       timestamp: '2013-03-18T00:00:01.234'
     });
     restHelper.createIntyg(tsDiabetesIntyg);
+
+    var toLisjpIntyg = genericTestDataBuilder.getLisjpFull(personId);
+    var fromLisjpIntyg = genericTestDataBuilder.getLisjpFull(personId);
+    toLisjpIntygsId = toLisjpIntyg.id;
+    fromLisjpIntygsId = fromLisjpIntyg.id
+    toLisjpIntyg.certificateRelation = {
+    fromIntygsId : toLisjpIntygsId,
+    toIntygsId : fromLisjpIntygsId,
+    relationKod : 'KOMPLT',
+    skapad : '2013-03-18T00:00:01.234'
+    }
+    restHelper.createIntyg(toLisjpIntyg);
+    restHelper.createIntyg(fromLisjpIntyg);
   });
 
   afterAll(function() {
     restHelper.deleteIntyg(fk7263IntygsId);
     restHelper.deleteIntyg(tsBasIntygsId);
     restHelper.deleteIntyg(tsDiabetesIntygsId);
+    restHelper.deleteIntyg(toLisjpIntygsId);
+    restHelper.deleteIntyg(fromLisjpIntygsId);
   });
 
   describe('Invånare med intyg', function() {
@@ -97,6 +114,10 @@ describe('Lista intyg', function() {
     it('Verifiera text för intyg som inte har någon händelse', function() {
       expect(inboxPage.hasEvent(fk7263IntygsId, 'Inga händelser')).toBeTruthy();
     });
+
+    it('Verifiera text för kompletterat lisjp-intyg', function() {
+    expect(inboxPage.hasEvent(fromLisjpIntygsId, 'Kompletterades av vården med ett nytt intyg.')).toBeTruthy;
+    })
 
   });
 

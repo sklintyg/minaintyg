@@ -35,10 +35,10 @@ import se.inera.intyg.minaintyg.web.service.dto.CertificateEventType;
  */
 public class CertificateMeta {
 
-    private static final String EVENT_TYPE_ERSATT = "ERSATT";
-    private static final String EVENT_TYPE_ERSATTER = "ERSATTER";
-    private static final String EVENT_TYPE_KOMPLETTERAT = "KOMPLETTERAT";
-    private static final String EVENT_TYPE_KOMPLETTERAR = "KOMPLETTERAR";
+    public static final String EVENT_TYPE_ERSATT = "ERSATT";
+    public static final String EVENT_TYPE_ERSATTER = "ERSATTER";
+    public static final String EVENT_TYPE_KOMPLETTERAT = "KOMPLETTERAT";
+    public static final String EVENT_TYPE_KOMPLETTERAR = "KOMPLETTERAR";
 
     private String id;
     private Boolean selected;

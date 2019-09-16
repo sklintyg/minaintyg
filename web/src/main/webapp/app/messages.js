@@ -162,6 +162,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'common.title.helptext.lessinfo': 'Mindre information',
 
     'certificates.label.replaced': 'ERSATT INTYG',
+    'certificates.label.completed': 'KOMPLETTERAT INTYG',
     'certificates.label.dash': '-',
 
     // Errors in main app (boot-app.jsp)
