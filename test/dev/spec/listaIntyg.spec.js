@@ -37,8 +37,6 @@ describe('Lista intyg', function() {
   var fk7263IntygsId = null;
   var tsBasIntygsId = null;
   var tsDiabetesIntygsId = null;
-  var toLisjpIntygsId = null;
-  var fromLisjpIntygsId = null;
 
   beforeAll(function() {
     var fk7263Intyg = genericTestDataBuilder.getFk7263(personId, '2017-03-18T00:00:01.234');
@@ -64,8 +62,6 @@ describe('Lista intyg', function() {
     restHelper.deleteIntyg(fk7263IntygsId);
     restHelper.deleteIntyg(tsBasIntygsId);
     restHelper.deleteIntyg(tsDiabetesIntygsId);
-    restHelper.deleteIntyg(toLisjpIntygsId);
-    restHelper.deleteIntyg(fromLisjpIntygsId);
   });
 
   describe('Invånare med intyg', function() {
