@@ -61,6 +61,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         logEvent(MonitoringEvent.CERTIFICATE_RESTORED, certificateId);
     }
 
+    @Override
+    public void logBrowserInfo(String browserName, String browserVersion, String osFamily, String osVersion, String width, String height) {
+        logEvent(MonitoringEvent.BROWSER_INFO, browserName, browserVersion, osFamily, osVersion, width, height);
+    }
+
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
 
         StringBuilder logMsg = new StringBuilder();
@@ -70,6 +75,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     private enum MonitoringEvent {
+        BROWSER_INFO("Name '{}' Version '{}' OSFamily '{}' OSVersion '{}' Width '{}' Height '{}'"),
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
         CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
         CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
