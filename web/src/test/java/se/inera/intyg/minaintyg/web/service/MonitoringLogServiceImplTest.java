@@ -117,4 +117,10 @@ public class MonitoringLogServiceImplTest {
         logService.logCertificateRestored(CERTIFICATE_ID);
         verifyLog(Level.INFO, "CERTIFICATE_RESTORED Certificate 'CERTIFICATE_ID' restored");
     }
+
+    @Test
+    public void shouldLogBrowserInfo() {
+        logService.logBrowserInfo("BROWSERNAME", "VERSION", "OSFAMILY", "OSVERSION", "WIDTH", "HEIGHT");
+        verifyLog(Level.INFO, "BROWSER_INFO Name 'BROWSERNAME' Version 'VERSION' OSFamily 'OSFAMILY' OSVersion 'OSVERSION' Width 'WIDTH' Height 'HEIGHT'");
+    }
 }

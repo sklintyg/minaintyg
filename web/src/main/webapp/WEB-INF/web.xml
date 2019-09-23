@@ -95,6 +95,16 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <servlet>
+    <servlet-name>js-monitoring-api</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/js-monitoring-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
   <!-- Mina intyg testability services -->
   <servlet>
     <servlet-name>testability</servlet-name>
@@ -164,6 +174,10 @@
   <servlet-mapping>
     <servlet-name>sessionapi</servlet-name>
     <url-pattern>/session/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>js-monitoring-api</servlet-name>
+    <url-pattern>/js-monitoring-api/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>metrics</servlet-name>

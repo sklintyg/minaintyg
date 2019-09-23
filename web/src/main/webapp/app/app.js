@@ -158,9 +158,9 @@
 
   app.run(['$log', '$rootScope', '$state', '$window', 'common.moduleService', 'common.messageService',
     'common.dynamicLinkService', 'common.recipientsFactory',
-    'minaintyg.messages', 'MIConfig',
+    'minaintyg.messages', 'MIConfig', 'monitoringLogService',
     function($log, $rootScope, $state, $window, moduleService, messageService, dynamicLinkService,
-        recipientsFactory, miMessages, MIConfig) {
+        recipientsFactory, miMessages, MIConfig, monitoringLogService) {
       $rootScope.lang = 'sv';
       $rootScope.DEFAULT_LANG = 'sv';
       $rootScope.page_title = 'Titel'; // jshint ignore:line
@@ -172,6 +172,8 @@
 
       //Initialize commmon recipientsFactory with known recipients
       recipientsFactory.setRecipients(MIConfig.knownRecipients);
+      //Log startup screen resolution (server also uses userAgent header to detect and log other browser info)
+      monitoringLogService.screenResolution($window.innerWidth, $window.innerHeight);
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState/*, toParams, fromState, fromParams*/) {
         if (toState.data.keepInboxTabActive === false) {

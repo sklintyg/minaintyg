@@ -34,4 +34,5 @@ public interface MonitoringLogService {
 
     void logCertificateRestored(String certificateId);
 
+    void logBrowserInfo(String browserName, String browserVersion, String osFamily, String osVersion, String width, String height);
 }
