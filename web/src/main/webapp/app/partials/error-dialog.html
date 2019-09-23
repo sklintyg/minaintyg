@@ -5,7 +5,8 @@
   </h3>
 </div>
 <div class="modal-body">
-  <span dynamic-label key="{{bodyTextId}}"></span>
+  <span ng-if="bodyTextId !== undefined" dynamic-label key="{{bodyTextId}}"></span>
+  <span ng-if="bodyText !== undefined" ng-bind-html="bodyText"></span>
 </div>
 
 <div class="modal-footer">

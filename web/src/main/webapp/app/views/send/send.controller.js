@@ -81,10 +81,10 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
           } else {
             // show error view
-            $state.go('fel', {errorCode: 'certnotfound'});
+            $state.go('fel', {errorCode: 'certnotfound', certId: $scope.vm.id});
           }
         }, function() {
-          $state.go('fel', {errorCode: 'certnotfound'});
+          $state.go('fel', {errorCode: 'certnotfound', certId: $scope.vm.id});
         });
 
         $scope.checkSekretessBeforeSend = function(selectedRecipients) {

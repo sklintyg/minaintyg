@@ -26,7 +26,7 @@
  *
  * and then in code route to this controller like this:
  *
- * $location.path("/fel/certnotfound");
+ * $location.path("/fel/certnotfound/certId");
  *
  */
 angular.module('minaintyg').controller('minaintyg.ErrorViewCtrl',
@@ -37,4 +37,5 @@ angular.module('minaintyg').controller('minaintyg.ErrorViewCtrl',
       // set a default if no errorCode is given in stateParams
       $scope.errorCode = $stateParams.errorCode || 'generic';
       $scope.pagefocus = true;
+      $scope.certId = $stateParams.certId;
     });

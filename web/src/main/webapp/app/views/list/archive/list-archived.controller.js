@@ -41,7 +41,7 @@ angular.module('minaintyg').controller('minaintyg.ListArchivedCtrl',
               dialogService.showDialog($scope, {
                 dialogId: 'restore-error-dialog',
                 titleId: 'error.generictechproblem.title',
-                bodyTextId: 'error.modal.couldnotrestorecert',
+                bodyText: messageService.getProperty('error.modal.couldnotrestorecert', {intygsId: item.id}),
                 button1text: 'error.modal.btn.back-to-archive-cert',
                 templateUrl: '/app/partials/error-dialog.html',
                 autoClose: true
