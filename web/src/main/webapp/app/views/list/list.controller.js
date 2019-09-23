@@ -66,7 +66,7 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
               dialogService.showDialog($scope, {
                 dialogId: 'archive-error-dialog',
                 titleId: 'error.generictechproblem.title',
-                bodyTextId: 'error.modal.couldnotarchivecert',
+                bodyText: messageService.getProperty('error.modal.couldnotarchivecert', {intygsId:item.id}),
                 button1text: 'error.modal.btn.back-to-inkorg',
                 templateUrl: '/app/partials/error-dialog.html',
                 autoClose: true

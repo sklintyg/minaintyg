@@ -58,7 +58,7 @@ angular.module('minaintyg').config(function($stateProvider, $urlRouterProvider) 
       breadcrumb: ['arkiv']
     }
   }).state('fel', {
-    url: '/fel/:errorCode',
+    url: '/fel/:errorCode/:certId',
     templateUrl: '/app/views/error/error.html',
     controller: 'minaintyg.ErrorViewCtrl',
     data: {title: 'Fel', keepInboxTabActive: false}

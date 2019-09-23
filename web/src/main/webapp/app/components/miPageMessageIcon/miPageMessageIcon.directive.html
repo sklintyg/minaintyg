@@ -3,7 +3,8 @@
     <img ng-src="{{imgPath}}">
   </div>
   <div class="col-xs-12 text-center text">
-    <span dynamic-label key="{{msgKey}}"></span>
+    <span ng-if="msgText !== undefined" ng-bind-html="msgText"></span>
+    <span ng-if="msgText === undefined" dynamic-label key="{{msgKey}}"></span>
   </div>
   <div class="clearfix"></div>
 </div>

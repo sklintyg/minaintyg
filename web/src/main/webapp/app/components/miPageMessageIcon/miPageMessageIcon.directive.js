@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').directive('miPageMessageIcon',
-    function() {
+angular.module('minaintyg').directive('miPageMessageIcon', ['common.messageService',
+    function(messageService) {
       'use strict';
 
       return {
@@ -26,9 +26,16 @@ angular.module('minaintyg').directive('miPageMessageIcon',
         scope: {
           imgPath: '@',
           msgKey: '@',
+          certId: '@',
           inModal: '='
         },
-        templateUrl: '/app/components/miPageMessageIcon/miPageMessageIcon.directive.html'
+        templateUrl: '/app/components/miPageMessageIcon/miPageMessageIcon.directive.html',
+
+        link: function($scope){
+          if($scope.msgKey === 'error.certnotfound') {
+            $scope.msgText = messageService.getProperty('error.certnotfound', {intygsId: $scope.certId});
+          }
+        }
       };
-    });
+    }]);
 
