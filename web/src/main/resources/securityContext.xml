@@ -41,6 +41,7 @@
   <security:http security="none" pattern="/api/modules/map"/>
   <security:http security="none" pattern="/api/modules/active"/>
   <security:http security="none" pattern="/appconfig/**"/>
+  <security:http security="none" pattern="/js-monitoring-api/**"/>
   <security:http security="none" pattern="/app/**"/>
   <security:http security="none" pattern="/css/**"/>
   <security:http security="none" pattern="/font/**"/>
