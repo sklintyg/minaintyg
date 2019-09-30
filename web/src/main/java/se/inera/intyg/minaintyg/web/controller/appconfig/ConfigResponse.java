@@ -21,6 +21,7 @@ package se.inera.intyg.minaintyg.web.controller.appconfig;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import se.inera.intyg.infra.driftbannerdto.Banner;
 import se.inera.intyg.infra.dynamiclink.model.DynamicLink;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 
@@ -44,10 +45,12 @@ public class ConfigResponse implements Serializable {
     private List<UtlatandeRecipient> knownRecipients;
 
     private Map<String, DynamicLink> links;
+    private List<Banner> banners;
 
     //CHECKSTYLE:OFF ParameterNumberCheck
     public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
-        String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links) {
+        String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links,
+        List<Banner> banners) {
 
         this.version = version;
         this.buildNumber = buildNumber;
@@ -57,6 +60,7 @@ public class ConfigResponse implements Serializable {
         this.applicationLogoutUrl = applicationLogoutUrl;
         this.knownRecipients = knownRecipients;
         this.links = links;
+        this.banners = banners;
     }
     //CHECKSTYLE:ON ParameterNumberCheck
 
@@ -96,4 +100,7 @@ public class ConfigResponse implements Serializable {
         return links;
     }
 
+    public List<Banner> getBanners() {
+        return banners;
+    }
 }

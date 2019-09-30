@@ -164,6 +164,7 @@
       $rootScope.lang = 'sv';
       $rootScope.DEFAULT_LANG = 'sv';
       $rootScope.page_title = 'Titel'; // jshint ignore:line
+      $rootScope.banners = MIConfig.banners;
 
       messageService.addResources(miMessages);
       messageService.addLinks(MIConfig.links);

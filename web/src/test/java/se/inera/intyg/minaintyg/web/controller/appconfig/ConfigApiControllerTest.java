@@ -24,6 +24,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import se.inera.intyg.common.support.modules.registry.IntygModule;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
+import se.inera.intyg.infra.integration.ia.services.IABannerService;
 import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
 import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
@@ -64,6 +66,9 @@ public class ConfigApiControllerTest {
     @Mock
     private DynamicLinkService dynamicLinkService;
 
+    @Mock
+    private IABannerService iaBannerService;
+
     @InjectMocks
     private ConfigApiController controller;
 
@@ -77,6 +82,7 @@ public class ConfigApiControllerTest {
         when(systemConfigBean.getApplicationLogoutUrl()).thenReturn(APP_LOGOUT_URL);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
         when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
+        when(iaBannerService.getCurrentBanners()).thenReturn(new ArrayList<>());
 
         Response response = controller.getConfig();
 
