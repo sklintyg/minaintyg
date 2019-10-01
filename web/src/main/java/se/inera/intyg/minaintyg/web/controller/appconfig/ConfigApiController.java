@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.infra.dynamiclink.service.DynamicLinkService;
+import se.inera.intyg.infra.integration.ia.services.IABannerService;
 import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig;
 
@@ -50,6 +51,9 @@ public class ConfigApiController {
     @Autowired
     private DynamicLinkService dynamicLinkService;
 
+    @Autowired
+    private IABannerService iaBannerService;
+
     @GET
     @Path("/app")
     @Produces(JSON_UTF8)
@@ -64,7 +68,8 @@ public class ConfigApiController {
                 systemConfigBean.getElva77LoginUrl(),
                 systemConfigBean.getApplicationLogoutUrl(),
                 certificateService.getAllRecipients(),
-                dynamicLinkService.getAllAsMap()));
+                dynamicLinkService.getAllAsMap(),
+                iaBannerService.getCurrentBanners()));
 
         return builder.cacheControl(getNoCacheControl()).build();
     }

@@ -116,7 +116,7 @@ gretty {
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev,caching-enabled",
+               "-Dspring.profiles.active=dev,caching-enabled,ia-stub",
                "-Dresources.folder=classpath:",
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
@@ -151,6 +151,7 @@ dependencies {
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
     compile "se.inera.intyg.infra:monitoring:${infraVersion}"
     compile "se.inera.intyg.infra:security-filter:${infraVersion}"
+    compile "se.inera.intyg.infra:ia-integration:${infraVersion}"
 
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
     compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
@@ -178,6 +179,9 @@ dependencies {
     compile "org.owasp.esapi:esapi:${esapiVersion}"
     compile "org.opensaml:openws:${openWsVersion}"
     compile "org.opensaml:xmltooling:${xmlToolingVersion}"
+
+    compile "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
+    compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
 
     compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
         exclude(module: "jsr311-api")

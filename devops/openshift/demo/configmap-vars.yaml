@@ -9,6 +9,7 @@ data:
   NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore-ntjp.jks"
   PUTJANST_LOGICALADDRESS: "SE165565594230-1000"
   INTYGSTJANST_LOGICALADDRESS: "5565594230"
+  INTYGSADMIN_URL: "http://intygsadmin-demo:8081"
   FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/fk-saml-keystore.jks"
   FK_SAML_KEYSTORE_ALIAS: "minaintyg.se"
   SPRING_PROFILES_ACTIVE: "test,mi-security-test,caching-enabled"
