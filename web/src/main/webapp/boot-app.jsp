@@ -60,7 +60,7 @@
 
 
   <div class="content-wrapper" ng-cloak>
-    <service-banner id="service-banners" banners="$root.banners"></service-banner>
+    <mi-service-banner id="service-banners"></mi-service-banner>
 
     <mvk-top-bar></mvk-top-bar>
 

@@ -1,0 +1,15 @@
+<div
+    data-ng-repeat="banner in bannersShown"
+    ng-attr-id="{{::banner.id}}"
+    class="alert alert-{{::banner.severity}}"
+  >
+  <div class="text-container">
+    <div class="alert-icon" ng-switch="::banner.severity">
+      <i ng-switch-when="info" class="icon icon-attention-circled"></i>
+      <i ng-switch-when="warning" class="icon icon-attention-circled"></i>
+      <i ng-switch-when="danger" class="icon icon-attention"></i>
+    </div>
+    <span data-ng-bind-html="::banner.text"></span>
+    
+  </div>
+</div>

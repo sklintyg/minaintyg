@@ -69,17 +69,17 @@ $mi-link-secret: #FF9C5B;
 
 //Alerts (we dont use success variant)
 
-$mi-alert-info-bg: #D8EEF7;
-$mi-alert-info-border: #4890E2;
-$mi-alert-info-text: #000000;
+$mi-alert-info-bg: $mi-color-23;
+$mi-alert-info-border: $mi-color-03;
+$mi-alert-info-text: $mi-color-01;
 
-$mi-alert-warning-bg: #FCF9E4;
-$mi-alert-warning-border: #ECDBA9;
-$mi-alert-warning-text: #97784B;
+$mi-alert-warning-bg: $mi-color-25;
+$mi-alert-warning-border: $mi-color-26;
+$mi-alert-warning-text: $mi-color-27;
 
-$mi-alert-danger-bg: #F2DEDE;
-$mi-alert-danger-border: #D0021C;
-$mi-alert-danger-text: #751723;
+$mi-alert-danger-bg: $mi-color-24;
+$mi-alert-danger-border: $mi-color-18;
+$mi-alert-danger-text: $mi-color-28;
 
 $mi-success-color: #009200;
 

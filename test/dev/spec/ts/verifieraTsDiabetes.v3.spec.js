@@ -31,12 +31,13 @@ var inboxPage = miTestTools.pages.inboxPage;
 
 var genericTestDataBuilder = miTestTools.testdata.generic;
 
-describe('Visa intyg ts-diabetes', function() {
+describe('Visa intyg ts-diabetes v3', function() {
 
   var personId = '190101010101';
   var intygsId = null;
 
   beforeAll(function() {
+    browser.get('/web/logga-ut');
     var tsDiabetesIntyg = genericTestDataBuilder.getTsDiabetes(personId, '3.0');
     intygsId = tsDiabetesIntyg.id;
     restHelper.createIntyg(tsDiabetesIntyg);
