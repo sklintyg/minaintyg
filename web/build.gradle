@@ -71,17 +71,6 @@ task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
 checkstyleMain.dependsOn jsCodeQuality
 jsCodeQuality.onlyIf { project.hasProperty('codeQuality') }
 
-task zipResources(type: ArchiveDirectoryTask) {
-    sourcePath "../src/main/resources"
-    include "*"
-    include "*/*" //to include contents of a folder present inside from directory
-    archiveName "resources.zip"
-    destinationDir(file("../devops/openshift/test/env"))
-    archiveOnlyIfDiff file("${destinationDir}/${archiveName}").exists()
-}
-
-build.dependsOn zipResources
-
 war {
     from("${buildDir}/apps")
 
