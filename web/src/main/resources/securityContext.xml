@@ -494,7 +494,8 @@
         </list>
       </constructor-arg>
       <property name="refreshCheckInterval" value="86400000"/>
-
+      <property name="defaultIDP" value="https://m00-mg-local.idp.funktionstjanster.se/samlv2/idp/metadata/0/30"/>
+      <property name="hostedSPName" value="https://minaintyg.se/eleg"/>
     </bean>
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages e-leg class="org.springframework.security.saml.SAMLAuthenticationProvider"-->
