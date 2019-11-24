@@ -1,55 +1,39 @@
 #!groovy
 
-def buildVersion = "3.10.1.${BUILD_NUMBER}"
-def commonVersion = "3.10.1.+"
-def infraVersion = "3.10.1.+"
-def refDataVersion = "1.0-SNAPSHOT"
-def versionFlags = "-DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion} -DrefDataVersion=${refDataVersion}"
+node {
+    def buildVersion = ""
+    def commonVersion = ""
+    def infraVersion = ""
 
-stage('checkout') {
-    node {
+    stage('checkout') {
         git url: "https://github.com/sklintyg/minaintyg.git", branch: GIT_BRANCH
         util.run { checkout scm }
-    }
-}
 
-stage('build') {
-    node {
+        def info = readJSON file: 'build-info.json'
+        echo "${info}"
+        buildVersion = "${info.appVersion}.${BUILD_NUMBER}-nightly"
+        infraVersion = info.infraVersion
+        commonVersion = info.commonVersion
+
+        versionFlags = "-DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion} -DinfraVersion=${infraVersion}"
+    }
+
+    stage('owasp') {
         try {
-            shgradle "--refresh-dependencies clean build testReport sonarqube -PcodeQuality -PcodeCoverage -DgruntColors=false \
-                  ${versionFlags}"
+            shgradle "--refresh-dependencies clean dependencyCheckAggregate ${versionFlags}"
         } finally {
-            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
-                 reportFiles: 'index.html', reportName: 'JUnit results'
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports',  \
+                 reportFiles: 'dependency-check-report.html', reportName: 'OWASP dependency-check'
         }
     }
-}
 
-stage('tag') {
-    node {
-        shgradle "tagRelease ${versionFlags}"
-    }
-}
-
-
-stage('propagate') {
-    node {
-        gitRef = "v${buildVersion}"
-        releaseFlag = "${GIT_BRANCH.startsWith("release")}"
-        build job: "minaintyg-dintyg-build", wait: false, parameters: [
-                [$class: 'StringParameterValue', name: 'MINAINTYG_BUILD_VERSION', value: buildVersion],
-                [$class: 'StringParameterValue', name: 'COMMON_VERSION', value: commonVersion],
-                [$class: 'StringParameterValue', name: 'INFRA_VERSION', value: infraVersion],
-                [$class: 'StringParameterValue', name: 'REF_DATA_VERSION', value: refDataVersion],
-                [$class: 'StringParameterValue', name: 'GIT_REF', value: gitRef],
-                [$class: 'StringParameterValue', name: 'RELEASE_FLAG', value: releaseFlag]
-        ]
-    }
-}
-
-stage('notify') {
-    node {
-        util.notifySuccess()
+    stage('sonarqube') {
+        try {
+            shgradle "build -P codeQuality jacocoTestReport sonarqube ${versionFlags}"
+        } finally {
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'web/build/reports/jacoco/test/html',  \
+             reportFiles: 'index.html', reportName: 'Code coverage'
+        }
     }
 }
 
