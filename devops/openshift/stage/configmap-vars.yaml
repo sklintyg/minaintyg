@@ -11,6 +11,8 @@ data:
   NTJP_WS_CERTIFICATE_TYPE: "PKCS12"
   NTJP_WS_TRUSTSTORE_TYPE: "JKS"
   ELVA77_URL_MAIN: "https://e-tjanster.1177.se/"
+  DEFAULT_SAML_IDP_ENTITYID: "https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/metadata/0/30"
+  DEFAULT_SAML_SP_ENTITYID: "https://qa.minaintyg.se/eleg"
 kind: ConfigMap
 metadata:
   name: minaintyg-configmap-envvar
