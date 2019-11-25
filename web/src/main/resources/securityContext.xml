@@ -495,7 +495,8 @@
         </list>
       </constructor-arg>
       <property name="refreshCheckInterval" value="86400000"/>
-
+      <property name="defaultIDP" value="${default.saml.idp.entityId}"/>
+      <property name="hostedSPName" value="${default.saml.sp.entityId}"/>
     </bean>
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages e-leg class="org.springframework.security.saml.SAMLAuthenticationProvider"-->
