@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Inera AB (http://www.inera.se)
+ * Copyright (C) 2020 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -18,12 +18,13 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
+import org.junit.After;
+import org.junit.Before;
+
 import com.google.common.base.Strings;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.http.ContentType;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Base class for REST / SOAP in-container tests.
