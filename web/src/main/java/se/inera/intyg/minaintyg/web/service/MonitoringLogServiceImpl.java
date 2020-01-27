@@ -66,6 +66,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         logEvent(MonitoringEvent.BROWSER_INFO, browserName, browserVersion, osFamily, osVersion, width, height);
     }
 
+    @Override
+    public void logSamlStatusForFailedLogin(String issuer, String samlStatus) {
+        logEvent(MonitoringEvent.SAML_STATUS_LOGIN_FAIL, issuer, samlStatus);
+    }
+
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
 
         StringBuilder logMsg = new StringBuilder();
@@ -81,7 +86,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
         CERTIFICATE_SEND("Certificate '{}' sent to '{}'"),
         CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
-        CERTIFICATE_RESTORED("Certificate '{}' restored");
+        CERTIFICATE_RESTORED("Certificate '{}' restored"),
+
+        SAML_STATUS_LOGIN_FAIL("Login failed at IDP '{}' with status message '{}'");
 
         private final String msg;
 
