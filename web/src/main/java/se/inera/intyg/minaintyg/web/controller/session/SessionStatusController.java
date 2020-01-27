@@ -27,11 +27,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import se.inera.intyg.minaintyg.web.filters.SessionTimeoutFilter;
+import se.inera.intyg.infra.security.filter.SessionTimeoutFilter;
 
 /**
- * Reports basic information about the current session status.
- * This controller works in cooperation with SessionTimeoutFilter that makes sure that requests to:
+ * Reports basic information about the current session status. This controller works in cooperation with SessionTimeoutFilter that makes
+ * sure that requests to:
  * <ul>
  * <li>getSessionStatus does NOT extend the session</li>
  * <li>getExtendSession does extend the session.</li>
@@ -39,8 +39,7 @@ import se.inera.intyg.minaintyg.web.filters.SessionTimeoutFilter;
  *
  * @see SessionTimeoutFilter
  * @see org.springframework.security.web.context.SecurityContextRepository SecurityContextRepository
- * @see org.springframework.security.web.context.HttpSessionSecurityContextRepository
- * HttpSessionSecurityContextRepository
+ * @see org.springframework.security.web.context.HttpSessionSecurityContextRepository HttpSessionSecurityContextRepository
  */
 
 public class SessionStatusController {
