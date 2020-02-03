@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.saml.SAMLConstants;
 import org.springframework.security.saml.context.SAMLMessageContext;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
 import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
@@ -57,7 +58,7 @@ public class SAMLStatusLogger extends SAMLDefaultLogger {
             return;
         }
 
-        if (context.getInboundSAMLMessage() != null) {
+        if (context.getInboundSAMLMessage() != null && SAMLConstants.FAILURE.equals(result)) {
             SAMLObject samlObj = context.getInboundSAMLMessage();
 
             List<XMLObject> tmp = samlObj.getOrderedChildren();
