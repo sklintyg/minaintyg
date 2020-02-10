@@ -28,6 +28,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+import se.inera.clinicalprocess.healthcond.certificate.receiver.types.v1.ApprovalStatusType;
+import se.inera.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.inera.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.ReceiverApprovalStatus;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.registerapprovedreceivers.v1.RegisterApprovedReceiversType;
 import se.inera.intyg.common.lisjp.support.LisjpEntryPoint;
@@ -35,9 +38,6 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.schemas.contract.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.receiver.types.v1.ApprovalStatusType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
 
 public final class IntegrationTestUtility {
 

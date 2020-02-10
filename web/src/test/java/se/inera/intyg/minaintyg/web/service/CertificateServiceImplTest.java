@@ -375,7 +375,7 @@ public class CertificateServiceImplTest {
         final String type = "fk7263";
         GetRecipientsForCertificateResponseType responseType = new GetRecipientsForCertificateResponseType();
         responseType.setResult(se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.v1.utils.ResultTypeUtil
-            .errorResult(se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
+            .errorResult(se.inera.clinicalprocess.healthcond.certificate.v1.ErrorIdType.APPLICATION_ERROR, "error"));
         when(getRecipientsService.getRecipientsForCertificate(anyString(), any(GetRecipientsForCertificateType.class)))
             .thenReturn(responseType);
         service.getRecipientsForCertificate(type);

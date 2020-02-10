@@ -37,6 +37,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import se.inera.clinicalprocess.healthcond.certificate.types.v3.IntygId;
+import se.inera.clinicalprocess.healthcond.certificate.types.v3.TypAvRelation;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.IntygRelations;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listrelationsforcertificate.v1.Relation;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
@@ -45,11 +47,9 @@ import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.registry.ModuleNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Part;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvIntyg;
-import se.riv.clinicalprocess.healthcond.certificate.types.v3.TypAvRelation;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Enhet;
 import se.riv.clinicalprocess.healthcond.certificate.v3.HosPersonal;
 import se.riv.clinicalprocess.healthcond.certificate.v3.Intyg;
@@ -270,7 +270,7 @@ public class UtlatandeMetaDataConverterTest {
         final String enhetsnamn,
         final LocalDateTime signeringstidpunkt) {
         Intyg intyg = new Intyg();
-        intyg.setIntygsId(new IntygId());
+        intyg.setIntygsId(new se.riv.clinicalprocess.healthcond.certificate.types.v3.IntygId());
         intyg.getIntygsId().setExtension(intygsId);
         intyg.setTyp(new TypAvIntyg());
         intyg.getTyp().setCode(intygstyp);

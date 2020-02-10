@@ -18,7 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.exception;
 
-import se.riv.clinicalprocess.healthcond.certificate.v1.ResultType;
+import se.inera.clinicalprocess.healthcond.certificate.v1.ResultType;
 
 
 public class ResultTypeErrorException extends RuntimeException {

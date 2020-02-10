@@ -29,11 +29,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
+import se.inera.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.listknownrecipients.v1.ListKnownRecipientsType;
 import se.inera.intyg.minaintyg.web.service.dto.UtlatandeRecipient;
-import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
 
 @Repository
 @EnableScheduling
