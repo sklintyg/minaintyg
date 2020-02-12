@@ -69,7 +69,11 @@ public class ConfigApiController {
                 systemConfigBean.getApplicationLogoutUrl(),
                 certificateService.getAllRecipients(),
                 dynamicLinkService.getAllAsMap(),
-                iaBannerService.getCurrentBanners()));
+                iaBannerService.getCurrentBanners(),
+                systemConfigBean.getMiUserSurveyDateFrom(),
+                systemConfigBean.getMiUserSurveyDateTo(),
+                systemConfigBean.getMiUserSurveyUrl(),
+                systemConfigBean.getMiUserSurveyVersion()));
 
         return builder.cacheControl(getNoCacheControl()).build();
     }

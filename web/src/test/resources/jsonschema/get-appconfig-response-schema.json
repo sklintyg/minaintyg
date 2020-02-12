@@ -33,6 +33,18 @@
         ]
       }
     },
+    "miUserSurveyUrl": {
+      "type": "string"
+    },
+    "miUserSurveyVersion": {
+      "type": "string"
+    },
+    "miUserSurveyDateTo": {
+      "type": "string"
+    },
+    "miUserSurveyDateFrom": {
+      "type": "string"
+    },
     "banners": {
       "type": "array",
       "minItems": 0,
