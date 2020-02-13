@@ -42,6 +42,12 @@ public class ConfigResponse implements Serializable {
     private String elva77LoginUrl;
     private String applicationLogoutUrl;
 
+    private String miUserSurveyUrl;
+    private String miUserSurveyVersion;
+    private String miUserSurveyDateFrom;
+    private String miUserSurveyDateTo;
+
+
     private List<UtlatandeRecipient> knownRecipients;
 
     private Map<String, DynamicLink> links;
@@ -50,7 +56,7 @@ public class ConfigResponse implements Serializable {
     //CHECKSTYLE:OFF ParameterNumberCheck
     public ConfigResponse(String version, String buildNumber, boolean useMinifiedJavascript, String elva77MainUrl, String elva77LoginUrl,
         String applicationLogoutUrl, List<UtlatandeRecipient> knownRecipients, Map<String, DynamicLink> links,
-        List<Banner> banners) {
+        List<Banner> banners, String miUserSurveyDateFrom, String miUserSurveyDateTo, String miUserSurveyUrl, String miUserSurveyVersion) {
 
         this.version = version;
         this.buildNumber = buildNumber;
@@ -61,6 +67,10 @@ public class ConfigResponse implements Serializable {
         this.knownRecipients = knownRecipients;
         this.links = links;
         this.banners = banners;
+        this.miUserSurveyDateFrom = miUserSurveyDateFrom;
+        this.miUserSurveyDateTo = miUserSurveyDateTo;
+        this.miUserSurveyUrl = miUserSurveyUrl;
+        this.miUserSurveyVersion = miUserSurveyVersion;
     }
     //CHECKSTYLE:ON ParameterNumberCheck
 
@@ -102,5 +112,21 @@ public class ConfigResponse implements Serializable {
 
     public List<Banner> getBanners() {
         return banners;
+    }
+
+    public String getMiUserSurveyUrl() {
+        return miUserSurveyUrl;
+    }
+
+    public String getMiUserSurveyDateFrom() {
+        return miUserSurveyDateFrom;
+    }
+
+    public String getMiUserSurveyDateTo() {
+        return miUserSurveyDateTo;
+    }
+
+    public String getMiUserSurveyVersion() {
+        return miUserSurveyVersion;
     }
 }

@@ -49,6 +49,18 @@ public class SystemPropertiesConfig {
     @Value("${certificate.baseUrl}")
     private String intygstjanstBaseUrl;
 
+    @Value("${mi.user.survey.url}")
+    private String miUserSurveyUrl;
+
+    @Value("${mi.user.survey.version}")
+    private String miUserSurveyVersion;
+
+    @Value("${mi.user.survey.date.to}")
+    private String miUserSurveyDateTo;
+
+    @Value("${mi.user.survey.date.from}")
+    private String miUserSurveyDateFrom;
+
     @Autowired
     private Environment environment;
 
@@ -81,4 +93,23 @@ public class SystemPropertiesConfig {
     public String getIntygstjanstBaseUrl() {
         return intygstjanstBaseUrl;
     }
+
+    public String getMiUserSurveyUrl() {
+        return miUserSurveyUrl;
+    }
+
+    public String getMiUserSurveyVersion() {
+        return miUserSurveyVersion;
+    }
+
+    public String getMiUserSurveyDateTo() {
+        return miUserSurveyDateTo;
+    }
+
+    public String getMiUserSurveyDateFrom() {
+        return miUserSurveyDateFrom;
+    }
+
+
+
 }

@@ -53,6 +53,10 @@ public class ConfigApiControllerTest {
     private static final String ELVA77_LOGIN_URL = "/saml/login";
     private static final String APP_LOGOUT_URL = "/web/logga-ut";
     private static final java.lang.String VERSION = "1.2.3";
+    private static final String SURVEY_URL = "www.google.se";
+    private static final String SURVEY_VERSION = "1.0";
+    private static final String SURVEY_DATE_TO = "2020-01-01";
+    private static final String SURVEY_DATE_FROM = "2020-01-31";
 
     @Mock
     private IntygModuleRegistry moduleRegistry;
@@ -80,6 +84,10 @@ public class ConfigApiControllerTest {
         when(systemConfigBean.getElva77MainUrl()).thenReturn(ELVA77_MAIN_URL);
         when(systemConfigBean.getElva77LoginUrl()).thenReturn(ELVA77_LOGIN_URL);
         when(systemConfigBean.getApplicationLogoutUrl()).thenReturn(APP_LOGOUT_URL);
+        when(systemConfigBean.getMiUserSurveyDateFrom()).thenReturn(SURVEY_DATE_FROM);
+        when(systemConfigBean.getMiUserSurveyDateTo()).thenReturn(SURVEY_DATE_TO);
+        when(systemConfigBean.getMiUserSurveyUrl()).thenReturn(SURVEY_URL);
+        when(systemConfigBean.getMiUserSurveyVersion()).thenReturn(SURVEY_VERSION);
         when(systemConfigBean.getUseMinifiedJavascript()).thenReturn(false);
         when(dynamicLinkService.getAllAsMap()).thenReturn(new HashMap<>());
         when(iaBannerService.getCurrentBanners()).thenReturn(new ArrayList<>());
@@ -97,6 +105,10 @@ public class ConfigApiControllerTest {
         assertEquals(ELVA77_LOGIN_URL, config.getElva77LoginUrl());
         assertEquals(APP_LOGOUT_URL, config.getApplicationLogoutUrl());
         assertEquals(false, config.isUseMinifiedJavascript());
+        assertEquals(SURVEY_URL, config.getMiUserSurveyUrl());
+        assertEquals(SURVEY_VERSION, config.getMiUserSurveyVersion());
+        assertEquals(SURVEY_DATE_FROM, config.getMiUserSurveyDateFrom());
+        assertEquals(SURVEY_DATE_TO, config.getMiUserSurveyDateTo());
 
         verify(certificateService).getAllRecipients();
     }

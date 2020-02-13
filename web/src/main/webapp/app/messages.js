@@ -165,6 +165,12 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'certificates.label.completed': 'KOMPLETTERAT INTYG',
     'certificates.label.dash': '-',
 
+    /* USER SURVEY */
+
+    'mi.survey.modal.text': 'Vi genomför en användarundersökning för tjänsten Mina Intyg och vore mycket tacksamma om du kan tänka dig att dela dina synpunkter med oss. Undersökningen tar ett par minuter att fylla i och är helt anonym. Du kan närsomhelst avbryta undersökningen om så önskas. \n' +
+        'Vill du hjälpa oss att förbättra tjänsten genom ditt deltagande?',
+    'mi.survey.modal.title': 'Användarundersökning',
+
     // Errors in main app (boot-app.jsp)
     //'error.pagetitle': 'Tekniskt fel',
     'error.generictechproblem.title': 'Tekniskt fel',
