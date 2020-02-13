@@ -46,7 +46,7 @@ public class SystemPropertiesConfig {
     @Value("${application.logout.url}")
     private String applicationLogoutUrl;
 
-    @Value("${certificate.baseUrl:}")
+    @Value("${certificate.baseUrl}")
     private String intygstjanstBaseUrl;
 
     @Value("${mi.user.survey.url:}")
