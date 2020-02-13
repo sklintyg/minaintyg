@@ -49,16 +49,16 @@ public class SystemPropertiesConfig {
     @Value("${certificate.baseUrl}")
     private String intygstjanstBaseUrl;
 
-    @Value("${mi.user.survey.url}")
+    @Value("${mi.user.survey.url:}")
     private String miUserSurveyUrl;
 
-    @Value("${mi.user.survey.version}")
+    @Value("${mi.user.survey.version:}")
     private String miUserSurveyVersion;
 
-    @Value("${mi.user.survey.date.to}")
+    @Value("${mi.user.survey.date.to:}")
     private String miUserSurveyDateTo;
 
-    @Value("${mi.user.survey.date.from}")
+    @Value("${mi.user.survey.date.from:}")
     private String miUserSurveyDateFrom;
 
     @Autowired
