@@ -57,6 +57,7 @@ import se.inera.intyg.minaintyg.web.api.Certificate;
 import se.inera.intyg.minaintyg.web.api.CertificateMeta;
 import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.web.util.CertificateMetaConverter;
 import se.inera.intyg.schemas.contract.Personnummer;
 
@@ -91,6 +92,9 @@ public class ModuleApiController {
      */
     @Autowired
     private CertificateService certificateService;
+
+    @Autowired
+    private MonitoringLogService monitoringLogService;
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
@@ -193,8 +197,10 @@ public class ModuleApiController {
                 if (isEmployerCopy) {
                     pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG,
                         optionalFields, UtkastStatus.SIGNED);
+                    monitoringLogService.logCertificatePrintedEmployerCopy(id, type);
                 } else {
                     pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, UtkastStatus.SIGNED);
+                    monitoringLogService.logCertificatePrintedFully(id, type);
                 }
 
                 return Response.ok(pdf.getPdfData())

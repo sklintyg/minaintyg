@@ -47,6 +47,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemE
 import se.inera.intyg.minaintyg.web.security.Citizen;
 import se.inera.intyg.minaintyg.web.service.CertificateService;
 import se.inera.intyg.minaintyg.web.service.CitizenService;
+import se.inera.intyg.minaintyg.web.service.MonitoringLogService;
 import se.inera.intyg.schemas.contract.Personnummer;
 
 public abstract class ModuleApiControllerTest {
@@ -74,6 +75,9 @@ public abstract class ModuleApiControllerTest {
 
     @Mock
     private ObjectMapper objectMapper = mock(ObjectMapper.class);
+
+    @Mock
+    private MonitoringLogService monitoringLogService;
 
     @InjectMocks
     private ModuleApiController moduleApiController = new ModuleApiController();

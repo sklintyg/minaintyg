@@ -67,6 +67,16 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
+    public void logCertificatePrintedFully(String certificateId, String certificateType) {
+        logEvent(MonitoringEvent.CERTIFICATE_PRINTED_FULLY, certificateId, certificateType);
+    }
+
+    @Override
+    public void logCertificatePrintedEmployerCopy(String certificateId, String certificateType) {
+        logEvent(MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY, certificateId, certificateType);
+    }
+
+    @Override
     public void logSamlStatusForFailedLogin(String issuer, String samlStatus) {
         logEvent(MonitoringEvent.SAML_STATUS_LOGIN_FAIL, issuer, samlStatus);
     }
@@ -87,6 +97,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CERTIFICATE_SEND("Certificate '{}' sent to '{}'"),
         CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
         CERTIFICATE_RESTORED("Certificate '{}' restored"),
+        CERTIFICATE_PRINTED_FULLY("Certificate '{}' of type '{}' was printed including all information"),
+        CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy"),
 
         SAML_STATUS_LOGIN_FAIL("Login failed at IDP '{}' with status message '{}'");
 
