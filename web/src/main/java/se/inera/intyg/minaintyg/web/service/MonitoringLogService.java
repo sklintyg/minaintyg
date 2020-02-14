@@ -36,6 +36,10 @@ public interface MonitoringLogService {
 
     void logBrowserInfo(String browserName, String browserVersion, String osFamily, String osVersion, String width, String height);
 
+    void logCertificatePrintedFully(String intygsId, String intygsType);
+
+    void logCertificatePrintedEmployerCopy(String intygsId, String intygsType);
+
     // Saml
     void logSamlStatusForFailedLogin(String issuer, String samlStatus);
 }
