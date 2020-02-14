@@ -20,14 +20,14 @@
 angular.module('minaintyg').factory('minaintyg.SendService', function($http, $log) {
   'use strict';
 
-  function _sendCertificate(certId, recipients, callback) {
+  function _sendCertificate(certId, certType, recipients, callback) {
     var recipientIds = [];
 
     angular.forEach(recipients, function(recipient) {
       recipientIds.push(recipient.id);
     });
 
-    $http.put('/api/certificates/' + certId + '/send', recipientIds).then(function(response) {
+    $http.put('/api/certificates/' + certId + '/' + certType + '/send', recipientIds).then(function(response) {
       callback(response.data);
     }, function(response) {
       $log.error('error ' + response.status);

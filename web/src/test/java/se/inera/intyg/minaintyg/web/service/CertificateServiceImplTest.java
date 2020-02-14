@@ -559,6 +559,7 @@ public class CertificateServiceImplTest {
         String personId = "19121212-1212";
         String citizenUsername = "19121212-1212";
         String utlatandeId = "1234567890";
+        String intygTyp = "lisjp";
         List<String> recipients = Arrays.asList(FK_RECIPIENT_ID, TS_RECIPIENT_ID);
 
         SendCertificateToRecipientResponseType successResponse = new SendCertificateToRecipientResponseType();
@@ -580,7 +581,7 @@ public class CertificateServiceImplTest {
         when(citizenService.getCitizen()).thenReturn(citizen);
 
         /* Then */
-        final List<SendToRecipientResult> apiResponse = service.sendCertificate(createPnr(personId), utlatandeId, recipients);
+        final List<SendToRecipientResult> apiResponse = service.sendCertificate(createPnr(personId), utlatandeId, intygTyp, recipients);
 
         /* Verify */
         assertEquals(2, apiResponse.size());
@@ -599,7 +600,7 @@ public class CertificateServiceImplTest {
         // NOTE: This mocking assumes that they are processed in the order that they are enumerated in the recipients
         // list
         verify(sendServiceMock, times(2)).sendCertificateToRecipient(eq(INTYGSTJANST_LOGICAL_ADDRESS), arguments.capture());
-        verify(monitoringServiceMock).logCertificateSend(utlatandeId, FK_RECIPIENT_ID);
+        verify(monitoringServiceMock).logCertificateSend(utlatandeId, FK_RECIPIENT_ID, intygTyp);
 
         List<SendCertificateToRecipientType> capturedArguments = arguments.getAllValues();
         SendCertificateToRecipientType actualRequestFK = capturedArguments.get(0);
@@ -634,7 +635,7 @@ public class CertificateServiceImplTest {
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
 
         final List<SendToRecipientResult> apiResponse = service
-            .sendCertificate(createPnr("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
+            .sendCertificate(createPnr("19121212-1212"), "1234567890", "lisjp", Arrays.asList("FKASSA"));
 
         SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
             .findFirst().get();
@@ -646,7 +647,7 @@ public class CertificateServiceImplTest {
 
         when(citizenService.getCitizen()).thenReturn(mock(Citizen.class));
         final List<SendToRecipientResult> apiResponse = service
-            .sendCertificate(createPnr("19121212-1212"), "1234567890", Arrays.asList("FKASSA"));
+            .sendCertificate(createPnr("19121212-1212"), "1234567890", "lisjp", Arrays.asList("FKASSA"));
         SendToRecipientResult fkResult = apiResponse.stream().filter(sr -> sr.getRecipientId().equals(FK_RECIPIENT_ID))
             .findFirst().get();
         assertFalse(fkResult.isSent());

@@ -137,7 +137,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             }
           });
 
-          sendService.sendCertificate($scope.vm.id, selectedRecipients, function(results) {
+          sendService.sendCertificate($scope.vm.id, $scope.vm.type, selectedRecipients, function(results) {
 
             //Update status for each recipient
             angular.forEach(dialogVm.recipients, function(recipient) {

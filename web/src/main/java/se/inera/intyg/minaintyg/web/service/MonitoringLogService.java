@@ -28,7 +28,7 @@ public interface MonitoringLogService {
 
     void logCertificateRead(String id, String typ);
 
-    void logCertificateSend(String certificateId, String recipientId);
+    void logCertificateSend(String certificateId, String recipientId, String certificateType);
 
     void logCertificateArchived(String certificateId);
 

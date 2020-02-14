@@ -186,7 +186,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
+    public List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String intygsTyp,
         List<String> recipients) {
         List<SendToRecipientResult> batchResult = new ArrayList<>();
         for (String recipientId : recipients) {
@@ -206,7 +206,7 @@ public class CertificateServiceImpl implements CertificateService {
                     batchResult.add(new SendToRecipientResult(recipientId, false, null));
                 } else {
                     batchResult.add(new SendToRecipientResult(recipientId, true, LocalDateTime.now()));
-                    monitoringService.logCertificateSend(certificateId, recipientId);
+                    monitoringService.logCertificateSend(certificateId, recipientId, intygsTyp);
                 }
             } catch (Exception e) {
                 LOGGER.error(

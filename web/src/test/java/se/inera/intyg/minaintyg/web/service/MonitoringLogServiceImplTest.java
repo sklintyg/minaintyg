@@ -102,8 +102,8 @@ public class MonitoringLogServiceImplTest {
 
     @Test
     public void shouldLogCertificateSend() {
-        logService.logCertificateSend(CERTIFICATE_ID, RECIPIENT_ID);
-        verifyLog(Level.INFO, "CERTIFICATE_SEND Certificate 'CERTIFICATE_ID' sent to 'RECIPIENT_ID'");
+        logService.logCertificateSend(CERTIFICATE_ID, RECIPIENT_ID, CERTIFICATE_TYPE);
+        verifyLog(Level.INFO, "CERTIFICATE_SEND Certificate 'CERTIFICATE_ID' of type 'CERTIFICATE_TYPE' sent to 'RECIPIENT_ID'");
     }
 
     @Test

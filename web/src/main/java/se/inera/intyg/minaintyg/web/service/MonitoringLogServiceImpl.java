@@ -47,8 +47,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logCertificateSend(String certificateId, String recipientId) {
-        logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, recipientId);
+    public void logCertificateSend(String certificateId, String recipientId, String certificateType) {
+        logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, certificateType, recipientId);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
         CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
         CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
-        CERTIFICATE_SEND("Certificate '{}' sent to '{}'"),
+        CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
         CERTIFICATE_ARCHIVED("Certificate '{}' archived"),
         CERTIFICATE_RESTORED("Certificate '{}' restored"),
         CERTIFICATE_PRINTED_FULLY("Certificate '{}' of type '{}' was printed including all information"),
