@@ -240,13 +240,14 @@ public class ApiControllerIT extends IntegrationTestBase {
         createAuthSession(CITIZEN_CIVIC_REGISTRATION_NUMBER);
 
         final String id = UUID.randomUUID().toString();
+        final String type = "lisjp";
         IntegrationTestUtility.givenIntyg(id, LuaenaEntryPoint.MODULE_ID, LUAE_NA_VERSION, CITIZEN_CIVIC_REGISTRATION_NUMBER, false, false);
 
         List<String> recipientList = Arrays.asList("FKASSA", "FAKE");
         spec()
-            .pathParams("id", id).and().body(recipientList)
+            .pathParams("id", id, "type", type).and().body(recipientList)
             .expect().statusCode(HttpServletResponse.SC_OK)
-            .when().put("api/certificates/{id}/send")
+            .when().put("api/certificates/{id}/{type}/send")
             .then()
             .body(matchesJsonSchemaInClasspath("jsonschema/send-response-schema.json"));
     }
