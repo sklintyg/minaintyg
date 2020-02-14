@@ -109,13 +109,14 @@ public class ApiController {
      * @return The response of the send operation
      */
     @PUT
-    @Path("/{id}/send")
+    @Path("/{id}/{intygsTyp}/send")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(JSON_UTF8)
-    public List<SendToRecipientResult> send(@PathParam("id") final String id, final List<String> recipients) {
+    public List<SendToRecipientResult> send(@PathParam("id") final String id, @PathParam("intygsTyp")
+    final String intygsTyp, final List<String> recipients) {
         Citizen citizen = citizenService.getCitizen();
         LOG.debug("Requesting 'send' for certificate {} to recipients {}", id, recipients);
-        return certificateService.sendCertificate(createPnr(citizen.getUsername()), id, recipients);
+        return certificateService.sendCertificate(createPnr(citizen.getUsername()), id, intygsTyp, recipients);
     }
 
     /**

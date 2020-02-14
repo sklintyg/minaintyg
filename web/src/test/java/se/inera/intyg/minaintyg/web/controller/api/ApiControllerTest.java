@@ -187,20 +187,21 @@ public class ApiControllerTest {
 
         // When
         String certificateId = "abc-123";
+        String certificateType = "lisjp";
         List<String> recipients = Arrays.asList(FKASSA_RECIPIENT_ID, TRANSP_RECIPIENT_ID);
         List<SendToRecipientResult> expectedResponse = new ArrayList<>();
         expectedResponse.add(new SendToRecipientResult(FKASSA_RECIPIENT_ID, true, LocalDateTime.now()));
         expectedResponse.add(new SendToRecipientResult(TRANSP_RECIPIENT_ID, true, LocalDateTime.now()));
 
         mockCitizen(CIVIC_REGISTRATION_NUMBER);
-        when(certificateService.sendCertificate(PNR, certificateId, recipients)).thenReturn(expectedResponse);
+        when(certificateService.sendCertificate(PNR, certificateId, certificateType, recipients)).thenReturn(expectedResponse);
 
         // Then
-        final List<SendToRecipientResult> actualResult = apiController.send(certificateId, recipients);
+        final List<SendToRecipientResult> actualResult = apiController.send(certificateId, certificateType, recipients);
 
         // Verify
         assertEquals(actualResult, expectedResponse);
-        verify(certificateService).sendCertificate(eq(PNR), eq(certificateId), eq(recipients));
+        verify(certificateService).sendCertificate(eq(PNR), eq(certificateId), eq(certificateType), eq(recipients));
     }
 
     @Test

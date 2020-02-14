@@ -42,7 +42,7 @@ public interface CertificateService {
     /**
      * Request to send a specific certificate to a specific recipient.
      */
-    List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId,
+    List<SendToRecipientResult> sendCertificate(Personnummer civicRegistrationNumber, String certificateId, String intygsTyp,
         List<String> recipientIds);
 
     /**
