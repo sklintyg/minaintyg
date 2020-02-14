@@ -197,7 +197,7 @@ public class ModuleApiController {
                 if (isEmployerCopy) {
                     pdf = moduleApi.pdfEmployer(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG,
                         optionalFields, UtkastStatus.SIGNED);
-                        monitoringLogService.logCertificatePrintedEmployerCopy(id, type);
+                    monitoringLogService.logCertificatePrintedEmployerCopy(id, type);
                 } else {
                     pdf = moduleApi.pdf(utlatande.get().getInternalModel(), statusList, ApplicationOrigin.MINA_INTYG, UtkastStatus.SIGNED);
                     monitoringLogService.logCertificatePrintedFully(id, type);
