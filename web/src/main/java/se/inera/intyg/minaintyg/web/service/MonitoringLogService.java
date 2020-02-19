@@ -42,4 +42,10 @@ public interface MonitoringLogService {
 
     // Saml
     void logSamlStatusForFailedLogin(String issuer, String samlStatus);
+
+    void logOpenedAbout(String pnr);
+
+    void logOpenedFAQ(String pnr);
+
+    void logOpenedQuestion(String id, String title, String pnr);
 }

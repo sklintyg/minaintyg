@@ -23,7 +23,10 @@ import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.ok;
 import static javax.ws.rs.core.Response.status;
 import static se.inera.intyg.minaintyg.web.controller.monitoring.MonitoringRequest.HEIGHT;
+import static se.inera.intyg.minaintyg.web.controller.monitoring.MonitoringRequest.QUESTION_TITLE;
+import static se.inera.intyg.minaintyg.web.controller.monitoring.MonitoringRequest.QUESTION_ID;
 import static se.inera.intyg.minaintyg.web.controller.monitoring.MonitoringRequest.WIDTH;
+import static se.inera.intyg.minaintyg.web.controller.monitoring.MonitoringRequest.USER;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -65,6 +68,16 @@ public class MonitoringApiController {
                         userAgentInfo.getOsVersion(),
                         request.getInfo().get(WIDTH),
                         request.getInfo().get(HEIGHT));
+                break;
+            case OPENED_ABOUT:
+                monitoringService.logOpenedAbout(request.getInfo().get(USER));
+                break;
+            case OPENED_FAQ:
+                monitoringService.logOpenedFAQ(request.getInfo().get(USER));
+                break;
+            case OPENED_QUESTION:
+                monitoringService.logOpenedQuestion(request.getInfo().get(QUESTION_ID),
+                    request.getInfo().get(QUESTION_TITLE), request.getInfo().get(USER));
                 break;
             default:
                 return status(BAD_REQUEST).build();

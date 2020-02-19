@@ -25,6 +25,9 @@ public class MonitoringRequest {
 
     public static final String WIDTH = "width";
     public static final String HEIGHT = "height";
+    public static final String QUESTION_ID = "id";
+    public static final String QUESTION_TITLE = "title";
+    public static final String USER = "user";
 
     private MonitoringRequestEvent event;
     private Map<String, String> info;
@@ -52,12 +55,20 @@ public class MonitoringRequest {
         switch (event) {
             case SCREEN_RESOLUTION:
                 return info != null && info.get(WIDTH) != null && info.get(HEIGHT) != null;
+            case OPENED_ABOUT:
+            case OPENED_FAQ:
+                return info != null && info.get(USER) != null;
+            case OPENED_QUESTION:
+                return info != null && info.get(QUESTION_ID) != null && info.get(QUESTION_TITLE) != null && info.get(USER) != null;
             default:
                 return false;
         }
     }
 
     public enum MonitoringRequestEvent {
-        SCREEN_RESOLUTION
+        SCREEN_RESOLUTION,
+        OPENED_ABOUT,
+        OPENED_FAQ,
+        OPENED_QUESTION
     }
 }

@@ -19,11 +19,12 @@
 
 angular.module('minaintyg').controller(
     'minaintyg.AboutCtrl',
-    ['$scope', 'common.messageService', 'MIConfig',
-      function($scope, messageService, MIConfig) {
+    ['$scope', 'common.messageService', 'MIConfig', 'monitoringLogService', 'MIUser',
+      function($scope, messageService, MIConfig, monitoringLogService, MIUser) {
         'use strict';
 
         $scope.version = MIConfig.version;
+        monitoringLogService.openedAbout(MIUser.personId);
 
         //faq's are actually arrays of faq items
         $scope.faqs = messageService.getProperty('help.faq');

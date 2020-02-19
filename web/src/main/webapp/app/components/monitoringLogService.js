@@ -31,6 +31,35 @@ angular.module('minaintyg').factory('monitoringLogService',
             return input !== undefined && input !== '';
         }
 
+        function _openedAbout(user) {
+          post( {
+            'event': 'OPENED_ABOUT',
+            'info': {
+              'user': user
+            }
+          });
+        }
+
+      function _openedFAQ(user) {
+        post( {
+          'event': 'OPENED_FAQ',
+          'info': {
+            'user': user
+          }
+        });
+      }
+
+      function _openedQuestion(id, title, user) {
+        post( {
+          'event': 'OPENED_QUESTION',
+          'info': {
+            'id': id,
+            'title': title,
+            'user': user
+          }
+        });
+      }
+
         function _screenResolution(width, height) {
             if (isDefined(width) && isDefined(height)) {
                 post({
@@ -45,7 +74,10 @@ angular.module('minaintyg').factory('monitoringLogService',
 
 
         return {
-            screenResolution: _screenResolution
+            screenResolution: _screenResolution,
+            openedAbout: _openedAbout,
+            openedFAQ: _openedFAQ,
+            openedQuestion: _openedQuestion
         };
 
     }]);
