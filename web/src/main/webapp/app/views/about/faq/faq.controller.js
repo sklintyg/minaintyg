@@ -17,9 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('minaintyg').controller('AboutFaqPageCtrl', ['$scope', 'common.messageService', '$window', 'smoothScroll',
-  function($scope, messageService, $window, smoothScroll) {
+angular.module('minaintyg').controller('AboutFaqPageCtrl', [
+    '$scope', 'common.messageService', '$window', 'smoothScroll', 'monitoringLogService', 'MIUser',
+  function($scope, messageService, $window, smoothScroll, monitoringLogService, MIUser) {
     'use strict';
+
+    monitoringLogService.openedFAQ(MIUser.personId);
 
     function getQuestions(prefix, idPrefix) {
       var questions = [];
@@ -70,6 +73,9 @@ angular.module('minaintyg').controller('AboutFaqPageCtrl', ['$scope', 'common.me
     };
 
     $scope.toggleQuestion = function(question) {
+      if(question.closed) {
+        monitoringLogService.openedQuestion(question.id, messageService.getProperty(question.title), MIUser.personId);
+      }
       question.closed = !question.closed;
 
       if (!question.closed) {

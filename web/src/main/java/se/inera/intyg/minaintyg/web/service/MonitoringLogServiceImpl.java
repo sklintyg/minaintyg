@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.service;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,26 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         logEvent(MonitoringEvent.SAML_STATUS_LOGIN_FAIL, issuer, samlStatus);
     }
 
+    @Override
+    public void logOpenedAbout(String pnr) {
+        logEvent(MonitoringEvent.OPENED_ABOUT, getPersonnummerHash(pnr));
+    }
+
+    @Override
+    public void logOpenedFAQ(String pnr) {
+        logEvent(MonitoringEvent.OPENED_FAQ, getPersonnummerHash(pnr));
+    }
+
+    @Override
+    public void logOpenedQuestion(String id, String title, String pnr) {
+        logEvent(MonitoringEvent.OPENED_QUESTION, id, title.replace(" ", "_"), getPersonnummerHash(pnr));
+    }
+
+    private String getPersonnummerHash(String pnr) {
+        Optional<Personnummer> personnummer = Personnummer.createPersonnummer(pnr);
+        return personnummer.get().getPersonnummerHash();
+    }
+
     private void logEvent(MonitoringEvent logEvent, Object... logMsgArgs) {
 
         StringBuilder logMsg = new StringBuilder();
@@ -88,6 +109,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
         LOG.info(LogMarkers.MONITORING, logMsg.toString(), logMsgArgs);
     }
+
 
     private enum MonitoringEvent {
         BROWSER_INFO("Name '{}' Version '{}' OSFamily '{}' OSVersion '{}' Width '{}' Height '{}'"),
@@ -99,6 +121,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         CERTIFICATE_RESTORED("Certificate '{}' restored"),
         CERTIFICATE_PRINTED_FULLY("Certificate '{}' of type '{}' was printed including all information"),
         CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy"),
+        OPENED_ABOUT("Om Mina intyg was opened by user '{}'"),
+        OPENED_FAQ("FAQ for Mina intyg was opened by user '{}'"),
+        OPENED_QUESTION("Question '{}' with title '{}' was opened by user '{}'"),
 
         SAML_STATUS_LOGIN_FAIL("Login failed at IDP '{}' with status message '{}'");
 
