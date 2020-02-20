@@ -91,5 +91,8 @@
     <bean id="minaIntygPUService" class="se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUServiceImpl">
            <property name="puService" ref="puService" />
     </bean>
+
+    <!-- Use the same PU validator for both prod and test. Set as primary so it is used instead of the default validator in infra -->
+    <bean id="puResponseValidator" class="se.inera.intyg.infra.integration.pu.services.validator.ProdPUResponseValidator" primary="true"/>
   </beans>
 </beans>
