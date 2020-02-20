@@ -33,7 +33,7 @@ var genericTestDataBuilder = miTestTools.testdata.generic;
 describe('Lista intyg', function() {
 
   var personId = '19010101-0101';
-  var personIdNoCertificates = '19121212-9999';
+  var personIdNoCertificates = '19870410-2386';
   var fk7263IntygsId = null;
   var tsBasIntygsId = null;
   var tsDiabetesIntygsId = null;
