@@ -56,7 +56,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'inbox.label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
     'inbox.header': 'Översikt över dina intyg',
 
-    'inbox.description.1': 'Här listas alla dina intyg med det senast utfärdade intyget överst.<br/> I Mina intyg kan du skicka dina intyg till olika mottagare, som till exempel Försäkringskassan, anpassa intyg till arbetsgivare eller ladda ner intygen som PDF. Klicka på knappen Visa intyg för att hantera dina intyg.',
+    'inbox.description.1': 'Här listas alla dina intyg med det senast utfärdade intyget överst.<br/> I Mina intyg kan du bland annat se på intyg, ladda ner intyg i PDF-format och skicka intyg till olika mottagare, exempelvis Försäkringskassan. Du kan även välja att dölja din diagnos för arbetsgivare, vilket du hittar mer information om i <a href="#/omminaintyg/faq">Vanliga frågor och svar</a>. Klicka på knappen Visa intyg för att hantera dina intyg.',
     'inbox.description.archive.title': 'Arkivera intyg',
     'inbox.description.archive': '<p>Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen.</p><p><a href="#/arkiverade">Läs mer om arkivering av intyg under fliken Arkiverade intyg</a>.</p>',
 
