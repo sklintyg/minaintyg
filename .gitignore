@@ -23,10 +23,5 @@ web/src/main/webapp/app/app.css
 .sass-cache/
 out
 
-*.p12
-*.jks
-devops/openshift/test/secret-vars.yaml
-devops/openshift/demo/secret-vars.yaml
-
 test/reports
 
