@@ -114,7 +114,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
     // FAQ
     'faq.intyg.1.title': 'Varför kan jag inte se mitt intyg?',
-    'faq.intyg.1.body': 'I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21. Landsting och regioner ansluter sina journalsystem successivt till att skriva elektroniska läkarintyg, vilket kan innebära att det inte finns några läkarintyg att visa än.',
+    'faq.intyg.1.body': '<p>Om din läkare har signerat ditt intyg digitalt ska det finnas i Mina intyg. Hittar du inte ditt intyg i inkorgen, alternativt i ditt arkiv, vänd dig till din läkare/vårdgivare.</p><p>I Mina intyg visas läkarintyg som är utfärdade efter 2013-11-21.</p>',
     'faq.intyg.2.title': 'Varför kan jag inte skicka mitt intyg?',
     'faq.intyg.2.body': '<p>En del intyg har ingen elektronisk mottagare. Det gäller till exempel intyg till arbetsgivare. Dessa kan du istället skriva ut och ge till din arbetsgivare.</p>Det finns också intyg som skickas av vården direkt till mottagaren. Dessa är synliga i Mina intyg för att du ska kunna se att intyget är utfärdat och skickat.',
     'faq.intyg.3.title': 'Kan jag göra någon ändring i intygen som riktar sig till min arbetsgivare?',
