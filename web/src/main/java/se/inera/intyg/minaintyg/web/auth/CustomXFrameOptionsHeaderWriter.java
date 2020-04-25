@@ -40,8 +40,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomXFrameOptionsHeaderWriter implements HeaderWriter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CustomXFrameOptionsHeaderWriter.class);
-
     private static final String CONTENT_SECURITY_POLICY = "Content-Security-Policy";
     private static final String FRAME_ANCESTORS = "frame-ancestors ";
     private static final String DENY = "DENY";

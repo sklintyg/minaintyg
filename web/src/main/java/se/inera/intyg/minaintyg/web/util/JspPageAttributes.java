@@ -27,8 +27,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class JspPageAttributes {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JspPageAttributes.class);
-
     @Autowired
     @Value("${elva77.url.login}")
     private String elva77LoginUrl;

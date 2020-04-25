@@ -24,6 +24,7 @@ import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -205,7 +206,7 @@ public class CertificateServiceImpl implements CertificateService {
                         certificateId, recipientId, response.getResult().getResultText()));
                     batchResult.add(new SendToRecipientResult(recipientId, false, null));
                 } else {
-                    batchResult.add(new SendToRecipientResult(recipientId, true, LocalDateTime.now()));
+                    batchResult.add(new SendToRecipientResult(recipientId, true, LocalDateTime.now(ZoneId.systemDefault())));
                     monitoringService.logCertificateSend(certificateId, recipientId, intygsTyp);
                 }
             } catch (Exception e) {
@@ -402,7 +403,7 @@ public class CertificateServiceImpl implements CertificateService {
         parameters.setIntygsId(toIntygsId(certificateId));
         parameters.setPart(toPart(RECIPIENT_INVANA));
         parameters.setStatus(toStatus(status));
-        parameters.setTidpunkt(LocalDateTime.now());
+        parameters.setTidpunkt(LocalDateTime.now(ZoneId.systemDefault()));
 
         SetCertificateStatusResponseType response = setCertificateStatusService.setCertificateStatus(logicalAddress, parameters);
 

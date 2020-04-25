@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.controller.api;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -126,7 +127,8 @@ public class ApiController {
     @Path("/onbeforeunload")
     public String onbeforeunload(@Context HttpServletRequest req) {
         if (req.getSession().getAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP) == null) {
-            req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP, LocalDateTime.now());
+            req.getSession().setAttribute(BrowserClosedInterceptor.BROWSER_CLOSED_TIMESTAMP,
+                LocalDateTime.now(ZoneId.systemDefault()));
         } else {
             LOG.warn("onbeforeonload already set");
         }
