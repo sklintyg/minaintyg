@@ -19,6 +19,7 @@
 package se.inera.intyg.minaintyg.web.controller.appconfig;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -104,7 +105,7 @@ public class ConfigApiControllerTest {
         assertEquals(ELVA77_MAIN_URL, config.getElva77MainUrl());
         assertEquals(ELVA77_LOGIN_URL, config.getElva77LoginUrl());
         assertEquals(APP_LOGOUT_URL, config.getApplicationLogoutUrl());
-        assertEquals(false, config.isUseMinifiedJavascript());
+        assertFalse(config.isUseMinifiedJavascript());
         assertEquals(SURVEY_URL, config.getMiUserSurveyUrl());
         assertEquals(SURVEY_VERSION, config.getMiUserSurveyVersion());
         assertEquals(SURVEY_DATE_FROM, config.getMiUserSurveyDateFrom());

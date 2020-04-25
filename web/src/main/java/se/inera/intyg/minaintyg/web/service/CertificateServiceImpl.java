@@ -181,7 +181,7 @@ public class CertificateServiceImpl implements CertificateService {
     @PostConstruct
     public void init() {
         jsonPostHeaders = new HttpHeaders();
-        jsonPostHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        jsonPostHeaders.setContentType(MediaType.APPLICATION_JSON);
         jsonPostHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
     }
 

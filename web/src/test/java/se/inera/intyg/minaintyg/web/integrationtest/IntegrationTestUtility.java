@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
 import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 
 import com.google.common.base.Strings;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.specification.RequestSpecification;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;

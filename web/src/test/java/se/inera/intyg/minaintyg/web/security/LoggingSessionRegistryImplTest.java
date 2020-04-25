@@ -20,7 +20,7 @@ package se.inera.intyg.minaintyg.web.security;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -69,7 +69,7 @@ public class LoggingSessionRegistryImplTest {
         final String sessionId = "session-id";
         loggingSessionRegistry.registerNewSession(sessionId, "principal");
 
-        verifyZeroInteractions(monitoringService);
+        verifyNoInteractions(monitoringService);
     }
 
     @Test
@@ -107,14 +107,14 @@ public class LoggingSessionRegistryImplTest {
 
         loggingSessionRegistry.removeSessionInformation(sessionId);
 
-        verifyZeroInteractions(monitoringService);
+        verifyNoInteractions(monitoringService);
     }
 
     @Test
     public void testRemoveSessionInformationNoSession() throws Exception {
         loggingSessionRegistry.removeSessionInformation("session-id");
 
-        verifyZeroInteractions(monitoringService);
+        verifyNoInteractions(monitoringService);
     }
 
     private Personnummer createPnr(String pnr) {

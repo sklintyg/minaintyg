@@ -75,7 +75,7 @@ public class BrowserClosedInterceptorTest {
 
         boolean preHandle = interceptor.preHandle(request, response, null);
 
-        Mockito.verifyZeroInteractions(logoutHandler);
+        Mockito.verifyNoInteractions(logoutHandler);
         assertTrue(preHandle);
 
     }
@@ -85,7 +85,7 @@ public class BrowserClosedInterceptorTest {
 
         boolean preHandle = interceptor.preHandle(request, response, null);
 
-        Mockito.verifyZeroInteractions(logoutHandler);
+        Mockito.verifyNoInteractions(logoutHandler);
         assertTrue(preHandle);
 
     }
