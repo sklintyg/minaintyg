@@ -24,8 +24,6 @@ import com.google.common.base.Strings;
 import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.web.header.HeaderWriter;
 import org.springframework.stereotype.Component;
@@ -58,6 +56,7 @@ public class CustomXFrameOptionsHeaderWriter implements HeaderWriter {
             return;
         }
 
+        //CHECKSTYLE:OFF EmptyCatchBlock
         try {
             URI uri = URI.create(referer);
             if (isExpectedScheme(uri) && hostIsExpectedDomain(uri)) {
@@ -67,6 +66,7 @@ public class CustomXFrameOptionsHeaderWriter implements HeaderWriter {
         } catch (Exception ignored) {
 
         }
+        //CHECKSTYLE:ON EmptyCatchBlock
         // If the referer could not be parsed into an URI, did not match allowed scheme/domain
         // or there were some error, just add DENY header.
         response.addHeader(XFRAME_OPTIONS_HEADER, DENY);
