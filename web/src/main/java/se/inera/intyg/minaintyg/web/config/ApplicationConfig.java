@@ -18,27 +18,21 @@
  */
 package se.inera.intyg.minaintyg.web.config;
 
-import net.javacrumbs.shedlock.core.LockProvider;
-import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;
-import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.session.web.http.CookieSerializer;
+import se.inera.intyg.infra.security.common.cookie.IneraCookieSerializer;
 
 @Configuration
-@EnableAsync
-@EnableScheduling
-@EnableSchedulerLock(defaultLockAtMostFor = "PT10M")
-public class JobConfig {
-
-    @Autowired
-    private JedisConnectionFactory jedisConnectionFactory;
+public class ApplicationConfig {
 
     @Bean
-    public LockProvider lockProvider() {
-        return new RedisLockProvider(jedisConnectionFactory, "webcert");
+    public CookieSerializer cookieSerializer() {
+        /*
+        This is needed to make IdP functionality work.
+        This will not satisfy all browsers, but it works for IE, Chrome and Edge.
+        Reference: https://auth0.com/blog/browser-behavior-changes-what-developers-need-to-know/
+         */
+        return new IneraCookieSerializer();
     }
 }

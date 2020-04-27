@@ -139,6 +139,7 @@ dependencies {
     compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
     compile "se.inera.intyg.infra:monitoring:${infraVersion}"
     compile "se.inera.intyg.infra:security-filter:${infraVersion}"
+    compile "se.inera.intyg.infra:security-common:${infraVersion}"
     compile "se.inera.intyg.infra:ia-integration:${infraVersion}"
 
     compile "se.inera.intyg.common:ts-bas:${commonVersion}"
@@ -155,15 +156,16 @@ dependencies {
     compile "se.inera.intyg.common:ag114:${commonVersion}"
     compile "se.inera.intyg.common:ag7804:${commonVersion}"
 
-    compile "org.springframework:spring-web:${springVersion}"
-    compile "org.springframework:spring-webmvc:${springVersion}"
-    compile "org.springframework.security:spring-security-config:${springSecurityVersion}"
-    compile "org.springframework.security:spring-security-web:${springSecurityVersion}"
-    compile "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
+    compile "org.springframework:spring-web"
+    compile "org.springframework:spring-webmvc"
+    compile "org.springframework.security:spring-security-config"
+    compile "org.springframework.security:spring-security-web"
+    compile "org.springframework.security:spring-security-taglibs"
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
-    compile "org.springframework.session:spring-session:${springSessionVersion}"
+    compile "org.springframework.session:spring-session-data-redis"
 
-    compile "org.aspectj:aspectjweaver:${aspectJWeaverVersion}"
+
+    compile "org.aspectj:aspectjweaver"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
     compile "org.opensaml:openws:${openWsVersion}"
     compile "org.opensaml:xmltooling:${xmlToolingVersion}"
@@ -171,15 +173,20 @@ dependencies {
     compile "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
     compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
 
-    compile("io.swagger:swagger-jaxrs:${jaxrsVersion}") {
+    compile("io.swagger:swagger-jaxrs:${swaggerJaxrsVersion}") {
         exclude(module: "jsr311-api")
     }
 
-    compileOnly "javax.servlet:servlet-api:${servletApiVersion}"
+    compile "com.sun.xml.messaging.saaj:saaj-impl"
+    compile "com.sun.activation:jakarta.activation"
+    compile "org.glassfish.jaxb:jaxb-runtime"
+
+    compileOnly "jakarta.servlet:jakarta.servlet-api"
     compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
 
-    testCompile "com.jayway.restassured:rest-assured:${restassuredVersion}"
-    testCompile "com.jayway.restassured:json-schema-validator:${jsonSchemaValidatorVersion}"
+    testCompile "io.rest-assured:rest-assured"
+    testCompile "io.rest-assured:json-schema-validator"
+    testCompile "com.sun.xml.bind:jaxb-osgi:${jaxbOsgiVersion}" // Can remove when rest-assured in BOM > version 4.0
 
     gretty "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"

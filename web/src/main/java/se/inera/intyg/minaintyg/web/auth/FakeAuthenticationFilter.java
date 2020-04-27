@@ -20,6 +20,7 @@ package se.inera.intyg.minaintyg.web.auth;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +56,7 @@ public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFi
             : "ELVA77";
 
         // we manually encode the json guid
-        String json = URLDecoder.decode(guid, "UTF-8");
+        String json = URLDecoder.decode(guid, StandardCharsets.UTF_8);
         return performFakeElegAuthentication(json, origin);
     }
 

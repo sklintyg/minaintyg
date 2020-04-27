@@ -18,15 +18,15 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static se.inera.intyg.minaintyg.web.integrationtest.IntegrationTestUtility.spec;
 
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.After;

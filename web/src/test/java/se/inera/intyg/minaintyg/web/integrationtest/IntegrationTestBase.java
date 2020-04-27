@@ -22,9 +22,9 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.google.common.base.Strings;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.http.ContentType;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
 
 /**
  * Base class for REST / SOAP in-container tests.

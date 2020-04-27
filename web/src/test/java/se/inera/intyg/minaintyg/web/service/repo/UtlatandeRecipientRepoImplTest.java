@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.service.repo;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.or;
 import static org.mockito.ArgumentMatchers.any;
@@ -67,6 +68,6 @@ public class UtlatandeRecipientRepoImplTest {
 
     @Test
     public void testGetAllRecipients() {
-        assertTrue(repo.getAllRecipients().size() == 1);
+        assertEquals(1, repo.getAllRecipients().size());
     }
 }
