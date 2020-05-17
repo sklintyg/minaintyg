@@ -65,6 +65,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller"/>
     <context:component-scan base-package="se.inera.intyg.minaintyg.web.jobs"/>
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.config"/>
   </beans>
 
   <beans>
