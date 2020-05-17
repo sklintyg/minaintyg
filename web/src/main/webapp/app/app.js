@@ -192,10 +192,9 @@
       });
 
       $window.onbeforeunload = function() {
-        var request = new XMLHttpRequest();
-        // `false` makes the request synchronous
-        request.open('GET', '/api/certificates/onbeforeunload', false);
-        request.send(null);
+        // Must be done async
+        // https://www.chromestatus.com/feature/4664843055398912
+        $.get('/api/certificates/onbeforeunload');
       };
 
     }]);
