@@ -18,10 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.jobs;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.infra.driftbannerdto.Application;
 import se.inera.intyg.infra.integration.ia.jobs.BannerJob;
 
+@EnableScheduling
 @Service
 public class MIBannerJob extends BannerJob {
 
