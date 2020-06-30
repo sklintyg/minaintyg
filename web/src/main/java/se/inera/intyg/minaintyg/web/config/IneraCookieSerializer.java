@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
  * <p>
  * It needed to be re-implemented since the current version of Spring Session (1.3.3)
  * doesn't have the required implementation to be extended.
+ * </p>
  */
 public class IneraCookieSerializer implements CookieSerializer {
 
