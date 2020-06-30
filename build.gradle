@@ -55,6 +55,8 @@ allprojects {
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile 'junit:junit:4.+'
         testCompile "org.mockito:mockito-core:${mockitoVersion}"
+
+        errorprone("com.google.errorprone:error_prone_core:2.3.4")
     }
 
     group = 'se.inera.intyg.minaintyg'
