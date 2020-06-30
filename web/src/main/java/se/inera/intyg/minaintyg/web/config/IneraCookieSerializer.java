@@ -19,6 +19,15 @@
 
 package se.inera.intyg.minaintyg.web.config;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.session.web.http.CookieSerializer;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -29,18 +38,11 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.session.web.http.CookieSerializer;
 
 /**
  * Custom CookieSerializer to add samesite=none attribute to session cookie.
  * This is based on the DefaultCookieSerializer from Spring 5 (Spring Session Core 2.2.1)
- *
+ * <p>
  * It needed to be re-implemented since the current version of Spring Session (1.3.3)
  * doesn't have the required implementation to be extended.
  */
@@ -86,6 +88,8 @@ public class IneraCookieSerializer implements CookieSerializer {
 
     private String rememberMeRequestAttribute;
 
+    private Pattern ucBrowserPattern = Pattern.compile("UCBrowser/(\\d+)\\.(\\d+)\\.(\\d+)\\.");
+
     @Override
     public List<String> readCookieValues(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
@@ -94,13 +98,13 @@ public class IneraCookieSerializer implements CookieSerializer {
             for (Cookie cookie : cookies) {
                 if (this.cookieName.equals(cookie.getName())) {
                     String sessionId = this.useBase64Encoding
-                        ? base64Decode(cookie.getValue()) : cookie.getValue();
+                            ? base64Decode(cookie.getValue()) : cookie.getValue();
                     if (sessionId == null) {
                         continue;
                     }
                     if (this.jvmRoute != null && sessionId.endsWith(this.jvmRoute)) {
                         sessionId = sessionId.substring(0,
-                            sessionId.length() - this.jvmRoute.length());
+                                sessionId.length() - this.jvmRoute.length());
                     }
                     matchingCookieValues.add(sessionId);
                 }
@@ -126,7 +130,7 @@ public class IneraCookieSerializer implements CookieSerializer {
         if (maxAge > -1) {
             sb.append("; Max-Age=").append(maxAge);
             ZonedDateTime expires = (maxAge != 0) ? ZonedDateTime.now(this.clock).plusSeconds(maxAge)
-                : Instant.EPOCH.atZone(ZoneOffset.UTC);
+                    : Instant.EPOCH.atZone(ZoneOffset.UTC);
             sb.append("; Expires=").append(expires.format(DateTimeFormatter.RFC_1123_DATE_TIME));
         }
         String domain = getDomainName(request);
@@ -147,11 +151,56 @@ public class IneraCookieSerializer implements CookieSerializer {
         }
 
         // Check if connection is secure since "none" isn't a valid option when using http (as used in DEV).
-        if (request.isSecure()) {
+        if (request.isSecure() && !shouldntGetSameSiteNone(request.getHeader(HttpHeaders.USER_AGENT))) {
             sb.append("; SameSite=").append("none");
         }
 
         response.addHeader("Set-Cookie", sb.toString());
+    }
+
+    /**
+     * Som older browser/OS doesn't handle samesite=none. These must be excluded when this
+     * attribute is set for session cookies.
+     * <ul>
+     * <li>Based on https://catchjs.com/Blog/SameSiteCookies</li>
+     * <li>Information on incompatible browsers: https://www.chromium.org/updates/same-site/incompatible-clients</li>
+     * </ul>
+     *
+     * @param userAgent User Agent
+     * @return true if samesite=none should not be set.
+     */
+    private boolean shouldntGetSameSiteNone(String userAgent) {
+        return userAgent.contains("iPhone OS 12_") || userAgent.contains("iPad; CPU OS 12_") ||  //iOS 12
+                (userAgent.contains("UCBrowser/")
+                        ? isOlderUcBrowser(userAgent)                                             //UC Browser < 12.13.2
+                        : (userAgent.contains("Chrome/5") || userAgent.contains("Chrome/6"))) ||         //Chrome
+                userAgent.contains("Chromium/5") || userAgent.contains("Chromium/6") ||              //Chromium
+                (userAgent.contains(" OS X 10_14_")
+                        && ((userAgent.contains("Version/") && userAgent.contains("Safari")) ||             //Safari on MacOS 10.14
+                        userAgent.endsWith("(KHTML, like Gecko)")));                              //Embedded browser on MacOS 10.14
+    }
+
+    private boolean isOlderUcBrowser(String userAgent) {
+        // CHECKSTYLE:OFF MagicNumber
+        Matcher uaMatcher = ucBrowserPattern.matcher(userAgent);
+
+        if (!uaMatcher.find()) {
+            return false;
+        }
+
+        int major = Integer.parseInt(uaMatcher.group(1));
+        int minor = Integer.parseInt(uaMatcher.group(2));
+        int build = Integer.parseInt(uaMatcher.group(3));
+
+        if (major != 12) {
+            return major < 12;
+        }
+
+        if (minor != 13) {
+            return minor < 13;
+        }
+        return build < 2;
+        // CHECKSTYLE:ON MagicNumber
     }
 
     private int getMaxAge(String requestedCookieValue, HttpServletRequest request) {
@@ -159,7 +208,7 @@ public class IneraCookieSerializer implements CookieSerializer {
         if ("".equals(requestedCookieValue)) {
             maxAge = 0;
         } else if (this.rememberMeRequestAttribute != null
-            && request.getAttribute(this.rememberMeRequestAttribute) != null) {
+                && request.getAttribute(this.rememberMeRequestAttribute) != null) {
             // the cookie is only written at time of session creation, so we rely on
             // session expiration rather than cookie expiration if remember me is
             // enabled
@@ -179,7 +228,7 @@ public class IneraCookieSerializer implements CookieSerializer {
             prev = cur;
             cur = chars[i];
             if (!DOMAIN_VALID.get(cur) || ((prev == '.' || prev == -1) && (cur == '.' || cur == '-'))
-                || (prev == '-' && cur == '.')) {
+                    || (prev == '-' && cur == '.')) {
                 throw new IllegalArgumentException("Invalid cookie domain: " + domain);
             }
             i++;
@@ -253,7 +302,7 @@ public class IneraCookieSerializer implements CookieSerializer {
     public void setUseHttpOnlyCookie(boolean useHttpOnlyCookie) {
         if (useHttpOnlyCookie && !isServlet3()) {
             throw new IllegalArgumentException(
-                "You cannot set useHttpOnlyCookie to true in pre Servlet 3 environment");
+                    "You cannot set useHttpOnlyCookie to true in pre Servlet 3 environment");
         }
         this.useHttpOnlyCookie = useHttpOnlyCookie;
     }
@@ -283,7 +332,7 @@ public class IneraCookieSerializer implements CookieSerializer {
     public void setDomainName(String domainName) {
         if (this.domainNamePattern != null) {
             throw new IllegalStateException(
-                "Cannot set both domainName and domainNamePattern");
+                    "Cannot set both domainName and domainNamePattern");
         }
         this.domainName = domainName;
     }
@@ -291,10 +340,10 @@ public class IneraCookieSerializer implements CookieSerializer {
     public void setDomainNamePattern(String domainNamePattern) {
         if (this.domainName != null) {
             throw new IllegalStateException(
-                "Cannot set both domainName and domainNamePattern");
+                    "Cannot set both domainName and domainNamePattern");
         }
         this.domainNamePattern = Pattern.compile(domainNamePattern,
-            Pattern.CASE_INSENSITIVE);
+                Pattern.CASE_INSENSITIVE);
     }
 
     public void setJvmRoute(String jvmRoute) {
@@ -308,7 +357,7 @@ public class IneraCookieSerializer implements CookieSerializer {
     public void setRememberMeRequestAttribute(String rememberMeRequestAttribute) {
         if (rememberMeRequestAttribute == null) {
             throw new IllegalArgumentException(
-                "rememberMeRequestAttribute cannot be null");
+                    "rememberMeRequestAttribute cannot be null");
         }
         this.rememberMeRequestAttribute = rememberMeRequestAttribute;
     }
