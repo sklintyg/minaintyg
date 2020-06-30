@@ -33,6 +33,6 @@ public class ApplicationConfig {
         This will not satisfy all browsers, but it works for IE, Chrome and Edge.
         Reference: https://auth0.com/blog/browser-behavior-changes-what-developers-need-to-know/
          */
-        return new IneraCookieSerializer();
+        return new IneraCookieSerializer(true);
     }
 }
