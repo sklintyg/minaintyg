@@ -34,9 +34,14 @@ ext {
 
     nodeJsVersion = "10.16.2"
     npmVersion = "6.10.3"
+
 }
 
 allprojects {
+    // Errorprone plugin stopped working due to version updates and testClasses won't
+    // work if errorProne dependency is added
+    ext.errorproneExclude = ".*"
+
     apply plugin: 'se.inera.intyg.plugin.common'
     apply plugin: 'maven'
 
@@ -55,8 +60,6 @@ allprojects {
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile 'junit:junit:4.+'
         testCompile "org.mockito:mockito-core:${mockitoVersion}"
-
-        errorprone("com.google.errorprone:error_prone_core:2.3.4")
     }
 
     group = 'se.inera.intyg.minaintyg'
