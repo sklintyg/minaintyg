@@ -199,6 +199,15 @@
       </security:headers>
     </security:http>
 
+    <security:http use-expressions="false" entry-point-ref="http403ForbiddenEntryPoint">
+      <security:csrf token-repository-ref="tokenRepository" disabled="false"/>
+      <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+      <security:custom-filter position="PRE_AUTH_FILTER" ref="fakeAuthFilter" />
+      <security:custom-filter after="BASIC_AUTH_FILTER" ref="samlFilter"/>
+      <security:request-cache ref="httpSessionRequestCache" />
+      <security:session-management session-authentication-strategy-ref="registerSessionAuthenticationStrategy" />
+    </security:http>
+
     <!-- Legacy FK SAML entry point. This should be removed, replaced by /saml/* + alias
     <security:http pattern="/web/fksso/**" authentication-manager-ref="authenticationManager" entry-point-ref="samlEntryPoint">
      <security:custom-filter before="FIRST" ref="clearSecurityContextFilter" />
