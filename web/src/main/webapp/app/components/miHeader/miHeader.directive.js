@@ -45,12 +45,28 @@ angular.module('minaintyg').directive('miHeader',
                 templateUrl: '/app/components/miHeader/miHeaderSekretess.dialog.html',
                 keyboard: false,
                 controller: function($scope, $uibModalInstance) {
+
+                  $scope.onKeydown = function(e) {
+                    if (e.keyCode === 27) {
+                      $uibModalInstance.close();
+                      e.preventDefault();
+                      $scope.$emit('dialogOpen', false);
+                    }
+                  };
+
+                  $scope.dialog = {
+                    focus: true
+                  };
+                  $scope.$emit('dialogOpen', true);
+
                   $scope.gotoAbout = function() {
                     $uibModalInstance.close();
+                    $scope.$emit('dialogOpen', false);
                     $state.go('omminaintyg.juridik');
                   };
                   $scope.close = function() {
                     $uibModalInstance.close();
+                    $scope.$emit('dialogOpen', false);
                   };
                 }
               });

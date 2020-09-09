@@ -80,7 +80,6 @@ angular.module('minaintyg').controller('minaintyg.ListCtrl',
 
         $scope.openArchiveDialog = function(cert) {
           $scope.certToArchive = cert;
-          $scope.dialog.focus = true;
           archiveDialog = dialogService.showDialog($scope, {
             dialogId: 'archive-confirmation-dialog',
             titleId: 'inbox.archivemodal.header',
