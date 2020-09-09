@@ -60,24 +60,28 @@
 
 
   <div class="content-wrapper" ng-cloak>
-    <mi-service-banner id="service-banners"></mi-service-banner>
+    <mi-screen-reader-wrapper>
+      <mi-service-banner id="service-banners"></mi-service-banner>
 
-    <mvk-top-bar></mvk-top-bar>
+      <mvk-top-bar></mvk-top-bar>
 
-    <mi-header></mi-header>
+      <mi-header></mi-header>
 
-    <mi-main-navigation></mi-main-navigation>
+      <mi-main-navigation></mi-main-navigation>
 
-    <mi-cookie-banner></mi-cookie-banner>
+      <mi-cookie-banner></mi-cookie-banner>
 
-    <%-- ng-view that holds dynamic content managed by angular app --%>
-    <div id="view" ui-view autoscroll="false"></div>
-    <mi-scroll-to-top-footer></mi-scroll-to-top-footer>
+      <%-- ng-view that holds dynamic content managed by angular app --%>
+      <div id="view" ui-view autoscroll="false"></div>
+      <mi-scroll-to-top-footer></mi-scroll-to-top-footer>
 
-    <%-- Add navigation aid directives --%>
-    <mi-scroll-to-top></mi-scroll-to-top>
+      <%-- Add navigation aid directives --%>
+      <mi-scroll-to-top></mi-scroll-to-top>
+    </mi-screen-reader-wrapper>
   </div>
+<mi-screen-reader-wrapper>
   <mi-footer ng-cloak></mi-footer>
+</mi-screen-reader-wrapper>
 
 
   <c:choose>

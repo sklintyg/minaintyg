@@ -1,15 +1,17 @@
-<div id="mi-sekretess-dialog" class="modal-header">
-  <button type="button" class="close" ng-click="close()">×</button>
-  <h3 ng-focus="dialog.focus" class="modal-title" tabindex="-1">
-    <span dynamic-label key="user.sekretessmarkeringmodal.header"></span>
-  </h3>
-</div>
-<div class="modal-body">
-  <p>Att du som invånare har skyddade personuppgifter i folkbokföringsregistret begränsar inte användandet av Mina intyg.</p>
-  <p>Läs mer om hur ditt intyg och dina personuppgifter hanteras på sidan <a ng-click="gotoAbout()">Om mina intyg</a>.</p>
-</div>
-<div class="modal-footer">
-  <button type="button" id="close-sekretessdialog-button" class="btn btn-primary" ng-click="close()">
-    <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span dynamic-label key="user.sekretessmarkeringmodal.button"></span>
-  </button>
+<div ng-keydown="onKeydown($event)" tabindex="-1">
+  <div id="mi-sekretess-dialog" class="modal-header">
+    <button type="button" class="close" ng-click="close()">×</button>
+    <h3 ng-focus="dialog.focus" class="modal-title" tabindex="-1">
+      <span dynamic-label key="user.sekretessmarkeringmodal.header"></span>
+    </h3>
+  </div>
+  <div class="modal-body">
+    <p>Att du som invånare har skyddade personuppgifter i folkbokföringsregistret begränsar inte användandet av Mina intyg.</p>
+    <p>Läs mer om hur ditt intyg och dina personuppgifter hanteras på sidan <a ng-click="gotoAbout()">Om mina intyg</a>.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" id="close-sekretessdialog-button" class="btn btn-primary" ng-click="close()">
+      <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span dynamic-label key="user.sekretessmarkeringmodal.button"></span>
+    </button>
+  </div>
 </div>
