@@ -1,4 +1,4 @@
-<div id="mi-sending-dialog" class="mi-sending-dialog">
+<div id="mi-sending-dialog" class="mi-sending-dialog" ng-focus="vm.focus" ng-keydown="onKeydown($event)" tabindex="-1">
   <div mi-spinner label="sendpage.dialog.label.sending" show-spinner="vm.sending" show-content="!vm.sending">
 
     <div class="modal-header">
