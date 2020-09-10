@@ -114,7 +114,8 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
           var dialogVm = {
             sending: true,
             recipients: selectedRecipients,
-            someFailed: false
+            someFailed: false,
+            focus: true
           };
 
           dialogInstance = $uibModal.open({
@@ -125,6 +126,15 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             controller: function($scope, $uibModalInstance, vm, onBackToCertificate) {
               $scope.vm = vm;
               $scope.onBackToCertificate = onBackToCertificate;
+
+              $scope.$emit('dialogOpen', true);
+
+              $scope.onKeydown = function(e) {
+                if (e.keyCode === 27) {
+                  onBackToCertificate();
+                  e.preventDefault();
+                }
+              };
 
             },
             resolve: {
@@ -171,6 +181,8 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
             dialogInstance.close();
             dialogInstance = undefined;
           }
+
+          $scope.$emit('dialogOpen', false);
 
           $location.path($scope.vm.type + '/' + $scope.vm.intygTypeVersion + '/view/' + $scope.vm.id).search({});
         };
