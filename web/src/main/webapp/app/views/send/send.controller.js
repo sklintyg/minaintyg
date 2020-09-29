@@ -120,7 +120,7 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
 
           dialogInstance = $uibModal.open({
             templateUrl: '/app/views/send/sender.dialog.html',
-            backdrop: 'static',
+            backdrop: true,
             keyboard: false,
             windowClass: 'mi-sending-dialog-window-class',
             controller: function($scope, $uibModalInstance, vm, onBackToCertificate) {
@@ -145,6 +145,8 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                 return dialogVm;
               }
             }
+          }).result.then(undefined, function() {
+            $scope.backToViewCertificate();
           });
 
           sendService.sendCertificate($scope.vm.id, $scope.vm.type, selectedRecipients, function(results) {
