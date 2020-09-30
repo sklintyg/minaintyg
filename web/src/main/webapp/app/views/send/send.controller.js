@@ -145,7 +145,9 @@ angular.module('minaintyg').controller('minaintyg.SendCtrl',
                 return dialogVm;
               }
             }
-          }).result.then(undefined, function() {
+          });
+
+          dialogInstance.result.then(undefined, function() {
             $scope.backToViewCertificate();
           });
 
