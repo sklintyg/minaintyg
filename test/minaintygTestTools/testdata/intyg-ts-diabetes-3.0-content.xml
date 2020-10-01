@@ -100,62 +100,66 @@
             <ns3:delsvar id="109.1">true</ns3:delsvar>
             <ns3:delsvar id="109.2">true</ns3:delsvar>
             <ns3:delsvar id="109.3">true</ns3:delsvar>
-            <ns3:delsvar id="109.4">true</ns3:delsvar>
-            <ns3:delsvar id="109.5">
+            <ns3:delsvar id="109.4">
                 <ns5:partialDate>
                     <ns5:format>YYYY</ns5:format>
                     <ns5:value>2017</ns5:value>
                 </ns5:partialDate>
             </ns3:delsvar>
-            <ns3:delsvar id="109.6">true</ns3:delsvar>
-            <ns3:delsvar id="109.7">Hypnos</ns3:delsvar>
+            <ns3:delsvar id="109.5">true</ns3:delsvar>
+            <ns3:delsvar id="109.6">Hypnos</ns3:delsvar>
+            <ns3:delsvar id="109.7">true</ns3:delsvar>
         </ns3:svar>
-        <ns3:svar id="100">
-            <ns3:delsvar id="100.1">true</ns3:delsvar>
+        <ns3:svar id="41">
+            <ns3:delsvar id="41.1">false</ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="37">
             <ns3:delsvar id="37.1">true</ns3:delsvar>
         </ns3:svar>
-        <ns3:svar id="101">
-            <ns3:delsvar id="101.1">false</ns3:delsvar>
+        <ns3:svar id="100">
+            <ns3:delsvar id="100.1">true</ns3:delsvar>
         </ns3:svar>
-        <ns3:svar id="102">
-            <ns3:delsvar id="102.1">true</ns3:delsvar>
-        </ns3:svar>
-        <ns3:svar id="38">
-            <ns3:delsvar id="38.1">false</ns3:delsvar>
-        </ns3:svar>
-        <ns3:svar id="36">
-            <ns3:delsvar id="36.1">true</ns3:delsvar>
-        </ns3:svar>
-        <ns3:svar id="105">
-            <ns3:delsvar id="105.1">false</ns3:delsvar>
+        <ns3:svar id="110">
+            <ns3:delsvar id="110.1">false</ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="106">
             <ns3:delsvar id="106.1">true</ns3:delsvar>
-            <ns3:delsvar id="106.2">2018-10-17</ns3:delsvar>
+            <ns3:delsvar id="106.2">
+                <ns5:partialDate>
+                    <ns5:format>YYYY-MM-DD</ns5:format>
+                    <ns5:value>2018-10-17</ns5:value>
+                </ns5:partialDate>
+            </ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="107">
             <ns3:delsvar id="107.1">true</ns3:delsvar>
-            <ns3:delsvar id="107.2">2018-10-09</ns3:delsvar>
+            <ns3:delsvar id="107.2">
+                <ns5:partialDate>
+                    <ns5:format>YYYY-MM-DD</ns5:format>
+                    <ns5:value>2018-10-09</ns5:value>
+                </ns5:partialDate>
+            </ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="108">
             <ns3:delsvar id="108.1">true</ns3:delsvar>
-            <ns3:delsvar id="108.2">2018-10-11</ns3:delsvar>
+            <ns3:delsvar id="108.2">
+                <ns5:partialDate>
+                    <ns5:format>YYYY-MM-DD</ns5:format>
+                    <ns5:value>2018-10-11</ns5:value>
+                </ns5:partialDate>
+            </ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="103">
             <ns3:delsvar id="103.1">false</ns3:delsvar>
         </ns3:svar>
-        <ns3:svar id="104">
-            <ns3:delsvar id="104.1">true</ns3:delsvar>
-        </ns3:svar>
         <ns3:svar id="8">
-            <ns3:delsvar id="8.1">1.0</ns3:delsvar>
-            <ns3:delsvar id="8.4">0.0</ns3:delsvar>
+            <ns3:delsvar id="8.1">false</ns3:delsvar>
             <ns3:delsvar id="8.2">1.0</ns3:delsvar>
             <ns3:delsvar id="8.5">0.0</ns3:delsvar>
             <ns3:delsvar id="8.3">1.0</ns3:delsvar>
             <ns3:delsvar id="8.6">0.0</ns3:delsvar>
+            <ns3:delsvar id="8.4">1.0</ns3:delsvar>
+            <ns3:delsvar id="8.7">0.0</ns3:delsvar>
         </ns3:svar>
         <ns3:svar id="32">
             <ns3:delsvar id="32.1">Kommentarer av det viktiga slaget</ns3:delsvar>

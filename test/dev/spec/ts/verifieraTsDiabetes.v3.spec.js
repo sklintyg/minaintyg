@@ -81,7 +81,7 @@ describe('Visa intyg ts-diabetes v3', function() {
       expect(viewPage.getTextContent(
           'allmant-behandling-endastKost-allmant-behandling-tabletter-allmant-behandling-insulin-allmant-behandling-annanBehandling-0')).toEqual(
           'Endast kost');
-      expect(viewPage.getTextContent('allmant-behandling-tablettRiskHypoglykemi')).toEqual('Ja');
+      expect(viewPage.getTextContent('allmant-behandling-riskHypoglykemi')).toEqual('Ja');
       expect(viewPage.getTextContent('allmant-behandling-insulinSedanAr')).toEqual('2017');
       expect(viewPage.getTextContent('allmant-behandling-annanBehandlingBeskrivning')).toEqual('Hypnos');
     });
@@ -89,10 +89,7 @@ describe('Visa intyg ts-diabetes v3', function() {
     it('Verifiera "Hypoglykemier"', function() {
       expect(viewPage.getTextContent('hypoglykemier-sjukdomenUnderKontroll')).toEqual('Ja');
       expect(viewPage.getTextContent('hypoglykemier-nedsattHjarnfunktion')).toEqual('Ja');
-      expect(viewPage.getTextContent('hypoglykemier-forstarRisker')).toEqual('Nej');
-      expect(viewPage.getTextContent('hypoglykemier-fortrogenMedSymptom')).toEqual('Ja');
-      expect(viewPage.getTextContent('hypoglykemier-saknarFormagaVarningstecken')).toEqual('Nej');
-      expect(viewPage.getTextContent('hypoglykemier-kunskapLampligaAtgarder')).toEqual('Ja');
+      expect(viewPage.getTextContent('hypoglykemier-formagaVarningstecken')).toEqual('Nej');
       expect(viewPage.getTextContent('hypoglykemier-egenkontrollBlodsocker')).toEqual('Nej');
       expect(viewPage.getTextContent('hypoglykemier-aterkommandeSenasteAret')).toEqual('Ja');
       expect(viewPage.getTextContent('hypoglykemier-aterkommandeSenasteTidpunkt')).toEqual('2018-10-17');
@@ -104,7 +101,6 @@ describe('Visa intyg ts-diabetes v3', function() {
 
     it('Verifiera "Synfunktion"', function() {
       expect(viewPage.getTextContent('synfunktion-misstankeOgonsjukdom')).toEqual('Nej');
-      expect(viewPage.getTextContent('synfunktion-ogonbottenFotoSaknas')).toEqual('Ja');
       expect(viewPage.getTextContent('synfunktion-row0-col1')).toEqual('1,0');
       expect(viewPage.getTextContent('synfunktion-row0-col2')).toEqual('0,0');
       expect(viewPage.getTextContent('synfunktion-row1-col1')).toEqual('1,0');
