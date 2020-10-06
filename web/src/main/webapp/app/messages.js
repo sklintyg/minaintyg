@@ -132,7 +132,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'faq.sakerhet.2.title': 'Hur skyddas mina uppgifter?',
     'faq.sakerhet.2.body': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Dataskyddsförordningen (GDPR), Patientdatalagen (PDL) och av Datainspektionen.',
     'faq.sakerhet.3.title': 'Kan andra komma åt mina uppgifter?',
-    'faq.sakerhet.3.body': 'Nej, i och med att du bara kan logga in med e-legitimation, vars inloggning baseras på ditt personnummer, kan endast information om dig som loggar in visas.',
+    'faq.sakerhet.3.body': '<p>Nej, i och med att du loggar in med din personliga e-legitimation, kan endast information om dig visas.</p>' +
+                           '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p>' +
+                           '<p>När du laddar ner ditt intyg som PDF kommer det att sparas till den dator/enhet du använder. Om du till exempel använder en offentlig dator måste du själv se till att radera det nerladdade intyget innan du lämnar datorn/enheten.</p>',
     'faq.sakerhet.4.title': 'Varför kan jag inte logga in med lösenord och sms?',
     'faq.sakerhet.4.body': 'Lösenord och SMS uppfyller inte de krav som gäller för hantering av medicinsk information, som till exempel kan finnas i ett läkarintyg.',
     'faq.sakerhet.5.title': 'Är det säkert med e-legitimation?',
