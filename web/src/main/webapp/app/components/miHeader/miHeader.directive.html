@@ -12,13 +12,13 @@
       <span class="user-name">{{authUserDescription}}</span>
     </span>
     <a ng-click="showSekretessInfoMessage()" ng-if="userHasSekretessmarkering">
-      <i class="icon icon-shield"></i><span dynamic-label key="user.label.sekrettessmarkering"></span>
+      <i aria-hidden="true" class="icon icon-shield"></i><span dynamic-label key="user.label.sekrettessmarkering"></span>
     </a>
   </div>
   <div class="mi-header-col user-logout" ng-if="authUserDescription">
     <a href="{{applicationLogoutUrl}}" id="mvklogoutLink">
       <dynamic-label key="mvk.header.logouttext"></dynamic-label>
-      <i class="icon icon-logout-1"></i>
+      <i aria-hidden="true" class="icon icon-logout-1"></i>
     </a>
   </div>
 </div>

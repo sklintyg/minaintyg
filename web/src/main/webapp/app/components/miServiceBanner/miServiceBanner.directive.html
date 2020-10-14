@@ -5,9 +5,9 @@
   >
   <div class="text-container">
     <div class="alert-icon" ng-switch="::banner.severity">
-      <i ng-switch-when="info" class="icon icon-attention-circled"></i>
-      <i ng-switch-when="warning" class="icon icon-attention-circled"></i>
-      <i ng-switch-when="danger" class="icon icon-attention"></i>
+      <i ng-switch-when="info" aria-hidden="true" class="icon icon-attention-circled"></i>
+      <i ng-switch-when="warning" aria-hidden="true" class="icon icon-attention-circled"></i>
+      <i ng-switch-when="danger" aria-hidden="true" class="icon icon-attention"></i>
     </div>
     <span data-ng-bind-html="::banner.text"></span>
     

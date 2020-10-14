@@ -12,14 +12,14 @@
     <button type="button" id="{{button1id}}" class="btn btn-primary" ng-disabled="!dialog.acceptprogressdone" ng-click="button1click()"
             uib-popover="{{button1tooltip}}"
             popover-popup-delay="300" popover-append-to-body="true" popover-placement="auto top">
-      <i ng-if="!dialog.acceptprogressdone" class="icon icon-spinner animate-spin"></i>
-      <i ng-if="button1icon && dialog.acceptprogressdone" class="icon" ng-class="button1icon"></i> <span dynamic-label key="{{button1text}}"></span>
+      <i ng-if="!dialog.acceptprogressdone" aria-hidden="true" class="icon icon-spinner animate-spin"></i>
+      <i ng-if="button1icon && dialog.acceptprogressdone" aria-hidden="true" class="icon" ng-class="button1icon"></i> <span dynamic-label key="{{button1text}}"></span>
     </button>
     <button ng-if="button2visible" type="button" id="{{button2id}}" class="btn {{button2class}}" ng-disabled="!dialog.acceptprogressdone" ng-click="button2click()">
-      <i ng-if="button2icon" class="icon" ng-class="button2icon"></i> <span dynamic-label key="{{button2text}}"></span>
+      <i ng-if="button2icon" aria-hidden="true" class="icon" ng-class="button2icon"></i> <span dynamic-label key="{{button2text}}"></span>
     </button>
     <button ng-if="button3visible" type="button" id="{{button3id}}" class="btn btn-third" ng-click="button3click()">
-      <i ng-if="button3icon" class="icon" ng-class="button3icon"></i> <span dynamic-label key="{{button3text}}"></span>
+      <i ng-if="button3icon" aria-hidden="true" class="icon" ng-class="button3icon"></i> <span dynamic-label key="{{button3text}}"></span>
     </button>
   </div>
 </div>

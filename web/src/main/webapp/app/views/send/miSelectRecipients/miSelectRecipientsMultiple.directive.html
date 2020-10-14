@@ -16,11 +16,11 @@
 
             <a ng-attr-id="{{'selectable-recipient-' + r.id}}" ng-if="!r.sent" class="unsent"
                ng-click="select($event, r)" href="#">
-              {{r.name}}<i ng-if="userHasSekretessmarkering && r.trusted" class="icon icon-shield"></i>
+              {{r.name}}<i ng-if="userHasSekretessmarkering && r.trusted" aria-hidden="true" class="icon icon-shield"></i>
               <span class="pull-right" dynamic-label key="sendpage.btn.select"></span></a>
 
             <div ng-attr-id="{{'unselectable-recipient-' + r.id}}" ng-if="r.sent" class="sent">
-              {{r.name}}<i ng-if="userHasSekretessmarkering && r.trusted" class="icon icon-shield"></i>
+              {{r.name}}<i ng-if="userHasSekretessmarkering && r.trusted" aria-hidden="true" class="icon icon-shield"></i>
               <span class="pull-right timestamp">Skickat {{r.sentTimestamp | date:'shortDate'}}</span>
             </div>
           </li>
@@ -39,7 +39,7 @@
           <li ng-repeat="sr in selected">
             <a ng-attr-id="{{'removable-recipient-' + sr.id}}" ng-click="deselect($event, $index)" class="unsent"
                href="#">{{sr.name}}
-              <i ng-if="userHasSekretessmarkering && sr.trusted" class="icon icon-shield"></i>
+              <i ng-if="userHasSekretessmarkering && sr.trusted" aria-hidden="true" class="icon icon-shield"></i>
               <span class="pull-right" dynamic-label key="sendpage.btn.remove-one"></span>
             </a>
           </li>
@@ -48,11 +48,11 @@
         <div class="button-row">
           <button id="send-to-recipients-btn" ng-click="onSend({selectedRecipients: selected})" class="btn btn-primary"
                   type="button" ng-disabled="selected.length < 1">
-            <i class="icon icon-ok"></i> <span dynamic-label key="sendpage.btn.send"></span>
+            <i aria-hidden="true" class="icon icon-ok"></i> <span dynamic-label key="sendpage.btn.send"></span>
           </button>
           <button id="clear-selection-btn" ng-click="deselectAll()" class="btn btn-third" type="button"
                   ng-if="selected.length > 0">
-            <i class="icon icon-cancel"></i> <span dynamic-label key="sendpage.btn.clear"></span>
+            <i aria-hidden="true" class="icon icon-cancel"></i> <span dynamic-label key="sendpage.btn.clear"></span>
           </button>
         </div>
 
