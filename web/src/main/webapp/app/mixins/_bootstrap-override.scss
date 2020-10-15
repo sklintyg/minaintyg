@@ -64,16 +64,25 @@ h2 {
 }
 
 .btn-primary {
+  &:focus {
+    background-color: $mi-button-bg;
+  }
   //For now - we have same style for all interaction states of buttons.
-  &:hover, &:focus, &:active, &:focus:active {
+  &:hover, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-primary;
     border-color: $mi-button-primary;
   }
+
 }
 
+
 .btn-secondary {
-  &:hover, &:focus, &:active, &:focus:active {
+  &:focus {
+    background-color: $mi-button-bg;
+  }
+
+  &:hover, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-secondary;
     border-color: $mi-button-secondary;
@@ -81,7 +90,11 @@ h2 {
 }
 
 .btn-third {
-  &:hover, &:focus, &:active, &:focus:active {
+  &:focus {
+    background-color: $mi-button-bg;
+  }
+
+  &:hover, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-third;
     border-color: $mi-button-third;
@@ -154,5 +167,11 @@ h2 {
 @media all and (max-width: 728px) {
   [uib-popover-popup].popover, [uib-popover-html-popup].popover, [uib-popover-template-popup].popover {
     display: none !important;
+  }
+}
+
+.navbar-toggle {
+  &:focus {
+    appearance: none;
   }
 }

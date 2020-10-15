@@ -25,8 +25,12 @@ mi-help-navigation-menu {
 
         &:hover {
           color: $mi-link-color;
-          background-color: $nav-pills-active-link-hover-bg;
+          background-color: transparent;
           text-decoration: underline;
+        }
+
+        &:focus {
+          background-color: transparent;
         }
       }
 
