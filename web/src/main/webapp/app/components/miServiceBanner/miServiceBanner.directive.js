@@ -52,6 +52,6 @@ angular.module('minaintyg').directive('miServiceBanner', function() {
   };
 
   function addExternalIcon(text) {
-    return text.replace(new RegExp('</a>', 'g'), '<i class="icon icon-external_link"></i></a>');
+    return text.replace(new RegExp('</a>', 'g'), '<i aria-hidden="true" class="icon icon-external_link"></i></a>');
   }
 });

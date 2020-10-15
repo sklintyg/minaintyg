@@ -19,7 +19,7 @@
 
         <div class="col-sm-6">
           <span class="sent-status">
-            <i class="icon" ng-class="{'icon-ok' :r.status.sent, 'icon-attention danger' :!r.status.sent}"></i>
+            <i aria-hidden="true" class="icon" ng-class="{'icon-ok' :r.status.sent, 'icon-attention danger' :!r.status.sent}"></i>
             <span ng-if="r.status.sent" class="text-nowrap">
               {{r.status.timestamp | date:'short'}}
               <span ng-attr-id="{{'success-result-' + r.id}}" dynamic-label key="sendpage.dialog.label.received-by"></span>
@@ -37,7 +37,7 @@
 
     <div class="modal-footer">
       <button id="back-to-intyg-btn" ng-click="onBackToCertificate()" class="btn" ng-class="{'btn-secondary': vm.someFailed, 'btn-primary': !vm.someFailed}" type="button">
-        <i class="icon icon-left-1"></i> <span dynamic-label key="sendpage.dialog.btn.back-to-intyg"></span>
+        <i aria-hidden="true" class="icon icon-left-1"></i> <span dynamic-label key="sendpage.dialog.btn.back-to-intyg"></span>
       </button>
     </div>
 

@@ -40,17 +40,17 @@ angular.module('minaintyg').constant('minaintyg.messages', {
 
     'user.label.sekrettessmarkering': 'Du har skyddade personuppgifter',
     'user.sekretessmarkeringmodal.header': 'Vad innebär skyddade personuppgifter?',
-    'user.sekretessmarkeringmodal.button': '<i class="icon icon-ok"></i> Ok, jag förstår',
+    'user.sekretessmarkeringmodal.button': '<i aria-hidden="true" class="icon icon-ok"></i> Ok, jag förstår',
 
     'send.sekretessmarkeringmodal.header': 'Observera!',
     'send.sekretessmarkeringmodal.body': '<p>Mina intyg kan aldrig garantera hur de tillgängliga mottagarna för ett intyg hanterar skyddade personuppgifter eller om de följer Skatteverkets vägledning för hur skyddade personuppgifter ska hanteras. Myndigheter ska ha särskilda rutiner för hantering av skyddade personuppgifter.</p><p>Vill du veta mer om hur en specifik mottagare hanterar inkomna handlingar för dig med skyddade personuppgifter, hänvisar vi till den aktuella mottagaren</p>',
-    'send.sekretessmarkeringmodal.button1': '<i class="icon icon-ok"></i> Skicka',
-    'send.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
+    'send.sekretessmarkeringmodal.button1': '<i aria-hidden="true" class="icon icon-ok"></i> Skicka',
+    'send.sekretessmarkeringmodal.button2': '<i aria-hidden="true" class="icon icon-cancel"></i> Avbryt',
 
     'pdf.sekretessmarkeringmodal.header': 'Ladda ner intyg som PDF',
     'pdf.sekretessmarkeringmodal.body': '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p><p>När du laddar ner ditt intyg som PDF kommer det att sparas till den dator/enhet du använder. Om du till exempel använder en offentlig dator måste du själv se till att radera det nerladdade intyget innan du lämnar datorn/enheten.</p>',
-    'pdf.sekretessmarkeringmodal.button1': '<i class="icon icon-download-1"></i> Ladda ner intyg som PDF',
-    'pdf.sekretessmarkeringmodal.button2': '<i class="icon icon-cancel"></i> Avbryt',
+    'pdf.sekretessmarkeringmodal.button1': '<i aria-hidden="true" class="icon icon-download-1"></i> Ladda ner intyg som PDF',
+    'pdf.sekretessmarkeringmodal.button2': '<i aria-hidden="true" class="icon icon-cancel"></i> Avbryt',
 
     /* INBOX */
     'inbox.label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
