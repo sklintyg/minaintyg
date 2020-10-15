@@ -67,7 +67,7 @@ h2 {
   &:focus {
     background-color: $mi-button-bg;
   }
-  //For now - we have same style for all interaction states of buttons.
+
   &:hover, &:active, &:focus:active {
     color: $mi-button-bg;
     background-color: $mi-button-primary;
