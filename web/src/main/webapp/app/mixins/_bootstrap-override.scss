@@ -76,7 +76,6 @@ h2 {
 
 }
 
-
 .btn-secondary {
   &:focus {
     background-color: $mi-button-bg;
@@ -167,11 +166,5 @@ h2 {
 @media all and (max-width: 728px) {
   [uib-popover-popup].popover, [uib-popover-html-popup].popover, [uib-popover-template-popup].popover {
     display: none !important;
-  }
-}
-
-.navbar-toggle {
-  &:focus {
-    appearance: none;
   }
 }
