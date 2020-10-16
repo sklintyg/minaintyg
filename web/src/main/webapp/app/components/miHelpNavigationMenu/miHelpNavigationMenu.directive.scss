@@ -28,6 +28,10 @@ mi-help-navigation-menu {
           background-color: $nav-pills-active-link-hover-bg;
           text-decoration: underline;
         }
+
+        &:focus {
+          background-color: $nav-pills-active-link-hover-bg;
+        }
       }
 
       &.active {
