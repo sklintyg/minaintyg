@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2020 Inera AB (http://www.inera.se)
+  ~
+  ~ This file is part of sklintyg (https://github.com/sklintyg).
+  ~
+  ~ sklintyg is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ sklintyg is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<configuration scan="true" scanPeriod="30 seconds">
+
+  <jmxConfigurator />
+
+  <include resource="logback-dev-base.xml"/>
+
+  <logger name="org.springframework" level="WARN" />
+  <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="WARN" />
+  <logger name="org.springframework.http" level="WARN" />
+  <logger name="org.springframework.security" level="WARN" />
+  <logger name="org.springframework.web" level="WARN" />
+
+  <logger name="org.apache.cxf" level="error" />
+
+  <logger name="se.inera.intyg.common.fk7263" level="debug" />
+  <logger name="se.inera.intyg.common.ts_bas" level="debug" />
+  <logger name="se.inera.intyg.common.ts_diabetes" level="debug" />
+  <logger name="se.inera.intyg.minaintyg.web" level="debug" />
+
+  <!-- Monitoring logger -->
+  <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO" />
+
+
+  <root level="WARN">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="MONITORING" />
+    <appender-ref ref="VALIDATION" />
+  </root>
+
+</configuration>
