@@ -21,6 +21,8 @@
 
   <jmxConfigurator />
 
+  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+
   <include resource="logback-dev-base.xml"/>
 
   <logger name="org.springframework" level="WARN" />
@@ -39,8 +41,7 @@
   <!-- Monitoring logger -->
   <logger name="se.inera.intyg.minaintyg.web.service.MonitoringLogService" level="INFO" />
 
-
-  <root level="WARN">
+  <root level="warn">
     <appender-ref ref="CONSOLE" />
     <appender-ref ref="MONITORING" />
     <appender-ref ref="VALIDATION" />
