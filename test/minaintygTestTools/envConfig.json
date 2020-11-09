@@ -10,8 +10,8 @@
         "SELENIUM_ADDRESS": ""
     },
     "test-pipeline": {
-        "MINAINTYG_URL": "http://minaintyg-2020-3:8080/",
-        "INTYGTJANST_URL": "http://intygstjanst-minaintyg-2020-3:8080/inera-certificate",
+        "MINAINTYG_URL": "http://minaintyg-2021-1:8080/",
+        "INTYGTJANST_URL": "http://intygstjanst-minaintyg-2021-1:8080/inera-certificate",
         "SELENIUM_ADDRESS": ""
     }
 }
