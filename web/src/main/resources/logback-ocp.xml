@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-       ~ Copyright (C) 2019 Inera AB (http://www.inera.se)
+  ~ Copyright (C) 2020 Inera AB (http://www.inera.se)
   ~
   ~ This file is part of sklintyg (https://github.com/sklintyg).
   ~
@@ -24,7 +24,7 @@
 
   <include resource="logback-ocp-base.xml"/>
 
-  <!-- ST Is not using IntygUser from infra -->
+  <!-- MI Is not using IntygUser from infra -->
   <appender name="MI_MONITORING" class="ch.qos.logback.core.ConsoleAppender">
     <filter class="se.inera.intyg.infra.monitoring.logging.MarkerFilter">
       <marker>Monitoring</marker>
@@ -40,7 +40,7 @@
     <appender-ref ref="MI_MONITORING" />
   </logger>
 
-  <root level="INFO">
+  <root level="WARN">
     <appender-ref ref="CONSOLE"/>
   </root>
 

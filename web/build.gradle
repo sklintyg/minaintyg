@@ -109,7 +109,7 @@ gretty {
                "-Djetty.port=8088",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
-               "-Dlogback.file=${projectDir}/minaintyg-logback.xml",
+               "-Dlogback.file=classpath:logback-dev.xml",
                "-DuseMinifiedJavaScript=${minified}"]
 
     // SAML test settings for local testing
