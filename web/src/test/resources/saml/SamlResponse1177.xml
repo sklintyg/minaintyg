@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" Destination="http://192.168.0.180:8088/saml/SSO/alias/eleg" ID="_04419756df59b634cc722de578502d5e1e" InResponseTo="a2a8a1907155e0153ahha873ic895ag" IssueInstant="2017-03-13T14:35:16.376Z" Version="2.0">
+<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" Destination="http://192.168.0.180:8040/saml/SSO/alias/eleg" ID="_04419756df59b634cc722de578502d5e1e" InResponseTo="a2a8a1907155e0153ahha873ic895ag" IssueInstant="2017-03-13T14:35:16.376Z" Version="2.0">
   <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
     https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/metadata/0/0
   </saml2:Issuer>
@@ -58,7 +58,7 @@
       <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient">_04b422698f4126e76fee32fc82f6d99198
       </saml2:NameID>
       <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
-        <saml2:SubjectConfirmationData Address="217.10.114.193" InResponseTo="a2a8a1907155e0153ahha873ic895ag" NotOnOrAfter="2017-03-13T14:40:16.376Z" Recipient="http://192.168.0.180:8088/saml/SSO/alias/eleg"/>
+        <saml2:SubjectConfirmationData Address="217.10.114.193" InResponseTo="a2a8a1907155e0153ahha873ic895ag" NotOnOrAfter="2017-03-13T14:40:16.376Z" Recipient="http://192.168.0.180:8040/saml/SSO/alias/eleg"/>
       </saml2:SubjectConfirmation>
     </saml2:Subject>
     <saml2:Conditions NotBefore="2017-03-13T14:30:16.376Z" NotOnOrAfter="2017-03-13T14:40:16.376Z">

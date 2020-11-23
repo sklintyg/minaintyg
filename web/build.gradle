@@ -85,44 +85,37 @@ test {
 
 task restAssuredTest(type: Test) {
     outputs.upToDateWhen { false }
-    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: "http://localhost:8088/"
+    systemProperty "integration.tests.baseUrl", System.properties['baseUrl'] ?: "http://localhost:8040/"
     systemProperty "integration.tests.certificate.baseUrl", System.properties['certificate.baseUrl'] ?: "http://localhost:8080/"
     include '**/*IT*'
 }
 
 gretty {
+    def minified = System.properties['useMinifiedJavaScript'] ?: false
+    def instance = System.properties['instance'] ?: '0'
+    def useHttpPort = 8040 + (instance as Integer)
+    def useInternalHttpPort = 8140 + (instance as Integer)
+
     servletContainer = 'tomcat9'
     contextPath = '/'
     integrationTestTask = null
     scanInterval = 0
-    httpPort = 8088
-    debugPort = 5006
+    debugPort = 8840 + (instance as Integer)
+    portPropertiesFileName = "gretty_ports_${instance}.properties"
     debugSuspend = false
     inplaceMode = 'hard'
+    serverConfigFile = "tomcat-gretty-${instance}.xml"
 
-    def minified = System.properties['useMinifiedJavaScript'] ?: false
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,caching-enabled,ia-stub",
                "-Dresources.folder=classpath:",
-               "-Djetty.port=8088",
+               "-Ddev.http.port=${useHttpPort}",
                "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
                "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
                "-Dlogback.file=classpath:logback-dev.xml",
                "-DuseMinifiedJavaScript=${minified}"]
-
-    // SAML test settings for local testing
-//    jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-//               "-Dspring.profiles.active=test,wc-pu-stub,mi-security-test",
-//               "-Dconfig.dir=/Users/username/intyg/minaintyg-konfiguration/test",
-//               "-Dminaintyg.resources.folder=${projectDir}/../src/main/resources",
-//               "-Djetty.port=8088",
-//               "-Dminaintyg.stubs.port=8088",
-//               "-Dminaintyg.credentials.file=/Users/username/intyg/minaintyg-konfiguration/test/credentials.properties",
-//               "-Dminaintyg.config.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg.properties",
-//               "-Dminaintyg.logback.file=/Users/username/intyg/minaintyg-konfiguration/test/minaintyg-logback.xml",
-//               "-Dminaintyg.useMinifiedJavaScript=${minified}"]
 
     extraResourceBase webappOutputDir
 }

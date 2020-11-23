@@ -18,13 +18,12 @@
  */
 package se.inera.intyg.minaintyg.web.integrationtest;
 
-import org.junit.After;
-import org.junit.Before;
-
 import com.google.common.base.Strings;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Base class for REST / SOAP in-container tests.
@@ -46,7 +45,7 @@ public abstract class IntegrationTestBase {
     @Before
     public void setupBase() {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8088");
+        RestAssured.baseURI = System.getProperty("integration.tests.baseUrl", "http://localhost:8080");
         RestAssured.requestSpecification = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
         RestAssured.config = RestAssured.config().sessionConfig(RestAssured.config().getSessionConfig().sessionIdName("SESSION"));
         // IntegrationTestUtility.certificateBaseUrl = System.getProperty("integration.tests.certificate.baseUrl") + "inera-certificate/";
