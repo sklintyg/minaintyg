@@ -5,7 +5,7 @@
         "SELENIUM_ADDRESS": "http://selenium1.nordicmedtest.se:4444/wd/hub"
     },
     "dev": {
-        "MINAINTYG_URL": "http://localhost:8089/",
+        "MINAINTYG_URL": "http://localhost:8040/",
         "INTYGTJANST_URL": "http://localhost:8080/inera-certificate",
         "SELENIUM_ADDRESS": ""
     },
