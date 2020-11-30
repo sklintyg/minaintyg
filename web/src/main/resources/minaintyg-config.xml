@@ -25,12 +25,12 @@
 
   <beans>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+      <property name="ignoreResourceNotFound" value="true"/>
       <property name="locations">
         <list>
-          <value>classpath:default.properties</value>
+          <value>classpath:application.properties</value>
           <value>classpath:version.properties</value>
-          <value>file:${config.file}</value>
-          <value>file:${credentials.file}</value>
+          <value>file:${dev.config.file}</value>
         </list>
       </property>
     </bean>

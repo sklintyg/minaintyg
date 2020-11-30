@@ -95,6 +95,7 @@ gretty {
     def instance = System.properties['instance'] ?: '0'
     def useHttpPort = 8040 + (instance as Integer)
     def useInternalHttpPort = 8140 + (instance as Integer)
+    def applicationDir = "${rootProject.projectDir}/devops/dev"
 
     servletContainer = 'tomcat9'
     contextPath = '/'
@@ -104,18 +105,21 @@ gretty {
     portPropertiesFileName = "gretty_ports_${instance}.properties"
     debugSuspend = false
     inplaceMode = 'hard'
-    serverConfigFile = "tomcat-gretty-${instance}.xml"
+    serverConfigFile = "tomcat-gretty.xml"
 
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
                "-Dspring.profiles.active=dev,caching-enabled,ia-stub",
-               "-Dresources.folder=classpath:",
+               "-Dlogback.file=${applicationDir}/config/logback-dev.xml",
+               "-Djava.awt.headless=true",
+               "-Dfile.encoding=UTF-8",
+               "-Dapplication.dir=${applicationDir}",
+               "-Ddev.config.file=${applicationDir}/config/application-dev.properties",
+               "-DuseMinifiedJavaScript=${minified}",
                "-Ddev.http.port=${useHttpPort}",
-               "-Dcredentials.file=${projectDir}/minaintyg-credentials.properties",
-               "-Dconfig.file=${projectDir}/minaintyg-dev.properties",
-               "-Dlogback.file=classpath:logback-dev.xml",
-               "-DuseMinifiedJavaScript=${minified}"]
+               "-Ddev.http.port.internal=${useInternalHttpPort}"
+    ]
 
     extraResourceBase webappOutputDir
 }

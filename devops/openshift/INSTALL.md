@@ -14,11 +14,10 @@ The following configuration properties have been added:
 
 ### 1.2 Configuration of reference data
 
-The main update is activation of the new reference data concept (master data for shared configurations). Refdata is provided as a JAR file and configured with the `REFDATA_URL` and `RESOURCES_FOLDER` parameters. Normally the default value of `RESOURCES_FOLDER` should be set to  `classpath:`. Three configuration updates is required in order to activate the new refdata:
+The main update is activation of the new reference data concept (master data for shared configurations). Refdata is provided as a JAR file and configured with the `REFDATA_URL` parameter. Two configuration updates is required in order to activate the new refdata:
 
 1. Parameter `REFDATA_URL` shall be set to the actual location of the refdata JAR artefact.
-2. Parameter `RESOURCES_FOLDER` or `-Dresources.folder=...` in `secret-env.sh` shall be set to `classpath:`. Though, it's recommended to remove this parameter from `secret-env.sh`. 
-3. The old `resources.zip` must be removed in order to enable the `REFDATA_URL` setting. 
+2. The old `resources.zip` must be removed in order to enable the `REFDATA_URL` setting. 
 
 Latest builds of refdata can be downloaded from the Inera Nexus server. 
 
