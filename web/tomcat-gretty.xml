@@ -31,10 +31,10 @@
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
 
   <Service name="Catalina">
-    <Connector port="8040" protocol="HTTP/1.1"
+    <Connector port="${dev.http.port}" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443" />
-    <Connector port="8140" protocol="HTTP/1.1"
+    <Connector port="${dev.http.port.internal}" protocol="HTTP/1.1"
         connectionTimeout="20000"
         redirectPort="8443" />
     <Engine name="Catalina" defaultHost="localhost">

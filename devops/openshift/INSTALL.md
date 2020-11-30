@@ -14,11 +14,10 @@ The following configuration properties have been added:
 
 ### 1.2 Configuration of reference data
 
-The main update is activation of the new reference data concept (master data for shared configurations). Refdata is provided as a JAR file and configured with the `REFDATA_URL` and `RESOURCES_FOLDER` parameters. Normally the default value of `RESOURCES_FOLDER` should be set to  `classpath:`. Three configuration updates is required in order to activate the new refdata:
+The main update is activation of the new reference data concept (master data for shared configurations). Refdata is provided as a JAR file and configured with the `REFDATA_URL` parameter. Two configuration updates is required in order to activate the new refdata:
 
 1. Parameter `REFDATA_URL` shall be set to the actual location of the refdata JAR artefact.
-2. Parameter `RESOURCES_FOLDER` or `-Dresources.folder=...` in `secret-env.sh` shall be set to `classpath:`. Though, it's recommended to remove this parameter from `secret-env.sh`. 
-3. The old `resources.zip` must be removed in order to enable the `REFDATA_URL` setting. 
+2. The old `resources.zip` must be removed in order to enable the `REFDATA_URL` setting. 
 
 Latest builds of refdata can be downloaded from the Inera Nexus server. 
 
@@ -154,17 +153,14 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
     REDIS_SENTINEL_MASTER_NAME: "<name>"
     SPRING_PROFILES_ACTIVE: "prod,caching-enabled,redis-sentinel"
     CERTIFICATE_BASEURL: "http://intygstjanst:8080"
-    NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/<file>"
+    NTJP_WS_CERTIFICATE_FILE: "${application.dir}/certifikat/<file>"
     NTJP_WS_CERTIFICATE_TYPE: [ "JKS" | "PKCS12" ]
-    NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/<file>"
+    NTJP_WS_TRUSTSTORE_FILE: "${application.dir}/certifikat/<file>"
     NTJP_WS_TRUSTSTORE_TYPE: [ "JKS" | "PKCS12" ]
-    FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/<file>"
+    FK_SAML_KEYSTORE_FILE: "file://${application.dir}/certifikat/<file>"
     FK_SAML_KEYSTORE_ALIAS: "<alias>"
    
-Note: Parameters shall follow the Java naming convention when used as in the value field, e.g. the path to certificates indicated by the `CERTIFICATE_FOLDER` property and the truststore file might be defined like:
- 
-	NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
-        
+       
 ##### 3.4.1 Redis Sentinel Configuration
 
 Redis sentinel requires at least three URL:s passed in order to work correctly. These are specified in the `REDIS_SERVICE_HOST` and `REDIS_SERVICE_PORT` parameters respectively:
