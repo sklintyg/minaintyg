@@ -25,6 +25,7 @@
 
   <beans>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+      <property name="ignoreUnresolvablePlaceholders" value="true"/>
       <property name="ignoreResourceNotFound" value="true"/>
       <property name="locations">
         <list>
