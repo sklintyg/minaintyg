@@ -21,29 +21,26 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:annotation-config />
+  <context:annotation-config/>
+
+  <beans profile="dev">
+    <context:property-placeholder
+        location="classpath:application.properties, classpath:version.properties, file:${dev.config.file}"
+        order="1" ignore-resource-not-found="true" ignore-unresolvable="true"/>
+  </beans>
 
   <beans>
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-      <property name="ignoreUnresolvablePlaceholders" value="true"/>
-      <property name="ignoreResourceNotFound" value="true"/>
-      <property name="locations">
-        <list>
-          <value>classpath:application.properties</value>
-          <value>classpath:version.properties</value>
-          <value>file:${dev.config.file}</value>
-        </list>
-      </property>
-    </bean>
+    <context:property-placeholder location="classpath:application.properties, classpath:version.properties"
+        order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
-    <import resource="classpath*:module-config.xml" />
-    <import resource="classpath*:mi-module-cxf-servlet.xml" />
-    <import resource="classpath*:/basic-cache-config.xml" />
-    <import resource="classpath*:pu-services-config.xml" />
-    <import resource="classpath*:/pu-ignite-config.xml" />
-    <import resource="classpath:ia-services-config.xml" />
+    <import resource="classpath*:module-config.xml"/>
+    <import resource="classpath*:mi-module-cxf-servlet.xml"/>
+    <import resource="classpath*:/basic-cache-config.xml"/>
+    <import resource="classpath*:pu-services-config.xml"/>
+    <import resource="classpath*:/pu-ignite-config.xml"/>
+    <import resource="classpath:ia-services-config.xml"/>
 
-    <context:component-scan base-package="se.inera.intyg.minaintyg.web.config, se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu, se.inera.intyg.infra.monitoring" />
+    <context:component-scan base-package="se.inera.intyg.minaintyg.web.config, se.inera.intyg.minaintyg.web.security, se.inera.intyg.minaintyg.web.service, se.inera.intyg.minaintyg.web.util, se.inera.intyg.common.support.integration.module, se.inera.intyg.minaintyg.web.integration.pu, se.inera.intyg.infra.monitoring"/>
 
     <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
       <property name="mapper">
@@ -51,9 +48,9 @@
       </property>
     </bean>
 
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 
-    <bean id="apiExceptionHandler" class="se.inera.intyg.minaintyg.web.controller.api.ApiExceptionHandler" />
+    <bean id="apiExceptionHandler" class="se.inera.intyg.minaintyg.web.controller.api.ApiExceptionHandler"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basenames">
@@ -81,16 +78,16 @@
       <property name="origin" value="MINA_INTYG"/>
     </bean>
 
-    <bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.json.CustomObjectMapper" />
-    <bean id="intygTextsService" class="se.inera.intyg.common.services.texts.IntygTextsServiceImpl" />
-    <bean id="intygTextsRepository" class="se.inera.intyg.common.services.texts.repo.IntygTextsRepositoryImpl" />
-    <bean id="befattningService" class="se.inera.intyg.common.support.services.BefattningService" />
+    <bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.json.CustomObjectMapper"/>
+    <bean id="intygTextsService" class="se.inera.intyg.common.services.texts.IntygTextsServiceImpl"/>
+    <bean id="intygTextsRepository" class="se.inera.intyg.common.services.texts.repo.IntygTextsRepositoryImpl"/>
+    <bean id="befattningService" class="se.inera.intyg.common.support.services.BefattningService"/>
 
-    <bean id="dynamicLinkRepository" class="se.inera.intyg.infra.dynamiclink.repository.DynamicLinkRepositoryImpl" />
-    <bean id="dynamicLinkService" class="se.inera.intyg.infra.dynamiclink.service.DynamicLinkServiceImpl" />
+    <bean id="dynamicLinkRepository" class="se.inera.intyg.infra.dynamiclink.repository.DynamicLinkRepositoryImpl"/>
+    <bean id="dynamicLinkService" class="se.inera.intyg.infra.dynamiclink.service.DynamicLinkServiceImpl"/>
 
     <bean id="minaIntygPUService" class="se.inera.intyg.minaintyg.web.integration.pu.MinaIntygPUServiceImpl">
-           <property name="puService" ref="puService" />
+      <property name="puService" ref="puService"/>
     </bean>
 
   </beans>
