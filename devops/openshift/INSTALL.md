@@ -153,17 +153,14 @@ Open _&lt;env>/configmap-vars.yaml_ and replace `<value>` with expected values. 
     REDIS_SENTINEL_MASTER_NAME: "<name>"
     SPRING_PROFILES_ACTIVE: "prod,caching-enabled,redis-sentinel"
     CERTIFICATE_BASEURL: "http://intygstjanst:8080"
-    NTJP_WS_CERTIFICATE_FILE: "${certificate.folder}/<file>"
+    NTJP_WS_CERTIFICATE_FILE: "${application.dir}/certifikat/<file>"
     NTJP_WS_CERTIFICATE_TYPE: [ "JKS" | "PKCS12" ]
-    NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/<file>"
+    NTJP_WS_TRUSTSTORE_FILE: "${application.dir}/certifikat/<file>"
     NTJP_WS_TRUSTSTORE_TYPE: [ "JKS" | "PKCS12" ]
-    FK_SAML_KEYSTORE_FILE: "file://${certificate.folder}/<file>"
+    FK_SAML_KEYSTORE_FILE: "file://${application.dir}/certifikat/<file>"
     FK_SAML_KEYSTORE_ALIAS: "<alias>"
    
-Note: Parameters shall follow the Java naming convention when used as in the value field, e.g. the path to certificates indicated by the `CERTIFICATE_FOLDER` property and the truststore file might be defined like:
- 
-	NTJP_WS_TRUSTSTORE_FILE: "${certificate.folder}/truststore.jks"
-        
+       
 ##### 3.4.1 Redis Sentinel Configuration
 
 Redis sentinel requires at least three URL:s passed in order to work correctly. These are specified in the `REDIS_SERVICE_HOST` and `REDIS_SERVICE_PORT` parameters respectively:
