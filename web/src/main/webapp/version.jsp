@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" trimDirectiveWhitespaces="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%--
@@ -62,7 +62,10 @@
       </div>
       <div>
         Spring profiles:
-        <span class="label label-info"><%= System.getProperty("spring.profiles.active") %></span>
+        <div>
+          <span style="margin-left: 20px;">From SYSTEM (Primary):</span> <span class="label label-info"><%= System.getProperty("spring.profiles.active") %></span><br/>
+          <span style="margin-left: 20px;">From ENV (Secondary):</span> <span class="label label-info"><%= System.getenv("SPRING_PROFILES_ACTIVE") %></span>
+        </div>
       </div>
     </div>
   </div>
