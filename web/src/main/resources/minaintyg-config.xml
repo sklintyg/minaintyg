@@ -23,15 +23,9 @@
 
   <context:annotation-config/>
 
-  <beans profile="dev">
-    <context:property-placeholder
-        location="classpath:application.properties, classpath:version.properties, file:${dev.config.file}"
-        order="1" ignore-resource-not-found="true" ignore-unresolvable="true"/>
-  </beans>
-
   <beans>
-    <context:property-placeholder location="classpath:application.properties, classpath:version.properties"
-        order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:application.properties, classpath:version.properties, file:${dev.config.file:-}"
+        order="1" ignore-resource-not-found="true" ignore-unresolvable="true"/>
 
     <import resource="classpath*:module-config.xml"/>
     <import resource="classpath*:mi-module-cxf-servlet.xml"/>

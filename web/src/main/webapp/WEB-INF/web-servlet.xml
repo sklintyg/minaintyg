@@ -45,16 +45,10 @@
     </mvc:interceptor>
   </mvc:interceptors>
 
-  <beans profile="dev">
-    <context:property-placeholder
-      location="classpath:application.properties, file:${dev.config.file}"
-        order="1" ignore-resource-not-found="true" ignore-unresolvable="true" />
-  </beans>
-
   <beans>
     <context:property-placeholder
-      location="classpath:application.properties"
-        order="2" ignore-resource-not-found="true" ignore-unresolvable="true"/>
+      location="classpath:application.properties, file:${dev.config.file:-}"
+        order="1" ignore-resource-not-found="true" ignore-unresolvable="true"/>
     <context:annotation-config/>
     <context:component-scan base-package="se.inera.intyg.minaintyg.web.controller"/>
     <context:component-scan base-package="se.inera.intyg.minaintyg.web.jobs"/>
