@@ -6,6 +6,11 @@ mi-footer {
   display: block;
   min-height: $mi-footer-height;
 
+  a{
+    color: $mi-color-30;
+    text-decoration: underline;
+  }
+
   h3 {
     font-size: 14px;
     margin: 0 0 5px 0;
