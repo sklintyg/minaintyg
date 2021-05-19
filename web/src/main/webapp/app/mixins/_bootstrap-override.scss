@@ -8,20 +8,21 @@ body {
 }
 
 a {
-  color: #378998;
+  color: $mi-color-30;
   cursor: pointer;
 
   &:visited {
-    color: #378998;
+    color: $mi-color-30;
   }
 
   &.external-link {
-    color: #0F6EDC !important;
     &:visited {
-      color: #42377D !important;;
+      color: #42377D !important;
     }
   }
 }
+
+
 
 h1, h2, h3 {
   &:focus {
