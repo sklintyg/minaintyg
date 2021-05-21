@@ -11,13 +11,21 @@ mi-page-head {
 
   .btn-link-chevron {
     padding-left: 0;
-    color: $mi-color-30;
-    text-decoration: underline;
   }
 }
 
 .page-head-wrapper{
   a{
     text-decoration: underline;
+    &:hover{
+      color: $mi-color-30;
+    }
+  }
+  button{
+    color: $mi-color-30;
+    text-decoration: underline;
+    &:hover{
+      color: $mi-color-30;
+    }
   }
 }
