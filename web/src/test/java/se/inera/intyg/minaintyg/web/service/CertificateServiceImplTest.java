@@ -50,6 +50,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponderInterface;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateResponseType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getrecipientsforcertificate.v11.GetRecipientsForCertificateType;
@@ -681,6 +682,41 @@ public class CertificateServiceImplTest {
     public void testGetRelationsForCertificateNoIds() {
         List<IntygRelations> relationsForCertificates = service.getRelationsForCertificates(Collections.emptyList());
         assertEquals(0, relationsForCertificates.size());
+    }
+
+    @Test
+    public void testIsMajorVersionActiveConfiguredInactiveLatestVersion() {
+        initInactivePreviousMajorVersionForCertificateType();
+        String certificateType = "ts-bas";
+        String certificateVersion = "7.0";
+
+        when(intygTextsService.isLatestMajorVersion(certificateType, certificateVersion)).thenReturn(true);
+
+        assertTrue(service.isMajorVersionActive(certificateType, certificateVersion));
+    }
+
+    @Test
+    public void testIsMajorVersionActiveConfiguredInactiveNotLatestVersion() {
+        initInactivePreviousMajorVersionForCertificateType();
+        String certificateType = "ts-bas";
+        String certificateVersion = "6.0";
+
+        when(intygTextsService.isLatestMajorVersion(certificateType, certificateVersion)).thenReturn(false);
+
+        assertFalse(service.isMajorVersionActive(certificateType, certificateVersion));
+    }
+
+    @Test
+    public void testIsMajorVersionActiveNotConfiguredInactive() {
+        initInactivePreviousMajorVersionForCertificateType();
+        String certificateType = "lisjp";
+        String certificateVersion = "1.2";
+
+        assertTrue(service.isMajorVersionActive(certificateType, certificateVersion));
+    }
+
+    private void initInactivePreviousMajorVersionForCertificateType() {
+        ReflectionTestUtils.setField(service, "inactivePreviousMajorVersionForCertificateType", Collections.singletonList("ts-bas"));
     }
 
     private Intyg buildIntyg() {

@@ -189,6 +189,9 @@
         },
         "isReplaced": {
           "type": "boolean"
+        },
+        "sendToRecipientEnabled": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false,
@@ -203,7 +206,8 @@
         "archived",
         "statuses",
         "events",
-        "isReplaced"
+        "isReplaced",
+        "sendToRecipientEnabled"
       ]
     }
   },
