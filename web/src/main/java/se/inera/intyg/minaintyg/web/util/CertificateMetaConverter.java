@@ -67,14 +67,8 @@ public final class CertificateMetaConverter {
         return result;
     }
 
-    /**
-     * Converts CertificateMetaData types to Rest CertificateMeta, optionally filtering statuses to include only
-     * selected statuses.
-     *
-     * @param statusFilter - List of CertificateState types to keep
-     */
     public static CertificateMeta toCertificateMetaFromCertMetaData(Utlatande utlatande, CertificateMetaData metaData,
-        List<IntygRelations> relations, List<CertificateState> statusFilter) {
+        List<IntygRelations> relations, List<CertificateState> statusFilter, boolean sendToRecipientEnabled) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(metaData.getCertificateId());
@@ -86,6 +80,7 @@ public final class CertificateMetaConverter {
         result.setSentDate(metaData.getSignDate());
         result.setArchived(!metaData.isAvailable());
         result.setComplementaryInfo(metaData.getAdditionalInfo());
+        result.setSendToRecipientEnabled(sendToRecipientEnabled);
 
         for (Status status : metaData.getStatus()) {
             // Obey any status filter restrictions

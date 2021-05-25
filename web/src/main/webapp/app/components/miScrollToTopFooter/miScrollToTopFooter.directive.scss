@@ -8,6 +8,9 @@ mi-scroll-to-top-footer {
       padding: 0;
       color: $mi-color-30;
       text-decoration: underline;
+      &:hover{
+        color: $mi-color-30;
+      }
     }
   }
 }

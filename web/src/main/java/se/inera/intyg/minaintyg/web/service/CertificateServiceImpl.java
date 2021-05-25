@@ -137,6 +137,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Value("${certificates.citizenApi.active}")
     private boolean certificatesCitizenApiActive;
 
+    @Value("#{T(java.util.Arrays).asList('${inactivate.previous.major.version.for.certificate.type:}')}")
+    private List<String> inactivePreviousMajorVersionForCertificateType;
+
     // This value is injected by the setter method
     private String logicalAddress;
 
@@ -333,6 +336,18 @@ public class CertificateServiceImpl implements CertificateService {
 
         return response.getIntygRelation();
 
+    }
+
+    @Override
+    public boolean isMajorVersionActive(String certificateType, String certificateVersion) {
+        if (isPreviousMajorVersionConfiguredAsInactive(certificateType)) {
+            return intygTextsService.isLatestMajorVersion(certificateType, certificateVersion);
+        }
+        return true;
+    }
+
+    private boolean isPreviousMajorVersionConfiguredAsInactive(String certificateType) {
+        return inactivePreviousMajorVersionForCertificateType.contains(certificateType);
     }
 
     @Override
