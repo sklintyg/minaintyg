@@ -79,4 +79,9 @@ public interface CertificateService {
      * Get relation for one or many intyg ids.
      */
     List<IntygRelations> getRelationsForCertificates(List<String> intygIds);
+
+    /**
+     * Checks if this major version of the certificate type is active. Depends on config for inactivate previous major version.
+     */
+    boolean isMajorVersionActive(String certificateType, String certificateVersion);
 }
