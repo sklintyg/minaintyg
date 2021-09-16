@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -64,6 +65,9 @@ public class SystemPropertiesConfig {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
     // getters
 
     public boolean getUseMinifiedJavascript() {
@@ -83,7 +87,8 @@ public class SystemPropertiesConfig {
     }
 
     public String getElva77LoginUrl() {
-        return elva77LoginUrl;
+        final var serverName = httpServletRequest.getServerName();
+        return elva77LoginUrl + (serverName.startsWith("www.") ? "www-eleg" : "eleg");
     }
 
     public String getApplicationLogoutUrl() {
@@ -109,7 +114,4 @@ public class SystemPropertiesConfig {
     public String getMiUserSurveyDateFrom() {
         return miUserSurveyDateFrom;
     }
-
-
-
 }

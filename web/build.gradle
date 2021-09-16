@@ -110,7 +110,7 @@ gretty {
 
     // Normal settings
     jvmArgs = ["-Dcatalina.base=${buildDir}/catalina.base",
-               "-Dspring.profiles.active=dev,caching-enabled,ia-stub",
+               "-Dspring.profiles.active=dev,caching-enabled,ia-stub,mi-security-test",
                "-Dlogback.file=${applicationDir}/config/logback-dev.xml",
                "-Djava.awt.headless=true",
                "-Dfile.encoding=UTF-8",

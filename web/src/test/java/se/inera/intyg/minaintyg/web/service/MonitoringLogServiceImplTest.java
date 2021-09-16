@@ -123,4 +123,10 @@ public class MonitoringLogServiceImplTest {
         logService.logBrowserInfo("BROWSERNAME", "VERSION", "OSFAMILY", "OSVERSION", "WIDTH", "HEIGHT");
         verifyLog(Level.INFO, "BROWSER_INFO Name 'BROWSERNAME' Version 'VERSION' OSFamily 'OSFAMILY' OSVersion 'OSVERSION' Width 'WIDTH' Height 'HEIGHT'");
     }
+
+    @Test
+    public void shouldLogSamlStatusForLoginFailure() {
+        logService.logSamlStatusForFailedLogin("Idp", "samlStatusCode", "samlStatusMessage", "exceptioMessage");
+        verifyLog(Level.INFO, "SAML_STATUS_LOGIN_FAIL Login failed at IDP 'Idp' with status code 'samlStatusCode', status message 'samlStatusMessage' and exception message \"exceptioMessage\"");
+    }
 }

@@ -21,11 +21,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:security="http://www.springframework.org/schema/security"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-              http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+              http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
   <!-- Enable auto-wiring -->
   <aop:aspectj-autoproxy/>
   <context:annotation-config/>
@@ -390,9 +390,32 @@
       </property>
     </bean>
 
+    <bean id="spExtendedMetadata" abstract="true">
+      <property name="local" value="true"/>
+      <property name="securityProfile" value="metaiop"/>
+      <property name="sslSecurityProfile" value="metaiop"/>
+      <property name="signMetadata" value="true"/>
+      <property name="signingKey" value="${fk.saml.keystore.alias}"/>
+      <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
+      <property name="requireArtifactResolveSigned" value="true"/>
+      <property name="requireLogoutRequestSigned" value="true"/>
+      <property name="requireLogoutResponseSigned" value="true"/>
+    </bean>
+
+    <bean id="elegExtendedMetadata" class="org.springframework.security.saml.metadata.ExtendedMetadata" parent="spExtendedMetadata">
+      <property name="alias" value="eleg"/>
+    </bean>
+
+    <bean id="wwwElegExtendedMetadata" class="org.springframework.security.saml.metadata.ExtendedMetadata" parent="spExtendedMetadata">
+      <property name="alias" value="www-eleg"/>
+    </bean>
+
+    <bean id="defaultAliasExtendedMetadata" class="org.springframework.security.saml.metadata.ExtendedMetadata" parent="spExtendedMetadata">
+      <property name="alias" value="defaultAlias"/>
+    </bean>
+
     <!-- IDP Metadata configuration - paths to metadata of IDPs in circle of trust is here -->
     <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager">
-
       <constructor-arg>
         <list>
 
@@ -408,20 +431,10 @@
             </constructor-arg>
 
             <constructor-arg>
-              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
-                <property name="alias" value="eleg"/>
-                <property name="local" value="true"/>
-                <property name="securityProfile" value="metaiop"/>
-                <property name="sslSecurityProfile" value="metaiop"/>    <!-- pkix -->
-                <property name="signMetadata" value="true"/>
-
-                <!-- The signingKey and encryptionKey refers to the _aliases_ of the key in the keystore defined in the keyManager bean -->
-                <property name="signingKey" value="${fk.saml.keystore.alias}"/>
-                <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
-                <property name="requireArtifactResolveSigned" value="true"/>
-                <property name="requireLogoutRequestSigned" value="true"/>
-                <property name="requireLogoutResponseSigned" value="true"/>
-              </bean>
+              <util:map>
+                <entry key="https://mi.localtest.me/eleg" value-ref="elegExtendedMetadata"/>
+                <entry key="https://www.mi.localtest.me/www-eleg" value-ref="wwwElegExtendedMetadata"/>
+              </util:map>
             </constructor-arg>
 
             <property name="metadataTrustCheck" value="true"/>
@@ -448,8 +461,6 @@
           </bean>
           <!-- END IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
 
-
-
           <!-- START SERVICE PROVIDER BEAN FOR FK SAML -->
           <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
             <constructor-arg>
@@ -461,22 +472,7 @@
               </bean>
             </constructor-arg>
 
-            <constructor-arg>
-              <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
-                <property name="alias" value="defaultAlias"/>
-                <property name="local" value="true"/>
-                <property name="securityProfile" value="metaiop"/>
-                <property name="sslSecurityProfile" value="metaiop"/>    <!-- pkix -->
-                <property name="signMetadata" value="true"/>
-
-                <!-- The signingKey and encryptionKey refers to the _aliases_ of the key in the keystore defined in the keyManager bean -->
-                <property name="signingKey" value="${fk.saml.keystore.alias}"/>
-                <property name="encryptionKey" value="${fk.saml.keystore.alias}"/>
-                <property name="requireArtifactResolveSigned" value="true"/>
-                <property name="requireLogoutRequestSigned" value="true"/>
-                <property name="requireLogoutResponseSigned" value="true"/>
-              </bean>
-            </constructor-arg>
+            <constructor-arg ref="defaultAliasExtendedMetadata"/>
 
             <property name="metadataTrustCheck" value="true"/>
           </bean>
@@ -502,9 +498,9 @@
           </bean>
           <!-- END IDENTITY PROVIDER BEAN FOR FK SAML -->
 
-
         </list>
       </constructor-arg>
+
       <property name="refreshCheckInterval" value="86400000"/>
       <property name="defaultIDP" value="${default.saml.idp.entityId}"/>
       <property name="hostedSPName" value="${default.saml.sp.entityId}"/>
