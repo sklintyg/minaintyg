@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.minaintyg.web.util;
 
+import static se.inera.intyg.infra.security.common.model.AuthConstants.ALIAS_ELEG;
+import static se.inera.intyg.infra.security.common.model.AuthConstants.ALIAS_WWW_ELEG;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,6 +71,8 @@ public class SystemPropertiesConfig {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
+    private static final String WWW_SUBDOMAIN_IDENTIFIER = "www.";
+
     // getters
 
     public boolean getUseMinifiedJavascript() {
@@ -88,7 +93,7 @@ public class SystemPropertiesConfig {
 
     public String getElva77LoginUrl() {
         final var serverName = httpServletRequest.getServerName();
-        return elva77LoginUrl + (serverName.startsWith("www.") ? "www-eleg" : "eleg");
+        return elva77LoginUrl + (serverName.toLowerCase().startsWith(WWW_SUBDOMAIN_IDENTIFIER) ? ALIAS_WWW_ELEG : ALIAS_ELEG);
     }
 
     public String getApplicationLogoutUrl() {
