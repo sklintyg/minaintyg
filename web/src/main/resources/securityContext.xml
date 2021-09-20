@@ -419,7 +419,7 @@
       <constructor-arg>
         <list>
 
-          <!-- START SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
+          <!-- START SERVICE PROVIDER BEANS FOR 1177 UTHOPP -->
           <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
             <constructor-arg>
               <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
@@ -429,17 +429,23 @@
                 <property name="parserPool" ref="parserPool"/>
               </bean>
             </constructor-arg>
-
-            <constructor-arg>
-              <util:map>
-                <entry key="https://mi.localtest.me/eleg" value-ref="elegExtendedMetadata"/>
-                <entry key="https://www.mi.localtest.me/www-eleg" value-ref="wwwElegExtendedMetadata"/>
-              </util:map>
-            </constructor-arg>
-
+            <constructor-arg ref="elegExtendedMetadata"/>
             <property name="metadataTrustCheck" value="true"/>
           </bean>
-          <!-- END SERVICE PROVIDER BEAN FOR 1177 UTHOPP -->
+
+          <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">
+            <constructor-arg>
+              <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
+                <constructor-arg>
+                  <value type="java.io.File">${application.dir}/config/sp-www-eleg.xml</value>
+                </constructor-arg>
+                <property name="parserPool" ref="parserPool"/>
+              </bean>
+            </constructor-arg>
+            <constructor-arg ref="wwwElegExtendedMetadata"/>
+            <property name="metadataTrustCheck" value="true"/>
+          </bean>
+          <!-- END SERVICE PROVIDER BEANS FOR 1177 UTHOPP -->
 
           <!-- START IDENTITY PROVIDER BEAN FOR 1177 UTHOPP -->
           <bean class="org.springframework.security.saml.metadata.ExtendedMetadataDelegate">

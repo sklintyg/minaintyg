@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="dev.minaintyg.intygstjanster.se" entityID="https://mi.localtest.me/saml/SSO/alias/defaultAlias"> <!-- entityID="https://demo.minaintyg.intygstjanster.se/defaultAlias"> -->
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" ID="dev.minaintyg.intygstjanster.se" entityID="https://mi.localtest.me/saml/SSO/alias/defaultAlias">
   <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://mi.localtest.me/saml/SingleLogout/alias/defaultAlias"/>
     <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://mi.localtest.me/saml/SingleLogout/alias/defaultAlias"/>
