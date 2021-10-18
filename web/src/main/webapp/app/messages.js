@@ -56,9 +56,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'inbox.label.certificatesloading': 'Dina intyg laddas. Vänligen vänta...',
     'inbox.header': 'Översikt över dina intyg',
 
-    'inbox.description.1': 'Här listas alla dina intyg med det senast utfärdade intyget överst.<br/> I Mina intyg kan du bland annat se på intyg, ladda ner intyg i PDF-format och skicka intyg till olika mottagare, exempelvis Försäkringskassan. Du kan även välja att dölja din diagnos för arbetsgivare, vilket du hittar mer information om i <a href="#/omminaintyg/faq">Vanliga frågor och svar</a>. Klicka på knappen Visa intyg för att hantera dina intyg.',
-    'inbox.description.archive.title': 'Arkivera intyg',
-    'inbox.description.archive': '<p>Du kan inte ta bort enstaka intyg från Mina intyg, men du kan flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till Inkorgen.</p><p><a href="#/arkiverade">Läs mer om arkivering av intyg under fliken Arkiverade intyg</a>.</p>',
+    'inbox.description.1': '<p>Här listas dina läkarintyg som vården utfärdat digitalt. Det senast utfärdade intyget visas överst.</p><p>Du kan skicka intyg digitalt till Försäkringskassan och Transportstyrelsen. Läkarintyg om arbetsförmåga kan inte skickas digitalt till din arbetsgivare, däremot kan du skriva ut intyget.</p><p>För att läsa ditt intyg klicka på knappen Visa intyg.</p>',
+    'inbox.description.2': '<p>Du har inte tillgång till någon annan persons intyg. Det finns ingen ombudsfunktion i Mina intyg.</p><p>Intyg kan inte "laddas upp" eller tillföras av dig till Mina intyg. Saknar du ett intyg ska du kontakta vården.</p><p>Du hittar mer information i <a href="#/omminaintyg/faq">Vanliga frågor och svar</a>.</p>',
 
     'inbox.tooltip.archive': '<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken <a href="#">Arkiverade intyg</a>.',
 
@@ -102,7 +101,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'sendpage.dialog.label.received-by': 'Mottaget av',
     'sendpage.dialog.label.not-received-by': 'Ej mottaget av',
     'sendpage.dialog.label.somefailed.title': 'Tekniskt fel',
-    'sendpage.dialog.label.somefailed.body': 'Intyget kunde inte tas emot av alla mottagare just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta Ineras kundservice. Ring 0771-25 10 10 eller besök <LINK:ineraKontakt>',
+    'sendpage.dialog.label.somefailed.body': 'Intyget kunde inte tas emot av alla mottagare just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta Support. Ring 0770-72 00 00, klockan 06.00 - 22.00 alla dagar eller besök  <LINK:1177eServicesHelpAndSupport>',
     'sendpage.dialog.label.nonefailed.title': 'Intyget skickat',
     'sendpage.dialog.label.nonefailed.body': 'Intyget är nu inskickat och mottaget av:',
     'sendpage.dialog.btn.back-to-intyg': 'Tillbaka till intyget',
@@ -128,9 +127,9 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'faq.intyg.6.body': '<p>Vårdgivaren kan makulera ett intyg för att det innehåller ett allvarligt fel, till exempel om det är skrivit på fel patient.</p>Om en vårdgivare makulerar ett intyg är det inte tillgängligt i Mina intyg.',
 
     'faq.sakerhet.1.title': 'Är det säkert att använda Mina intyg?',
-    'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Datainspektionens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
+    'faq.sakerhet.1.body': 'Ja, Mina intyg har en hög säkerhetsnivå och uppfyller Integritetsskyddsmyndighetens säkerhetskrav. Du kan bara logga in med e-legitimation (e-legitimation kan också heta bank-id – det är en typ av e-legitimation). E-legitimation är ett säkert sätt att logga in på.',
     'faq.sakerhet.2.title': 'Hur skyddas mina uppgifter?',
-    'faq.sakerhet.2.body': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Dataskyddsförordningen (GDPR), Patientdatalagen (PDL) och av Datainspektionen.',
+    'faq.sakerhet.2.body': 'Hanteringen av uppgifter i Mina intyg följer de krav som ställs i Dataskyddsförordningen (GDPR), Patientdatalagen (PDL) och av Integritetsskyddsmyndigheten.',
     'faq.sakerhet.3.title': 'Kan andra komma åt mina uppgifter?',
     'faq.sakerhet.3.body': '<p>Nej, i och med att du loggar in med din personliga e-legitimation, kan endast information om dig visas.</p>' +
                            '<p>OBS! Tänk på att ditt intyg innehåller personuppgifter om dig.</p>' +
@@ -179,13 +178,13 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     // Errors in main app (boot-app.jsp)
     //'error.pagetitle': 'Tekniskt fel',
     'error.generictechproblem.title': 'Tekniskt fel',
-    'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
-    'error.couldnotloadarchivedlist': '<p>Dina arkiverade intyg kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
-    'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt> och ange intygs-id: {intygsId}.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+    'error.couldnotloadcertlist': '<p>Intygen i inkorgen kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:1177eServicesSupport>.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
+    'error.couldnotloadarchivedlist': '<p>Dina arkiverade intyg kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:1177eServicesSupport>.</p>',
+    'error.certnotfound': '<p>Intyget kunde inte visas på grund av ett tekniskt fel. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:1177eServicesSupport> och ange intygs-id: {intygsId}.<br><br>Om du inte kan nå ditt intyg i Mina intyg, kontakta din läkare för att få en kopia av intyget.</p>',
     'info.certrevoked': '<p>Intyget är makulerat och kan därför inte visas.</p><a href="/web/start/#/inkorg">Gå till inkorgen</a>',
     'error.certarchived': '<p>Intyget är arkiverat och kan därför inte visas. Återställ intyget till inkorgen för att kunna läsa det.</p>',
-    'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt> och ange intygs-id: {intygsId}.</p>',
-    'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt> och ange intygs-id: {intygsId}.</p>',
+    'error.modal.couldnotarchivecert': '<p>Intyget kunde inte flyttas från Inkorgen till Arkiverade intyg just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:1177eServicesSupport> och ange intygs-id: {intygsId}.</p>',
+    'error.modal.couldnotrestorecert': '<p>Intyget kunde inte flyttas från Arkiverade intyg till Inkorgen just nu. Försök igen om några minuter.<br><br>Om felet kvarstår kontakta <LINK:1177eServicesSupport> och ange intygs-id: {intygsId}.</p>',
     'error.generic': '<p>Tekniskt fel</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p><p><a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
     'error.modal.btn.back-to-inkorg': 'Tillbaka till Inkorgen',
     'error.modal.btn.back-to-archive-cert': 'Tillbaka till Arkiverade intyg',
@@ -199,8 +198,8 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'error.noauth.text': '<p>Du har blivit utloggad från tjänsten på grund av inaktivitet, eller så försöker du nå en sida som kräver inloggning. Gå till minaintyg.se för att logga in.</p><p><a href="/">Gå till minaintyg.se</a></p>',
     'error.notfound-loggedin.text': '<p>Sidan du försöker nå finns inte.</p><p>Kontrollera om du stavat fel i webbläsaren eller gå till tillbaka till inkorgen.</p><p> <a href="/web/start/#/inkorg">Gå till inkorgen</a></p>',
 
-    'error.generictechproblem.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.</p>',
-    'error.login.failed.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att logga in just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:ineraKundserviceKontakt>.<br><a href="/">Gå till minaintyg.se</a></p>'
+    'error.generictechproblem.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att visa Mina intyg just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:1177eServicesSupport>.</p>',
+    'error.login.failed.text': '<p>Tekniskt fel.</p><p>På grund av ett tekniskt fel går det inte att logga in just nu. Försök igen om några minuter.</p><p>Om felet kvarstår kontakta <LINK:1177eServicesSupport>.<br><a href="/">Gå till minaintyg.se</a></p>'
   },
   'en': {
     'label.showall': 'Show all',
