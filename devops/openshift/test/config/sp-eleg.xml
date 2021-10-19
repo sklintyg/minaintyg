@@ -12,3 +12,4 @@
     <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Location="https://minaintyg.inera.nordicmedtest.se/saml/SSO/alias/eleg" index="1"/>
   </md:SPSSODescriptor>
 </md:EntityDescriptor>
+

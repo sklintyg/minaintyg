@@ -20,23 +20,19 @@ package se.inera.intyg.minaintyg.web.util;
 
 import static se.inera.intyg.minaintyg.web.util.SystemPropertiesConfig.USE_MINIFIED_JAVA_SCRIPT_ENV_KEY;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 public class JspPageAttributes {
 
-    @Autowired
-    @Value("${elva77.url.login}")
-    private String elva77LoginUrl;
-
-    @Autowired
     @Value("${elva77.url.main}")
     private String elva77MainUrl;
 
+    @Autowired
+    private SystemPropertiesConfig systemPropertiesConfig;
+
     public String getElva77LoginUrl() {
-        return elva77LoginUrl;
+        return systemPropertiesConfig.getElva77LoginUrl();
     }
 
     public String getElva77MainUrl() {

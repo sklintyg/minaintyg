@@ -58,12 +58,13 @@ public class SAMLStatusLogger extends SAMLDefaultLogger {
         }
 
         if (context.getInboundSAMLMessage() != null && SAMLConstants.FAILURE.equals(result)) {
-            SAMLObject samlObj = context.getInboundSAMLMessage();
+            final var samlObj = context.getInboundSAMLMessage();
 
-            List<XMLObject> tmp = samlObj.getOrderedChildren();
+            final var tmp = samlObj.getOrderedChildren();
 
             String issuer = null;
-            String status = null;
+            String statusCode = null;
+            String statusMessage = null;
 
             for (XMLObject obj : tmp) {
                 if (obj instanceof IssuerImpl) {
@@ -71,11 +72,14 @@ public class SAMLStatusLogger extends SAMLDefaultLogger {
                     issuer = issuerObj.getValue();
                 } else if (obj instanceof StatusImpl) {
                     StatusImpl statusObj = (StatusImpl) obj;
-                    status = statusObj.getStatusMessage() != null ? statusObj.getStatusMessage().getMessage() : null;
+                    statusCode = statusObj.getStatusCode() != null ? statusObj.getStatusCode().getValue() : null;
+                    statusMessage = statusObj.getStatusMessage() != null ? statusObj.getStatusMessage().getMessage() : null;
                 }
             }
 
-            logService.logSamlStatusForFailedLogin(issuer, status);
+            final var exceptionMessage = e != null ? e.toString() : null;
+
+            logService.logSamlStatusForFailedLogin(issuer, statusCode, statusMessage, exceptionMessage);
         }
 
         super.log(operation, result, context, a, e);

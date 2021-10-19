@@ -78,8 +78,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
 
     @Override
-    public void logSamlStatusForFailedLogin(String issuer, String samlStatus) {
-        logEvent(MonitoringEvent.SAML_STATUS_LOGIN_FAIL, issuer, samlStatus);
+    public void logSamlStatusForFailedLogin(String issuer, String samlStatusCode, String samlStatusMessage, String exceptionMessage) {
+        logEvent(MonitoringEvent.SAML_STATUS_LOGIN_FAIL, issuer, samlStatusCode, samlStatusMessage, exceptionMessage);
     }
 
     @Override
@@ -110,7 +110,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         LOG.info(LogMarkers.MONITORING, logMsg.toString(), logMsgArgs);
     }
 
-
     private enum MonitoringEvent {
         BROWSER_INFO("Name '{}' Version '{}' OSFamily '{}' OSVersion '{}' Width '{}' Height '{}'"),
         CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
@@ -124,8 +123,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
         OPENED_ABOUT("Om Mina intyg was opened by user '{}'"),
         OPENED_FAQ("FAQ for Mina intyg was opened by user '{}'"),
         OPENED_QUESTION("Question '{}' with title '{}' was opened by user '{}'"),
-
-        SAML_STATUS_LOGIN_FAIL("Login failed at IDP '{}' with status message '{}'");
+        SAML_STATUS_LOGIN_FAIL("Login failed at IDP '{}' with status code '{}', status message '{}' and exception message \"{}\"");
 
         private final String msg;
 

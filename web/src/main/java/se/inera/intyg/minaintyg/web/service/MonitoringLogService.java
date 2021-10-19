@@ -41,7 +41,7 @@ public interface MonitoringLogService {
     void logCertificatePrintedEmployerCopy(String intygsId, String intygsType);
 
     // Saml
-    void logSamlStatusForFailedLogin(String issuer, String samlStatus);
+    void logSamlStatusForFailedLogin(String issuer, String samlStatusCode, String samlStatusMessage, String exceptionMessage);
 
     void logOpenedAbout(String pnr);
 
