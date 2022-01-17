@@ -128,10 +128,10 @@ public class ModuleApiController {
                 List<IntygRelations> relations = certificateService.getRelationsForCertificates(Arrays.asList(id));
                 Utlatande utlatande = certificateResponse.get().getUtlatande();
                 CertificateMetaData metaData = certificateResponse.get().getMetaData();
-                boolean sendToRecipientEnabled = certificateService.isMajorVersionActive(type, intygTypeVersion);
+                boolean majorVersionActive = certificateService.isMajorVersionActive(type, intygTypeVersion);
 
                 CertificateMeta meta = CertificateMetaConverter.toCertificateMetaFromCertMetaData(utlatande, metaData, relations,
-                    RELEVANT_STATUS_TYPES, sendToRecipientEnabled);
+                    RELEVANT_STATUS_TYPES, majorVersionActive);
                 return Response.ok(new Certificate(utlatandeJson, meta)).build();
 
             } catch (IOException e) {

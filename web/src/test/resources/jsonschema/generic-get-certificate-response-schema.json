@@ -190,7 +190,7 @@
         "isReplaced": {
           "type": "boolean"
         },
-        "sendToRecipientEnabled": {
+        "majorVersionActive": {
           "type": "boolean"
         }
       },
@@ -207,7 +207,7 @@
         "statuses",
         "events",
         "isReplaced",
-        "sendToRecipientEnabled"
+        "majorVersionActive"
       ]
     }
   },

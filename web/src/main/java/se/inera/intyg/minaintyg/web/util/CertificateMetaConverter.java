@@ -68,7 +68,7 @@ public final class CertificateMetaConverter {
     }
 
     public static CertificateMeta toCertificateMetaFromCertMetaData(Utlatande utlatande, CertificateMetaData metaData,
-        List<IntygRelations> relations, List<CertificateState> statusFilter, boolean sendToRecipientEnabled) {
+        List<IntygRelations> relations, List<CertificateState> statusFilter, boolean majorVersionActive) {
         CertificateMeta result = new CertificateMeta();
 
         result.setId(metaData.getCertificateId());
@@ -80,7 +80,7 @@ public final class CertificateMetaConverter {
         result.setSentDate(metaData.getSignDate());
         result.setArchived(!metaData.isAvailable());
         result.setComplementaryInfo(metaData.getAdditionalInfo());
-        result.setSendToRecipientEnabled(sendToRecipientEnabled);
+        result.setMajorVersionActive(majorVersionActive);
 
         for (Status status : metaData.getStatus()) {
             // Obey any status filter restrictions
