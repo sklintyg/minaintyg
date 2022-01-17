@@ -51,7 +51,7 @@ public class CertificateMeta {
     private String complementaryInfo;
     private List<Status> statuses = new ArrayList<>();
     private List<CertificateRelation> relations = new ArrayList<>();
-    private boolean sendToRecipientEnabled;
+    private boolean majorVersionActive;
 
     public String getId() {
         return id;
@@ -137,12 +137,12 @@ public class CertificateMeta {
         this.relations = relations;
     }
 
-    public boolean isSendToRecipientEnabled() {
-        return sendToRecipientEnabled;
+    public boolean isMajorVersionActive() {
+        return majorVersionActive;
     }
 
-    public void setSendToRecipientEnabled(boolean sendToRecipientEnabled) {
-        this.sendToRecipientEnabled = sendToRecipientEnabled;
+    public void setMajorVersionActive(boolean majorVersionActive) {
+        this.majorVersionActive = majorVersionActive;
     }
 
     /**
