@@ -22,6 +22,7 @@ ext {
     jaxbOsgiVersion = "2.3.2"
     openWsVersion = "1.5.4"
     shedlockSpringVersion = "4.5.0"
+    springFrameworkVersion = "5.2.20.RELEASE" // included because of vulnerability (CVE-2022-22965) in 5.2.4.RELEASE
     springSecuritySaml2CoreVersion = "1.0.3.RELEASE"
     xmlToolingVersion = "1.4.4"
 
@@ -52,6 +53,54 @@ allprojects {
     }
 
     dependencies {
+
+        // Exclude and import of non-BOM version of Spring Framework due to
+        // vulnerability (CVE-2022-22965) in BOM-version 5.2.4.RELEASE.
+        compile("org.springframework:spring-web") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-webmvc") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-aop") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-beans") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-context") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-core") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-expression") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-jdbc") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
+        compile("org.springframework:spring-jcl") {
+            version {
+                strictly "${springFrameworkVersion}"
+            }
+        }
 
         testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
         testCompile 'junit:junit:4.+'
