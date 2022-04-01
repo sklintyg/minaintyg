@@ -1,5 +1,5 @@
 {
-  "appVersion": "3.16.2",
+  "appVersion": "3.16.2.35",
   "commonVersion": "3.16.2.+",
   "infraVersion": "3.16.2.+",
   "buildArgs": "--refresh-dependencies clean build testReport -PcodeQuality -DgruntColors=false",
