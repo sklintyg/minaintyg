@@ -57,7 +57,7 @@ angular.module('minaintyg').constant('minaintyg.messages', {
     'inbox.header': 'Översikt över dina intyg',
 
     'inbox.description.1': '<p>Här listas dina läkarintyg som vården utfärdat digitalt. Det senast utfärdade intyget visas överst.</p><p>Du kan skicka intyg digitalt till Försäkringskassan och Transportstyrelsen. Läkarintyg om arbetsförmåga kan inte skickas digitalt till din arbetsgivare, däremot kan du skriva ut intyget.</p><p>För att läsa ditt intyg klicka på knappen Visa intyg.</p>',
-    'inbox.description.2': '<p>Du har inte tillgång till någon annan persons intyg. Det finns ingen ombudsfunktion i Mina intyg.</p><p>Intyg kan inte "laddas upp" eller tillföras av dig till Mina intyg. Saknar du ett intyg ska du kontakta vården.</p><p>Du hittar mer information i <a href="#/omminaintyg/faq">Vanliga frågor och svar</a>.</p>',
+    'inbox.description.2': '<p>Du har inte tillgång till någon annan persons intyg. Det finns ingen ombudsfunktion i Mina intyg.</p><p>Intyg kan inte "laddas upp" eller tillföras av dig till Mina intyg. Saknar du ett intyg ska du kontakta vården.</p><p>Hittar du inte ditt intyg i inkorgen, alternativt i ditt arkiv, vänd dig till din läkare/vårdgivare.</p><p>Du hittar mer information i <a href="#/omminaintyg/faq">Vanliga frågor och svar</a>.</p>',
 
     'inbox.tooltip.archive': '<b>Att arkivera intyg</b><br/>Ett läkarintyg innehåller information som hämtas från patientjournalen. Det innebär bland annat att du inte helt kan ta bort ditt intyg från Mina intyg. Däremot kan du flytta dina gamla intyg till Arkiverade intyg. Ett arkiverat intyg kan alltid flyttas tillbaka till inkorgen. Läs mer om arkivering av intyg under fliken <a href="#">Arkiverade intyg</a>.',
 
