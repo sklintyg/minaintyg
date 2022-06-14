@@ -76,13 +76,6 @@ describe('Logga ut', function() {
       specHelper.waitForAngularTestability();
       expect(inboxPage.isAt()).toBeTruthy();
     });
-
-    it('Access denied visas om invånaren försöker navigera till startsidan', function() {
-      browser.driver.get(browser.baseUrl + 'web/start');
-      specHelper.waitForAngularTestability();
-      expect(accessdeniedPage.isAt()).toBeTruthy();
-    });
-
   });
 
   describe('Utloggning vid vidarenavigering', function() {
