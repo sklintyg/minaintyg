@@ -14,14 +14,11 @@ ext {
     intygClinicalprocessSchemasVersion = "1.0.24"
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5"
 
-    apacheJstlVersion = "9.4.28.v20200408"
     cxfVersion = "3.5.3"
-    esapiVersion = "2.2.0.0"
+    esapiVersion = "2.5.0.0"
     swaggerJaxrsVersion = "1.6.0"
-    jakartaJwsApiVersion = "2.1.0"
-    jaxbOsgiVersion = "2.3.2"
     openWsVersion = "1.5.4"
-    shedlockSpringVersion = "4.5.0"
+    shedlockSpringVersion = "4.42.0"
     springSecuritySaml2CoreVersion = "1.0.3.RELEASE"
     xmlToolingVersion = "1.4.4"
 
