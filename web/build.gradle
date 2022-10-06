@@ -1,6 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'org.gretty'
-apply plugin: 'com.moowork.grunt'
+apply plugin: 'nebula.grunt'
 apply plugin: 'idea'
 
 def webappOutputDir = 'build/apps/'
@@ -161,7 +161,7 @@ dependencies {
     compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
     compile "org.springframework.session:spring-session-data-redis"
 
-
+    compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
     compile "org.aspectj:aspectjweaver"
     compile "org.owasp.esapi:esapi:${esapiVersion}"
     compile "org.opensaml:openws:${openWsVersion}"
@@ -179,13 +179,12 @@ dependencies {
     compile "org.glassfish.jaxb:jaxb-runtime"
 
     compileOnly "jakarta.servlet:jakarta.servlet-api"
-    compileOnly "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
+    compileOnly "org.eclipse.jetty:apache-jstl"
 
     testCompile "io.rest-assured:rest-assured"
     testCompile "io.rest-assured:json-schema-validator"
-    testCompile "com.sun.xml.bind:jaxb-osgi:${jaxbOsgiVersion}" // Can remove when rest-assured in BOM > version 4.0
     testCompile "org.springframework:spring-test"
 
-    gretty "org.eclipse.jetty:apache-jstl:${apacheJstlVersion}"
+    gretty "org.eclipse.jetty:apache-jstl"
     gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }
