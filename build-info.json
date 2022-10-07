@@ -3,6 +3,6 @@
   "commonVersion": "3.18.0.+",
   "infraVersion": "3.18.0.+",
   "buildArgs": "--refresh-dependencies clean build testReport -PcodeQuality -DgruntColors=false",
-  "tests": [ "restAssuredTest"],
+  "tests": [ ],
   "backingService": "intygstjanst:3.17.0.+"
 }
