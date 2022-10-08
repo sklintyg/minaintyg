@@ -15,7 +15,7 @@ ext {
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5"
 
     cxfVersion = "3.5.3"
-    esapiVersion = "2.5.0.0"
+    esapiVersion = "2.2.0.0"
     swaggerJaxrsVersion = "1.6.0"
     openWsVersion = "1.5.4"
     shedlockSpringVersion = "4.42.0"
