@@ -78,4 +78,13 @@ allprojects {
     }
 }
 
+gradle.taskGraph.whenReady {
+    def runningRestAssuredTest = false
+    project('minaintyg-web') { runningRestAssuredTest = gradle.taskGraph.getAllTasks().contains(restAssuredTest) }
+
+    if (runningRestAssuredTest) {
+        project('minaintyg-web') { npmInstall.enabled(false); jsTests.enabled(false); test.enabled(false) }
+    }
+}
+
 task tagRelease(type: TagReleaseTask)
