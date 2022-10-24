@@ -1,7 +1,6 @@
 pluginManagement {
     repositories {
-        // Uncomment line below during development of gradle-intyg-plugin
-        //mavenLocal()
+        mavenLocal()
         maven { url "https://nexus.drift.inera.se/repository/it-public/" }
         gradlePluginPortal()
     }
