@@ -7,5 +7,6 @@ export CATALINA_OPTS_APPEND="\
 -Dlogback.file=$APP_DIR/config/logback-ocp.xml \
 -Djava.awt.headless=true \
 -Dfile.encoding=UTF-8 \
--Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl"
+-Djavax.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl \
+-Dxml.catalog.cacheEnabled=false"
 
