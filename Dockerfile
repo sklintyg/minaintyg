@@ -21,4 +21,3 @@ ENV APP_NAME=$artifact
 ENV SCRIPT_DEBUG=true
 
 ADD /web/build/libs/*.war $JWS_HOME/webapps/ROOT.war
-
