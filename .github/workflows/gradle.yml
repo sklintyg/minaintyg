@@ -27,4 +27,4 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew --no-daemon build -PcodeQuality -DgruntColors=false -DcommonVersion=3.19.0.+ -DinfraVersion=3.19.0.+
+        run: ./gradlew --no-daemon build -PcodeQuality -DgruntColors=false -DcommonVersion=3.19.1.+ -DinfraVersion=3.19.1.+
