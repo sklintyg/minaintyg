@@ -30,7 +30,7 @@ task jsTests(type: NodeTask, dependsOn: npmInstall) {
     inputs.dir("$projectDir/src/main/webapp")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
-    inputs.files(configurations.compile)
+    inputs.files(configurations.testRuntimeClasspath)
     outputs.dir(webappTestOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
@@ -44,7 +44,7 @@ task jsInclude(type: NodeTask, dependsOn: npmInstall) {
     inputs.dir("$projectDir/src/main/webapp")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
-    inputs.files(configurations.compile)
+    inputs.files(configurations.runtimeClasspath)
     outputs.dir(webappOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
@@ -82,6 +82,8 @@ war {
 test {
     exclude '**/*IT*'
 }
+
+compileTestJava.dependsOn('createVersionPropertyFile')
 
 task restAssuredTest(type: Test) {
     outputs.upToDateWhen { false }
@@ -128,64 +130,64 @@ gretty {
 war.dependsOn createVersionPropertyFile
 
 dependencies {
-    compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
+    implementation "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 
-    compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
-    compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:${intygClinicalprocessSchemasVersion}"
+    implementation "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
+    implementation "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:${intygClinicalprocessSchemasVersion}"
 
-    compile "se.inera.intyg.infra:dynamiclink:${infraVersion}"
-    compile "se.inera.intyg.infra:pu-integration:${infraVersion}"
-    compile "se.inera.intyg.infra:monitoring:${infraVersion}"
-    compile "se.inera.intyg.infra:security-filter:${infraVersion}"
-    compile "se.inera.intyg.infra:security-common:${infraVersion}"
-    compile "se.inera.intyg.infra:ia-integration:${infraVersion}"
+    implementation "se.inera.intyg.infra:dynamiclink:${infraVersion}"
+    implementation "se.inera.intyg.infra:pu-integration:${infraVersion}"
+    implementation "se.inera.intyg.infra:monitoring:${infraVersion}"
+    implementation "se.inera.intyg.infra:security-filter:${infraVersion}"
+    implementation "se.inera.intyg.infra:security-common:${infraVersion}"
+    implementation "se.inera.intyg.infra:ia-integration:${infraVersion}"
 
-    compile "se.inera.intyg.common:ts-bas:${commonVersion}"
-    compile "se.inera.intyg.common:ts-diabetes:${commonVersion}"
-    compile "se.inera.intyg.common:tstrk1009:${commonVersion}"
-    compile "se.inera.intyg.common:tstrk1062:${commonVersion}"
-    compile "se.inera.intyg.common:luse:${commonVersion}"
-    compile "se.inera.intyg.common:lisjp:${commonVersion}"
-    compile "se.inera.intyg.common:luae_na:${commonVersion}"
-    compile "se.inera.intyg.common:luae_fs:${commonVersion}"
-    compile "se.inera.intyg.common:fk7263:${commonVersion}"
-    compile "se.inera.intyg.common:af00213:${commonVersion}"
-    compile "se.inera.intyg.common:af00251:${commonVersion}"
-    compile "se.inera.intyg.common:ag114:${commonVersion}"
-    compile "se.inera.intyg.common:ag7804:${commonVersion}"
+    implementation "se.inera.intyg.common:ts-bas:${commonVersion}"
+    implementation "se.inera.intyg.common:ts-diabetes:${commonVersion}"
+    implementation "se.inera.intyg.common:tstrk1009:${commonVersion}"
+    implementation "se.inera.intyg.common:tstrk1062:${commonVersion}"
+    implementation "se.inera.intyg.common:luse:${commonVersion}"
+    implementation "se.inera.intyg.common:lisjp:${commonVersion}"
+    implementation "se.inera.intyg.common:luae_na:${commonVersion}"
+    implementation "se.inera.intyg.common:luae_fs:${commonVersion}"
+    implementation "se.inera.intyg.common:fk7263:${commonVersion}"
+    implementation "se.inera.intyg.common:af00213:${commonVersion}"
+    implementation "se.inera.intyg.common:af00251:${commonVersion}"
+    implementation "se.inera.intyg.common:ag114:${commonVersion}"
+    implementation "se.inera.intyg.common:ag7804:${commonVersion}"
 
-    compile "org.springframework:spring-web"
-    compile "org.springframework:spring-webmvc"
-    compile "org.springframework.security:spring-security-config"
-    compile "org.springframework.security:spring-security-web"
-    compile "org.springframework.security:spring-security-taglibs"
-    compile "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
-    compile "org.springframework.session:spring-session-data-redis"
+    implementation "org.springframework:spring-web"
+    implementation "org.springframework:spring-webmvc"
+    implementation "org.springframework.security:spring-security-config"
+    implementation "org.springframework.security:spring-security-web"
+    implementation "org.springframework.security:spring-security-taglibs"
+    implementation "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
+    implementation "org.springframework.session:spring-session-data-redis"
 
-    compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
-    compile "org.aspectj:aspectjweaver"
-    compile "org.owasp.esapi:esapi:${esapiVersion}"
-    compile "org.opensaml:openws:${openWsVersion}"
-    compile "org.opensaml:xmltooling:${xmlToolingVersion}"
+    implementation "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
+    implementation "org.aspectj:aspectjweaver"
+    implementation "org.owasp.esapi:esapi:${esapiVersion}"
+    implementation "org.opensaml:openws:${openWsVersion}"
+    implementation "org.opensaml:xmltooling:${xmlToolingVersion}"
 
-    compile "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
-    compile "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
 
-    compile("io.swagger:swagger-jaxrs:${swaggerJaxrsVersion}") {
+    implementation("io.swagger:swagger-jaxrs:${swaggerJaxrsVersion}") {
         exclude(module: "jsr311-api")
     }
 
-    compile "com.sun.xml.messaging.saaj:saaj-impl"
-    compile "com.sun.activation:jakarta.activation"
-    compile "org.glassfish.jaxb:jaxb-runtime"
+    implementation "com.sun.xml.messaging.saaj:saaj-impl"
+    implementation "com.sun.activation:jakarta.activation"
+    implementation "org.glassfish.jaxb:jaxb-runtime"
 
     compileOnly "jakarta.servlet:jakarta.servlet-api"
     compileOnly "org.eclipse.jetty:apache-jstl"
 
-    testCompile "io.rest-assured:rest-assured"
-    testCompile "io.rest-assured:json-schema-validator"
-    testCompile "org.springframework:spring-test"
+    testImplementation "io.rest-assured:rest-assured"
+    testImplementation "io.rest-assured:json-schema-validator"
+    testImplementation "org.springframework:spring-test"
 
-    gretty "org.eclipse.jetty:apache-jstl"
-    gretty "se.inera.intyg.refdata:refdata:${refDataVersion}"
+    grettyRunnerTomcat9 "org.eclipse.jetty:apache-jstl"
+    grettyRunnerTomcat9 "se.inera.intyg.refdata:refdata:${refDataVersion}"
 }

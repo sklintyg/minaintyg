@@ -1,8 +1,8 @@
 plugins {
-    id "se.inera.intyg.plugin.common" version "3.2.7" apply false
-    id "org.gretty" version "3.0.8" apply false
-    id "nebula.node" version "1.4.2" apply false
-    id "io.spring.dependency-management" version "1.0.13.RELEASE" apply false
+    id "se.inera.intyg.plugin.common" version "3.2.9-SNAPSHOT" apply false
+    id "org.gretty" version "3.1.1" apply false
+    id "nebula.node" version "3.0.0" apply false
+    id "io.spring.dependency-management" version "1.1.0" apply false
 }
 
 ext {
@@ -14,7 +14,7 @@ ext {
     intygClinicalprocessSchemasVersion = "1.0.24"
     rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5"
 
-    cxfVersion = "3.5.5"
+    cxfVersion = "3.6.1"
     esapiVersion = "2.2.0.0"
     swaggerJaxrsVersion = "1.6.0"
     openWsVersion = "1.5.4"
@@ -25,13 +25,14 @@ ext {
     nodeJsVersion = "12.22.12"
     npmVersion = "6.14.16"
 
-    springbootMavenBomVersion = "2.7.6"
+    springbootMavenBomVersion = "2.7.13"
 }
 
 allprojects {
     apply plugin: 'se.inera.intyg.plugin.common'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: "io.spring.dependency-management"
+    apply plugin: 'java-library'
 
     repositories {
         mavenLocal()
@@ -49,9 +50,9 @@ allprojects {
     }
 
     dependencies {
-        testCompile "se.inera.intyg.refdata:refdata:${refDataVersion}"
-        testCompile 'junit:junit'
-        testCompile "org.mockito:mockito-core"
+        testImplementation "se.inera.intyg.refdata:refdata:${refDataVersion}"
+        testImplementation 'junit:junit'
+        testImplementation "org.mockito:mockito-core"
     }
 
     group = 'se.inera.intyg.minaintyg'
@@ -62,7 +63,7 @@ allprojects {
 
     task createVersionPropertyFile(type: VersionPropertyFileTask)
 
-    uploadArchives.repositories.mavenDeployer {
+    /*uploadArchives.repositories.mavenDeployer {
         repository(url: "https://nexus.drift.inera.se/repository/maven-releases/") {
             authentication(userName: System.properties['ineraNexusUsername'], password: System.properties['ineraNexusPassword'])
         }
@@ -75,7 +76,7 @@ allprojects {
         pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.infra' }.each {
             it.version = se.inera.intyg.IntygPluginKt.findResolvedVersion(project, 'se.inera.intyg.infra')
         }
-    }
+    }*/
 }
 
 gradle.taskGraph.whenReady {
@@ -85,6 +86,12 @@ gradle.taskGraph.whenReady {
     if (runningRestAssuredTest) {
         project('minaintyg-web') { npmInstall.enabled(false); jsTests.enabled(false); test.enabled(false) }
     }
+}
+
+clean {
+    setDelete(fileTree(buildDir) {
+        exclude("/tmp/.cache/expanded/expanded.lock")
+    })
 }
 
 task tagRelease(type: TagReleaseTask)

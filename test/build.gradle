@@ -29,5 +29,5 @@ task protractorTests(type: NodeTask, dependsOn: npmInstall) {
 }
 
 dependencies {
-    runtime project(':minaintyg-web')
+    runtimeOnly project(':minaintyg-web')
 }
