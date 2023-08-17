@@ -1,0 +1,5 @@
+rootProject.name = 'minaintyg'
+
+include 'web'
+include 'integration-api'
+include 'integration-webcert'

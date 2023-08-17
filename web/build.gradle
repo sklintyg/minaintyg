@@ -1,0 +1,44 @@
+plugins {
+    id "org.springframework.boot" version "3.1.2"
+}
+
+dependencies {
+    implementation project(":integration-api")
+    runtimeOnly project(":integration-webcert")
+
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.session:spring-session-core"
+
+    compileOnly "org.projectlombok:lombok"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"§
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+bootRun {
+    systemProperty("spring.profiles.active", "testability,dev")
+}
+
+tasks.register("appRunDebug") {
+    println("######## Running in Debug mode ########")
+    doFirst {
+        bootRun.configure {
+            jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841"
+        }
+    }
+    finalizedBy("bootRun")
+}
+
+tasks.register("appRun") {
+    println("######## Running in normal mode ########")
+    finalizedBy("bootRun")
+}

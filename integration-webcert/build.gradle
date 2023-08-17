@@ -1,0 +1,11 @@
+
+dependencies {
+    implementation project(':integration-api')
+    implementation 'org.springframework:spring-context'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
