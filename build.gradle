@@ -5,6 +5,8 @@ plugins {
 
 ext {
     springbootMavenBomVersion = '3.1.2'
+    springSecuritySaml2CoreVersion = '1.0.3.RELEASE'
+    javaxServletApiVersion = '4.0.1'
 }
 
 group = 'se.inera.intyg.minaintyg'

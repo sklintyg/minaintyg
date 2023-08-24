@@ -3,17 +3,21 @@ plugins {
 }
 
 dependencies {
+
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.session:spring-session-core"
+    implementation "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
 
+    compileOnly "jakarta.servlet:jakarta.servlet-api:${javaxServletApiVersion}"
     compileOnly "org.projectlombok:lombok"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor "org.projectlombok:lombok"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
@@ -23,6 +27,7 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
+
 
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
