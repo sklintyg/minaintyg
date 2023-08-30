@@ -5,5 +5,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface MinaIntygUser extends UserDetails, Serializable {
 
-    String getPersonId();
+    String getPatientId();
 }

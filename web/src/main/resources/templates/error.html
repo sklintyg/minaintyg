@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href="@{/style/inera-master-0.16.0.css}" rel="stylesheet" />
+</head>
+<body>
+  <div class="iu-mx-lg">
+    <br/>
+    <h1>Mina intyg</h1>
+    <div class="ic-alert ic-alert--status ic-alert--error">
+      <h3 class="ic-alert__headline">
+        <i class="ic-alert__icon ic-error-icon"></i>
+        Ett fel har uppstått
+      </h3>
+      <p>Tryck på länken ”Tillbaka till startsidan” och gör ett nytt försök. </p>
+    </div>
+    <br/>
+    <p>
+      <span style="float:left;width:7em">Date</span>
+      <span th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}?:'-'"></span>
+    </p>
+
+    <p>
+      <span style="float:left;width:7em">Path</span>
+      <span th:text="${path}?:'-'"></span>
+    </p>
+
+    <p>
+      <span style="float:left;width:7em">Error</span>
+      <span th:text="${error}?:'-'"></span>
+    </p>
+
+    <p>
+      <span style="float:left;width:7em">Status</span>
+      <span th:text="${status}?:'-'"></span>
+    </p>
+
+    <p>
+      <span style="float: left;width:7em">Message</span>
+      <span th:text="${message}?:'-'"></span>
+    </p>
+
+    <p>
+      <span style="float:left;width:7em">Trace</span>
+      <span th:text="${trace}?:'-'"></span>
+    </p>
+
+    <br/>
+    <a th:if="${status == 403}" th:href="@{/}">Tillbaka till startsidan</a>
+  </div>
+</body>
+</html>

@@ -12,15 +12,10 @@ public class MinaIntygUserImpl implements MinaIntygUser{
     private static final long serialVersionUID = 1L;
 
     private final Set<SimpleGrantedAuthority> roles = Collections.singleton(new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
-    private final String personId;
+    private final String patientId;
 
-    public MinaIntygUserImpl(String personId) {
-        this.personId = personId;
-    }
-
-    @Override
-    public String getPersonId() {
-        return personId;
+    public MinaIntygUserImpl(String patientId) {
+        this.patientId = patientId;
     }
 
     @Override
@@ -56,5 +51,10 @@ public class MinaIntygUserImpl implements MinaIntygUser{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getPatientId() {
+        return this.patientId;
     }
 }

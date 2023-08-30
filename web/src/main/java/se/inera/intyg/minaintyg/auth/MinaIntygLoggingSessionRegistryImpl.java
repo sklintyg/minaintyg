@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
@@ -12,11 +13,12 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends Spri
 
     private final MonitoringLogService monitoringService;
     private final FindByIndexNameSessionRepository<T> sessionRepository;
-    public MinaIntygLoggingSessionRegistryImpl(FindByIndexNameSessionRepository<T> sessionRepository,
-        MonitoringLogService monitoringService) {
+
+    public MinaIntygLoggingSessionRegistryImpl(FindByIndexNameSessionRepository<T> sessionRepository, MonitoringLogService monitoringService) {
         super(sessionRepository);
         this.sessionRepository = sessionRepository;
         this.monitoringService = monitoringService;
+        // Session Redis
     }
 
     @Override

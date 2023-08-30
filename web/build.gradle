@@ -3,32 +3,38 @@ plugins {
 }
 
 dependencies {
-
+    constraints {
+        implementation "org.opensaml:opensaml-core:4.2.0"
+        implementation "org.opensaml:opensaml-saml-api:4.2.0"
+        implementation "org.opensaml:opensaml-saml-impl:4.2.0"
+    }
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.security:spring-security-saml2-service-provider'
     implementation "org.springframework.session:spring-session-core"
-    implementation "org.springframework.security.extensions:spring-security-saml2-core:${springSecuritySaml2CoreVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "org.springframework.session:spring-session-data-redis"
+    implementation "redis.clients:jedis"
 
-    compileOnly "jakarta.servlet:jakarta.servlet-api:${javaxServletApiVersion}"
     compileOnly "org.projectlombok:lombok"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor "org.projectlombok:lombok"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 }
 
 tasks.named("test") {
     useJUnitPlatform()
 }
-
-
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
 }
