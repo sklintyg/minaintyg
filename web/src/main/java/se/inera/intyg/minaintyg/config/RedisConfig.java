@@ -13,10 +13,8 @@ public class RedisConfig {
     @Value("${redis.host}")
     private String redisHost;
     @Value("${redis.port}")
-
     private String redisPort;
     @Value("${redis.password}")
-
     private String redisPassword;
 
 

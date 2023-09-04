@@ -30,7 +30,11 @@
   <div class="container">
     <ul class="nav">
       <li class="nav-item">
-        <form th:action="@{/logout}" method="post">
+        <form th:action="@{/fake/sso}" method="post">
+          <select name="personId" id="personId" required>
+            <option value="191212121212">191212121212</option>
+            <option value="201212121212">201212121212</option>
+          </select>
           <button class="btn btn-primary" id="rp_logout_button" type="submit">
             RP-initiated Logout
           </button>

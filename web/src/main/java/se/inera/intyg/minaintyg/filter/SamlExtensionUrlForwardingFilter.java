@@ -20,12 +20,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @Order(-101) // To run before FilterChainProxy
 public class SamlExtensionUrlForwardingFilter extends OncePerRequestFilter {
-    private static final Map<String, String> urlMapping = Map.of("/saml/SSO", "/login/saml2/sso/one",
-        "/saml/login", "/saml2/authenticate/one",
+    private static final Map<String, String> urlMapping = Map.of(
+        "/saml/SSO", "/login/saml2/sso/eleg",
+        "/saml/login", "/saml2/authenticate/eleg",
         "/saml/logout", "/logout/saml2/slo",
         "/saml/SingleLogout", "/logout/saml2/slo",
         "/saml/metadata", "/saml2/service-provider-metadata/one");
-    // @formatter:on
 
     private final RequestMatcher matcher = createRequestMatcher();
 
@@ -39,13 +39,13 @@ public class SamlExtensionUrlForwardingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
-        boolean match = this.matcher.matches(request);
+        final var match = this.matcher.matches(request);
         if (!match) {
             filterChain.doFilter(request, response);
             return;
         }
-        String forwardUrl = urlMapping.get(request.getRequestURI());
-        RequestDispatcher dispatcher = request.getRequestDispatcher(forwardUrl);
+        final var forwardUrl = urlMapping.get(request.getRequestURI());
+        final var dispatcher = request.getRequestDispatcher(forwardUrl);
         dispatcher.forward(request, response);
     }
 }

@@ -18,16 +18,25 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends Spri
         super(sessionRepository);
         this.sessionRepository = sessionRepository;
         this.monitoringService = monitoringService;
-        // Session Redis
+
     }
 
     @Override
     public void registerNewSession(String sessionId, Object principal) {
         LOGGER.debug("Attempting to register new session '{}'", sessionId);
 
-        //TODO: Add logging and related logic
+        if (!isMinaIntygUser(principal)) {
+            return;
+        }
+
+        final var user = (MinaIntygUser) principal;
+        monitoringService.logUserLogin(user.getPatientId());
 
         super.registerNewSession(sessionId, principal);
+    }
+
+    private boolean isMinaIntygUser(Object principal) {
+        return principal instanceof MinaIntygUser;
     }
 
     @Override
