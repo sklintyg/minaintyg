@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
-import se.inera.intyg.minaintyg.integration.dto.PUResponse;
+import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 import se.inera.intyg.minaintyg.integration.dto.Status;
 
 @Slf4j
@@ -21,12 +21,12 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
         return new MinaIntygUser(puResponse.getPerson().getPersonId(), puResponse.getPerson().getName());
     }
 
-    private static void validatePUResponse(String personId, PUResponse puResponse) {
-        if (puResponse.getStatus().equals(Status.NOT_FOUND)) {
+    private static void validatePUResponse(String personId, PersonResponse personResponse) {
+        if (personResponse.getStatus().equals(Status.NOT_FOUND)) {
             log.error("Person identified by '{}' not found in PU-service, cannot login.", personId);
             throw new PersonNotFoundException("Person identified by '" + personId + "' not found in PU-service");
         }
-        if (puResponse.getStatus().equals(Status.ERROR)) {
+        if (personResponse.getStatus().equals(Status.ERROR)) {
             log.warn("Error communicating with PU service, cannot query person '{}", personId);
             throw new PUServiceException("Error communication with PU-service");
         }

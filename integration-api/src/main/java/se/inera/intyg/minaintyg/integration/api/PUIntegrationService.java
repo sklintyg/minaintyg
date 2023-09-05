@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.integration.api;
 
-import se.inera.intyg.minaintyg.integration.dto.PUResponse;
+import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 
 public interface PUIntegrationService {
 
-    PUResponse get(String personId);
+    PersonResponse get(String personId);
 }

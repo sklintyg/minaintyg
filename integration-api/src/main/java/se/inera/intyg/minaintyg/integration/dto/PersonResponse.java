@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PUResponse {
+public class PersonResponse {
 
     private Person person;
     private Status status;

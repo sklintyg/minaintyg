@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
-import se.inera.intyg.minaintyg.integration.dto.PUResponse;
+import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 import se.inera.intyg.minaintyg.integration.dto.Person;
 import se.inera.intyg.minaintyg.integration.dto.Status;
 
@@ -70,8 +70,8 @@ class MinaIntygUserDetailServiceImplTest {
         assertEquals(PERSON_NAME, principal.getPatientName());
     }
 
-    private static PUResponse getPuResponse(Status status) {
-        return PUResponse.builder()
+    private static PersonResponse getPuResponse(Status status) {
+        return PersonResponse.builder()
             .person(
                 Person.builder()
                     .personId(PERSON_ID)
