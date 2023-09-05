@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
@@ -40,12 +41,32 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends Spri
         return principal instanceof MinaIntygUser;
     }
 
+
     @Override
     public void removeSessionInformation(String sessionId) {
         log.debug("Attempting to remove session '{}'", sessionId);
 
-        //TODO: Add logging and related logic
+        final var session = sessionRepository.findById(sessionId);
+        final var user = getUser(session);
+        if (user == null) {
+            super.removeSessionInformation(sessionId);
+            return;
+        }
+
+        if (session.isExpired()) {
+            //TODO: Add loggging
+        } else {
+            //TODO: Add loggging
+        }
 
         super.removeSessionInformation(sessionId);
+    }
+    private MinaIntygUser getUser(Session session) {
+        if (session == null) {
+            return null;
+        }
+        final var authenticator = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        final var principal = authenticator != null ? authenticator.getAuthentication().getPrincipal() : null;
+        return isMinaIntygUser(principal) ? (MinaIntygUser) principal : null;
     }
 }

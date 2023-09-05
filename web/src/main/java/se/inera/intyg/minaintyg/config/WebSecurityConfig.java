@@ -149,6 +149,7 @@ public class WebSecurityConfig {
             authorizeHttpRequests((request) -> {
                     request.requestMatchers("/fake/sso").permitAll();
                     request.requestMatchers("/welcome").permitAll();
+                    request.requestMatchers("/testability/**").permitAll();
                 }
             )
             .addFilterAt(fakeAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)

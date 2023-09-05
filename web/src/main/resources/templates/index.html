@@ -36,7 +36,12 @@
             <option value="201212121212">201212121212</option>
           </select>
           <button class="btn btn-primary" id="rp_logout_button" type="submit">
-            RP-initiated Logout
+            FAKE-LOGIN
+          </button>
+        </form>
+        <form th:action="@{/testability/logout}" method="post">
+          <button class="btn btn-primary" id="rp_logout_buttonx" type="submit">
+            logout
           </button>
         </form>
       </li>
