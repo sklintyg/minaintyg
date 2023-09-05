@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.DEV_PROFILE;
+import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
 
 import java.io.File;
 import java.security.cert.CertificateException;
@@ -13,6 +14,7 @@ import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.opensaml.security.x509.X509Support;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,7 +24,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
+import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
+import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
+import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticationException;
 import org.springframework.security.saml2.provider.service.metadata.OpenSamlMetadataResolver;
 import org.springframework.security.saml2.provider.service.registration.InMemoryRelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
@@ -39,9 +44,9 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
-import org.springframework.session.web.http.DefaultCookieSerializer;
 import se.inera.intyg.minaintyg.auth.FakeAuthenticationProvider;
 import se.inera.intyg.minaintyg.auth.MinaIntygLoggingSessionRegistryImpl;
+import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 import se.inera.intyg.minaintyg.filter.FakeAuthenticationFilter;
 import se.inera.intyg.minaintyg.service.monitoring.MonitoringLogService;
@@ -54,6 +59,7 @@ public class WebSecurityConfig {
 
     private final MonitoringLogService monitoringLogService;
     private final FindByIndexNameSessionRepository<? extends Session> sessionRepository;
+    private final MinaIntygUserDetailService minaIntygUserDetailService;
     private static final String ELEG = "eleg";
     private static List<String> profiles;
     @Value("${private.key}")
@@ -66,9 +72,11 @@ public class WebSecurityConfig {
     private String singleLogoutServiceLocation;
 
     public WebSecurityConfig(MonitoringLogService monitoringLogService,
-        FindByIndexNameSessionRepository<? extends Session> sessionRepository, Environment environment) {
+        FindByIndexNameSessionRepository<? extends Session> sessionRepository, MinaIntygUserDetailService minaIntygUserDetailService,
+        Environment environment) {
         this.monitoringLogService = monitoringLogService;
         this.sessionRepository = sessionRepository;
+        this.minaIntygUserDetailService = minaIntygUserDetailService;
         this.profiles = Arrays.asList(environment.getActiveProfiles());
     }
 
@@ -168,16 +176,8 @@ public class WebSecurityConfig {
 
     // https://stackoverflow.com/questions/72508155/spring-saml2-and-spring-session-savedrequest-not-retrieved-cannot-redirect-to
     @Bean
-    public DefaultCookieSerializer cookieSerializerCustomizer() {
-//        return cookieSerializer -> {
-//            cookieSerializer.setSameSite(null);
-//        };
-        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setCookieName("JSESSIONID");
-        serializer.setCookiePath("/");
-        serializer.setDomainNamePattern("^.+?\\.(\\w+\\.[a-z]+)$");
-        serializer.setSameSite(null);
-        return serializer;
+    public DefaultCookieSerializerCustomizer cookieSerializerCustomizer() {
+        return cookieSerializer -> cookieSerializer.setSameSite(null);
     }
     @Bean
     public FakeAuthenticationFilter fakeAuthenticationFilter() {
@@ -189,7 +189,7 @@ public class WebSecurityConfig {
 
 
     private FakeAuthenticationProvider getFakeAuthenticationProvider() {
-        return new FakeAuthenticationProvider();
+        return new FakeAuthenticationProvider(minaIntygUserDetailService);
     }
 
     private OpenSaml4AuthenticationProvider getOpenSaml4AuthenticationProvider() {
@@ -198,9 +198,22 @@ public class WebSecurityConfig {
             final var authentication = OpenSaml4AuthenticationProvider
                 .createDefaultResponseAuthenticationConverter()
                 .convert(responseToken);
-            assert authentication != null;
-            return new Saml2AuthenticationToken(authentication);
+            if (!(authentication != null && authentication.isAuthenticated())) {
+                //TODO: Look into better error handling when working with Authentication-jira
+                return null;
+            }
+            final var personId = getAttribute(authentication);
+            final var principal = minaIntygUserDetailService.getPrincipal(personId);
+            return new Saml2AuthenticationToken(principal, authentication);
         });
         return authenticationProvider;
+    }
+    private String getAttribute(Saml2Authentication samlCredential) {
+        final var principal = (DefaultSaml2AuthenticatedPrincipal) samlCredential.getPrincipal();
+        final var attributes = principal.getAttributes();
+        if (attributes.containsKey(PERSON_ID_ATTRIBUTE)) {
+            return (String) attributes.get(PERSON_ID_ATTRIBUTE).get(0);
+        }
+        throw new IllegalArgumentException("Could not extract attribute '" + PERSON_ID_ATTRIBUTE + "' from Saml2Authentication.");
     }
 }

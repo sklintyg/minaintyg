@@ -2,22 +2,23 @@ package se.inera.intyg.minaintyg.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-
+@RequiredArgsConstructor
 public class FakeAuthenticationProvider implements AuthenticationProvider {
+
+    private final MinaIntygUserDetailService minaIntygUserDetailService;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         if (!(authentication instanceof FakeAuthenticationToken)) {
             return null;
         }
         final var credentials = (FakeCredentials) authentication.getCredentials();
-        final var principal = new MinaIntygUser(credentials.getPersonId(), credentials.getPersonName());
-        //TODO: Might need to fix so that credentials are updated on the result from UsernamePasswordAuth...
-        return new UsernamePasswordAuthenticationToken(principal, credentials, buildGrantedAuthorities(principal));
+        final var principal = minaIntygUserDetailService.getPrincipal(credentials.getPersonId());
+        return new FakeAuthenticationToken(credentials, principal, buildGrantedAuthorities(principal));
     }
     @Override
     public boolean supports(Class<?> authentication) {

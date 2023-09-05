@@ -24,7 +24,7 @@ class Saml2AuthenticationTokenTest {
     private static final String CORRECT_ATTRIBUTE_NAME = "Subject_SerialNumber";
     private static final String INVALID_ATTRIBUTE_NAME = "invalidAttributeName";
     private static final String ATTRIBUTE_VALUE = "191212121212";
-    private static final String ATTRIBUTE_VALUE_NAME = "test";
+    private static final String ATTRIBUTE_VALUE_NAME = "nameFromPU";
     @Mock
     private Saml2Authentication saml2Authentication;
     @InjectMocks
@@ -65,7 +65,7 @@ class Saml2AuthenticationTokenTest {
         when(saml2Authentication.isAuthenticated()).thenReturn(true);
         when(saml2Authentication.getPrincipal()).thenReturn(getAuthenticatedPrincipal(CORRECT_ATTRIBUTE_NAME, ATTRIBUTE_VALUE));
         final var result = (MinaIntygUser) saml2AuthenticationToken.getPrincipal();
-        assertEquals(ATTRIBUTE_VALUE_NAME, result.getUsername());
+        assertEquals(ATTRIBUTE_VALUE_NAME, result.getPatientName());
     }
 
     private static DefaultSaml2AuthenticatedPrincipal getAuthenticatedPrincipal(String attributeName, String attributeValue) {
