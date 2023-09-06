@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -9,14 +10,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
-import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 import se.inera.intyg.minaintyg.integration.dto.Person;
+import se.inera.intyg.minaintyg.integration.dto.PersonRequest;
+import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 import se.inera.intyg.minaintyg.integration.dto.Status;
 
 @ExtendWith(MockitoExtension.class)
 class MinaIntygUserDetailServiceImplTest {
 
     private static final String PERSON_ID = "191212121212";
+    private static final String PERSON_FIRSTNAME = "Arnold";
+    private static final String PERSON_LASTNAME = "Johansson";
     private static final String PERSON_NAME = "Arnold Johansson";
     @Mock
     private PUIntegrationService puIntegrationService;
@@ -30,14 +34,14 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldThrowPersonNotFoundExceptionIfResponseHasStatusNotFound() {
         final var puResponse = getPuResponse(Status.NOT_FOUND);
-        when(puIntegrationService.get(PERSON_ID)).thenReturn(puResponse);
+        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
         assertThrows(PersonNotFoundException.class, () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
     }
 
     @Test
     void shouldThrowPUServiceExceptionIfResponseHasStatusError() {
         final var puResponse = getPuResponse(Status.ERROR);
-        when(puIntegrationService.get(PERSON_ID)).thenReturn(puResponse);
+        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
         assertThrows(PUServiceException.class, () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
     }
 
@@ -49,7 +53,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldReturnTypeMinaIntygUser() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.get(PERSON_ID)).thenReturn(puResponse);
+        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(principal.getClass(), MinaIntygUser.class);
     }
@@ -57,7 +61,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldSetPersonIdFromPUResponseToUserObject() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.get(PERSON_ID)).thenReturn(puResponse);
+        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(PERSON_ID, principal.getPatientId());
     }
@@ -65,7 +69,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldSetNameFromPUResponseToUserObject() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.get(PERSON_ID)).thenReturn(puResponse);
+        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(PERSON_NAME, principal.getPatientName());
     }
@@ -74,8 +78,9 @@ class MinaIntygUserDetailServiceImplTest {
         return PersonResponse.builder()
             .person(
                 Person.builder()
-                    .personId(PERSON_ID)
-                    .name(PERSON_NAME)
+                    .personnummer(PERSON_ID)
+                    .fornamn(PERSON_FIRSTNAME)
+                    .efternamn(PERSON_LASTNAME)
                     .build()
             )
             .status(status)
