@@ -1,14 +1,12 @@
 package se.inera.intyg.minaintyg.auth;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
-import se.inera.intyg.minaintyg.service.monitoring.MonitoringLogService;
+import se.inera.intyg.minaintyg.monitoring.MonitoringLogService;
 
 @Slf4j
 public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends SpringSessionBackedSessionRegistry<T> {

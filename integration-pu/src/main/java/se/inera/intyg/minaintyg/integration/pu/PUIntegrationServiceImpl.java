@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
 import se.inera.intyg.minaintyg.integration.dto.PersonRequest;
 import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 
-@Component
+@Service
 public class PUIntegrationServiceImpl implements PUIntegrationService {
     private final WebClient webClient;
     private final String scheme;

@@ -2,7 +2,7 @@ package se.inera.intyg.minaintyg.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
 import se.inera.intyg.minaintyg.integration.dto.Person;
 import se.inera.intyg.minaintyg.integration.dto.PersonRequest;
@@ -10,7 +10,7 @@ import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
 import se.inera.intyg.minaintyg.integration.dto.Status;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailService{
 

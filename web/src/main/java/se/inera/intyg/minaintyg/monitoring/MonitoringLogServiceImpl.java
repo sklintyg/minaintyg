@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.service.monitoring;
+package se.inera.intyg.minaintyg.monitoring;
 
 
 import org.slf4j.Logger;
