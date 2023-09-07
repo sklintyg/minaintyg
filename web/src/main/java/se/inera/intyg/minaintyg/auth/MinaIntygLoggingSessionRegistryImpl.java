@@ -13,7 +13,7 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
 
   private final MonitoringLogService monitoringService;
   private final FindByIndexNameSessionRepository<T> sessionRepository;
-  
+
   public MinaIntygLoggingSessionRegistryImpl(FindByIndexNameSessionRepository<T> sessionRepository,
       MonitoringLogService monitoringService) {
     super(sessionRepository);
@@ -31,7 +31,7 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
     }
 
     final var user = (MinaIntygUser) principal;
-    monitoringService.logUserLogin(user.getPatientId());
+    monitoringService.logUserLogin(user.getPersonId());
 
     super.registerNewSession(sessionId, principal);
   }

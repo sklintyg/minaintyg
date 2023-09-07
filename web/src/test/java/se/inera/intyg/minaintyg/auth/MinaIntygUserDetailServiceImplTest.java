@@ -70,7 +70,7 @@ class MinaIntygUserDetailServiceImplTest {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
-    assertEquals(PERSON_ID, principal.getPatientId());
+    assertEquals(PERSON_ID, principal.getPersonId());
   }
 
   @Test
@@ -78,7 +78,7 @@ class MinaIntygUserDetailServiceImplTest {
     final var puResponse = getPuResponse(Status.FOUND, null);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
-    assertEquals(PERSON_NAME, principal.getPatientName());
+    assertEquals(PERSON_NAME, principal.getPersonName());
   }
 
   @Test
@@ -86,7 +86,7 @@ class MinaIntygUserDetailServiceImplTest {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
-    assertEquals(PERSON_NAME_WITH_MIDDLENAME, principal.getPatientName());
+    assertEquals(PERSON_NAME_WITH_MIDDLENAME, principal.getPersonName());
   }
 
   private static PersonResponse getPuResponse(Status status, String middleName) {

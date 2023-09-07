@@ -14,12 +14,12 @@ public class MinaIntygUser implements User {
 
   private final Set<SimpleGrantedAuthority> roles = Collections.singleton(
       new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
-  private final String patientId;
-  private final String patientName;
+  private final String personId;
+  private final String personName;
 
-  public MinaIntygUser(String patientId, String patientName) {
-    this.patientId = patientId;
-    this.patientName = patientName;
+  public MinaIntygUser(String personId, String personName) {
+    this.personId = personId;
+    this.personName = personName;
   }
 
   @Override
@@ -58,11 +58,11 @@ public class MinaIntygUser implements User {
   }
 
   @Override
-  public String getPatientId() {
-    return this.patientId;
+  public String getPersonId() {
+    return this.personId;
   }
 
-  public String getPatientName() {
-    return patientName;
+  public String getPersonName() {
+    return personName;
   }
 }

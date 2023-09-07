@@ -11,27 +11,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/testability")
+@RequestMapping("/api/testability")
 public class TestabilityController {
 
-    private final TestPersonService testPersonService;
+  private final TestPersonService testPersonService;
 
-    @PostMapping("/logout")
-    public void logout(HttpServletRequest request) {
-        invalidateSessionAndClearContext(request);
-    }
+  @PostMapping("/logout")
+  public void logout(HttpServletRequest request) {
+    invalidateSessionAndClearContext(request);
+  }
 
-    @GetMapping(value = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TestPersonResponse person() {
-        final var persons = testPersonService.getPersons();
-        return TestPersonResponse.builder()
-            .testPerson(persons)
-            .build();
-    }
+  @GetMapping(value = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
+  public TestPersonResponse person() {
+    final var persons = testPersonService.getPersons();
+    return TestPersonResponse.builder()
+        .testPerson(persons)
+        .build();
+  }
 
-    private void invalidateSessionAndClearContext(HttpServletRequest request) {
-        request.getSession().invalidate();
-        SecurityContextHolder.getContext().setAuthentication(null);
-        SecurityContextHolder.clearContext();
-    }
+  private void invalidateSessionAndClearContext(HttpServletRequest request) {
+    request.getSession().invalidate();
+    SecurityContextHolder.getContext().setAuthentication(null);
+    SecurityContextHolder.clearContext();
+  }
 }
