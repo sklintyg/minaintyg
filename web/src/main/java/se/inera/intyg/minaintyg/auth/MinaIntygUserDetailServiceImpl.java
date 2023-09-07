@@ -27,7 +27,7 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
             .build()
     );
     if (!personResponse.getStatus().equals(Status.FOUND)) {
-      handleCommunicationFault(personId, personResponse);
+      handleCommunicationFault(personResponse.getStatus());
     }
     return getMinaIntygUser(personResponse);
   }
@@ -49,17 +49,10 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     return middleName != null ? middleName + SPACE : EMPTY;
   }
 
-  private static void handleCommunicationFault(String personId, PersonResponse personResponse) {
-    if (personResponse.getStatus().equals(Status.NOT_FOUND)) {
-      log.error("Person identified by '{}' not found in intygproxyservice, cannot login.",
-          personId);
-      throw new PersonNotFoundException(
-          "Person identified by '" + personId + "' not found in PU-service");
-    }
-    if (personResponse.getStatus().equals(Status.ERROR)) {
-      log.warn("Error communicating with intygproxyservice, cannot query person '{}", personId);
-      throw new PUServiceException("Error communication with PU-service");
-    }
+  private static void handleCommunicationFault(Status status) {
+    log.error("Error communicating with IntygProxyService, status from response: '{}",
+        status);
+    throw new RuntimeException("Error communication with IntygProxyService. Status: " + status);
   }
 
   private void validatePersonId(String personId) {

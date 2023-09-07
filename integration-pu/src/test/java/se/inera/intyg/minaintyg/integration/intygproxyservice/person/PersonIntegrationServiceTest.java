@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
-import se.inera.intyg.minaintyg.integration.api.person.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetPersonFromIntygProxyServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,8 +53,8 @@ class PersonIntegrationServiceTest {
       final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenThrow(
           RuntimeException.class);
-      final var actualResult = personIntegrationService.getPerson(personRequest);
-      assertEquals(Status.ERROR, actualResult.getStatus());
+      assertThrows(RuntimeException.class,
+          () -> personIntegrationService.getPerson(personRequest));
     }
   }
 

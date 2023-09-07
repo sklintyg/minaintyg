@@ -5,7 +5,6 @@ import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 
 @RequiredArgsConstructor
@@ -14,7 +13,7 @@ public class FakeAuthenticationProvider implements AuthenticationProvider {
   private final MinaIntygUserDetailService minaIntygUserDetailService;
 
   @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+  public Authentication authenticate(Authentication authentication) {
     if (!(authentication instanceof FakeAuthenticationToken)) {
       return null;
     }

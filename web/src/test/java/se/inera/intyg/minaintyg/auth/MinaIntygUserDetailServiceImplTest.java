@@ -37,18 +37,18 @@ class MinaIntygUserDetailServiceImplTest {
   }
 
   @Test
-  void shouldThrowPersonNotFoundExceptionIfResponseHasStatusNotFound() {
+  void shouldThrowRuntimeExceptionIfResponseHasStatusNotFound() {
     final var puResponse = getPuResponse(Status.NOT_FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    assertThrows(PersonNotFoundException.class,
+    assertThrows(RuntimeException.class,
         () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
   }
 
   @Test
-  void shouldThrowPUServiceExceptionIfResponseHasStatusError() {
+  void shouldThrowRuntimeExceptionIfResponseHasStatusError() {
     final var puResponse = getPuResponse(Status.ERROR, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    assertThrows(PUServiceException.class,
+    assertThrows(RuntimeException.class,
         () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
   }
 
