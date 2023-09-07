@@ -13,38 +13,38 @@ import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 @Service
 public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
 
-    private final WebClient webClient;
-    private final String scheme;
-    private final String baseUrl;
-    private final int port;
-    private final String puEndpoint;
+  private final WebClient webClient;
+  private final String scheme;
+  private final String baseUrl;
+  private final int port;
+  private final String puEndpoint;
 
-    public GetPersonFromIntygProxyServiceImpl(
-        @Qualifier(value = "intygProxyWebClient") WebClient webClient,
-        @Value("${integration.intygProxy.scheme}") String scheme,
-        @Value("${integration.intygProxy.baseurl}") String baseUrl,
-        @Value("${integration.intygProxy.port}") int port,
-        @Value("${integration.intygProxy.pu.endpoint}") String puEndpoint) {
-        this.webClient = webClient;
-        this.scheme = scheme;
-        this.baseUrl = baseUrl;
-        this.port = port;
-        this.puEndpoint = puEndpoint;
-    }
+  public GetPersonFromIntygProxyServiceImpl(
+      @Qualifier(value = "intygProxyWebClient") WebClient webClient,
+      @Value("${integration.intygProxy.scheme}") String scheme,
+      @Value("${integration.intygProxy.baseurl}") String baseUrl,
+      @Value("${integration.intygProxy.port}") int port,
+      @Value("${integration.intygProxy.pu.endpoint}") String puEndpoint) {
+    this.webClient = webClient;
+    this.scheme = scheme;
+    this.baseUrl = baseUrl;
+    this.port = port;
+    this.puEndpoint = puEndpoint;
+  }
 
-    @Override
-    public PersonResponse getPersonFromIntygProxy(PersonRequest personRequest) {
-        return webClient.post().uri(uriBuilder -> uriBuilder
-                .scheme(scheme)
-                .host(baseUrl)
-                .port(port)
-                .path(puEndpoint)
-                .build())
-            .body(Mono.just(personRequest), PersonRequest.class)
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .retrieve()
-            .bodyToMono(PersonResponse.class)
-            .share()
-            .block();
-    }
+  @Override
+  public PersonResponse getPersonFromIntygProxy(PersonRequest personRequest) {
+    return webClient.post().uri(uriBuilder -> uriBuilder
+            .scheme(scheme)
+            .host(baseUrl)
+            .port(port)
+            .path(puEndpoint)
+            .build())
+        .body(Mono.just(personRequest), PersonRequest.class)
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .retrieve()
+        .bodyToMono(PersonResponse.class)
+        .share()
+        .block();
+  }
 }

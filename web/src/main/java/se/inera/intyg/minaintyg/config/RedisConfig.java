@@ -10,27 +10,28 @@ import org.springframework.util.StringUtils;
 
 @Configuration
 public class RedisConfig {
-    @Value("${redis.host}")
-    private String redisHost;
-    @Value("${redis.port}")
-    private String redisPort;
-    @Value("${redis.password}")
-    private String redisPassword;
+
+  @Value("${redis.host}")
+  private String redisHost;
+  @Value("${redis.port}")
+  private String redisPort;
+  @Value("${redis.password}")
+  private String redisPassword;
 
 
-    @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        return standAloneConnectionFactory();
+  @Bean
+  JedisConnectionFactory jedisConnectionFactory() {
+    return standAloneConnectionFactory();
+  }
+
+  private JedisConnectionFactory standAloneConnectionFactory() {
+    RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+    redisStandaloneConfiguration.setHostName(redisHost);
+    redisStandaloneConfiguration.setPort(Integer.parseInt(redisPort));
+    if (StringUtils.hasLength(redisPassword)) {
+      redisStandaloneConfiguration.setPassword(redisPassword);
     }
-
-    private JedisConnectionFactory standAloneConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(redisHost);
-        redisStandaloneConfiguration.setPort(Integer.parseInt(redisPort));
-        if (StringUtils.hasLength(redisPassword)) {
-            redisStandaloneConfiguration.setPassword(redisPassword);
-        }
-        return new JedisConnectionFactory(redisStandaloneConfiguration,
-            JedisClientConfiguration.builder().usePooling().build());
-    }
+    return new JedisConnectionFactory(redisStandaloneConfiguration,
+        JedisClientConfiguration.builder().usePooling().build());
+  }
 }

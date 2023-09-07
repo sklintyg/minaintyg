@@ -8,20 +8,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FakeCredentials {
-    private String personId;
 
-    public String getPersonId() {
-        return personId;
-    }
+  private String personId;
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
+  public String getPersonId() {
+    return personId;
+  }
 
-    @Override
-    public String toString() {
-        return "FakeCredentials{" +
-            "personId='" + personId + '\'' +
-            '}';
-    }
+  public void setPersonId(String personId) {
+    this.personId = personId;
+  }
+
+  @Override
+  public String toString() {
+    return "FakeCredentials{" +
+        "personId='" + personId + '\'' +
+        '}';
+  }
 }

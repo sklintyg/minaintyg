@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestabilityController {
 
     private final TestPersonService testPersonService;
+
     @PostMapping("/logout")
     public void logout(HttpServletRequest request) {
         invalidateSessionAndClearContext(request);
@@ -24,8 +25,8 @@ public class TestabilityController {
     public TestPersonResponse person() {
         final var persons = testPersonService.getPersons();
         return TestPersonResponse.builder()
-                .testPerson(persons)
-                .build();
+            .testPerson(persons)
+            .build();
     }
 
     private void invalidateSessionAndClearContext(HttpServletRequest request) {

@@ -10,45 +10,48 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class FakeAuthenticationToken extends AbstractAuthenticationToken {
 
-    @Serial
-    private static final long serialVersionUID = -2796850504529240890L;
+  @Serial
+  private static final long serialVersionUID = -2796850504529240890L;
 
-    private FakeCredentials fakeCredentials;
-    private final Set<SimpleGrantedAuthority> roles = Collections.singleton(new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
+  private FakeCredentials fakeCredentials;
+  private final Set<SimpleGrantedAuthority> roles = Collections.singleton(
+      new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
 
-    private final Object principal;
+  private final Object principal;
 
-    public FakeAuthenticationToken(FakeCredentials fakeCredentials, Object principal, Collection<? extends GrantedAuthority> authorities) {
-        super(authorities);
-        this.fakeCredentials = fakeCredentials;
-        this.principal = principal;
-        setAuthenticated(true);
-    }
+  public FakeAuthenticationToken(FakeCredentials fakeCredentials, Object principal,
+      Collection<? extends GrantedAuthority> authorities) {
+    super(authorities);
+    this.fakeCredentials = fakeCredentials;
+    this.principal = principal;
+    
+    setAuthenticated(true);
+  }
 
-    public Set<SimpleGrantedAuthority> getRoles() {
-        return roles;
-    }
+  public Set<SimpleGrantedAuthority> getRoles() {
+    return roles;
+  }
 
-    @Override
-    public Object getCredentials() {
-        return fakeCredentials;
-    }
+  @Override
+  public Object getCredentials() {
+    return fakeCredentials;
+  }
 
-    @Override
-    public Object getPrincipal() {
-        return principal;
-    }
+  @Override
+  public Object getPrincipal() {
+    return principal;
+  }
 
-    @Override
-    public void eraseCredentials() {
-        super.eraseCredentials();
-        this.fakeCredentials = null;
-    }
+  @Override
+  public void eraseCredentials() {
+    super.eraseCredentials();
+    this.fakeCredentials = null;
+  }
 
-    @Override
-    public String toString() {
-        return "FakeAuthenticationToken{" +
-            "fakeCredentials=" + fakeCredentials +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "FakeAuthenticationToken{" +
+        "fakeCredentials=" + fakeCredentials +
+        '}';
+  }
 }

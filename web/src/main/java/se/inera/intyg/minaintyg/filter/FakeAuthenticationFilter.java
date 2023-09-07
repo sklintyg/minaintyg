@@ -1,4 +1,5 @@
 package se.inera.intyg.minaintyg.filter;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,25 +16,28 @@ import se.inera.intyg.minaintyg.auth.FakeCredentials;
 public class FakeAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    public FakeAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/fake/sso", HttpMethod.POST.name()));
-        log.error("FakeAuthentication enabled. DO NOT USE IN PRODUCTION");
-    }
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-        throws AuthenticationException, IOException {
-        if (request.getCharacterEncoding() == null) {
-            request.setCharacterEncoding("UTF-8");
-        }
-        final var personId = request.getParameter("personId");
-        return performFakeElegAuthentication(personId);
-    }
+  public FakeAuthenticationFilter() {
+    super(new AntPathRequestMatcher("/fake/sso", HttpMethod.POST.name()));
+    log.error("FakeAuthentication enabled. DO NOT USE IN PRODUCTION");
+  }
 
-    private Authentication performFakeElegAuthentication(String personId) {
-        final var fakeCredentials = new FakeCredentials();
-        fakeCredentials.setPersonId(personId);
-        log.info("Detected fake credentials " + fakeCredentials);
-        return getAuthenticationManager().authenticate(new FakeAuthenticationToken(fakeCredentials, null, null));
+  @Override
+  public Authentication attemptAuthentication(HttpServletRequest request,
+      HttpServletResponse response)
+      throws AuthenticationException, IOException {
+    if (request.getCharacterEncoding() == null) {
+      request.setCharacterEncoding("UTF-8");
     }
+    final var personId = request.getParameter("personId");
+    return performFakeElegAuthentication(personId);
+  }
+
+  private Authentication performFakeElegAuthentication(String personId) {
+    final var fakeCredentials = new FakeCredentials();
+    fakeCredentials.setPersonId(personId);
+    log.info("Detected fake credentials " + fakeCredentials);
+    return getAuthenticationManager().authenticate(
+        new FakeAuthenticationToken(fakeCredentials, null, null));
+  }
 
 }

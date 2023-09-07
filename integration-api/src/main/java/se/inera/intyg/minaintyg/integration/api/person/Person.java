@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Person {
 
-    private String personnummer;
-    private String fornamn;
-    private String efternamn;
+  private String personnummer;
+  private String fornamn;
+  private String efternamn;
 }

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PersonResponse {
 
-    private Person person;
-    private Status status;
+  private Person person;
+  private Status status;
 }

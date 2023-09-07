@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface TestPersonService {
 
-    List<TestPerson> getPersons();
+  List<TestPerson> getPersons();
 }

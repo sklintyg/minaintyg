@@ -5,5 +5,5 @@ import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 
 public interface GetPersonFromIntygProxyService {
 
-    PersonResponse getPersonFromIntygProxy(PersonRequest personRequest);
+  PersonResponse getPersonFromIntygProxy(PersonRequest personRequest);
 }

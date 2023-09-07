@@ -12,27 +12,30 @@ import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetP
 @Service
 public class PersonIntegrationService implements GetPersonService {
 
-    private final GetPersonFromIntygProxyService getPersonFromIntygProxyService;
+  private final GetPersonFromIntygProxyService getPersonFromIntygProxyService;
 
-    public PersonIntegrationService(GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService) {
-        this.getPersonFromIntygProxyService = getPersonFromIntygProxyService;
-    }
+  public PersonIntegrationService(
+      GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService) {
+    this.getPersonFromIntygProxyService = getPersonFromIntygProxyService;
+  }
 
-    @Override
-    public PersonResponse getPerson(PersonRequest personRequest) {
-        validateRequest(personRequest);
-        try {
-            return getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest);
-        } catch (Exception exception) {
-            log.error("Not able to get person from intygproxyservice. {}", exception.getMessage());
-            throw new RuntimeException("Unable to get person from intygproxyservice");
-        }
+  @Override
+  public PersonResponse getPerson(PersonRequest personRequest) {
+    validateRequest(personRequest);
+    try {
+      return getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest);
+    } catch (Exception exception) {
+      log.error("Not able to get person from intygproxyservice. {}", exception.getMessage());
+      throw new RuntimeException("Unable to get person from intygproxyservice");
     }
+  }
 
-    private void validateRequest(PersonRequest personRequest) {
-        if (personRequest == null || personRequest.getPersonId() == null || personRequest.getPersonId().isEmpty()) {
-            log.error("No valid personRequest was provided: {}, cannot get person from intygproxy.", personRequest);
-            throw new IllegalArgumentException("Valid personRequest was not provided: " + personRequest);
-        }
+  private void validateRequest(PersonRequest personRequest) {
+    if (personRequest == null || personRequest.getPersonId() == null || personRequest.getPersonId()
+        .isEmpty()) {
+      log.error("No valid personRequest was provided: {}, cannot get person from intygproxy.",
+          personRequest);
+      throw new IllegalArgumentException("Valid personRequest was not provided: " + personRequest);
     }
+  }
 }

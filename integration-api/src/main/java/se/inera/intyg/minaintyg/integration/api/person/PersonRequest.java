@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PersonRequest {
 
-    private String personId;
+  private String personId;
 }
