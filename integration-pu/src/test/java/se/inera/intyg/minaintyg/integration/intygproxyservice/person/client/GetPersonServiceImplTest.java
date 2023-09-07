@@ -1,7 +1,5 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,7 +19,7 @@ import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
 
 @ExtendWith(MockitoExtension.class)
-class GetPersonFromIntygProxyServiceImplTest {
+class GetPersonServiceImplTest {
 
     private static MockWebServer mockWebServer;
     private GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService;
@@ -52,34 +49,6 @@ class GetPersonFromIntygProxyServiceImplTest {
             mockWebServer.getPort(), getPersonEndpoint);
     }
 
-    @Nested
-    class ErrorHandling {
-
-        @Test
-        void shouldThrowIlligalArgumentExceptionIfPersonRequestIsNull() {
-            assertThrows(IllegalArgumentException.class, () -> getPersonFromIntygProxyService.getPerson(null));
-        }
-
-        @Test
-        void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsNullPersonId() {
-            final var personRequest = PersonRequest.builder().personId(null).build();
-            assertThrows(IllegalArgumentException.class, () -> getPersonFromIntygProxyService.getPerson(personRequest));
-        }
-
-        @Test
-        void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsEmptyPersonId() {
-            final var personRequest = PersonRequest.builder().personId("").build();
-            assertThrows(IllegalArgumentException.class, () -> getPersonFromIntygProxyService.getPerson(personRequest));
-        }
-
-        @Test
-        void shouldThrowExceptionIfCommunicationErrorWithIntygProxyServiceOccurs() throws IOException {
-            final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
-            mockWebServer.shutdown();
-            assertThrows(RuntimeException.class, () -> getPersonFromIntygProxyService.getPerson(personRequest));
-        }
-    }
-
     @Test
     void shouldReturnPersonResponse() throws JsonProcessingException {
         final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
@@ -95,7 +64,7 @@ class GetPersonFromIntygProxyServiceImplTest {
             .build();
         mockWebServer.enqueue(new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
-        final var actualResponse = getPersonFromIntygProxyService.getPerson(personRequest);
+        final var actualResponse = getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest);
         Assertions.assertEquals(expectedResponse, actualResponse);
     }
 }

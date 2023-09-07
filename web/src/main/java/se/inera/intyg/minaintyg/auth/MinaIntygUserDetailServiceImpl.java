@@ -3,8 +3,8 @@ package se.inera.intyg.minaintyg.auth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonService;
 import se.inera.intyg.minaintyg.integration.api.person.Person;
-import se.inera.intyg.minaintyg.integration.api.person.PersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
@@ -14,13 +14,13 @@ import se.inera.intyg.minaintyg.integration.api.person.Status;
 @RequiredArgsConstructor
 public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailService {
 
-    private final PersonIntegrationService personIntegrationService;
+    private final GetPersonService getPersonService;
     private static final String SPACE = " ";
 
     @Override
     public Object getPrincipal(String personId) {
         validatePersonId(personId);
-        final var personResponse = personIntegrationService.getPerson(
+        final var personResponse = getPersonService.getPerson(
             PersonRequest.builder()
                 .personId(personId)
                 .build()

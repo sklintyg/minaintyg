@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.integration.api.person;
 
-public interface PersonIntegrationService {
+public interface GetPersonService {
 
     PersonResponse getPerson(PersonRequest personRequest);
 }
