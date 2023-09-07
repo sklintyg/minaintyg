@@ -16,6 +16,7 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
 
   private final GetPersonService getPersonService;
   private static final String SPACE = " ";
+  private static final String EMPTY = "";
 
   @Override
   public Object getPrincipal(String personId) {
@@ -38,7 +39,14 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
   }
 
   private String buildPersonName(Person person) {
-    return person.getFornamn() + SPACE + person.getEfternamn();
+    return person.getFornamn()
+        + SPACE
+        + includeMiddleName(person.getMellannamn())
+        + person.getEfternamn();
+  }
+
+  private String includeMiddleName(String middleName) {
+    return middleName != null ? middleName + SPACE : EMPTY;
   }
 
   private static void handleCommunicationFault(String personId, PersonResponse personResponse) {

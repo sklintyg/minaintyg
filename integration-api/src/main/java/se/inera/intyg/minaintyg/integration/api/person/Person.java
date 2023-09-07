@@ -13,5 +13,6 @@ public class Person {
 
   private String personnummer;
   private String fornamn;
+  private String mellannamn;
   private String efternamn;
 }
