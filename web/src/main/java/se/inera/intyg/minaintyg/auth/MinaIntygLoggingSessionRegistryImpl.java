@@ -19,7 +19,6 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
     super(sessionRepository);
     this.sessionRepository = sessionRepository;
     this.monitoringService = monitoringService;
-
   }
 
   @Override
