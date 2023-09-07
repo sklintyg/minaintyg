@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +28,11 @@ public class TestabilityController {
     return TestPersonResponse.builder()
         .testPerson(persons)
         .build();
+  }
+
+  @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+  public MinaIntygUser user() {
+    return (MinaIntygUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 
   private void invalidateSessionAndClearContext(HttpServletRequest request) {
