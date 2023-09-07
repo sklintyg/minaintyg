@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.config;
+package se.inera.intyg.minaintyg.integration.intygproxyservice.person.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

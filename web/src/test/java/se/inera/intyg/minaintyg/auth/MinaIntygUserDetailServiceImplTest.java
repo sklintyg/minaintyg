@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.auth;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -9,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.PUIntegrationService;
-import se.inera.intyg.minaintyg.integration.dto.Person;
-import se.inera.intyg.minaintyg.integration.dto.PersonRequest;
-import se.inera.intyg.minaintyg.integration.dto.PersonResponse;
-import se.inera.intyg.minaintyg.integration.dto.Status;
+import se.inera.intyg.minaintyg.integration.api.person.Person;
+import se.inera.intyg.minaintyg.integration.api.person.PersonIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
+import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
+import se.inera.intyg.minaintyg.integration.api.person.Status;
 
 @ExtendWith(MockitoExtension.class)
 class MinaIntygUserDetailServiceImplTest {
@@ -23,9 +24,10 @@ class MinaIntygUserDetailServiceImplTest {
     private static final String PERSON_LASTNAME = "Johansson";
     private static final String PERSON_NAME = "Arnold Johansson";
     @Mock
-    private PUIntegrationService puIntegrationService;
+    private PersonIntegrationService personIntegrationService;
     @InjectMocks
     private MinaIntygUserDetailServiceImpl minaIntygUserDetailService;
+
     @Test
     void shouldThrowIlligalArgumentExceptionIfNoPersonIdIsNull() {
         assertThrows(IllegalArgumentException.class, () -> minaIntygUserDetailService.getPrincipal(null));
@@ -34,14 +36,14 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldThrowPersonNotFoundExceptionIfResponseHasStatusNotFound() {
         final var puResponse = getPuResponse(Status.NOT_FOUND);
-        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
+        when(personIntegrationService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
         assertThrows(PersonNotFoundException.class, () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
     }
 
     @Test
     void shouldThrowPUServiceExceptionIfResponseHasStatusError() {
         final var puResponse = getPuResponse(Status.ERROR);
-        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
+        when(personIntegrationService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
         assertThrows(PUServiceException.class, () -> minaIntygUserDetailService.getPrincipal(PERSON_ID));
     }
 
@@ -53,7 +55,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldReturnTypeMinaIntygUser() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
+        when(personIntegrationService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(principal.getClass(), MinaIntygUser.class);
     }
@@ -61,7 +63,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldSetPersonIdFromPUResponseToUserObject() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
+        when(personIntegrationService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(PERSON_ID, principal.getPatientId());
     }
@@ -69,7 +71,7 @@ class MinaIntygUserDetailServiceImplTest {
     @Test
     void shouldSetNameFromPUResponseToUserObject() {
         final var puResponse = getPuResponse(Status.FOUND);
-        when(puIntegrationService.getPersonResponse(any(PersonRequest.class))).thenReturn(puResponse);
+        when(personIntegrationService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
         final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID);
         assertEquals(PERSON_NAME, principal.getPatientName());
     }

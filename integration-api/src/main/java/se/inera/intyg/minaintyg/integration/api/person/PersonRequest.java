@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.dto;
+package se.inera.intyg.minaintyg.integration.api.person;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
