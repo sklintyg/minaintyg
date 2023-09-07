@@ -56,7 +56,6 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
     } else {
       //TODO: Add loggging
     }
-
     super.removeSessionInformation(sessionId);
   }
 
