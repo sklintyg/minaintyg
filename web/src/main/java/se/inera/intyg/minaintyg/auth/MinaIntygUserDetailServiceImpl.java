@@ -43,16 +43,17 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
 
   private static void handleCommunicationFault(String personId, PersonResponse personResponse) {
     if (personResponse.getStatus().equals(Status.NOT_FOUND)) {
-      log.error("Person identified by '{}' not found in PU-service, cannot login.", personId);
+      log.error("Person identified by '{}' not found in intygproxyservice, cannot login.",
+          personId);
       throw new PersonNotFoundException(
           "Person identified by '" + personId + "' not found in PU-service");
     }
     if (personResponse.getStatus().equals(Status.ERROR)) {
-      log.warn("Error communicating with PU service, cannot query person '{}", personId);
+      log.warn("Error communicating with intygproxyservice, cannot query person '{}", personId);
       throw new PUServiceException("Error communication with PU-service");
     }
   }
-  
+
   private void validatePersonId(String personId) {
     if (personId == null || personId.trim().isEmpty()) {
       throw new IllegalArgumentException(

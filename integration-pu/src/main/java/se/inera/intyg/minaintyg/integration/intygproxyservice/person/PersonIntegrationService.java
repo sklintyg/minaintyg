@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonService;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
+import se.inera.intyg.minaintyg.integration.api.person.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetPersonFromIntygProxyService;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetPersonFromIntygProxyServiceImpl;
 
@@ -25,8 +26,9 @@ public class PersonIntegrationService implements GetPersonService {
     try {
       return getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest);
     } catch (Exception exception) {
-      log.error("Not able to get person from intygproxyservice. {}", exception.getMessage());
-      throw new RuntimeException("Unable to get person from intygproxyservice");
+      return PersonResponse.builder()
+          .status(Status.ERROR)
+          .build();
     }
   }
 
