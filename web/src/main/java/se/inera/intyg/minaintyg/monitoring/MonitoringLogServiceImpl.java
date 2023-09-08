@@ -1,23 +1,25 @@
 package se.inera.intyg.minaintyg.monitoring;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.util.HashUtility;
 
+@Slf4j
 @Service
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
   private static final Object SPACE = " ";
-  private static final Logger LOGGER = LoggerFactory.getLogger(MonitoringLogServiceImpl.class);
 
   @Override
-  public void logUserLogin(String personId) {
-    logEvent(MonitoringEvent.USER_LOGIN, personId);
+  public void logUserLogin(String personId, String loginMethod) {
+    // Hantera bindestreck
+    // logback MDC
+    logEvent(MonitoringEvent.CITIZEN_LOGIN, HashUtility.hash(personId), loginMethod);
   }
 
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
-    LOGGER.info(buildMessage(event), logMsgArgs);
+    log.info(buildMessage(event), logMsgArgs);
   }
 
   private String buildMessage(MonitoringEvent logEvent) {
@@ -27,8 +29,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   private enum MonitoringEvent {
-    USER_LOGIN("Login user '{}'");
-
+    CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'");
     private final String message;
 
     MonitoringEvent(String message) {

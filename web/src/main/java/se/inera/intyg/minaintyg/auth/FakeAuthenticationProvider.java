@@ -18,7 +18,8 @@ public class FakeAuthenticationProvider implements AuthenticationProvider {
       return null;
     }
     final var credentials = (FakeCredentials) authentication.getCredentials();
-    final var principal = minaIntygUserDetailService.getPrincipal(credentials.getPersonId());
+    final var principal = minaIntygUserDetailService.getPrincipal(credentials.getPersonId(),
+        LoginMethod.FAKE);
     return new FakeAuthenticationToken(credentials, principal, buildGrantedAuthorities(principal));
   }
 

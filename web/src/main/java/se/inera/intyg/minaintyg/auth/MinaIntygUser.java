@@ -17,9 +17,12 @@ public class MinaIntygUser implements Serializable {
   private final String personId;
   private final String personName;
 
-  public MinaIntygUser(String personId, String personName) {
+  private final LoginMethod loginMethod;
+
+  public MinaIntygUser(String personId, String personName, LoginMethod loginMethod) {
     this.personId = personId;
     this.personName = personName;
+    this.loginMethod = loginMethod;
   }
 
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -28,6 +31,10 @@ public class MinaIntygUser implements Serializable {
 
   public String getPersonId() {
     return this.personId;
+  }
+
+  public LoginMethod getLoginMethod() {
+    return loginMethod;
   }
 
   public String getPersonName() {

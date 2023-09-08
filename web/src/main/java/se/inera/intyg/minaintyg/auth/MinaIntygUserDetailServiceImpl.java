@@ -19,7 +19,7 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
   private static final String EMPTY = "";
 
   @Override
-  public Object getPrincipal(String personId) {
+  public Object getPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
     final var personResponse = getPersonService.getPerson(
         PersonRequest.builder()
@@ -29,13 +29,13 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     if (!personResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personResponse.getStatus());
     }
-    return getMinaIntygUser(personResponse);
+    return getMinaIntygUser(personResponse, loginMethod);
   }
 
-  private MinaIntygUser getMinaIntygUser(PersonResponse personResponse) {
+  private MinaIntygUser getMinaIntygUser(PersonResponse personResponse, LoginMethod loginMethod) {
     final var personId = personResponse.getPerson().getPersonnummer();
     final var personName = buildPersonName(personResponse.getPerson());
-    return new MinaIntygUser(personId, personName);
+    return new MinaIntygUser(personId, personName, loginMethod);
   }
 
   private String buildPersonName(Person person) {

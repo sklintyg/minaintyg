@@ -44,6 +44,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import se.inera.intyg.minaintyg.auth.FakeAuthenticationProvider;
+import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygLoggingSessionRegistryImpl;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -219,7 +220,7 @@ public class WebSecurityConfig {
         return null;
       }
       final var personId = getAttribute(authentication);
-      final var principal = minaIntygUserDetailService.getPrincipal(personId);
+      final var principal = minaIntygUserDetailService.getPrincipal(personId, LoginMethod.ELVA77);
       return new Saml2AuthenticationToken(principal, authentication);
     });
     return authenticationProvider;

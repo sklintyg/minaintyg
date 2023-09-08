@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +25,7 @@ class UserControllerTest {
 
   @Test
   void shouldReturnUser() {
-    final var expectedResult = new MinaIntygUser(PERSON_ID, PERSON_NAME);
+    final var expectedResult = new MinaIntygUser(PERSON_ID, PERSON_NAME, LoginMethod.ELVA77);
     when(minaIntygUserService.getUser()).thenReturn(expectedResult);
     final var actualResult = userController.getUser();
     assertEquals(expectedResult, actualResult);

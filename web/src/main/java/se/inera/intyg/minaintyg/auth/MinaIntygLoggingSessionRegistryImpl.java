@@ -30,7 +30,7 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
     }
 
     final var user = (MinaIntygUser) principal;
-    monitoringService.logUserLogin(user.getPersonId());
+    monitoringService.logUserLogin(user.getPersonId(), user.getLoginMethod().name());
 
     super.registerNewSession(sessionId, principal);
   }
