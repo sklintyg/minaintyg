@@ -32,8 +32,6 @@ public class PersonIntegrationService implements GetPersonService {
   private void validateRequest(PersonRequest personRequest) {
     if (personRequest == null || personRequest.getPersonId() == null || personRequest.getPersonId()
         .isEmpty()) {
-      log.error("No valid personRequest was provided: {}, cannot get person from intygproxy.",
-          personRequest);
       throw new IllegalArgumentException("Valid personRequest was not provided: " + personRequest);
     }
   }

@@ -10,7 +10,7 @@ dependencies {
     }
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
-    runtimeOnly project(":integration-pu")
+    runtimeOnly project(":integration-intyg-proxy-service")
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"

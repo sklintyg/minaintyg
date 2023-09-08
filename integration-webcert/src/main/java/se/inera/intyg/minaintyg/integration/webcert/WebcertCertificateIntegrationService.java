@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.intygproxyservice.person.webcert;
+package se.inera.intyg.minaintyg.integration.webcert;
 
 import org.springframework.stereotype.Service;
 
