@@ -3,3 +3,5 @@ rootProject.name = 'minaintyg'
 include 'web'
 include 'integration-api'
 include 'integration-webcert'
+include 'integration-intyg-proxy-service'
+

@@ -3,12 +3,22 @@ plugins {
 }
 
 dependencies {
+    constraints {
+        implementation "org.opensaml:opensaml-core:4.2.0"
+        implementation "org.opensaml:opensaml-saml-api:4.2.0"
+        implementation "org.opensaml:opensaml-saml-impl:4.2.0"
+    }
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
+    runtimeOnly project(":integration-intyg-proxy-service")
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.security:spring-security-saml2-service-provider'
     implementation "org.springframework.session:spring-session-core"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "org.springframework.session:spring-session-data-redis"
+    implementation "redis.clients:jedis"
 
     compileOnly "org.projectlombok:lombok"
 
@@ -23,7 +33,6 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
-
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
 }
