@@ -180,6 +180,7 @@ public class WebSecurityConfig {
     request.requestMatchers("/links").permitAll();
     request.requestMatchers("/config").permitAll();
     request.requestMatchers("/error/**").permitAll();
+    request.requestMatchers("/actuator/health").permitAll();
   }
 
   @Bean
