@@ -1,6 +1,7 @@
 plugins {
     id "org.springframework.boot" version "3.1.2"
 }
+def applicationDir = "${rootProject.projectDir}/devops/dev"
 dependencies {
     constraints {
         implementation "org.opensaml:opensaml-core:4.2.0"
@@ -31,7 +32,6 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
-def applicationDir = "${rootProject.projectDir}/devops/dev"
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
     systemProperty("application.dir", "${rootProject.projectDir}/devops/dev")
