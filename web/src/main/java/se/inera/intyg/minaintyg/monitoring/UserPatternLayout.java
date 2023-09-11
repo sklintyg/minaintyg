@@ -21,10 +21,6 @@ package se.inera.intyg.minaintyg.monitoring;
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 
-/**
- * Logback {@link PatternLayout} PatternLayout implementation that exposes user and session
- * information.
- */
 public class UserPatternLayout extends PatternLayoutEncoder {
 
   static {

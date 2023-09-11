@@ -21,7 +21,6 @@ package se.inera.intyg.minaintyg.monitoring;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import java.util.Objects;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.util.HashUtility;
@@ -38,12 +37,11 @@ public class UserConverter extends ClassicConverter {
     if (minaIntygUser == null) {
       return "noUser";
     }
-    return HashUtility.hash(minaIntygUser.getPersonId()) + "," + minaIntygUser.getPersonName()
-        + "," + minaIntygUser.getLoginMethod();
+    return HashUtility.hash(minaIntygUser.getPersonId()) + "," + minaIntygUser.getLoginMethod();
   }
 
-  MinaIntygUser minaIntygUser() {
-    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+  private MinaIntygUser minaIntygUser() {
+    final var auth = SecurityContextHolder.getContext().getAuthentication();
 
     if (Objects.isNull(auth)) {
       return null;

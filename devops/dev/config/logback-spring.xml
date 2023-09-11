@@ -1,5 +1,7 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
+  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+<!--  <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
 
   <property name="TIMESTAMP" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
   <property name="LEVEL" value="%highlight(%-5level)" />
@@ -8,8 +10,9 @@
   <property name="LOGGER" value="%logger{10}" />
   <property name="LINE" value="%msg%n"/>
 
+  <logger name="org.apache.cxf" level="off" />
+
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <withJansi>true</withJansi>
     <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
       <markers>Monitoring,Validation</markers>
       <onMatch>DENY</onMatch>
@@ -21,7 +24,6 @@
   </appender>
 
   <appender name="MONITORING" class="ch.qos.logback.core.ConsoleAppender">
-    <withJansi>true</withJansi>
     <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
       <marker>Monitoring</marker>
       <onMatch>ACCEPT</onMatch>
@@ -33,7 +35,6 @@
   </appender>
 
   <appender name="VALIDATION" class="ch.qos.logback.core.ConsoleAppender">
-    <withJansi>true</withJansi>
     <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
       <marker>Validation</marker>
       <onMatch>ACCEPT</onMatch>

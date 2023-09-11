@@ -52,13 +52,26 @@ class MonitoringLogServiceImplTest {
   class LogUserLogin {
 
     @Test
-    void shouldLogHashedPersonId() {
+    void shouldLogWhenUserLogin() {
       monitoringLogService.logUserLogin(PERSON_ID, LoginMethod.ELVA77.name());
       final var hashedPersonId = HashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "CITIZEN_LOGIN Citizen '" + hashedPersonId + "' logged in using login method 'ELVA77'");
     }
   }
+
+  @Nested
+  class LogUserLogout {
+
+    @Test
+    void shouldLogWhenUserLogout() {
+      monitoringLogService.logUserLogout(PERSON_ID, LoginMethod.ELVA77.name());
+      final var hashedPersonId = HashUtility.hash(PERSON_ID);
+      verifyLog(Level.INFO,
+          "CITIZEN_LOGOUT Citizen '" + hashedPersonId + "' logged out using login method 'ELVA77'");
+    }
+  }
+
 
   private void verifyLog(Level logLevel, String logMessage) {
     verify(mockAppender).doAppend(captorLoggingEvent.capture());

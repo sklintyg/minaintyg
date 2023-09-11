@@ -9,17 +9,21 @@ import se.inera.intyg.minaintyg.util.HashUtility;
 @Service
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
-  private static final Object SPACE = " ";
+  private static final String SPACE = " ";
 
   @Override
   public void logUserLogin(String personId, String loginMethod) {
-    // Hantera bindestreck
-    // logback MDC
     logEvent(MonitoringEvent.CITIZEN_LOGIN, HashUtility.hash(personId), loginMethod);
   }
 
+  @Override
+  public void logUserLogout(String personId, String loginMethod) {
+    logEvent(MonitoringEvent.CITIZEN_LOGOUT, HashUtility.hash(personId), loginMethod);
+  }
+
+
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
-    log.info(buildMessage(event), logMsgArgs);
+    log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
   }
 
   private String buildMessage(MonitoringEvent logEvent) {
@@ -29,7 +33,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   private enum MonitoringEvent {
-    CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'");
+    CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
+    CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'");
     private final String message;
 
     MonitoringEvent(String message) {

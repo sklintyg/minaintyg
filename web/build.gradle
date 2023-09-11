@@ -22,8 +22,6 @@ dependencies {
 
     compileOnly "org.projectlombok:lombok"
 
-    developmentOnly "org.springframework.boot:spring-boot-devtools"
-
     annotationProcessor "org.projectlombok:lombok"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
@@ -45,7 +43,7 @@ tasks.register("appRunDebug") {
         bootRun.configure {
             jvmArgs = [
                     "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841",
-                    "-Dlogback.file=${applicationDir}/config/logback-dev.xml",]
+                    "-Dlogging.config=${applicationDir}/config/logback-spring.xml",]
         }
     }
     finalizedBy("bootRun")
@@ -55,7 +53,7 @@ tasks.register("appRun") {
     println("######## Running in normal mode ########")
     doFirst {
         bootRun.configure {
-            jvmArgs = ["-Dlogback.file=${applicationDir}/config/logback-dev.xml"]
+            jvmArgs = ["-Dlogging.config=${applicationDir}/config/logback-spring.xml"]
         }
     }
     finalizedBy("bootRun")

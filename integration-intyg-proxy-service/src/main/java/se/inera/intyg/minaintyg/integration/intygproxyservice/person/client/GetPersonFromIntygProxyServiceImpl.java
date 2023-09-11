@@ -21,10 +21,10 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
 
   public GetPersonFromIntygProxyServiceImpl(
       @Qualifier(value = "intygProxyWebClient") WebClient webClient,
-      @Value("${integration.intygProxy.scheme}") String scheme,
-      @Value("${integration.intygProxy.baseurl}") String baseUrl,
-      @Value("${integration.intygProxy.port}") int port,
-      @Value("${integration.intygProxy.pu.endpoint}") String puEndpoint) {
+      @Value("${integration.intygproxyservice.scheme}") String scheme,
+      @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
+      @Value("${integration.intygproxyservice.port}") int port,
+      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
