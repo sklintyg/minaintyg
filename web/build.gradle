@@ -1,7 +1,6 @@
 plugins {
     id "org.springframework.boot" version "3.1.2"
 }
-
 dependencies {
     constraints {
         implementation "org.opensaml:opensaml-core:4.2.0"
@@ -34,15 +33,19 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
+def applicationDir = "${rootProject.projectDir}/devops/dev"
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
+    systemProperty("application.dir", "${rootProject.projectDir}/devops/dev")
 }
 
 tasks.register("appRunDebug") {
     println("######## Running in Debug mode ########")
     doFirst {
         bootRun.configure {
-            jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841"
+            jvmArgs = [
+                    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841",
+                    "-Dlogback.file=${applicationDir}/config/logback-dev.xml",]
         }
     }
     finalizedBy("bootRun")
@@ -50,5 +53,10 @@ tasks.register("appRunDebug") {
 
 tasks.register("appRun") {
     println("######## Running in normal mode ########")
+    doFirst {
+        bootRun.configure {
+            jvmArgs = ["-Dlogback.file=${applicationDir}/config/logback-dev.xml"]
+        }
+    }
     finalizedBy("bootRun")
 }
