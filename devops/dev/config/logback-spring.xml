@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
   <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
-<!--  <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
 
   <property name="TIMESTAMP" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
   <property name="LEVEL" value="%highlight(%-5level)" />
