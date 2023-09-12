@@ -31,7 +31,7 @@ class MinaIntygLoggingSessionRegistryImplTest {
 
   private static final String PERSON_ID = "personId";
   private static final String SESSION_ID = "sessionId";
-  private static final String PERSON_NAMN = "personName";
+  private static final String PERSON_NAME = "personName";
   private static final LoginMethod LOGIN_METHOD = LoginMethod.ELVA77;
 
   @Nested
@@ -39,7 +39,11 @@ class MinaIntygLoggingSessionRegistryImplTest {
 
     @Test
     void shouldLogIfPrincipalIsMinaIntygUser() {
-      final var principal = new MinaIntygUser(PERSON_ID, PERSON_NAMN, LOGIN_METHOD);
+      final var principal = MinaIntygUser.builder()
+          .personId(PERSON_ID)
+          .personName(PERSON_NAME)
+          .loginMethod(LOGIN_METHOD)
+          .build();
       minaIntygLoggingSessionRegistry.registerNewSession(SESSION_ID, principal);
       verify(monitoringLogService).logUserLogin(principal.getPersonId(),
           principal.getLoginMethod().name());
@@ -58,7 +62,11 @@ class MinaIntygLoggingSessionRegistryImplTest {
 
     @Test
     void shouldLogIfPrincipalIsMinaIntygUser() {
-      final var principal = new MinaIntygUser(PERSON_ID, PERSON_NAMN, LOGIN_METHOD);
+      final var principal = MinaIntygUser.builder()
+          .personId(PERSON_ID)
+          .personName(PERSON_NAME)
+          .loginMethod(LOGIN_METHOD)
+          .build();
       mockSession(principal);
       minaIntygLoggingSessionRegistry.removeSessionInformation(SESSION_ID);
       verify(monitoringLogService).logUserLogout(principal.getPersonId(),

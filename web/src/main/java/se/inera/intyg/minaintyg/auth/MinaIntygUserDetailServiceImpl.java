@@ -29,13 +29,17 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     if (!personResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personResponse.getStatus());
     }
-    return getMinaIntygUser(personResponse, loginMethod);
+    return buildMinaIntygUser(personResponse, loginMethod);
   }
 
-  private MinaIntygUser getMinaIntygUser(PersonResponse personResponse, LoginMethod loginMethod) {
+  private MinaIntygUser buildMinaIntygUser(PersonResponse personResponse, LoginMethod loginMethod) {
     final var personId = personResponse.getPerson().getPersonnummer();
     final var personName = buildPersonName(personResponse.getPerson());
-    return new MinaIntygUser(personId, personName, loginMethod);
+    return MinaIntygUser.builder()
+        .personId(personId)
+        .personName(personName)
+        .loginMethod(loginMethod)
+        .build();
   }
 
   private String buildPersonName(Person person) {

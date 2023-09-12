@@ -16,6 +16,7 @@ class UserConverterTest {
 
   private static final String NO_USER = "noUser";
   private static final String PERSON_ID = "191212121212";
+  private static final String PERSON_NAME = "personName";
   private UserConverter userConverter;
 
   @BeforeEach
@@ -24,15 +25,19 @@ class UserConverterTest {
   }
 
   @Test
-  void shouldReturnUserIfGetUserFromPrincipalIsEmpty() {
+  void shouldNotReturnUserInfoIfGetUserFromPrincipalIsEmpty() {
     TestPrincipalHelper.setUnknownPrincipal(new Object());
     final var result = userConverter.convert(null);
     assertEquals(NO_USER, result);
   }
 
   @Test
-  void shouldReturnUserIfGetUserFromPrincipalIsNotEmpty() {
-    final var user = new MinaIntygUser(PERSON_ID, "name", LoginMethod.FAKE);
+  void shouldReturnUserInfoIfGetUserFromPrincipalIsNotEmpty() {
+    final var user = MinaIntygUser.builder()
+        .personId(PERSON_ID)
+        .personName(PERSON_NAME)
+        .loginMethod(LoginMethod.ELVA77)
+        .build();
     final var expectedResult = HashUtility.hash(user.getPersonId()) + "," + user.getLoginMethod();
     TestPrincipalHelper.setMinaIntygUserAsPrincipal(user);
     final var result = userConverter.convert(null);

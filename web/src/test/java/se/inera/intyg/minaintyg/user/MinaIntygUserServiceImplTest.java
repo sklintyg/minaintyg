@@ -19,14 +19,20 @@ class MinaIntygUserServiceImplTest {
 
   @Test
   void shouldReturnUserFromPrincipal() {
-    final var expectedUser = Optional.of(new MinaIntygUser(PERSON_ID, PERSON_NAME, LOGIN_METHOD));
+    final var expectedUser = Optional.of(
+        MinaIntygUser.builder()
+            .personId(PERSON_ID)
+            .personName(PERSON_NAME)
+            .loginMethod(LOGIN_METHOD)
+            .build()
+    );
     TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedUser.get());
     final var actualUser = minaIntygUserService.getUser();
     assertEquals(expectedUser, actualUser);
   }
 
   @Test
-  void shouldNotReturnUserFromPrincipalIfPrincipalNotHasTypeMinaIntygUser() {
+  void shouldNotReturnUserFromPrincipalIfPrincipalNotIsInstanceOfMinaIntygUser() {
     final var user = new Object();
     TestPrincipalHelper.setUnknownPrincipal(user);
     final var actualUser = minaIntygUserService.getUser();

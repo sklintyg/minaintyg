@@ -27,7 +27,11 @@ class UserControllerTest {
   @Test
   void shouldReturnUser() {
     final var expectedResult = Optional.of(
-        new MinaIntygUser(PERSON_ID, PERSON_NAME, LoginMethod.ELVA77));
+        MinaIntygUser.builder()
+            .personId(PERSON_ID)
+            .personName(PERSON_NAME)
+            .loginMethod(LoginMethod.ELVA77)
+            .build());
     when(minaIntygUserService.getUser()).thenReturn(expectedResult);
     final var actualResult = userController.getUser();
     assertEquals(expectedResult.get(), actualResult);
