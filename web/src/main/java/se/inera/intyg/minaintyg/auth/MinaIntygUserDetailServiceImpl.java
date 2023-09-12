@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonService;
-import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
-import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
+import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
 @Slf4j
 @Service
@@ -15,8 +14,7 @@ import se.inera.intyg.minaintyg.integration.api.person.Status;
 public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailService {
 
   private final GetPersonService getPersonService;
-  private static final String SPACE = " ";
-  private static final String EMPTY = "";
+  private final MinaIntygUserService minaIntygUserService;
 
   @Override
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
@@ -29,28 +27,7 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     if (!personResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personResponse.getStatus());
     }
-    return buildMinaIntygUser(personResponse, loginMethod);
-  }
-
-  private MinaIntygUser buildMinaIntygUser(PersonResponse personResponse, LoginMethod loginMethod) {
-    final var personId = personResponse.getPerson().getPersonnummer();
-    final var personName = buildPersonName(personResponse.getPerson());
-    return MinaIntygUser.builder()
-        .personId(personId)
-        .personName(personName)
-        .loginMethod(loginMethod)
-        .build();
-  }
-
-  private String buildPersonName(Person person) {
-    return person.getFornamn()
-        + SPACE
-        + includeMiddleName(person.getMellannamn())
-        + person.getEfternamn();
-  }
-
-  private String includeMiddleName(String middleName) {
-    return middleName != null ? middleName + SPACE : EMPTY;
+    return minaIntygUserService.buildUserFromPersonResponse(personResponse, loginMethod);
   }
 
   private static void handleCommunicationFault(Status status) {

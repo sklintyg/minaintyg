@@ -15,6 +15,7 @@ import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
+import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
 @ExtendWith(MockitoExtension.class)
 class MinaIntygUserDetailServiceImplTest {
@@ -25,6 +26,8 @@ class MinaIntygUserDetailServiceImplTest {
   private static final String PERSON_NAME = "Arnold Johansson";
   private static final String PERSON_NAME_WITH_MIDDLENAME = "Arnold React Johansson";
   private static final String PERSON_MIDDLENAME = "React";
+  @Mock
+  private MinaIntygUserService minaIntygUserService;
   @Mock
   private GetPersonService getPersonService;
   @InjectMocks
@@ -62,14 +65,19 @@ class MinaIntygUserDetailServiceImplTest {
   void shouldReturnTypeMinaIntygUser() {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
+    when(minaIntygUserService.buildUserFromPersonResponse(puResponse,
+        LoginMethod.ELVA77)).thenReturn(getUser());
     final var principal = minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
     assertEquals(principal.getClass(), MinaIntygUser.class);
   }
 
   @Test
   void shouldSetPersonIdFromPUResponseToUserObject() {
+    final var expectedUser = getUser();
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
+    when(minaIntygUserService.buildUserFromPersonResponse(puResponse,
+        LoginMethod.ELVA77)).thenReturn(expectedUser);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
     assertEquals(PERSON_ID, principal.getPersonId());
@@ -77,30 +85,26 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldSetNameFromPUResponseToUserObject() {
+    final var expectedUser = getUser();
     final var puResponse = getPuResponse(Status.FOUND, null);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
+    when(minaIntygUserService.buildUserFromPersonResponse(puResponse,
+        LoginMethod.ELVA77)).thenReturn(expectedUser);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
     assertEquals(PERSON_NAME, principal.getPersonName());
   }
 
   @Test
-  void shouldSetNameIfSurnamePresentFromPUResponseToUserObject() {
-    final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
-    when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-        LoginMethod.ELVA77);
-    assertEquals(PERSON_NAME_WITH_MIDDLENAME, principal.getPersonName());
-  }
-
-  @Test
   void shouldSetLoginMethodToUserObject() {
-    final var expectedLoginMethod = LoginMethod.ELVA77;
+    final var expectedUser = getUser();
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
+    when(minaIntygUserService.buildUserFromPersonResponse(puResponse,
+        LoginMethod.ELVA77)).thenReturn(expectedUser);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-        expectedLoginMethod);
-    assertEquals(expectedLoginMethod, principal.getLoginMethod());
+        expectedUser.getLoginMethod());
+    assertEquals(expectedUser.getLoginMethod(), principal.getLoginMethod());
   }
 
   private static PersonResponse getPuResponse(Status status, String middleName) {
@@ -114,6 +118,14 @@ class MinaIntygUserDetailServiceImplTest {
                 .build()
         )
         .status(status)
+        .build();
+  }
+
+  private static MinaIntygUser getUser() {
+    return MinaIntygUser.builder()
+        .personId(PERSON_ID)
+        .personName(PERSON_NAME)
+        .loginMethod(LoginMethod.ELVA77)
         .build();
   }
 }
