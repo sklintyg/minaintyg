@@ -1,10 +1,9 @@
 package se.inera.intyg.minaintyg.monitoring;
 
+import static se.inera.intyg.minaintyg.user.UserToolkit.getUserFromPrincipal;
+
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import java.util.Objects;
-import org.springframework.security.core.context.SecurityContextHolder;
-import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 public class UserConverter extends ClassicConverter {
@@ -15,23 +14,11 @@ public class UserConverter extends ClassicConverter {
   }
 
   private String userInfo() {
-    final var minaIntygUser = minaIntygUser();
-    if (minaIntygUser == null) {
+    final var minaIntygUser = getUserFromPrincipal();
+    if (minaIntygUser.isEmpty()) {
       return "noUser";
     }
-    return HashUtility.hash(minaIntygUser.getPersonId()) + "," + minaIntygUser.getLoginMethod();
+    final var user = minaIntygUser.get();
+    return HashUtility.hash(user.getPersonId()) + "," + user.getLoginMethod();
   }
-
-  private MinaIntygUser minaIntygUser() {
-    final var auth = SecurityContextHolder.getContext().getAuthentication();
-
-    if (Objects.isNull(auth)) {
-      return null;
-    }
-
-    final var principal = auth.getPrincipal();
-
-    return (principal instanceof MinaIntygUser) ? (MinaIntygUser) principal : null;
-  }
-
 }

@@ -33,7 +33,7 @@ class MinaIntygUserDetailServiceImplTest {
   @Test
   void shouldThrowIlligalArgumentExceptionIfNoPersonIdIsNull() {
     assertThrows(IllegalArgumentException.class,
-        () -> minaIntygUserDetailService.getPrincipal(null, LoginMethod.ELVA77));
+        () -> minaIntygUserDetailService.buildPrincipal(null, LoginMethod.ELVA77));
   }
 
   @Test
@@ -41,7 +41,7 @@ class MinaIntygUserDetailServiceImplTest {
     final var puResponse = getPuResponse(Status.NOT_FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     assertThrows(RuntimeException.class,
-        () -> minaIntygUserDetailService.getPrincipal(PERSON_ID, LoginMethod.ELVA77));
+        () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
   }
 
   @Test
@@ -49,12 +49,12 @@ class MinaIntygUserDetailServiceImplTest {
     final var puResponse = getPuResponse(Status.ERROR, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     assertThrows(RuntimeException.class,
-        () -> minaIntygUserDetailService.getPrincipal(PERSON_ID, LoginMethod.ELVA77));
+        () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
   }
 
   @Test
   void shouldThrowIlligalArgumentExceptionIfNoPersonIdIsEmtpy() {
-    assertThrows(IllegalArgumentException.class, () -> minaIntygUserDetailService.getPrincipal("",
+    assertThrows(IllegalArgumentException.class, () -> minaIntygUserDetailService.buildPrincipal("",
         LoginMethod.ELVA77));
   }
 
@@ -62,7 +62,7 @@ class MinaIntygUserDetailServiceImplTest {
   void shouldReturnTypeMinaIntygUser() {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = minaIntygUserDetailService.getPrincipal(PERSON_ID, LoginMethod.ELVA77);
+    final var principal = minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
     assertEquals(principal.getClass(), MinaIntygUser.class);
   }
 
@@ -70,7 +70,7 @@ class MinaIntygUserDetailServiceImplTest {
   void shouldSetPersonIdFromPUResponseToUserObject() {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID,
+    final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
     assertEquals(PERSON_ID, principal.getPersonId());
   }
@@ -79,7 +79,7 @@ class MinaIntygUserDetailServiceImplTest {
   void shouldSetNameFromPUResponseToUserObject() {
     final var puResponse = getPuResponse(Status.FOUND, null);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID,
+    final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
     assertEquals(PERSON_NAME, principal.getPersonName());
   }
@@ -88,7 +88,7 @@ class MinaIntygUserDetailServiceImplTest {
   void shouldSetNameIfSurnamePresentFromPUResponseToUserObject() {
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID,
+    final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
     assertEquals(PERSON_NAME_WITH_MIDDLENAME, principal.getPersonName());
   }
@@ -98,7 +98,7 @@ class MinaIntygUserDetailServiceImplTest {
     final var expectedLoginMethod = LoginMethod.ELVA77;
     final var puResponse = getPuResponse(Status.FOUND, PERSON_MIDDLENAME);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
-    final var principal = (MinaIntygUser) minaIntygUserDetailService.getPrincipal(PERSON_ID,
+    final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         expectedLoginMethod);
     assertEquals(expectedLoginMethod, principal.getLoginMethod());
   }

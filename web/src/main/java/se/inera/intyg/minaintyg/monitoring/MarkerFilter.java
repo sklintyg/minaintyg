@@ -14,7 +14,6 @@ import org.slf4j.MarkerFactory;
 public class MarkerFilter extends AbstractMatcherFilter<ILoggingEvent> {
 
   public static final Marker MONITORING = MarkerFactory.getMarker(LogMarkers.MONITORING.getName());
-  public static final Marker VALIDATION = MarkerFactory.getMarker(LogMarkers.VALIDATION.getName());
 
   List<Marker> markersToMatch = new ArrayList<>();
 

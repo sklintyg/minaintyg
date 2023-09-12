@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.user;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,9 +26,10 @@ class UserControllerTest {
 
   @Test
   void shouldReturnUser() {
-    final var expectedResult = new MinaIntygUser(PERSON_ID, PERSON_NAME, LoginMethod.ELVA77);
+    final var expectedResult = Optional.of(
+        new MinaIntygUser(PERSON_ID, PERSON_NAME, LoginMethod.ELVA77));
     when(minaIntygUserService.getUser()).thenReturn(expectedResult);
     final var actualResult = userController.getUser();
-    assertEquals(expectedResult, actualResult);
+    assertEquals(expectedResult.get(), actualResult);
   }
 }

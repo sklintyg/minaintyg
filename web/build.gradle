@@ -34,7 +34,7 @@ tasks.named("test") {
 }
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
-    systemProperty("application.dir", "${rootProject.projectDir}/devops/dev")
+    systemProperty("application.dir", "${applicationDir}/devops/dev")
 }
 
 tasks.register("appRunDebug") {

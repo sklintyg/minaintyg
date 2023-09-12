@@ -1,7 +1,9 @@
 package se.inera.intyg.minaintyg.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
@@ -17,9 +19,17 @@ class MinaIntygUserServiceImplTest {
 
   @Test
   void shouldReturnUserFromPrincipal() {
-    final var expectedUser = new MinaIntygUser(PERSON_ID, PERSON_NAME, LOGIN_METHOD);
-    TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedUser);
+    final var expectedUser = Optional.of(new MinaIntygUser(PERSON_ID, PERSON_NAME, LOGIN_METHOD));
+    TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedUser.get());
     final var actualUser = minaIntygUserService.getUser();
     assertEquals(expectedUser, actualUser);
+  }
+
+  @Test
+  void shouldNotReturnUserFromPrincipalIfPrincipalNotHasTypeMinaIntygUser() {
+    final var user = new Object();
+    TestPrincipalHelper.setUnknownPrincipal(user);
+    final var actualUser = minaIntygUserService.getUser();
+    assertTrue(actualUser.isEmpty());
   }
 }

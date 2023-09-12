@@ -19,7 +19,7 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
   private static final String EMPTY = "";
 
   @Override
-  public Object getPrincipal(String personId, LoginMethod loginMethod) {
+  public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
     final var personResponse = getPersonService.getPerson(
         PersonRequest.builder()

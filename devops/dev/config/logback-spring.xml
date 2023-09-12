@@ -1,46 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 seconds">
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
   <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
-
-  <property name="TIMESTAMP" value="%d{yyyy-MM-dd HH:mm:ss.SSS}"/>
-  <property name="LEVEL" value="%highlight(%-5level)" />
-  <property name="SESSION" value="%X{req.sessionInfo:--}"/>
-  <property name="TRACE" value="%X{req.traceId:--}"/>
-  <property name="LOGGER" value="%logger{10}" />
-  <property name="LINE" value="%msg%n"/>
-
-  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
-      <markers>Monitoring,Validation</markers>
-      <onMatch>DENY</onMatch>
-      <onMismatch>ACCEPT</onMismatch>
-    </filter>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${TIMESTAMP} ${LEVEL} [console,${SESSION},${TRACE}] --- ${LOGGER} : ${LINE}</pattern>
-    </encoder>
-  </appender>
-
-  <appender name="MONITORING" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
-      <marker>Monitoring</marker>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-    <encoder class="se.inera.intyg.minaintyg.monitoring.UserPatternLayout">
-      <pattern>${TIMESTAMP} ${LEVEL} [monitoring,${SESSION},${TRACE},%user] --- %boldGreen(${LOGGER}) : ${LINE}</pattern>
-    </encoder>
-  </appender>
-
-  <appender name="VALIDATION" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
-      <marker>Validation</marker>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${TIMESTAMP} ${LEVEL} [validation,${SESSION},${TRACE}] --- %boldCyan(${LOGGER}) : ${LINE}</pattern>
-    </encoder>
-  </appender>
+  <include resource="logback-spring-base.xml"/>
 
   <logger name="org.springframework" level="WARN" />
   <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="WARN" />
@@ -54,7 +15,5 @@
   <root level="INFO">
     <appender-ref ref="CONSOLE" />
     <appender-ref ref="MONITORING" />
-    <appender-ref ref="VALIDATION" />
   </root>
-
 </configuration>

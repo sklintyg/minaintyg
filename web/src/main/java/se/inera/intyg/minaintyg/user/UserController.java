@@ -15,6 +15,6 @@ public class UserController {
 
   @GetMapping("/")
   public MinaIntygUser getUser() {
-    return minaIntygUserService.getUser();
+    return minaIntygUserService.getUser().orElse(null);
   }
 }

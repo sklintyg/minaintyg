@@ -18,7 +18,7 @@ public class FakeAuthenticationProvider implements AuthenticationProvider {
       return null;
     }
     final var credentials = (FakeCredentials) authentication.getCredentials();
-    final var principal = minaIntygUserDetailService.getPrincipal(credentials.getPersonId(),
+    final var principal = minaIntygUserDetailService.buildPrincipal(credentials.getPersonId(),
         LoginMethod.FAKE);
     return new FakeAuthenticationToken(credentials, principal, buildGrantedAuthorities(principal));
   }
@@ -30,7 +30,7 @@ public class FakeAuthenticationProvider implements AuthenticationProvider {
 
   private Collection<? extends GrantedAuthority> buildGrantedAuthorities(Object details) {
     if (details instanceof MinaIntygUser) {
-      return ((MinaIntygUser) details).getAuthorities();
+      return ((MinaIntygUser) details).getRoles();
     } else {
       return new ArrayList<>();
     }
