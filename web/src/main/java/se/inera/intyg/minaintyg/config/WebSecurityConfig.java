@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.DEV_PROFILE;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
+import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.TESTABILITY_PROFILE;
 
 import java.io.File;
 import java.security.cert.CertificateException;
@@ -146,7 +146,7 @@ public class WebSecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .cors(withDefaults());
 
-    if (profiles.contains(DEV_PROFILE)) {
+    if (profiles.contains(TESTABILITY_PROFILE)) {
       configureFake(http);
     }
 
