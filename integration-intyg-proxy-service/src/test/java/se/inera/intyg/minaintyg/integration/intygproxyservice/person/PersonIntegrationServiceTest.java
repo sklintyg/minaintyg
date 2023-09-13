@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
+import se.inera.intyg.minaintyg.integration.api.person.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetPersonFromIntygProxyServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,6 +21,9 @@ class PersonIntegrationServiceTest {
 
   @Mock
   private GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService;
+
+  @Mock
+  private PersonConverterService personConverterService;
 
   @InjectMocks
   private PersonIntegrationService personIntegrationService;
@@ -61,16 +65,23 @@ class PersonIntegrationServiceTest {
   @Test
   void shouldReturnPersonResponse() {
     final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
-    final var expectedResult = PersonResponse.builder()
+    final var expectedResult = getPersonResponse();
+    when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
+        expectedResult);
+    when(personConverterService.convert(expectedResult.getPerson())).thenReturn(
+        expectedResult.getPerson());
+    final var actualResult = personIntegrationService.getPerson(personRequest);
+    assertEquals(expectedResult, actualResult);
+  }
+
+  private static PersonResponse getPersonResponse() {
+    return PersonResponse.builder()
         .person(
             Person.builder()
                 .personnummer(PERSON_ID)
                 .build()
         )
+        .status(Status.FOUND)
         .build();
-    when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
-        expectedResult);
-    final var actualResult = personIntegrationService.getPerson(personRequest);
-    assertEquals(expectedResult, actualResult);
   }
 }

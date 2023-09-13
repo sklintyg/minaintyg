@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonService;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
-import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
 @Slf4j
 @Service
@@ -14,7 +13,6 @@ import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailService {
 
   private final GetPersonService getPersonService;
-  private final MinaIntygUserService minaIntygUserService;
 
   @Override
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
@@ -27,7 +25,11 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     if (!personResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personResponse.getStatus());
     }
-    return minaIntygUserService.buildUserFromPersonResponse(personResponse, loginMethod);
+    return MinaIntygUser.builder()
+        .personId(personResponse.getPerson().getPersonnummer())
+        .personName(personResponse.getPerson().getNamn())
+        .loginMethod(loginMethod)
+        .build();
   }
 
   private static void handleCommunicationFault(Status status) {
