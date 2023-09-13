@@ -6,8 +6,5 @@ public enum LoginMethod {
   public String value() {
     return name();
   }
-
-  public static LoginMethod fromValue(String v) {
-    return valueOf(v);
-  }
+  
 }
