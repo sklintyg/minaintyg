@@ -26,8 +26,8 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
       handleCommunicationFault(personResponse.getStatus());
     }
     return MinaIntygUser.builder()
-        .personId(personResponse.getPerson().getPersonnummer())
-        .personName(personResponse.getPerson().getNamn())
+        .personId(personResponse.getPerson().getPersonId())
+        .personName(personResponse.getPerson().getName())
         .loginMethod(loginMethod)
         .build();
   }

@@ -15,19 +15,12 @@ import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
-import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
 @ExtendWith(MockitoExtension.class)
 class MinaIntygUserDetailServiceImplTest {
 
   private static final String PERSON_ID = "191212121212";
-  private static final String PERSON_FIRSTNAME = "Arnold";
-  private static final String PERSON_LASTNAME = "Johansson";
   private static final String PERSON_NAME = "Arnold Johansson";
-  private static final String PERSON_NAME_WITH_MIDDLENAME = "Arnold React Johansson";
-  private static final String PERSON_MIDDLENAME = "React";
-  @Mock
-  private MinaIntygUserService minaIntygUserService;
   @Mock
   private GetPersonService getPersonService;
   @InjectMocks
@@ -41,7 +34,7 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldThrowRuntimeExceptionIfResponseHasStatusNotFound() {
-    final var puResponse = getPuResponse(Status.NOT_FOUND);
+    final var puResponse = getPersonResponse(Status.NOT_FOUND);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     assertThrows(RuntimeException.class,
         () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
@@ -49,7 +42,7 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldThrowRuntimeExceptionIfResponseHasStatusError() {
-    final var puResponse = getPuResponse(Status.ERROR);
+    final var puResponse = getPersonResponse(Status.ERROR);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     assertThrows(RuntimeException.class,
         () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
@@ -63,7 +56,7 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldReturnTypeMinaIntygUser() {
-    final var puResponse = getPuResponse(Status.FOUND);
+    final var puResponse = getPersonResponse(Status.FOUND);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
     assertEquals(principal.getClass(), MinaIntygUser.class);
@@ -71,7 +64,7 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldSetPersonIdFromPUResponseToUserObject() {
-    final var puResponse = getPuResponse(Status.FOUND);
+    final var puResponse = getPersonResponse(Status.FOUND);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
@@ -80,7 +73,7 @@ class MinaIntygUserDetailServiceImplTest {
 
   @Test
   void shouldSetNameFromPUResponseToUserObject() {
-    final var puResponse = getPuResponse(Status.FOUND);
+    final var puResponse = getPersonResponse(Status.FOUND);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         LoginMethod.ELVA77);
@@ -90,19 +83,19 @@ class MinaIntygUserDetailServiceImplTest {
   @Test
   void shouldSetLoginMethodToUserObject() {
     final var expectedUser = getUser();
-    final var puResponse = getPuResponse(Status.FOUND);
+    final var puResponse = getPersonResponse(Status.FOUND);
     when(getPersonService.getPerson(any(PersonRequest.class))).thenReturn(puResponse);
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
         expectedUser.getLoginMethod());
     assertEquals(expectedUser.getLoginMethod(), principal.getLoginMethod());
   }
 
-  private static PersonResponse getPuResponse(Status status) {
+  private static PersonResponse getPersonResponse(Status status) {
     return PersonResponse.builder()
         .person(
             Person.builder()
-                .namn(PERSON_NAME)
-                .personnummer(PERSON_ID)
+                .name(PERSON_NAME)
+                .personId(PERSON_ID)
                 .build()
         )
         .status(status)

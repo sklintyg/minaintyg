@@ -14,17 +14,17 @@ import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetP
 public class PersonIntegrationService implements GetPersonService {
 
   private final GetPersonFromIntygProxyService getPersonFromIntygProxyService;
-  private final PersonConverterService personConverterService;
+  private final PersonSvarConverter personSvarConverter;
 
   @Override
   public PersonResponse getPerson(PersonRequest personRequest) {
     validateRequest(personRequest);
     try {
-      final var personFromIntygProxy = getPersonFromIntygProxyService.getPersonFromIntygProxy(
+      final var personSvarDTO = getPersonFromIntygProxyService.getPersonFromIntygProxy(
           personRequest);
       return PersonResponse.builder()
-          .person(personConverterService.convert(personFromIntygProxy.getPerson()))
-          .status(personFromIntygProxy.getStatus())
+          .person(personSvarConverter.convertPerson(personSvarDTO.getPerson()))
+          .status(personSvarConverter.convertStatus(personSvarDTO.getStatus()))
           .build();
     } catch (Exception exception) {
       throw new RuntimeException(exception);

@@ -13,10 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
-import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
-import se.inera.intyg.minaintyg.integration.api.person.Status;
 
 @ExtendWith(MockitoExtension.class)
 class GetPersonServiceImplTest {
@@ -53,15 +50,15 @@ class GetPersonServiceImplTest {
   @Test
   void shouldReturnPersonResponse() throws JsonProcessingException {
     final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
-    final var expectedResponse = PersonResponse.builder()
+    final var expectedResponse = PersonSvarDTO.builder()
         .person(
-            Person.builder()
+            PersonDTO.builder()
                 .personnummer(PERSON_ID)
                 .fornamn(PERSON_FIRSTNAME)
                 .efternamn(PERSON_LASTNAME)
                 .build()
         )
-        .status(Status.FOUND)
+        .status(StatusDTO.FOUND)
         .build();
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
