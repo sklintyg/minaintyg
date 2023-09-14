@@ -37,10 +37,10 @@ class GetCertificatesFromIntygstjanstServiceImplTest {
     void initialize() {
         final var scheme = "http";
         final var baseUrl = "localhost";
-        final var getPersonEndpoint = "/api/v1/person";
+        final var endpoint = "/api/certificate";
         getCertificatesFromIntygstjanstService = new GetCertificatesFromIntygstjanstServiceImpl(
                 WebClient.create(baseUrl), scheme, baseUrl,
-                mockWebServer.getPort(), getPersonEndpoint);
+                mockWebServer.getPort(), endpoint);
     }
 
     @Test
