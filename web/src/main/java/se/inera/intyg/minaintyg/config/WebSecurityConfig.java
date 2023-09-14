@@ -34,7 +34,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import se.inera.intyg.minaintyg.auth.FakeAuthenticationProvider;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
-import se.inera.intyg.minaintyg.auth.MinaIntygLoggingSessionRegistryImpl;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 import se.inera.intyg.minaintyg.filter.FakeAuthenticationFilter;
@@ -55,7 +54,7 @@ public class WebSecurityConfig {
   @Value("${saml.idp.metadata.location}")
   private String samlIdpMetadataLocation;
 
-  private List<String> activeProfiles;
+  private final List<String> activeProfiles;
 
   public WebSecurityConfig(MinaIntygUserDetailService minaIntygUserDetailService,
       Environment environment) {
@@ -126,10 +125,10 @@ public class WebSecurityConfig {
         .securityContext(context -> context.requireExplicitSave(false));
   }
 
-  private static void configureAlwaysPermitted(
+  private void configureAlwaysPermitted(
       AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry request) {
     request.requestMatchers("/actuator/health").permitAll();
-    if (profiles.contains(TESTABILITY_PROFILE)) {
+    if (activeProfiles.contains(TESTABILITY_PROFILE)) {
       request.requestMatchers("/fake/sso").permitAll();
       request.requestMatchers("/api/testability/**").permitAll();
     }

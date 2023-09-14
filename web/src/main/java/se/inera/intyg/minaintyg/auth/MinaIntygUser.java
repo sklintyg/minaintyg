@@ -21,7 +21,7 @@ public class MinaIntygUser implements Saml2AuthenticatedPrincipal, Serializable 
 
   @Serial
   private static final long serialVersionUID = 1L;
-  private Set<SimpleGrantedAuthority> roles = Collections.singleton(
+  private final Set<SimpleGrantedAuthority> roles = Collections.singleton(
       new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
   private String personId;
   private String personName;
