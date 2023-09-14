@@ -4,17 +4,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
 
-  private final MinaIntygUserService minaIntygUserService;
+  private final UserService userService;
 
   @GetMapping
-  public MinaIntygUser getUser() {
-    return minaIntygUserService.getUser().orElse(null);
+  public UserResponseDTO getUser() {
+    return userService.getLoggedInUser().map(minaIntygUser ->
+        UserResponseDTO.builder()
+            .personId(minaIntygUser.getPersonId())
+            .personName(minaIntygUser.getPersonName())
+            .loginMethod(minaIntygUser.getLoginMethod())
+            .build()
+    ).orElse(null);
   }
 }

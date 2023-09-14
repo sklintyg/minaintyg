@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 
 @Service
-public class MinaIntygUserServiceImpl implements MinaIntygUserService {
+public class UserService {
 
 
-  @Override
-  public Optional<MinaIntygUser> getUser() {
+  public Optional<MinaIntygUser> getLoggedInUser() {
     return getUserFromPrincipal();
   }
 

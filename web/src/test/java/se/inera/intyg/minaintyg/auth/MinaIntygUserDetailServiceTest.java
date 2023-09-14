@@ -17,14 +17,14 @@ import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
 
 @ExtendWith(MockitoExtension.class)
-class MinaIntygUserDetailServiceImplTest {
+class MinaIntygUserDetailServiceTest {
 
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_NAME = "Arnold Johansson";
   @Mock
   private GetPersonService getPersonService;
   @InjectMocks
-  private MinaIntygUserDetailServiceImpl minaIntygUserDetailService;
+  private MinaIntygUserDetailService minaIntygUserDetailService;
 
   @Test
   void shouldThrowIlligalArgumentExceptionIfNoPersonIdIsNull() {

@@ -1,7 +1,10 @@
 package se.inera.intyg.minaintyg.testability;
 
+import static se.inera.intyg.minaintyg.config.WebSecurityConfig.TESTABILITY_PROFILE;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,7 @@ import se.inera.intyg.minaintyg.auth.FakeCredentials;
 
 @RestController
 @RequiredArgsConstructor
+@Profile(TESTABILITY_PROFILE)
 @RequestMapping("/api/testability")
 public class TestabilityController {
 

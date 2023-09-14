@@ -2,15 +2,14 @@ package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
-import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.TESTABILITY_PROFILE;
+import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.SINGLE_LOGOUT_SERVICE_LOCATION;
 
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
@@ -18,10 +17,10 @@ import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
@@ -30,6 +29,7 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
+import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -37,10 +37,15 @@ import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
   private final MinaIntygUserDetailService minaIntygUserDetailService;
-  public static final String ELEG = "eleg";
+  private final Environment environment;
+
+  public static final String TESTABILITY_PROFILE = "testability";
+  public static final String TESTABILITY_API = "/api/testability/**";
+  public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
 
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
@@ -49,14 +54,6 @@ public class WebSecurityConfig {
   private String password;
   @Value("${saml.idp.metadata.location}")
   private String samlIdpMetadataLocation;
-
-  private final List<String> activeProfiles;
-
-  public WebSecurityConfig(MinaIntygUserDetailService minaIntygUserDetailService,
-      Environment environment) {
-    this.minaIntygUserDetailService = minaIntygUserDetailService;
-    this.activeProfiles = Arrays.asList(environment.getActiveProfiles());
-  }
 
   @Bean
   public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository(
@@ -75,8 +72,8 @@ public class WebSecurityConfig {
 
     final var registration = RelyingPartyRegistrations
         .fromMetadataLocation(samlIdpMetadataLocation)
-        .registrationId(ELEG)
-        .singleLogoutServiceLocation("{baseUrl}/logout/saml2/slo")
+        .registrationId(AuthenticationConstants.ELEG_PARTY_REGISTRATION_ID)
+        .singleLogoutServiceLocation(SINGLE_LOGOUT_SERVICE_LOCATION)
         .signingX509Credentials(signing ->
             signing.add(
                 Saml2X509Credential.signing(appPrivateKey, appCertificate)
@@ -91,14 +88,16 @@ public class WebSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http,
       RelyingPartyRegistrationRepository relyingPartyRegistrationRepository) throws Exception {
 
+    if (environment.acceptsProfiles(Profiles.of(TESTABILITY_PROFILE))) {
+      configureTestability(http);
+    }
+
     http
-        .httpBasic(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(request -> request.
-            requestMatchers("/actuator/**").permitAll().
-            requestMatchers("/api/testability/**").permitAll()
+            requestMatchers(HEALTH_CHECK_ENDPOINT).permitAll()
         )
         .authorizeHttpRequests(request -> request.
-            requestMatchers("/api/**").fullyAuthenticated()
+            requestMatchers("/**").fullyAuthenticated()
         )
         .saml2Login(saml2 -> saml2
             .relyingPartyRegistrationRepository(relyingPartyRegistrationRepository)
@@ -109,16 +108,19 @@ public class WebSecurityConfig {
             )
         )
         .saml2Logout(withDefaults())
-        .saml2Metadata(withDefaults())
-        .csrf(csrfConfigurer -> csrfConfigurer
-            .ignoringRequestMatchers("/api/testability/**")
-        );
-
-    if (activeProfiles.contains(TESTABILITY_PROFILE)) {
-      // configureFake(http);
-    }
+        .saml2Metadata(withDefaults());
 
     return http.build();
+  }
+
+  private void configureTestability(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(request -> request.
+            requestMatchers(TESTABILITY_API).permitAll()
+        )
+        .csrf(csrfConfigurer -> csrfConfigurer
+            .ignoringRequestMatchers(TESTABILITY_API)
+        );
   }
 
   // https://stackoverflow.com/questions/72508155/spring-saml2-and-spring-session-savedrequest-not-retrieved-cannot-redirect-to
