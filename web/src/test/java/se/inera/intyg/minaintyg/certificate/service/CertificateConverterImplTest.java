@@ -149,7 +149,7 @@ class CertificateConverterImplTest {
 
         @BeforeEach
         void setup() {
-            Mockito.when(certificateStatusService.all(
+            Mockito.when(certificateStatusService.get(
                     anyList(),
                     any(CertificateRecipient.class),
                     any(LocalDateTime.class)
@@ -164,7 +164,7 @@ class CertificateConverterImplTest {
             final var captor = ArgumentCaptor.forClass(List.class);
 
             verify(certificateStatusService)
-                    .all(captor.capture(), any(CertificateRecipient.class), any(LocalDateTime.class));
+                    .get(captor.capture(), any(CertificateRecipient.class), any(LocalDateTime.class));
 
 
             assertEquals(RELATIONS, captor.getValue());
@@ -177,7 +177,7 @@ class CertificateConverterImplTest {
             final var captor = ArgumentCaptor.forClass(CertificateRecipient.class);
 
             verify(certificateStatusService)
-                    .all(anyList(), captor.capture(), any(LocalDateTime.class));
+                    .get(anyList(), captor.capture(), any(LocalDateTime.class));
 
 
             assertEquals(RECIPIENT, captor.getValue());
@@ -190,7 +190,7 @@ class CertificateConverterImplTest {
             final var captor = ArgumentCaptor.forClass(LocalDateTime.class);
 
             verify(certificateStatusService)
-                    .all(anyList(), any(CertificateRecipient.class), captor.capture());
+                    .get(anyList(), any(CertificateRecipient.class), captor.capture());
 
 
             assertEquals(ISSUED, captor.getValue());

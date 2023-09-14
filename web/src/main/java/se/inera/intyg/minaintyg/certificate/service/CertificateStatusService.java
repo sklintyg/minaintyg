@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CertificateStatusService {
-    List<CertificateStatusType> all(List<CertificateRelation> relations,
+    List<CertificateStatusType> get(List<CertificateRelation> relations,
                                     CertificateRecipient recipient,
                                     LocalDateTime issued);
 

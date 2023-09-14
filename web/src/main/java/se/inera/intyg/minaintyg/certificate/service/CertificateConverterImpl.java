@@ -46,7 +46,7 @@ public class CertificateConverterImpl implements CertificateConverter {
                                 .build()
                 )
                 .issued(certificate.getIssued().toString())
-                .statuses(certificateStatusService.all(
+                .statuses(certificateStatusService.get(
                             certificate.getRelations(),
                             certificate.getRecipient(),
                             certificate.getIssued()

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CertificateRelation {
-    String timestamp;
+    String timestamp; // TODO: Should this be localdatetime?
     String certificateId;
     CertificateRelationType type;
 }
