@@ -8,4 +8,5 @@ import lombok.Data;
 public class CertificateType {
     String id;
     String name;
+    String version;
 }

@@ -1,10 +1,7 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.certificate.service.dto.CertificateIssuer;
-import se.inera.intyg.minaintyg.certificate.service.dto.CertificateSummary;
-import se.inera.intyg.minaintyg.certificate.service.dto.CertificateType;
-import se.inera.intyg.minaintyg.certificate.service.dto.CertificateUnit;
+import se.inera.intyg.minaintyg.certificate.service.dto.*;
 import se.inera.intyg.minaintyg.integration.api.certificate.dto.Certificate;
 
 @Service
@@ -20,14 +17,15 @@ public class CertificateConverterImpl implements CertificateConverter {
     }
 
     @Override
-    public se.inera.intyg.minaintyg.certificate.service.dto.Certificate convert(Certificate certificate) {
-        return se.inera.intyg.minaintyg.certificate.service.dto.Certificate
+    public CertificateDTO convert(Certificate certificate) {
+        return CertificateDTO
                 .builder()
                 .id(certificate.getId())
                 .type(CertificateType
                         .builder()
                         .name(certificate.getType().getName())
                         .id(certificate.getType().getId())
+                        .version(certificate.getType().getVersion())
                         .build())
                 .unit(CertificateUnit
                                 .builder()
