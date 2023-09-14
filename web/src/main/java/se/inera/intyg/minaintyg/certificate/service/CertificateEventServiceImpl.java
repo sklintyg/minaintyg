@@ -9,7 +9,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateRelat
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CertificateEventServiceImpl implements CertificateEventService {
@@ -22,7 +21,7 @@ public class CertificateEventServiceImpl implements CertificateEventService {
                         ? CertificateEventFactory.renewed(relation)
                         : CertificateEventFactory.renews(relation)
                 )
-                .collect(Collectors.toList());
+                .toList();
 
         events.add(CertificateEventFactory.sent(recipient));
 
@@ -30,6 +29,6 @@ public class CertificateEventServiceImpl implements CertificateEventService {
                 .stream()
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

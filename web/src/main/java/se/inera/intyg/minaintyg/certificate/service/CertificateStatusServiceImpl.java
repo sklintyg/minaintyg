@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CertificateStatusServiceImpl implements CertificateStatusService {
@@ -28,7 +27,7 @@ public class CertificateStatusServiceImpl implements CertificateStatusService {
             statuses = relations
                     .stream()
                     .map(this::renewed)
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         statuses.add(sent(recipient));
@@ -38,7 +37,7 @@ public class CertificateStatusServiceImpl implements CertificateStatusService {
                 .stream()
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Optional<CertificateStatusType> renewed(CertificateRelation relation) {

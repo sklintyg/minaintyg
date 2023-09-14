@@ -8,8 +8,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesServi
 import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesRequest;
 import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ListCertificatesServiceImpl implements ListCertificatesService {
@@ -37,7 +35,7 @@ public class ListCertificatesServiceImpl implements ListCertificatesService {
                        .getContent()
                        .stream()
                        .map(certificateConverter::convert)
-                       .collect(Collectors.toList())
+                       .toList()
                )
                .build();
 
