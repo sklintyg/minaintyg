@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.DEV_PROFILE;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
+import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.TESTABILITY_PROFILE;
 
 import java.io.File;
 import java.security.cert.CertificateException;
@@ -44,6 +44,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import se.inera.intyg.minaintyg.auth.FakeAuthenticationProvider;
+import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygLoggingSessionRegistryImpl;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -145,7 +146,7 @@ public class WebSecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .cors(withDefaults());
 
-    if (profiles.contains(DEV_PROFILE)) {
+    if (profiles.contains(TESTABILITY_PROFILE)) {
       configureFake(http);
     }
 
@@ -220,7 +221,7 @@ public class WebSecurityConfig {
         return null;
       }
       final var personId = getAttribute(authentication);
-      final var principal = minaIntygUserDetailService.getPrincipal(personId);
+      final var principal = minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
       return new Saml2AuthenticationToken(principal, authentication);
     });
     return authenticationProvider;

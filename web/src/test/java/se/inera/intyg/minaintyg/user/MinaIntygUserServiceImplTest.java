@@ -1,40 +1,49 @@
 package se.inera.intyg.minaintyg.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
+import se.inera.intyg.minaintyg.testhelper.TestPrincipalHelper;
 
 class MinaIntygUserServiceImplTest {
 
   private static final String PERSON_ID = "personId";
   private static final String PERSON_NAME = "personName";
+  private static final String FIRSTNAME = "firstname";
+  private static final String LASTNAME = "lastNnme";
+  private static final String SURNAME = "surname";
+  private static final LoginMethod LOGIN_METHOD = LoginMethod.ELVA77;
 
   private final MinaIntygUserServiceImpl minaIntygUserService = new MinaIntygUserServiceImpl();
 
-  @Test
-  void shouldReturnUserFromPrincipal() {
-    final var expectedUser = new MinaIntygUser(PERSON_ID, PERSON_NAME);
-    setUserAsPrincipal(expectedUser);
-    final var actualUser = minaIntygUserService.getUser();
-    assertEquals(expectedUser, actualUser);
-  }
+  @Nested
+  class GetUser {
 
-  private void setUserAsPrincipal(final MinaIntygUser user) {
-    Authentication auth = new AbstractAuthenticationToken(null) {
-      @Override
-      public Object getCredentials() {
-        return null;
-      }
+    @Test
+    void shouldReturnUserFromPrincipal() {
+      final var expectedUser = Optional.of(
+          MinaIntygUser.builder()
+              .personId(PERSON_ID)
+              .personName(PERSON_NAME)
+              .loginMethod(LOGIN_METHOD)
+              .build()
+      );
+      TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedUser.get());
+      final var actualUser = minaIntygUserService.getUser();
+      assertEquals(expectedUser, actualUser);
+    }
 
-      @Override
-      public Object getPrincipal() {
-        return user;
-      }
-    };
-    SecurityContextHolder.getContext().setAuthentication(auth);
+    @Test
+    void shouldNotReturnUserFromPrincipalIfPrincipalNotIsInstanceOfMinaIntygUser() {
+      final var user = new Object();
+      TestPrincipalHelper.setUnknownPrincipal(user);
+      final var actualUser = minaIntygUserService.getUser();
+      assertTrue(actualUser.isEmpty());
+    }
   }
 }
