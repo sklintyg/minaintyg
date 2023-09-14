@@ -154,13 +154,7 @@ public class WebSecurityConfig {
   }
 
   private void configureFake(HttpSecurity http) throws Exception {
-    http.
-        authorizeHttpRequests((request) -> {
-              request.requestMatchers("/fake/sso").permitAll();
-              request.requestMatchers("/welcome").permitAll();
-              request.requestMatchers("/testability/**").permitAll();
-            }
-        )
+    http
         .addFilterAt(fakeAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
         .securityContext(context -> context.requireExplicitSave(false));
   }
@@ -182,6 +176,10 @@ public class WebSecurityConfig {
     request.requestMatchers("/config").permitAll();
     request.requestMatchers("/error/**").permitAll();
     request.requestMatchers("/actuator/health").permitAll();
+    if (profiles.contains(TESTABILITY_PROFILE)) {
+      request.requestMatchers("/fake/sso").permitAll();
+      request.requestMatchers("/api/testability/**").permitAll();
+    }
   }
 
   @Bean
