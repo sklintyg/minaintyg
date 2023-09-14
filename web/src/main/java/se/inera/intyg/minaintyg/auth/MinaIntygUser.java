@@ -2,35 +2,26 @@ package se.inera.intyg.minaintyg.auth;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MinaIntygUser implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 1L;
-  private final Set<SimpleGrantedAuthority> roles = Collections.singleton(
+  Set<SimpleGrantedAuthority> roles = Collections.singleton(
       new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
-  private final String personId;
-  private final String personName;
+  private String personId;
+  private String personName;
+  private LoginMethod loginMethod;
 
-  public MinaIntygUser(String personId, String personName) {
-    this.personId = personId;
-    this.personName = personName;
-  }
-
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles;
-  }
-
-  public String getPersonId() {
-    return this.personId;
-  }
-
-  public String getPersonName() {
-    return personName;
-  }
 }

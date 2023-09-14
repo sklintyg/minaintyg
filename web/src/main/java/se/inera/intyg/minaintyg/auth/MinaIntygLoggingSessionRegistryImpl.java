@@ -30,8 +30,7 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
     }
 
     final var user = (MinaIntygUser) principal;
-    monitoringService.logUserLogin(user.getPersonId());
-
+    monitoringService.logUserLogin(user.getPersonId(), user.getLoginMethod().name());
     super.registerNewSession(sessionId, principal);
   }
 
@@ -50,12 +49,7 @@ public class MinaIntygLoggingSessionRegistryImpl<T extends Session> extends
       super.removeSessionInformation(sessionId);
       return;
     }
-
-    if (session.isExpired()) {
-      //TODO: Add loggging
-    } else {
-      //TODO: Add loggging
-    }
+    monitoringService.logUserLogout(user.getPersonId(), user.getLoginMethod().name());
     super.removeSessionInformation(sessionId);
   }
 

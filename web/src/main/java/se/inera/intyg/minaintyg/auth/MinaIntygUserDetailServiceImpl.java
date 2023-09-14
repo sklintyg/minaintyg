@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonService;
-import se.inera.intyg.minaintyg.integration.api.person.Person;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
-import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
 import se.inera.intyg.minaintyg.integration.api.person.Status;
 
 @Slf4j
@@ -15,11 +13,9 @@ import se.inera.intyg.minaintyg.integration.api.person.Status;
 public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailService {
 
   private final GetPersonService getPersonService;
-  private static final String SPACE = " ";
-  private static final String EMPTY = "";
 
   @Override
-  public Object getPrincipal(String personId) {
+  public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
     final var personResponse = getPersonService.getPerson(
         PersonRequest.builder()
@@ -29,24 +25,11 @@ public class MinaIntygUserDetailServiceImpl implements MinaIntygUserDetailServic
     if (!personResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personResponse.getStatus());
     }
-    return getMinaIntygUser(personResponse);
-  }
-
-  private MinaIntygUser getMinaIntygUser(PersonResponse personResponse) {
-    final var personId = personResponse.getPerson().getPersonnummer();
-    final var personName = buildPersonName(personResponse.getPerson());
-    return new MinaIntygUser(personId, personName);
-  }
-
-  private String buildPersonName(Person person) {
-    return person.getFornamn()
-        + SPACE
-        + includeMiddleName(person.getMellannamn())
-        + person.getEfternamn();
-  }
-
-  private String includeMiddleName(String middleName) {
-    return middleName != null ? middleName + SPACE : EMPTY;
+    return MinaIntygUser.builder()
+        .personId(personResponse.getPerson().getPersonId())
+        .personName(personResponse.getPerson().getName())
+        .loginMethod(loginMethod)
+        .build();
   }
 
   private static void handleCommunicationFault(Status status) {

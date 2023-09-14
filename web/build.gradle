@@ -1,7 +1,7 @@
 plugins {
     id "org.springframework.boot" version "3.1.2"
 }
-
+def applicationDir = "${rootProject.projectDir}/devops/dev"
 dependencies {
     constraints {
         implementation "org.opensaml:opensaml-core:4.2.0"
@@ -15,16 +15,14 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation 'org.springframework.security:spring-security-saml2-service-provider'
     implementation "org.springframework.session:spring-session-core"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "org.springframework.session:spring-session-data-redis"
     implementation "redis.clients:jedis"
+    implementation "com.google.guava:guava"
 
     compileOnly "org.projectlombok:lombok"
-
-    developmentOnly "org.springframework.boot:spring-boot-devtools"
 
     annotationProcessor "org.projectlombok:lombok"
 
@@ -37,13 +35,16 @@ tasks.named("test") {
 }
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
+    systemProperty("application.dir", "${applicationDir}")
 }
 
 tasks.register("appRunDebug") {
     println("######## Running in Debug mode ########")
     doFirst {
         bootRun.configure {
-            jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841"
+            jvmArgs = [
+                    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841",
+                    "-Dlogging.config=${applicationDir}/config/logback-spring.xml",]
         }
     }
     finalizedBy("bootRun")
@@ -51,5 +52,10 @@ tasks.register("appRunDebug") {
 
 tasks.register("appRun") {
     println("######## Running in normal mode ########")
+    doFirst {
+        bootRun.configure {
+            jvmArgs = ["-Dlogging.config=${applicationDir}/config/logback-spring.xml"]
+        }
+    }
     finalizedBy("bootRun")
 }

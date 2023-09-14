@@ -13,8 +13,8 @@ public class UserController {
 
   private final MinaIntygUserService minaIntygUserService;
 
-  @GetMapping("")
+  @GetMapping
   public MinaIntygUser getUser() {
-    return minaIntygUserService.getUser();
+    return minaIntygUserService.getUser().orElse(null);
   }
 }
