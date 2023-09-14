@@ -1,57 +1,50 @@
 package se.inera.intyg.minaintyg.auth;
 
 import java.io.Serial;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
+import java.util.Objects;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class FakeAuthenticationToken extends AbstractAuthenticationToken {
 
   @Serial
-  private static final long serialVersionUID = -2796850504529240890L;
+  private static final long serialVersionUID = 1L;
 
-  private FakeCredentials fakeCredentials;
-  private final Set<SimpleGrantedAuthority> roles = Collections.singleton(
-      new SimpleGrantedAuthority("ROLE_ORGANIZATION_DELEGATE"));
+  private final MinaIntygUser minaIntygUser;
 
-  private final Object principal;
-
-  public FakeAuthenticationToken(FakeCredentials fakeCredentials, Object principal,
-      Collection<? extends GrantedAuthority> authorities) {
-    super(authorities);
-    this.fakeCredentials = fakeCredentials;
-    this.principal = principal;
-    
+  public FakeAuthenticationToken(MinaIntygUser minaIntygUser) {
+    super(Collections.emptyList());
+    this.minaIntygUser = minaIntygUser;
     setAuthenticated(true);
-  }
-
-  public Set<SimpleGrantedAuthority> getRoles() {
-    return roles;
   }
 
   @Override
   public Object getCredentials() {
-    return fakeCredentials;
+    return minaIntygUser.getPersonId();
   }
 
   @Override
   public Object getPrincipal() {
-    return principal;
+    return minaIntygUser;
   }
 
   @Override
-  public void eraseCredentials() {
-    super.eraseCredentials();
-    this.fakeCredentials = null;
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+    final var that = (FakeAuthenticationToken) o;
+    return Objects.equals(minaIntygUser, that.minaIntygUser);
   }
 
   @Override
-  public String toString() {
-    return "FakeAuthenticationToken{" +
-        "fakeCredentials=" + fakeCredentials +
-        '}';
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), minaIntygUser);
   }
 }

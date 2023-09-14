@@ -22,7 +22,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
@@ -31,12 +30,9 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import se.inera.intyg.minaintyg.auth.FakeAuthenticationProvider;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
-import se.inera.intyg.minaintyg.filter.FakeAuthenticationFilter;
 
 @Slf4j
 @Configuration
@@ -99,6 +95,9 @@ public class WebSecurityConfig {
         .httpBasic(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(request -> request.
             requestMatchers("/actuator/**").permitAll().
+            requestMatchers("/api/testability/**").permitAll()
+        )
+        .authorizeHttpRequests(request -> request.
             requestMatchers("/api/**").fullyAuthenticated()
         )
         .saml2Login(saml2 -> saml2
@@ -110,7 +109,10 @@ public class WebSecurityConfig {
             )
         )
         .saml2Logout(withDefaults())
-        .saml2Metadata(withDefaults());
+        .saml2Metadata(withDefaults())
+        .csrf(csrfConfigurer -> csrfConfigurer
+            .ignoringRequestMatchers("/api/testability/**")
+        );
 
     if (activeProfiles.contains(TESTABILITY_PROFILE)) {
       // configureFake(http);
@@ -119,37 +121,10 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  private void configureFake(HttpSecurity http) throws Exception {
-    http
-        .addFilterAt(fakeAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
-        .securityContext(context -> context.requireExplicitSave(false));
-  }
-
-  private void configureAlwaysPermitted(
-      AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry request) {
-    request.requestMatchers("/actuator/health").permitAll();
-    if (activeProfiles.contains(TESTABILITY_PROFILE)) {
-      request.requestMatchers("/fake/sso").permitAll();
-      request.requestMatchers("/api/testability/**").permitAll();
-    }
-  }
-
   // https://stackoverflow.com/questions/72508155/spring-saml2-and-spring-session-savedrequest-not-retrieved-cannot-redirect-to
   @Bean
   public DefaultCookieSerializerCustomizer cookieSerializerCustomizer() {
     return cookieSerializer -> cookieSerializer.setSameSite(null);
-  }
-
-  @Bean
-  public FakeAuthenticationFilter fakeAuthenticationFilter() {
-    final var fakeAuthenticationFilter = new FakeAuthenticationFilter();
-    fakeAuthenticationFilter.setAuthenticationManager(
-        new ProviderManager(getFakeAuthenticationProvider()));
-    return fakeAuthenticationFilter;
-  }
-
-  private FakeAuthenticationProvider getFakeAuthenticationProvider() {
-    return new FakeAuthenticationProvider(minaIntygUserDetailService);
   }
 
   private OpenSaml4AuthenticationProvider getOpenSaml4AuthenticationProvider() {
