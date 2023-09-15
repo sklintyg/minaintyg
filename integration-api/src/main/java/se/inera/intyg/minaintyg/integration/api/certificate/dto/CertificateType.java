@@ -1,16 +1,13 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class CertificateType {
-    String id;
-    String name;
-    String version;
+
+  String id;
+  String name;
+  String version;
 }

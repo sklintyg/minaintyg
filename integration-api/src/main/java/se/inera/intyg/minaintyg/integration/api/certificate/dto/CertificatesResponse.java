@@ -1,16 +1,12 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
+import lombok.Builder;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class CertificatesResponse {
-    private List<Certificate> content;
+
+  List<Certificate> content;
 }

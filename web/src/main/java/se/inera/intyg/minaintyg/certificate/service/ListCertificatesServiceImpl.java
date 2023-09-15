@@ -12,32 +12,26 @@ import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 @RequiredArgsConstructor
 public class ListCertificatesServiceImpl implements ListCertificatesService {
 
-    private final GetCertificatesService getCertificatesService;
-    private final MinaIntygUserService userService;
-    private final CertificateConverter certificateConverter;
+  private final GetCertificatesService getCertificatesService;
+  private final MinaIntygUserService userService;
 
-    @Override
-    public ListCertificatesResponse get(ListCertificatesRequest request) {
-       final var response = getCertificatesService.get(
-               CertificatesRequest
-                       .builder()
-                       .patientId(userService.getUser().getPersonId())
-                       .years(request.getYears())
-                       .units(request.getUnits())
-                       .statuses(request.getStatuses())
-                       .certificateTypes(request.getCertificateTypes())
-                       .build()
-        );
+  @Override
+  public ListCertificatesResponse get(ListCertificatesRequest request) {
+    final var response = getCertificatesService.get(
+        CertificatesRequest
+            .builder()
+            .patientId(userService.getUser().isPresent()
+                ? userService.getUser().get().getPersonId() : "")
+            .years(request.getYears())
+            .units(request.getUnits())
+            .statuses(request.getStatuses())
+            .certificateTypes(request.getCertificateTypes())
+            .build()
+    );
 
-       return ListCertificatesResponse.builder()
-               .content(
-                       response
-                       .getContent()
-                       .stream()
-                       .map(certificateConverter::convert)
-                       .toList()
-               )
-               .build();
+    return ListCertificatesResponse.builder()
+        .content(response.getContent())
+        .build();
 
-    }
+  }
 }

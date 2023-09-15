@@ -5,7 +5,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CertificateIssuer {
+public class CertificateEvent {
 
-  String name;
+  String timestamp;
+  String certificateId;
+  String description;
 }

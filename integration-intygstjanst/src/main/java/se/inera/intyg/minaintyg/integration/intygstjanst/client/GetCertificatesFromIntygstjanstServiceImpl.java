@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesResponse;
+import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
 @Service
-public class GetCertificatesFromIntygstjanstServiceImpl implements GetCertificatesFromIntygstjanstService {
+public class GetCertificatesFromIntygstjanstServiceImpl implements
+    GetCertificatesFromIntygstjanstService {
 
   private final WebClient webClient;
   private final String scheme;
@@ -33,7 +34,7 @@ public class GetCertificatesFromIntygstjanstServiceImpl implements GetCertificat
   }
 
   @Override
-  public CertificatesResponse get(CertificatesRequest request) {
+  public CertificatesResponseDTO get(CertificatesRequest request) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
@@ -43,7 +44,7 @@ public class GetCertificatesFromIntygstjanstServiceImpl implements GetCertificat
         .body(Mono.just(request), CertificatesRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
-        .bodyToMono(CertificatesResponse.class)
+        .bodyToMono(CertificatesResponseDTO.class)
         .share()
         .block();
   }
