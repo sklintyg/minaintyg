@@ -20,14 +20,14 @@ import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
 import se.inera.intyg.minaintyg.user.MinaIntygUserService;
 
 @ExtendWith(MockitoExtension.class)
-class ListCertificatesServiceImplTest {
+class ListCertificatesServiceTest {
 
   private static final String PATIENT_ID = "PatientId";
   private static final List<String> YEARS = List.of("2020");
@@ -43,7 +43,7 @@ class ListCertificatesServiceImplTest {
   MinaIntygUserService minaIntygUserService;
 
   @InjectMocks
-  ListCertificatesServiceImpl listCertificatesService;
+  ListCertificatesService listCertificatesService;
 
   @BeforeEach
   void setup() {

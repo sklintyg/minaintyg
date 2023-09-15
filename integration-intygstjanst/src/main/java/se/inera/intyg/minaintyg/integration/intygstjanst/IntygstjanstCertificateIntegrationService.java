@@ -2,8 +2,8 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 
 @Service

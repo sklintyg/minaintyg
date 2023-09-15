@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.certificate.dto;
+package se.inera.intyg.minaintyg.integration.api.certificate.model;
 
 import java.util.List;
 import lombok.Builder;

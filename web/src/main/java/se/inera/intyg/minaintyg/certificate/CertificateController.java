@@ -18,7 +18,7 @@ public class CertificateController {
   private final GetCertificateFilterService getCertificateFilterService;
 
   @PostMapping("")
-  public CertificatesResponse listCertificates(CertificatesRequest request) {
+  public CertificatesResponseDTO listCertificates(CertificatesRequestDTO request) {
     final var listCertificatesRequest =
         ListCertificatesRequest
             .builder()
@@ -28,7 +28,7 @@ public class CertificateController {
             .statuses(request.getStatuses())
             .build();
 
-    return CertificatesResponse
+    return CertificatesResponseDTO
         .builder()
         .content(listCertificatesService.get(listCertificatesRequest).getContent())
         .build();

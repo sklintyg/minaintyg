@@ -1,11 +1,11 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateIssuer;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateSummary;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateType;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateIssuer;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateSummary;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 
 @Service

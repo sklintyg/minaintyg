@@ -1,8 +1,9 @@
 package se.inera.intyg.minaintyg.integration.api.certificate;
 
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
 
 public interface GetCertificatesService {
-    CertificatesResponse get(CertificatesRequest request);
+
+  CertificatesResponse get(CertificatesRequest request);
 }

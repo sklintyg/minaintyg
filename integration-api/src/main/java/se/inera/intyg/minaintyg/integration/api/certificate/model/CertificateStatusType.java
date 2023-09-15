@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.certificate.dto;
+package se.inera.intyg.minaintyg.integration.api.certificate.model;
 
 public enum CertificateStatusType {
   NOT_SENT,

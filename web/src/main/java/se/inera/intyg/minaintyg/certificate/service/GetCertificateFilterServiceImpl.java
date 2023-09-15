@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 
 @Service
 @RequiredArgsConstructor

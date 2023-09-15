@@ -3,8 +3,8 @@ package se.inera.intyg.minaintyg.certificate;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 
 @Data
 @Builder

@@ -17,8 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.dto.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
@@ -49,7 +49,7 @@ class CertificateControllerTest {
   @Nested
   class Request {
 
-    CertificatesRequest request = CertificatesRequest
+    CertificatesRequestDTO request = CertificatesRequestDTO
         .builder()
         .years(YEARS)
         .units(UNITS)
@@ -104,7 +104,7 @@ class CertificateControllerTest {
     @Test
     void shouldSetContent() {
       final var response = certificateController.listCertificates(
-          CertificatesRequest.builder().build());
+          CertificatesRequestDTO.builder().build());
 
       assertEquals(certificates, response.getContent());
     }
