@@ -133,7 +133,7 @@ class CertificateEventServiceTest {
   }
 
   @Nested
-  class RenewsEvent {
+  class ReplacesEvent {
 
     @Test
     void shouldIncludeEventIfRelationExists() {

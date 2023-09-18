@@ -91,7 +91,7 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldNotIncludeStatusIfRelationIsRenews() {
+  void shouldNotIncludeStatusIfRelationIsReplaces() {
     final var response = certificateStatusService.get(REPLACES_RELATIONS, null, null);
 
     assertEquals(0, response.size());
