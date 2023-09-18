@@ -6,8 +6,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.stream.Stream;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,7 @@ public class MdcServletFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     if (request instanceof final HttpServletRequest http) {
-      MDC.put(sessionInfoKey, http.getSession().getId());
+      MDC.put(sessionInfoKey, getSessionIdFromCookie(http));
       MDC.put(traceIdKey, http.getHeader(traceIdHeader));
     }
     try {
@@ -34,5 +36,16 @@ public class MdcServletFilter implements Filter {
     } finally {
       MDC.clear();
     }
+  }
+
+  private String getSessionIdFromCookie(HttpServletRequest http) {
+    final var cookies = http.getCookies();
+    if (cookies == null) {
+      return null;
+    }
+    return Stream.of(cookies)
+        .filter(c -> "SESSION".equals(c.getName()))
+        .map(Cookie::getValue)
+        .findFirst().orElse(null);
   }
 }
