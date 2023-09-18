@@ -32,10 +32,11 @@ public class GetCertificateFilterService {
     return GetCertificateFilterResponse
         .builder()
         .certificateTypes(
-            getList(certificates, (certificate) -> certificate.getType().getId())
+            getList(certificates, Certificate::getType)
         )
         .years(
-            getList(certificates, (certificate) -> certificate.getIssued().substring(0, 4))
+            getList(certificates,
+                (certificate) -> String.valueOf(certificate.getIssued().getYear()))
         )
         .units(
             getList(certificates, Certificate::getUnit)

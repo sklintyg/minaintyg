@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
-import se.inera.intyg.minaintyg.user.MinaIntygUserService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class ListCertificatesServiceTest {
@@ -40,16 +39,15 @@ class ListCertificatesServiceTest {
   GetCertificatesService getCertificatesService;
 
   @Mock
-  MinaIntygUserService minaIntygUserService;
+  UserService userService;
 
   @InjectMocks
   ListCertificatesService listCertificatesService;
 
   @BeforeEach
   void setup() {
-    when(minaIntygUserService.getUser()).thenReturn(
-        Optional.of(
-            new MinaIntygUser(Collections.emptySet(), PATIENT_ID, "name", LoginMethod.FAKE)));
+    when(userService.getLoggedInUser()).thenReturn(
+        Optional.of(new MinaIntygUser(PATIENT_ID, "name", LoginMethod.FAKE)));
 
     when(getCertificatesService.get(any())).thenReturn(
         CertificatesResponse

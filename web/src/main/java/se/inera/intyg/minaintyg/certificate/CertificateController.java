@@ -35,10 +35,10 @@ public class CertificateController {
   }
 
   @GetMapping("/filters")
-  public CertificateFilterResponse getFilters() {
+  public CertificateFilterResponseDTO getFilters() {
     final var response = getCertificateFilterService.get();
 
-    return CertificateFilterResponse
+    return CertificateFilterResponseDTO
         .builder()
         .years(response.getYears())
         .certificateTypes(response.getCertificateTypes())

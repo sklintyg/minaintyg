@@ -48,7 +48,7 @@ public class CertificateConverter {
                 .value(certificate.getSummary().getValue())
                 .build()
         )
-        .issued(certificate.getIssued().toString())
+        .issued(certificate.getIssued())
         .statuses(certificateStatusService.get(
                 certificate.getRelations(),
                 certificate.getRecipient(),
