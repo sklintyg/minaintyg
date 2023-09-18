@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst.client.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRel
 @AllArgsConstructor
 public class CertificateRelationDTO {
 
-  String timestamp; // TODO: Should this be localdatetime?
+  LocalDateTime timestamp;
   String certificateId;
   CertificateRelationType type;
 }

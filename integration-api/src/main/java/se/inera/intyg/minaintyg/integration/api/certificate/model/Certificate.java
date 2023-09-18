@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
@@ -15,5 +16,5 @@ public class Certificate {
   CertificateUnit unit;
   List<CertificateEvent> events;
   List<CertificateStatusType> statuses;
-  String issued;
+  LocalDateTime issued;
 }

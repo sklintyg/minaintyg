@@ -33,14 +33,14 @@ class CertificateEventServiceTest {
           .builder()
           .type(CertificateRelationType.RENEWED)
           .certificateId("certificateId1")
-          .timestamp(LocalDateTime.now().toString())
+          .timestamp(LocalDateTime.now())
           .build());
   private static final List<CertificateRelationDTO> RENEWS_RELATIONS = List.of(
       CertificateRelationDTO
           .builder()
           .type(CertificateRelationType.RENEWS)
           .certificateId("certificateId2")
-          .timestamp(LocalDateTime.now().toString())
+          .timestamp(LocalDateTime.now())
           .build());
 
   @InjectMocks

@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Value;
 
@@ -7,7 +8,7 @@ import lombok.Value;
 @Builder
 public class CertificateEvent {
 
-  String timestamp;
+  LocalDateTime timestamp;
   String certificateId;
   String description;
 }
