@@ -16,7 +16,7 @@ import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 class UserControllerTest {
 
   @Mock
-  private MinaIntygUserServiceImpl minaIntygUserService;
+  private UserService userService;
 
   @InjectMocks
   private UserController userController;
@@ -27,12 +27,18 @@ class UserControllerTest {
   @Test
   void shouldReturnUser() {
     final var expectedResult = Optional.of(
-        MinaIntygUser.builder()
+        UserResponseDTO.builder()
             .personId(PERSON_ID)
             .personName(PERSON_NAME)
             .loginMethod(LoginMethod.ELVA77)
             .build());
-    when(minaIntygUserService.getUser()).thenReturn(expectedResult);
+    when(userService.getLoggedInUser()).thenReturn(
+        Optional.of(MinaIntygUser.builder()
+            .personId(PERSON_ID)
+            .personName(PERSON_NAME)
+            .loginMethod(LoginMethod.ELVA77)
+            .build())
+    );
     final var actualResult = userController.getUser();
     assertEquals(expectedResult.get(), actualResult);
   }

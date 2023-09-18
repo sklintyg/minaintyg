@@ -1,13 +1,10 @@
 plugins {
     id "org.springframework.boot" version "3.1.2"
 }
+
 def applicationDir = "${rootProject.projectDir}/devops/dev"
+
 dependencies {
-    constraints {
-        implementation "org.opensaml:opensaml-core:4.2.0"
-        implementation "org.opensaml:opensaml-saml-api:4.2.0"
-        implementation "org.opensaml:opensaml-saml-impl:4.2.0"
-    }
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
     runtimeOnly project(":integration-intyg-proxy-service")
@@ -15,11 +12,10 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation 'org.springframework.security:spring-security-saml2-service-provider'
-    implementation "org.springframework.session:spring-session-core"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "org.springframework.session:spring-session-data-redis"
-    implementation "redis.clients:jedis"
     implementation "com.google.guava:guava"
 
     compileOnly "org.projectlombok:lombok"
@@ -33,9 +29,11 @@ dependencies {
 tasks.named("test") {
     useJUnitPlatform()
 }
+
 bootRun {
     systemProperty("spring.profiles.active", "testability,dev")
     systemProperty("application.dir", "${applicationDir}")
+    systemProperty("spring.config.additional-location", "file:${applicationDir}/config/")
 }
 
 tasks.register("appRunDebug") {

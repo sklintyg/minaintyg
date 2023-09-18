@@ -15,7 +15,7 @@ public class UserToolkit {
 
     final var principal = auth.getPrincipal();
 
-    return (principal instanceof MinaIntygUser) ? Optional.of((MinaIntygUser) principal)
+    return (principal instanceof MinaIntygUser minaIntygUser) ? Optional.of(minaIntygUser)
         : Optional.empty();
   }
 }

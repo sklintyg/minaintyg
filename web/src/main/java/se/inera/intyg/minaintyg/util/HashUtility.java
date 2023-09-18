@@ -10,7 +10,7 @@ public final class HashUtility {
 
   public static final String EMPTY = "EMPTY";
 
-  private static HashFunction hf = Hashing.sha256();
+  private static final HashFunction hf = Hashing.sha256();
 
   private HashUtility() {
   }

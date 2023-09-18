@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://localhost:8041/saml2/service-provider-metadata/eleg">
+    <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>MIID7DCCAdQCCQCimXki+vmkATANBgkqhkiG9w0BAQ0FADA8MQswCQYDVQQGEwJTRTEVMBMGA1UECgwMU29wcmEgU3RlcmlhMRYwFAYDVQQDDA0yUyBSb290IENBIHYxMB4XDTE5MDQwMTA3MTEyMVoXDTM5MDMyNzA3MTEyMVowNDELMAkGA1UEBhMCU0UxETAPBgNVBAoMCEluZXJhIEFCMRIwEAYDVQQDDAlsb2NhbGhvc3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDGBMQ5mjhU2rctIH0dxwm4qT6CJJglb5HDtC5UzvKkm4RGLDJKyru9nYcC/VPETNG1T7nVy86jXlNf6LKDiX+kJ+R/3Fh1hnPTgdszOFHqzf0s5YRz2owBN0fj7S1Dbqxnj1n16Ex+05W8U88yXEZ6HTUbsYjIBUUUrX6wm3+th/hfj3BnvvpPifS6qrwvhxBA44wTKVvX3nNr1k+refsRYMu9UMCuQ7UtGjWvrWBUBJ3aQ3rrYUI0AOsqr2qF/yfPmscW2ILwLwR+a++oUl0h52pj6Y0xCFuBOQ/J59aIxQ7d4u6uSyvoNLJtXD6OgXbrFd8K6qMaVf2+Fh/M6AvpAgMBAAEwDQYJKoZIhvcNAQENBQADggIBACW9EHq7MOnGYxMMFZG4zdwpVVuJpFzXRIJYbIphOrXBe+bJz0bpetWDiDgeWqEEmk+kB4JH5v2QhfE3HLerW2X5qsxDcSzRAcN+ykzHPaUIHvw7dZnk8cUb3i7kdpmIlb0QRNz7knc9ROt8abxn+KQLPw4Je5WAp4cVyTZKDIn/ju4JY0Mt5Ep3koWbmf2DVktkUc+q+kC3U/YTzFRgJymQD5UjQYOYJTzg8aOE1Rji3SSBhdz7wM1paGlLp8NFNXaGY1dClYiDaNGygktSVKkEeJm+iOiyzNvUQAFJkGbIBAxFqPR/euyMTKYs4JrplzJ55Rgi2oRKiIvQpLHqdK5fnnqyW069ftbvBUnwEF4nMxSqXrGCc0/oqgWBik7+CFL8SRQfGGfpMjmgAt/dQM9vH/GB9gimyBm+GYZB47sBRdSYsD+OxKqFNV69JQN2iWdRhIxlPXNyROzU4muDVsg4y9um360YKUmh3Lb3o7ys4kO5b4fQpfmpe5hcpjOxKnXS1a1sW3J1ujwW9VDJ7bgOPDyyaXhgP+9CODTY3YHmd4ChaOTiG+4i0bdmJVuUowWD81IeSg9rPVS4T4BZuCKh4yMVn0hSJha2qLODWzZ0YH8OX56t7EzjlMtcMXfXPluLAd4PF2PDWEmiY09S9a3K1IS9X4zzaLXs7w//WUmE</ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8041/logout/saml2/slo" ResponseLocation="http://localhost:8041/logout/saml2/slo"/>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8041/login/saml2/sso/eleg" index="1"/>
+    </md:SPSSODescriptor>
+</md:EntityDescriptor>
