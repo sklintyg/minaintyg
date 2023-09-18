@@ -14,11 +14,15 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.certificate.service.GetCertificateFilterService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
@@ -32,81 +36,137 @@ class CertificateControllerTest {
   @Mock
   ListCertificatesService listCertificatesService;
 
+  @Mock
+  GetCertificateFilterService getCertificateFilterService;
+
   @InjectMocks
   CertificateController certificateController;
 
-  @BeforeEach
-  void setup() {
-    final var response =
-        ListCertificatesResponse
-            .builder()
-            .content(certificates)
-            .build();
+  @Nested
+  class ListCertificates {
 
-    when(listCertificatesService.get(any())).thenReturn(response);
+    @BeforeEach
+    void setup() {
+      final var response =
+          ListCertificatesResponse
+              .builder()
+              .content(certificates)
+              .build();
+
+      when(listCertificatesService.get(any())).thenReturn(response);
+    }
+
+    @Nested
+    class Request {
+
+      CertificatesRequestDTO request = CertificatesRequestDTO
+          .builder()
+          .years(YEARS)
+          .units(UNITS)
+          .certificateTypes(TYPES)
+          .statuses(STATUSES)
+          .build();
+
+      @Test
+      void shouldSendYears() {
+        certificateController.listCertificates(request);
+
+        final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+
+        verify(listCertificatesService).get(captor.capture());
+        assertEquals(YEARS, captor.getValue().getYears());
+      }
+
+      @Test
+      void shouldSendUnits() {
+        certificateController.listCertificates(request);
+
+        final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+
+        verify(listCertificatesService).get(captor.capture());
+        assertEquals(UNITS, captor.getValue().getUnits());
+      }
+
+      @Test
+      void shouldSendCertificateTypes() {
+        certificateController.listCertificates(request);
+
+        final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+
+        verify(listCertificatesService).get(captor.capture());
+        assertEquals(TYPES, captor.getValue().getCertificateTypes());
+      }
+
+      @Test
+      void shouldSendStatuses() {
+        certificateController.listCertificates(request);
+
+        final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+
+        verify(listCertificatesService).get(captor.capture());
+        assertEquals(STATUSES, captor.getValue().getStatuses());
+      }
+    }
+
+    @Nested
+    class Response {
+
+      @Test
+      void shouldSetContent() {
+        final var response = certificateController.listCertificates(
+            CertificatesRequestDTO.builder().build());
+
+        assertEquals(certificates, response.getContent());
+      }
+    }
   }
 
   @Nested
-  class Request {
+  class FilterService {
 
-    CertificatesRequestDTO request = CertificatesRequestDTO
+    private static final GetCertificateFilterResponse EXPECTED_RESPONSE = GetCertificateFilterResponse
         .builder()
-        .years(YEARS)
-        .units(UNITS)
-        .certificateTypes(TYPES)
-        .statuses(STATUSES)
+        .statuses(List.of(CertificateStatusType.SENT))
+        .years(List.of("2020"))
+        .certificateTypes(List.of(CertificateType.builder().build()))
+        .units(List.of(CertificateUnit.builder().build()))
         .build();
 
-    @Test
-    void shouldSendYears() {
-      certificateController.listCertificates(request);
-
-      final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
-
-      verify(listCertificatesService).get(captor.capture());
-      assertEquals(YEARS, captor.getValue().getYears());
+    @BeforeEach
+    void setup() {
+      when(getCertificateFilterService.get()).thenReturn(EXPECTED_RESPONSE);
     }
 
-    @Test
-    void shouldSendUnits() {
-      certificateController.listCertificates(request);
+    @Nested
+    class Response {
 
-      final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+      @Test
+      void shouldSetCertificateTypes() {
+        final var response = certificateController.getFilters();
 
-      verify(listCertificatesService).get(captor.capture());
-      assertEquals(UNITS, captor.getValue().getUnits());
-    }
+        assertEquals(EXPECTED_RESPONSE.getCertificateTypes(), response.getCertificateTypes());
+      }
 
-    @Test
-    void shouldSendCertificateTypes() {
-      certificateController.listCertificates(request);
+      @Test
+      void shouldSetYears() {
+        final var response = certificateController.getFilters();
 
-      final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+        assertEquals(EXPECTED_RESPONSE.getYears(), response.getYears());
+      }
 
-      verify(listCertificatesService).get(captor.capture());
-      assertEquals(TYPES, captor.getValue().getCertificateTypes());
-    }
+      @Test
+      void shouldSetUnits() {
+        final var response = certificateController.getFilters();
 
-    @Test
-    void shouldSendStatuses() {
-      certificateController.listCertificates(request);
+        assertEquals(EXPECTED_RESPONSE.getUnits(), response.getUnits());
+      }
 
-      final var captor = ArgumentCaptor.forClass(ListCertificatesRequest.class);
+      @Test
+      void shouldSetStatuses() {
+        final var response = certificateController.getFilters();
 
-      verify(listCertificatesService).get(captor.capture());
-      assertEquals(STATUSES, captor.getValue().getStatuses());
-    }
-  }
-
-  @Nested
-  class Response {
-
-    @Test
-    void shouldSetContent() {
-      final var response = certificateController.listCertificates(
-          CertificatesRequestDTO.builder().build());
-
-      assertEquals(certificates, response.getContent());
+        assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
+      }
     }
   }
 }
