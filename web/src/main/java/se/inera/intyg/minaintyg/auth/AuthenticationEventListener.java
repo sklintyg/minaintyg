@@ -7,7 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.stereotype.Component;
-import se.inera.intyg.minaintyg.monitoring.MonitoringLogService;
+import se.inera.intyg.minaintyg.common.logging.MonitoringLogService;
 
 @Component
 @Slf4j

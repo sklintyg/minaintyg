@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.common.logging.pattern;
 
 import static se.inera.intyg.minaintyg.user.UserToolkit.getUserFromPrincipal;
 

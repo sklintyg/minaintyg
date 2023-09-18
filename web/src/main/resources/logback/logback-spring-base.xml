@@ -7,7 +7,7 @@
   <property name="LINE" value="%msg%n"/>
 
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
+    <filter class="se.inera.intyg.minaintyg.common.filter.MarkerFilter">
       <markers>Monitoring,Validation</markers>
       <onMatch>DENY</onMatch>
       <onMismatch>ACCEPT</onMismatch>
@@ -18,12 +18,12 @@
   </appender>
 
   <appender name="MONITORING" class="ch.qos.logback.core.ConsoleAppender">
-    <filter class="se.inera.intyg.minaintyg.monitoring.MarkerFilter">
+    <filter class="se.inera.intyg.minaintyg.common.filter.MarkerFilter">
       <marker>Monitoring</marker>
       <onMatch>ACCEPT</onMatch>
       <onMismatch>DENY</onMismatch>
     </filter>
-    <encoder class="se.inera.intyg.minaintyg.monitoring.UserPatternLayout">
+    <encoder class="se.inera.intyg.minaintyg.common.logging.pattern.UserPatternLayout">
       <pattern>${TIMESTAMP} ${LEVEL} [monitoring,${SESSION},${TRACE},%user] --- %boldGreen(${LOGGER}) : ${LINE}</pattern>
     </encoder>
   </appender>

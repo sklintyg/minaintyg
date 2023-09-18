@@ -1,6 +1,5 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -47,10 +46,7 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
             .path(puEndpoint)
             .build())
         .body(Mono.just(personRequest), PersonRequest.class)
-        .headers(httpHeaders -> {
-          httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-          httpHeaders.add(traceIdHeader, MDC.get(traceIdKey));
-        })
+        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(PersonSvarDTO.class)
         .share()

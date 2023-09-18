@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.common.logging;
 
 
 import lombok.extern.slf4j.Slf4j;

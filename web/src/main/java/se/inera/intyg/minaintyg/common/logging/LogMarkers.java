@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.common.logging;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;

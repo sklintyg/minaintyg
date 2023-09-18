@@ -10,7 +10,7 @@
   <logger name="org.springframework.web" level="WARN" />
 
   <!-- Monitoring logger -->
-  <logger name="se.inera.intyg.minaintyg.monitoring.MonitoringLogService" level="INFO" />
+  <logger name="se.inera.intyg.minaintyg.common.logging.MonitoringLogService" level="INFO" />
 
   <root level="INFO">
     <appender-ref ref="CONSOLE" />
