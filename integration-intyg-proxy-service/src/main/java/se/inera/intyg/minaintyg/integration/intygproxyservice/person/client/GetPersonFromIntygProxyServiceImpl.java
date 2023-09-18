@@ -48,8 +48,8 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
             .build())
         .body(Mono.just(personRequest), PersonRequest.class)
         .headers(httpHeaders -> {
-          httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-          httpHeaders.set(traceIdHeader, MDC.get(traceIdKey));
+          httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+          httpHeaders.add(traceIdHeader, MDC.get(traceIdKey));
         })
         .retrieve()
         .bodyToMono(PersonSvarDTO.class)
