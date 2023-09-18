@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
-import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstServiceImpl;
+import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
 @ExtendWith(MockitoExtension.class)
@@ -19,7 +19,7 @@ class IntygstjanstCertificateIntegrationServiceTest {
 
   private static final String PERSON_ID = "191212121212";
   @Mock
-  private GetCertificatesFromIntygstjanstServiceImpl getCertificatesFromIntygstjanstService;
+  private GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
   @InjectMocks
   private IntygstjanstCertificateIntegrationService intygstjanstCertificateIntegrationService;
 

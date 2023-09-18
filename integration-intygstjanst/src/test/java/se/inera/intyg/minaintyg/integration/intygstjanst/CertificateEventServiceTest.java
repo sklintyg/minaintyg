@@ -16,7 +16,7 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 
 @ExtendWith(MockitoExtension.class)
-class CertificateEventServiceImplTest {
+class CertificateEventServiceTest {
 
   private static final CertificateRecipientDTO SENT_RECIPIENT = CertificateRecipientDTO
       .builder()
@@ -44,7 +44,7 @@ class CertificateEventServiceImplTest {
           .build());
 
   @InjectMocks
-  CertificateEventServiceImpl certificateEventService;
+  CertificateEventService certificateEventService;
 
   @Test
   void shouldNotIncludeSeveralStatuses() {

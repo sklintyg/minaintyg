@@ -15,7 +15,7 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 
 @ExtendWith(MockitoExtension.class)
-class CertificateStatusServiceImplTest {
+class CertificateStatusServiceTest {
 
   private static final LocalDateTime NEW_ISSUED = LocalDateTime.now();
   private static final LocalDateTime OLD_ISSUED = LocalDateTime.now().minusMonths(1);
@@ -40,7 +40,7 @@ class CertificateStatusServiceImplTest {
           .build());
 
   @InjectMocks
-  CertificateStatusServiceImpl certificateStatusService;
+  CertificateStatusService certificateStatusService;
 
   @Test
   void shouldIncludeNewIfNewerThanAMonth() {

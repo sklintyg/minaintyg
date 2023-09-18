@@ -6,17 +6,17 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
-import se.inera.intyg.minaintyg.user.MinaIntygUserService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @Service
 @RequiredArgsConstructor
 public class ListCertificatesService {
 
   private final GetCertificatesService getCertificatesService;
-  private final MinaIntygUserService userService;
+  private final UserService userService;
 
   public ListCertificatesResponse get(ListCertificatesRequest request) {
-    if (userService.getUser().isEmpty()) {
+    if (userService.getLoggedInUser().isEmpty()) {
       throw new IllegalStateException();
     }
 
@@ -25,7 +25,7 @@ public class ListCertificatesService {
     final var response = getCertificatesService.get(
         CertificatesRequest
             .builder()
-            .patientId(userService.getUser().get().getPersonId())
+            .patientId(userService.getLoggedInUser().get().getPersonId())
             .years(request.getYears())
             .units(request.getUnits())
             .statuses(request.getStatuses())

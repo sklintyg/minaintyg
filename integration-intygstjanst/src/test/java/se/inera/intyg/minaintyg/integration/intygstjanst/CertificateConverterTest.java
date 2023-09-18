@@ -29,7 +29,7 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateU
 
 
 @ExtendWith(MockitoExtension.class)
-class CertificateConverterImplTest {
+class CertificateConverterTest {
 
   private static final String TYPE_ID = "typeId";
   private static final String TYPE_NAME = "typeName";
@@ -79,7 +79,7 @@ class CertificateConverterImplTest {
   @Mock
   CertificateStatusService certificateStatusService;
   @InjectMocks
-  CertificateConverterImpl certificateConverter;
+  CertificateConverter certificateConverter;
 
   @Test
   void shouldConvertCertificateId() {

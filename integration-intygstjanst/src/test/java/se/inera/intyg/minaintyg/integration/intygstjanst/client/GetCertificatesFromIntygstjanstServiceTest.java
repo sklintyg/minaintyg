@@ -19,11 +19,11 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateD
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
 @ExtendWith(MockitoExtension.class)
-class GetCertificatesFromIntygstjanstServiceImplTest {
+class GetCertificatesFromIntygstjanstServiceTest {
 
   private static MockWebServer mockWebServer;
   private final ObjectMapper objectMapper = new ObjectMapper();
-  private GetCertificatesFromIntygstjanstServiceImpl getCertificatesFromIntygstjanstService;
+  private GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
 
   @BeforeAll
   static void setUp() throws IOException {
@@ -41,7 +41,7 @@ class GetCertificatesFromIntygstjanstServiceImplTest {
     final var scheme = "http";
     final var baseUrl = "localhost";
     final var endpoint = "/api/certificate";
-    getCertificatesFromIntygstjanstService = new GetCertificatesFromIntygstjanstServiceImpl(
+    getCertificatesFromIntygstjanstService = new GetCertificatesFromIntygstjanstService(
         WebClient.create(baseUrl), scheme, baseUrl,
         mockWebServer.getPort(), endpoint);
   }
