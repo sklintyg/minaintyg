@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
-import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.SINGLE_LOGOUT_SERVICE_LOCATION;
 
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -54,6 +53,10 @@ public class WebSecurityConfig {
   private String password;
   @Value("${saml.idp.metadata.location}")
   private String samlIdpMetadataLocation;
+  @Value("${saml.sp.assertion.consumer.service.location}")
+  private String assertionConsumerServiceLocation;
+  @Value("${saml.sp.single.logout.service.location}")
+  private String singleLogoutServiceLocation;
 
   @Bean
   public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository(
@@ -73,7 +76,8 @@ public class WebSecurityConfig {
     final var registration = RelyingPartyRegistrations
         .fromMetadataLocation(samlIdpMetadataLocation)
         .registrationId(AuthenticationConstants.ELEG_PARTY_REGISTRATION_ID)
-        .singleLogoutServiceLocation(SINGLE_LOGOUT_SERVICE_LOCATION)
+        .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
+        .singleLogoutServiceLocation(singleLogoutServiceLocation)
         .signingX509Credentials(signing ->
             signing.add(
                 Saml2X509Credential.signing(appPrivateKey, appCertificate)
@@ -94,10 +98,8 @@ public class WebSecurityConfig {
 
     http
         .authorizeHttpRequests(request -> request.
-            requestMatchers(HEALTH_CHECK_ENDPOINT).permitAll()
-        )
-        .authorizeHttpRequests(request -> request.
-            requestMatchers("/**").fullyAuthenticated()
+            requestMatchers(HEALTH_CHECK_ENDPOINT).permitAll().
+            anyRequest().fullyAuthenticated()
         )
         .saml2Login(saml2 -> saml2
             .relyingPartyRegistrationRepository(relyingPartyRegistrationRepository)
