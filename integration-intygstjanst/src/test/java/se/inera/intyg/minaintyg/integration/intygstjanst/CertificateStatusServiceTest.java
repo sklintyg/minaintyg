@@ -28,15 +28,15 @@ class CertificateStatusServiceTest {
       .builder()
       .id("id")
       .build();
-  private static final List<CertificateRelationDTO> RENEWED_RELATIONS = List.of(
+  private static final List<CertificateRelationDTO> REPLACED_RELATIONS = List.of(
       CertificateRelationDTO
           .builder()
-          .type(CertificateRelationType.RENEWED)
+          .type(CertificateRelationType.REPLACED)
           .build());
-  private static final List<CertificateRelationDTO> RENEWS_RELATIONS = List.of(
+  private static final List<CertificateRelationDTO> REPLACES_RELATIONS = List.of(
       CertificateRelationDTO
           .builder()
-          .type(CertificateRelationType.RENEWS)
+          .type(CertificateRelationType.REPLACES)
           .build());
 
   @InjectMocks
@@ -83,16 +83,16 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldIncludeRenewedIfRelationExists() {
-    final var response = certificateStatusService.get(RENEWED_RELATIONS, null, null);
+  void shouldIncludeReplacedIfRelationExists() {
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, null, null);
 
     assertEquals(1, response.size());
-    assertEquals(CertificateStatusType.RENEWED, response.get(0));
+    assertEquals(CertificateStatusType.REPLACED, response.get(0));
   }
 
   @Test
   void shouldNotIncludeStatusIfRelationIsRenews() {
-    final var response = certificateStatusService.get(RENEWS_RELATIONS, null, null);
+    final var response = certificateStatusService.get(REPLACES_RELATIONS, null, null);
 
     assertEquals(0, response.size());
   }
@@ -113,7 +113,7 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldNotIncludeSeveralStatuses() {
-    final var response = certificateStatusService.get(RENEWED_RELATIONS, SENT_RECIPIENT,
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, SENT_RECIPIENT,
         NEW_ISSUED);
 
     assertEquals(3, response.size());

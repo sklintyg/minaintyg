@@ -28,17 +28,17 @@ class CertificateEventServiceTest {
       .builder()
       .id("id")
       .build();
-  private static final List<CertificateRelationDTO> RENEWED_RELATIONS = List.of(
+  private static final List<CertificateRelationDTO> REPLACED_RELATIONS = List.of(
       CertificateRelationDTO
           .builder()
-          .type(CertificateRelationType.RENEWED)
+          .type(CertificateRelationType.REPLACED)
           .certificateId("certificateId1")
           .timestamp(LocalDateTime.now())
           .build());
-  private static final List<CertificateRelationDTO> RENEWS_RELATIONS = List.of(
+  private static final List<CertificateRelationDTO> REPLACES_RELATIONS = List.of(
       CertificateRelationDTO
           .builder()
-          .type(CertificateRelationType.RENEWS)
+          .type(CertificateRelationType.REPLACES)
           .certificateId("certificateId2")
           .timestamp(LocalDateTime.now())
           .build());
@@ -48,7 +48,7 @@ class CertificateEventServiceTest {
 
   @Test
   void shouldNotIncludeSeveralStatuses() {
-    final var response = certificateEventService.get(RENEWED_RELATIONS, SENT_RECIPIENT);
+    final var response = certificateEventService.get(REPLACED_RELATIONS, SENT_RECIPIENT);
 
     assertEquals(2, response.size());
   }
@@ -88,7 +88,7 @@ class CertificateEventServiceTest {
     void shouldIncludeTimestamp() {
       final var response = certificateEventService.get(Collections.emptyList(), SENT_RECIPIENT);
 
-      assertEquals(SENT_RECIPIENT.getSent().toString(), response.get(0).getTimestamp());
+      assertEquals(SENT_RECIPIENT.getSent(), response.get(0).getTimestamp());
     }
 
     @Test
@@ -100,34 +100,35 @@ class CertificateEventServiceTest {
   }
 
   @Nested
-  class RenewedEvent {
+  class ReplacedEvent {
 
     @Test
     void shouldIncludeEventIfRelationExists() {
-      final var response = certificateEventService.get(RENEWED_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACED_RELATIONS, null);
 
       assertEquals(1, response.size());
     }
 
     @Test
     void shouldIncludeDescription() {
-      final var response = certificateEventService.get(RENEWED_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACED_RELATIONS, null);
 
       assertEquals("Ersattes av vården med ett nytt intyg", response.get(0).getDescription());
     }
 
     @Test
     void shouldIncludeCertificateId() {
-      final var response = certificateEventService.get(RENEWED_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACED_RELATIONS, null);
 
-      assertEquals(RENEWED_RELATIONS.get(0).getCertificateId(), response.get(0).getCertificateId());
+      assertEquals(REPLACED_RELATIONS.get(0).getCertificateId(),
+          response.get(0).getCertificateId());
     }
 
     @Test
     void shouldIncludeTimestamp() {
-      final var response = certificateEventService.get(RENEWED_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACED_RELATIONS, null);
 
-      assertEquals(RENEWED_RELATIONS.get(0).getTimestamp(), response.get(0).getTimestamp());
+      assertEquals(REPLACED_RELATIONS.get(0).getTimestamp(), response.get(0).getTimestamp());
     }
   }
 
@@ -136,14 +137,14 @@ class CertificateEventServiceTest {
 
     @Test
     void shouldIncludeEventIfRelationExists() {
-      final var response = certificateEventService.get(RENEWS_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACES_RELATIONS, null);
 
       assertEquals(1, response.size());
     }
 
     @Test
     void shouldIncludeDescription() {
-      final var response = certificateEventService.get(RENEWS_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACES_RELATIONS, null);
 
       assertEquals("Ersätter ett intyg som inte längre är aktuellt",
           response.get(0).getDescription());
@@ -151,16 +152,17 @@ class CertificateEventServiceTest {
 
     @Test
     void shouldIncludeCertificateId() {
-      final var response = certificateEventService.get(RENEWS_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACES_RELATIONS, null);
 
-      assertEquals(RENEWS_RELATIONS.get(0).getCertificateId(), response.get(0).getCertificateId());
+      assertEquals(REPLACES_RELATIONS.get(0).getCertificateId(),
+          response.get(0).getCertificateId());
     }
 
     @Test
     void shouldIncludeTimestamp() {
-      final var response = certificateEventService.get(RENEWS_RELATIONS, null);
+      final var response = certificateEventService.get(REPLACES_RELATIONS, null);
 
-      assertEquals(RENEWS_RELATIONS.get(0).getTimestamp(), response.get(0).getTimestamp());
+      assertEquals(REPLACES_RELATIONS.get(0).getTimestamp(), response.get(0).getTimestamp());
     }
   }
 }

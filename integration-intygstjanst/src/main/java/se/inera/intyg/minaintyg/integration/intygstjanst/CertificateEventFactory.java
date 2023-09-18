@@ -14,12 +14,12 @@ public class CertificateEventFactory {
 
     return Optional.of(CertificateEvent
         .builder()
-        .timestamp(recipient.getSent().toString())
+        .timestamp(recipient.getSent())
         .description("Skickat till " + recipient.getName())
         .build());
   }
 
-  public static Optional<CertificateEvent> renewed(CertificateRelationDTO relation) {
+  public static Optional<CertificateEvent> replaced(CertificateRelationDTO relation) {
     if (relation == null) {
       return Optional.empty();
     }
@@ -33,7 +33,7 @@ public class CertificateEventFactory {
     );
   }
 
-  public static Optional<CertificateEvent> renews(CertificateRelationDTO relation) {
+  public static Optional<CertificateEvent> replaces(CertificateRelationDTO relation) {
     if (relation == null) {
       return Optional.empty();
     }

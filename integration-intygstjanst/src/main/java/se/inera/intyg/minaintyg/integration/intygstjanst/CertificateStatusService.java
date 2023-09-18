@@ -25,7 +25,7 @@ public class CertificateStatusService {
     } else {
       statuses = relations
           .stream()
-          .map(this::renewed)
+          .map(this::replaced)
           .collect(Collectors.toList());
     }
 
@@ -39,9 +39,9 @@ public class CertificateStatusService {
         .toList();
   }
 
-  private Optional<CertificateStatusType> renewed(CertificateRelationDTO relation) {
-    if (relation.getType() == CertificateRelationType.RENEWED) {
-      return Optional.of(CertificateStatusType.RENEWED);
+  private Optional<CertificateStatusType> replaced(CertificateRelationDTO relation) {
+    if (relation.getType() == CertificateRelationType.REPLACED) {
+      return Optional.of(CertificateStatusType.REPLACED);
     }
 
     return Optional.empty();

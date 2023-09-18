@@ -16,9 +16,9 @@ public class CertificateEventService {
       CertificateRecipientDTO recipient) {
     final var events = relations
         .stream()
-        .map(relation -> relation.getType() == CertificateRelationType.RENEWED
-            ? CertificateEventFactory.renewed(relation)
-            : CertificateEventFactory.renews(relation)
+        .map(relation -> relation.getType() == CertificateRelationType.REPLACED
+            ? CertificateEventFactory.replaced(relation)
+            : CertificateEventFactory.replaces(relation)
         ).collect(Collectors.toList());
 
     events.add(CertificateEventFactory.sent(recipient));
