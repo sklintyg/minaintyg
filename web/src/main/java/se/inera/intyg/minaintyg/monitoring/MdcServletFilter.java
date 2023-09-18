@@ -44,7 +44,7 @@ public class MdcServletFilter implements Filter {
       return null;
     }
     return Stream.of(cookies)
-        .filter(c -> "SESSION".equals(c.getName()))
+        .filter(cookie -> "SESSION".equals(cookie.getName()))
         .map(Cookie::getValue)
         .findFirst().orElse(null);
   }
