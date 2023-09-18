@@ -1,11 +1,14 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
+import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -21,16 +24,18 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
       final var response = getCertificatesFromIntygstjanstService.get(request);
       return CertificatesResponse
           .builder()
-          .content(
-              response.getContent()
-                  .stream()
-                  .map(certificateConverter::convert)
-                  .toList()
-          )
+          .content(convertContent(response))
           .build();
     } catch (Exception exception) {
       throw new RuntimeException(exception);
     }
+  }
+
+  private List<Certificate> convertContent(CertificatesResponseDTO response) {
+    return response.getContent()
+        .stream()
+        .map(certificateConverter::convert)
+        .toList();
   }
 
   private void validateRequest(CertificatesRequest request) {

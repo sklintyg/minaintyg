@@ -2,6 +2,8 @@ package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,6 +25,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
+import se.inera.intyg.minaintyg.monitoring.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +40,9 @@ class ListCertificatesServiceTest {
 
   @Mock
   GetCertificatesService getCertificatesService;
+
+  @Mock
+  MonitoringLogService monitoringLogService;
 
   @Mock
   UserService userService;
@@ -127,6 +133,26 @@ class ListCertificatesServiceTest {
       final var response = listCertificatesService.get(ListCertificatesRequest.builder().build());
 
       assertEquals(certificate, response.getContent().get(0));
+    }
+
+    @Test
+    void shouldLogListedCertificatesUsingPatientId() {
+      listCertificatesService.get(ListCertificatesRequest.builder().build());
+
+      final var captor = ArgumentCaptor.forClass(String.class);
+
+      verify(monitoringLogService).logListCertificates(captor.capture(), anyInt());
+      assertEquals(PATIENT_ID, captor.getValue());
+    }
+
+    @Test
+    void shouldLogListedCertificatesUsingCertificateCount() {
+      listCertificatesService.get(ListCertificatesRequest.builder().build());
+
+      final var captor = ArgumentCaptor.forClass(Integer.class);
+
+      verify(monitoringLogService).logListCertificates(anyString(), captor.capture());
+      assertEquals(1, captor.getValue());
     }
   }
 }
