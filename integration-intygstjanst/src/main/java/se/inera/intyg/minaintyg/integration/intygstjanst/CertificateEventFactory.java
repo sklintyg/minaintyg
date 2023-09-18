@@ -20,20 +20,15 @@ public class CertificateEventFactory {
   }
 
   public static Optional<CertificateEvent> replaced(CertificateRelationDTO relation) {
-    if (relation == null) {
-      return Optional.empty();
-    }
-
-    return Optional.of(CertificateEvent
-        .builder()
-        .timestamp(relation.getTimestamp())
-        .certificateId(relation.getCertificateId())
-        .description("Ersattes av vården med ett nytt intyg")
-        .build()
-    );
+    return event(relation, "Ersattes av vården med ett nytt intyg");
   }
 
   public static Optional<CertificateEvent> replaces(CertificateRelationDTO relation) {
+    return event(relation, "Ersätter ett intyg som inte längre är aktuellt");
+  }
+
+  public static Optional<CertificateEvent> event(CertificateRelationDTO relation,
+      String description) {
     if (relation == null) {
       return Optional.empty();
     }
@@ -42,7 +37,7 @@ public class CertificateEventFactory {
         .builder()
         .timestamp(relation.getTimestamp())
         .certificateId(relation.getCertificateId())
-        .description("Ersätter ett intyg som inte längre är aktuellt")
+        .description(description)
         .build());
   }
 }

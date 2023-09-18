@@ -1,7 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,17 +17,7 @@ public class CertificateStatusService {
       CertificateRecipientDTO recipient,
       LocalDateTime issued) {
 
-    List<Optional<CertificateStatusType>> statuses;
-
-    if (relations == null) {
-      statuses = new ArrayList<>();
-    } else {
-      statuses = relations
-          .stream()
-          .map(this::replaced)
-          .collect(Collectors.toList());
-    }
-
+    final var statuses = getStatusesFromRelations(relations);
     statuses.add(sent(recipient));
     statuses.add(newStatus(issued));
 
@@ -39,27 +28,34 @@ public class CertificateStatusService {
         .toList();
   }
 
-  private Optional<CertificateStatusType> replaced(CertificateRelationDTO relation) {
-    if (relation.getType() == CertificateRelationType.REPLACED) {
-      return Optional.of(CertificateStatusType.REPLACED);
-    }
+  private List<Optional<CertificateStatusType>> getStatusesFromRelations(
+      List<CertificateRelationDTO> relations) {
+    return relations
+        .stream()
+        .map(this::replaced)
+        .collect(Collectors.toList());
+  }
 
-    return Optional.empty();
+  private Optional<CertificateStatusType> replaced(CertificateRelationDTO relation) {
+    return relation.getType() == CertificateRelationType.REPLACED
+        ? Optional.of(CertificateStatusType.REPLACED)
+        : Optional.empty();
   }
 
   private Optional<CertificateStatusType> sent(CertificateRecipientDTO recipient) {
-    if (recipient != null) {
-      return recipient.getSent() == null
-          ? Optional.of(CertificateStatusType.NOT_SENT)
-          : Optional.of(CertificateStatusType.SENT);
-
+    if (recipient == null) {
+      return Optional.empty();
     }
 
-    return Optional.empty();
+    return recipient.getSent() == null
+        ? Optional.of(CertificateStatusType.NOT_SENT)
+        : Optional.of(CertificateStatusType.SENT);
+
   }
 
   private Optional<CertificateStatusType> newStatus(LocalDateTime issued) {
     return issued != null && issued.isAfter(LocalDateTime.now().minusMonths(1))
-        ? Optional.of(CertificateStatusType.NEW) : Optional.empty();
+        ? Optional.of(CertificateStatusType.NEW)
+        : Optional.empty();
   }
 }

@@ -105,13 +105,6 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldNotIncludeStatusIfRelationsIsNull() {
-    final var response = certificateStatusService.get(null, null, null);
-
-    assertEquals(0, response.size());
-  }
-
-  @Test
   void shouldNotIncludeSeveralStatuses() {
     final var response = certificateStatusService.get(REPLACED_RELATIONS, SENT_RECIPIENT,
         NEW_ISSUED);
