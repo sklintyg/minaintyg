@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -17,18 +18,24 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
   private final String baseUrl;
   private final int port;
   private final String puEndpoint;
+  private final String traceIdHeader;
+  private final String traceIdKey;
 
   public GetPersonFromIntygProxyServiceImpl(
       @Qualifier(value = "intygProxyWebClient") WebClient webClient,
       @Value("${integration.intygproxyservice.scheme}") String scheme,
       @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
       @Value("${integration.intygproxyservice.port}") int port,
-      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint) {
+      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint,
+      @Value("${log.trace.header}") String traceIdHeader,
+      @Value("${mdc.trace.id.key}") String traceIdKey) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
     this.port = port;
     this.puEndpoint = puEndpoint;
+    this.traceIdHeader = traceIdHeader;
+    this.traceIdKey = traceIdKey;
   }
 
   @Override
@@ -40,7 +47,10 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
             .path(puEndpoint)
             .build())
         .body(Mono.just(personRequest), PersonRequest.class)
-        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .headers(httpHeaders -> {
+          httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+          httpHeaders.set(traceIdHeader, MDC.get(traceIdKey));
+        })
         .retrieve()
         .bodyToMono(PersonSvarDTO.class)
         .share()

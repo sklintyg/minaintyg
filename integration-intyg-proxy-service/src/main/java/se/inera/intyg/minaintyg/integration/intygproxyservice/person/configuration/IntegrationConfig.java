@@ -7,9 +7,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class IntegrationConfig {
 
-    @Bean(name = "intygProxyWebClient")
-    public WebClient webClientForIntygProxy() {
-        return WebClient.builder()
-            .build();
-    }
+  @Bean(name = "intygProxyWebClient")
+  public WebClient webClientForIntygProxy() {
+    return WebClient.builder()
+        .build();
+  }
 }
