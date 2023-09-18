@@ -10,12 +10,13 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesF
 public class IntygstjanstCertificateIntegrationService implements GetCertificatesService {
 
   private final GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
-  private CertificateConverter certificateConverter;
+  private final CertificateConverter certificateConverter;
 
   public IntygstjanstCertificateIntegrationService(
-      GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService
-  ) {
+      GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService,
+      CertificateConverter certificateConverter) {
     this.getCertificatesFromIntygstjanstService = getCertificatesFromIntygstjanstService;
+    this.certificateConverter = certificateConverter;
   }
 
   @Override
@@ -28,7 +29,7 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
           .content(
               response.getContent()
                   .stream()
-                  .map(certificate -> certificateConverter.convert(certificate))
+                  .map(certificateConverter::convert)
                   .toList()
           )
           .build();
