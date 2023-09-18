@@ -15,7 +15,7 @@ public class MarkerFilter extends AbstractMatcherFilter<ILoggingEvent> {
 
   public static final Marker MONITORING = MarkerFactory.getMarker(LogMarkers.MONITORING.getName());
 
-  List<Marker> markersToMatch = new ArrayList<>();
+  private final List<Marker> markersToMatch = new ArrayList<>();
 
   @Override
   public void start() {

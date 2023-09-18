@@ -2,12 +2,12 @@ package se.inera.intyg.minaintyg.testability;
 
 import java.util.List;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
 public class TestPersonResponse {
 
-  private List<TestPerson> testPerson;
+  List<TestPerson> testPerson;
 
 }

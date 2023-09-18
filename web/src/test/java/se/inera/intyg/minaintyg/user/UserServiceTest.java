@@ -10,7 +10,7 @@ import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.testhelper.TestPrincipalHelper;
 
-class MinaIntygUserServiceImplTest {
+class UserServiceTest {
 
   private static final String PERSON_ID = "personId";
   private static final String PERSON_NAME = "personName";
@@ -19,7 +19,7 @@ class MinaIntygUserServiceImplTest {
   private static final String SURNAME = "surname";
   private static final LoginMethod LOGIN_METHOD = LoginMethod.ELVA77;
 
-  private final MinaIntygUserServiceImpl minaIntygUserService = new MinaIntygUserServiceImpl();
+  private final UserService userService = new UserService();
 
   @Nested
   class GetUser {
@@ -34,7 +34,7 @@ class MinaIntygUserServiceImplTest {
               .build()
       );
       TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedUser.get());
-      final var actualUser = minaIntygUserService.getUser();
+      final var actualUser = userService.getLoggedInUser();
       assertEquals(expectedUser, actualUser);
     }
 
@@ -42,7 +42,7 @@ class MinaIntygUserServiceImplTest {
     void shouldNotReturnUserFromPrincipalIfPrincipalNotIsInstanceOfMinaIntygUser() {
       final var user = new Object();
       TestPrincipalHelper.setUnknownPrincipal(user);
-      final var actualUser = minaIntygUserService.getUser();
+      final var actualUser = userService.getLoggedInUser();
       assertTrue(actualUser.isEmpty());
     }
   }
