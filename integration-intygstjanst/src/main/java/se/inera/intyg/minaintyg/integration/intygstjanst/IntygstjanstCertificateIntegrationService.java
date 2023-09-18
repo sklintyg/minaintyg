@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
@@ -7,17 +8,11 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRe
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 
 @Service
+@RequiredArgsConstructor
 public class IntygstjanstCertificateIntegrationService implements GetCertificatesService {
 
   private final GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
   private final CertificateConverter certificateConverter;
-
-  public IntygstjanstCertificateIntegrationService(
-      GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService,
-      CertificateConverter certificateConverter) {
-    this.getCertificatesFromIntygstjanstService = getCertificatesFromIntygstjanstService;
-    this.certificateConverter = certificateConverter;
-  }
 
   @Override
   public CertificatesResponse get(CertificatesRequest request) {

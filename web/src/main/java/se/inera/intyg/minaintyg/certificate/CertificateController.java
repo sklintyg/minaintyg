@@ -17,7 +17,7 @@ public class CertificateController {
   private final ListCertificatesService listCertificatesService;
   private final GetCertificateFilterService getCertificateFilterService;
 
-  @PostMapping("")
+  @PostMapping
   public CertificatesResponseDTO listCertificates(CertificatesRequestDTO request) {
     final var listCertificatesRequest =
         ListCertificatesRequest

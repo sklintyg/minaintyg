@@ -31,19 +31,11 @@ public class GetCertificateFilterService {
 
     return GetCertificateFilterResponse
         .builder()
-        .certificateTypes(
-            getList(certificates, Certificate::getType)
-        )
-        .years(
-            getList(certificates,
-                (certificate) -> String.valueOf(certificate.getIssued().getYear()))
-        )
-        .units(
-            getList(certificates, Certificate::getUnit)
-        )
-        .statuses(
-            List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT)
-        )
+        .certificateTypes(getList(certificates, Certificate::getType))
+        .years(getList(certificates,
+            (certificate) -> String.valueOf(certificate.getIssued().getYear())))
+        .units(getList(certificates, Certificate::getUnit))
+        .statuses(List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT))
         .build();
   }
 
