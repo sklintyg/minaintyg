@@ -12,16 +12,6 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 @Service
 public class CertificateEventService {
 
-  private static List<Optional<CertificateEvent>> getEventsFromRelations(
-      List<CertificateRelationDTO> relations) {
-    return relations
-        .stream()
-        .map(relation -> relation.getType() == CertificateRelationType.REPLACED
-            ? CertificateEventFactory.replaced(relation)
-            : CertificateEventFactory.replaces(relation)
-        ).collect(Collectors.toList());
-  }
-
   public List<CertificateEvent> get(List<CertificateRelationDTO> relations,
       CertificateRecipientDTO recipient) {
 
@@ -33,5 +23,15 @@ public class CertificateEventService {
         .filter(Optional::isPresent)
         .map(Optional::get)
         .toList();
+  }
+
+  private List<Optional<CertificateEvent>> getEventsFromRelations(
+      List<CertificateRelationDTO> relations) {
+    return relations
+        .stream()
+        .map(relation -> relation.getType() == CertificateRelationType.REPLACED
+            ? CertificateEventFactory.replaced(relation)
+            : CertificateEventFactory.replaces(relation)
+        ).collect(Collectors.toList());
   }
 }
