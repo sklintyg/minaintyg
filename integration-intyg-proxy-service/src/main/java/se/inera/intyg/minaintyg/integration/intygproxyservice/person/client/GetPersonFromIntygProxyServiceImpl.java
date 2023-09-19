@@ -17,24 +17,18 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
   private final String baseUrl;
   private final int port;
   private final String puEndpoint;
-  private final String traceIdHeader;
-  private final String traceIdKey;
 
   public GetPersonFromIntygProxyServiceImpl(
       @Qualifier(value = "intygProxyWebClient") WebClient webClient,
       @Value("${integration.intygproxyservice.scheme}") String scheme,
       @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
       @Value("${integration.intygproxyservice.port}") int port,
-      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint,
-      @Value("${log.trace.header}") String traceIdHeader,
-      @Value("${mdc.trace.id.key}") String traceIdKey) {
+      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
     this.port = port;
     this.puEndpoint = puEndpoint;
-    this.traceIdHeader = traceIdHeader;
-    this.traceIdKey = traceIdKey;
   }
 
   @Override

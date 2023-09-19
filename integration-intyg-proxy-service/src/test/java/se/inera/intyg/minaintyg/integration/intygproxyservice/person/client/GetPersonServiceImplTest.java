@@ -42,11 +42,9 @@ class GetPersonServiceImplTest {
     final var scheme = "http";
     final var baseUrl = "localhost";
     final var getPersonEndpoint = "/api/v1/person";
-    final var traceIdHeader = "tracerIdHeader";
-    final var traceIdKey = "tracerIdHeader";
     getPersonFromIntygProxyService = new GetPersonFromIntygProxyServiceImpl(
         WebClient.create(baseUrl), scheme, baseUrl,
-        mockWebServer.getPort(), getPersonEndpoint, traceIdHeader, traceIdKey);
+        mockWebServer.getPort(), getPersonEndpoint);
   }
 
   @Test
