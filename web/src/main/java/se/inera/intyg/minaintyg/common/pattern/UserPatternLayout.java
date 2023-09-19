@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.common.logging.pattern;
+package se.inera.intyg.minaintyg.common.pattern;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;

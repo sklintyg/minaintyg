@@ -14,6 +14,12 @@ public class IntegrationConfig {
 
   @Value("${log.trace.header}")
   private String traceIdHeader;
+  @Value("${log.session.header}")
+  private String sessionIdHeader;
+
+
+  @Value("${mdc.session.info.key}")
+  private String sessionInfoKey;
   @Value("${mdc.trace.id.key}")
   private String traceIdKey;
 
@@ -22,7 +28,10 @@ public class IntegrationConfig {
     return WebClient.builder()
         .filter(ExchangeFilterFunction.ofRequestProcessor(
             request -> Mono.just(ClientRequest.from(request)
-                .header(traceIdHeader, MDC.get(traceIdKey))
+                .headers(httpHeaders -> {
+                  httpHeaders.add(traceIdHeader, MDC.get(traceIdKey));
+                  httpHeaders.add(sessionIdHeader, MDC.get(sessionInfoKey));
+                })
                 .build())
         ))
         .build();

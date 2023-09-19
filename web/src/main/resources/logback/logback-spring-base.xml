@@ -23,7 +23,7 @@
       <onMatch>ACCEPT</onMatch>
       <onMismatch>DENY</onMismatch>
     </filter>
-    <encoder class="se.inera.intyg.minaintyg.common.logging.pattern.UserPatternLayout">
+    <encoder class="se.inera.intyg.minaintyg.common.pattern.UserPatternLayout">
       <pattern>${TIMESTAMP} ${LEVEL} [monitoring,${SESSION},${TRACE},%user] --- %boldGreen(${LOGGER}) : ${LINE}</pattern>
     </encoder>
   </appender>
