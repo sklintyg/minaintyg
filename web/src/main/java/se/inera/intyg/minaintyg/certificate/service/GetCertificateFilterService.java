@@ -22,6 +22,7 @@ public class GetCertificateFilterService {
         .getContent()
         .stream()
         .map(getValueFunction)
+        .distinct()
         .toList();
   }
 
