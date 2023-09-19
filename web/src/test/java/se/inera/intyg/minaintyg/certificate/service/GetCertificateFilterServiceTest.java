@@ -79,10 +79,17 @@ class GetCertificateFilterServiceTest {
   }
 
   @Test
-  void shouldSetCertificateTypes() {
+  void shouldSetCertificateTypeName() {
     final var result = getCertificateFilterService.get();
 
-    assertEquals(CERTIFICATE.getType(), result.getCertificateTypes().get(0));
+    assertEquals(CERTIFICATE.getType().getName(), result.getCertificateTypes().get(0).getName());
+  }
+
+  @Test
+  void shouldSetCertificateTypeId() {
+    final var result = getCertificateFilterService.get();
+
+    assertEquals(CERTIFICATE.getType().getId(), result.getCertificateTypes().get(0).getId());
   }
 
   @Test

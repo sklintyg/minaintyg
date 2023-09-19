@@ -21,7 +21,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateTypeFilter;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
@@ -128,7 +128,7 @@ class CertificateControllerTest {
         .builder()
         .statuses(List.of(CertificateStatusType.SENT))
         .years(List.of("2020"))
-        .certificateTypes(List.of(CertificateType.builder().build()))
+        .certificateTypes(List.of(CertificateTypeFilter.builder().build()))
         .units(List.of(CertificateUnit.builder().build()))
         .build();
 
