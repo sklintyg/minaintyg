@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 public class ExchangeFilterFunctionProvider {
 
-  public static ExchangeFilterFunction getExchangeFilterFunction() {
+  public static ExchangeFilterFunction addHeadersFromMDCToRequest() {
     return ExchangeFilterFunction.ofRequestProcessor(
         request -> Mono.just(ClientRequest.from(request)
             .headers(httpHeaders -> {

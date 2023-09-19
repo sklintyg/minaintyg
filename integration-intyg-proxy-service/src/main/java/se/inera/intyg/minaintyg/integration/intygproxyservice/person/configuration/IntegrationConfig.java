@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.configuration;
 
-import static se.inera.intyg.minaintyg.integration.api.ExchangeFilterFunctionProvider.getExchangeFilterFunction;
+import static se.inera.intyg.minaintyg.integration.api.ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ public class IntegrationConfig {
   @Bean(name = "intygProxyWebClient")
   public WebClient webClientForIntygProxy() {
     return WebClient.builder()
-        .filter(getExchangeFilterFunction())
+        .filter(addHeadersFromMDCToRequest())
         .build();
   }
 }
