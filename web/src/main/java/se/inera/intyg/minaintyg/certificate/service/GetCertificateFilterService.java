@@ -9,6 +9,8 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -22,15 +24,30 @@ public class GetCertificateFilterService {
 
     return GetCertificateFilterResponse
         .builder()
-        .certificateTypes(getList(certificates, Certificate::getType))
-        .years(getList(
-                certificates,
-                (certificate) -> String.valueOf(certificate.getIssued().getYear())
-            )
-        )
-        .units(getList(certificates, Certificate::getUnit))
-        .statuses(List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT))
+        .certificateTypes(getCertificateTypes(certificates))
+        .years(getYears(certificates))
+        .units(getUnits(certificates))
+        .statuses(getStatuses())
         .build();
+  }
+
+  private List<String> getYears(ListCertificatesResponse certificates) {
+    return getList(
+        certificates,
+        (certificate) -> String.valueOf(certificate.getIssued().getYear())
+    );
+  }
+
+  private List<CertificateType> getCertificateTypes(ListCertificatesResponse certificates) {
+    return getList(certificates, Certificate::getType);
+  }
+
+  private List<CertificateUnit> getUnits(ListCertificatesResponse certificates) {
+    return getList(certificates, Certificate::getUnit);
+  }
+
+  private List<CertificateStatusType> getStatuses() {
+    return List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT);
   }
 
   private <T> List<T> getList(ListCertificatesResponse certificates,
@@ -42,6 +59,4 @@ public class GetCertificateFilterService {
         .distinct()
         .toList();
   }
-
-
 }
