@@ -1,16 +1,12 @@
 package se.inera.intyg.minaintyg.common.filter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static se.inera.intyg.minaintyg.common.filter.MDCHelper.verifyRequestType;
 
-import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,22 +23,6 @@ class MDCHelperTest {
   }
 
   @Nested
-  class ValidateRequest {
-
-    @Test
-    void shouldReturnTrueIfTypeHttpServletRequest() {
-      final var httpServletRequest = mock(HttpServletRequest.class);
-      assertTrue(verifyRequestType(httpServletRequest));
-    }
-
-    @Test
-    void shouldReturnFalseIfTypeNotHttpServletRequest() {
-      final var servletRequest = mock(ServletRequest.class);
-      assertFalse(verifyRequestType(servletRequest));
-    }
-  }
-
-  @Nested
   class SessionId {
 
     @Test
@@ -50,7 +30,7 @@ class MDCHelperTest {
       final var expectedValue = "sessionId";
       final var httpServletRequest = mock(HttpServletRequest.class);
       when(httpServletRequest.getCookies()).thenReturn(
-          new Cookie[]{new Cookie("SESSION", expectedValue)});
+          new Cookie[]{new Cookie("SPRING-SESSION", expectedValue)});
       final var result = mdcHelper.buildSessionInfo(httpServletRequest);
       assertEquals(expectedValue, result);
     }
