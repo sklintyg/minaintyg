@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
@@ -31,6 +32,7 @@ public class CertificateStatusService {
       List<CertificateRelationDTO> relations) {
     return relations
         .stream()
+        .filter((relation) -> relation.getType() == CertificateRelationType.REPLACED)
         .map(CertificateStatusFactory::replaced)
         .collect(Collectors.toList());
   }

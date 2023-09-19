@@ -18,7 +18,7 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 class CertificateStatusServiceTest {
 
   private static final LocalDateTime NEW_ISSUED = LocalDateTime.now();
-  private static final LocalDateTime OLD_ISSUED = LocalDateTime.now().minusMonths(1);
+  private static final LocalDateTime OLD_ISSUED = LocalDateTime.now().minusMonths(2);
   private static final CertificateRecipientDTO SENT_RECIPIENT = CertificateRecipientDTO
       .builder()
       .id("id")

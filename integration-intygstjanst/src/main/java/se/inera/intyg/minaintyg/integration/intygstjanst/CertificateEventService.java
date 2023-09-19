@@ -29,9 +29,19 @@ public class CertificateEventService {
       List<CertificateRelationDTO> relations) {
     return relations
         .stream()
-        .map(relation -> relation.getType() == CertificateRelationType.REPLACED
-            ? CertificateEventFactory.replaced(relation)
-            : CertificateEventFactory.replaces(relation)
-        ).collect(Collectors.toList());
+        .map(this::getEvent)
+        .collect(Collectors.toList());
+  }
+
+  private Optional<CertificateEvent> getEvent(CertificateRelationDTO relation) {
+    if (relation.getType() == CertificateRelationType.REPLACED) {
+      return CertificateEventFactory.replaced(relation);
+    }
+
+    if (relation.getType() == CertificateRelationType.REPLACES) {
+      return CertificateEventFactory.replaces(relation);
+    }
+
+    return Optional.empty();
   }
 }

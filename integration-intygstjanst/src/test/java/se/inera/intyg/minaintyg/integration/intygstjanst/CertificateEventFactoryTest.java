@@ -64,6 +64,13 @@ class CertificateEventFactoryTest {
 
       assertTrue(result.isEmpty());
     }
+
+    @Test
+    void shouldReturnEmptyIfRelationHasWrongType() {
+      final var result = CertificateEventFactory.replaced(replaces);
+
+      assertTrue(result.isEmpty());
+    }
   }
 
   @Nested
@@ -93,6 +100,13 @@ class CertificateEventFactoryTest {
     @Test
     void shouldReturnEmptyIfRelationIsNull() {
       final var result = CertificateEventFactory.replaces(null);
+
+      assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyIfRelationHasWrongType() {
+      final var result = CertificateEventFactory.replaces(replaced);
 
       assertTrue(result.isEmpty());
     }
