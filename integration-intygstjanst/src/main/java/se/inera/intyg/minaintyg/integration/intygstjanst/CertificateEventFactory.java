@@ -27,7 +27,7 @@ public class CertificateEventFactory {
     return event(relation, "Ersätter ett intyg som inte längre är aktuellt");
   }
 
-  public static Optional<CertificateEvent> event(CertificateRelationDTO relation,
+  private static Optional<CertificateEvent> event(CertificateRelationDTO relation,
       String description) {
     if (relation == null) {
       return Optional.empty();

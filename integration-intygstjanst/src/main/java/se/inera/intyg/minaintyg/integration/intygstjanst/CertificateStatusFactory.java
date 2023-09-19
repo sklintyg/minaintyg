@@ -10,6 +10,10 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 public class CertificateStatusFactory {
 
   public static Optional<CertificateStatusType> replaced(CertificateRelationDTO relation) {
+    if (relation == null) {
+      return Optional.empty();
+    }
+
     return relation.getType() == CertificateRelationType.REPLACED
         ? Optional.of(CertificateStatusType.REPLACED)
         : Optional.empty();
@@ -27,7 +31,7 @@ public class CertificateStatusFactory {
   }
 
   public static Optional<CertificateStatusType> newStatus(LocalDateTime issued) {
-    return issued != null && issued.isAfter(LocalDateTime.now().minusMonths(1))
+    return issued != null && issued.isAfter(LocalDateTime.now().minusMonths(1).minusDays(1))
         ? Optional.of(CertificateStatusType.NEW)
         : Optional.empty();
   }
