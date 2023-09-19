@@ -2,12 +2,12 @@ package se.inera.intyg.minaintyg.certificate.service.dto;
 
 import java.util.List;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
 
-@Data
+@Value
 @Builder
 public class GetCertificateFilterResponse {
 

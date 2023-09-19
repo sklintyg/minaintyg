@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateDTO {
 
-  String id;
-  CertificateTypeDTO type;
-  CertificateSummaryDTO summary;
-  CertificateIssuerDTO issuer;
-  CertificateUnitDTO unit;
-  List<CertificateRelationDTO> relations;
-  CertificateRecipientDTO recipient;
-  LocalDateTime issued;
+  private CertificateIssuerDTO issuer;
+  private CertificateUnitDTO unit;
+  private List<CertificateRelationDTO> relations;
+  private CertificateRecipientDTO recipient;
+  private LocalDateTime issued;
+  private String id;
+  private CertificateTypeDTO type;
+  private CertificateSummaryDTO summary;
 }

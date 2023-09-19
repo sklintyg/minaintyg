@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateTypeDTO {
 
-  String id;
-  String name;
-  String version;
+  private String id;
+  private String name;
+  private String version;
 }

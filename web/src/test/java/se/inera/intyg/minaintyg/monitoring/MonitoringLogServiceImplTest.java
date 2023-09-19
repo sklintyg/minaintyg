@@ -86,7 +86,7 @@ class MonitoringLogServiceImplTest {
       monitoringLogService.logListCertificates(PERSON_ID, 10);
       final var hashedPersonId = HashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
-          "LIST_CERTIFICATES 10 certificates listed for patient '" + hashedPersonId + "'");
+          "LIST_CERTIFICATES Citizen '" + hashedPersonId + "' listed 10 certificates");
     }
   }
 }

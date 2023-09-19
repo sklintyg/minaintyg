@@ -9,6 +9,10 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 
 public class CertificateStatusFactory {
 
+  private CertificateStatusFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static Optional<CertificateStatusType> replaced(CertificateRelationDTO relation) {
     if (relation == null) {
       return Optional.empty();

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateIssuerDTO {
 
-  String name;
+  private String name;
 }

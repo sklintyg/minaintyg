@@ -8,6 +8,10 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateD
 
 public class CertificateInformationFactory {
 
+  private CertificateInformationFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static CertificateSummary summary(CertificateDTO certificate) {
     return CertificateSummary
         .builder()

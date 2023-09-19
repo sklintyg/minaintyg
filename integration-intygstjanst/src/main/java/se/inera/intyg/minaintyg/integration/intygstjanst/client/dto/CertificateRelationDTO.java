@@ -13,7 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRel
 @AllArgsConstructor
 public class CertificateRelationDTO {
 
-  LocalDateTime timestamp;
-  String certificateId;
-  CertificateRelationType type;
+  private LocalDateTime timestamp;
+  private String certificateId;
+  private CertificateRelationType type;
 }

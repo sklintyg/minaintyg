@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateRecipientDTO {
 
-  String id;
-  String name;
-  LocalDateTime sent;
+  private String id;
+  private String name;
+  private LocalDateTime sent;
 }

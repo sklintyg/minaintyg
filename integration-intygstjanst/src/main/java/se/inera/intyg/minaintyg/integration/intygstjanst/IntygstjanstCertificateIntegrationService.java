@@ -40,7 +40,7 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
 
   private void validateRequest(CertificatesRequest request) {
     if (request == null || request.getPatientId() == null || request.getPatientId().isEmpty()) {
-      throw new IllegalArgumentException("Valid request was not provided: " + request);
+      throw new IllegalArgumentException("Valid request was not provided, must contain patient id");
     }
   }
 }

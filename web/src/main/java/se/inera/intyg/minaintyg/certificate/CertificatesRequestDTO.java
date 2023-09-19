@@ -15,11 +15,11 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateSta
 public class CertificatesRequestDTO {
 
   @Builder.Default
-  List<String> years = Collections.emptyList();
+  private List<String> years = Collections.emptyList();
   @Builder.Default
-  List<String> units = Collections.emptyList();
+  private List<String> units = Collections.emptyList();
   @Builder.Default
-  List<String> certificateTypes = Collections.emptyList();
+  private List<String> certificateTypes = Collections.emptyList();
   @Builder.Default
-  List<CertificateStatusType> statuses = Collections.emptyList();
+  private List<CertificateStatusType> statuses = Collections.emptyList();
 }

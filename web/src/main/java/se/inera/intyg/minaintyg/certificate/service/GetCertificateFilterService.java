@@ -16,7 +16,24 @@ public class GetCertificateFilterService {
 
   private final ListCertificatesService listCertificatesService;
 
-  private static <T> List<T> getList(ListCertificatesResponse certificates,
+  public GetCertificateFilterResponse get() {
+
+    final var certificates = listCertificatesService.get(ListCertificatesRequest.builder().build());
+
+    return GetCertificateFilterResponse
+        .builder()
+        .certificateTypes(getList(certificates, Certificate::getType))
+        .years(getList(
+                certificates,
+                (certificate) -> String.valueOf(certificate.getIssued().getYear())
+            )
+        )
+        .units(getList(certificates, Certificate::getUnit))
+        .statuses(List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT))
+        .build();
+  }
+
+  private <T> List<T> getList(ListCertificatesResponse certificates,
       Function<Certificate, T> getValueFunction) {
     return certificates
         .getContent()
@@ -26,18 +43,5 @@ public class GetCertificateFilterService {
         .toList();
   }
 
-  public GetCertificateFilterResponse get() {
-
-    final var certificates = listCertificatesService.get(ListCertificatesRequest.builder().build());
-
-    return GetCertificateFilterResponse
-        .builder()
-        .certificateTypes(getList(certificates, Certificate::getType))
-        .years(getList(certificates,
-            (certificate) -> String.valueOf(certificate.getIssued().getYear())))
-        .units(getList(certificates, Certificate::getUnit))
-        .statuses(List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT))
-        .build();
-  }
 
 }

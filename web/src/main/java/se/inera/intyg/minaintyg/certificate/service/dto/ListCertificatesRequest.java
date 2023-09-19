@@ -13,8 +13,8 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateSta
 @Builder
 public class ListCertificatesRequest {
 
-  List<String> years;
-  List<String> units;
-  List<String> certificateTypes;
-  List<CertificateStatusType> statuses;
+  private List<String> years;
+  private List<String> units;
+  private List<String> certificateTypes;
+  private List<CertificateStatusType> statuses;
 }

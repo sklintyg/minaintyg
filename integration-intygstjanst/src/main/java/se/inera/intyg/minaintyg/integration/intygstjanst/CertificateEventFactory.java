@@ -8,6 +8,10 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 
 public class CertificateEventFactory {
 
+  private CertificateEventFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static Optional<CertificateEvent> sent(CertificateRecipientDTO recipient) {
     if (recipient == null || recipient.getSent() == null) {
       return Optional.empty();

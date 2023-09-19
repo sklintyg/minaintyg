@@ -23,7 +23,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
   @Override
   public void logListCertificates(String personId, int nbrOfCertificates) {
-    logEvent(MonitoringEvent.LIST_CERTIFICATES, nbrOfCertificates, HashUtility.hash(personId));
+    logEvent(MonitoringEvent.LIST_CERTIFICATES, HashUtility.hash(personId), nbrOfCertificates);
   }
 
 
@@ -40,7 +40,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   private enum MonitoringEvent {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
-    LIST_CERTIFICATES("'{}' certificates listed for patient");
+    LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates");
     private final String message;
 
     MonitoringEvent(String message) {

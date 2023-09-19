@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateUnitDTO {
 
-  String id;
-  String name;
+  private String id;
+  private String name;
 }
