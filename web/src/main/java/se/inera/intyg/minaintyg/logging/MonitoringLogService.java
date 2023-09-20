@@ -7,4 +7,6 @@ public interface MonitoringLogService {
   void logUserLogout(String personId, String loginMethod);
 
   void logListCertificates(String personId, int nbrOfCertificates);
+
+  void logGetCertificate(String personId, String certificateId);
 }
