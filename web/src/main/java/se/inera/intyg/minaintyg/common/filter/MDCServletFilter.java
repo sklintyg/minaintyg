@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.common.filter;
 
 
-import static se.inera.intyg.minaintyg.integration.api.constants.MDCLogConstants.MDC_SESSION_ID_KEY;
-import static se.inera.intyg.minaintyg.integration.api.constants.MDCLogConstants.MDC_TRACE_ID_KEY;
+import static se.inera.intyg.minaintyg.integration.common.constants.MDCLogConstants.MDC_SESSION_ID_KEY;
+import static se.inera.intyg.minaintyg.integration.common.constants.MDCLogConstants.MDC_TRACE_ID_KEY;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

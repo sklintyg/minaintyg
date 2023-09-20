@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.common.filter;
 
-import static se.inera.intyg.minaintyg.integration.api.constants.MDCLogConstants.LOG_TRACE_ID_HEADER;
+import static se.inera.intyg.minaintyg.integration.common.constants.MDCLogConstants.LOG_TRACE_ID_HEADER;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.constants;
+package se.inera.intyg.minaintyg.integration.common.constants;
 
 public class MDCLogConstants {
 
