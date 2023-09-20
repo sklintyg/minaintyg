@@ -1,8 +1,9 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.logging;
 
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.common.logging.LogMarkers;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @Slf4j

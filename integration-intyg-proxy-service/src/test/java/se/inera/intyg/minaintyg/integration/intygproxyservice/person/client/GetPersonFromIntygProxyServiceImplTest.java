@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
 
 @ExtendWith(MockitoExtension.class)
-class GetPersonServiceImplTest {
+class GetPersonFromIntygProxyServiceImplTest {
 
   private static MockWebServer mockWebServer;
   private GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService;

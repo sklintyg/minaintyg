@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
+import se.inera.intyg.minaintyg.logging.MonitoringLogServiceImpl;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,7 +83,7 @@ class MonitoringLogServiceImplTest {
   class LogListCertificates {
 
     @Test
-    void shouldLogWhenUserLogout() {
+    void shouldLogWhenUserListsCertificate() {
       monitoringLogService.logListCertificates(PERSON_ID, 10);
       final var hashedPersonId = HashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,

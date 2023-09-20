@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.common.filter;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.filter.AbstractMatcherFilter;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
+import se.inera.intyg.minaintyg.common.logging.LogMarkers;
 
 public class MarkerFilter extends AbstractMatcherFilter<ILoggingEvent> {
 

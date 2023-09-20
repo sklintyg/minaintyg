@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
+import se.inera.intyg.minaintyg.common.pattern.UserConverter;
 import se.inera.intyg.minaintyg.testhelper.TestPrincipalHelper;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
