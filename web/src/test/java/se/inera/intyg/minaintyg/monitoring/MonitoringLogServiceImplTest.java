@@ -26,15 +26,13 @@ import se.inera.intyg.minaintyg.util.HashUtility;
 @ExtendWith(MockitoExtension.class)
 class MonitoringLogServiceImplTest {
 
+  private static final String PERSON_ID = "personId";
   @InjectMocks
   private MonitoringLogServiceImpl monitoringLogService;
   @Captor
   private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
-
   @Mock
   private Appender<ILoggingEvent> mockAppender;
-
-  private static final String PERSON_ID = "personId";
 
   @BeforeEach
   void setUp() {
@@ -46,6 +44,14 @@ class MonitoringLogServiceImplTest {
   void tearDown() {
     final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
     logger.detachAppender(mockAppender);
+  }
+
+  private void verifyLog(Level logLevel, String logMessage) {
+    verify(mockAppender).doAppend(captorLoggingEvent.capture());
+    final LoggingEvent loggingEvent = captorLoggingEvent.getValue();
+    assertThat(loggingEvent.getLevel(), equalTo(logLevel));
+    assertThat(loggingEvent.getFormattedMessage(),
+        equalTo(logMessage));
   }
 
   @Nested
@@ -72,12 +78,15 @@ class MonitoringLogServiceImplTest {
     }
   }
 
+  @Nested
+  class LogListCertificates {
 
-  private void verifyLog(Level logLevel, String logMessage) {
-    verify(mockAppender).doAppend(captorLoggingEvent.capture());
-    final LoggingEvent loggingEvent = captorLoggingEvent.getValue();
-    assertThat(loggingEvent.getLevel(), equalTo(logLevel));
-    assertThat(loggingEvent.getFormattedMessage(),
-        equalTo(logMessage));
+    @Test
+    void shouldLogWhenUserLogout() {
+      monitoringLogService.logListCertificates(PERSON_ID, 10);
+      final var hashedPersonId = HashUtility.hash(PERSON_ID);
+      verifyLog(Level.INFO,
+          "LIST_CERTIFICATES Citizen '" + hashedPersonId + "' listed 10 certificates");
+    }
   }
 }
