@@ -30,7 +30,7 @@ class MDCHelperTest {
       final var expectedValue = "sessionId";
       final var httpServletRequest = mock(HttpServletRequest.class);
       when(httpServletRequest.getCookies()).thenReturn(
-          new Cookie[]{new Cookie("SPRING-SESSION", expectedValue)});
+          new Cookie[]{new Cookie("SESSION", expectedValue)});
       final var result = mdcHelper.buildSessionInfo(httpServletRequest);
       assertEquals(expectedValue, result);
     }
