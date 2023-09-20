@@ -148,7 +148,7 @@ class CertificateConverterTest {
   void shouldConvertIssued() {
     final var response = certificateConverter.convert(ORIGINAL_CERTIFICATE);
 
-    assertEquals(ISSUED.toString(), response.getIssued());
+    assertEquals(ISSUED, response.getIssued());
   }
 
   @Nested
