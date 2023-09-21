@@ -1,9 +1,9 @@
-package se.inera.intyg.minaintyg.util;
+package se.inera.intyg.minaintyg.util.html;
 
-import static se.inera.intyg.minaintyg.util.CertificateQuestionHTMLFactory.list;
-import static se.inera.intyg.minaintyg.util.CertificateQuestionHTMLFactory.table;
-import static se.inera.intyg.minaintyg.util.CertificateQuestionHTMLFactory.text;
-import static se.inera.intyg.minaintyg.util.CertificateQuestionHTMLFactory.textList;
+import static se.inera.intyg.minaintyg.util.html.CertificateQuestionHTMLFactory.list;
+import static se.inera.intyg.minaintyg.util.html.CertificateQuestionHTMLFactory.table;
+import static se.inera.intyg.minaintyg.util.html.CertificateQuestionHTMLFactory.text;
+import static se.inera.intyg.minaintyg.util.html.CertificateQuestionHTMLFactory.textList;
 
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestion;
@@ -20,8 +20,10 @@ public class CertificateToHTMLFactory {
   }
 
   public static String category(CertificateCategory category) {
-    final var questions = HTMLUtility.fromList(category.getQuestions(),
-        CertificateToHTMLFactory::question);
+    final var questions = HTMLUtility.fromList(
+        category.getQuestions(),
+        CertificateToHTMLFactory::question
+    );
     final var title = categoryTitle(category.getTitle());
 
     return HTMLFactory.section(
@@ -30,7 +32,7 @@ public class CertificateToHTMLFactory {
   }
 
   private static String categoryTitle(String title) {
-    return HTMLFactory.h2(title);
+    return HTMLTextFactory.h2(title);
   }
 
   private static String question(CertificateQuestion question) {

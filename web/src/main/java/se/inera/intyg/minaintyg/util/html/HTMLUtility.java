@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.util;
+package se.inera.intyg.minaintyg.util.html;
 
 import java.util.List;
 import java.util.Map;

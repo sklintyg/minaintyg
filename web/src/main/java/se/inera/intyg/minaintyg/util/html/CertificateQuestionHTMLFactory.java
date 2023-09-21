@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.util;
+package se.inera.intyg.minaintyg.util.html;
 
 import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionList;
@@ -9,25 +9,25 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.question.Certi
 public class CertificateQuestionHTMLFactory {
 
   public static String textList(CertificateQuestionTextList question) {
-    return question(question, HTMLFactory.textList(question.getValues()));
+    return question(question, HTMLListFactory.textList(question.getValues()));
   }
 
   public static String text(CertificateQuestionText question) {
-    return question(question, HTMLFactory.p(question.getValue()));
+    return question(question, HTMLTextFactory.p(question.getValue()));
   }
 
   public static String table(CertificateQuestionTable question) {
-    final var content = HTMLFactory.table(question.getValues(), question.getHeadings());
+    final var content = HTMLTableFactory.table(question.getValues(), question.getHeadings());
     return question(question, content);
   }
 
   public static String list(CertificateQuestionList question) {
-    final var content = HTMLFactory.ul(question.getValues());
+    final var content = HTMLListFactory.ul(question.getValues());
     return question(question, content);
   }
 
   private static String questionTitle(String title) {
-    return HTMLFactory.h3(title);
+    return HTMLTextFactory.h3(title);
   }
 
   private static String question(String title, String content) {

@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CompleteCertificate;
-import se.inera.intyg.minaintyg.util.CertificateToHTMLFactory;
+import se.inera.intyg.minaintyg.util.html.CertificateToHTMLFactory;
 
 @Service
 public class CertificateConverter {
