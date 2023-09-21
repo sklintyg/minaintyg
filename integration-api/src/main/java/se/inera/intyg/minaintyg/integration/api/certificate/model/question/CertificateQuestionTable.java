@@ -5,10 +5,11 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 public class CertificateQuestionTable extends CertificateQuestion {
 
   //TODO: Can we make the format easier? Heading inside map maybe

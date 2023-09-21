@@ -14,7 +14,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.question.Certi
 
 public class CertificateToHTMLFactory {
 
-
   public static String certificate(String content) {
     return HTMLFactory.article(content);
   }

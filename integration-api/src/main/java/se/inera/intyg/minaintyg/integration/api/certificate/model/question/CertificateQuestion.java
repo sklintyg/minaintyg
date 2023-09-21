@@ -1,8 +1,10 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.question;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@SuperBuilder
 public abstract class CertificateQuestion {
 
   String title;
