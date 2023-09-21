@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.certificate.model;
+package se.inera.intyg.minaintyg.integration.api.certificate.model.question;
 
 import lombok.Builder;
 import lombok.Data;

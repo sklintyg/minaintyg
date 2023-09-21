@@ -1,11 +1,11 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestionList;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestionTable;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestionText;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestionTextList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTextList;
 import se.inera.intyg.minaintyg.util.HTMLUtility;
 
 public class CertificateQuestionFactory {

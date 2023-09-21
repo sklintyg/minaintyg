@@ -10,4 +10,5 @@ public class CompleteCertificate {
 
   Certificate metadata;
   List<CertificateCategory> categories;
+  List<String> texts;
 }
