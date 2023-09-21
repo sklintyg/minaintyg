@@ -28,6 +28,8 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
@@ -108,6 +110,10 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
+        )
+        .csrf(csrfConfigurer -> csrfConfigurer
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
         )
         .saml2Logout(withDefaults())
         .saml2Metadata(withDefaults());
