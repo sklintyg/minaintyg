@@ -2,8 +2,6 @@ package se.inera.intyg.minaintyg.util.html;
 
 public class HTMLFactory {
 
-  // TODO: Create new factory for text
-
   private static final String START_FIRST_TAG = "<";
   private static final String START_SECOND_TAG = ">";
   private static final String END_FIRST_TAG = "</";
