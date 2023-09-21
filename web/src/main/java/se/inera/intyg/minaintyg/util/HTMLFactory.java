@@ -1,10 +1,9 @@
-package se.inera.intyg.minaintyg.certificate.service;
+package se.inera.intyg.minaintyg.util;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import se.inera.intyg.minaintyg.util.HTMLUtility;
 
 public class HTMLFactory {
 
@@ -20,6 +19,7 @@ public class HTMLFactory {
   private static final String IDS_HEADING_2 = "ids-heading-2";
   private static final String IDS_HEADING_3 = "ids-heading-3";
   private static final String IDS_HEADING_4 = "ids-heading-4";
+  private static final String IDS_CERTIFICATE = "ids-certificate";
 
 
   public static String tag(String tagName, String className, String value) {
@@ -39,6 +39,10 @@ public class HTMLFactory {
 
   public static String section(String value) {
     return tag("section", value);
+  }
+
+  public static String article(String value) {
+    return tag("article", IDS_CERTIFICATE, value);
   }
 
   public static String h2(String value) {
