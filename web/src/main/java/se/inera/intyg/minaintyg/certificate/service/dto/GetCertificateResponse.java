@@ -1,12 +1,15 @@
 package se.inera.intyg.minaintyg.certificate.service.dto;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Value;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 
 @Value
 @Builder
 public class GetCertificateResponse {
 
-  List<String> content;
+  // TODO: Do we want to have a different format of Certificate instead that includes HTML and metadata
+
+  Certificate metadata;
+  String content;
 }

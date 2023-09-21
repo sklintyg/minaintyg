@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
@@ -18,6 +19,7 @@ public class GetCertificateService {
   private final UserService userService;
   private final CertificateValueToHTMLConverter certificateValueToHTMLConverter;
 
+  // TODO: Create new converter
 
   public GetCertificateResponse get(GetCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
@@ -33,11 +35,13 @@ public class GetCertificateService {
 
     return GetCertificateResponse.builder()
         .content(
-            response.getContent()
+            response.getCertificate()
+                .getCategories()
                 .stream()
                 .map(certificateValueToHTMLConverter::convert)
-                .toList()
+                .collect(Collectors.joining())
         )
+        .metadata(response.getCertificate().getMetadata())
         .build();
 
   }

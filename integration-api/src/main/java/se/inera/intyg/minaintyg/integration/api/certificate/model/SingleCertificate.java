@@ -6,8 +6,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CertificateCategory {
+public class SingleCertificate {
 
-  String title;
-  List<CertificateQuestion> questions;
+  Certificate metadata;
+  List<CertificateCategory> categories;
+  List<String> texts;
 }

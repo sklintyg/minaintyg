@@ -1,11 +1,11 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetSingleCertificateService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.SingleCertificate;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
@@ -23,15 +23,15 @@ public class WebcertCertificateIntegrationService implements GetSingleCertificat
       final var response = getCertificateFromWebcertService.get(request);
       return CertificateResponse
           .builder()
-          .content(convertContent(response))
+          .certificate(convertCertificate(response))
           .build();
     } catch (Exception exception) {
       throw new RuntimeException(exception);
     }
   }
 
-  private List<String> convertContent(CertificateResponseDTO response) {
-    return response.getContent();
+  private SingleCertificate convertCertificate(CertificateResponseDTO response) {
+    return SingleCertificate.builder().build();
   }
 
   private void validateRequest(CertificateRequest request) {

@@ -11,6 +11,8 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class CertificateQuestionTable extends CertificateQuestion {
 
+  //TODO: Can we make the format easier? Heading inside map maybe
+
   List<String> headings;
   Map<Integer, List<String>> values;
 
