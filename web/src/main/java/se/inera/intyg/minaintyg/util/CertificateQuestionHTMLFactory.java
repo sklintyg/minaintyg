@@ -9,12 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.question.Certi
 public class CertificateQuestionHTMLFactory {
 
   public static String textList(CertificateQuestionTextList question) {
-    final var content = HTMLUtility.fromMap(
-        question.getValues(),
-        value -> textListItem(value.getValue(), value.getKey())
-    );
-
-    return question(question, content);
+    return question(question, HTMLFactory.textList(question.getValues()));
   }
 
   public static String text(CertificateQuestionText question) {
@@ -42,9 +37,4 @@ public class CertificateQuestionHTMLFactory {
   private static String question(CertificateQuestion question, String content) {
     return question(question.getTitle(), content);
   }
-
-  private static String textListItem(String value, String title) {
-    return HTMLUtility.join(HTMLFactory.h4(title), HTMLFactory.p(value));
-  }
-
 }

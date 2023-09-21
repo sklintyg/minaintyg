@@ -30,7 +30,7 @@ public class CertificateToHTMLFactory {
   }
 
   private static String categoryTitle(String title) {
-    return HTMLFactory.h4(title);
+    return HTMLFactory.h2(title);
   }
 
   private static String question(CertificateQuestion question) {

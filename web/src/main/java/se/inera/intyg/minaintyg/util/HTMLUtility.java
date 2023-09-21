@@ -26,5 +26,4 @@ public final class HTMLUtility {
         .map(mapper)
         .collect(Collectors.joining());
   }
-
 }
