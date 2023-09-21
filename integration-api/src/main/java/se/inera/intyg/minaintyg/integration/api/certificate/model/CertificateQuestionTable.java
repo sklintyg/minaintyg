@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 public class CertificateQuestionTable extends CertificateQuestion {
 
   List<String> headings;
-  Map<Integer, String> values;
+  Map<Integer, List<String>> values;
 
   @Builder.Default
   CertificateQuestionType type = CertificateQuestionType.TABLE;

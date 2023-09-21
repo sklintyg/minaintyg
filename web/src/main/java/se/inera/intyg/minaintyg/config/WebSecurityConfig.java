@@ -20,6 +20,7 @@ import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
@@ -39,14 +40,12 @@ import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  private final MinaIntygUserDetailService minaIntygUserDetailService;
-  private final Environment environment;
-
   public static final String TESTABILITY_PROFILE = "testability";
   public static final String TESTABILITY_API = "/api/testability/**";
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
-
+  private final MinaIntygUserDetailService minaIntygUserDetailService;
+  private final Environment environment;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
   @Value("${spring.ssl.bundle.jks.app.keystore.password}")
@@ -110,7 +109,8 @@ public class WebSecurityConfig {
             )
         )
         .saml2Logout(withDefaults())
-        .saml2Metadata(withDefaults());
+        .saml2Metadata(withDefaults())
+        .csrf(AbstractHttpConfigurer::disable);
 
     return http.build();
   }

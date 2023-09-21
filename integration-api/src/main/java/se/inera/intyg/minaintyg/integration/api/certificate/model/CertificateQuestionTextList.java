@@ -12,5 +12,5 @@ public class CertificateQuestionTextList extends CertificateQuestion {
 
   Map<String, String> values;
   @Builder.Default
-  CertificateQuestionType type = CertificateQuestionType.LIST;
+  CertificateQuestionType type = CertificateQuestionType.TEXT_LIST;
 }

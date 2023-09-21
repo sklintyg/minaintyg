@@ -9,4 +9,5 @@ import lombok.Value;
 public class CertificateCategory {
 
   List<CertificateQuestion> questions;
+  String title;
 }
