@@ -59,6 +59,10 @@ public class WebSecurityConfig {
   private String assertionConsumerServiceLocation;
   @Value("${saml.sp.single.logout.service.location}")
   private String singleLogoutServiceLocation;
+  @Value("${saml.login.success.url}")
+  private String samlLoginSuccessUrl;
+  @Value("${saml.login.success.url.always.use}")
+  private boolean samlLoginSuccessUrlAlwaysUse;
 
   @Bean
   public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository(
@@ -110,6 +114,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
+            .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .csrf(csrfConfigurer -> csrfConfigurer
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
