@@ -1,9 +1,8 @@
-package se.inera.intyg.minaintyg.util;
+package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.util.html.HTMLFactory;
 
 // TODO: Switch map to linkedmap so they preserve order
 

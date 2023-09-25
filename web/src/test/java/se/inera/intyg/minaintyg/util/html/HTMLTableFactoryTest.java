@@ -1,11 +1,10 @@
-package se.inera.intyg.minaintyg.util;
+package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.util.html.HTMLTableFactory;
 
 class HTMLTableFactoryTest {
 
