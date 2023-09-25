@@ -21,7 +21,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.list.Certifica
 import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
-class GetCertificateFilterServiceTest {
+class GetCertificateListFilterServiceTest {
 
   private static final CertificateListItem CERTIFICATE_LIST_ITEM = CertificateListItem
       .builder()
@@ -44,7 +44,7 @@ class GetCertificateFilterServiceTest {
   @Mock
   ListCertificatesService listCertificatesService;
   @InjectMocks
-  GetCertificateFilterService getCertificateFilterService;
+  GetCertificateListFilterService getCertificateListFilterService;
 
   @BeforeEach
   void setup() {
@@ -59,28 +59,28 @@ class GetCertificateFilterServiceTest {
 
   @Test
   void shouldSetSentStatus() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(CertificateStatusType.SENT, result.getStatuses().get(0));
   }
 
   @Test
   void shouldSetNotSentStatus() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(CertificateStatusType.NOT_SENT, result.getStatuses().get(1));
   }
 
   @Test
   void shouldSetUnits() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(CERTIFICATE_LIST_ITEM.getUnit(), result.getUnits().get(0));
   }
 
   @Test
   void shouldSetCertificateTypeName() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(CERTIFICATE_LIST_ITEM.getType().getName(),
         result.getCertificateTypes().get(0).getName());
@@ -88,7 +88,7 @@ class GetCertificateFilterServiceTest {
 
   @Test
   void shouldSetCertificateTypeId() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(CERTIFICATE_LIST_ITEM.getType().getId(),
         result.getCertificateTypes().get(0).getId());
@@ -96,7 +96,7 @@ class GetCertificateFilterServiceTest {
 
   @Test
   void shouldSetYears() {
-    final var result = getCertificateFilterService.get();
+    final var result = getCertificateListFilterService.get();
 
     assertEquals(Year.now().toString(), result.getYears().get(0));
   }

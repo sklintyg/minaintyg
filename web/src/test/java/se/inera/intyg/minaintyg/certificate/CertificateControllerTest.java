@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
-import se.inera.intyg.minaintyg.certificate.service.GetCertificateFilterService;
+import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
@@ -39,7 +39,7 @@ class CertificateControllerTest {
   ListCertificatesService listCertificatesService;
 
   @Mock
-  GetCertificateFilterService getCertificateFilterService;
+  GetCertificateListFilterService getCertificateListFilterService;
 
   @InjectMocks
   CertificateController certificateController;
@@ -124,7 +124,7 @@ class CertificateControllerTest {
   }
 
   @Nested
-  class FilterService {
+  class CertificateListFilters {
 
     private static final GetCertificateFilterResponse EXPECTED_RESPONSE = GetCertificateFilterResponse
         .builder()
@@ -136,7 +136,7 @@ class CertificateControllerTest {
 
     @BeforeEach
     void setup() {
-      when(getCertificateFilterService.get()).thenReturn(EXPECTED_RESPONSE);
+      when(getCertificateListFilterService.get()).thenReturn(EXPECTED_RESPONSE);
     }
 
     @Nested
@@ -144,28 +144,28 @@ class CertificateControllerTest {
 
       @Test
       void shouldSetCertificateTypes() {
-        final var response = certificateController.getFilters();
+        final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getCertificateTypes(), response.getCertificateTypes());
       }
 
       @Test
       void shouldSetYears() {
-        final var response = certificateController.getFilters();
+        final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getYears(), response.getYears());
       }
 
       @Test
       void shouldSetUnits() {
-        final var response = certificateController.getFilters();
+        final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getUnits(), response.getUnits());
       }
 
       @Test
       void shouldSetStatuses() {
-        final var response = certificateController.getFilters();
+        final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
       }

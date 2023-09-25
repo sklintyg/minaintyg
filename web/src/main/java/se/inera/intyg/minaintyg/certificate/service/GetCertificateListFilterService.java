@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.list.Certifica
 
 @Service
 @RequiredArgsConstructor
-public class GetCertificateFilterService {
+public class GetCertificateListFilterService {
 
   private final ListCertificatesService listCertificatesService;
 

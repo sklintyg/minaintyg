@@ -9,7 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.list.Certifica
 
 @Value
 @Builder
-public class CertificateFilterResponseDTO {
+public class CertificateListFilterResponseDTO {
 
   List<String> years;
   List<CertificateUnit> units;

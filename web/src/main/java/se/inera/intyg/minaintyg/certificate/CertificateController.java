@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import se.inera.intyg.minaintyg.certificate.dto.CertificateFilterResponseDTO;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateListFilterResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.certificate.service.GetCertificateFilterService;
+import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
@@ -22,7 +22,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 public class CertificateController {
 
   private final ListCertificatesService listCertificatesService;
-  private final GetCertificateFilterService getCertificateFilterService;
+  private final GetCertificateListFilterService getCertificateListFilterService;
   private final GetCertificateService getCertificateService;
 
   @PostMapping
@@ -59,10 +59,10 @@ public class CertificateController {
   }
 
   @GetMapping("/filters")
-  public CertificateFilterResponseDTO getFilters() {
-    final var response = getCertificateFilterService.get();
+  public CertificateListFilterResponseDTO getCertificateListFilter() {
+    final var response = getCertificateListFilterService.get();
 
-    return CertificateFilterResponseDTO
+    return CertificateListFilterResponseDTO
         .builder()
         .years(response.getYears())
         .certificateTypes(response.getCertificateTypes())
