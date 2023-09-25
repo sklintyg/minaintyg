@@ -16,7 +16,7 @@ public class GetCertificateService {
   private final GetCompleteCertificateService getCompleteCertificateService;
   private final MonitoringLogService monitoringLogService;
   private final UserService userService;
-  private final CertificateConverter certificateConverter;
+  private final CertificateToFormattedCertificateConverter certificateToFormattedCertificateConverter;
 
   public GetCertificateResponse get(GetCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
@@ -31,7 +31,7 @@ public class GetCertificateService {
     monitoringLogService.logGetCertificate(user.getPersonId(), request.getCertificateId());
 
     return GetCertificateResponse.builder()
-        .certificate(certificateConverter.convert(response.getCertificate()))
+        .certificate(certificateToFormattedCertificateConverter.convert(response.getCertificate()))
         .build();
 
   }

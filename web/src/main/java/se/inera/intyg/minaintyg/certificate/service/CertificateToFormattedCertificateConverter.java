@@ -7,7 +7,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.util.html.CertificateToHTMLFactory;
 
 @Service
-public class CertificateConverter {
+public class CertificateToFormattedCertificateConverter {
 
   public FormattedCertificate convert(Certificate certificate) {
     return FormattedCertificate
