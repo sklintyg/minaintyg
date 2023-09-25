@@ -2,13 +2,13 @@ package se.inera.intyg.minaintyg.certificate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListFilterResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
-import se.inera.intyg.minaintyg.certificate.dto.CertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
@@ -43,11 +43,11 @@ public class CertificateController {
   }
 
   @PostMapping("/{certificateId}")
-  public CertificateResponseDTO getCertificate(CertificateRequestDTO request) {
+  public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
     final var response = getCertificateService.get(
         GetCertificateRequest
             .builder()
-            .certificateId(request.getCertificateId())
+            .certificateId(certificateId)
             .build()
     );
 
