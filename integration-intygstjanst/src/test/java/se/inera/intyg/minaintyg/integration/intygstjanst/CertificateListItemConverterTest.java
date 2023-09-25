@@ -17,8 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateEvent;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateEvent;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateIssuerDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
@@ -29,7 +29,7 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateU
 
 
 @ExtendWith(MockitoExtension.class)
-class CertificateConverterTest {
+class CertificateListItemConverterTest {
 
   private static final String TYPE_ID = "typeId";
   private static final String TYPE_NAME = "typeName";

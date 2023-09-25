@@ -4,9 +4,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListResponse;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
@@ -18,11 +18,11 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
   private final CertificateConverter certificateConverter;
 
   @Override
-  public CertificatesResponse get(CertificatesRequest request) {
+  public CertificateListResponse get(CertificateListRequest request) {
     validateRequest(request);
     try {
       final var response = getCertificatesFromIntygstjanstService.get(request);
-      return CertificatesResponse
+      return CertificateListResponse
           .builder()
           .content(convertContent(response))
           .build();
@@ -31,14 +31,14 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
     }
   }
 
-  private List<Certificate> convertContent(CertificatesResponseDTO response) {
+  private List<CertificateListItem> convertContent(CertificatesResponseDTO response) {
     return response.getContent()
         .stream()
         .map(certificateConverter::convert)
         .toList();
   }
 
-  private void validateRequest(CertificatesRequest request) {
+  private void validateRequest(CertificateListRequest request) {
     if (request == null || request.getPatientId() == null || request.getPatientId().isEmpty()) {
       throw new IllegalArgumentException("Valid request was not provided, must contain patient id");
     }

@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import java.util.Optional;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateEvent;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateEvent;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 

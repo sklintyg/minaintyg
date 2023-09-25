@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.certificate;
+package se.inera.intyg.minaintyg.certificate.dto;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,13 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CertificatesRequestDTO {
+public class CertificateListRequestDTO {
 
   @Builder.Default
   private List<String> years = Collections.emptyList();

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 

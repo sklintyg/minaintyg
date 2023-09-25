@@ -14,15 +14,16 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateFilterService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateTypeFilter;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateTypeFilter;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
@@ -31,7 +32,8 @@ class CertificateControllerTest {
   private static final List<String> UNITS = List.of("unit1");
   private static final List<String> TYPES = List.of("lisjp");
   private static final List<CertificateStatusType> STATUSES = List.of(CertificateStatusType.SENT);
-  private static final List<Certificate> certificates = List.of(Certificate.builder().build());
+  private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS = List.of(
+      CertificateListItem.builder().build());
 
   @Mock
   ListCertificatesService listCertificatesService;
@@ -50,7 +52,7 @@ class CertificateControllerTest {
       final var response =
           ListCertificatesResponse
               .builder()
-              .content(certificates)
+              .content(CERTIFICATE_LIST_ITEMS)
               .build();
 
       when(listCertificatesService.get(any())).thenReturn(response);
@@ -59,7 +61,7 @@ class CertificateControllerTest {
     @Nested
     class Request {
 
-      CertificatesRequestDTO request = CertificatesRequestDTO
+      CertificateListRequestDTO request = CertificateListRequestDTO
           .builder()
           .years(YEARS)
           .units(UNITS)
@@ -114,9 +116,9 @@ class CertificateControllerTest {
       @Test
       void shouldSetContent() {
         final var response = certificateController.listCertificates(
-            CertificatesRequestDTO.builder().build());
+            CertificateListRequestDTO.builder().build());
 
-        assertEquals(certificates, response.getContent());
+        assertEquals(CERTIFICATE_LIST_ITEMS, response.getContent());
       }
     }
   }

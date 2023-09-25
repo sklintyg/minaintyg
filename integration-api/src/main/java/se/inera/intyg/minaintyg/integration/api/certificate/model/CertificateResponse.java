@@ -7,5 +7,5 @@ import lombok.Value;
 @Builder
 public class CertificateResponse {
 
-  CompleteCertificate certificate;
+  Certificate certificate;
 }

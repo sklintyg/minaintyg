@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
@@ -48,7 +48,7 @@ class GetCertificatesFromIntygstjanstServiceTest {
 
   @Test
   void shouldReturnCertificatesResponse() throws JsonProcessingException {
-    final var request = CertificatesRequest.builder().build();
+    final var request = CertificateListRequest.builder().build();
     final var expectedResponse = CertificatesResponseDTO
         .builder()
         .content(List.of(CertificateDTO

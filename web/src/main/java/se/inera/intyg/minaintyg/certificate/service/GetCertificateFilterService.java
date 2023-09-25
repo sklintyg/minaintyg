@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateTypeFilter;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateTypeFilter;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -32,15 +32,16 @@ public class GetCertificateFilterService {
         .build();
   }
 
-  private List<String> getYears(List<Certificate> certificates) {
+  private List<String> getYears(List<CertificateListItem> certificateListItems) {
     return getList(
-        certificates,
+        certificateListItems,
         (certificate) -> String.valueOf(certificate.getIssued().getYear())
     );
   }
 
-  private List<CertificateTypeFilter> getCertificateTypes(List<Certificate> certificates) {
-    return getList(certificates, Certificate::getType)
+  private List<CertificateTypeFilter> getCertificateTypes(
+      List<CertificateListItem> certificateListItems) {
+    return getList(certificateListItems, CertificateListItem::getType)
         .stream()
         .map(this::convertCertificateTypeFilter)
         .distinct()
@@ -55,17 +56,17 @@ public class GetCertificateFilterService {
         .build();
   }
 
-  private List<CertificateUnit> getUnits(List<Certificate> certificates) {
-    return getList(certificates, Certificate::getUnit);
+  private List<CertificateUnit> getUnits(List<CertificateListItem> certificateListItems) {
+    return getList(certificateListItems, CertificateListItem::getUnit);
   }
 
   private List<CertificateStatusType> getStatuses() {
     return List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT);
   }
 
-  private <T> List<T> getList(List<Certificate> certificates,
-      Function<Certificate, T> getValueFunction) {
-    return certificates
+  private <T> List<T> getList(List<CertificateListItem> certificateListItems,
+      Function<CertificateListItem, T> getValueFunction) {
+    return certificateListItems
         .stream()
         .map(getValueFunction)
         .distinct()

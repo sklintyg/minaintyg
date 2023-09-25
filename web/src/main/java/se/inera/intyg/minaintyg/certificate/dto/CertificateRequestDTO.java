@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.certificate;
+package se.inera.intyg.minaintyg.certificate.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

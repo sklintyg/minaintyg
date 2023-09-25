@@ -15,8 +15,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
@@ -35,14 +35,14 @@ class IntygstjanstCertificateIntegrationServiceTest {
   @Nested
   class TestResponse {
 
-    CertificatesRequest request;
+    CertificateListRequest request;
     CertificatesResponseDTO certificatesResponseDTO;
     CertificateDTO originalCertificate = new CertificateDTO();
-    Certificate convertedCertificate;
+    CertificateListItem convertedCertificateListItem;
 
     @BeforeEach
     void setup() {
-      request = CertificatesRequest.builder().patientId(PERSON_ID).build();
+      request = CertificateListRequest.builder().patientId(PERSON_ID).build();
 
       certificatesResponseDTO = CertificatesResponseDTO
           .builder()
@@ -53,7 +53,7 @@ class IntygstjanstCertificateIntegrationServiceTest {
           certificatesResponseDTO);
 
       when(certificateConverter.convert(any(CertificateDTO.class))).thenReturn(
-          convertedCertificate);
+          convertedCertificateListItem);
     }
 
     @Test
@@ -71,7 +71,7 @@ class IntygstjanstCertificateIntegrationServiceTest {
     void shouldReturnConvertedCertificate() {
       final var result = intygstjanstCertificateIntegrationService.get(request);
 
-      assertEquals(convertedCertificate, result.getContent().get(0));
+      assertEquals(convertedCertificateListItem, result.getContent().get(0));
     }
   }
 
@@ -86,21 +86,21 @@ class IntygstjanstCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfRequestContainsNullPatientId() {
-      final var request = CertificatesRequest.builder().patientId(null).build();
+      final var request = CertificateListRequest.builder().patientId(null).build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfRequestContainsEmptyPatientId() {
-      final var request = CertificatesRequest.builder().patientId("").build();
+      final var request = CertificateListRequest.builder().patientId("").build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldReturnStatusErrorIfCommunicationErrorWithIntygProxyOccurs() {
-      final var request = CertificatesRequest.builder().patientId(PERSON_ID).build();
+      final var request = CertificateListRequest.builder().patientId(PERSON_ID).build();
       when(getCertificatesFromIntygstjanstService.get(request)).thenThrow(
           RuntimeException.class);
       assertThrows(RuntimeException.class,

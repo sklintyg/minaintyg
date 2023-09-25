@@ -15,15 +15,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificateFilterServiceTest {
 
-  private static final Certificate CERTIFICATE = Certificate
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM = CertificateListItem
       .builder()
       .issued(LocalDateTime.now())
       .type(
@@ -51,7 +51,7 @@ class GetCertificateFilterServiceTest {
     when(listCertificatesService.get(any(ListCertificatesRequest.class))).thenReturn(
         ListCertificatesResponse
             .builder()
-            .content(List.of(CERTIFICATE))
+            .content(List.of(CERTIFICATE_LIST_ITEM))
             .build()
     );
   }
@@ -75,21 +75,23 @@ class GetCertificateFilterServiceTest {
   void shouldSetUnits() {
     final var result = getCertificateFilterService.get();
 
-    assertEquals(CERTIFICATE.getUnit(), result.getUnits().get(0));
+    assertEquals(CERTIFICATE_LIST_ITEM.getUnit(), result.getUnits().get(0));
   }
 
   @Test
   void shouldSetCertificateTypeName() {
     final var result = getCertificateFilterService.get();
 
-    assertEquals(CERTIFICATE.getType().getName(), result.getCertificateTypes().get(0).getName());
+    assertEquals(CERTIFICATE_LIST_ITEM.getType().getName(),
+        result.getCertificateTypes().get(0).getName());
   }
 
   @Test
   void shouldSetCertificateTypeId() {
     final var result = getCertificateFilterService.get();
 
-    assertEquals(CERTIFICATE.getType().getId(), result.getCertificateTypes().get(0).getId());
+    assertEquals(CERTIFICATE_LIST_ITEM.getType().getId(),
+        result.getCertificateTypes().get(0).getId());
   }
 
   @Test

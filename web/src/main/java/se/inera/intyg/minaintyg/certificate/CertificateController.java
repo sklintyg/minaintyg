@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateFilterResponseDTO;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
@@ -21,7 +26,7 @@ public class CertificateController {
   private final GetCertificateService getCertificateService;
 
   @PostMapping
-  public CertificatesResponseDTO listCertificates(CertificatesRequestDTO request) {
+  public CertificateListResponseDTO listCertificates(CertificateListRequestDTO request) {
     final var listCertificatesRequest =
         ListCertificatesRequest
             .builder()
@@ -31,7 +36,7 @@ public class CertificateController {
             .statuses(request.getStatuses())
             .build();
 
-    return CertificatesResponseDTO
+    return CertificateListResponseDTO
         .builder()
         .content(listCertificatesService.get(listCertificatesRequest).getContent())
         .build();

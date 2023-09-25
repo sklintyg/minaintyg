@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.certificate.model;
+package se.inera.intyg.minaintyg.integration.api.certificate.model.list;
 
 import java.util.List;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CertificatesRequest {
+public class CertificateListRequest {
 
   String patientId;
   List<String> years;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificatesRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
@@ -21,7 +21,7 @@ public class ListCertificatesService {
     final var user = userService.getLoggedInUser().orElseThrow();
 
     final var response = getCertificatesService.get(
-        CertificatesRequest
+        CertificateListRequest
             .builder()
             .patientId(user.getPersonId())
             .years(request.getYears())

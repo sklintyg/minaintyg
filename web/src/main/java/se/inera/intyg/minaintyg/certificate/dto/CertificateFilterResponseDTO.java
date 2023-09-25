@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.certificate.service.dto;
+package se.inera.intyg.minaintyg.certificate.dto;
 
 import java.util.List;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.list.Certifica
 
 @Value
 @Builder
-public class GetCertificateFilterResponse {
+public class CertificateFilterResponseDTO {
 
   List<String> years;
   List<CertificateUnit> units;
