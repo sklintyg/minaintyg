@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
-public class CertificateQuestionTable extends CertificateQuestion {
+public class CertificateQuestionTableValue extends CertificateQuestionValue {
 
   //TODO: Can we make the format easier? Heading inside map maybe
 
@@ -18,5 +18,5 @@ public class CertificateQuestionTable extends CertificateQuestion {
   Map<Integer, List<String>> values;
 
   @Builder.Default
-  CertificateQuestionType type = CertificateQuestionType.TABLE;
+  CertificateQuestionValueType type = CertificateQuestionValueType.TABLE;
 }

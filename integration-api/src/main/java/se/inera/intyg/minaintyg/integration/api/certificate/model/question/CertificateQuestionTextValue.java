@@ -1,6 +1,5 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.question;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,9 +8,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
-public class CertificateQuestionList extends CertificateQuestion {
+public class CertificateQuestionTextValue extends CertificateQuestionValue {
 
-  List<String> values;
+  String value;
   @Builder.Default
-  CertificateQuestionType type = CertificateQuestionType.LIST;
+  CertificateQuestionValueType type = CertificateQuestionValueType.TEXT;
 }

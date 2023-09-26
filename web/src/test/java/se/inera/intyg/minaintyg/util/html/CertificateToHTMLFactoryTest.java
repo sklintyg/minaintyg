@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTextValue;
 
 class CertificateToHTMLFactoryTest {
 
@@ -15,7 +15,7 @@ class CertificateToHTMLFactoryTest {
         .builder()
         .title("Category title")
         .questions(
-            List.of(CertificateQuestionText
+            List.of(CertificateQuestionTextValue
                 .builder()
                 .title("Question title")
                 .value("text")

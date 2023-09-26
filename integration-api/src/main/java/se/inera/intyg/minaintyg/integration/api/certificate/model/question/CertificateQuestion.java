@@ -1,12 +1,16 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.question;
 
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import java.util.Collections;
+import java.util.List;
+import lombok.Builder;
+import lombok.Value;
 
-@Getter
-@SuperBuilder
-public abstract class CertificateQuestion {
+@Value
+@Builder
+public class CertificateQuestion {
 
   String title;
-  CertificateQuestionType type;
+  CertificateQuestionValue value;
+  @Builder.Default
+  List<CertificateSubQuestion> subQuestions = Collections.emptyList();
 }

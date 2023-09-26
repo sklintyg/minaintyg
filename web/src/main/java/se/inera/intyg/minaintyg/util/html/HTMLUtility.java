@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public final class HTMLUtility {
 
-  public static String join(String s1, String s2) {
-    return s1.concat(s2);
+  public static String join(String... s) {
+    return String.join("", s);
   }
 
   public static <T> String fromList(List<T> list, Function<T, String> mapper) {

@@ -1,0 +1,29 @@
+package se.inera.intyg.minaintyg.certificate.service;
+
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
+import se.inera.intyg.minaintyg.util.html.HTMLTextFactory;
+import se.inera.intyg.minaintyg.util.html.HTMLUtility;
+
+@Service
+@RequiredArgsConstructor
+public class FormattedCategoryConverter {
+
+  private final FormattedQuestionConverter formattedQuestionConverter;
+
+  private static String categoryTitle(String title) {
+    return HTMLTextFactory.h2(title);
+  }
+
+  public String convert(CertificateCategory category) {
+    return HTMLUtility.join(
+        categoryTitle(category.getTitle()),
+        category.getQuestions()
+            .stream()
+            .map(formattedQuestionConverter::convert)
+            .collect(Collectors.joining())
+    );
+  }
+}

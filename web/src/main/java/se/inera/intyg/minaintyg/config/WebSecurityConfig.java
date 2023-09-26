@@ -20,6 +20,7 @@ import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
@@ -119,7 +120,9 @@ public class WebSecurityConfig {
             .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
         )
         .saml2Logout(withDefaults())
-        .saml2Metadata(withDefaults());
+        .saml2Metadata(withDefaults())
+        .csrf(AbstractHttpConfigurer::disable);
+
     return http.build();
   }
 

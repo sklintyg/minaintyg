@@ -53,7 +53,7 @@ class GetCertificateServiceTest {
   @Mock
   UserService userService;
   @Mock
-  CertificateToFormattedCertificateConverter certificateToFormattedCertificateConverter;
+  FormattedCertificateConverter formattedCertificateConverter;
   @Mock
   GetCompleteCertificateService getCompleteCertificateService;
   @InjectMocks
@@ -114,7 +114,7 @@ class GetCertificateServiceTest {
 
       getCertificateService.get(REQUEST);
 
-      verify(certificateToFormattedCertificateConverter).convert(captor.capture());
+      verify(formattedCertificateConverter).convert(captor.capture());
       assertEquals(EXPECTED_RESPONSE.getCertificate(), captor.getValue());
     }
   }

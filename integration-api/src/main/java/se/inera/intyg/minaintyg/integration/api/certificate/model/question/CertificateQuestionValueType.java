@@ -1,8 +1,7 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.question;
 
-public enum CertificateQuestionType {
+public enum CertificateQuestionValueType {
   TEXT,
   LIST,
-  TABLE,
-  TEXT_LIST
+  TABLE
 }
