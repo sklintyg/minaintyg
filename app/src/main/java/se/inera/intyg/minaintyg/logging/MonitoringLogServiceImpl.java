@@ -29,7 +29,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
   @Override
   public void logGetCertificate(String personId, String certificateId) {
-    logEvent(MonitoringEvent.LIST_CERTIFICATES, HashUtility.hash(personId), certificateId);
+    logEvent(MonitoringEvent.GET_CERTIFICATE, HashUtility.hash(personId), certificateId);
   }
 
 

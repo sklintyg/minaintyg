@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -21,17 +20,6 @@ class HTMLUtilityTest {
   @Test
   void shouldFormatTextsInList() {
     final var response = HTMLUtility.fromList(List.of(S1, S2), HTMLTextFactory::p);
-
-    assertEquals(response, "<p>" + S1 + "</p><p>" + S2 + "</p>");
-  }
-
-  @Test
-  void shouldFormatTextsInMap() {
-    final var map = new LinkedHashMap<String, String>();
-    map.put("key1", S1);
-    map.put("key2", S2);
-
-    final var response = HTMLUtility.fromMap(map, entry -> HTMLTextFactory.p(entry.getValue()));
 
     assertEquals(response, "<p>" + S1 + "</p><p>" + S2 + "</p>");
   }
