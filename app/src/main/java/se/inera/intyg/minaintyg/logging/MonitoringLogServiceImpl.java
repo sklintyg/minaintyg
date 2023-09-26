@@ -27,12 +27,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     logEvent(MonitoringEvent.LIST_CERTIFICATES, HashUtility.hash(personId), nbrOfCertificates);
   }
 
-  @Override
-  public void logGetCertificate(String personId, String certificateId) {
-    logEvent(MonitoringEvent.LIST_CERTIFICATES, HashUtility.hash(personId), certificateId);
-  }
-
-
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
     log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
   }
@@ -46,8 +40,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   private enum MonitoringEvent {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
-    LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
-    GET_CERTIFICATE("Citizen '{}' retrieved certificate '{}'");
+    LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates");
     private final String message;
 
     MonitoringEvent(String message) {

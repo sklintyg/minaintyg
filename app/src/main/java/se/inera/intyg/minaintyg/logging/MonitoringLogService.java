@@ -8,5 +8,4 @@ public interface MonitoringLogService {
 
   void logListCertificates(String personId, int nbrOfCertificates);
 
-  void logGetCertificate(String personId, String certificateId);
 }
