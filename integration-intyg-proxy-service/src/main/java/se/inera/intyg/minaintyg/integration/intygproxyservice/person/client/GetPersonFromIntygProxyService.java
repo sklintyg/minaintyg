@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
-import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 
 public interface GetPersonFromIntygProxyService {
 
-  PersonSvarDTO getPersonFromIntygProxy(PersonRequest personRequest);
+  PersonSvarDTO getPersonFromIntygProxy(GetPersonIntegrationRequest personRequest);
 }

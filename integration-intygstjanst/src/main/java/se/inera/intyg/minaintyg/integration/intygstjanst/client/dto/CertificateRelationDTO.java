@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
 
 @Data
 @Builder

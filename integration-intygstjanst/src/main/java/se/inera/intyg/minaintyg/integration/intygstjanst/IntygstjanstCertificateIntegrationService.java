@@ -3,26 +3,27 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
 
 @Service
 @RequiredArgsConstructor
-public class IntygstjanstCertificateIntegrationService implements GetCertificatesService {
+public class IntygstjanstCertificateIntegrationService implements
+    GetCertificateListIntegrationService {
 
   private final GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
   private final CertificateConverter certificateConverter;
 
   @Override
-  public CertificateListResponse get(CertificateListRequest request) {
+  public GetCertificateListIntegrationResponse get(GetCertificateListIntegrationRequest request) {
     validateRequest(request);
     try {
       final var response = getCertificatesFromIntygstjanstService.get(request);
-      return CertificateListResponse
+      return GetCertificateListIntegrationResponse
           .builder()
           .content(convertContent(response))
           .build();
@@ -38,7 +39,7 @@ public class IntygstjanstCertificateIntegrationService implements GetCertificate
         .toList();
   }
 
-  private void validateRequest(CertificateListRequest request) {
+  private void validateRequest(GetCertificateListIntegrationRequest request) {
     if (request == null || request.getPatientId() == null || request.getPatientId().isEmpty()) {
       throw new IllegalArgumentException("Valid request was not provided, must contain patient id");
     }

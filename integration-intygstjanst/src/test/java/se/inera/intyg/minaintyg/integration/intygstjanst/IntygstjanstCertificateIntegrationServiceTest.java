@@ -15,8 +15,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.GetCertificatesFromIntygstjanstService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
@@ -35,14 +35,14 @@ class IntygstjanstCertificateIntegrationServiceTest {
   @Nested
   class TestResponse {
 
-    CertificateListRequest request;
+    GetCertificateListIntegrationRequest request;
     CertificatesResponseDTO certificatesResponseDTO;
     CertificateDTO originalCertificate = new CertificateDTO();
     CertificateListItem convertedCertificateListItem;
 
     @BeforeEach
     void setup() {
-      request = CertificateListRequest.builder().patientId(PERSON_ID).build();
+      request = GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID).build();
 
       certificatesResponseDTO = CertificatesResponseDTO
           .builder()
@@ -86,21 +86,22 @@ class IntygstjanstCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfRequestContainsNullPatientId() {
-      final var request = CertificateListRequest.builder().patientId(null).build();
+      final var request = GetCertificateListIntegrationRequest.builder().patientId(null).build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfRequestContainsEmptyPatientId() {
-      final var request = CertificateListRequest.builder().patientId("").build();
+      final var request = GetCertificateListIntegrationRequest.builder().patientId("").build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldReturnStatusErrorIfCommunicationErrorWithIntygProxyOccurs() {
-      final var request = CertificateListRequest.builder().patientId(PERSON_ID).build();
+      final var request = GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID)
+          .build();
       when(getCertificatesFromIntygstjanstService.get(request)).thenThrow(
           RuntimeException.class);
       assertThrows(RuntimeException.class,

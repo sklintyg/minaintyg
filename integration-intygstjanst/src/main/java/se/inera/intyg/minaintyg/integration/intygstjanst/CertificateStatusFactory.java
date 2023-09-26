@@ -2,8 +2,8 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateRelationType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 

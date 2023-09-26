@@ -10,10 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.person.Person;
-import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
-import se.inera.intyg.minaintyg.integration.api.person.PersonResponse;
-import se.inera.intyg.minaintyg.integration.api.person.Status;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.person.model.Person;
+import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetPersonFromIntygProxyServiceImpl;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonSvarDTO;
@@ -29,7 +29,7 @@ class PersonIntegrationServiceTest {
   private PersonSvarConverter personSvarConverter;
 
   @InjectMocks
-  private PersonIntegrationService personIntegrationService;
+  private PersonIntegrationIntegrationService personIntegrationService;
 
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_NAME = "personName";
@@ -44,21 +44,21 @@ class PersonIntegrationServiceTest {
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsNullPersonId() {
-      final var personRequest = PersonRequest.builder().personId(null).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(null).build();
       assertThrows(IllegalArgumentException.class,
           () -> personIntegrationService.getPerson(personRequest));
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsEmptyPersonId() {
-      final var personRequest = PersonRequest.builder().personId("").build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId("").build();
       assertThrows(IllegalArgumentException.class,
           () -> personIntegrationService.getPerson(personRequest));
     }
 
     @Test
     void shouldReturnStatusErrorIfCommunicationErrorWithIntygProxyOccurs() {
-      final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenThrow(
           RuntimeException.class);
       assertThrows(RuntimeException.class,
@@ -71,17 +71,17 @@ class PersonIntegrationServiceTest {
 
     @Test
     void shouldReturnPersonResponse() {
-      final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
       final var personSvarDTO = getPersonResponse();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
           personSvarDTO);
       final var actualResult = personIntegrationService.getPerson(personRequest);
-      assertEquals(PersonResponse.class, actualResult.getClass());
+      assertEquals(GetPersonIntegrationResponse.class, actualResult.getClass());
     }
 
     @Test
     void shouldReturnPersonResponseWithConvertedPerson() {
-      final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
       final var expectedResult = getPerson();
       final var personSvarDTO = getPersonResponse();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
@@ -95,7 +95,7 @@ class PersonIntegrationServiceTest {
 
     @Test
     void shouldReturnPersonResponseWithConvertedStatus() {
-      final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
       final var expectedResult = Status.FOUND;
       final var personSvarDTO = getPersonResponse();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
