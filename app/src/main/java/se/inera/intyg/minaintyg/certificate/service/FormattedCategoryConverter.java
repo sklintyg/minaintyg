@@ -13,10 +13,6 @@ public class FormattedCategoryConverter {
 
   private final FormattedQuestionConverter formattedQuestionConverter;
 
-  private static String categoryTitle(String title) {
-    return HTMLTextFactory.h2(title);
-  }
-
   public String convert(CertificateCategory category) {
     return HTMLUtility.join(
         categoryTitle(category.getTitle()),
@@ -26,4 +22,9 @@ public class FormattedCategoryConverter {
             .collect(Collectors.joining())
     );
   }
+
+  private String categoryTitle(String title) {
+    return HTMLTextFactory.h2(title);
+  }
+
 }
