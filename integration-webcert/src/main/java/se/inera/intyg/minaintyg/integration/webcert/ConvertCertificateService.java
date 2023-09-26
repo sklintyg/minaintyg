@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.GetCertificateResponse;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -14,11 +14,11 @@ public class ConvertCertificateService {
 
   private final CategoryQuestionOrganizer categoryQuestionOrganizer;
 
-  public Certificate convert(GetCertificateResponse response) {
+  public Certificate convert(CertificateResponseDTO response) {
     final var certificateDataElements = getCertificateDataElements(response);
     final var categoryWithQuestionsList = categoryQuestionOrganizer.organize(
-        certificateDataElements);
-
+        certificateDataElements
+    );
     return Certificate.builder()
         .metadata(CertificateMetadata.builder()
             .build())
@@ -26,7 +26,7 @@ public class ConvertCertificateService {
   }
 
   private static List<CertificateDataElement> getCertificateDataElements(
-      GetCertificateResponse response) {
-    return response.getData().values().stream().toList();
+      CertificateResponseDTO response) {
+    return response.getCertificate().getData().values().stream().toList();
   }
 }

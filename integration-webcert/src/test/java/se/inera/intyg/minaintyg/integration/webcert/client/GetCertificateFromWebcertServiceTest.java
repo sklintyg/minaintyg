@@ -13,10 +13,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.GetCertificateResponse;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 class GetCertificateFromWebcertServiceTest {
 
@@ -50,11 +51,14 @@ class GetCertificateFromWebcertServiceTest {
 
   @Test
   void shouldReturnGetCertificateResponse() throws JsonProcessingException {
-    final var getCertificateRequest = GetCertificateRequest.builder().certificateId(CERTIFICATE_ID)
+    final var getCertificateRequest = GetCertificateIntegrationRequest.builder()
+        .certificateId(CERTIFICATE_ID)
         .build();
-    final var expectedResponse = GetCertificateResponse.builder()
-        .data(Map.of(ID, CertificateDataElement.builder().build()))
-        .metadata(CertificateMetadata.builder().build())
+    final var expectedResponse = CertificateResponseDTO.builder()
+        .certificate(CertificateDTO.builder()
+            .data(Map.of(ID, CertificateDataElement.builder().build()))
+            .metadata(CertificateMetadata.builder().build())
+            .build())
         .build();
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
