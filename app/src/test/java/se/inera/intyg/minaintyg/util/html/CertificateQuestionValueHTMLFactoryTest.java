@@ -20,7 +20,7 @@ class CertificateQuestionValueHTMLFactoryTest {
     final var result = CertificateQuestionValueHTMLFactory.list(question);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Title</h3><ul><li>element 1</li><li>element 2</li></ul>",
+        "<ul><li>element 1</li><li>element 2</li></ul>",
         result);
   }
 
@@ -34,7 +34,7 @@ class CertificateQuestionValueHTMLFactoryTest {
     final var result = CertificateQuestionValueHTMLFactory.text(question);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Title</h3><p>element 1</p>",
+        "<p>element 1</p>",
         result);
   }
 
@@ -49,7 +49,7 @@ class CertificateQuestionValueHTMLFactoryTest {
     final var result = CertificateQuestionValueHTMLFactory.table(question);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Title</h3><table className=\"ids-table\"><thead><th>heading 1</th><th>heading 2</th></thead><tbody><tr><td>Value 1</td><td>Value 2</td></tr></tbody></table>",
+        "<table className=\"ids-table\"><thead><th>heading 1</th><th>heading 2</th></thead><tbody><tr><td>Value 1</td><td>Value 2</td></tr></tbody></table>",
         result);
   }
 }

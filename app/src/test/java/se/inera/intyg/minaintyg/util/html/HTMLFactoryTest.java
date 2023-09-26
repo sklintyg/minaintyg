@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-// TODO: Switch map to linkedmap so they preserve order
-
 class HTMLFactoryTest {
 
   @Test

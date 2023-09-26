@@ -10,11 +10,20 @@ class HTMLUtilityTest {
   private static final String S1 = "S_1";
   private static final String S2 = "S_2";
 
+  private static final String S3 = "S_3";
+
   @Test
   void shouldJoinTwoTexts() {
     final var response = HTMLUtility.join(S1, S2);
 
     assertEquals(response, S1 + S2);
+  }
+
+  @Test
+  void shouldJoinThreeTexts() {
+    final var response = HTMLUtility.join(S1, S2, S3);
+
+    assertEquals(response, S1 + S2 + S3);
   }
 
   @Test

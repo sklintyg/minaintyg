@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.util.html.HTMLFactory;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,12 @@ public class FormattedCertificateConverter {
         .builder()
         .metadata(certificate.getMetadata())
         .formattedContent(
-            certificate.getCategories()
-                .stream()
-                .map(formattedCategoryConverter::convert)
-                .collect(Collectors.joining())
+            HTMLFactory.article(
+                certificate.getCategories()
+                    .stream()
+                    .map(formattedCategoryConverter::convert)
+                    .collect(Collectors.joining())
+            )
         )
         .build();
   }
