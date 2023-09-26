@@ -18,12 +18,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCompleteCertificateService;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateResponse;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
@@ -37,7 +37,7 @@ class GetCertificateServiceTest {
       .certificateId(ID)
       .build();
 
-  private static final CertificateResponse EXPECTED_RESPONSE = CertificateResponse
+  private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
       .builder()
       .certificate(
           Certificate
@@ -55,7 +55,7 @@ class GetCertificateServiceTest {
   @Mock
   FormattedCertificateConverter formattedCertificateConverter;
   @Mock
-  GetCompleteCertificateService getCompleteCertificateService;
+  GetCertificateIntegrationService getCertificateIntegrationService;
   @InjectMocks
   GetCertificateService getCertificateService;
 
@@ -64,7 +64,7 @@ class GetCertificateServiceTest {
     when(userService.getLoggedInUser())
         .thenReturn(Optional.ofNullable(MinaIntygUser.builder().personId(PATIENT_ID).build()));
 
-    when(getCompleteCertificateService.get(any())).thenReturn(EXPECTED_RESPONSE);
+    when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
   }
 
   @Nested
@@ -96,11 +96,11 @@ class GetCertificateServiceTest {
 
     @Test
     void shouldSetCertificateId() {
-      final var captor = ArgumentCaptor.forClass(CertificateRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
 
       getCertificateService.get(REQUEST);
 
-      verify(getCompleteCertificateService).get(captor.capture());
+      verify(getCertificateIntegrationService).get(captor.capture());
       assertEquals(ID, captor.getValue().getCertificateId());
     }
   }

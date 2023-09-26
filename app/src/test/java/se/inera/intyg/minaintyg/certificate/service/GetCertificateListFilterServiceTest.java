@@ -15,10 +15,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificateListFilterServiceTest {

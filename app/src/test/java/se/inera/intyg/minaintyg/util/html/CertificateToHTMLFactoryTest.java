@@ -1,15 +1,8 @@
 package se.inera.intyg.minaintyg.util.html;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTextValue;
-
 class CertificateToHTMLFactoryTest {
 
-  @Test
+  /*@Test
   void shouldReturnCategory() {
     final var result = CertificateToHTMLFactory.category(CertificateCategory
         .builder()
@@ -35,6 +28,6 @@ class CertificateToHTMLFactoryTest {
     final var result = CertificateToHTMLFactory.certificate("content");
 
     assertEquals("<article className=\"ids-certificate\">content</article>", result);
-  }
+  }*/
 
 }

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 
 @ExtendWith(MockitoExtension.class)
 class GetPersonFromIntygProxyServiceImplTest {
@@ -49,7 +49,7 @@ class GetPersonFromIntygProxyServiceImplTest {
 
   @Test
   void shouldReturnPersonResponse() throws JsonProcessingException {
-    final var personRequest = PersonRequest.builder().personId(PERSON_ID).build();
+    final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
     final var expectedResponse = PersonSvarDTO.builder()
         .person(
             PersonDTO.builder()

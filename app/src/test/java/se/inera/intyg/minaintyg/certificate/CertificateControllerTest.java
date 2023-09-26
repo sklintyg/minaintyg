@@ -24,11 +24,11 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateTypeFilter;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTypeFilter;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {

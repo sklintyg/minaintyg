@@ -2,8 +2,8 @@ package se.inera.intyg.minaintyg.integration.intygproxyservice.person;
 
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import se.inera.intyg.minaintyg.integration.api.person.Person;
-import se.inera.intyg.minaintyg.integration.api.person.Status;
+import se.inera.intyg.minaintyg.integration.api.person.model.Person;
+import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 

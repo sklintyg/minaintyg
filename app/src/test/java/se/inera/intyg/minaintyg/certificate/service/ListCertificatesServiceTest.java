@@ -20,11 +20,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListItem;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
@@ -40,7 +40,7 @@ class ListCertificatesServiceTest {
       .build();
 
   @Mock
-  GetCertificatesService getCertificatesService;
+  GetCertificateListIntegrationService getCertificateListIntegrationService;
 
   @Mock
   MonitoringLogService monitoringLogService;
@@ -56,8 +56,8 @@ class ListCertificatesServiceTest {
     when(userService.getLoggedInUser()).thenReturn(
         Optional.of(new MinaIntygUser(PATIENT_ID, "name", LoginMethod.FAKE)));
 
-    when(getCertificatesService.get(any())).thenReturn(
-        CertificateListResponse
+    when(getCertificateListIntegrationService.get(any())).thenReturn(
+        GetCertificateListIntegrationResponse
             .builder()
             .content(List.of(CERTIFICATE_LIST_ITEM))
             .build()
@@ -79,9 +79,9 @@ class ListCertificatesServiceTest {
     void shouldSendPatientId() {
       listCertificatesService.get(request);
 
-      final var captor = ArgumentCaptor.forClass(CertificateListRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateListIntegrationRequest.class);
 
-      verify(getCertificatesService).get(captor.capture());
+      verify(getCertificateListIntegrationService).get(captor.capture());
       assertEquals(PATIENT_ID, captor.getValue().getPatientId());
     }
 
@@ -89,9 +89,9 @@ class ListCertificatesServiceTest {
     void shouldSendYears() {
       listCertificatesService.get(request);
 
-      final var captor = ArgumentCaptor.forClass(CertificateListRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateListIntegrationRequest.class);
 
-      verify(getCertificatesService).get(captor.capture());
+      verify(getCertificateListIntegrationService).get(captor.capture());
       assertEquals(YEARS, captor.getValue().getYears());
     }
 
@@ -99,9 +99,9 @@ class ListCertificatesServiceTest {
     void shouldSendUnits() {
       listCertificatesService.get(request);
 
-      final var captor = ArgumentCaptor.forClass(CertificateListRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateListIntegrationRequest.class);
 
-      verify(getCertificatesService).get(captor.capture());
+      verify(getCertificateListIntegrationService).get(captor.capture());
       assertEquals(UNITS, captor.getValue().getUnits());
     }
 
@@ -109,9 +109,9 @@ class ListCertificatesServiceTest {
     void shouldSendCertificateTypes() {
       listCertificatesService.get(request);
 
-      final var captor = ArgumentCaptor.forClass(CertificateListRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateListIntegrationRequest.class);
 
-      verify(getCertificatesService).get(captor.capture());
+      verify(getCertificateListIntegrationService).get(captor.capture());
       assertEquals(TYPES, captor.getValue().getCertificateTypes());
     }
 
@@ -119,9 +119,9 @@ class ListCertificatesServiceTest {
     void shouldSendStatuses() {
       listCertificatesService.get(request);
 
-      final var captor = ArgumentCaptor.forClass(CertificateListRequest.class);
+      final var captor = ArgumentCaptor.forClass(GetCertificateListIntegrationRequest.class);
 
-      verify(getCertificatesService).get(captor.capture());
+      verify(getCertificateListIntegrationService).get(captor.capture());
       assertEquals(STATUSES, captor.getValue().getStatuses());
     }
   }

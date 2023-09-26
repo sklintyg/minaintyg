@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificatesService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationService;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
@@ -13,15 +13,15 @@ import se.inera.intyg.minaintyg.user.UserService;
 @RequiredArgsConstructor
 public class ListCertificatesService {
 
-  private final GetCertificatesService getCertificatesService;
+  private final GetCertificateListIntegrationService getCertificateListIntegrationService;
   private final UserService userService;
   private final MonitoringLogService monitoringLogService;
 
   public ListCertificatesResponse get(ListCertificatesRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
 
-    final var response = getCertificatesService.get(
-        CertificateListRequest
+    final var response = getCertificateListIntegrationService.get(
+        GetCertificateListIntegrationRequest
             .builder()
             .patientId(user.getPersonId())
             .years(request.getYears())

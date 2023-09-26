@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.certificate.model.list;
+package se.inera.intyg.minaintyg.integration.api.certificate.model.common;
 
 import java.time.LocalDateTime;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.api.person;
+package se.inera.intyg.minaintyg.integration.api.person.model;
 
 import lombok.Builder;
 import lombok.Value;

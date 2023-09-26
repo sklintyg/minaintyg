@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.person.Status;
+import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonSvarDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;

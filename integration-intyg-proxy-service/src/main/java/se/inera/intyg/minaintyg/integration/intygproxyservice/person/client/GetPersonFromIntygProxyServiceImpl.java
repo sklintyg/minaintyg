@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import se.inera.intyg.minaintyg.integration.api.person.PersonRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 
 @Service
 public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
@@ -32,14 +32,14 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
   }
 
   @Override
-  public PersonSvarDTO getPersonFromIntygProxy(PersonRequest personRequest) {
+  public PersonSvarDTO getPersonFromIntygProxy(GetPersonIntegrationRequest personRequest) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(puEndpoint)
             .build())
-        .body(Mono.just(personRequest), PersonRequest.class)
+        .body(Mono.just(personRequest), GetPersonIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(PersonSvarDTO.class)

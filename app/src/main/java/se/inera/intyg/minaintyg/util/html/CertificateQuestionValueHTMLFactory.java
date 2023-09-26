@@ -1,21 +1,21 @@
 package se.inera.intyg.minaintyg.util.html;
 
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestion;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionListValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTableValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTextValue;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 
 public class CertificateQuestionValueHTMLFactory {
 
-  public static String text(CertificateQuestionTextValue question) {
+  public static String text(CertificateQuestionValueText question) {
     return HTMLTextFactory.p(question.getValue());
   }
 
-  public static String table(CertificateQuestionTableValue question) {
+  public static String table(CertificateQuestionValueTable question) {
     return HTMLTableFactory.table(question.getValues(), question.getHeadings());
   }
 
-  public static String list(CertificateQuestionListValue question) {
+  public static String list(CertificateQuestionValueList question) {
     return HTMLListFactory.ul(question.getValues());
   }
 

@@ -7,8 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.list.CertificateListRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @Service
@@ -33,14 +33,14 @@ public class GetCertificateFromWebcertService {
     this.endpoint = endpoint;
   }
 
-  public CertificateResponseDTO get(CertificateRequest request) {
+  public CertificateResponseDTO get(GetCertificateIntegrationRequest request) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(endpoint)
             .build())
-        .body(Mono.just(request), CertificateListRequest.class)
+        .body(Mono.just(request), GetCertificateListIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(CertificateResponseDTO.class)

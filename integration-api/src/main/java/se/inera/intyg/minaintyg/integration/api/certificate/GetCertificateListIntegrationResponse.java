@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.certificate.dto;
+package se.inera.intyg.minaintyg.integration.api.certificate;
 
 import java.util.List;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateLis
 
 @Value
 @Builder
-public class CertificateListResponseDTO {
+public class GetCertificateListIntegrationResponse {
 
   List<CertificateListItem> content;
 }

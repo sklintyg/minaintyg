@@ -7,12 +7,11 @@ import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFac
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestion;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionListValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTableValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionTextValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateQuestionValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.question.CertificateSubQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.util.html.HTMLTextFactory;
 import se.inera.intyg.minaintyg.util.html.HTMLUtility;
 
@@ -31,7 +30,7 @@ public class FormattedQuestionConverter {
     );
   }
 
-  private String convertSubQuestion(CertificateSubQuestion subQuestion) {
+  private String convertSubQuestion(CertificateQuestion subQuestion) {
     return HTMLUtility.join(
         questionTitle(subQuestion.getTitle()),
         value(subQuestion.getValue())
@@ -43,15 +42,11 @@ public class FormattedQuestionConverter {
   }
 
   private String value(CertificateQuestionValue value) {
-    switch (value.getType()) {
-      case TEXT:
-        return text((CertificateQuestionTextValue) value);
-      case LIST:
-        return list((CertificateQuestionListValue) value);
-      case TABLE:
-        return table((CertificateQuestionTableValue) value);
-    }
+    return switch (value.getType()) {
+      case TEXT -> text((CertificateQuestionValueText) value);
+      case LIST -> list((CertificateQuestionValueList) value);
+      case TABLE -> table((CertificateQuestionValueTable) value);
+    };
 
-    return "";
   }
 }

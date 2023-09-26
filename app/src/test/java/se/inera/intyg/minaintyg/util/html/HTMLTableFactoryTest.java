@@ -3,7 +3,6 @@ package se.inera.intyg.minaintyg.util.html;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class HTMLTableFactoryTest {
@@ -11,7 +10,7 @@ class HTMLTableFactoryTest {
   @Test
   void shouldReturnTableWithOneTr() {
     final var result = HTMLTableFactory.table(
-        Map.of(1, List.of("Value 1", "Value 2")),
+        List.of(List.of("Value 1", "Value 2")),
         List.of("heading 1", "heading 2")
     );
 
@@ -23,7 +22,7 @@ class HTMLTableFactoryTest {
   @Test
   void shouldReturnUlWithTwoTr() {
     final var result = HTMLTableFactory.table(
-        Map.of(1, List.of("Value 1", "Value 2"), 2, List.of("Value 3", "Value 4")),
+        List.of(List.of("Value 1", "Value 2"), List.of("Value 3", "Value 4")),
         List.of("heading 1", "heading 2")
     );
 
