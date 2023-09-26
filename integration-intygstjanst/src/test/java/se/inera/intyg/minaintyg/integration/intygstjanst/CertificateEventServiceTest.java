@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRecipientDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 

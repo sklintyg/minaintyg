@@ -1,9 +1,9 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateIssuer;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateSummary;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateUnit;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateIssuer;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 
 public class CertificateInformationFactory {

@@ -3,9 +3,9 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateEvent;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 
 @Service
@@ -15,8 +15,8 @@ public class CertificateConverter {
   private final CertificateEventService certificateEventService;
   private final CertificateStatusService certificateStatusService;
 
-  public Certificate convert(CertificateDTO certificate) {
-    return Certificate
+  public CertificateListItem convert(CertificateDTO certificate) {
+    return CertificateListItem
         .builder()
         .id(certificate.getId())
         .type(CertificateInformationFactory.type(certificate))
