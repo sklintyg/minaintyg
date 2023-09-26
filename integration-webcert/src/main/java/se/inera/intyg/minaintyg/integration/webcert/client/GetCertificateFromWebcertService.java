@@ -31,6 +31,7 @@ public class GetCertificateFromWebcertService {
     this.baseUrl = baseUrl;
     this.port = port;
     this.endpoint = endpoint;
+
   }
 
   public CertificateResponseDTO get(CertificateRequest request) {
