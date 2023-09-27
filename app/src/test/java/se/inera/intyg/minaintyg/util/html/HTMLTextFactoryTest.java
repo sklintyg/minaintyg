@@ -37,5 +37,12 @@ class HTMLTextFactoryTest {
 
       assertEquals("<h4 className=\"ids-heading-4\">title</h4>", result);
     }
+
+    @Test
+    void shouldReturnH5() {
+      final var result = HTMLTextFactory.h5("title");
+
+      assertEquals("<h5 className=\"ids-heading-5\">title</h5>", result);
+    }
   }
 }
