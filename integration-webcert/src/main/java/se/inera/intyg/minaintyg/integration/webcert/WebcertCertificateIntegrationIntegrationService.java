@@ -7,7 +7,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 
 @Service
@@ -24,7 +23,7 @@ public class WebcertCertificateIntegrationIntegrationService implements
       final var response = getCertificateFromWebcertService.get(request);
       return GetCertificateIntegrationResponse
           .builder()
-          .certificate(convertCertificate(response))
+          .certificate(convertCertificate())
           .build();
     } catch (Exception exception) {
       throw new RuntimeException(exception);
@@ -32,7 +31,7 @@ public class WebcertCertificateIntegrationIntegrationService implements
   }
 
   // TODO: Add implementation in other PR
-  private Certificate convertCertificate(CertificateResponseDTO response) {
+  private Certificate convertCertificate() {
     return Certificate.builder().build();
   }
 

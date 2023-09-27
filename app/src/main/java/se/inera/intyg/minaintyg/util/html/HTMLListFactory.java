@@ -6,6 +6,10 @@ import java.util.List;
 
 public class HTMLListFactory {
 
+  private HTMLListFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String ul(List<String> values) {
     final var content = HTMLUtility.fromList(values, HTMLListFactory::li);
 

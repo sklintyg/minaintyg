@@ -91,11 +91,10 @@ class MonitoringLogServiceImplTest {
     }
 
     @Test
-    void shouldLogWhenUserGetsCertificate() {
-      monitoringLogService.logGetCertificate(PERSON_ID, "id");
-      final var hashedPersonId = HashUtility.hash(PERSON_ID);
-      verifyLog(Level.INFO,
-          "GET_CERTIFICATE Citizen '" + hashedPersonId + "' retrieved certificate 'id'");
+    void shouldLogWhenCertificateIsRead() {
+      monitoringLogService.logCertificateRead("id", "lisjp");
+
+      verifyLog(Level.INFO, "CERTIFICATE_READ Certificate 'id' of type 'lisjp' was read");
     }
   }
 }

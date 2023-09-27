@@ -53,8 +53,7 @@ public class CertificateController {
 
     return CertificateResponseDTO
         .builder()
-        .content(response.getCertificate().getFormattedContent())
-        .metadata(response.getCertificate().getMetadata())
+        .certificate(response.getCertificate())
         .build();
   }
 

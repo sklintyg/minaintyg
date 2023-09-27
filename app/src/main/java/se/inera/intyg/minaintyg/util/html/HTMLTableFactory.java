@@ -7,6 +7,10 @@ import java.util.List;
 
 public class HTMLTableFactory {
 
+  private HTMLTableFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String table(List<List<String>> values, List<String> headings) {
     final var headingsContent = HTMLUtility.fromList(headings, HTMLTableFactory::th);
     final var tableBody = tbody(values);

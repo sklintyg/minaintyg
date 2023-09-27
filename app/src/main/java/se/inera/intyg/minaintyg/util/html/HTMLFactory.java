@@ -12,6 +12,10 @@ public class HTMLFactory {
   private static final String IDS_CERTIFICATE = "ids-certificate";
   private static final String SPACE = " ";
 
+  private HTMLFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String tag(String tagName, String className, String value) {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";

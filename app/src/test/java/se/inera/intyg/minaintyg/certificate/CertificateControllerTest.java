@@ -215,23 +215,10 @@ class CertificateControllerTest {
     class Response {
 
       @Test
-      void shouldSetMetadata() {
+      void shouldSetCertificate() {
         final var response = certificateController.getCertificate(CERTIFICATE_ID);
 
-        assertEquals(
-            expectedResponse.getCertificate().getMetadata(),
-            response.getMetadata()
-        );
-      }
-
-      @Test
-      void shouldSetFormattedContent() {
-        final var response = certificateController.getCertificate(CERTIFICATE_ID);
-
-        assertEquals(
-            expectedResponse.getCertificate().getMetadata(),
-            response.getMetadata()
-        );
+        assertEquals(expectedResponse.getCertificate(), response.getCertificate());
       }
     }
   }

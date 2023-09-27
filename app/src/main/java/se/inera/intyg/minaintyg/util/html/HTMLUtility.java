@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 
 public final class HTMLUtility {
 
+  private HTMLUtility() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String join(String... s) {
     return Stream.of(s)
         .filter(Objects::nonNull)

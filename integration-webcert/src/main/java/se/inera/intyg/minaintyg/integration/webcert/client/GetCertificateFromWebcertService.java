@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @Service
@@ -40,7 +39,7 @@ public class GetCertificateFromWebcertService {
             .port(port)
             .path(endpoint)
             .build())
-        .body(Mono.just(request), GetCertificateListIntegrationRequest.class)
+        .body(Mono.just(request), GetCertificateIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(CertificateResponseDTO.class)

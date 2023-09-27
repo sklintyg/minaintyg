@@ -6,6 +6,10 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 
 public class CertificateQuestionValueHTMLFactory {
 
+  private CertificateQuestionValueHTMLFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String text(CertificateQuestionValueText question) {
     return HTMLTextFactory.p(question.getValue());
   }

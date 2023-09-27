@@ -28,10 +28,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   @Override
-  public void logGetCertificate(String personId, String certificateId) {
-    logEvent(MonitoringEvent.GET_CERTIFICATE, HashUtility.hash(personId), certificateId);
+  public void logCertificateRead(String certificateId, String type) {
+    logEvent(MonitoringEvent.CERTIFICATE_READ, certificateId, type);
   }
-
 
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
     log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
@@ -47,7 +46,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
-    GET_CERTIFICATE("Citizen '{}' retrieved certificate '{}'");
+    CERTIFICATE_READ("Certificate '{}' of type '{}' was read");
     private final String message;
 
     MonitoringEvent(String message) {

@@ -4,7 +4,7 @@ import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFac
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.table;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.text;
 
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
@@ -37,8 +37,10 @@ public class FormattedQuestionConverter {
     return question(question, this::subQuestionTitle, this::subQuestionLabel);
   }
 
-  private String question(CertificateQuestion question, Function<String, String> getTitle,
-      Function<String, String> getLabel) {
+  private String question(
+      CertificateQuestion question,
+      UnaryOperator<String> getTitle,
+      UnaryOperator<String> getLabel) {
     return HTMLUtility.join(
         getTitle.apply(question.getTitle()),
         getLabel.apply(question.getLabel()),
@@ -68,6 +70,5 @@ public class FormattedQuestionConverter {
       case LIST -> list((CertificateQuestionValueList) value);
       case TABLE -> table((CertificateQuestionValueTable) value);
     };
-
   }
 }

@@ -29,5 +29,4 @@ public class FormattedCategoryConverter {
   private String categoryTitle(String title) {
     return HTMLTextFactory.h2(title);
   }
-
 }
