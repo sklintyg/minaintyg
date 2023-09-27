@@ -28,12 +28,17 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.NullRequestCache;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
+import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
+import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
 
 @Slf4j
 @Configuration
@@ -114,12 +119,24 @@ public class WebSecurityConfig {
             )
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
+        .requestCache(cacheConfigurer -> cacheConfigurer
+            .requestCache(
+                samlLoginSuccessUrlAlwaysUse
+                    ? new NullRequestCache()
+                    : new HttpSessionRequestCache()
+            )
+        )
+        .exceptionHandling(exceptionConfigurer -> exceptionConfigurer
+            .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+        )
         .csrf(csrfConfigurer -> csrfConfigurer
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+            .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
         )
+        .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .saml2Logout(withDefaults())
         .saml2Metadata(withDefaults());
+
     return http.build();
   }
 
