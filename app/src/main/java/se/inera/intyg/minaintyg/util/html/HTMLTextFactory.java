@@ -7,6 +7,7 @@ public class HTMLTextFactory {
   private static final String IDS_HEADING_2 = "ids-heading-2";
   private static final String IDS_HEADING_3 = "ids-heading-3";
   private static final String IDS_HEADING_4 = "ids-heading-4";
+  private static final String IDS_HEADING_5 = "ids-heading-5";
 
 
   public static String h2(String value) {
@@ -19,6 +20,10 @@ public class HTMLTextFactory {
 
   public static String h4(String value) {
     return tag("h4", IDS_HEADING_4, value);
+  }
+
+  public static String h5(String value) {
+    return tag("h5", IDS_HEADING_5, value);
   }
 
   public static String p(String value) {

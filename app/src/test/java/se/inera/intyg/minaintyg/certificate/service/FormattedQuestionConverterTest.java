@@ -94,6 +94,35 @@ class FormattedQuestionConverterTest {
   }
 
   @Test
+  void shouldReturnHTMLWithSubQuestion() {
+    final var question = CertificateQuestion.builder()
+        .title("Title")
+        .label("Label")
+        .value(
+            CertificateQuestionValueText
+                .builder()
+                .value("element 1")
+                .build()
+        )
+        .build();
+
+    final var completeQuestion = CertificateQuestion.builder()
+        .subQuestions(List.of(question))
+        .title("Complete title")
+        .label("Complete label")
+        .value(
+            CertificateQuestionValueText.builder().value("Complete text").build()
+        )
+        .build();
+
+    final var result = formattedQuestionConverter.convert(completeQuestion);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Complete title</h3><h4 className=\"ids-heading-4\">Complete label</h4><p>Complete text</p><h4 className=\"ids-heading-4\">Title</h4><h5 className=\"ids-heading-5\">Label</h5><p>element 1</p>",
+        result);
+  }
+
+  @Test
   void shouldReturnHTMLForTable() {
     final var question = CertificateQuestion.builder()
         .title("Title")
