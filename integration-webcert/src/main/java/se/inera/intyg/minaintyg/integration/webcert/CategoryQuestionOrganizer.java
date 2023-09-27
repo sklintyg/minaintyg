@@ -10,23 +10,30 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 @Component
 public class CategoryQuestionOrganizer {
 
-  public List<CategoryWithQuestions> organize(
+  public List<List<CertificateDataElement>> organize(
       List<CertificateDataElement> certificateDataElements) {
     final var elementsSortedByIndex = getElementsSortedByIndex(certificateDataElements);
-    final var categoryWithQuestions = new ArrayList<CategoryWithQuestions>();
+    final var organizedCertificateDataElements = new ArrayList<List<CertificateDataElement>>();
 
-    elementsSortedByIndex.forEach(certificateDataElement -> {
-      if (elementIsCategory(certificateDataElement)) {
-        categoryWithQuestions.add(new CategoryWithQuestions(certificateDataElement));
+    elementsSortedByIndex.forEach(element -> {
+      if (elementIsCategory(element)) {
+        organizedCertificateDataElements.add(new ArrayList<>());
+        addElementToList(organizedCertificateDataElements, element);
+      } else {
+        addElementToList(organizedCertificateDataElements, element);
       }
-      if (categoryWithQuestions.isEmpty()) {
-        return;
-      }
-      categoryWithQuestions.get(categoryWithQuestions.size() - 1)
-          .addQuestion(certificateDataElement);
     });
+    return organizedCertificateDataElements;
+  }
 
-    return categoryWithQuestions;
+  private static void addElementToList(
+      ArrayList<List<CertificateDataElement>> organizedCertificateDataElements,
+      CertificateDataElement element) {
+    if (organizedCertificateDataElements.isEmpty()) {
+      throw new IllegalArgumentException("Questions without related categories are not permited");
+    }
+    organizedCertificateDataElements.get(organizedCertificateDataElements.size() - 1)
+        .add(element);
   }
 
   private static List<CertificateDataElement> getElementsSortedByIndex(

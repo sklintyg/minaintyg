@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 class GetCertificateFromWebcertServiceTest {
@@ -57,7 +57,7 @@ class GetCertificateFromWebcertServiceTest {
     final var expectedResponse = CertificateResponseDTO.builder()
         .certificate(CertificateDTO.builder()
             .data(Map.of(ID, CertificateDataElement.builder().build()))
-            .metadata(CertificateMetadata.builder().build())
+            .metadata(CertificateMetadataDTO.builder().build())
             .build())
         .build();
     mockWebServer.enqueue(

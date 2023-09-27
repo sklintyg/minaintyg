@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement.CertificateDataElementBuilder;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 
 
 @JsonDeserialize(builder = CertificateDataElementBuilder.class)
@@ -12,11 +14,11 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataEl
 @Builder
 public class CertificateDataElement {
 
-  private String id;
-  private String parent;
-  private int index;
-  private CertificateDataConfig config;
-  private CertificateDataValue value;
+  String id;
+  String parent;
+  int index;
+  CertificateDataConfig config;
+  CertificateDataValue value;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class CertificateDataElementBuilder {

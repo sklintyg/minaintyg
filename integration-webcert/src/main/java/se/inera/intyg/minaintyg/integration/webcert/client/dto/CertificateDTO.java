@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateDTO {
 
-  CertificateMetadata metadata;
+  CertificateMetadataDTO metadata;
   Map<String, CertificateDataElement> data;
 }

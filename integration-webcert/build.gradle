@@ -1,10 +1,14 @@
 dependencies {
     implementation project(':integration-api')
-    implementation 'org.springframework:spring-context'
     implementation project(path: ':integration-intygstjanst')
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "com.squareup.okhttp3:okhttp"
     testImplementation "com.squareup.okhttp3:mockwebserver"
