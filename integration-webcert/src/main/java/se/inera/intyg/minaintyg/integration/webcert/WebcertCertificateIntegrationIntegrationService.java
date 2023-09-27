@@ -31,6 +31,7 @@ public class WebcertCertificateIntegrationIntegrationService implements
     }
   }
 
+  // TODO: Add implementation in other PR
   private Certificate convertCertificate(CertificateResponseDTO response) {
     return Certificate.builder().build();
   }
