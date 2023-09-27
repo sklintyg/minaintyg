@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model;
 
+import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
@@ -12,5 +13,6 @@ public class CertificateQuestion {
   String title;
   String label;
   CertificateQuestionValue value;
-  List<CertificateQuestion> subQuestions;
+  @Builder.Default
+  List<CertificateQuestion> subQuestions = Collections.emptyList();
 }

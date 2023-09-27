@@ -13,11 +13,15 @@ public class HTMLFactory {
   private static final String SPACE = " ";
 
   public static String tag(String tagName, String className, String value) {
+    if (value == null || tagName == null || tagName.isEmpty()) {
+      return "";
+    }
+
     return startTag(tagName, className) + value + endTag(tagName);
   }
 
   public static String tag(String tagName, String value) {
-    return startTag(tagName, null) + value + endTag(tagName);
+    return tag(tagName, null, value);
   }
 
 

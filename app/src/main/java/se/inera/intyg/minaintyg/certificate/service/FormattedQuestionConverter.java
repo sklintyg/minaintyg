@@ -21,24 +21,29 @@ public class FormattedQuestionConverter {
 
   public String convert(CertificateQuestion question) {
     return HTMLUtility.join(
-        questionTitle(question.getTitle()),
-        value(question.getValue()),
+        convertQuestion(question),
         question.getSubQuestions()
             .stream()
-            .map(this::convertSubQuestion)
+            .map(this::convertQuestion)
             .collect(Collectors.joining())
     );
   }
 
-  private String convertSubQuestion(CertificateQuestion subQuestion) {
+  private String convertQuestion(CertificateQuestion question) {
     return HTMLUtility.join(
-        questionTitle(subQuestion.getTitle()),
-        value(subQuestion.getValue())
+        questionTitle(question.getTitle()),
+        questionLabel(question.getLabel()),
+        value(question.getValue())
     );
   }
 
   private String questionTitle(String title) {
     return HTMLTextFactory.h3(title);
+  }
+
+  private String questionLabel(String label) {
+
+    return HTMLTextFactory.h4(label);
   }
 
   private String value(CertificateQuestionValue value) {
