@@ -5,7 +5,6 @@ import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFac
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.text;
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
@@ -23,10 +22,10 @@ public class FormattedQuestionConverter {
   public String convert(CertificateQuestion question) {
     return HTMLUtility.join(
         convertQuestion(question),
-        question.getSubQuestions()
-            .stream()
-            .map(this::convertSubQuestion)
-            .collect(Collectors.joining())
+        HTMLUtility.fromList(
+            question.getSubQuestions(),
+            this::convertSubQuestion
+        )
     );
   }
 
