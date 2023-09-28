@@ -9,4 +9,6 @@ public interface MonitoringLogService {
   void logListCertificates(String personId, int nbrOfCertificates);
 
   void logCertificateRead(String personId, String certificateId);
+
+  void logCertificateSent(String certificateId, String type, String recipient);
 }
