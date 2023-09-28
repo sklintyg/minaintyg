@@ -13,7 +13,6 @@ public class CertificateQuestion {
   String title;
   String label;
   CertificateQuestionValue value;
-
   @Builder.Default
   List<CertificateQuestion> subQuestions = Collections.emptyList();
 }

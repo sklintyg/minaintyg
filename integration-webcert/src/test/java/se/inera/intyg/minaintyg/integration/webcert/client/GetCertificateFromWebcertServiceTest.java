@@ -55,10 +55,12 @@ class GetCertificateFromWebcertServiceTest {
         .certificateId(CERTIFICATE_ID)
         .build();
     final var expectedResponse = CertificateResponseDTO.builder()
-        .certificate(CertificateDTO.builder()
-            .data(Map.of(ID, CertificateDataElement.builder().build()))
-            .metadata(CertificateMetadataDTO.builder().build())
-            .build())
+        .certificate(
+            CertificateDTO.builder()
+                .data(Map.of(ID, CertificateDataElement.builder().build()))
+                .metadata(CertificateMetadataDTO.builder().build())
+                .build()
+        )
         .build();
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))

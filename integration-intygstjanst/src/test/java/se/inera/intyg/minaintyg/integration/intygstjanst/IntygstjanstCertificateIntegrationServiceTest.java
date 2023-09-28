@@ -79,20 +79,20 @@ class IntygstjanstCertificateIntegrationServiceTest {
   class ErrorHandling {
 
     @Test
-    void shouldThrowIlligalArgumentExceptionIfRequestIsNull() {
+    void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(null));
     }
 
     @Test
-    void shouldThrowIlligalArgumentExceptionIfRequestContainsNullPatientId() {
+    void shouldThrowIllegalArgumentExceptionIfRequestContainsNullPatientId() {
       final var request = GetCertificateListIntegrationRequest.builder().patientId(null).build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
-    void shouldThrowIlligalArgumentExceptionIfRequestContainsEmptyPatientId() {
+    void shouldThrowIllegalArgumentExceptionIfRequestContainsEmptyPatientId() {
       final var request = GetCertificateListIntegrationRequest.builder().patientId("").build();
       assertThrows(IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
