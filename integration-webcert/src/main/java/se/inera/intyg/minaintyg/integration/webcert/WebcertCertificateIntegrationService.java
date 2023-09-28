@@ -26,12 +26,12 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     final var response = getCertificateFromWebcertService.get(request);
 
     if (responseContainsNoData(response)) {
-      return GetCertificateIntegrationResponse.builder()
-          .build();
+      //TODO: Throw exception
     }
 
     final var organizedByCategoryData = categoryQuestionOrganizer.organize(
-        getCertificateDataElements(response));
+        getCertificateDataElements(response)
+    );
 
     final var certificateCategories = convertCertificateService.convert(organizedByCategoryData);
 

@@ -1,6 +1,5 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
@@ -53,8 +51,7 @@ class WebcertCertificateIntegrationServiceTest {
   }
 
   @Test
-  void shouldReturnEmptyResponseIfNoCertificateWasFound() {
-    final var expectedResult = GetCertificateIntegrationResponse.builder().build();
+  void shouldThrowIfNoCertificateWasFound() {
     final var request = GetCertificateIntegrationRequest.builder()
         .certificateId(CERTIFICATE_ID)
         .build();
@@ -63,7 +60,6 @@ class WebcertCertificateIntegrationServiceTest {
             .certificate(null)
             .build()
     );
-    final var result = webcertCertificateIntegrationService.get(request);
-    assertEquals(expectedResult, result);
+    assertThrows(RuntimeException.class, () -> webcertCertificateIntegrationService.get(request));
   }
 }

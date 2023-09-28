@@ -4,22 +4,37 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueBoolean;
+import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCode;
+import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCodeList;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDateListSubQuestions;
+import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDiagnosisList;
+import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueIcf;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueText;
 
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigDiagnoses;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioMultipleCodeOptionalDropdown;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.DiagnosesTerminology;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.RadioMultipleCodeOptionalDropdown;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataIcfValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueBoolean;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosis;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosisList;
 
 class ValueToolkitTest {
 
@@ -207,6 +222,234 @@ class ValueToolkitTest {
           .id(id)
           .label(LABEL)
           .build();
+    }
+  }
+
+  @Nested
+  class ValueCodeList {
+
+    @Test
+    void shouldReturnListOfAllValues() {
+      final var certificateDataValueCodeList = CertificateDataValueCodeList.builder()
+          .list(
+              List.of(
+                  CertificateDataValueCode.builder()
+                      .code("NUVARANDE_ARBETE")
+                      .build(),
+                  CertificateDataValueCode.builder()
+                      .code("ARBETSSOKANDE")
+                      .build(),
+                  CertificateDataValueCode.builder()
+                      .code("FORALDRALEDIG")
+                      .build(),
+                  CertificateDataValueCode.builder()
+                      .code("STUDIER")
+                      .build()
+              )
+          ).
+          build();
+
+      final var expectedResponse = CertificateQuestionValueList.builder()
+          .values(
+              List.of(
+                  "Nuvarande arbete",
+                  "Arbetssökande",
+                  "Föräldraledighet för vård av barn",
+                  "Studier"
+              )
+          )
+          .build();
+
+      final var result = getValueCodeList(certificateDataValueCodeList);
+      assertEquals(expectedResponse, result);
+    }
+
+    @Test
+    void shouldReturnListOfOneValue() {
+      final var certificateDataValueCodeList = CertificateDataValueCodeList.builder()
+          .list(
+              List.of(
+                  CertificateDataValueCode.builder()
+                      .code("NUVARANDE_ARBETE")
+                      .build()
+              )
+          ).
+          build();
+
+      final var expectedResponse = CertificateQuestionValueList.builder()
+          .values(
+              List.of(
+                  "Nuvarande arbete"
+              )
+          )
+          .build();
+
+      final var result = getValueCodeList(certificateDataValueCodeList);
+      assertEquals(expectedResponse, result);
+    }
+  }
+
+  @Nested
+  class ValueDiagnosisList {
+
+    private static final String TERMINOLOGY_LABEL_ICD = "ICD-10-SE";
+    private static final String TERMINOLOGY_LABEL_KSH97 = "KSH97-P (Primärvård)";
+    private static final String DIAGNOSIS_CODE_M79 = "M79";
+    private static final String DIAGNOSIS_CODE_M79_DESCRIPTION = "Andra sjukdomstillstånd i mjukvävnader som ej klassificeras på annan plats";
+
+    @Test
+    void shouldIncludeOneDiagnosis() {
+      final var config = CertificateDataConfigDiagnoses.builder()
+          .terminology(
+              List.of(
+                  DiagnosesTerminology.builder()
+                      .label(TERMINOLOGY_LABEL_ICD)
+                      .build(),
+                  DiagnosesTerminology.builder()
+                      .label(TERMINOLOGY_LABEL_KSH97)
+                      .build()
+              )
+          )
+          .build();
+
+      final var value = CertificateDataValueDiagnosisList.builder()
+          .list(
+              List.of(
+                  CertificateDataValueDiagnosis.builder()
+                      .code(DIAGNOSIS_CODE_M79)
+                      .description(DIAGNOSIS_CODE_M79_DESCRIPTION)
+                      .build()
+              )
+          )
+          .build();
+
+      final var expectedResult = CertificateQuestionValueTable.builder()
+          .headings(
+              List.of(TERMINOLOGY_LABEL_ICD, TERMINOLOGY_LABEL_KSH97)
+          )
+          .values(
+              List.of(
+                  List.of(DIAGNOSIS_CODE_M79, DIAGNOSIS_CODE_M79_DESCRIPTION)
+              )
+          ).build();
+      final var result = getValueDiagnosisList(value, config);
+      assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void shouldIncludeMultipleDiagnosis() {
+      final var config = CertificateDataConfigDiagnoses.builder()
+          .terminology(
+              List.of(
+                  DiagnosesTerminology.builder()
+                      .label(TERMINOLOGY_LABEL_ICD)
+                      .build(),
+                  DiagnosesTerminology.builder()
+                      .label(TERMINOLOGY_LABEL_KSH97)
+                      .build()
+              )
+          )
+          .build();
+
+      final var value = CertificateDataValueDiagnosisList.builder()
+          .list(
+              List.of(
+                  CertificateDataValueDiagnosis.builder()
+                      .code(DIAGNOSIS_CODE_M79)
+                      .description(DIAGNOSIS_CODE_M79_DESCRIPTION)
+                      .build(),
+                  CertificateDataValueDiagnosis.builder()
+                      .code(DIAGNOSIS_CODE_M79)
+                      .description(DIAGNOSIS_CODE_M79_DESCRIPTION)
+                      .build(),
+                  CertificateDataValueDiagnosis.builder()
+                      .code(DIAGNOSIS_CODE_M79)
+                      .description(DIAGNOSIS_CODE_M79_DESCRIPTION)
+                      .build()
+              )
+          )
+          .build();
+
+      final var expectedResult = CertificateQuestionValueTable.builder()
+          .headings(
+              List.of(TERMINOLOGY_LABEL_ICD, TERMINOLOGY_LABEL_KSH97)
+          )
+          .values(
+              List.of(
+                  List.of(DIAGNOSIS_CODE_M79, DIAGNOSIS_CODE_M79_DESCRIPTION),
+                  List.of(DIAGNOSIS_CODE_M79, DIAGNOSIS_CODE_M79_DESCRIPTION),
+                  List.of(DIAGNOSIS_CODE_M79, DIAGNOSIS_CODE_M79_DESCRIPTION)
+              )
+          ).build();
+      final var result = getValueDiagnosisList(value, config);
+      assertEquals(expectedResult, result);
+    }
+  }
+
+  @Nested
+  class ValueIcf {
+
+    @Test
+    void shouldHandleEmptyIcfValue() {
+      final var certificateDataIcfValue = CertificateDataIcfValue.builder().build();
+      final var result = getValueIcf(certificateDataIcfValue);
+      assertEquals(NOT_PROVIDED, result.getValue());
+    }
+
+    @Test
+    void shouldReturnTextValue() {
+      final var certificateDataIcfValue = CertificateDataIcfValue.builder()
+          .text(TEXT)
+          .build();
+      final var result = getValueIcf(certificateDataIcfValue);
+      assertEquals(TEXT, result.getValue());
+    }
+  }
+
+  @Nested
+  class ValueCode {
+
+    private static final String VALUE_CODE = "id";
+    private static final String CONFIG_ID = "id";
+    private static final String CONFIG_LABEL = "configLabel";
+
+    @Test
+    void shouldHandleEmptyValueCode() {
+      final var value = CertificateDataValueCode.builder()
+          .build();
+
+      final var config = CertificateDataConfigRadioMultipleCodeOptionalDropdown.builder()
+          .list(
+              List.of(
+                  RadioMultipleCodeOptionalDropdown.builder()
+                      .id(CONFIG_ID)
+                      .label(CONFIG_LABEL)
+                      .build()
+              )
+          ).build();
+
+      final var result = getValueCode(value, config);
+      assertEquals(NOT_PROVIDED, result.getValue());
+    }
+
+    @Test
+    void shouldReturnTextValue() {
+      final var value = CertificateDataValueCode.builder()
+          .code(VALUE_CODE)
+          .build();
+
+      final var config = CertificateDataConfigRadioMultipleCodeOptionalDropdown.builder()
+          .list(
+              List.of(
+                  RadioMultipleCodeOptionalDropdown.builder()
+                      .id(CONFIG_ID)
+                      .label(CONFIG_LABEL)
+                      .build()
+              )
+          ).build();
+
+      final var result = getValueCode(value, config);
+      assertEquals(CONFIG_LABEL, result.getValue());
     }
   }
 }

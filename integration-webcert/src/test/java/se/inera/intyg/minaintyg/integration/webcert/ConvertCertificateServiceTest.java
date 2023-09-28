@@ -3,71 +3,43 @@ package se.inera.intyg.minaintyg.integration.webcert;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueBoolean;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
 
 @ExtendWith(MockitoExtension.class)
 class ConvertCertificateServiceTest {
 
-  private static final String CATEGORY_CONFIG_TYPE = "categoryConfig";
-  private static final String CATEGORY_CONFIG_TYPE_WITHOUT_TEXT = "categoryWithoutTextConfig";
-  private static final String TEXT_CONFIG_TYPE = "textConfig";
-  private static final String TEXT_VALUE_TYPE = "textValue";
-  private static final String TEXT_NO_VALUE_TYPE = "textNoValue";
-  private static final String BOOLEAN_VALUE_TYPE_TRUE = "booleanValueTrue";
-  private static final String BOOLEAN_VALUE_TYPE_FALSE = "booleanFalse";
-  private static final String BOOLEAN_NO_VALUE_TYPE = "booleanNoValue";
-  private static final String BOOLEAN_CONFIG_TYPE = "booleanConfig";
   private static final String TITLE = "title";
   private static final String TEXT_VALUE = "textValue";
-  private static final String NO_VALUE = "Ej angivet";
+  private static final String LABEL_VALUE = "labelValue";
+  private static final String NOT_PROVIDED = "Ej angivet";
   private static final String TRUE_BOOLEAN = "Ja";
   private static final String FALSE_BOOLEAN = "Nej";
-  private static final Map<String, CertificateDataConfig> configMap = Map.of(
-      CATEGORY_CONFIG_TYPE, CertificateDataConfigCategory.builder()
-          .text(TITLE)
-          .build(),
-      CATEGORY_CONFIG_TYPE_WITHOUT_TEXT, CertificateDataConfigCategory.builder()
-          .build(),
-      TEXT_CONFIG_TYPE, CertificateDataConfigTextArea.builder()
-          .text(TEXT_VALUE)
-          .build(),
-      BOOLEAN_CONFIG_TYPE, CertificateDataConfigRadioBoolean.builder()
-          .text(TEXT_VALUE)
-          .build()
-  );
-
-  private static final Map<String, CertificateDataValue> valueMap = Map.of(
-      TEXT_VALUE_TYPE, CertificateDataTextValue.builder()
-          .text(TEXT_VALUE)
-          .build(),
-      TEXT_NO_VALUE_TYPE, CertificateDataTextValue.builder()
-          .build(),
-      BOOLEAN_VALUE_TYPE_TRUE, CertificateDataValueBoolean.builder()
-          .selected(true)
-          .build(),
-      BOOLEAN_VALUE_TYPE_FALSE, CertificateDataValueBoolean.builder()
-          .selected(false)
-          .build(),
-      BOOLEAN_NO_VALUE_TYPE, CertificateDataValueBoolean.builder()
-          .build()
-  );
-
+  private static final String CONFIG_ID = "configId";
+  private static final String CODE = "NUVARANDE_ARBETE";
+  private static final String CODE_MATCH = "Nuvarande arbete";
   private static ConvertCertificateService convertCertificateService;
 
   @BeforeAll
@@ -81,8 +53,10 @@ class ConvertCertificateServiceTest {
     @Test
     void shouldAddCategoryTitle() {
       final var elements = List.of(
-          List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE), createElement(
-              TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE)));
+          List.of(
+              createElement(CertificateDataConfigCategory.builder()
+                  .text(TITLE)
+                  .build(), null)));
       final var result = convertCertificateService.convert(elements);
       assertEquals(TITLE, result.get(0).getTitle());
     }
@@ -90,12 +64,19 @@ class ConvertCertificateServiceTest {
     @Test
     void shouldAddMultipleCategoryTitle() {
       final var elements = List.of(
-          List.of(createElement(CATEGORY_CONFIG_TYPE,
-              TEXT_VALUE_TYPE), createElement(TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE)),
-          List.of(createElement(CATEGORY_CONFIG_TYPE,
-              TEXT_VALUE_TYPE), createElement(TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE)),
-          List.of(createElement(CATEGORY_CONFIG_TYPE,
-              TEXT_VALUE_TYPE), createElement(TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE)));
+          List.of(
+              createElement(CertificateDataConfigCategory.builder()
+                  .text(TITLE)
+                  .build(), null)),
+          List.of(
+              createElement(CertificateDataConfigCategory.builder()
+                  .text(TITLE)
+                  .build(), null)),
+          List.of(
+              createElement(CertificateDataConfigCategory.builder()
+                  .text(TITLE)
+                  .build(), null))
+      );
       final var result = convertCertificateService.convert(elements);
       assertEquals(TITLE, result.get(0).getTitle());
       assertEquals(TITLE, result.get(1).getTitle());
@@ -105,16 +86,84 @@ class ConvertCertificateServiceTest {
     @Test
     void shouldHandleNullTitle() {
       final var elements = List.of(
-          List.of(createElement(CATEGORY_CONFIG_TYPE_WITHOUT_TEXT,
-              TEXT_VALUE_TYPE), createElement(TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE))
+          List.of(createElement(CertificateDataConfigCategory.builder().build(), null)
+          )
       );
       final var result = convertCertificateService.convert(elements);
       assertNull(result.get(0).getTitle());
     }
   }
 
+
   @Nested
   class ToCertificateQuestion {
+
+    @Nested
+    class Title {
+
+      @Test
+      void shouldIncludeTitleIfPresent() {
+        final var elements = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder()
+                        .text(TEXT_VALUE)
+                        .build(), null
+                )
+            )
+        );
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(TEXT_VALUE, result.get(0).getQuestions().get(0).getTitle());
+      }
+
+      @Test
+      void shouldNotIncludeTitleIfNotPresent() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder()
+                        .build(), null
+                )
+            )
+        );
+        final var result = convertCertificateService.convert(elements);
+        assertNull(result.get(0).getQuestions().get(0).getTitle());
+      }
+    }
+
+    @Nested
+    class Label {
+
+      @Test
+      void shouldIncludeLabelIfPresent() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder()
+                        .label(LABEL_VALUE)
+                        .build(), null
+                )
+            )
+        );
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(LABEL_VALUE, result.get(0).getQuestions().get(0).getLabel());
+      }
+
+      @Test
+      void shouldNotIncludeLabelIfNotPresent() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder()
+                        .build(), null
+                )
+            )
+        );
+        final var result = convertCertificateService.convert(elements);
+        assertNull(result.get(0).getQuestions().get(0).getLabel());
+      }
+    }
 
     @Nested
     class TextValue {
@@ -122,13 +171,17 @@ class ConvertCertificateServiceTest {
       @Test
       void shouldConvertCertificateDataTextValue() {
         final var elements = List.of(
-            List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE),
-                createElement(TEXT_CONFIG_TYPE, TEXT_VALUE_TYPE)
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder().build(),
+                    CertificateDataTextValue.builder()
+                        .text(TEXT_VALUE)
+                        .build()
+                )
             )
         );
 
         final var expectedResult = CertificateQuestion.builder()
-            .title(TEXT_VALUE)
             .value(CertificateQuestionValueText.builder()
                 .value(TEXT_VALUE)
                 .build())
@@ -141,15 +194,18 @@ class ConvertCertificateServiceTest {
       @Test
       void shouldConvertCertificateDataTextValueWithNoValue() {
         final var elements = List.of(
-            List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE),
-                createElement(TEXT_CONFIG_TYPE, TEXT_NO_VALUE_TYPE)
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigTextArea.builder().build(),
+                    CertificateDataTextValue.builder()
+                        .build()
+                )
             )
         );
 
         final var expectedResult = CertificateQuestion.builder()
-            .title(TEXT_VALUE)
             .value(CertificateQuestionValueText.builder()
-                .value(NO_VALUE)
+                .value(NOT_PROVIDED)
                 .build())
             .build();
 
@@ -164,13 +220,15 @@ class ConvertCertificateServiceTest {
       @Test
       void shouldConvertCertificateDataValueRadioBooleanWithValueTrue() {
         final var elements = List.of(
-            List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE),
-                createElement(BOOLEAN_CONFIG_TYPE, BOOLEAN_VALUE_TYPE_TRUE)
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(CertificateDataConfigRadioBoolean.builder().build(),
+                    CertificateDataValueBoolean.builder()
+                        .selected(true)
+                        .build())
             )
         );
 
         final var expectedResult = CertificateQuestion.builder()
-            .title(TEXT_VALUE)
             .value(
                 CertificateQuestionValueText.builder()
                     .value(TRUE_BOOLEAN)
@@ -183,13 +241,15 @@ class ConvertCertificateServiceTest {
       @Test
       void shouldConvertCertificateDataValueRadioBooleanWithValueFalse() {
         final var elements = List.of(
-            List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE),
-                createElement(BOOLEAN_CONFIG_TYPE, BOOLEAN_VALUE_TYPE_FALSE)
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(CertificateDataConfigRadioBoolean.builder().build(),
+                    CertificateDataValueBoolean.builder()
+                        .selected(false)
+                        .build())
             )
         );
 
         final var expectedResult = CertificateQuestion.builder()
-            .title(TEXT_VALUE)
             .value(
                 CertificateQuestionValueText.builder()
                     .value(FALSE_BOOLEAN)
@@ -202,16 +262,162 @@ class ConvertCertificateServiceTest {
       @Test
       void shouldConvertCertificateDataValueRadioBooleanWithNoValue() {
         final var elements = List.of(
-            List.of(createElement(CATEGORY_CONFIG_TYPE, TEXT_VALUE_TYPE),
-                createElement(BOOLEAN_CONFIG_TYPE, BOOLEAN_NO_VALUE_TYPE)
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(CertificateDataConfigRadioBoolean.builder().build(),
+                    CertificateDataValueBoolean.builder()
+                        .build())
             )
         );
 
         final var expectedResult = CertificateQuestion.builder()
-            .title(TEXT_VALUE)
             .value(
                 CertificateQuestionValueText.builder()
-                    .value(NO_VALUE)
+                    .value(NOT_PROVIDED)
+                    .build())
+            .build();
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+    }
+
+    @Nested
+    class DateList {
+
+      @Test
+      void shouldConvertCertificateDataDateList() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigCheckboxMultipleDate.builder()
+                        .label(LABEL_VALUE)
+                        .list(
+                            List.of(
+                                CheckboxMultipleDate.builder()
+                                    .id(CONFIG_ID)
+                                    .build()
+                            )
+                        )
+                        .build(),
+                    CertificateDataValueDateList.builder()
+                        .list(
+                            List.of(
+                                CertificateDataValueDate.builder()
+                                    .id(CONFIG_ID)
+                                    .date(LocalDate.now())
+                                    .build()
+                            )
+                        )
+                        .build()
+                )
+            )
+        );
+
+        final var expectedResult = CertificateQuestion.builder()
+            .label(LABEL_VALUE)
+            .subQuestions(
+                List.of(
+                    CertificateQuestion.builder()
+                        .value(CertificateQuestionValueText.builder()
+                            .value(LocalDate.now().toString())
+                            .build())
+                        .build()
+                )
+            ).build();
+
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+
+      @Test
+      void shouldConvertCertificateDataDateListWithNoValue() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(
+                    CertificateDataConfigCheckboxMultipleDate.builder()
+                        .label(LABEL_VALUE)
+                        .list(
+                            List.of(
+                                CheckboxMultipleDate.builder()
+                                    .id(CONFIG_ID)
+                                    .build()
+                            )
+                        )
+                        .build(),
+                    CertificateDataValueDateList.builder()
+                        .build()
+                )
+            )
+        );
+
+        final var expectedResult = CertificateQuestion.builder()
+            .label(LABEL_VALUE)
+            .subQuestions(
+                List.of(
+                    CertificateQuestion.builder()
+                        .value(CertificateQuestionValueText.builder()
+                            .value(NOT_PROVIDED)
+                            .build())
+                        .build()
+                )
+            ).build();
+
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+    }
+
+    @Nested
+    class CodeList {
+
+      @Test
+      void shouldConvertCertificateDataCodeList() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(CertificateDataConfigTextArea.builder().build(),
+                    CertificateDataValueCodeList.builder()
+                        .list(
+                            List.of(
+                                CertificateDataValueCode.builder()
+                                    .code(CODE)
+                                    .build()
+                            )
+                        )
+                        .build())
+            )
+        );
+
+        final var expectedResult = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(
+                        List.of(
+                            CODE_MATCH
+                        )
+                    )
+                    .build())
+            .build();
+        final var result = convertCertificateService.convert(elements);
+        assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+
+      @Test
+      void shouldConvertCertificateDataCodeListIfNoValue() {
+        final var elements = List.of(
+            List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(CertificateDataConfigTextArea.builder().build(),
+                    CertificateDataValueCodeList.builder()
+                        .build())
+            )
+        );
+
+        final var expectedResult = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(
+                        List.of(
+                            NOT_PROVIDED
+                        )
+                    )
                     .build())
             .build();
         final var result = convertCertificateService.convert(elements);
@@ -221,10 +427,11 @@ class ConvertCertificateServiceTest {
   }
 
 
-  private static CertificateDataElement createElement(String config, String value) {
+  private static CertificateDataElement createElement(CertificateDataConfig config,
+      CertificateDataValue value) {
     return CertificateDataElement.builder()
-        .config(configMap.get(config))
-        .value(valueMap.get(value))
+        .config(config)
+        .value(value)
         .build();
   }
 }
