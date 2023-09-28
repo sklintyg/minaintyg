@@ -19,6 +19,7 @@ import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterServ
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
+import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
@@ -190,7 +191,7 @@ class CertificateControllerTest {
             FormattedCertificate
                 .builder()
                 .metadata(CertificateMetadata.builder().build())
-                .formattedContent("Formatted content")
+                .content(List.of(FormattedCertificateCategory.builder().build()))
                 .build()
         )
         .build();

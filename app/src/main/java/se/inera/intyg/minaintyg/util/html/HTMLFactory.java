@@ -9,7 +9,6 @@ public class HTMLFactory {
   private static final String CLASSNAME = "className";
   private static final String START_ATTRIBUTE_TAG = "=\"";
   private static final String END_ATTRIBUTE_TAG = "\"";
-  private static final String IDS_CERTIFICATE = "ids-certificate";
   private static final String SPACE = " ";
 
   private HTMLFactory() {
@@ -28,14 +27,6 @@ public class HTMLFactory {
     return tag(tagName, null, value);
   }
 
-
-  public static String section(String value) {
-    return tag("section", value);
-  }
-
-  public static String article(String value) {
-    return tag("article", IDS_CERTIFICATE, value);
-  }
 
   private static String startTag(String tagName, String className) {
     if (className != null) {
