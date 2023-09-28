@@ -16,11 +16,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
+import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
+import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTypeFilter;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
@@ -31,6 +36,7 @@ class CertificateControllerTest {
   private static final List<String> YEARS = List.of("2020");
   private static final List<String> UNITS = List.of("unit1");
   private static final List<String> TYPES = List.of("lisjp");
+  private static final String CERTIFICATE_ID = "ID";
   private static final List<CertificateStatusType> STATUSES = List.of(CertificateStatusType.SENT);
   private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS = List.of(
       CertificateListItem.builder().build());
@@ -40,7 +46,10 @@ class CertificateControllerTest {
 
   @Mock
   GetCertificateListFilterService getCertificateListFilterService;
-  
+
+  @Mock
+  GetCertificateService getCertificateService;
+
   @InjectMocks
   CertificateController certificateController;
 
@@ -168,6 +177,48 @@ class CertificateControllerTest {
         final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
+      }
+    }
+  }
+
+  @Nested
+  class GetCertificate {
+
+    final GetCertificateResponse expectedResponse = GetCertificateResponse
+        .builder()
+        .certificate(
+            FormattedCertificate
+                .builder()
+                .metadata(CertificateMetadata.builder().build())
+                .formattedContent("Formatted content")
+                .build()
+        )
+        .build();
+
+    @BeforeEach
+    void setup() {
+      when(getCertificateService.get(any(GetCertificateRequest.class)))
+          .thenReturn(expectedResponse);
+    }
+
+    @Test
+    void shouldCallServiceWithCertificateId() {
+      certificateController.getCertificate(CERTIFICATE_ID);
+      final var captor = ArgumentCaptor.forClass(GetCertificateRequest.class);
+
+      verify(getCertificateService).get(captor.capture());
+
+      assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
+    }
+
+    @Nested
+    class Response {
+
+      @Test
+      void shouldSetCertificate() {
+        final var response = certificateController.getCertificate(CERTIFICATE_ID);
+
+        assertEquals(expectedResponse.getCertificate(), response.getCertificate());
       }
     }
   }

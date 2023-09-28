@@ -80,7 +80,7 @@ class MonitoringLogServiceImplTest {
   }
 
   @Nested
-  class LogListCertificates {
+  class LogCertificate {
 
     @Test
     void shouldLogWhenUserListsCertificate() {
@@ -88,6 +88,13 @@ class MonitoringLogServiceImplTest {
       final var hashedPersonId = HashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "LIST_CERTIFICATES Citizen '" + hashedPersonId + "' listed '10' certificates");
+    }
+
+    @Test
+    void shouldLogWhenCertificateIsRead() {
+      monitoringLogService.logCertificateRead("id", "lisjp");
+
+      verifyLog(Level.INFO, "CERTIFICATE_READ Certificate 'id' of type 'lisjp' was read");
     }
   }
 }
