@@ -8,20 +8,6 @@ import org.junit.jupiter.api.Test;
 class HTMLFactoryTest {
 
   @Test
-  void shouldReturnArticle() {
-    final var result = HTMLFactory.article("Test");
-
-    assertEquals("<article className=\"ids-certificate\">Test</article>", result);
-  }
-
-  @Test
-  void shouldReturnSection() {
-    final var result = HTMLFactory.section("Test");
-
-    assertEquals("<section>Test</section>", result);
-  }
-
-  @Test
   void shouldReturnCorrectTag() {
     final var result = HTMLFactory.tag("tag", "Value");
 

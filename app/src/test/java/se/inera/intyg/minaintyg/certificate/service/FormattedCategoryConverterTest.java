@@ -30,7 +30,7 @@ class FormattedCategoryConverterTest {
   }
 
   @Test
-  void shouldReturnCategory() {
+  void shouldConvertCategoryHeading() {
     final var result = formattedCategoryConverter.convert(CertificateCategory
         .builder()
         .title("Category title")
@@ -44,7 +44,48 @@ class FormattedCategoryConverterTest {
     );
 
     assertEquals(
-        "<section><h2 className=\"ids-heading-2\">Category title</h2><h3 className=\"ids-heading-3\">Question title</h3><p>text</p></section>",
-        result);
+        "Category title",
+        result.getHeading());
+  }
+
+  @Test
+  void shouldConvertCategoryBody() {
+    final var result = formattedCategoryConverter.convert(CertificateCategory
+        .builder()
+        .title("Category title")
+        .questions(
+            List.of(CertificateQuestion
+                .builder()
+                .build()
+            )
+        )
+        .build()
+    );
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Question title</h3><p>text</p>",
+        result.getBody());
+  }
+
+  @Test
+  void shouldConvertCategoryBodyForSeveralQuestions() {
+    final var result = formattedCategoryConverter.convert(CertificateCategory
+        .builder()
+        .title("Category title")
+        .questions(
+            List.of(CertificateQuestion
+                    .builder()
+                    .build(),
+                CertificateQuestion
+                    .builder()
+                    .build()
+            )
+        )
+        .build()
+    );
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Question title</h3><p>text</p><h3 className=\"ids-heading-3\">Question title</h3><p>text</p>",
+        result.getBody());
   }
 }

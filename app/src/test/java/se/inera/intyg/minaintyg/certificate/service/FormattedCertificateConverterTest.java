@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
@@ -25,6 +26,12 @@ class FormattedCertificateConverterTest {
       .metadata(CertificateMetadata.builder().build())
       .categories(List.of(CertificateCategory.builder().build()))
       .build();
+
+  private static final FormattedCertificateCategory category = FormattedCertificateCategory
+      .builder()
+      .heading("Title")
+      .body("Body")
+      .build();
   @Mock
   FormattedCategoryConverter formattedCategoryConverter;
   @InjectMocks
@@ -33,15 +40,15 @@ class FormattedCertificateConverterTest {
   @BeforeEach
   void setup() {
     when(formattedCategoryConverter.convert(any(CertificateCategory.class)))
-        .thenReturn("content");
+        .thenReturn(category);
   }
 
   @Test
-  void shouldConvertCertificateFormat() {
+  void shouldConvertContent() {
     final var result = formattedCertificateConverter.convert(certificate);
 
-    assertEquals("<article className=\"ids-certificate\">content</article>",
-        result.getFormattedContent());
+    assertEquals(1, result.getContent().size());
+    assertEquals(category, result.getContent().get(0));
   }
 
   @Test

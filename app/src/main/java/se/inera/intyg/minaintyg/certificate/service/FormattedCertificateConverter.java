@@ -1,11 +1,12 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
+import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.util.html.HTMLFactory;
-import se.inera.intyg.minaintyg.util.html.HTMLUtility;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 
 @Service
 @RequiredArgsConstructor
@@ -17,14 +18,15 @@ public class FormattedCertificateConverter {
     return FormattedCertificate
         .builder()
         .metadata(certificate.getMetadata())
-        .formattedContent(
-            HTMLFactory.article(
-                HTMLUtility.fromList(
-                    certificate.getCategories(),
-                    formattedCategoryConverter::convert
-                )
-            )
-        )
+        .content(convertCategories(certificate.getCategories()))
         .build();
+  }
+
+  private List<FormattedCertificateCategory> convertCategories(
+      List<CertificateCategory> categories) {
+    return categories
+        .stream()
+        .map(formattedCategoryConverter::convert)
+        .toList();
   }
 }
