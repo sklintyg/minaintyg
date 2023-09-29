@@ -1,9 +1,11 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,12 +13,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
 
+  private static final String ID = "id";
   private static final String CERTIFICATE_ID = "certificateId";
   @Mock
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
@@ -67,12 +73,44 @@ class WebcertCertificateIntegrationServiceTest {
     final var request = GetCertificateIntegrationRequest.builder()
         .certificateId(CERTIFICATE_ID)
         .build();
-    final var response = CertificateResponseDTO.builder().build();
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .build()
+        )
+        .build();
+    final var expectedResult = List.of(
+        CertificateCategory.builder().build()
+    );
+    when(getCertificateFromWebcertService.get(request)).thenReturn(response);
+    when(convertCertificateService.convert(response)).thenReturn(expectedResult);
+    final var result = webcertCertificateIntegrationService.get(request);
+    assertEquals(expectedResult, result.getCertificate().getCategories());
+  }
+
+  @Test
+  void shouldReturnGetCertificateIntegrationResponseWithMetaData() {
+    final var request = GetCertificateIntegrationRequest.builder()
+        .certificateId(CERTIFICATE_ID)
+        .build();
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .build()
+        )
+        .build();
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
     when(convertCertificateService.convert(response)).thenReturn(
-        List.of(
-            CertificateCategory.builder().build()
+        List.of(CertificateCategory.builder().build()
         )
     );
+    final var result = webcertCertificateIntegrationService.get(request);
+    assertEquals(CertificateMetadata.builder().build(), result.getCertificate().getMetadata());
   }
 }

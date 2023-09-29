@@ -85,7 +85,6 @@ public class ConvertCertificateService {
       certificateQuestionBuilder.value(getValueIcf(element.getValue()));
     }
     if (element.getValue() instanceof CertificateDataValueDateRangeList) {
-      //TODO: Not yet implemented
       certificateQuestionBuilder.value(
           getValueDateRangeList(element.getValue(), element.getConfig()));
     }
