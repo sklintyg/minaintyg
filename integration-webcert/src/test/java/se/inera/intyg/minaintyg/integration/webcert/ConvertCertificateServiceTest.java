@@ -344,6 +344,9 @@ class ConvertCertificateServiceTest {
 
         final var expectedResult = CertificateQuestion.builder()
             .label(LABEL_VALUE)
+            .value(
+                CertificateQuestionValueText.builder().build()
+            )
             .subQuestions(
                 List.of(
                     CertificateQuestion.builder()
@@ -382,6 +385,9 @@ class ConvertCertificateServiceTest {
 
         final var expectedResult = CertificateQuestion.builder()
             .label(LABEL_VALUE)
+            .value(
+                CertificateQuestionValueText.builder().build()
+            )
             .subQuestions(
                 List.of(
                     CertificateQuestion.builder()

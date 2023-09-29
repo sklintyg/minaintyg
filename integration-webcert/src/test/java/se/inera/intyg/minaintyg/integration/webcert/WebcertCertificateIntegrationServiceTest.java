@@ -14,15 +14,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
 
   private static final String ID = "id";
+  private static final String NAME = "name";
   private static final String CERTIFICATE_ID = "certificateId";
   @Mock
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
@@ -79,6 +82,12 @@ class WebcertCertificateIntegrationServiceTest {
                 .data(
                     Map.of(ID, CertificateDataElement.builder().build())
                 )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
                 .build()
         )
         .build();
@@ -102,6 +111,12 @@ class WebcertCertificateIntegrationServiceTest {
                 .data(
                     Map.of(ID, CertificateDataElement.builder().build())
                 )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
                 .build()
         )
         .build();
@@ -110,7 +125,15 @@ class WebcertCertificateIntegrationServiceTest {
         List.of(CertificateCategory.builder().build()
         )
     );
+    final var expectedMetadata = CertificateMetadata.builder()
+        .type(
+            CertificateType.builder()
+                .id(ID)
+                .name(NAME)
+                .build()
+        )
+        .build();
     final var result = webcertCertificateIntegrationService.get(request);
-    assertEquals(CertificateMetadata.builder().build(), result.getCertificate().getMetadata());
+    assertEquals(expectedMetadata, result.getCertificate().getMetadata());
   }
 }
