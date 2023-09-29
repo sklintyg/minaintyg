@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
-import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 import org.springframework.util.StringUtils;
 
 /**
@@ -18,15 +17,16 @@ import org.springframework.util.StringUtils;
  */
 public final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeHandler {
 
-  private final CsrfTokenRequestHandler delegate = new XorCsrfTokenRequestAttributeHandler();
+  /**
+   * Use CsrfTokenRequestAttributeHandler instead of XorCsrfTokenRequestAttributeHandler. The latter
+   * decodes the csrf-token in a way that doesn't work when we generate the form in our SPA instead
+   * of serverside. Keeping the delegate to simplify changes later.
+   */
+  private final CsrfTokenRequestHandler delegate = new CsrfTokenRequestAttributeHandler();
 
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response,
       Supplier<CsrfToken> csrfToken) {
-    /*
-     * Always use XorCsrfTokenRequestAttributeHandler to provide BREACH protection of
-     * the CsrfToken when it is rendered in the response body.
-     */
     this.delegate.handle(request, response, csrfToken);
   }
 
@@ -46,6 +46,9 @@ public final class SpaCsrfTokenRequestHandler extends CsrfTokenRequestAttributeH
      * XorCsrfTokenRequestAttributeHandler to resolve the CsrfToken. This applies
      * when a server-side rendered form includes the _csrf request parameter as a
      * hidden input.
+     *
+     * NOTE: Because we don't do server-side rendering of the form, we cannot use
+     * the XorCsrfTokenRequestAttributeHandler.
      */
     return this.delegate.resolveCsrfTokenValue(request, csrfToken);
   }
