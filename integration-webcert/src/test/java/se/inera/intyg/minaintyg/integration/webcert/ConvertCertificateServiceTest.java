@@ -2,18 +2,24 @@ package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleDate;
@@ -40,12 +46,16 @@ class ConvertCertificateServiceTest {
   private static final String CONFIG_ID = "configId";
   private static final String CODE = "NUVARANDE_ARBETE";
   private static final String CODE_MATCH = "Nuvarande arbete";
-  private static ConvertCertificateService convertCertificateService;
-
-  @BeforeAll
-  static void beforeAll() {
-    convertCertificateService = new ConvertCertificateService();
-  }
+  private static final CertificateResponseDTO CERTIFICATE_RESPONSE_DTO = CertificateResponseDTO.builder()
+      .certificate(
+          CertificateDTO.builder()
+              .data(Collections.emptyMap())
+              .build())
+      .build();
+  @Mock
+  private CategoryQuestionOrganizer categoryQuestionOrganizer;
+  @InjectMocks
+  private ConvertCertificateService convertCertificateService;
 
   @Nested
   class CategoryTitle {
@@ -57,7 +67,8 @@ class ConvertCertificateServiceTest {
               createElement(CertificateDataConfigCategory.builder()
                   .text(TITLE)
                   .build(), null)));
-      final var result = convertCertificateService.convert(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+      final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
     }
 
@@ -77,7 +88,8 @@ class ConvertCertificateServiceTest {
                   .text(TITLE)
                   .build(), null))
       );
-      final var result = convertCertificateService.convert(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+      final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
       assertEquals(TITLE, result.get(1).getTitle());
       assertEquals(TITLE, result.get(2).getTitle());
@@ -89,7 +101,8 @@ class ConvertCertificateServiceTest {
           List.of(createElement(CertificateDataConfigCategory.builder().build(), null)
           )
       );
-      final var result = convertCertificateService.convert(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+      final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertNull(result.get(0).getTitle());
     }
   }
@@ -113,7 +126,8 @@ class ConvertCertificateServiceTest {
                 )
             )
         );
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(TEXT_VALUE, result.get(0).getQuestions().get(0).getTitle());
       }
 
@@ -127,7 +141,8 @@ class ConvertCertificateServiceTest {
                 )
             )
         );
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertNull(result.get(0).getQuestions().get(0).getTitle());
       }
     }
@@ -146,7 +161,8 @@ class ConvertCertificateServiceTest {
                 )
             )
         );
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(LABEL_VALUE, result.get(0).getQuestions().get(0).getLabel());
       }
 
@@ -160,7 +176,8 @@ class ConvertCertificateServiceTest {
                 )
             )
         );
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertNull(result.get(0).getQuestions().get(0).getLabel());
       }
     }
@@ -187,7 +204,8 @@ class ConvertCertificateServiceTest {
                 .build())
             .build();
 
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
 
@@ -209,7 +227,8 @@ class ConvertCertificateServiceTest {
                 .build())
             .build();
 
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
     }
@@ -234,7 +253,8 @@ class ConvertCertificateServiceTest {
                     .value(TRUE_BOOLEAN)
                     .build())
             .build();
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
 
@@ -255,7 +275,8 @@ class ConvertCertificateServiceTest {
                     .value(FALSE_BOOLEAN)
                     .build())
             .build();
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
 
@@ -275,7 +296,8 @@ class ConvertCertificateServiceTest {
                     .value(NOT_PROVIDED)
                     .build())
             .build();
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
     }
@@ -324,7 +346,8 @@ class ConvertCertificateServiceTest {
                 )
             ).build();
 
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
 
@@ -361,7 +384,8 @@ class ConvertCertificateServiceTest {
                 )
             ).build();
 
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
     }
@@ -396,7 +420,8 @@ class ConvertCertificateServiceTest {
                     )
                     .build())
             .build();
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
 
@@ -420,7 +445,8 @@ class ConvertCertificateServiceTest {
                     )
                     .build())
             .build();
-        final var result = convertCertificateService.convert(elements);
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
       }
     }

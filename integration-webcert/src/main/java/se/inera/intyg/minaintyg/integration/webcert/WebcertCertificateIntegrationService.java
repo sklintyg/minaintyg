@@ -1,6 +1,5 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
@@ -9,7 +8,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @Service
@@ -29,11 +27,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new RuntimeException("Certificate for patient was not found");
     }
 
-    final var organizedByCategoryData = categoryQuestionOrganizer.organize(
-        getCertificateDataElements(response)
-    );
-
-    final var certificateCategories = convertCertificateService.convert(organizedByCategoryData);
+    final var certificateCategories = convertCertificateService.convert(response);
 
     return GetCertificateIntegrationResponse.builder()
         .certificate(
@@ -56,10 +50,5 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new IllegalArgumentException(
           "Valid request was not provided, must contain certificate id");
     }
-  }
-
-  private static List<CertificateDataElement> getCertificateDataElements(
-      CertificateResponseDTO response) {
-    return response.getCertificate().getData().values().stream().toList();
   }
 }
