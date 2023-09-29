@@ -7,6 +7,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
@@ -32,7 +33,14 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
-                .metadata(CertificateMetadata.builder().build())
+                .metadata(CertificateMetadata.builder()
+                    .type(
+                        CertificateType.builder()
+                            .id(response.getCertificate().getMetadata().getId())
+                            .name(response.getCertificate().getMetadata().getName())
+                            .build()
+                    )
+                    .build())
                 .categories(certificateCategories)
                 .build()
         )

@@ -142,19 +142,31 @@ public final class ValueToolkit {
   public static CertificateQuestionValueTable getValueDateRangeList(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
     return CertificateQuestionValueTable.builder()
+        .headings(List.of(
+            "Not yet implemented",
+            "Not yet implemented"
+        ))
+        .values(
+            List.of(
+                List.of(
+                    "Not yet implemented",
+                    "Not yet implemented"
+                )
+            ))
         .build();
   }
-
+  
   public static CertificateQuestionValueText getValueCode(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
+    if (!(certificateDataConfig instanceof final CertificateDataConfigRadioMultipleCodeOptionalDropdown dataConfig)) {
+      return notProvidedTextValue();
+    }
     final var dataValue = (CertificateDataValueCode) certificateDataValue;
-    final var dataConfig = (CertificateDataConfigRadioMultipleCodeOptionalDropdown) certificateDataConfig;
-
     final var radioMultipleCodeOptionalDropdownLabel = dataConfig.getList().stream()
         .filter(config -> config.getId().equals(dataValue.getCode()))
         .map(RadioMultipleCodeOptionalDropdown::getLabel)
         .toList();
-    
+
     return CertificateQuestionValueText.builder()
         .value(radioMultipleCodeOptionalDropdownLabel.isEmpty() ? NOT_PROVIDED
             : radioMultipleCodeOptionalDropdownLabel.get(0))

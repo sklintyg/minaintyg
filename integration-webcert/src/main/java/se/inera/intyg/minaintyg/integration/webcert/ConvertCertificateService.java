@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
@@ -74,6 +75,8 @@ public class ConvertCertificateService {
     if (element.getValue() instanceof CertificateDataValueDateList) {
       certificateQuestionBuilder.subQuestions(
           getValueDateListSubQuestions(element.getValue(), element.getConfig()));
+      //TODO: Questions only containing subquestions has no value, need to make a null check in FormattedQuestionConverter
+      certificateQuestionBuilder.value(CertificateQuestionValueText.builder().build());
     }
     if (element.getValue() instanceof CertificateDataValueCodeList) {
       certificateQuestionBuilder.value(getValueCodeList(element.getValue()));
