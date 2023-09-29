@@ -23,7 +23,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRangeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosisList;
 
 public final class ValueToolkit {
@@ -86,12 +85,9 @@ public final class ValueToolkit {
 
 
   public static List<CertificateQuestion> getValueDateListSubQuestions(
-      CertificateDataElement element) {
-    if (!(element.getConfig() instanceof CertificateDataConfigCheckboxMultipleDate)) {
-      return null;
-    }
-    final var certificateDataValueDates = ((CertificateDataValueDateList) element.getValue()).getList();
-    final var certificateDataConfigDates = ((CertificateDataConfigCheckboxMultipleDate) element.getConfig()).getList();
+      CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataValueConfig) {
+    final var certificateDataValueDates = ((CertificateDataValueDateList) certificateDataValue).getList();
+    final var certificateDataConfigDates = ((CertificateDataConfigCheckboxMultipleDate) certificateDataValueConfig).getList();
     if (certificateDataValueDates == null) {
       return List.of(
           CertificateQuestion.builder()
@@ -108,11 +104,7 @@ public final class ValueToolkit {
       CertificateDataValue certificateDataValue) {
     final var value = ((CertificateDataValueCodeList) certificateDataValue).getList();
     if (value == null || value.isEmpty()) {
-      return CertificateQuestionValueList.builder()
-          .values(
-              List.of(NOT_PROVIDED)
-          )
-          .build();
+      return notProvidedValueList();
     }
     return CertificateQuestionValueList.builder()
         .values(
@@ -124,25 +116,21 @@ public final class ValueToolkit {
         .build();
   }
 
+
   public static CertificateQuestionValueTable getValueDiagnosisList(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
     final var diagnosesTerminologies = ((CertificateDataConfigDiagnoses) certificateDataConfig).getTerminology();
     final var certificateDataValueDiagnoses = ((CertificateDataValueDiagnosisList) certificateDataValue).getList();
+
     final var headings = diagnosesTerminologies.stream()
         .map(DiagnosesTerminology::getLabel)
         .collect(Collectors.toList());
+
     final var values = certificateDataValueDiagnoses.stream()
         .map(diagnosis -> List.of(diagnosis.getCode(), diagnosis.getDescription()))
         .collect(Collectors.toList());
-    return buildQuestionValueTable(headings, values);
-  }
 
-  private static CertificateQuestionValueTable buildQuestionValueTable(List<String> headings,
-      List<List<String>> values) {
-    return CertificateQuestionValueTable.builder()
-        .headings(headings)
-        .values(values)
-        .build();
+    return buildQuestionValueTable(headings, values);
   }
 
   public static CertificateQuestionValueText getValueIcf(
@@ -153,19 +141,20 @@ public final class ValueToolkit {
 
   public static CertificateQuestionValueTable getValueDateRangeList(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
-    final var values = (CertificateDataValueDateRangeList) certificateDataValue;
-    //TODO: Not yet implemented
-    return buildQuestionValueTable(List.of(), List.of());
+    return CertificateQuestionValueTable.builder()
+        .build();
   }
 
   public static CertificateQuestionValueText getValueCode(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
     final var dataValue = (CertificateDataValueCode) certificateDataValue;
     final var dataConfig = (CertificateDataConfigRadioMultipleCodeOptionalDropdown) certificateDataConfig;
+
     final var radioMultipleCodeOptionalDropdownLabel = dataConfig.getList().stream()
         .filter(config -> config.getId().equals(dataValue.getCode()))
         .map(RadioMultipleCodeOptionalDropdown::getLabel)
         .toList();
+    
     return CertificateQuestionValueText.builder()
         .value(radioMultipleCodeOptionalDropdownLabel.isEmpty() ? NOT_PROVIDED
             : radioMultipleCodeOptionalDropdownLabel.get(0))
@@ -205,6 +194,22 @@ public final class ValueToolkit {
   private static CertificateQuestionValueText notProvidedTextValue() {
     return CertificateQuestionValueText.builder()
         .value(NOT_PROVIDED)
+        .build();
+  }
+
+  private static CertificateQuestionValueList notProvidedValueList() {
+    return CertificateQuestionValueList.builder()
+        .values(
+            List.of(NOT_PROVIDED)
+        )
+        .build();
+  }
+
+  private static CertificateQuestionValueTable buildQuestionValueTable(List<String> headings,
+      List<List<String>> values) {
+    return CertificateQuestionValueTable.builder()
+        .headings(headings)
+        .values(values)
         .build();
   }
 }

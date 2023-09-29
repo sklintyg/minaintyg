@@ -72,7 +72,8 @@ public class ConvertCertificateService {
       certificateQuestionBuilder.value(getValueBoolean(element.getValue()));
     }
     if (element.getValue() instanceof CertificateDataValueDateList) {
-      certificateQuestionBuilder.subQuestions(getValueDateListSubQuestions(element));
+      certificateQuestionBuilder.subQuestions(
+          getValueDateListSubQuestions(element.getValue(), element.getConfig()));
     }
     if (element.getValue() instanceof CertificateDataValueCodeList) {
       certificateQuestionBuilder.value(getValueCodeList(element.getValue()));

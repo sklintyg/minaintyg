@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueBoolean;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCode;
 import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCodeList;
@@ -21,7 +20,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigDiagnoses;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioMultipleCodeOptionalDropdown;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.DiagnosesTerminology;
@@ -98,29 +96,54 @@ class ValueToolkitTest {
   class ValueDateListSubQuestions {
 
     @Test
-    void shouldReturnNullIfWrongConfig() {
-      final var dataElement = CertificateDataElement.builder()
-          .config(
-              CertificateDataConfigRadioBoolean.builder().build()
+    void shouldReturnSubQuestions() {
+      final var config = CertificateDataConfigCheckboxMultipleDate.builder()
+          .list(
+              List.of(
+                  getCheckboxMultipleDate("1"),
+                  getCheckboxMultipleDate("2"),
+                  getCheckboxMultipleDate("3"),
+                  getCheckboxMultipleDate("4")
+              )
           )
           .build();
-      final var result = getValueDateListSubQuestions(dataElement);
-      assertNull(result);
-    }
-
-    @Test
-    void shouldReturnSubQuestions() {
-      final var dataElement = getElemetsWithMultipleDateConfigAndDateListValue();
-
-      final var result = getValueDateListSubQuestions(dataElement);
+      final var value = CertificateDataValueDateList.builder()
+          .list(
+              List.of(
+                  getDataValueDate("1"),
+                  getDataValueDate("2"),
+                  getDataValueDate("3"),
+                  getDataValueDate("4")
+              )
+          )
+          .build();
+      final var result = getValueDateListSubQuestions(value, config);
       assertFalse(result.isEmpty());
     }
 
     @Test
     void shouldReturnSubQuestionsWithCorrectLabel() {
-      final var dataElement = getElemetsWithMultipleDateConfigAndDateListValue();
-
-      final var result = getValueDateListSubQuestions(dataElement);
+      final var config = CertificateDataConfigCheckboxMultipleDate.builder()
+          .list(
+              List.of(
+                  getCheckboxMultipleDate("1"),
+                  getCheckboxMultipleDate("2"),
+                  getCheckboxMultipleDate("3"),
+                  getCheckboxMultipleDate("4")
+              )
+          )
+          .build();
+      final var value = CertificateDataValueDateList.builder()
+          .list(
+              List.of(
+                  getDataValueDate("1"),
+                  getDataValueDate("2"),
+                  getDataValueDate("3"),
+                  getDataValueDate("4")
+              )
+          )
+          .build();
+      final var result = getValueDateListSubQuestions(value, config);
       assertEquals(LABEL, result.get(0).getLabel());
       assertEquals(LABEL, result.get(1).getLabel());
       assertEquals(LABEL, result.get(2).getLabel());
@@ -129,9 +152,27 @@ class ValueToolkitTest {
 
     @Test
     void shouldReturnSubQuestionsWithAllValues() {
-      final var dataElement = getElemetsWithMultipleDateConfigAndDateListValue();
-
-      final var result = getValueDateListSubQuestions(dataElement);
+      final var config = CertificateDataConfigCheckboxMultipleDate.builder()
+          .list(
+              List.of(
+                  getCheckboxMultipleDate("1"),
+                  getCheckboxMultipleDate("2"),
+                  getCheckboxMultipleDate("3"),
+                  getCheckboxMultipleDate("4")
+              )
+          )
+          .build();
+      final var value = CertificateDataValueDateList.builder()
+          .list(
+              List.of(
+                  getDataValueDate("1"),
+                  getDataValueDate("2"),
+                  getDataValueDate("3"),
+                  getDataValueDate("4")
+              )
+          )
+          .build();
+      final var result = getValueDateListSubQuestions(value, config);
       assertEquals(LocalDate.now().toString(),
           ((CertificateQuestionValueText) result.get(0).getValue()).getValue());
       assertEquals(LocalDate.now().toString(),
@@ -144,9 +185,24 @@ class ValueToolkitTest {
 
     @Test
     void shouldReturnSubQuestionsWithOneValue() {
-      final var dataElement = getElemetsWithMultipleDateConfigAndOneDateValue();
-
-      final var result = getValueDateListSubQuestions(dataElement);
+      final var config = CertificateDataConfigCheckboxMultipleDate.builder()
+          .list(
+              List.of(
+                  getCheckboxMultipleDate("1"),
+                  getCheckboxMultipleDate("2"),
+                  getCheckboxMultipleDate("3"),
+                  getCheckboxMultipleDate("4")
+              )
+          )
+          .build();
+      final var value = CertificateDataValueDateList.builder()
+          .list(
+              List.of(
+                  getDataValueDate("3")
+              )
+          )
+          .build();
+      final var result = getValueDateListSubQuestions(value, config);
       assertEquals(NOT_PROVIDED,
           ((CertificateQuestionValueText) result.get(0).getValue()).getValue());
       assertEquals(NOT_PROVIDED,
