@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CertificateResponseDTO {
 
-  CertificateDTO certificate;
+  private CertificateDTO certificate;
 
 }
