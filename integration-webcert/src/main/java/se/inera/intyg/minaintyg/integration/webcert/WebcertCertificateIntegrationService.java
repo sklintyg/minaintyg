@@ -25,8 +25,8 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     validateRequest(request);
     final var response = getCertificateFromWebcertService.get(request);
 
-    if (responseContainsNoData(response)) {
-      //TODO: Throw exception
+    if (validateResponse(response)) {
+      throw new RuntimeException("Certificate for patient was not found");
     }
 
     final var organizedByCategoryData = categoryQuestionOrganizer.organize(
@@ -45,7 +45,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
         .build();
   }
 
-  private static boolean responseContainsNoData(CertificateResponseDTO response) {
+  private static boolean validateResponse(CertificateResponseDTO response) {
     return response.getCertificate() == null || response.getCertificate().getData() == null
         || response.getCertificate().getData().isEmpty();
   }
