@@ -24,7 +24,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     final var response = getCertificateFromWebcertService.get(request);
 
     if (validateResponse(response)) {
-      throw new RuntimeException("Certificate for patient was not found");
+      throw new RuntimeException("Certificate was not found, certificateId: " + request.getCertificateId());
     }
 
     final var certificateCategories = convertCertificateService.convert(response);
