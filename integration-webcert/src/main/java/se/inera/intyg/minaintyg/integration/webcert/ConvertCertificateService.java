@@ -40,6 +40,7 @@ public class ConvertCertificateService {
     final var organizedByCategoryData = categoryQuestionOrganizer.organize(
         getCertificateDataElements(response)
     );
+
     return organizedByCategoryData.stream()
         .map(this::toCertificateCategory)
         .collect(Collectors.toList());

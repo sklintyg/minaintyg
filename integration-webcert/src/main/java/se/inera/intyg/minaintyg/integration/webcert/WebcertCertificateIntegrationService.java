@@ -15,7 +15,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateRespon
 public class WebcertCertificateIntegrationService implements GetCertificateIntegrationService {
 
   private final GetCertificateFromWebcertService getCertificateFromWebcertService;
-  private final CategoryQuestionOrganizer categoryQuestionOrganizer;
   private final ConvertCertificateService convertCertificateService;
 
   @Override
@@ -24,7 +23,8 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     final var response = getCertificateFromWebcertService.get(request);
 
     if (validateResponse(response)) {
-      throw new RuntimeException("Certificate was not found, certificateId: " + request.getCertificateId());
+      throw new RuntimeException(
+          "Certificate was not found, certificateId: " + request.getCertificateId());
     }
 
     final var certificateCategories = convertCertificateService.convert(response);

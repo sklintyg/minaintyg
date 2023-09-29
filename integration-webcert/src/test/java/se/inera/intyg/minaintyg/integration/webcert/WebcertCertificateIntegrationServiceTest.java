@@ -3,12 +3,14 @@ package se.inera.intyg.minaintyg.integration.webcert;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
@@ -21,9 +23,6 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Mock
   private ConvertCertificateService convertCertificateService;
-
-  @Mock
-  private CategoryQuestionOrganizer categoryQuestionOrganizer;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -61,5 +60,19 @@ class WebcertCertificateIntegrationServiceTest {
             .build()
     );
     assertThrows(RuntimeException.class, () -> webcertCertificateIntegrationService.get(request));
+  }
+
+  @Test
+  void shouldReturnGetCertificateIntegrationResponseWithCategories() {
+    final var request = GetCertificateIntegrationRequest.builder()
+        .certificateId(CERTIFICATE_ID)
+        .build();
+    final var response = CertificateResponseDTO.builder().build();
+    when(getCertificateFromWebcertService.get(request)).thenReturn(response);
+    when(convertCertificateService.convert(response)).thenReturn(
+        List.of(
+            CertificateCategory.builder().build()
+        )
+    );
   }
 }

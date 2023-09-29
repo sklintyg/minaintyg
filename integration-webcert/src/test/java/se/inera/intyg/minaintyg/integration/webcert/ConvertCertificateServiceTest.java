@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
@@ -23,9 +24,14 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateRespon
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigDiagnoses;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioMultipleCodeOptionalDropdown;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.DiagnosesTerminology;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.RadioMultipleCodeOptionalDropdown;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataIcfValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueBoolean;
@@ -33,6 +39,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosis;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosisList;
 
 @ExtendWith(MockitoExtension.class)
 class ConvertCertificateServiceTest {
@@ -448,6 +456,197 @@ class ConvertCertificateServiceTest {
         when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
         final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
         assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+    }
+
+    @Nested
+    class DiagnosisList {
+
+      private static final String DIAGNOSIS_CODE_M79 = "M79";
+      private static final String DIAGNOSIS_CODE_M79_DESCRIPTION = "M79 description";
+      private static final String DIAGNOSIS_CODE_B36 = "B36";
+      private static final String DIAGNOSIS_CODE_B36_DESCRIPTION = "B36 description";
+
+      @Test
+      void shouldConvertCertificateDataDiagnosisListValue() {
+        final var config = CertificateDataConfigDiagnoses.builder()
+            .terminology(
+                List.of(
+                    DiagnosesTerminology.builder()
+                        .label(LABEL_VALUE)
+                        .build(),
+
+                    DiagnosesTerminology.builder()
+                        .label(LABEL_VALUE)
+                        .build()
+                )
+            )
+            .build();
+
+        final var value = CertificateDataValueDiagnosisList.builder()
+            .list(
+                List.of(
+                    CertificateDataValueDiagnosis.builder()
+                        .code(DIAGNOSIS_CODE_B36)
+                        .description(DIAGNOSIS_CODE_B36_DESCRIPTION)
+                        .build(),
+                    CertificateDataValueDiagnosis.builder()
+                        .code(DIAGNOSIS_CODE_M79)
+                        .description(DIAGNOSIS_CODE_M79_DESCRIPTION)
+                        .build()
+                )
+            )
+            .build();
+
+        final var expectedResult = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueTable.builder()
+                    .headings(
+                        List.of(
+                            LABEL_VALUE, LABEL_VALUE
+                        )
+                    )
+                    .values(
+                        List.of(
+                            List.of(
+                                DIAGNOSIS_CODE_B36, DIAGNOSIS_CODE_B36_DESCRIPTION
+                            ),
+                            List.of(
+                                DIAGNOSIS_CODE_M79, DIAGNOSIS_CODE_M79_DESCRIPTION
+                            )
+                        )
+                    )
+                    .build()
+            )
+            .build();
+        final var element = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(config, value))
+        );
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(element);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
+        assertEquals(expectedResult, result.get(0).getQuestions().get(0));
+      }
+    }
+
+    @Nested
+    class IcfValue {
+
+      @Test
+      void shouldConvertCertificateIcfValue() {
+        final var value = CertificateDataIcfValue.builder()
+            .text(TEXT_VALUE)
+            .build();
+        final var config = CertificateDataConfigTextArea.builder().build();
+        final var element = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(config, value)
+            )
+        );
+        final var expectedValue = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueText.builder()
+                    .value(TEXT_VALUE)
+                    .build()
+            )
+            .build();
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(element);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
+        assertEquals(expectedValue, result.get(0).getQuestions().get(0));
+      }
+
+      @Test
+      void shouldConvertCertificateIcfNoValue() {
+        final var value = CertificateDataIcfValue.builder().build();
+        final var config = CertificateDataConfigTextArea.builder().build();
+        final var element = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(config, value)
+            )
+        );
+        final var expectedValue = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueText.builder()
+                    .value(NOT_PROVIDED)
+                    .build()
+            )
+            .build();
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(element);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
+        assertEquals(expectedValue, result.get(0).getQuestions().get(0));
+      }
+    }
+
+    @Nested
+    class ValueCode {
+
+      @Test
+      void shouldConvertCertificateCodeValue() {
+        final var value = CertificateDataValueCode.builder()
+            .code(CONFIG_ID)
+            .build();
+
+        final var config = CertificateDataConfigRadioMultipleCodeOptionalDropdown.builder()
+            .list(
+                List.of(
+                    RadioMultipleCodeOptionalDropdown.builder()
+                        .id(CONFIG_ID)
+                        .label(LABEL_VALUE)
+                        .build()
+                )
+            ).build();
+        final var element = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(config, value)
+            )
+        );
+        final var expectedValue = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueText.builder()
+                    .value(LABEL_VALUE)
+                    .build()
+            )
+            .build();
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(element);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
+        assertEquals(expectedValue, result.get(0).getQuestions().get(0));
+      }
+
+      @Test
+      void shouldConvertCertificateCodeNoValue() {
+        final var value = CertificateDataValueCode.builder()
+            .code(CODE)
+            .build();
+
+        final var config = CertificateDataConfigRadioMultipleCodeOptionalDropdown.builder()
+            .list(
+                List.of(
+                    RadioMultipleCodeOptionalDropdown.builder()
+                        .id(CONFIG_ID)
+                        .label(LABEL_VALUE)
+                        .build()
+                )
+            ).build();
+        final var element = List.of(
+            List.of(
+                createElement(CertificateDataConfigCategory.builder().build(), null),
+                createElement(config, value)
+            )
+        );
+        final var expectedValue = CertificateQuestion.builder()
+            .value(
+                CertificateQuestionValueText.builder()
+                    .value(NOT_PROVIDED)
+                    .build()
+            )
+            .build();
+        when(categoryQuestionOrganizer.organize(any())).thenReturn(element);
+        final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
+        assertEquals(expectedValue, result.get(0).getQuestions().get(0));
       }
     }
   }
