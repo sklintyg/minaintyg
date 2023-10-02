@@ -65,6 +65,10 @@ public class FormattedQuestionConverter {
   }
 
   private String value(CertificateQuestionValue value) {
+    if (value == null) {
+      return null;
+    }
+
     return switch (value.getType()) {
       case TEXT -> text((CertificateQuestionValueText) value);
       case LIST -> list((CertificateQuestionValueList) value);
