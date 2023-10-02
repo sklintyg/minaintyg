@@ -9,6 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateInteg
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,11 @@ public class SendCertificateService {
   private final MonitoringLogService monitoringLogService;
   private final GetCertificateRecipientService getCertificateRecipientService;
   private final SendCertificateIntegrationService sendCertificateIntegrationService;
+  private final UserService userService;
 
   public SendCertificateResponse send(SendCertificateRequest request) {
+    final var user = userService.getLoggedInUser().orElseThrow();
+
     final var recipientResponse = getCertificateRecipientService.get(
         GetCertificateRecipientRequest
             .builder()
@@ -33,8 +37,9 @@ public class SendCertificateService {
         SendCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
-            .certificateType(request.getCertificateType())
-            .recipient(recipientResponse.getCertificateRecipient().getId())
+            .patientId(user.getPersonId())
+            .recipient(recipientResponse.getCertificateRecipient()
+                .getId()) // Send recipient here or get it from IT?
             .build()
     );
 

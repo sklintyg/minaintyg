@@ -18,7 +18,6 @@ public class GetCertificateRecipientService {
         GetCertificateRecipientIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
-            .certificateType(request.getCertificateType())
             .build()
     );
 

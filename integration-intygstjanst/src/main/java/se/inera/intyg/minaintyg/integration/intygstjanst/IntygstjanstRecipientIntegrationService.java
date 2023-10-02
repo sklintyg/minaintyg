@@ -53,10 +53,5 @@ public class IntygstjanstRecipientIntegrationService implements
       throw new IllegalArgumentException(
           "Valid request was not provided, certificate id must be defined");
     }
-
-    if (request.getCertificateType() == null || request.getCertificateType().isEmpty()) {
-      throw new IllegalArgumentException(
-          "Valid request was not provided, certificate type must be defined");
-    }
   }
 }

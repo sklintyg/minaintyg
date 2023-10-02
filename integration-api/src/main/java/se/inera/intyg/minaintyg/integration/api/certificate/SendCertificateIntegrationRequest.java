@@ -7,7 +7,7 @@ import lombok.Value;
 @Builder
 public class SendCertificateIntegrationRequest {
 
-  String certificateType;
   String certificateId;
+  String patientId;
   String recipient;
 }

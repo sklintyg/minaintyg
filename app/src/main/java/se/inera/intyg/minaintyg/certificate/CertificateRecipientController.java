@@ -43,7 +43,6 @@ public class CertificateRecipientController {
         SendCertificateRequest
             .builder()
             .certificateId(request.getCertificateId())
-            .certificateType(request.getCertificateType())
             .build()
     );
 

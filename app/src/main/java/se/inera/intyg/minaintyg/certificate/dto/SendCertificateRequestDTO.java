@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class SendCertificateRequestDTO {
 
   String certificateId;
-  String certificateType;
+  String patientId;
+  String recipient;
 }
