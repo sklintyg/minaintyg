@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.integration.webcert;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
@@ -83,7 +82,6 @@ public final class ValueToolkit {
     return getText(value);
   }
 
-
   public static List<CertificateQuestion> getValueDateListSubQuestions(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataValueConfig) {
     final var certificateDataValueDates = ((CertificateDataValueDateList) certificateDataValue).getList();
@@ -111,11 +109,10 @@ public final class ValueToolkit {
             value.stream()
                 .map(CertificateDataValueCode::getCode)
                 .map(ValueToolkit::codeToString)
-                .collect(Collectors.toList())
+                .toList()
         )
         .build();
   }
-
 
   public static CertificateQuestionValueTable getValueDiagnosisList(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
@@ -124,11 +121,11 @@ public final class ValueToolkit {
 
     final var headings = diagnosesTerminologies.stream()
         .map(DiagnosesTerminology::getLabel)
-        .collect(Collectors.toList());
+        .toList();
 
     final var values = certificateDataValueDiagnoses.stream()
         .map(diagnosis -> List.of(diagnosis.getCode(), diagnosis.getDescription()))
-        .collect(Collectors.toList());
+        .toList();
 
     return buildQuestionValueTable(headings, values);
   }
@@ -155,7 +152,7 @@ public final class ValueToolkit {
             ))
         .build();
   }
-  
+
   public static CertificateQuestionValueText getValueCode(
       CertificateDataValue certificateDataValue, CertificateDataConfig certificateDataConfig) {
     if (!(certificateDataConfig instanceof final CertificateDataConfigRadioMultipleCodeOptionalDropdown dataConfig)) {

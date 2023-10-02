@@ -13,7 +13,6 @@ import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValue
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
@@ -44,7 +43,7 @@ public class ConvertCertificateService {
 
     return organizedByCategoryData.stream()
         .map(this::toCertificateCategory)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private static List<CertificateDataElement> getCertificateDataElements(
@@ -59,7 +58,7 @@ public class ConvertCertificateService {
             elements.stream()
                 .filter(removeCategory())
                 .map(this::toCertificateQuestion)
-                .collect(Collectors.toList())
+                .toList()
         )
         .build();
   }
@@ -75,7 +74,6 @@ public class ConvertCertificateService {
     if (element.getValue() instanceof CertificateDataValueDateList) {
       certificateQuestionBuilder.subQuestions(
           getValueDateListSubQuestions(element.getValue(), element.getConfig()));
-      //TODO: Questions only containing subquestions has no value, need to make a null check in FormattedQuestionConverter
       certificateQuestionBuilder.value(CertificateQuestionValueText.builder().build());
     }
     if (element.getValue() instanceof CertificateDataValueCodeList) {
