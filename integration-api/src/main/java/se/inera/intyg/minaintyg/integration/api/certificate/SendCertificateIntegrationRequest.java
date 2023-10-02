@@ -5,8 +5,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class GetCertificateRecipientIntegrationRequest {
+public class SendCertificateIntegrationRequest {
 
-  String certificateId;
   String certificateType;
+  String certificateId;
+  String recipient;
 }

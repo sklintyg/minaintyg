@@ -17,6 +17,7 @@ public class GetCertificateRecipientService {
     final var response = getCertificateRecipientIntegrationService.get(
         GetCertificateRecipientIntegrationRequest
             .builder()
+            .certificateId(request.getCertificateId())
             .certificateType(request.getCertificateType())
             .build()
     );

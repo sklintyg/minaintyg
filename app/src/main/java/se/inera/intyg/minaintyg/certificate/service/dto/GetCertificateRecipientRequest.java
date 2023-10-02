@@ -7,5 +7,6 @@ import lombok.Value;
 @Builder
 public class GetCertificateRecipientRequest {
 
+  String certificateId;
   String certificateType;
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRecipientRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 
@@ -14,25 +16,42 @@ public class SendCertificateService {
 
   private final MonitoringLogService monitoringLogService;
   private final GetCertificateRecipientService getCertificateRecipientService;
+  private final SendCertificateIntegrationService sendCertificateIntegrationService;
 
   public SendCertificateResponse send(SendCertificateRequest request) {
-    final var response = getCertificateRecipientService.get(
+    final var recipientResponse = getCertificateRecipientService.get(
         GetCertificateRecipientRequest
             .builder()
+            .certificateId(request.getCertificateId())
             .certificateType(request.getCertificateType())
             .build()
     );
 
-    validateAction(response.getCertificateRecipient());
+    validateAction(recipientResponse.getCertificateRecipient());
+
+    final var sentResponse = sendCertificateIntegrationService.send(
+        SendCertificateIntegrationRequest
+            .builder()
+            .certificateId(request.getCertificateId())
+            .certificateType(request.getCertificateType())
+            .recipient(recipientResponse.getCertificateRecipient().getId())
+            .build()
+    );
+
+    if (sentResponse.getSent() == null) {
+      // TODO: Throw error?
+      return null;
+    }
 
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
         request.getCertificateType(),
-        request.getRecipient()
+        recipientResponse.getCertificateRecipient().getId()
     );
 
     return SendCertificateResponse
         .builder()
+        .sent(sentResponse.getSent())
         .build();
   }
 

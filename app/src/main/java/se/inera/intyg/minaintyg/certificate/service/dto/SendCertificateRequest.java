@@ -9,5 +9,4 @@ public class SendCertificateRequest {
 
   String certificateId;
   String certificateType;
-  String recipient;
 }

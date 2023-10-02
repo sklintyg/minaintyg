@@ -15,7 +15,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/certificate/recipient")
+@RequestMapping("/api/recipient")
 public class CertificateRecipientController {
 
   private final GetCertificateRecipientService getCertificateRecipientService;
@@ -37,7 +37,6 @@ public class CertificateRecipientController {
         .build();
   }
 
-  // TODO: Should we get the type from the request or get it from GetCertificateService
   @PostMapping("/send")
   public SendCertificateResponseDTO sendCertificate(SendCertificateRequestDTO request) {
     final var response = sendCertificateService.send(
@@ -45,7 +44,6 @@ public class CertificateRecipientController {
             .builder()
             .certificateId(request.getCertificateId())
             .certificateType(request.getCertificateType())
-            .recipient(request.getRecipient())
             .build()
     );
 
