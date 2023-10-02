@@ -142,4 +142,18 @@ class FormattedQuestionConverterTest {
         "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4><table className=\"ids-table\"><thead><th>heading 1</th><th>heading 2</th></thead><tbody><tr><td>Value 1</td><td>Value 2</td></tr></tbody></table>",
         result);
   }
+
+  @Test
+  void shouldReturnTitleForQuestionWithNoValue() {
+    final var question = CertificateQuestion.builder()
+        .title("Title")
+        .label("Label")
+        .build();
+
+    final var result = formattedQuestionConverter.convert(question);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4>",
+        result);
+  }
 }
