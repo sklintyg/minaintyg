@@ -19,7 +19,7 @@ public class IntygstjanstSendCertificateIntegrationService implements
       SendCertificateIntegrationRequest request) {
     validateRequest(request);
     try {
-      final var response = sendCertificateUsingIntygstjanstService.get(request);
+      final var response = sendCertificateUsingIntygstjanstService.send(request);
       return SendCertificateIntegrationResponse
           .builder()
           .sent(response.getSent())

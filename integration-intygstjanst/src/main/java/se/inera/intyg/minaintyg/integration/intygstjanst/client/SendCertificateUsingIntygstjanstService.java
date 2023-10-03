@@ -32,7 +32,7 @@ public class SendCertificateUsingIntygstjanstService {
     this.endpoint = endpoint;
   }
 
-  public SendCertificateResponseDTO get(SendCertificateIntegrationRequest request) {
+  public SendCertificateResponseDTO send(SendCertificateIntegrationRequest request) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)

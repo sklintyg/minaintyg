@@ -38,7 +38,7 @@ public class CertificateRecipientController {
   }
 
   @PostMapping("/send")
-  public SendCertificateResponseDTO sendCertificate(SendCertificateRequestDTO request) {
+  public SendCertificateResponseDTO sendCertificateToRecipient(SendCertificateRequestDTO request) {
     final var response = sendCertificateService.send(
         SendCertificateRequest
             .builder()
