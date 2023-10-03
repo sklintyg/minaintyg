@@ -17,7 +17,7 @@ public class ConvertCertificateService {
   private final QuestionConverter questionConverter;
 
   public List<CertificateCategory> convert(CertificateResponseDTO response) {
-    final var organizedByCategoryData = categoryQuestionOrganizer.organizeAsMap(
+    final var organizedByCategoryData = categoryQuestionOrganizer.organize(
         getCertificateDataElements(response)
     );
 

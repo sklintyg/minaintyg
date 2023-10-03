@@ -57,7 +57,7 @@ class ConvertCertificateServiceTest {
           ),
           Collections.emptyList()
       );
-      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
     }
@@ -85,7 +85,7 @@ class ConvertCertificateServiceTest {
           Collections.emptyList()
       );
 
-      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
       assertEquals(TITLE, result.get(1).getTitle());
@@ -101,7 +101,7 @@ class ConvertCertificateServiceTest {
           ),
           Collections.emptyList()
       );
-      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
+      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertNull(result.get(0).getTitle());
     }
@@ -126,7 +126,7 @@ class ConvertCertificateServiceTest {
             .build())
         .build();
 
-    when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
+    when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
     when(questionConverter.convert(element)).thenReturn(expectedResult);
     final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
     assertEquals(expectedResult, result.get(0).getQuestions().get(0));

@@ -12,23 +12,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 @Component
 public class CategoryQuestionOrganizer {
 
-  public List<List<CertificateDataElement>> organize(
-      List<CertificateDataElement> certificateDataElements) {
-    final var elementsSortedByIndex = getElementsSortedByIndex(certificateDataElements);
-    final var organizedCertificateDataElements = new ArrayList<List<CertificateDataElement>>();
-
-    elementsSortedByIndex.forEach(element -> {
-      if (elementIsCategory(element)) {
-        organizedCertificateDataElements.add(new ArrayList<>());
-        addElementToList(organizedCertificateDataElements, element);
-      } else {
-        addElementToList(organizedCertificateDataElements, element);
-      }
-    });
-    return organizedCertificateDataElements;
-  }
-
-  public Map<CertificateDataElement, List<CertificateDataElement>> organizeAsMap(
+  public Map<CertificateDataElement, List<CertificateDataElement>> organize(
       List<CertificateDataElement> certificateDataElements) {
     final var elementsSortedByIndex = getElementsSortedByIndex(certificateDataElements);
     final var organizedCertificateDataElements = new ArrayList<List<CertificateDataElement>>();
