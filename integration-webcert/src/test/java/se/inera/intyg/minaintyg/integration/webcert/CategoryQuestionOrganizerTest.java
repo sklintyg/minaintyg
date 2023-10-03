@@ -28,19 +28,19 @@ class CategoryQuestionOrganizerTest {
   @Test
   void shouldOrganizeElementsByIndex() {
     final var certificateDataElements = List.of(
-        createElement(TEXT_TYPE, 1),
-        createElement(BOOLEAN_TYPE, 4),
-        createElement(TEXT_TYPE, 2),
-        createElement(BOOLEAN_TYPE, 3),
-        createElement(CATEGORY_TYPE, 0)
+        createElement(TEXT_TYPE, 1, "1", "0"),
+        createElement(BOOLEAN_TYPE, 4, "4", "0"),
+        createElement(TEXT_TYPE, 2, "2", "0"),
+        createElement(BOOLEAN_TYPE, 3, "3", "0"),
+        createElement(CATEGORY_TYPE, 0, "0", null)
     );
     final var expectedResult = List.of(
         List.of(
-            createElement(CATEGORY_TYPE, 0),
-            createElement(TEXT_TYPE, 1),
-            createElement(TEXT_TYPE, 2),
-            createElement(BOOLEAN_TYPE, 3),
-            createElement(BOOLEAN_TYPE, 4)
+            createElement(CATEGORY_TYPE, 0, "0", null),
+            createElement(TEXT_TYPE, 1, "1", "0"),
+            createElement(TEXT_TYPE, 2, "2", "0"),
+            createElement(BOOLEAN_TYPE, 3, "3", "0"),
+            createElement(BOOLEAN_TYPE, 4, "4", "0")
         )
     );
     final var result = categoryQuestionOrganizer.organize(certificateDataElements);
@@ -50,21 +50,21 @@ class CategoryQuestionOrganizerTest {
   @Test
   void shouldGroupElementsByCategory() {
     final var certificateDataElements = List.of(
-        createElement(TEXT_TYPE, 1),
-        createElement(BOOLEAN_TYPE, 4),
-        createElement(CATEGORY_TYPE, 2),
-        createElement(BOOLEAN_TYPE, 3),
-        createElement(CATEGORY_TYPE, 0)
+        createElement(TEXT_TYPE, 1, "1", "0"),
+        createElement(BOOLEAN_TYPE, 4, "4", "2"),
+        createElement(CATEGORY_TYPE, 2, "2", null),
+        createElement(BOOLEAN_TYPE, 3, "3", "2"),
+        createElement(CATEGORY_TYPE, 0, "0", null)
     );
     final var expectedResult = List.of(
         List.of(
-            createElement(CATEGORY_TYPE, 0),
-            createElement(TEXT_TYPE, 1)
+            createElement(CATEGORY_TYPE, 0, "0", null),
+            createElement(TEXT_TYPE, 1, "1", "0")
         ),
         List.of(
-            createElement(CATEGORY_TYPE, 2),
-            createElement(BOOLEAN_TYPE, 3),
-            createElement(BOOLEAN_TYPE, 4)
+            createElement(CATEGORY_TYPE, 2, "2", null),
+            createElement(BOOLEAN_TYPE, 3, "3", "2"),
+            createElement(BOOLEAN_TYPE, 4, "4", "2")
         )
     );
     final var result = categoryQuestionOrganizer.organize(certificateDataElements);
@@ -74,33 +74,33 @@ class CategoryQuestionOrganizerTest {
   @Test
   void shouldGroupElementsByMultipleCategories() {
     final var certificateDataElements = List.of(
-        createElement(TEXT_TYPE, 1),
-        createElement(BOOLEAN_TYPE, 4),
-        createElement(CATEGORY_TYPE, 2),
-        createElement(BOOLEAN_TYPE, 3),
-        createElement(CATEGORY_TYPE, 0),
-        createElement(CATEGORY_TYPE, 5),
-        createElement(BOOLEAN_TYPE, 6),
-        createElement(CATEGORY_TYPE, 7),
-        createElement(BOOLEAN_TYPE, 8)
+        createElement(TEXT_TYPE, 1, "1", "0"),
+        createElement(BOOLEAN_TYPE, 4, "4", "2"),
+        createElement(CATEGORY_TYPE, 2, "2", null),
+        createElement(BOOLEAN_TYPE, 3, "3", "2"),
+        createElement(CATEGORY_TYPE, 0, "0", null),
+        createElement(CATEGORY_TYPE, 5, "5", null),
+        createElement(BOOLEAN_TYPE, 6, "6", "5"),
+        createElement(CATEGORY_TYPE, 7, "7", null),
+        createElement(BOOLEAN_TYPE, 8, "8", "7")
     );
     final var expectedResult = List.of(
         List.of(
-            createElement(CATEGORY_TYPE, 0),
-            createElement(TEXT_TYPE, 1)
+            createElement(CATEGORY_TYPE, 0, "0", null),
+            createElement(TEXT_TYPE, 1, "1", "0")
         ),
         List.of(
-            createElement(CATEGORY_TYPE, 2),
-            createElement(BOOLEAN_TYPE, 3),
-            createElement(BOOLEAN_TYPE, 4)
+            createElement(CATEGORY_TYPE, 2, "2", null),
+            createElement(BOOLEAN_TYPE, 3, "3", "2"),
+            createElement(BOOLEAN_TYPE, 4, "4", "2")
         ),
         List.of(
-            createElement(CATEGORY_TYPE, 5),
-            createElement(BOOLEAN_TYPE, 6)
+            createElement(CATEGORY_TYPE, 5, "5", null),
+            createElement(BOOLEAN_TYPE, 6, "6", "5")
         ),
         List.of(
-            createElement(CATEGORY_TYPE, 7),
-            createElement(BOOLEAN_TYPE, 8)
+            createElement(CATEGORY_TYPE, 7, "7", null),
+            createElement(BOOLEAN_TYPE, 8, "8", "7")
         )
     );
     final var result = categoryQuestionOrganizer.organize(certificateDataElements);
@@ -110,15 +110,18 @@ class CategoryQuestionOrganizerTest {
   @Test
   void shouldThrowIfQuestionDoesNotHaveACategoryParent() {
     final var certificateDataElements = List.of(
-        createElement(TEXT_TYPE, 1),
-        createElement(BOOLEAN_TYPE, 4)
+        createElement(TEXT_TYPE, 1, "1", null),
+        createElement(BOOLEAN_TYPE, 4, "1", null)
     );
     assertThrows(IllegalArgumentException.class,
         () -> categoryQuestionOrganizer.organize(certificateDataElements));
   }
 
-  private static CertificateDataElement createElement(String type, int index) {
+  private static CertificateDataElement createElement(String type, int index, String id,
+      String parent) {
     return CertificateDataElement.builder()
+        .id(id)
+        .parent(parent)
         .index(index)
         .config(configMap.get(type))
         .build();
