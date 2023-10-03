@@ -38,15 +38,9 @@ public class SendCertificateService {
             .builder()
             .certificateId(request.getCertificateId())
             .patientId(user.getPersonId())
-            .recipient(recipientResponse.getCertificateRecipient()
-                .getId()) // Send recipient here or get it from IT?
+            .recipient(recipientResponse.getCertificateRecipient().getId())
             .build()
     );
-
-    if (sentResponse.getSent() == null) {
-      // TODO: Throw error?
-      return null;
-    }
 
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),

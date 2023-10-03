@@ -30,11 +30,21 @@ public class IntygstjanstSendCertificateIntegrationService implements
   }
 
   private void validateRequest(SendCertificateIntegrationRequest request) {
-    if (request == null
-        || request.getCertificateType() != null
-        || request.getCertificateId() != null
-        || request.getRecipient() != null) {
+    if (request == null) {
       throw new IllegalArgumentException("Valid request was not provided");
+    }
+
+    if (request.getCertificateId() == null || request.getCertificateId().isEmpty()) {
+      throw new IllegalArgumentException(
+          "Valid request was not provided, must include certificate id");
+    }
+
+    if (request.getPatientId() == null || request.getPatientId().isEmpty()) {
+      throw new IllegalArgumentException("Valid request was not provided, must include patient id");
+    }
+
+    if (request.getRecipient() == null || request.getRecipient().isEmpty()) {
+      throw new IllegalArgumentException("Valid request was not provided, must include recipient");
     }
   }
 }
