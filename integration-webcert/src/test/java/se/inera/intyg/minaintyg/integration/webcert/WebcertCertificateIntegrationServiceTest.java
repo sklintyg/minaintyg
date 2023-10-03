@@ -95,7 +95,7 @@ class WebcertCertificateIntegrationServiceTest {
         CertificateCategory.builder().build()
     );
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response)).thenReturn(expectedResult);
+    when(convertCertificateService.convert(response.getCertificate())).thenReturn(expectedResult);
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedResult, result.getCertificate().getCategories());
   }
@@ -121,7 +121,7 @@ class WebcertCertificateIntegrationServiceTest {
         )
         .build();
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response)).thenReturn(
+    when(convertCertificateService.convert(response.getCertificate())).thenReturn(
         List.of(CertificateCategory.builder().build()
         )
     );

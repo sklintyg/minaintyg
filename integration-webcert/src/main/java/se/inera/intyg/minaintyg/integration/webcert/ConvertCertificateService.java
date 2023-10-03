@@ -6,8 +6,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +16,9 @@ public class ConvertCertificateService {
   private final CategoryQuestionOrganizer categoryQuestionOrganizer;
   private final QuestionConverter questionConverter;
 
-  public List<CertificateCategory> convert(CertificateResponseDTO response) {
+  public List<CertificateCategory> convert(CertificateDTO certificateDTO) {
     final var organizedByCategoryData = categoryQuestionOrganizer.organize(
-        getCertificateDataElements(response)
+        getCertificateDataElements(certificateDTO)
     );
 
     return organizedByCategoryData.keySet().stream()
@@ -27,8 +27,8 @@ public class ConvertCertificateService {
   }
 
   private static List<CertificateDataElement> getCertificateDataElements(
-      CertificateResponseDTO response) {
-    return response.getCertificate().getData().values().stream().toList();
+      CertificateDTO certificateDTO) {
+    return certificateDTO.getData().values().stream().toList();
   }
 
   private CertificateCategory toCertificateCategory(CertificateDataElement category,

@@ -28,7 +28,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
 
-    final var certificateCategories = convertCertificateService.convert(response);
+    final var certificateCategories = convertCertificateService.convert(response.getCertificate());
 
     return GetCertificateIntegrationResponse.builder()
         .certificate(

@@ -36,16 +36,9 @@ public class CategoryQuestionOrganizer {
             )
         );
 
-    categoryQuestionMap.values().forEach(questions ->
-        questions.sort(Comparator.comparingInt(CertificateDataElement::getIndex))
-    );
+    sortQuestionsInIndexOrder(categoryQuestionMap);
 
     return categoryQuestionMap;
-  }
-
-  private static Predicate<CertificateDataElement> questionBelongToCategory(
-      CertificateDataElement category, Map<String, CertificateDataElement> questionMap) {
-    return question -> category.getId().equalsIgnoreCase(getParent(questionMap, question));
   }
 
   private static Map<String, CertificateDataElement> getQuestionMap(
@@ -64,6 +57,18 @@ public class CategoryQuestionOrganizer {
 
   private static boolean elementIsCategory(CertificateDataElement element) {
     return element.getConfig().getType().equals(CertificateDataConfigTypes.CATEGORY);
+  }
+
+  private static Predicate<CertificateDataElement> questionBelongToCategory(
+      CertificateDataElement category, Map<String, CertificateDataElement> questionMap) {
+    return question -> category.getId().equalsIgnoreCase(getParent(questionMap, question));
+  }
+
+  private static void sortQuestionsInIndexOrder(
+      Map<CertificateDataElement, List<CertificateDataElement>> categoryQuestionMap) {
+    categoryQuestionMap.values().forEach(questions ->
+        questions.sort(Comparator.comparingInt(CertificateDataElement::getIndex))
+    );
   }
 
   private static String getParent(Map<String, CertificateDataElement> questions,
