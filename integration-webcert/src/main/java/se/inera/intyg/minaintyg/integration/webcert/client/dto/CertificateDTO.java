@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.webcert.client.dto;
 
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CertificateResponseDTO {
+public class CertificateDTO {
 
-  private CertificateDTO certificate;
-
+  CertificateMetadataDTO metadata;
+  Map<String, CertificateDataElement> data;
 }
