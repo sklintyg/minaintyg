@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
 import java.util.List;
 import java.util.Map;

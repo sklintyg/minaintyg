@@ -1,6 +1,6 @@
-package se.inera.intyg.minaintyg.integration.webcert;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getTitleText;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getTitleText;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

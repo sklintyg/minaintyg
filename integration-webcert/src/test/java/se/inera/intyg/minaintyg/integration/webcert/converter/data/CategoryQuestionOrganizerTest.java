@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

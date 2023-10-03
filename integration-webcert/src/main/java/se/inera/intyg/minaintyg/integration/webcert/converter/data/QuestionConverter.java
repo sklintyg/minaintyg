@@ -1,15 +1,15 @@
-package se.inera.intyg.minaintyg.integration.webcert;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getLabelText;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getTitleText;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueBoolean;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCode;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCodeList;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDateListSubQuestions;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDateRangeList;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDiagnosisList;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueIcf;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueText;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getLabelText;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getTitleText;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueBoolean;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCode;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCodeList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateListSubQuestions;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateRangeList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDiagnosisList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueIcf;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueText;
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;

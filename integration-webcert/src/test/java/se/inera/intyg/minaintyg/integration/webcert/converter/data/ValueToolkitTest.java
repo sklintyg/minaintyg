@@ -1,14 +1,14 @@
-package se.inera.intyg.minaintyg.integration.webcert;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueBoolean;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCode;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueCodeList;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDateListSubQuestions;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueDiagnosisList;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueIcf;
-import static se.inera.intyg.minaintyg.integration.webcert.ValueToolkit.getValueText;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueBoolean;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCode;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCodeList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateListSubQuestions;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDiagnosisList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueIcf;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueText;
 
 import java.time.LocalDate;
 import java.util.List;

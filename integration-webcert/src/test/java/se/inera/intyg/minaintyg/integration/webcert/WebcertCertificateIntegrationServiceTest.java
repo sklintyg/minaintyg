@@ -20,6 +20,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.ConvertCertificateService;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {

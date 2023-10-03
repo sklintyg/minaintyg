@@ -10,6 +10,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMet
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.ConvertCertificateService;
 
 @Service
 @RequiredArgsConstructor
