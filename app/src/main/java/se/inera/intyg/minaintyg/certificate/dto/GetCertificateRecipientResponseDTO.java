@@ -8,5 +8,5 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 @Builder
 public class GetCertificateRecipientResponseDTO {
 
-  CertificateRecipient certificateRecipient;
+  CertificateRecipient recipient;
 }

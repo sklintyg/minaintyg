@@ -33,7 +33,7 @@ public class CertificateRecipientController {
 
     return GetCertificateRecipientResponseDTO
         .builder()
-        .certificateRecipient(response.getCertificateRecipient())
+        .recipient(response.getCertificateRecipient())
         .build();
   }
 
