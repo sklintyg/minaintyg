@@ -107,6 +107,44 @@ class CategoryQuestionOrganizerTest {
     assertMap(expectedResult, result);
   }
 
+  @Test
+  void shouldGroupElementsByCategoryWhenSubQuestionsInOneLevelAreIncluded() {
+    final var certificateDataElements = List.of(
+        createElement(TEXT_TYPE, 1, "1", "0"),
+        createElement(BOOLEAN_TYPE, 2, "2", "1"),
+        createElement(CATEGORY_TYPE, 0, "0", null)
+    );
+    final var expectedResult = Map.of(
+        createElement(CATEGORY_TYPE, 0, "0", null),
+        List.of(
+            createElement(TEXT_TYPE, 1, "1", "0"),
+            createElement(BOOLEAN_TYPE, 2, "2", "1")
+        )
+    );
+    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    assertMap(expectedResult, result);
+  }
+
+  @Test
+  void shouldGroupElementsByCategoryWhenSubQuestionsInTwoLevelAreIncluded() {
+    final var certificateDataElements = List.of(
+        createElement(TEXT_TYPE, 1, "1", "0"),
+        createElement(BOOLEAN_TYPE, 3, "3", "2"),
+        createElement(BOOLEAN_TYPE, 2, "2", "1"),
+        createElement(CATEGORY_TYPE, 0, "0", null)
+    );
+    final var expectedResult = Map.of(
+        createElement(CATEGORY_TYPE, 0, "0", null),
+        List.of(
+            createElement(TEXT_TYPE, 1, "1", "0"),
+            createElement(BOOLEAN_TYPE, 2, "2", "1"),
+            createElement(BOOLEAN_TYPE, 3, "3", "2")
+        )
+    );
+    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    assertMap(expectedResult, result);
+  }
+
   void assertMap(Map<CertificateDataElement, List<CertificateDataElement>> expected,
       Map<CertificateDataElement, List<CertificateDataElement>> actual) {
     expected.keySet().forEach(expectedCategory -> {
