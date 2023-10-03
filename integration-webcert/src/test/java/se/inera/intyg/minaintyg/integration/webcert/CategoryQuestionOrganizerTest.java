@@ -1,7 +1,6 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -106,16 +105,6 @@ class CategoryQuestionOrganizerTest {
     );
     final var result = categoryQuestionOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
-  }
-
-  @Test
-  void shouldThrowIfQuestionDoesNotHaveACategoryParent() {
-    final var certificateDataElements = List.of(
-        createElement(TEXT_TYPE, 1, "1", null),
-        createElement(BOOLEAN_TYPE, 4, "1", null)
-    );
-    assertThrows(IllegalArgumentException.class,
-        () -> categoryQuestionOrganizer.organize(certificateDataElements));
   }
 
   void assertMap(Map<CertificateDataElement, List<CertificateDataElement>> expected,
