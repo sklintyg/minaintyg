@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,33 +49,43 @@ class ConvertCertificateServiceTest {
 
     @Test
     void shouldAddCategoryTitle() {
-      final var elements = List.of(
-          List.of(
-              createElement(CertificateDataConfigCategory.builder()
+      final Map<CertificateDataElement, List<CertificateDataElement>> elements = Map.of(
+          createElement(0,
+              CertificateDataConfigCategory.builder()
                   .text(TITLE)
-                  .build(), null)));
-      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+                  .build(), null
+          ),
+          Collections.emptyList()
+      );
+      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
     }
 
     @Test
     void shouldAddMultipleCategoryTitle() {
-      final var elements = List.of(
-          List.of(
-              createElement(CertificateDataConfigCategory.builder()
+      final Map<CertificateDataElement, List<CertificateDataElement>> elements = Map.of(
+          createElement(0,
+              CertificateDataConfigCategory.builder()
                   .text(TITLE)
-                  .build(), null)),
-          List.of(
-              createElement(CertificateDataConfigCategory.builder()
+                  .build(), null
+          ),
+          Collections.emptyList(),
+          createElement(1,
+              CertificateDataConfigCategory.builder()
                   .text(TITLE)
-                  .build(), null)),
-          List.of(
-              createElement(CertificateDataConfigCategory.builder()
+                  .build(), null
+          ),
+          Collections.emptyList(),
+          createElement(2,
+              CertificateDataConfigCategory.builder()
                   .text(TITLE)
-                  .build(), null))
+                  .build(), null
+          ),
+          Collections.emptyList()
       );
-      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+
+      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertEquals(TITLE, result.get(0).getTitle());
       assertEquals(TITLE, result.get(1).getTitle());
@@ -83,11 +94,14 @@ class ConvertCertificateServiceTest {
 
     @Test
     void shouldHandleNullTitle() {
-      final var elements = List.of(
-          List.of(createElement(CertificateDataConfigCategory.builder().build(), null)
-          )
+      final Map<CertificateDataElement, List<CertificateDataElement>> elements = Map.of(
+          createElement(0,
+              CertificateDataConfigCategory.builder()
+                  .build(), null
+          ),
+          Collections.emptyList()
       );
-      when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+      when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
       final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
       assertNull(result.get(0).getTitle());
     }
@@ -95,16 +109,15 @@ class ConvertCertificateServiceTest {
 
   @Test
   void shouldConvertQuestions() {
-    final var element = createElement(
+    final var element = createElement(1,
         CertificateDataConfigTextArea.builder().build(),
         CertificateDataTextValue.builder()
             .text(TEXT_VALUE)
             .build()
     );
-    final var elements = List.of(
-        List.of(createElement(CertificateDataConfigCategory.builder().build(), null),
-            element
-        )
+    final var elements = Map.of(
+        createElement(0, CertificateDataConfigCategory.builder().build(), null),
+        List.of(element)
     );
 
     final var expectedResult = CertificateQuestion.builder()
@@ -113,15 +126,17 @@ class ConvertCertificateServiceTest {
             .build())
         .build();
 
-    when(categoryQuestionOrganizer.organize(any())).thenReturn(elements);
+    when(categoryQuestionOrganizer.organizeAsMap(any())).thenReturn(elements);
     when(questionConverter.convert(element)).thenReturn(expectedResult);
     final var result = convertCertificateService.convert(CERTIFICATE_RESPONSE_DTO);
     assertEquals(expectedResult, result.get(0).getQuestions().get(0));
   }
 
-  private static CertificateDataElement createElement(CertificateDataConfig config,
+  private static CertificateDataElement createElement(int index, CertificateDataConfig config,
       CertificateDataValue value) {
     return CertificateDataElement.builder()
+        .id(Integer.toString(index))
+        .index(index)
         .config(config)
         .value(value)
         .build();
