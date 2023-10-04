@@ -20,6 +20,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
@@ -31,7 +32,7 @@ class WebcertCertificateIntegrationServiceTest {
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
   @Mock
-  private ConvertCertificateService convertCertificateService;
+  private CertificateCategoryConverter certificateCategoryConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -44,18 +45,20 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Test
   void shouldThrowIfCertificateIdFromRequestIsNull() {
+    final var invalidRequest = GetCertificateIntegrationRequest.builder().build();
     assertThrows(IllegalArgumentException.class,
-        () -> webcertCertificateIntegrationService.get(GetCertificateIntegrationRequest.builder()
-            .build()));
+        () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
 
   @Test
   void shouldThrowIfCertificateIdFromRequestIsEmpty() {
+    final var invalidRequest = GetCertificateIntegrationRequest.builder()
+        .certificateId("")
+        .build();
+
     assertThrows(IllegalArgumentException.class,
-        () -> webcertCertificateIntegrationService.get(GetCertificateIntegrationRequest.builder()
-            .certificateId("")
-            .build()));
+        () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
   @Test
@@ -95,7 +98,8 @@ class WebcertCertificateIntegrationServiceTest {
         CertificateCategory.builder().build()
     );
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response)).thenReturn(expectedResult);
+    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
+        expectedResult);
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedResult, result.getCertificate().getCategories());
   }
@@ -121,7 +125,7 @@ class WebcertCertificateIntegrationServiceTest {
         )
         .build();
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response)).thenReturn(
+    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
         List.of(CertificateCategory.builder().build()
         )
     );
