@@ -3,10 +3,11 @@ package se.inera.intyg.minaintyg.certificate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
-import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRecipientRequest;
-import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRecipientResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
@@ -19,16 +20,17 @@ import se.inera.intyg.minaintyg.user.UserService;
 public class SendCertificateService {
 
   private final MonitoringLogService monitoringLogService;
-  private final GetCertificateRecipientService getCertificateRecipientService;
+  private final GetCertificateIntegrationService getCertificateIntegrationService;
   private final SendCertificateIntegrationService sendCertificateIntegrationService;
   private final UserService userService;
 
   public SendCertificateResponse send(SendCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
-    final var recipientResponse = getRecipient(request);
+    final var certificateResponse = getCertificate(request.getCertificateId());
+    final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
-    final var sentResponse = sendCertificate(request, user, recipientResponse);
-    logCertificateSent(request, recipientResponse);
+    final var sentResponse = sendCertificate(request, user, recipient);
+    logCertificateSent(request, recipient);
 
     return SendCertificateResponse
         .builder()
@@ -36,36 +38,34 @@ public class SendCertificateService {
         .build();
   }
 
-  private void logCertificateSent(SendCertificateRequest request,
-      GetCertificateRecipientResponse recipientResponse) {
+  private void logCertificateSent(SendCertificateRequest request, CertificateRecipient recipient) {
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
         request.getCertificateType(),
-        recipientResponse.getCertificateRecipient().getId()
+        recipient.getId()
     );
   }
 
   private SendCertificateIntegrationResponse sendCertificate(SendCertificateRequest request,
-      MinaIntygUser user, GetCertificateRecipientResponse recipientResponse) {
+      MinaIntygUser user, CertificateRecipient recipient) {
 
-    validateAction(recipientResponse.getCertificateRecipient());
+    validateAction(recipient);
 
     return sendCertificateIntegrationService.send(
         SendCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
             .patientId(user.getPersonId())
-            .recipient(recipientResponse.getCertificateRecipient().getId())
+            .recipient(recipient.getId())
             .build()
     );
   }
 
-  private GetCertificateRecipientResponse getRecipient(SendCertificateRequest request) {
-    return getCertificateRecipientService.get(
-        GetCertificateRecipientRequest
+  private GetCertificateIntegrationResponse getCertificate(String certificateId) {
+    return getCertificateIntegrationService.get(
+        GetCertificateIntegrationRequest
             .builder()
-            .certificateId(request.getCertificateId())
-            .certificateType(request.getCertificateType())
+            .certificateId(certificateId)
             .build()
     );
   }

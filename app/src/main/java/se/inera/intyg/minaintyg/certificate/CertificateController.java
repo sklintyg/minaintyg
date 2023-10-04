@@ -10,11 +10,15 @@ import se.inera.intyg.minaintyg.certificate.dto.CertificateListFilterResponseDTO
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.certificate.dto.SendCertificateRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.SendCertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class CertificateController {
   private final ListCertificatesService listCertificatesService;
   private final GetCertificateListFilterService getCertificateListFilterService;
   private final GetCertificateService getCertificateService;
+  private final SendCertificateService sendCertificateService;
 
   @PostMapping
   public CertificateListResponseDTO listCertificates(CertificateListRequestDTO request) {
@@ -70,4 +75,18 @@ public class CertificateController {
         .build();
   }
 
+  @PostMapping("/send")
+  public SendCertificateResponseDTO sendCertificateToRecipient(SendCertificateRequestDTO request) {
+    final var response = sendCertificateService.send(
+        SendCertificateRequest
+            .builder()
+            .certificateId(request.getCertificateId())
+            .build()
+    );
+
+    return SendCertificateResponseDTO
+        .builder()
+        .sent(response.getSent())
+        .build();
+  }
 }
