@@ -1,10 +1,10 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
-import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
@@ -41,7 +41,7 @@ public class CodeListValueConverter extends AbstractValueConverter {
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
     final var value = ((CertificateDataValueCodeList) element.getValue()).getList();
     if (value == null || value.isEmpty()) {
-      return notProvidedValueList();
+      return notProvidedValue();
     }
     return CertificateQuestionValueList.builder()
         .values(
@@ -53,11 +53,9 @@ public class CodeListValueConverter extends AbstractValueConverter {
         .build();
   }
 
-  private static CertificateQuestionValueList notProvidedValueList() {
-    return CertificateQuestionValueList.builder()
-        .values(
-            List.of(NOT_PROVIDED)
-        )
+  private static CertificateQuestionValueText notProvidedValue() {
+    return CertificateQuestionValueText.builder()
+        .value(NOT_PROVIDED)
         .build();
   }
 

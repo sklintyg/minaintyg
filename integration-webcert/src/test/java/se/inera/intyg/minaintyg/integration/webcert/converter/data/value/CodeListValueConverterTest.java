@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
@@ -83,12 +84,8 @@ class CodeListValueConverterTest {
         CertificateDataValueCodeList.builder()
             .build());
 
-    final var expectedResult = CertificateQuestionValueList.builder()
-        .values(
-            List.of(
-                NOT_PROVIDED
-            )
-        )
+    final var expectedResult = CertificateQuestionValueText.builder()
+        .value(NOT_PROVIDED)
         .build();
 
     final var result = codeListValueConverter.convert(elements);
