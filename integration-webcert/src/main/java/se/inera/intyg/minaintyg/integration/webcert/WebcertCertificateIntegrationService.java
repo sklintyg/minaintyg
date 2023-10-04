@@ -25,7 +25,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     final var response = getCertificateFromWebcertService.get(request);
 
     if (validateResponse(response)) {
-      throw new RuntimeException(
+      throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
 

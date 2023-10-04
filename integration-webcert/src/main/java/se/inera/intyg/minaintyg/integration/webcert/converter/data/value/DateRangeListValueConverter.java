@@ -18,16 +18,17 @@ public class DateRangeListValueConverter extends AbstractValueConverter {
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
     // TODO: Implementation is left to do
+    final var notYetImplementedText = "Not yet implemented";
     return CertificateQuestionValueTable.builder()
         .headings(List.of(
-            "Not yet implemented",
-            "Not yet implemented"
+            notYetImplementedText,
+            notYetImplementedText
         ))
         .values(
             List.of(
                 List.of(
-                    "Not yet implemented",
-                    "Not yet implemented"
+                    notYetImplementedText,
+                    notYetImplementedText
                 )
             ))
         .build();

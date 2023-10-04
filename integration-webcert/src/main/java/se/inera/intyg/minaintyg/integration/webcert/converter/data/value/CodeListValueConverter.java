@@ -13,8 +13,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 @Component
 public class CodeListValueConverter extends AbstractValueConverter {
 
-  private static final String TRUE_BOOLEAN = "Ja";
-  private static final String FALSE_BOOLEAN = "Nej";
   // TODO: Remove CODE_MAP and use the config of the element instead
   private static final Map<String, String> CODE_MAP = Map.ofEntries(
       Map.entry("NUVARANDE_ARBETE", "Nuvarande arbete"),

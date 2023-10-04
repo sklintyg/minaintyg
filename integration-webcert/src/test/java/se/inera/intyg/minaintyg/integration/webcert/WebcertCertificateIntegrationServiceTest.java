@@ -45,18 +45,20 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Test
   void shouldThrowIfCertificateIdFromRequestIsNull() {
+    final var invalidRequest = GetCertificateIntegrationRequest.builder().build();
     assertThrows(IllegalArgumentException.class,
-        () -> webcertCertificateIntegrationService.get(GetCertificateIntegrationRequest.builder()
-            .build()));
+        () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
 
   @Test
   void shouldThrowIfCertificateIdFromRequestIsEmpty() {
+    final var invalidRequest = GetCertificateIntegrationRequest.builder()
+        .certificateId("")
+        .build();
+
     assertThrows(IllegalArgumentException.class,
-        () -> webcertCertificateIntegrationService.get(GetCertificateIntegrationRequest.builder()
-            .certificateId("")
-            .build()));
+        () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
   @Test
