@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
@@ -32,7 +33,7 @@ class WebcertCertificateIntegrationServiceTest {
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
   @Mock
-  private CertificateCategoryConverter certificateCategoryConverter;
+  private CertificateDataConverter certificateDataConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -98,7 +99,7 @@ class WebcertCertificateIntegrationServiceTest {
         CertificateCategory.builder().build()
     );
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
+    when(certificateDataConverter.convert(anyList())).thenReturn(
         expectedResult);
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedResult, result.getCertificate().getCategories());
@@ -125,7 +126,7 @@ class WebcertCertificateIntegrationServiceTest {
         )
         .build();
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
+    when(certificateDataConverter.convert(anyList())).thenReturn(
         List.of(CertificateCategory.builder().build()
         )
     );

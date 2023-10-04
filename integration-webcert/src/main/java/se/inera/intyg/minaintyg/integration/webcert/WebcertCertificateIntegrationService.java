@@ -10,14 +10,14 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMet
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 
 @Service
 @RequiredArgsConstructor
 public class WebcertCertificateIntegrationService implements GetCertificateIntegrationService {
 
   private final GetCertificateFromWebcertService getCertificateFromWebcertService;
-  private final CertificateCategoryConverter certificateCategoryConverter;
+  private final CertificateDataConverter certificateDataConverter;
 
   @Override
   public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
@@ -41,7 +41,9 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
                     )
                     .build())
                 .categories(
-                    certificateCategoryConverter.convert(response.getCertificate())
+                    certificateDataConverter.convert(
+                        response.getCertificate().getData().values().stream().toList()
+                    )
                 )
                 .build()
         )
