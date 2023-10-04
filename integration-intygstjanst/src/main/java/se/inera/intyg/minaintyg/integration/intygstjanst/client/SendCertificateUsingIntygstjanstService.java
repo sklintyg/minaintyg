@@ -21,7 +21,7 @@ public class SendCertificateUsingIntygstjanstService {
   public SendCertificateUsingIntygstjanstService(
       @Qualifier(value = "intygstjanstWebClient") WebClient webClient,
       @Value("${integration.intygstjanst.scheme}") String scheme,
-      @Value("${integration.intygstjanst.baseurl}") String baseUrl,
+      @Value("${integration.intygstjanst.sendcertificate.endpoint}") String baseUrl,
       @Value("${integration.intygstjanst.port}") int port,
       @Value("${integration.intygstjanst.certificate.endpoint}") String endpoint) {
     this.webClient = webClient;
@@ -36,7 +36,7 @@ public class SendCertificateUsingIntygstjanstService {
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
-            .path(endpoint + "/send")
+            .path(endpoint)
             .build())
         .body(Mono.just(request), SendCertificateIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

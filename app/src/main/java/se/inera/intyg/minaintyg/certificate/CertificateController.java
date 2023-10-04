@@ -10,7 +10,6 @@ import se.inera.intyg.minaintyg.certificate.dto.CertificateListFilterResponseDTO
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.certificate.dto.SendCertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
@@ -74,12 +73,12 @@ public class CertificateController {
         .build();
   }
 
-  @PostMapping("/send")
-  public void sendCertificateToRecipient(SendCertificateRequestDTO request) {
+  @PostMapping("/{certificateId}/send")
+  public void sendCertificateToRecipient(@PathVariable String certificateId) {
     sendCertificateService.send(
         SendCertificateRequest
             .builder()
-            .certificateId(request.getCertificateId())
+            .certificateId(certificateId)
             .build()
     );
   }

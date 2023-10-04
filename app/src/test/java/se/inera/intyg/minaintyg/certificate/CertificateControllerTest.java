@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
-import se.inera.intyg.minaintyg.certificate.dto.SendCertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
@@ -232,12 +231,7 @@ class CertificateControllerTest {
 
     @Test
     void shouldCallServiceWithCertificateId() {
-      certificateController.sendCertificateToRecipient(
-          SendCertificateRequestDTO
-              .builder()
-              .certificateId(CERTIFICATE_ID)
-              .build()
-      );
+      certificateController.sendCertificateToRecipient(CERTIFICATE_ID);
       final var captor = ArgumentCaptor.forClass(SendCertificateRequest.class);
 
       verify(sendCertificateService).send(captor.capture());
