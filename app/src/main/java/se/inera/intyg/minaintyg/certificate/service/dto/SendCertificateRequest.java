@@ -8,5 +8,4 @@ import lombok.Value;
 public class SendCertificateRequest {
 
   String certificateId;
-  String certificateType;
 }

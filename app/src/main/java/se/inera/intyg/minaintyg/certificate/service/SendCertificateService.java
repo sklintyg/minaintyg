@@ -28,13 +28,18 @@ public class SendCertificateService {
     final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
     sendCertificate(request, user, recipient);
-    logCertificateSent(request, recipient);
+    logCertificateSent(
+        request,
+        recipient,
+        certificateResponse.getCertificate().getMetadata().getType().getId()
+    );
   }
 
-  private void logCertificateSent(SendCertificateRequest request, CertificateRecipient recipient) {
+  private void logCertificateSent(SendCertificateRequest request, CertificateRecipient recipient,
+      String certificateType) {
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
-        request.getCertificateType(),
+        certificateType,
         recipient.getId()
     );
   }
