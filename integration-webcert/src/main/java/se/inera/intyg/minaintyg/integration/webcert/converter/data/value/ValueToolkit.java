@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert.converter.data;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.List;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;

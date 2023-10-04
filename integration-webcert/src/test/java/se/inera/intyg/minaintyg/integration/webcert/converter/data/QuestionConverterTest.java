@@ -26,6 +26,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
 
 @ExtendWith(MockitoExtension.class)
 class QuestionConverterTest {

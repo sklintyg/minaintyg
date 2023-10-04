@@ -1,23 +1,24 @@
-package se.inera.intyg.minaintyg.integration.webcert.converter.data;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataIcfValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 
 @Component
-public class TextValueConverter extends AbstractValueConverter {
+public class IcfValueConverter extends AbstractValueConverter {
 
   @Override
   public CertificateDataValueType getType() {
-    return CertificateDataValueType.TEXT;
+    return CertificateDataValueType.ICF;
   }
 
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
-    final var value = ((CertificateDataTextValue) element.getValue()).getText();
+    final var value = ((CertificateDataIcfValue) element.getValue()).getText();
+    // TODO: Handle icf-codes
     return getText(value);
   }
 

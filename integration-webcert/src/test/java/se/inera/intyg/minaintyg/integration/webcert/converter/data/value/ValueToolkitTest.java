@@ -1,8 +1,8 @@
-package se.inera.intyg.minaintyg.integration.webcert.converter.data;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateListSubQuestions;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueToolkit.getValueDateListSubQuestions;
 
 import java.time.LocalDate;
 import java.util.List;

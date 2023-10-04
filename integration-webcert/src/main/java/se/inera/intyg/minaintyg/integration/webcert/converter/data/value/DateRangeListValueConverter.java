@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert.converter.data;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.List;
 import org.springframework.stereotype.Component;

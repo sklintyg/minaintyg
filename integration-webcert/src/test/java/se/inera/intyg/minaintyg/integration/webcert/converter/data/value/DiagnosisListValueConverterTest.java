@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert.converter.data;
+package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosisList;
 
 class DiagnosisListValueConverterTest {
-  
+
   private static final String LABEL_VALUE = "labelValue";
   private static final String DIAGNOSIS_CODE_M79 = "M79";
   private static final String DIAGNOSIS_CODE_M79_DESCRIPTION = "M79 description";
