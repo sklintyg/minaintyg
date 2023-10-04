@@ -34,7 +34,7 @@ class CertificateQuestionConverterTest {
   private static final String TITLE = "title";
   private static final String LABEL_VALUE = "labelValue";
   private static final String NOT_PROVIDED = "Ej angivet";
-  private static final String TECHNICAL_ERROR = "Kan inte visa värdet pga tekniskt fel!";
+  private static final String TECHNICAL_ERROR = "Kan inte visa värdet pga tekniskt fel";
   private static final String CONFIG_ID = "configId";
   private ValueConverter textValueConverter = mock(ValueConverter.class);
   private CertificateQuestionConverter certificateQuestionConverter;
