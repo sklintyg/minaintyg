@@ -10,13 +10,14 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMet
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
 
 @Service
 @RequiredArgsConstructor
 public class WebcertCertificateIntegrationService implements GetCertificateIntegrationService {
 
   private final GetCertificateFromWebcertService getCertificateFromWebcertService;
-  private final ConvertCertificateService convertCertificateService;
+  private final CertificateCategoryConverter certificateCategoryConverter;
 
   @Override
   public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
@@ -24,11 +25,9 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     final var response = getCertificateFromWebcertService.get(request);
 
     if (validateResponse(response)) {
-      throw new RuntimeException(
+      throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
-
-    final var certificateCategories = convertCertificateService.convert(response);
 
     return GetCertificateIntegrationResponse.builder()
         .certificate(
@@ -41,7 +40,9 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
                             .build()
                     )
                     .build())
-                .categories(certificateCategories)
+                .categories(
+                    certificateCategoryConverter.convert(response.getCertificate())
+                )
                 .build()
         )
         .build();
