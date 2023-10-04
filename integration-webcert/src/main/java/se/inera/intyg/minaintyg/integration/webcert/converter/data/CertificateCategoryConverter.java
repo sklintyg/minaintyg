@@ -9,13 +9,13 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataEl
 
 @Service
 @RequiredArgsConstructor
-public class ConvertCertificateService {
+public class CertificateCategoryConverter {
 
-  private final CategoryQuestionOrganizer categoryQuestionOrganizer;
-  private final QuestionConverter questionConverter;
+  private final CertificateElementOrganizer certificateElementOrganizer;
+  private final CertificateQuestionConverter certificateQuestionConverter;
 
   public List<CertificateCategory> convert(CertificateDTO certificateDTO) {
-    final var organizedByCategoryData = categoryQuestionOrganizer.organize(
+    final var organizedByCategoryData = certificateElementOrganizer.organize(
         getCertificateDataElements(certificateDTO)
     );
 
@@ -35,7 +35,7 @@ public class ConvertCertificateService {
         .title(getTitleText(category))
         .questions(
             elements.stream()
-                .map(questionConverter::convert)
+                .map(certificateQuestionConverter::convert)
                 .toList()
         )
         .build();

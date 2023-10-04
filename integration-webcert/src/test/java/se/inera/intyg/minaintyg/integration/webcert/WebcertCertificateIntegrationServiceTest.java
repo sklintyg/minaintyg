@@ -20,7 +20,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.integration.webcert.converter.data.ConvertCertificateService;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
@@ -32,7 +32,7 @@ class WebcertCertificateIntegrationServiceTest {
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
   @Mock
-  private ConvertCertificateService convertCertificateService;
+  private CertificateCategoryConverter certificateCategoryConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -96,7 +96,8 @@ class WebcertCertificateIntegrationServiceTest {
         CertificateCategory.builder().build()
     );
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response.getCertificate())).thenReturn(expectedResult);
+    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
+        expectedResult);
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedResult, result.getCertificate().getCategories());
   }
@@ -122,7 +123,7 @@ class WebcertCertificateIntegrationServiceTest {
         )
         .build();
     when(getCertificateFromWebcertService.get(request)).thenReturn(response);
-    when(convertCertificateService.convert(response.getCertificate())).thenReturn(
+    when(certificateCategoryConverter.convert(response.getCertificate())).thenReturn(
         List.of(CertificateCategory.builder().build()
         )
     );

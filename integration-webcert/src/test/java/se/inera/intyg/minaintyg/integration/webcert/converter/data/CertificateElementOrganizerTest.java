@@ -12,9 +12,9 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 
-class CategoryQuestionOrganizerTest {
+class CertificateElementOrganizerTest {
 
-  private final CategoryQuestionOrganizer categoryQuestionOrganizer = new CategoryQuestionOrganizer();
+  private final CertificateElementOrganizer certificateElementOrganizer = new CertificateElementOrganizer();
   private static final String CATEGORY_TYPE = "category";
   private static final String TEXT_TYPE = "text";
   private static final String BOOLEAN_TYPE = "boolean";
@@ -43,7 +43,7 @@ class CategoryQuestionOrganizerTest {
             createElement(BOOLEAN_TYPE, 4, "4", "0")
         )
     );
-    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    final var result = certificateElementOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
   }
 
@@ -67,7 +67,7 @@ class CategoryQuestionOrganizerTest {
             createElement(BOOLEAN_TYPE, 4, "4", "2")
         )
     );
-    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    final var result = certificateElementOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
   }
 
@@ -103,7 +103,7 @@ class CategoryQuestionOrganizerTest {
             createElement(BOOLEAN_TYPE, 8, "8", "7")
         )
     );
-    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    final var result = certificateElementOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
   }
 
@@ -121,7 +121,7 @@ class CategoryQuestionOrganizerTest {
             createElement(BOOLEAN_TYPE, 2, "2", "1")
         )
     );
-    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    final var result = certificateElementOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
   }
 
@@ -141,7 +141,7 @@ class CategoryQuestionOrganizerTest {
             createElement(BOOLEAN_TYPE, 3, "3", "2")
         )
     );
-    final var result = categoryQuestionOrganizer.organize(certificateDataElements);
+    final var result = certificateElementOrganizer.organize(certificateDataElements);
     assertMap(expectedResult, result);
   }
 

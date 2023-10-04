@@ -16,11 +16,11 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
 
 @Component
-public class QuestionConverter {
+public class CertificateQuestionConverter {
 
   private final Map<CertificateDataValueType, ValueConverter> valueConverterMap;
 
-  public QuestionConverter(List<ValueConverter> valueConverters) {
+  public CertificateQuestionConverter(List<ValueConverter> valueConverters) {
     valueConverterMap = valueConverters.stream().collect(
         Collectors.toMap(ValueConverter::getType, Function.identity())
     );

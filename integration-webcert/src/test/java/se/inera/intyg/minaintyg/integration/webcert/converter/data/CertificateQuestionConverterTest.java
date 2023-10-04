@@ -29,7 +29,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
 
 @ExtendWith(MockitoExtension.class)
-class QuestionConverterTest {
+class CertificateQuestionConverterTest {
 
   private static final String TITLE = "title";
   private static final String LABEL_VALUE = "labelValue";
@@ -37,12 +37,12 @@ class QuestionConverterTest {
   private static final String TECHNICAL_ERROR = "Kan inte visa värdet pga tekniskt fel!";
   private static final String CONFIG_ID = "configId";
   private ValueConverter textValueConverter = mock(ValueConverter.class);
-  private QuestionConverter questionConverter;
+  private CertificateQuestionConverter certificateQuestionConverter;
 
   @BeforeEach
   void setUp() {
     doReturn(CertificateDataValueType.TEXT).when(textValueConverter).getType();
-    questionConverter = new QuestionConverter(List.of(textValueConverter));
+    certificateQuestionConverter = new CertificateQuestionConverter(List.of(textValueConverter));
   }
 
   @Nested
@@ -56,7 +56,7 @@ class QuestionConverterTest {
               .build(), null
       );
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(TITLE, result.getTitle());
     }
 
@@ -66,7 +66,7 @@ class QuestionConverterTest {
           CertificateDataConfigTextArea.builder()
               .build(), null
       );
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertNull(result.getTitle());
     }
   }
@@ -81,7 +81,7 @@ class QuestionConverterTest {
               .label(LABEL_VALUE)
               .build(), null
       );
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(LABEL_VALUE, result.getLabel());
     }
 
@@ -92,7 +92,7 @@ class QuestionConverterTest {
               .build(), null
       );
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertNull(result.getLabel());
     }
   }
@@ -111,7 +111,7 @@ class QuestionConverterTest {
               .build(), null
       );
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(expectedValue, result.getValue());
     }
 
@@ -127,7 +127,7 @@ class QuestionConverterTest {
           CertificateDataValueBoolean.builder().build()
       );
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(expectedValue, result.getValue());
     }
 
@@ -145,7 +145,7 @@ class QuestionConverterTest {
           CertificateDataTextValue.builder().build()
       );
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(expectedValue, result.getValue());
     }
   }
@@ -193,7 +193,7 @@ class QuestionConverterTest {
               )
           ).build();
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(expectedResult, result);
     }
 
@@ -229,7 +229,7 @@ class QuestionConverterTest {
               )
           ).build();
 
-      final var result = questionConverter.convert(elements);
+      final var result = certificateQuestionConverter.convert(elements);
       assertEquals(expectedResult, result);
     }
   }

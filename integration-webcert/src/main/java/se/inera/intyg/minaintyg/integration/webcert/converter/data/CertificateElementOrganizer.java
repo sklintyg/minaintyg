@@ -12,7 +12,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataEl
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
 
 @Component
-public class CategoryQuestionOrganizer {
+public class CertificateElementOrganizer {
 
   public Map<CertificateDataElement, List<CertificateDataElement>> organize(
       List<CertificateDataElement> certificateDataElements) {
@@ -44,14 +44,14 @@ public class CategoryQuestionOrganizer {
   private static Map<String, CertificateDataElement> getQuestionMap(
       List<CertificateDataElement> certificateDataElements) {
     return certificateDataElements.stream()
-        .filter(Predicate.not(CategoryQuestionOrganizer::elementIsCategory))
+        .filter(Predicate.not(CertificateElementOrganizer::elementIsCategory))
         .collect(Collectors.toMap(CertificateDataElement::getId, Function.identity()));
   }
 
   private static Map<String, CertificateDataElement> getCategoryMap(
       List<CertificateDataElement> certificateDataElements) {
     return certificateDataElements.stream()
-        .filter(CategoryQuestionOrganizer::elementIsCategory)
+        .filter(CertificateElementOrganizer::elementIsCategory)
         .collect(Collectors.toMap(CertificateDataElement::getId, Function.identity()));
   }
 
