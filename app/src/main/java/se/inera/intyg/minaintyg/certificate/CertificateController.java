@@ -11,7 +11,6 @@ import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.SendCertificateRequestDTO;
-import se.inera.intyg.minaintyg.certificate.dto.SendCertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
@@ -76,17 +75,12 @@ public class CertificateController {
   }
 
   @PostMapping("/send")
-  public SendCertificateResponseDTO sendCertificateToRecipient(SendCertificateRequestDTO request) {
-    final var response = sendCertificateService.send(
+  public void sendCertificateToRecipient(SendCertificateRequestDTO request) {
+    sendCertificateService.send(
         SendCertificateRequest
             .builder()
             .certificateId(request.getCertificateId())
             .build()
     );
-
-    return SendCertificateResponseDTO
-        .builder()
-        .sent(response.getSent())
-        .build();
   }
 }

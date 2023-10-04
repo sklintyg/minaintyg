@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.SendCertificateResponseDTO;
 
 @Service
 public class SendCertificateUsingIntygstjanstService {
@@ -32,8 +31,8 @@ public class SendCertificateUsingIntygstjanstService {
     this.endpoint = endpoint;
   }
 
-  public SendCertificateResponseDTO send(SendCertificateIntegrationRequest request) {
-    return webClient.post().uri(uriBuilder -> uriBuilder
+  public void send(SendCertificateIntegrationRequest request) {
+    webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
@@ -42,7 +41,7 @@ public class SendCertificateUsingIntygstjanstService {
         .body(Mono.just(request), SendCertificateIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
-        .bodyToMono(SendCertificateResponseDTO.class)
+        .bodyToMono(Void.class)
         .share()
         .block();
   }

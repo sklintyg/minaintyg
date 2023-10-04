@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
-import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
@@ -24,18 +22,13 @@ public class SendCertificateService {
   private final SendCertificateIntegrationService sendCertificateIntegrationService;
   private final UserService userService;
 
-  public SendCertificateResponse send(SendCertificateRequest request) {
+  public void send(SendCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
     final var certificateResponse = getCertificate(request.getCertificateId());
     final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
-    final var sentResponse = sendCertificate(request, user, recipient);
+    sendCertificate(request, user, recipient);
     logCertificateSent(request, recipient);
-
-    return SendCertificateResponse
-        .builder()
-        .sent(sentResponse.getSent())
-        .build();
   }
 
   private void logCertificateSent(SendCertificateRequest request, CertificateRecipient recipient) {
@@ -46,12 +39,12 @@ public class SendCertificateService {
     );
   }
 
-  private SendCertificateIntegrationResponse sendCertificate(SendCertificateRequest request,
+  private void sendCertificate(SendCertificateRequest request,
       MinaIntygUser user, CertificateRecipient recipient) {
 
     validateAction(recipient);
 
-    return sendCertificateIntegrationService.send(
+    sendCertificateIntegrationService.send(
         SendCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())

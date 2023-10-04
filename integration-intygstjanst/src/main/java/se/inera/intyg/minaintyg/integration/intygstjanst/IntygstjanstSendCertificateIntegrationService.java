@@ -3,7 +3,6 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.SendCertificateUsingIntygstjanstService;
 
@@ -15,17 +14,13 @@ public class IntygstjanstSendCertificateIntegrationService implements
   private final SendCertificateUsingIntygstjanstService sendCertificateUsingIntygstjanstService;
 
   @Override
-  public SendCertificateIntegrationResponse send(
+  public void send(
       SendCertificateIntegrationRequest request) {
     validateRequest(request);
     try {
-      final var response = sendCertificateUsingIntygstjanstService.send(request);
-      return SendCertificateIntegrationResponse
-          .builder()
-          .sent(response.getSent())
-          .build();
+      sendCertificateUsingIntygstjanstService.send(request);
     } catch (Exception exception) {
-      throw new RuntimeException(exception);
+      throw new IllegalStateException(exception);
     }
   }
 
