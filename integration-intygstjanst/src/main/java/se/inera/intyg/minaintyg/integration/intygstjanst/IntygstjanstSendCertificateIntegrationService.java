@@ -31,7 +31,8 @@ public class IntygstjanstSendCertificateIntegrationService implements
 
     if (request.getCertificateId() == null || request.getCertificateId().isEmpty()) {
       throw new IllegalArgumentException(
-          "Valid request was not provided, must include certificate id");
+          "Valid request was not provided, must include certificate id"
+      );
     }
 
     if (request.getPatientId() == null || request.getPatientId().isEmpty()) {

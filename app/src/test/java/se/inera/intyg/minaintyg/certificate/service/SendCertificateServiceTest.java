@@ -44,6 +44,7 @@ class SendCertificateServiceTest {
       .builder()
       .certificateId(CERTIFICATE_ID)
       .build();
+
   private static final Certificate CERTIFICATE_SENT = getCertificate(
       CertificateRecipient
           .builder()
@@ -52,6 +53,7 @@ class SendCertificateServiceTest {
           .sent(LocalDateTime.now())
           .build()
   );
+
   private static final Certificate CERTIFICATE_NOT_SENT = getCertificate(
       CertificateRecipient
           .builder()
@@ -59,7 +61,9 @@ class SendCertificateServiceTest {
           .name(RECIPIENT_NAME)
           .build()
   );
+
   private static final Certificate CERTIFICATE_NO_RECIPIENT = getCertificate(null);
+  
   @Mock
   SendCertificateIntegrationService sendCertificateIntegrationService;
   @Mock

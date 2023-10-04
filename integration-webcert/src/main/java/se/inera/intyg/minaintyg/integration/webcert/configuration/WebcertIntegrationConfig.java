@@ -13,7 +13,7 @@ public class WebcertIntegrationConfig {
   private final ExchangeFilterFunctionProvider exchangeFilterFunctionProvider;
 
   @Bean(name = "webcertWebClient")
-  public WebClient webClientForIntygstjanst() {
+  public WebClient webClientForWebcert() {
     return WebClient.builder()
         .filter(exchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
