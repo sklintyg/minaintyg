@@ -1,66 +1,102 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getLabelText;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getTitleText;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueBoolean;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCode;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueCodeList;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueConverter.NOT_PROVIDED;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueConverter.TECHNICAL_ERROR;
 import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateListSubQuestions;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDateRangeList;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueDiagnosisList;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueIcf;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getValueText;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataIcfValue;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueBoolean;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateList;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRangeList;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDiagnosisList;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 
 @Component
 public class QuestionConverter {
 
+  private final Map<CertificateDataValueType, ValueConverter> valueConverterMap;
+
+  public QuestionConverter(List<ValueConverter> valueConverters) {
+    valueConverterMap = valueConverters.stream().collect(
+        Collectors.toMap(ValueConverter::getType, Function.identity())
+    );
+  }
+
   public CertificateQuestion convert(CertificateDataElement element) {
+    // TODO: Refactor DateList, but we first need to introduce a new CertificateQuestionValueType instead of creating subquestions
+    if (CertificateDataValueType.DATE_LIST.equals(valueType(element))) {
+      return convertDateList(element);
+    }
+
+    final var certificateQuestionBuilder = CertificateQuestion.builder()
+        .title(getTitleText(element))
+        .label(getLabelText(element));
+
+    if (missingValue(element)) {
+      return certificateQuestionBuilder
+          .value(
+              CertificateQuestionValueText.builder()
+                  .value(NOT_PROVIDED)
+                  .build()
+          )
+          .build();
+    }
+
+    if (missingConverter(element)) {
+      return certificateQuestionBuilder
+          .value(
+              CertificateQuestionValueText.builder()
+                  .value(TECHNICAL_ERROR)
+                  .build()
+          )
+          .build();
+    }
+
+    return certificateQuestionBuilder
+        .value(
+            valueConverterMap.get(valueType(element)).convert(element)
+        )
+        .build();
+  }
+
+  private static CertificateDataValueType valueType(CertificateDataElement element) {
+    return element.getValue() != null ? element.getValue().getType() : null;
+  }
+
+  private static boolean missingValue(CertificateDataElement element) {
+    return valueType(element) == null;
+  }
+
+  private boolean missingConverter(CertificateDataElement element) {
+    return !valueConverterMap.containsKey(valueType(element));
+  }
+
+  public CertificateQuestion convertDateList(CertificateDataElement element) {
     final var certificateQuestionBuilder = CertificateQuestion.builder();
-    if (element.getValue() instanceof CertificateDataTextValue) {
-      certificateQuestionBuilder.value(getValueText(element.getValue()));
-    }
-    if (element.getValue() instanceof CertificateDataValueBoolean) {
-      certificateQuestionBuilder.value(getValueBoolean(element.getValue()));
-    }
-    if (element.getValue() instanceof CertificateDataValueDateList) {
-      certificateQuestionBuilder.subQuestions(
-          getValueDateListSubQuestions(element.getValue(), element.getConfig()));
-      certificateQuestionBuilder.value(CertificateQuestionValueText.builder().build());
-    }
-    if (element.getValue() instanceof CertificateDataValueCodeList) {
-      certificateQuestionBuilder.value(getValueCodeList(element.getValue()));
-    }
-    if (element.getValue() instanceof CertificateDataValueDiagnosisList) {
-      certificateQuestionBuilder.value(
-          getValueDiagnosisList(element.getValue(), element.getConfig()));
-    }
-    if (element.getValue() instanceof CertificateDataIcfValue) {
-      certificateQuestionBuilder.value(getValueIcf(element.getValue()));
-    }
-    if (element.getValue() instanceof CertificateDataValueDateRangeList) {
-      certificateQuestionBuilder.value(
-          getValueDateRangeList(element.getValue(), element.getConfig()));
-    }
-    if (element.getValue() instanceof CertificateDataValueCode) {
-      certificateQuestionBuilder.value(getValueCode(element.getValue(), element.getConfig()));
-    }
+    certificateQuestionBuilder.subQuestions(
+        getValueDateListSubQuestions(element.getValue(), element.getConfig()));
+    certificateQuestionBuilder.value(CertificateQuestionValueText.builder().build());
 
     return certificateQuestionBuilder
         .title(getTitleText(element))
         .label(getLabelText(element))
         .build();
+  }
+
+  private static String getTitleText(CertificateDataElement element) {
+    if (element.getConfig().getText() == null || element.getConfig().getText().isEmpty()) {
+      return null;
+    }
+    return element.getConfig().getText();
+  }
+
+  private static String getLabelText(CertificateDataElement element) {
+    if (element.getConfig().getLabel() == null || element.getConfig().getLabel().isEmpty()) {
+      return null;
+    }
+    return element.getConfig().getLabel();
   }
 }

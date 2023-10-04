@@ -1,7 +1,5 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.ValueToolkit.getTitleText;
-
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,5 +39,12 @@ public class ConvertCertificateService {
                 .toList()
         )
         .build();
+  }
+
+  public static String getTitleText(CertificateDataElement element) {
+    if (element.getConfig().getText() == null || element.getConfig().getText().isEmpty()) {
+      return null;
+    }
+    return element.getConfig().getText();
   }
 }
