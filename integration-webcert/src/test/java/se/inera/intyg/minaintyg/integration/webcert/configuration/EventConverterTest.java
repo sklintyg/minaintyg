@@ -92,11 +92,37 @@ class EventConverterTest {
     assertEquals(expectedEvent, actualEvents);
   }
 
+  @Test
+  void shallConvertLatestReplacedAndComplementedCertificateToReplacedEvent() {
+    final var expectedEvent = List.of(
+        createReplaceEvent(REPLACED_DESCRIPTION)
+    );
+
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        CertificateRelation.builder()
+                            .type(CertificateRelationType.COMPLEMENTED)
+                            .certificateId("differentId")
+                            .created(LocalDateTime.now().minusDays(1))
+                            .status(CertificateStatus.SIGNED)
+                            .build(),
+                        createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(expectedEvent, actualEvents);
+  }
+
   @NotNull
-  private static CertificateRelation[] createChildRelations(CertificateRelation relation) {
-    return new CertificateRelation[]{
-        relation
-    };
+  private static CertificateRelation[] createChildRelations(CertificateRelation... relations) {
+    return relations;
   }
 
   @Test
