@@ -20,7 +20,6 @@ import org.springframework.core.env.Profiles;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
@@ -30,12 +29,16 @@ import org.springframework.security.saml2.provider.service.registration.RelyingP
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
+import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
+import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
 
 @Slf4j
 @Configuration
@@ -126,9 +129,11 @@ public class WebSecurityConfig {
         .exceptionHandling(exceptionConfigurer -> exceptionConfigurer
             .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
         )
-        .csrf(AbstractHttpConfigurer::disable
+        .csrf(csrfConfigurer -> csrfConfigurer
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
         )
-        //.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+        .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .saml2Logout(withDefaults())
         .saml2Metadata(withDefaults());
 
