@@ -23,7 +23,7 @@ public class SendCertificateUsingIntygstjanstService {
       @Value("${integration.intygstjanst.scheme}") String scheme,
       @Value("${integration.intygstjanst.baseurl}") String baseUrl,
       @Value("${integration.intygstjanst.port}") int port,
-      @Value("${integration.intygstjanst.sendcertificate.endpoin}") String endpoint) {
+      @Value("${integration.intygstjanst.sendcertificate.endpoint}") String endpoint) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
