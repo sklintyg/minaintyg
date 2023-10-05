@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
@@ -15,6 +16,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Certific
 
 class EventConverterTest {
 
+  public static final String REPLACED_DESCRIPTION = "Ersatt av vården med ett nytt intyg";
+  public static final String REPLACES_DESCRIPTION = "Ersätter ett intyg som inte längre är aktuellt";
   private final EventConverter eventConverter = new EventConverter();
 
   @Test
@@ -48,25 +51,16 @@ class EventConverterTest {
   @Test
   void shallConvertReplacedCertificateToReplacedEvent() {
     final var expectedEvent = List.of(
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersatt av vården med ett nytt intyg")
-            .timestamp(LocalDateTime.now())
-            .build()
+        createReplaceEvent(REPLACED_DESCRIPTION)
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .relations(
             CertificateRelations.builder()
                 .children(
-                    new CertificateRelation[]{
-                        CertificateRelation.builder()
-                            .type(CertificateRelationType.REPLACED)
-                            .certificateId(expectedEvent.get(0).getCertificateId())
-                            .created(expectedEvent.get(0).getTimestamp())
-                            .status(CertificateStatus.SIGNED)
-                            .build()
-                    }
+                    createChildRelations(
+                        createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
+                    )
                 )
                 .build()
         )
@@ -79,25 +73,16 @@ class EventConverterTest {
   @Test
   void shallConvertComplementedCertificateToReplacedEvent() {
     final var expectedEvent = List.of(
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersatt av vården med ett nytt intyg")
-            .timestamp(LocalDateTime.now())
-            .build()
+        createReplaceEvent(REPLACED_DESCRIPTION)
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .relations(
             CertificateRelations.builder()
                 .children(
-                    new CertificateRelation[]{
-                        CertificateRelation.builder()
-                            .type(CertificateRelationType.COMPLEMENTED)
-                            .certificateId(expectedEvent.get(0).getCertificateId())
-                            .created(expectedEvent.get(0).getTimestamp())
-                            .status(CertificateStatus.SIGNED)
-                            .build()
-                    }
+                    createChildRelations(
+                        createRelation(expectedEvent.get(0), CertificateRelationType.COMPLEMENTED)
+                    )
                 )
                 .build()
         )
@@ -107,25 +92,25 @@ class EventConverterTest {
     assertEquals(expectedEvent, actualEvents);
   }
 
+  @NotNull
+  private static CertificateRelation[] createChildRelations(CertificateRelation relation) {
+    return new CertificateRelation[]{
+        relation
+    };
+  }
+
   @Test
   void shallConvertReplacingCertificateToReplacesEvent() {
     final var expectedEvent = List.of(
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersätter ett intyg som inte längre är aktuellt")
-            .timestamp(LocalDateTime.now())
-            .build()
+        createReplaceEvent(REPLACES_DESCRIPTION)
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .relations(
             CertificateRelations.builder()
-                .parent(CertificateRelation.builder()
-                    .type(CertificateRelationType.REPLACED)
-                    .certificateId(expectedEvent.get(0).getCertificateId())
-                    .created(expectedEvent.get(0).getTimestamp())
-                    .status(CertificateStatus.SIGNED)
-                    .build())
+                .parent(
+                    createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
+                )
                 .build()
         )
         .build();
@@ -137,22 +122,15 @@ class EventConverterTest {
   @Test
   void shallConvertComplementedCertificateToReplacesEvent() {
     final var expectedEvent = List.of(
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersätter ett intyg som inte längre är aktuellt")
-            .timestamp(LocalDateTime.now())
-            .build()
+        createReplaceEvent(REPLACES_DESCRIPTION)
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .relations(
             CertificateRelations.builder()
-                .parent(CertificateRelation.builder()
-                    .type(CertificateRelationType.COMPLEMENTED)
-                    .certificateId(expectedEvent.get(0).getCertificateId())
-                    .created(expectedEvent.get(0).getTimestamp())
-                    .status(CertificateStatus.SIGNED)
-                    .build())
+                .parent(
+                    createRelation(expectedEvent.get(0), CertificateRelationType.COMPLEMENTED)
+                )
                 .build()
         )
         .build();
@@ -164,35 +142,20 @@ class EventConverterTest {
   @Test
   void shallConvertReplacingCertificateThatHasBeenReplacedToReplacedEvent() {
     final var expectedEvent = List.of(
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersätter ett intyg som inte längre är aktuellt")
-            .timestamp(LocalDateTime.now())
-            .build(),
-        CertificateEvent.builder()
-            .certificateId("id")
-            .description("Ersatt av vården med ett nytt intyg")
-            .timestamp(LocalDateTime.now())
-            .build());
+        createReplaceEvent(REPLACES_DESCRIPTION),
+        createReplaceEvent(REPLACED_DESCRIPTION)
+    );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .relations(
             CertificateRelations.builder()
-                .parent(CertificateRelation.builder()
-                    .type(CertificateRelationType.REPLACED)
-                    .certificateId(expectedEvent.get(0).getCertificateId())
-                    .created(expectedEvent.get(0).getTimestamp())
-                    .status(CertificateStatus.SIGNED)
-                    .build())
+                .parent(
+                    createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
+                )
                 .children(
-                    new CertificateRelation[]{
-                        CertificateRelation.builder()
-                            .type(CertificateRelationType.REPLACED)
-                            .certificateId(expectedEvent.get(1).getCertificateId())
-                            .created(expectedEvent.get(1).getTimestamp())
-                            .status(CertificateStatus.SIGNED)
-                            .build()
-                    }
+                    createChildRelations(
+                        createRelation(expectedEvent.get(1), CertificateRelationType.REPLACED)
+                    )
                 )
                 .build()
         )
@@ -208,14 +171,12 @@ class EventConverterTest {
         .relations(
             CertificateRelations.builder()
                 .children(
-                    new CertificateRelation[]{
-                        CertificateRelation.builder()
-                            .type(CertificateRelationType.REPLACED)
-                            .certificateId("id")
-                            .created(LocalDateTime.now())
-                            .status(CertificateStatus.REVOKED)
-                            .build()
-                    }
+                    createChildRelations(CertificateRelation.builder()
+                        .type(CertificateRelationType.REPLACED)
+                        .certificateId("id")
+                        .created(LocalDateTime.now())
+                        .status(CertificateStatus.REVOKED)
+                        .build())
                 )
                 .build()
         )
@@ -223,5 +184,24 @@ class EventConverterTest {
 
     final var actualEvents = eventConverter.convert(metadataDTO);
     assertEquals(Collections.emptyList(), actualEvents);
+  }
+
+  private static CertificateEvent createReplaceEvent(String description) {
+    return CertificateEvent.builder()
+        .certificateId("id")
+        .description(description)
+        .timestamp(LocalDateTime.now())
+        .build();
+  }
+
+  @NotNull
+  private static CertificateRelation createRelation(CertificateEvent expectedEvent,
+      CertificateRelationType certificateRelationType) {
+    return CertificateRelation.builder()
+        .type(certificateRelationType)
+        .certificateId(expectedEvent.getCertificateId())
+        .created(expectedEvent.getTimestamp())
+        .status(CertificateStatus.SIGNED)
+        .build();
   }
 }
