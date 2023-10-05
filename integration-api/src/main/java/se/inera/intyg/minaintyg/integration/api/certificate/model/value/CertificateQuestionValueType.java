@@ -3,5 +3,6 @@ package se.inera.intyg.minaintyg.integration.api.certificate.model.value;
 public enum CertificateQuestionValueType {
   TEXT,
   LIST,
-  TABLE
+  TABLE,
+  ITEM_LIST
 }
