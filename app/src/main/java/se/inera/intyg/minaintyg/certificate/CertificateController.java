@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListFilterResponseDTO;
@@ -26,7 +27,8 @@ public class CertificateController {
   private final GetCertificateService getCertificateService;
 
   @PostMapping
-  public CertificateListResponseDTO listCertificates(CertificateListRequestDTO request) {
+  public CertificateListResponseDTO listCertificates(
+      @RequestBody CertificateListRequestDTO request) {
     final var listCertificatesRequest =
         ListCertificatesRequest
             .builder()
