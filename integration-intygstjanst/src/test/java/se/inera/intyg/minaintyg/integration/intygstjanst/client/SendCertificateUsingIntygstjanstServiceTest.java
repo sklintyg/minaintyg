@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.integration.intygstjanst.client;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -19,9 +18,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateInteg
 class SendCertificateUsingIntygstjanstServiceTest {
 
   private static final String CERTIFICATE_ID = "certificateId";
-  private static final String ID = "id";
   private static MockWebServer mockWebServer;
-  private final ObjectMapper objectMapper = new ObjectMapper();
   private SendCertificateUsingIntygstjanstService sendCertificateUsingIntygstjanstService;
 
   @BeforeAll
