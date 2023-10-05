@@ -1,5 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.springframework.stereotype.Component;
@@ -23,28 +25,41 @@ public class DateListValueConverter extends AbstractValueConverter {
 
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
-    final var configList = ((CertificateDataConfigCheckboxMultipleDate) element.getConfig()).getList();
-    final var valueList = ((CertificateDataValueDateList) element.getValue()).getList();
+    final var configList = getConfigList(element);
+    final var valueList = getValueList(element);
     return CertificateQuestionValueItemList.builder()
         .values(
             configList.stream()
                 .map(checkboxMultipleDate ->
                     valueList.stream()
-                        .filter(matchingId(checkboxMultipleDate))
+                        .filter(
+                            matchingId(checkboxMultipleDate)
+                        )
                         .findFirst()
-                        .map(toValueItem(checkboxMultipleDate.getLabel()))
-                        .orElse(notProvidedValueItem(checkboxMultipleDate.getLabel()))
+                        .map(
+                            toValueItem(checkboxMultipleDate.getLabel())
+                        )
+                        .orElse(
+                            notProvidedValueItem(checkboxMultipleDate.getLabel())
+                        )
                 )
                 .toList()
         )
         .build();
   }
 
-  private static CertificationQuestionValueItem notProvidedValueItem(String label) {
-    return CertificationQuestionValueItem.builder()
-        .label(label)
-        .value(NOT_PROVIDED)
-        .build();
+  private static List<CheckboxMultipleDate> getConfigList(CertificateDataElement element) {
+    return ((CertificateDataConfigCheckboxMultipleDate) element.getConfig()).getList();
+  }
+
+  private static List<CertificateDataValueDate> getValueList(CertificateDataElement element) {
+    final var list = ((CertificateDataValueDateList) element.getValue()).getList();
+    return list != null ? list : Collections.emptyList();
+  }
+
+  private static Predicate<CertificateDataValueDate> matchingId(
+      CheckboxMultipleDate checkboxMultipleDate) {
+    return dateValue -> checkboxMultipleDate.getId().equalsIgnoreCase(dateValue.getId());
   }
 
   private static Function<CertificateDataValueDate, CertificationQuestionValueItem> toValueItem(
@@ -55,8 +70,10 @@ public class DateListValueConverter extends AbstractValueConverter {
         .build();
   }
 
-  private static Predicate<CertificateDataValueDate> matchingId(
-      CheckboxMultipleDate checkboxMultipleDate) {
-    return dateValue -> checkboxMultipleDate.getId().equalsIgnoreCase(dateValue.getId());
+  private static CertificationQuestionValueItem notProvidedValueItem(String label) {
+    return CertificationQuestionValueItem.builder()
+        .label(label)
+        .value(NOT_PROVIDED)
+        .build();
   }
 }
