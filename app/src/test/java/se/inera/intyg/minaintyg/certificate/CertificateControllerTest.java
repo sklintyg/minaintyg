@@ -142,6 +142,7 @@ class CertificateControllerTest {
         .years(List.of("2020"))
         .certificateTypes(List.of(CertificateTypeFilter.builder().build()))
         .units(List.of(CertificateUnit.builder().build()))
+        .total(5)
         .build();
 
     @BeforeEach
@@ -178,6 +179,13 @@ class CertificateControllerTest {
         final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
+      }
+
+      @Test
+      void shouldSetTotal() {
+        final var response = certificateController.getCertificateListFilter();
+
+        assertEquals(EXPECTED_RESPONSE.getTotal(), response.getTotal());
       }
     }
   }

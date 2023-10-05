@@ -15,4 +15,5 @@ public class CertificateListFilterResponseDTO {
   List<CertificateUnit> units;
   List<CertificateTypeFilter> certificateTypes;
   List<CertificateStatusType> statuses;
+  Integer total;
 }
