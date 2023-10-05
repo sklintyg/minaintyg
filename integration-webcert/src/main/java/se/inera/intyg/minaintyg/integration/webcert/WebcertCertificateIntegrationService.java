@@ -9,50 +9,52 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.configuration.MetadataConverter;
-import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateCategoryConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 
 @Service
 @RequiredArgsConstructor
 public class WebcertCertificateIntegrationService implements GetCertificateIntegrationService {
+  
+  private final GetCertificateFromWebcertService getCertificateFromWebcertService;
+  private final MetadataConverter metadataConverter;
+  private final CertificateDataConverter certificateDataConverter;
 
-    private final GetCertificateFromWebcertService getCertificateFromWebcertService;
-    private final CertificateCategoryConverter certificateCategoryConverter;
-    private final MetadataConverter metadataConverter;
+  @Override
+  public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
+    validateRequest(request);
+    final var response = getCertificateFromWebcertService.get(request);
 
-    @Override
-    public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
-        validateRequest(request);
-        final var response = getCertificateFromWebcertService.get(request);
+    if (validateResponse(response)) {
+      throw new IllegalArgumentException(
+          "Certificate was not found, certificateId: " + request.getCertificateId());
+    }
 
-        if (validateResponse(response)) {
-            throw new IllegalArgumentException(
-                "Certificate was not found, certificateId: " + request.getCertificateId());
-        }
-
-        return GetCertificateIntegrationResponse.builder()
-            .certificate(
-                Certificate.builder()
-                    .metadata(
-                        metadataConverter.convert(response.getCertificate().getMetadata())
+    return GetCertificateIntegrationResponse.builder()
+        .certificate(
+            Certificate.builder()
+                .metadata(
+                    metadataConverter.convert(response.getCertificate().getMetadata())
+                )
+                .categories(
+                    certificateDataConverter.convert(
+                        response.getCertificate().getData().values().stream().toList()
                     )
-                    .categories(
-                        certificateCategoryConverter.convert(response.getCertificate())
-                    )
-                    .build()
-            )
-            .build();
-    }
+                )
+                .build()
+        )
+        .build();
+  }
 
-    private static boolean validateResponse(CertificateResponseDTO response) {
-        return response.getCertificate() == null || response.getCertificate().getData() == null
-            || response.getCertificate().getData().isEmpty();
-    }
+  private static boolean validateResponse(CertificateResponseDTO response) {
+    return response.getCertificate() == null || response.getCertificate().getData() == null
+        || response.getCertificate().getData().isEmpty();
+  }
 
-    private void validateRequest(GetCertificateIntegrationRequest request) {
-        if (request == null || request.getCertificateId() == null || request.getCertificateId()
-            .isEmpty()) {
-            throw new IllegalArgumentException(
-                "Valid request was not provided, must contain certificate id");
-        }
+  private void validateRequest(GetCertificateIntegrationRequest request) {
+    if (request == null || request.getCertificateId() == null || request.getCertificateId()
+        .isEmpty()) {
+      throw new IllegalArgumentException(
+          "Valid request was not provided, must contain certificate id");
     }
+  }
 }
