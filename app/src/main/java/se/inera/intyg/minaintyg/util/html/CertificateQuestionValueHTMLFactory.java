@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.util.html;
 
-import static se.inera.intyg.minaintyg.util.html.HTMLTextFactory.h5;
+import static se.inera.intyg.minaintyg.util.html.HTMLTextFactory.h4;
 import static se.inera.intyg.minaintyg.util.html.HTMLTextFactory.p;
 import static se.inera.intyg.minaintyg.util.html.HTMLUtility.fromList;
 import static se.inera.intyg.minaintyg.util.html.HTMLUtility.join;
@@ -29,13 +29,11 @@ public class CertificateQuestionValueHTMLFactory {
   }
 
   public static String itemList(CertificateQuestionValueItemList question) {
-    return p(
-        fromList(
-            question.getValues(),
-            valueItem -> join(
-                h5(valueItem.getLabel()),
-                p(valueItem.getValue())
-            )
+    return fromList(
+        question.getValues(),
+        valueItem -> join(
+            h4(valueItem.getLabel()),
+            p(valueItem.getValue())
         )
     );
   }

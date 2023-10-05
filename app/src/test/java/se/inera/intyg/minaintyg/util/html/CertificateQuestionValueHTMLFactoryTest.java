@@ -74,7 +74,7 @@ class CertificateQuestionValueHTMLFactoryTest {
     final var result = CertificateQuestionValueHTMLFactory.itemList(value);
 
     assertEquals(
-        "<p><h5 className=\"ids-heading-5\">label 1</h5><p>value 1</p><h5 className=\"ids-heading-5\">label 2</h5><p>value 2</p></p>",
+        "<h4 className=\"ids-heading-4\">label 1</h4><p>value 1</p><h4 className=\"ids-heading-4\">label 2</h4><p>value 2</p>",
         result);
   }
 }
