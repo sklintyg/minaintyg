@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueItemList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificationQuestionValueItem;
 
 class CertificateQuestionValueHTMLFactoryTest {
 
@@ -50,6 +52,29 @@ class CertificateQuestionValueHTMLFactoryTest {
 
     assertEquals(
         "<table className=\"ids-table\"><thead><th>heading 1</th><th>heading 2</th></thead><tbody><tr><td>Value 1</td><td>Value 2</td></tr></tbody></table>",
+        result);
+  }
+
+  @Test
+  void shouldReturnHTMLForItemList() {
+    final var value = CertificateQuestionValueItemList
+        .builder()
+        .values(List.of(
+            CertificationQuestionValueItem.builder()
+                .label("label 1")
+                .value("value 1")
+                .build(),
+            CertificationQuestionValueItem.builder()
+                .label("label 2")
+                .value("value 2")
+                .build()
+        ))
+        .build();
+
+    final var result = CertificateQuestionValueHTMLFactory.itemList(value);
+
+    assertEquals(
+        "<p><h5 className=\"ids-heading-5\">label 1</h5><p>value 1</p><h5 className=\"ids-heading-5\">label 2</h5><p>value 2</p></p>",
         result);
   }
 }

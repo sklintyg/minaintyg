@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
+import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.itemList;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.list;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.table;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.text;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueItemList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
@@ -73,6 +75,7 @@ public class FormattedQuestionConverter {
       case TEXT -> text((CertificateQuestionValueText) value);
       case LIST -> list((CertificateQuestionValueList) value);
       case TABLE -> table((CertificateQuestionValueTable) value);
+      case ITEM_LIST -> itemList((CertificateQuestionValueItemList) value);
     };
   }
 }
