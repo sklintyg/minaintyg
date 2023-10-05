@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateIssuer;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
@@ -21,4 +22,5 @@ public class CertificateMetadata {
   List<CertificateEvent> events;
   List<CertificateStatusType> statuses;
   LocalDateTime issued;
+  CertificateRecipient recipient;
 }
