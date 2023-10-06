@@ -100,4 +100,11 @@ class GetCertificateListFilterServiceTest {
 
     assertEquals(Year.now().toString(), result.getYears().get(0));
   }
+
+  @Test
+  void shouldSetTotal() {
+    final var result = getCertificateListFilterService.get();
+
+    assertEquals(1, result.getTotal());
+  }
 }

@@ -72,6 +72,7 @@ public class CertificateController {
         .certificateTypes(response.getCertificateTypes())
         .units(response.getUnits())
         .statuses(response.getStatuses())
+        .total(response.getTotal())
         .build();
   }
 
