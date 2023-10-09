@@ -19,12 +19,13 @@ public class StatusConverter {
     public List<CertificateStatusType> convert(CertificateMetadataDTO metadataDTO) {
         final var events = new ArrayList<CertificateStatusType>();
 
-        if (isNew(metadataDTO)) {
-            events.add(CertificateStatusType.NEW);
-        }
-
         if (isReplaced(metadataDTO)) {
             events.add(CertificateStatusType.REPLACED);
+            return events;
+        }
+
+        if (isNew(metadataDTO)) {
+            events.add(CertificateStatusType.NEW);
         }
 
         if (notReplaced(metadataDTO) && isSent(metadataDTO)) {

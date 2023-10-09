@@ -156,6 +156,20 @@ class StatusConverterTest {
             assertEquals(Collections.emptyList(), actualStatuses);
         }
 
+
+        @Test
+        void shallConvertToReplacedIfBothNewAndReplaced() {
+            final var metadataDTO = CertificateMetadataDTO.builder()
+                .created(LAST_DAY_AS_NEW)
+                .relations(
+                    createChild(CertificateRelationType.REPLACED)
+                )
+                .build();
+
+            final var actualStatuses = statusConverter.convert(metadataDTO);
+            assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
+        }
+
         @Test
         void shallConvertToReplacedIfBothReplacedAndSentToRecipient() {
             final var metadataDTO = CertificateMetadataDTO.builder()
@@ -223,19 +237,6 @@ class StatusConverterTest {
 
     @Nested
     class MultipleStatuses {
-
-        @Test
-        void shallConvertToNewAndReplacedIfBothNewAndReplaced() {
-            final var metadataDTO = CertificateMetadataDTO.builder()
-                .created(LAST_DAY_AS_NEW)
-                .relations(
-                    createChild(CertificateRelationType.REPLACED)
-                )
-                .build();
-
-            final var actualStatuses = statusConverter.convert(metadataDTO);
-            assertEquals(List.of(CertificateStatusType.NEW, CertificateStatusType.REPLACED), actualStatuses);
-        }
 
         @Test
         void shallConvertToNewAndSentIfBothNewAndSent() {
