@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Staff;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Unit;
@@ -28,6 +29,8 @@ class MetadataConverterTest {
     public static final String UNIT_NAME = "unitName";
     @Mock
     private EventConverter eventConverter;
+    @Mock
+    private StatusConverter statusConverter;
     @InjectMocks
     private MetadataConverter metadataConverter;
 
@@ -99,7 +102,14 @@ class MetadataConverterTest {
         assertEquals(expectedMetadata, actualMetadata.getEvents());
     }
 
-    //TODO lägg till test för statuses
+    @Test
+    void ShallConvertStatuses() {
+        final var expectedMetadata = List.of(CertificateStatusType.SENT);
+        doReturn(expectedMetadata).when(statusConverter).convert(metadataDTO);
+
+        final var actualMetadata = metadataConverter.convert(metadataDTO);
+        assertEquals(expectedMetadata, actualMetadata.getStatuses());
+    }
 
     @Test
     void shallConvertIssued() {

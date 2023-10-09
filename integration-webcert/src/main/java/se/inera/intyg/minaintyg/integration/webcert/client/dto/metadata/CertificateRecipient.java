@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +28,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CertificateReceiver {
+public class CertificateRecipient {
 
-  private String name;
-  private boolean approved;
+    private String id;
+    private String name;
+    private LocalDateTime sent;
 }

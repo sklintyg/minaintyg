@@ -13,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetada
 public class MetadataConverter {
 
     private final EventConverter eventConverter;
+    private final StatusConverter statusConverter;
 
     public CertificateMetadata convert(CertificateMetadataDTO metadataDTO) {
         return CertificateMetadata.builder()
@@ -20,7 +21,8 @@ public class MetadataConverter {
             .type(convertType(metadataDTO))
             .issuer(convertIssuer(metadataDTO))
             .unit(convertUnit(metadataDTO))
-            .events(eventConverter.convert(metadataDTO)) //TODO lägg till implementering för statuses
+            .events(eventConverter.convert(metadataDTO))
+            .statuses(statusConverter.convert(metadataDTO))
             .issued(metadataDTO.getCreated())
             .build();
     }
@@ -48,5 +50,4 @@ public class MetadataConverter {
             .name(metadataDTO.getUnit().getUnitName())
             .build();
     }
-
 }
