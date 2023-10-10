@@ -1,5 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
+import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateConstants.DAYS_LIMIT_FOR_STATUS_NEW;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Certific
 
 @Component
 public class StatusConverter {
-
-  public static final int DAYS_LIMIT_FOR_STATUS_NEW = 14;
 
   public List<CertificateStatusType> convert(CertificateMetadataDTO metadataDTO) {
     final var events = new ArrayList<CertificateStatusType>();

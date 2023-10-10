@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Staff;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Unit;
 
@@ -27,6 +28,9 @@ class MetadataConverterTest {
   public static final String TYPE_VERSION = "typeVersion";
   public static final String UNIT_ID = "unitId";
   public static final String UNIT_NAME = "unitName";
+  public static final String RECIPIENT_NAME = "recipientName";
+  public static final String RECIPIENT_ID = "recipientId";
+  public static final LocalDateTime RECIPIENT_SENT = LocalDateTime.now();
   @Mock
   private EventConverter eventConverter;
   @Mock
@@ -39,8 +43,7 @@ class MetadataConverterTest {
       .type(TYPE_ID)
       .typeName(TYPE_NAME)
       .typeVersion(TYPE_VERSION)
-      .issuedBy(Staff
-          .builder()
+      .issuedBy(Staff.builder()
           .fullName(ISSUED_NAME)
           .build())
       .unit(Unit
@@ -49,6 +52,11 @@ class MetadataConverterTest {
           .unitName(UNIT_NAME)
           .build())
       .created(ISSUED)
+      .recipient(CertificateRecipient.builder()
+          .id(RECIPIENT_ID)
+          .name(RECIPIENT_NAME)
+          .sent(RECIPIENT_SENT)
+          .build())
       .build();
 
   @Test
@@ -115,5 +123,23 @@ class MetadataConverterTest {
   void shallConvertIssued() {
     final var actualMetadata = metadataConverter.convert(metadataDTO);
     assertEquals(ISSUED, actualMetadata.getIssued());
+  }
+
+  @Test
+  void shallConvertRecipientId() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO);
+    assertEquals(RECIPIENT_ID, actualMetadata.getRecipient().getId());
+  }
+
+  @Test
+  void shallConvertRecipientName() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO);
+    assertEquals(RECIPIENT_NAME, actualMetadata.getRecipient().getName());
+  }
+
+  @Test
+  void shallConvertRecipientSent() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO);
+    assertEquals(RECIPIENT_SENT, actualMetadata.getRecipient().getSent());
   }
 }

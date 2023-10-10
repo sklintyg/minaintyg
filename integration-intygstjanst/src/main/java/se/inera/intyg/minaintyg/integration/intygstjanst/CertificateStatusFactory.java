@@ -1,5 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
+import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateConstants.DAYS_LIMIT_FOR_STATUS_NEW;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
@@ -8,8 +10,6 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateRelationDTO;
 
 public class CertificateStatusFactory {
-
-  public static final int DAYS_LIMIT_FOR_STATUS_NEW = 14;
 
   private CertificateStatusFactory() {
     throw new IllegalStateException("Utility class");
