@@ -25,6 +25,7 @@ public class GetCertificateListFilterService {
 
     return GetCertificateFilterResponse
         .builder()
+        .total(certificates.size())
         .certificateTypes(getCertificateTypes(certificates))
         .years(getYears(certificates))
         .units(getUnits(certificates))
@@ -35,7 +36,7 @@ public class GetCertificateListFilterService {
   private List<String> getYears(List<CertificateListItem> certificateListItems) {
     return getList(
         certificateListItems,
-        (certificate) -> String.valueOf(certificate.getIssued().getYear())
+        certificate -> String.valueOf(certificate.getIssued().getYear())
     );
   }
 

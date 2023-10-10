@@ -96,5 +96,13 @@ class MonitoringLogServiceImplTest {
 
       verifyLog(Level.INFO, "CERTIFICATE_READ Certificate 'id' of type 'lisjp' was read");
     }
+
+    @Test
+    void shouldLogWhenCertificateIsSent() {
+      monitoringLogService.logCertificateSent("id", "lisjp", "recipient");
+
+      verifyLog(Level.INFO,
+          "CERTIFICATE_SEND Certificate 'id' of type 'lisjp' sent to 'recipient'");
+    }
   }
 }

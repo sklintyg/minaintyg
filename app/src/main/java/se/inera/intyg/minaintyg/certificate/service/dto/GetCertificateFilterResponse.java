@@ -15,4 +15,5 @@ public class GetCertificateFilterResponse {
   List<CertificateUnit> units;
   List<CertificateTypeFilter> certificateTypes;
   List<CertificateStatusType> statuses;
+  Integer total;
 }

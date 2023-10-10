@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelation;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelations;
@@ -18,6 +19,7 @@ class EventConverterTest {
 
   public static final String REPLACED_DESCRIPTION = "Ersatt av vården med ett nytt intyg";
   public static final String REPLACES_DESCRIPTION = "Ersätter ett intyg som inte längre är aktuellt";
+  public static final LocalDateTime TIMESTAMP = LocalDateTime.now();
   private final EventConverter eventConverter = new EventConverter();
 
   @Test
@@ -25,12 +27,16 @@ class EventConverterTest {
     final var expectedEvent = List.of(
         CertificateEvent.builder()
             .description("Skickat till recipientName")
+            .timestamp(TIMESTAMP)
             .build()
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
         .sent(true)
         .sentTo("recipientName")
+        .recipient(CertificateRecipient.builder()
+            .sent(TIMESTAMP)
+            .build())
         .build();
 
     final var actualEvents = eventConverter.convert(metadataDTO);
@@ -106,7 +112,7 @@ class EventConverterTest {
                         CertificateRelation.builder()
                             .type(CertificateRelationType.COMPLEMENTED)
                             .certificateId("differentId")
-                            .created(LocalDateTime.now().minusDays(1))
+                            .created(TIMESTAMP.minusDays(1))
                             .status(CertificateStatus.SIGNED)
                             .build(),
                         createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
@@ -211,7 +217,7 @@ class EventConverterTest {
     return CertificateEvent.builder()
         .certificateId("id")
         .description(description)
-        .timestamp(LocalDateTime.now())
+        .timestamp(TIMESTAMP)
         .build();
   }
 

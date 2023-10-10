@@ -18,6 +18,7 @@ import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
@@ -25,6 +26,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
+import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
@@ -44,12 +46,12 @@ class CertificateControllerTest {
 
   @Mock
   ListCertificatesService listCertificatesService;
-
   @Mock
   GetCertificateListFilterService getCertificateListFilterService;
-
   @Mock
   GetCertificateService getCertificateService;
+  @Mock
+  SendCertificateService sendCertificateService;
 
   @InjectMocks
   CertificateController certificateController;
@@ -142,6 +144,7 @@ class CertificateControllerTest {
         .years(List.of("2020"))
         .certificateTypes(List.of(CertificateTypeFilter.builder().build()))
         .units(List.of(CertificateUnit.builder().build()))
+        .total(5)
         .build();
 
     @BeforeEach
@@ -178,6 +181,13 @@ class CertificateControllerTest {
         final var response = certificateController.getCertificateListFilter();
 
         assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
+      }
+
+      @Test
+      void shouldSetTotal() {
+        final var response = certificateController.getCertificateListFilter();
+
+        assertEquals(EXPECTED_RESPONSE.getTotal(), response.getTotal());
       }
     }
   }
@@ -221,6 +231,19 @@ class CertificateControllerTest {
 
         assertEquals(expectedResponse.getCertificate(), response.getCertificate());
       }
+    }
+  }
+
+  @Nested
+  class SendCertificate {
+
+    @Test
+    void shouldCallServiceWithCertificateId() {
+      certificateController.sendCertificateToRecipient(CERTIFICATE_ID);
+      final var captor = ArgumentCaptor.forClass(SendCertificateRequest.class);
+
+      verify(sendCertificateService).send(captor.capture());
+      assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
     }
   }
 }

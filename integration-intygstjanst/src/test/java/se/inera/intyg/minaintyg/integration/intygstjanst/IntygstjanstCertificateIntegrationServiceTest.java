@@ -99,7 +99,7 @@ class IntygstjanstCertificateIntegrationServiceTest {
     }
 
     @Test
-    void shouldReturnStatusErrorIfCommunicationErrorWithIntygProxyOccurs() {
+    void shouldReturnStatusErrorIfCommunicationErrorWithITOccurs() {
       final var request = GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID)
           .build();
       when(getCertificatesFromIntygstjanstService.get(request)).thenThrow(

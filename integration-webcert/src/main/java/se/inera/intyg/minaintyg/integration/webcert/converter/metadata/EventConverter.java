@@ -22,13 +22,13 @@ public class EventConverter {
   public static final String EVENT_REPLACED = "Ersatt av vården med ett nytt intyg";
   public static final String EVENT_REPLACES = "Ersätter ett intyg som inte längre är aktuellt";
 
-  //TODO update converter and tests after timestamp has been added to API
   public List<CertificateEvent> convert(CertificateMetadataDTO metadataDTO) {
     final var events = new ArrayList<CertificateEvent>();
 
     if (metadataDTO.isSent()) {
       events.add(
           CertificateEvent.builder()
+              .timestamp(metadataDTO.getRecipient().getSent())
               .description(EVENT_SENT_TO_DESCRIPTION + metadataDTO.getSentTo())
               .build()
       );
