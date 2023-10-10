@@ -6,36 +6,39 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRange;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 
 @Component
-public class DateValueConverter extends AbstractValueConverter {
+public class DateRangeValueConverter extends AbstractValueConverter {
 
   @Override
-  protected CertificateQuestionValue convertToValue(CertificateDataElement element) {
-    return getDateValue(element.getValue())
-        .map(
-            dateValue -> {
-              if (dateValue.getDate() == null) {
+  public CertificateDataValueType getType() {
+    return CertificateDataValueType.DATE_RANGE;
+  }
+
+  @Override
+  public CertificateQuestionValue convertToValue(CertificateDataElement element) {
+    return getDateRange(element.getValue())
+        .map(dateRange -> {
+              if (isEmpty(dateRange)) {
                 return NOT_PROVIDED_VALUE;
               }
               return CertificateQuestionValueText.builder()
-                  .value(dateValue.getDate().toString())
+                  .value("%s - %s".formatted(dateRange.getFrom(), dateRange.getTo()))
                   .build();
             }
         )
         .orElse(NOT_PROVIDED_VALUE);
   }
 
-  @Override
-  public CertificateDataValueType getType() {
-    return CertificateDataValueType.DATE;
+  private static boolean isEmpty(CertificateDataValueDateRange dateRange) {
+    return dateRange.getFrom() == null || dateRange.getTo() == null;
   }
 
-  private Optional<CertificateDataValueDate> getDateValue(CertificateDataValue value) {
-    if (value instanceof CertificateDataValueDate dateValue) {
-      return Optional.of(dateValue);
+  private Optional<CertificateDataValueDateRange> getDateRange(CertificateDataValue element) {
+    if (element instanceof CertificateDataValueDateRange dateRange) {
+      return Optional.of(dateRange);
     }
     return Optional.empty();
   }
