@@ -32,9 +32,8 @@ class EventConverterTest {
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
-        .sent(true)
-        .sentTo("recipientName")
         .recipient(CertificateRecipient.builder()
+            .name("recipientName")
             .sent(TIMESTAMP)
             .build())
         .build();
@@ -46,9 +45,19 @@ class EventConverterTest {
   @Test
   void shallReturnEmptyListIfUnsentCertificate() {
     final var metadataDTO = CertificateMetadataDTO.builder()
-        .sent(false)
-        .sentTo("recipientName")
+        .recipient(CertificateRecipient.builder()
+            .id("id")
+            .name("recipientName")
+            .build())
         .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.emptyList(), actualEvents);
+  }
+
+  @Test
+  void shallReturnEmptyListIfNoRecipient() {
+    final var metadataDTO = CertificateMetadataDTO.builder().build();
 
     final var actualEvents = eventConverter.convert(metadataDTO);
     assertEquals(Collections.emptyList(), actualEvents);

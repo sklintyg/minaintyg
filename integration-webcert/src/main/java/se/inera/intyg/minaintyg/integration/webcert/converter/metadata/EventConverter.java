@@ -25,11 +25,11 @@ public class EventConverter {
   public List<CertificateEvent> convert(CertificateMetadataDTO metadataDTO) {
     final var events = new ArrayList<CertificateEvent>();
 
-    if (metadataDTO.isSent()) {
+    if (isSent(metadataDTO)) {
       events.add(
           CertificateEvent.builder()
               .timestamp(metadataDTO.getRecipient().getSent())
-              .description(EVENT_SENT_TO_DESCRIPTION + metadataDTO.getSentTo())
+              .description(EVENT_SENT_TO_DESCRIPTION + metadataDTO.getRecipient().getName())
               .build()
       );
     }
@@ -41,6 +41,13 @@ public class EventConverter {
         .ifPresent(events::add);
 
     return events;
+  }
+
+  private static boolean isSent(CertificateMetadataDTO metadataDTO) {
+    if (metadataDTO.getRecipient() == null) {
+      return false;
+    }
+    return metadataDTO.getRecipient().getSent() != null;
   }
 
   private Optional<CertificateEvent> createReplacedEvent(CertificateMetadataDTO metadataDTO) {

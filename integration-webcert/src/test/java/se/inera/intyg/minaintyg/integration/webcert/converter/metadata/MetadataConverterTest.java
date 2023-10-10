@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doReturn;
 
 import java.time.LocalDateTime;
@@ -141,5 +142,27 @@ class MetadataConverterTest {
   void shallConvertRecipientSent() {
     final var actualMetadata = metadataConverter.convert(metadataDTO);
     assertEquals(RECIPIENT_SENT, actualMetadata.getRecipient().getSent());
+  }
+
+  @Test
+  void shallReturnNullIfNoRecipient() {
+    final CertificateMetadataDTO metadataDTONoRecipient = CertificateMetadataDTO.builder()
+        .id(ID)
+        .type(TYPE_ID)
+        .typeName(TYPE_NAME)
+        .typeVersion(TYPE_VERSION)
+        .issuedBy(Staff.builder()
+            .fullName(ISSUED_NAME)
+            .build())
+        .unit(Unit
+            .builder()
+            .unitId(UNIT_ID)
+            .unitName(UNIT_NAME)
+            .build())
+        .created(ISSUED)
+        .build();
+
+    final var actualMetadata = metadataConverter.convert(metadataDTONoRecipient);
+    assertNull(actualMetadata.getRecipient());
   }
 }

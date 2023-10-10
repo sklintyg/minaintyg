@@ -51,10 +51,17 @@ public class MetadataConverter {
   }
 
   private CertificateRecipient convertRecipient(CertificateMetadataDTO metadataDTO) {
+    if (recipientIsNull(metadataDTO)) {
+      return null;
+    }
     return CertificateRecipient.builder()
         .id(metadataDTO.getRecipient().getId())
         .name(metadataDTO.getRecipient().getName())
         .sent(metadataDTO.getRecipient().getSent())
         .build();
+  }
+
+  private static boolean recipientIsNull(CertificateMetadataDTO metadataDTO) {
+    return metadataDTO.getRecipient() == null;
   }
 }
