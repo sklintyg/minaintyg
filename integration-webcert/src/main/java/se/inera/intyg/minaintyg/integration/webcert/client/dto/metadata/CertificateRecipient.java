@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CertificateRecipient {
 
-    private String id;
-    private String name;
-    private LocalDateTime sent;
+  private String id;
+  private String name;
+  private LocalDateTime sent;
 }

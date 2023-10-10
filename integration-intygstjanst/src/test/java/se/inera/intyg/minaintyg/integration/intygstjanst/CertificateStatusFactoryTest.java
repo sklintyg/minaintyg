@@ -13,99 +13,99 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 
 class CertificateStatusFactoryTest {
 
-    private static final CertificateRelationDTO replaced = CertificateRelationDTO
-        .builder()
-        .certificateId("CERTIFICATE_ID")
-        .timestamp(LocalDateTime.now())
-        .type(CertificateRelationType.REPLACED)
-        .build();
+  private static final CertificateRelationDTO replaced = CertificateRelationDTO
+      .builder()
+      .certificateId("CERTIFICATE_ID")
+      .timestamp(LocalDateTime.now())
+      .type(CertificateRelationType.REPLACED)
+      .build();
 
-    private static final CertificateRelationDTO replaces = CertificateRelationDTO
-        .builder()
-        .certificateId("CERTIFICATE_ID")
-        .timestamp(LocalDateTime.now())
-        .type(CertificateRelationType.REPLACES)
-        .build();
+  private static final CertificateRelationDTO replaces = CertificateRelationDTO
+      .builder()
+      .certificateId("CERTIFICATE_ID")
+      .timestamp(LocalDateTime.now())
+      .type(CertificateRelationType.REPLACES)
+      .build();
 
-    private static final CertificateRecipientDTO recipient = CertificateRecipientDTO
-        .builder()
-        .name("Name")
-        .id("id")
-        .sent(LocalDateTime.now())
-        .build();
+  private static final CertificateRecipientDTO recipient = CertificateRecipientDTO
+      .builder()
+      .name("Name")
+      .id("id")
+      .sent(LocalDateTime.now())
+      .build();
 
-    @Nested
-    class ReplacedEvent {
+  @Nested
+  class ReplacedEvent {
 
-        @Test
-        void shouldReturnReplacedIfCorrectRelationType() {
-            final var result = CertificateStatusFactory.replaced(replaced);
+    @Test
+    void shouldReturnReplacedIfCorrectRelationType() {
+      final var result = CertificateStatusFactory.replaced(replaced);
 
-            assertEquals(CertificateStatusType.REPLACED, result.get());
-        }
-
-        @Test
-        void shouldReturnEmptyIfRelationIsNotReplaced() {
-            final var result = CertificateStatusFactory.replaced(replaces);
-
-            assertTrue(result.isEmpty());
-        }
-
-        @Test
-        void shouldReturnEmptyIfRelationIsNull() {
-            final var result = CertificateStatusFactory.replaced(null);
-
-            assertTrue(result.isEmpty());
-        }
+      assertEquals(CertificateStatusType.REPLACED, result.get());
     }
 
-    @Nested
-    class SentEvent {
+    @Test
+    void shouldReturnEmptyIfRelationIsNotReplaced() {
+      final var result = CertificateStatusFactory.replaced(replaces);
 
-        @Test
-        void shouldReturnSentIfRecipientHasSentTimestamp() {
-            final var result = CertificateStatusFactory.sent(recipient);
-
-            assertEquals(CertificateStatusType.SENT, result.get());
-        }
-
-        @Test
-        void shouldReturnEmptyIfRecipientIsNull() {
-            final var result = CertificateStatusFactory.sent(null);
-
-            assertTrue(result.isEmpty());
-        }
-
-        @Test
-        void shouldReturnNotSentIfNoSentValue() {
-            final var result = CertificateStatusFactory.sent(CertificateRecipientDTO.builder().build());
-
-            assertEquals(CertificateStatusType.NOT_SENT, result.get());
-        }
+      assertTrue(result.isEmpty());
     }
 
-    @Nested
-    class NewEvent {
+    @Test
+    void shouldReturnEmptyIfRelationIsNull() {
+      final var result = CertificateStatusFactory.replaced(null);
 
-        @Test
-        void shouldReturnNewIfIssuedIsLessThanFourteenDaysAgo() {
-            final var result = CertificateStatusFactory.newStatus(LocalDateTime.now());
-
-            assertEquals(CertificateStatusType.NEW, result.get());
-        }
-
-        @Test
-        void shouldReturnEmptyIfIssuedIsMoreThanFourteenDaysAgo() {
-            final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(15));
-
-            assertTrue(result.isEmpty());
-        }
-
-        @Test
-        void shouldReturnNewIfIssuedIsFourteenDaysAgo() {
-            final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(14));
-
-            assertEquals(CertificateStatusType.NEW, result.get());
-        }
+      assertTrue(result.isEmpty());
     }
+  }
+
+  @Nested
+  class SentEvent {
+
+    @Test
+    void shouldReturnSentIfRecipientHasSentTimestamp() {
+      final var result = CertificateStatusFactory.sent(recipient);
+
+      assertEquals(CertificateStatusType.SENT, result.get());
+    }
+
+    @Test
+    void shouldReturnEmptyIfRecipientIsNull() {
+      final var result = CertificateStatusFactory.sent(null);
+
+      assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnNotSentIfNoSentValue() {
+      final var result = CertificateStatusFactory.sent(CertificateRecipientDTO.builder().build());
+
+      assertEquals(CertificateStatusType.NOT_SENT, result.get());
+    }
+  }
+
+  @Nested
+  class NewEvent {
+
+    @Test
+    void shouldReturnNewIfIssuedIsLessThanFourteenDaysAgo() {
+      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now());
+
+      assertEquals(CertificateStatusType.NEW, result.get());
+    }
+
+    @Test
+    void shouldReturnEmptyIfIssuedIsMoreThanFourteenDaysAgo() {
+      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(15));
+
+      assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnNewIfIssuedIsFourteenDaysAgo() {
+      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(14));
+
+      assertEquals(CertificateStatusType.NEW, result.get());
+    }
+  }
 }

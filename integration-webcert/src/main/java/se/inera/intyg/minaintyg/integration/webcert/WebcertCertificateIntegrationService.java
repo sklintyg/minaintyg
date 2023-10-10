@@ -28,7 +28,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
-
+  
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
