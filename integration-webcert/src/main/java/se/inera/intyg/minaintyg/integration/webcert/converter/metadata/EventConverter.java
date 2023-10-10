@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.webcert.configuration;
+package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
 import static java.util.function.Predicate.not;
 
