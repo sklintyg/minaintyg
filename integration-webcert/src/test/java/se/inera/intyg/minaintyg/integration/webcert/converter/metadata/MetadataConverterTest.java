@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Staff;
@@ -32,6 +33,8 @@ class MetadataConverterTest {
   public static final String RECIPIENT_NAME = "recipientName";
   public static final String RECIPIENT_ID = "recipientId";
   public static final LocalDateTime RECIPIENT_SENT = LocalDateTime.now();
+  public static final String SUMMARY_LABEL = "summaryLabel";
+  public static final String SUMMARY_VALUE = "summaryValue";
   @Mock
   private EventConverter eventConverter;
   @Mock
@@ -57,6 +60,10 @@ class MetadataConverterTest {
           .id(RECIPIENT_ID)
           .name(RECIPIENT_NAME)
           .sent(RECIPIENT_SENT)
+          .build())
+      .summary(CertificateSummary.builder()
+          .label(SUMMARY_LABEL)
+          .value(SUMMARY_VALUE)
           .build())
       .build();
 
@@ -160,9 +167,112 @@ class MetadataConverterTest {
             .unitName(UNIT_NAME)
             .build())
         .created(ISSUED)
+        .summary(CertificateSummary.builder()
+            .label(SUMMARY_LABEL)
+            .value(SUMMARY_VALUE)
+            .build())
         .build();
 
     final var actualMetadata = metadataConverter.convert(metadataDTONoRecipient);
     assertNull(actualMetadata.getRecipient());
+  }
+
+  @Test
+  void shallConvertSummaryLabel() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO);
+    assertEquals(SUMMARY_LABEL, actualMetadata.getSummary().getLabel());
+  }
+
+  @Test
+  void shallConvertSummaryValue() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO);
+    assertEquals(SUMMARY_VALUE, actualMetadata.getSummary().getValue());
+  }
+
+  @Test
+  void shallReturnNullIfNoSummaryLabel() {
+    final CertificateMetadataDTO metadataDTONoLabel = CertificateMetadataDTO.builder()
+        .id(ID)
+        .type(TYPE_ID)
+        .typeName(TYPE_NAME)
+        .typeVersion(TYPE_VERSION)
+        .issuedBy(Staff.builder()
+            .fullName(ISSUED_NAME)
+            .build())
+        .unit(Unit
+            .builder()
+            .unitId(UNIT_ID)
+            .unitName(UNIT_NAME)
+            .build())
+        .created(ISSUED)
+        .recipient(CertificateRecipient.builder()
+            .id(RECIPIENT_ID)
+            .name(RECIPIENT_NAME)
+            .sent(RECIPIENT_SENT)
+            .build())
+        .summary(CertificateSummary.builder()
+            .value(SUMMARY_VALUE)
+            .build())
+        .build();
+
+    final var actualMetadata = metadataConverter.convert(metadataDTONoLabel);
+    assertNull(actualMetadata.getSummary().getLabel());
+  }
+
+  @Test
+  void shallReturnNullIfNoSummaryValue() {
+    final CertificateMetadataDTO metadataDTONoValue = CertificateMetadataDTO.builder()
+        .id(ID)
+        .type(TYPE_ID)
+        .typeName(TYPE_NAME)
+        .typeVersion(TYPE_VERSION)
+        .issuedBy(Staff.builder()
+            .fullName(ISSUED_NAME)
+            .build())
+        .unit(Unit
+            .builder()
+            .unitId(UNIT_ID)
+            .unitName(UNIT_NAME)
+            .build())
+        .created(ISSUED)
+        .recipient(CertificateRecipient.builder()
+            .id(RECIPIENT_ID)
+            .name(RECIPIENT_NAME)
+            .sent(RECIPIENT_SENT)
+            .build())
+        .summary(CertificateSummary.builder()
+            .label(SUMMARY_LABEL)
+            .build())
+        .build();
+
+    final var actualMetadata = metadataConverter.convert(metadataDTONoValue);
+    assertNull(actualMetadata.getSummary().getValue());
+  }
+
+  @Test
+  void shallReturnSummaryWithNullLabelAndNullValueIfNoSummary() {
+    final CertificateMetadataDTO metadataDTONoSummary = CertificateMetadataDTO.builder()
+        .id(ID)
+        .type(TYPE_ID)
+        .typeName(TYPE_NAME)
+        .typeVersion(TYPE_VERSION)
+        .issuedBy(Staff.builder()
+            .fullName(ISSUED_NAME)
+            .build())
+        .unit(Unit
+            .builder()
+            .unitId(UNIT_ID)
+            .unitName(UNIT_NAME)
+            .build())
+        .created(ISSUED)
+        .recipient(CertificateRecipient.builder()
+            .id(RECIPIENT_ID)
+            .name(RECIPIENT_NAME)
+            .sent(RECIPIENT_SENT)
+            .build())
+        .build();
+
+    final var actualMetadata = metadataConverter.convert(metadataDTONoSummary);
+    assertEquals(CertificateSummary.builder().build(), actualMetadata.getSummary());
   }
 }
