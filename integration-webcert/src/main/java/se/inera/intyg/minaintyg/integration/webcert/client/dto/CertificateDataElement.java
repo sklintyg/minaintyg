@@ -19,6 +19,7 @@ public class CertificateDataElement {
   int index;
   CertificateDataConfig config;
   CertificateDataValue value;
+  CertificateDataElementStyleEnum style;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class CertificateDataElementBuilder {
