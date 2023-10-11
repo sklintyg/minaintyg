@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<configuration scan="true" scanPeriod="15 seconds">
+<configuration>
   <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
   <include resource="logback/logback-spring-base.xml"/>
 
