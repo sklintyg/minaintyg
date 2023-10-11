@@ -88,22 +88,22 @@ class CertificateStatusFactoryTest {
   class NewEvent {
 
     @Test
-    void shouldReturnNewIfIssuedIsLessThanOneMonthBack() {
+    void shouldReturnNewIfIssuedIsLessThanFourteenDaysAgo() {
       final var result = CertificateStatusFactory.newStatus(LocalDateTime.now());
 
       assertEquals(CertificateStatusType.NEW, result.get());
     }
 
     @Test
-    void shouldReturnEmptyIfIssuedIsMoreThanOneMonthBack() {
-      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusMonths(2));
+    void shouldReturnEmptyIfIssuedIsMoreThanFourteenDaysAgo() {
+      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(15));
 
       assertTrue(result.isEmpty());
     }
 
     @Test
-    void shouldReturnNewIfIssuedIsOneMonthBack() {
-      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusMonths(1));
+    void shouldReturnNewIfIssuedIsFourteenDaysAgo() {
+      final var result = CertificateStatusFactory.newStatus(LocalDateTime.now().minusDays(14));
 
       assertEquals(CertificateStatusType.NEW, result.get());
     }
