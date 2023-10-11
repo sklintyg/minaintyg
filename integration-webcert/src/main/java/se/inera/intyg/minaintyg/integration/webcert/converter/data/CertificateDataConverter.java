@@ -16,6 +16,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQue
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
@@ -64,12 +65,18 @@ public class CertificateDataConverter {
   private List<CertificateQuestion> toCertificateQuestions(CertificateDataElement element,
       Map<String, List<CertificateDataElement>> parentQuestionMap) {
     return parentQuestionMap.getOrDefault(element.getId(), Collections.emptyList()).stream()
+        .filter(notHidden())
         .sorted(Comparator.comparingInt(CertificateDataElement::getIndex))
         .map(question ->
             CertificateQuestion.builder()
                 .title(toTitle(question))
                 .label(toLabel(question))
-                .value(toValue(question))
+                .value(
+                    toValue(
+                        question,
+                        parentQuestionMap.getOrDefault(question.getId(), Collections.emptyList())
+                    )
+                )
                 .subQuestions(
                     toCertificateQuestions(question, parentQuestionMap)
                 )
@@ -92,7 +99,8 @@ public class CertificateDataConverter {
     return element.getConfig().getLabel();
   }
 
-  public CertificateQuestionValue toValue(CertificateDataElement element) {
+  public CertificateQuestionValue toValue(CertificateDataElement element,
+      List<CertificateDataElement> subQuestions) {
     if (missingValue(element)) {
       return CertificateQuestionValueText.builder()
           .value(NOT_PROVIDED)
@@ -105,7 +113,10 @@ public class CertificateDataConverter {
           .build();
     }
 
-    return valueConverterMap.get(valueType(element)).convert(element);
+    final var valueConverter = valueConverterMap.get(valueType(element));
+    return valueConverter.includeSubquestions() ?
+        valueConverter.convert(element, subQuestions) :
+        valueConverter.convert(element);
   }
 
   private static CertificateDataValueType valueType(CertificateDataElement element) {
@@ -122,5 +133,9 @@ public class CertificateDataConverter {
 
   private boolean elementIsCategory(CertificateDataElement element) {
     return element.getConfig().getType().equals(CertificateDataConfigTypes.CATEGORY);
+  }
+
+  private static Predicate<CertificateDataElement> notHidden() {
+    return element -> !CertificateDataElementStyleEnum.HIDDEN.equals(element.getStyle());
   }
 }
