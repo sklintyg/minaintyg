@@ -69,7 +69,12 @@ public class CertificateDataConverter {
             CertificateQuestion.builder()
                 .title(toTitle(question))
                 .label(toLabel(question))
-                .value(toValue(question))
+                .value(
+                    toValue(
+                        question,
+                        parentQuestionMap.getOrDefault(question.getId(), Collections.emptyList())
+                    )
+                )
                 .subQuestions(
                     toCertificateQuestions(question, parentQuestionMap)
                 )
@@ -92,7 +97,8 @@ public class CertificateDataConverter {
     return element.getConfig().getLabel();
   }
 
-  public CertificateQuestionValue toValue(CertificateDataElement element) {
+  public CertificateQuestionValue toValue(CertificateDataElement element,
+      List<CertificateDataElement> subQuestions) {
     if (missingValue(element)) {
       return CertificateQuestionValueText.builder()
           .value(NOT_PROVIDED)
@@ -105,7 +111,10 @@ public class CertificateDataConverter {
           .build();
     }
 
-    return valueConverterMap.get(valueType(element)).convert(element);
+    final var valueConverter = valueConverterMap.get(valueType(element));
+    return valueConverter.includeSubquestions() ?
+        valueConverter.convert(element, subQuestions) :
+        valueConverter.convert(element);
   }
 
   private static CertificateDataValueType valueType(CertificateDataElement element) {
