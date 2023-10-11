@@ -16,6 +16,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQue
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
@@ -64,6 +65,7 @@ public class CertificateDataConverter {
   private List<CertificateQuestion> toCertificateQuestions(CertificateDataElement element,
       Map<String, List<CertificateDataElement>> parentQuestionMap) {
     return parentQuestionMap.getOrDefault(element.getId(), Collections.emptyList()).stream()
+        .filter(notHidden())
         .sorted(Comparator.comparingInt(CertificateDataElement::getIndex))
         .map(question ->
             CertificateQuestion.builder()
@@ -131,5 +133,9 @@ public class CertificateDataConverter {
 
   private boolean elementIsCategory(CertificateDataElement element) {
     return element.getConfig().getType().equals(CertificateDataConfigTypes.CATEGORY);
+  }
+
+  private static Predicate<CertificateDataElement> notHidden() {
+    return element -> !CertificateDataElementStyleEnum.HIDDEN.equals(element.getStyle());
   }
 }

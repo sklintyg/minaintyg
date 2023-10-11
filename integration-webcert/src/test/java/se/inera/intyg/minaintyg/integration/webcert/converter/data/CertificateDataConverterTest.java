@@ -11,6 +11,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCat
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
@@ -311,6 +312,50 @@ class CertificateDataConverterTest {
         .when(codeValueConverter).convert(elements.get(1), List.of(subQuestion));
     doReturn(expectedCategories.get(0).getQuestions().get(0).getSubQuestions().get(0).getValue())
         .when(textValueConverter).convert(elements.get(2));
+
+    final var actualCategories = certificateDataConverter.convert(elements);
+
+    assertEquals(expectedCategories, actualCategories);
+  }
+
+  @Test
+  void shallExcludeHiddenQuestionsFromConversion() {
+    final var expectedCategories = List.of(
+        createCertificateCategory(CAT_ONE_TEXT,
+            createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE)
+        )
+    );
+
+    final var subQuestion = CertificateDataElement.builder()
+        .parent(QN_ONE_ID)
+        .style(CertificateDataElementStyleEnum.HIDDEN)
+        .config(CertificateDataConfigTextArea.builder().build())
+        .build();
+
+    final var elements = List.of(
+        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+        CertificateDataElement.builder()
+            .id(QN_ONE_ID)
+            .index(1)
+            .parent(CAT_ONE_ID)
+            .config(
+                CertificateDataConfigTextArea.builder()
+                    .text(QN_ONE_TEXT)
+                    .build()
+            )
+            .value(
+                CertificateDataValueCode.builder()
+                    .id(QN_ONE_VALUE)
+                    .build()
+            )
+            .build(),
+        subQuestion
+    );
+
+    doReturn(Boolean.TRUE)
+        .when(codeValueConverter).includeSubquestions();
+    doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
+        .when(codeValueConverter).convert(elements.get(1), List.of(subQuestion));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
