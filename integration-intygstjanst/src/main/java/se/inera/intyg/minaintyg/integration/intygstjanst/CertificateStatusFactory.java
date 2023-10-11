@@ -1,5 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
+import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateConstants.DAYS_LIMIT_FOR_STATUS_NEW;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
@@ -35,7 +37,8 @@ public class CertificateStatusFactory {
   }
 
   public static Optional<CertificateStatusType> newStatus(LocalDateTime issued) {
-    return issued != null && issued.isAfter(LocalDateTime.now().minusMonths(1).minusDays(1))
+    return issued != null && issued.isAfter(
+        LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1))
         ? Optional.of(CertificateStatusType.NEW)
         : Optional.empty();
   }

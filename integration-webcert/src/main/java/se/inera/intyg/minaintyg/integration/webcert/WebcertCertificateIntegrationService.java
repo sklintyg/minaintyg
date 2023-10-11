@@ -6,17 +6,17 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
 
 @Service
 @RequiredArgsConstructor
 public class WebcertCertificateIntegrationService implements GetCertificateIntegrationService {
 
   private final GetCertificateFromWebcertService getCertificateFromWebcertService;
+  private final MetadataConverter metadataConverter;
   private final CertificateDataConverter certificateDataConverter;
 
   @Override
@@ -28,18 +28,13 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
-
+  
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
-                .metadata(CertificateMetadata.builder()
-                    .type(
-                        CertificateType.builder()
-                            .id(response.getCertificate().getMetadata().getId())
-                            .name(response.getCertificate().getMetadata().getName())
-                            .build()
-                    )
-                    .build())
+                .metadata(
+                    metadataConverter.convert(response.getCertificate().getMetadata())
+                )
                 .categories(
                     certificateDataConverter.convert(
                         response.getCertificate().getData().values().stream().toList()
