@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelations;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateStatus;
@@ -41,5 +42,5 @@ public class CertificateMetadataDTO {
   private boolean latestMajorVersion;
   private LocalDateTime readyForSign;
   private String responsibleHospName;
-
+  private CertificateSummary summary;
 }

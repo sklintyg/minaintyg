@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateIssuer;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
@@ -26,6 +27,7 @@ public class MetadataConverter {
         .statuses(statusConverter.convert(metadataDTO))
         .issued(metadataDTO.getCreated())
         .recipient(convertRecipient(metadataDTO))
+        .summary(convertSummary(metadataDTO))
         .build();
   }
 
@@ -59,6 +61,21 @@ public class MetadataConverter {
         .name(metadataDTO.getRecipient().getName())
         .sent(metadataDTO.getRecipient().getSent())
         .build();
+  }
+
+  private CertificateSummary convertSummary(CertificateMetadataDTO metadataDTO) {
+    if (summaryIsNull(metadataDTO)) {
+      return CertificateSummary.builder().build();
+    }
+
+    return CertificateSummary.builder()
+        .label(metadataDTO.getSummary().getLabel())
+        .value(metadataDTO.getSummary().getValue())
+        .build();
+  }
+
+  private static boolean summaryIsNull(CertificateMetadataDTO metadataDTO) {
+    return metadataDTO.getSummary() == null;
   }
 
   private static boolean recipientIsNull(CertificateMetadataDTO metadataDTO) {
