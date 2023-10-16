@@ -37,6 +37,7 @@ class MetadataConverterTest {
   public static final LocalDateTime RECIPIENT_SENT = LocalDateTime.now();
   public static final String SUMMARY_LABEL = "summaryLabel";
   public static final String SUMMARY_VALUE = "summaryValue";
+  public static final String NAME = "certificateName";
   @Mock
   private EventConverter eventConverter;
   @Mock
@@ -49,6 +50,7 @@ class MetadataConverterTest {
   void setup() {
     metadataDTO = CertificateMetadataDTO.builder()
         .id(ID)
+        .name(NAME)
         .type(TYPE_ID)
         .typeName(TYPE_NAME)
         .typeVersion(TYPE_VERSION)
@@ -76,6 +78,12 @@ class MetadataConverterTest {
   void shallConvertCertificateId() {
     final var actualMetadata = metadataConverter.convert(metadataDTO.build());
     assertEquals(ID, actualMetadata.getId());
+  }
+
+  @Test
+  void ShallConvertCertificateName() {
+    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+    assertEquals(NAME, actualMetadata.getName());
   }
 
   @Test
