@@ -81,7 +81,7 @@ class MetadataConverterTest {
   }
 
   @Test
-  void ShallConvertCertificateName() {
+  void shallConvertCertificateName() {
     final var actualMetadata = metadataConverter.convert(metadataDTO.build());
     assertEquals(NAME, actualMetadata.getName());
   }
@@ -123,7 +123,7 @@ class MetadataConverterTest {
   }
 
   @Test
-  void ShallConvertEvents() {
+  void shallConvertEvents() {
     final var expectedMetadata = List.of(CertificateEvent.builder().build());
     doReturn(expectedMetadata).when(eventConverter).convert(metadataDTO.build());
 
@@ -132,7 +132,7 @@ class MetadataConverterTest {
   }
 
   @Test
-  void ShallConvertStatuses() {
+  void shallConvertStatuses() {
     final var expectedMetadata = List.of(CertificateStatusType.SENT);
     doReturn(expectedMetadata).when(statusConverter).convert(metadataDTO.build());
 
