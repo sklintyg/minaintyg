@@ -20,6 +20,7 @@ public class MetadataConverter {
   public CertificateMetadata convert(CertificateMetadataDTO metadataDTO) {
     return CertificateMetadata.builder()
         .id(metadataDTO.getId())
+        .name(metadataDTO.getName())
         .type(convertType(metadataDTO))
         .issuer(convertIssuer(metadataDTO))
         .unit(convertUnit(metadataDTO))
