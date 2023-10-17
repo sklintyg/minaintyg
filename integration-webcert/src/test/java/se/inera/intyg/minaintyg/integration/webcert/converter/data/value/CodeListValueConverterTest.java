@@ -8,7 +8,8 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleCode;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCodeList;
@@ -20,11 +21,36 @@ class CodeListValueConverterTest {
   private static final String CODE_TWO = "BESOK_ARBETSPLATS";
   private static final String CODE_TWO_MATCH = "Besök på arbetsplatsen";
   private static final String NOT_PROVIDED = "Ej angivet";
+  private static final CertificateDataConfigCheckboxMultipleCode CONFIG = CertificateDataConfigCheckboxMultipleCode
+      .builder()
+      .list(
+          List.of(
+              CheckboxMultipleCode
+                  .builder()
+                  .id(CODE_ONE)
+                  .label(CODE_ONE_MATCH)
+                  .build(),
+              CheckboxMultipleCode
+                  .builder()
+                  .id(CODE_TWO)
+                  .label(CODE_TWO_MATCH)
+                  .build()
+          )
+      )
+      .build();
   private ValueConverter codeListValueConverter = new CodeListValueConverter();
+
+  private static CertificateDataElement createElement(CertificateDataConfig config,
+      CertificateDataValue value) {
+    return CertificateDataElement.builder()
+        .config(config)
+        .value(value)
+        .build();
+  }
 
   @Test
   void shouldConvertCertificateDataCodeListWithOneValue() {
-    final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
+    final var elements = createElement(CONFIG,
         CertificateDataValueCodeList.builder()
             .list(
                 List.of(
@@ -50,7 +76,7 @@ class CodeListValueConverterTest {
 
   @Test
   void shouldConvertCertificateDataCodeListWithManyValue() {
-    final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
+    final var elements = createElement(CONFIG,
         CertificateDataValueCodeList.builder()
             .list(
                 List.of(
@@ -80,7 +106,7 @@ class CodeListValueConverterTest {
 
   @Test
   void shouldConvertCertificateDataCodeListIfNoValue() {
-    final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
+    final var elements = createElement(CONFIG,
         CertificateDataValueCodeList.builder()
             .build());
 
@@ -90,13 +116,5 @@ class CodeListValueConverterTest {
 
     final var result = codeListValueConverter.convert(elements);
     assertEquals(expectedResult, result);
-  }
-
-  private static CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
   }
 }
