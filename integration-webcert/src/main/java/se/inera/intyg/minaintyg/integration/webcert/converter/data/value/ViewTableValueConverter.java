@@ -73,6 +73,6 @@ public class ViewTableValueConverter extends AbstractValueConverter {
         .getColumns()
         .stream()
         .map(ViewColumn::getText)
-        .toList()).orElseGet(() -> List.of(TECHNICAL_ERROR));
+        .toList()).orElseGet(() -> List.of(MISSING_LABEL));
   }
 }
