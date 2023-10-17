@@ -67,9 +67,7 @@ public class ViewTableValueConverter extends AbstractValueConverter {
   }
 
   private List<String> getHeadings(CertificateDataConfig config) {
-    final var tableViewConfig = getConfig(config);
-
-    return tableViewConfig.map(c -> c
+    return getConfig(config).map(c -> c
         .getColumns()
         .stream()
         .map(ViewColumn::getText)

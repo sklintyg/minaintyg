@@ -12,12 +12,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 @Component
 public class ViewListValueConverter extends AbstractValueConverter {
 
-  private static CertificateQuestionValueText notProvidedValue() {
-    return CertificateQuestionValueText.builder()
-        .value(NOT_PROVIDED)
-        .build();
-  }
-
   @Override
   public CertificateDataValueType getType() {
     return CertificateDataValueType.VIEW_LIST;
@@ -35,6 +29,12 @@ public class ViewListValueConverter extends AbstractValueConverter {
                 .map(CertificateDataValueViewText::getText)
                 .toList()
         )
+        .build();
+  }
+
+  private CertificateQuestionValueText notProvidedValue() {
+    return CertificateQuestionValueText.builder()
+        .value(NOT_PROVIDED)
         .build();
   }
 }
