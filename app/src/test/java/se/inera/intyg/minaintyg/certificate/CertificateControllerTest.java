@@ -15,13 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
-import se.inera.intyg.minaintyg.certificate.service.GetCertificateListFilterService;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
-import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateFilterResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
@@ -30,8 +28,6 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTypeFilter;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
@@ -46,8 +42,6 @@ class CertificateControllerTest {
 
   @Mock
   ListCertificatesService listCertificatesService;
-  @Mock
-  GetCertificateListFilterService getCertificateListFilterService;
   @Mock
   GetCertificateService getCertificateService;
   @Mock
@@ -131,63 +125,6 @@ class CertificateControllerTest {
             CertificateListRequestDTO.builder().build());
 
         assertEquals(CERTIFICATE_LIST_ITEMS, response.getContent());
-      }
-    }
-  }
-
-  @Nested
-  class CertificateListFilters {
-
-    private final GetCertificateFilterResponse EXPECTED_RESPONSE = GetCertificateFilterResponse
-        .builder()
-        .statuses(List.of(CertificateStatusType.SENT))
-        .years(List.of("2020"))
-        .certificateTypes(List.of(CertificateTypeFilter.builder().build()))
-        .units(List.of(CertificateUnit.builder().build()))
-        .total(5)
-        .build();
-
-    @BeforeEach
-    void setup() {
-      when(getCertificateListFilterService.get()).thenReturn(EXPECTED_RESPONSE);
-    }
-
-    @Nested
-    class Response {
-
-      @Test
-      void shouldSetCertificateTypes() {
-        final var response = certificateController.getCertificateListFilter();
-
-        assertEquals(EXPECTED_RESPONSE.getCertificateTypes(), response.getCertificateTypes());
-      }
-
-      @Test
-      void shouldSetYears() {
-        final var response = certificateController.getCertificateListFilter();
-
-        assertEquals(EXPECTED_RESPONSE.getYears(), response.getYears());
-      }
-
-      @Test
-      void shouldSetUnits() {
-        final var response = certificateController.getCertificateListFilter();
-
-        assertEquals(EXPECTED_RESPONSE.getUnits(), response.getUnits());
-      }
-
-      @Test
-      void shouldSetStatuses() {
-        final var response = certificateController.getCertificateListFilter();
-
-        assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
-      }
-
-      @Test
-      void shouldSetTotal() {
-        final var response = certificateController.getCertificateListFilter();
-
-        assertEquals(EXPECTED_RESPONSE.getTotal(), response.getTotal());
       }
     }
   }
