@@ -22,11 +22,12 @@ public class CodeListValueConverter extends AbstractValueConverter {
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
     final var value = ((CertificateDataValueCodeList) element.getValue()).getList();
-    final var config = (CertificateDataConfigCheckboxMultipleCode) element.getConfig();
 
-    if (value == null || value.isEmpty()) {
+    if (value == null || value.isEmpty()
+        || !(element.getConfig() instanceof final CertificateDataConfigCheckboxMultipleCode config)) {
       return notProvidedValue();
     }
+
     return CertificateQuestionValueList.builder()
         .values(
             value.stream()

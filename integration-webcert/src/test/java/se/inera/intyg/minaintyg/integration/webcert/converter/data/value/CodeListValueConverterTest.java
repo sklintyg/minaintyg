@@ -9,6 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleCode;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
@@ -107,6 +108,20 @@ class CodeListValueConverterTest {
   @Test
   void shouldConvertCertificateDataCodeListIfNoValue() {
     final var elements = createElement(CONFIG,
+        CertificateDataValueCodeList.builder()
+            .build());
+
+    final var expectedResult = CertificateQuestionValueText.builder()
+        .value(NOT_PROVIDED)
+        .build();
+
+    final var result = codeListValueConverter.convert(elements);
+    assertEquals(expectedResult, result);
+  }
+
+  @Test
+  void shouldConvertToNoValueIfWrongConfig() {
+    final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
         CertificateDataValueCodeList.builder()
             .build());
 
