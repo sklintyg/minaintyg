@@ -13,6 +13,7 @@ public interface ValueConverter {
   CertificateQuestionValueText NOT_PROVIDED_VALUE = CertificateQuestionValueText.builder()
       .value(NOT_PROVIDED)
       .build();
+  String MISSING_LABEL = "Saknas";
 
   CertificateDataValueType getType();
 
