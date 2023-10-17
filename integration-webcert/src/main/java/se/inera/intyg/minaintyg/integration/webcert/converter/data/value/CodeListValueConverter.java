@@ -32,7 +32,7 @@ public class CodeListValueConverter extends AbstractValueConverter {
         .values(
             value.stream()
                 .map(CertificateDataValueCode::getCode)
-                .map(v -> codeToString(v, config))
+                .map(code -> codeToString(code, config))
                 .toList()
         )
         .build();
