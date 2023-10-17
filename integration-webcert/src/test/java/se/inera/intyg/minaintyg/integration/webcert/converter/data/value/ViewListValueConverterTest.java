@@ -20,14 +20,6 @@ class ViewListValueConverterTest {
 
   private ValueConverter valueConverter = new ViewListValueConverter();
 
-  private static CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
-  }
-
   @Test
   void shouldConvertValue() {
     final var elements = createElement(
@@ -67,5 +59,13 @@ class ViewListValueConverterTest {
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
+  }
+
+  private CertificateDataElement createElement(CertificateDataConfig config,
+      CertificateDataValue value) {
+    return CertificateDataElement.builder()
+        .config(config)
+        .value(value)
+        .build();
   }
 }

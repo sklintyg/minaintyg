@@ -17,14 +17,6 @@ class ViewTextValueConverterTest {
 
   private ValueConverter valueConverter = new ViewTextValueConverter();
 
-  private static CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
-  }
-
   @Test
   void shouldConvertCertificateDataTextValue() {
     final var elements = createElement(
@@ -56,5 +48,13 @@ class ViewTextValueConverterTest {
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
+  }
+
+  private CertificateDataElement createElement(CertificateDataConfig config,
+      CertificateDataValue value) {
+    return CertificateDataElement.builder()
+        .config(config)
+        .value(value)
+        .build();
   }
 }
