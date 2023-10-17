@@ -1,7 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.TECHNICAL_ERROR;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.MISSING_LABEL;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -128,7 +128,7 @@ class ViewTableValueConverterTest {
     );
 
     final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(List.of(TECHNICAL_ERROR))
+        .headings(List.of(MISSING_LABEL))
         .values(
             List.of(
                 List.of(VALUE_1, VALUE_2, VALUE_3)
