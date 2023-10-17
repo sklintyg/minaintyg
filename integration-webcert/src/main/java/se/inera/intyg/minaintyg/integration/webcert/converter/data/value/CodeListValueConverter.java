@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
@@ -26,26 +27,25 @@ public class CodeListValueConverter extends AbstractValueConverter {
       return NOT_PROVIDED_VALUE;
     }
 
-    if (!(element.getConfig() instanceof final CertificateDataConfigCheckboxMultipleCode config)) {
-      return TECHNICAL_ERROR_VALUE;
-    }
-
     return CertificateQuestionValueList.builder()
         .values(
             value.stream()
                 .map(CertificateDataValueCode::getCode)
-                .map(code -> codeToString(code, config))
+                .map(code -> codeToString(code, element.getConfig()))
                 .toList()
         )
         .build();
   }
 
-  private String codeToString(String code,
-      CertificateDataConfigCheckboxMultipleCode config) {
-    return config.getList()
+  private String codeToString(String code, CertificateDataConfig config) {
+    if (!(config instanceof final CertificateDataConfigCheckboxMultipleCode codeConfig)) {
+      return code;
+    }
+
+    return codeConfig.getList()
         .stream()
         .filter(configItem -> configItem.getId().equals(code))
         .findFirst()
-        .map(CheckboxMultipleCode::getLabel).orElse(MISSING_LABEL);
+        .map(CheckboxMultipleCode::getLabel).orElse(code);
   }
 }
