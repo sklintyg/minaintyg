@@ -23,9 +23,12 @@ public class CodeListValueConverter extends AbstractValueConverter {
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
     final var value = ((CertificateDataValueCodeList) element.getValue()).getList();
 
-    if (value == null || value.isEmpty()
-        || !(element.getConfig() instanceof final CertificateDataConfigCheckboxMultipleCode config)) {
+    if (value == null || value.isEmpty()) {
       return notProvidedValue();
+    }
+
+    if (!(element.getConfig() instanceof final CertificateDataConfigCheckboxMultipleCode config)) {
+      return technicalErrorValue();
     }
 
     return CertificateQuestionValueList.builder()
@@ -44,12 +47,18 @@ public class CodeListValueConverter extends AbstractValueConverter {
         .stream()
         .filter(configItem -> configItem.getId().equals(code))
         .findFirst()
-        .map(CheckboxMultipleCode::getLabel).orElse("");
+        .map(CheckboxMultipleCode::getLabel).orElse(MISSING_LABEL);
   }
 
   private CertificateQuestionValueText notProvidedValue() {
     return CertificateQuestionValueText.builder()
         .value(NOT_PROVIDED)
+        .build();
+  }
+
+  private CertificateQuestionValueText technicalErrorValue() {
+    return CertificateQuestionValueText.builder()
+        .value(TECHNICAL_ERROR)
         .build();
   }
 }
