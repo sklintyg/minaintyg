@@ -36,7 +36,7 @@ public class BooleanValueConverter extends AbstractValueConverter {
     if (config instanceof final CertificateDataConfigRadioBoolean radioBoolean) {
       return value ? radioBoolean.getSelectedText() : radioBoolean.getUnselectedText();
     }
-    return TECHNICAL_ERROR;
+    return value.toString();
   }
 
   private static CertificateQuestionValueText notProvidedTextValue() {

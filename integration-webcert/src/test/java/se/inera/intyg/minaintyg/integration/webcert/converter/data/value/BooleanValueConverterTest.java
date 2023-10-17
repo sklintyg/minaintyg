@@ -18,7 +18,7 @@ class BooleanValueConverterTest {
   private static final String NOT_PROVIDED = "Ej angivet";
   private static final String TRUE_BOOLEAN = "Ja";
   private static final String FALSE_BOOLEAN = "Nej";
-  private static final String TECHNICAL_ERROR = "Kan inte visa värdet pga tekniskt fel";
+  private final String TRUE = "true";
 
   private ValueConverter booleanValueConverter = new BooleanValueConverter();
 
@@ -134,14 +134,14 @@ class BooleanValueConverterTest {
   }
 
   @Test
-  void shouldShowTechnicalErrorIfConfigTypeIsNotSupported() {
+  void shouldValueIfConfigTypeIsNotSupported() {
     final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
         CertificateDataValueBoolean.builder()
             .selected(true)
             .build());
 
     final var expectedResult = CertificateQuestionValueText.builder()
-        .value(TECHNICAL_ERROR)
+        .value(TRUE)
         .build();
 
     final var result = booleanValueConverter.convert(elements);
