@@ -3,7 +3,6 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxMultipleCode;
@@ -24,11 +23,11 @@ public class CodeListValueConverter extends AbstractValueConverter {
     final var value = ((CertificateDataValueCodeList) element.getValue()).getList();
 
     if (value == null || value.isEmpty()) {
-      return notProvidedValue();
+      return NOT_PROVIDED_VALUE;
     }
 
     if (!(element.getConfig() instanceof final CertificateDataConfigCheckboxMultipleCode config)) {
-      return technicalErrorValue();
+      return TECHNICAL_ERROR_VALUE;
     }
 
     return CertificateQuestionValueList.builder()
@@ -48,17 +47,5 @@ public class CodeListValueConverter extends AbstractValueConverter {
         .filter(configItem -> configItem.getId().equals(code))
         .findFirst()
         .map(CheckboxMultipleCode::getLabel).orElse(MISSING_LABEL);
-  }
-
-  private CertificateQuestionValueText notProvidedValue() {
-    return CertificateQuestionValueText.builder()
-        .value(NOT_PROVIDED)
-        .build();
-  }
-
-  private CertificateQuestionValueText technicalErrorValue() {
-    return CertificateQuestionValueText.builder()
-        .value(TECHNICAL_ERROR)
-        .build();
   }
 }
