@@ -5,10 +5,10 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueYear;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueViewText;
 
 @Component
-public class YearValueConverter extends AbstractValueConverter {
+public class ViewTextValueConverter extends AbstractValueConverter {
 
   private static CertificateQuestionValueText getText(String value) {
     return CertificateQuestionValueText.builder()
@@ -18,12 +18,12 @@ public class YearValueConverter extends AbstractValueConverter {
 
   @Override
   public CertificateDataValueType getType() {
-    return CertificateDataValueType.YEAR;
+    return CertificateDataValueType.VIEW_TEXT;
   }
 
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
-    final var value = ((CertificateDataValueYear) element.getValue()).getYear().toString();
+    final var value = ((CertificateDataValueViewText) element.getValue()).getText();
     return getText(value);
   }
 }
