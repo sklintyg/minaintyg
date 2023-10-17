@@ -26,7 +26,7 @@ public class ViewTextValueConverter extends AbstractValueConverter {
 
   @Override
   public CertificateDataValueType getType() {
-    return CertificateDataValueType.YEAR;
+    return CertificateDataValueType.VIEW_TEXT;
   }
 
   private Optional<CertificateDataValueViewText> getValue(CertificateDataValue value) {
