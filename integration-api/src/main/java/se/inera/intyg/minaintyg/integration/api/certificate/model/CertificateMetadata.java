@@ -17,6 +17,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 public class CertificateMetadata {
 
   String id;
+  String name;
   CertificateType type;
   CertificateIssuer issuer;
   CertificateUnit unit;
