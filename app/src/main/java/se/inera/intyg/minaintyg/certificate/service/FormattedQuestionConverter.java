@@ -76,6 +76,7 @@ public class FormattedQuestionConverter {
       case LIST -> list((CertificateQuestionValueList) value);
       case TABLE -> table((CertificateQuestionValueTable) value);
       case ITEM_LIST -> itemList((CertificateQuestionValueItemList) value);
+      case MESSAGE -> "";
     };
   }
 }

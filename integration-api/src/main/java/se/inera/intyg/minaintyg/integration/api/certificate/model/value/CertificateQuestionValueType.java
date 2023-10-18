@@ -4,5 +4,6 @@ public enum CertificateQuestionValueType {
   TEXT,
   LIST,
   TABLE,
-  ITEM_LIST
+  ITEM_LIST,
+  MESSAGE
 }

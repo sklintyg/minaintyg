@@ -13,10 +13,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.MessageLevel;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueMessage;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMessage;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
@@ -101,6 +104,12 @@ public class CertificateDataConverter {
 
   public CertificateQuestionValue toValue(CertificateDataElement element,
       List<CertificateDataElement> subQuestions) {
+    if (element.getConfig() instanceof final CertificateDataConfigMessage configMessage) {
+      return CertificateQuestionValueMessage.builder()
+          .value(configMessage.getMessage())
+          .level(mapLevel(configMessage.getLevel()))
+          .build();
+    }
     if (missingValue(element)) {
       return CertificateQuestionValueText.builder()
           .value(NOT_PROVIDED)
@@ -117,6 +126,15 @@ public class CertificateDataConverter {
     return valueConverter.includeSubquestions() ?
         valueConverter.convert(element, subQuestions) :
         valueConverter.convert(element);
+  }
+
+  private MessageLevel mapLevel(
+      se.inera.intyg.minaintyg.integration.webcert.client.dto.config.MessageLevel messageLevel) {
+    return switch (messageLevel) {
+      case INFO -> MessageLevel.INFO;
+      case ERROR -> MessageLevel.ERROR;
+      case OBSERVE -> MessageLevel.OBSERVE;
+    };
   }
 
   private static CertificateDataValueType valueType(CertificateDataElement element) {
