@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
@@ -82,9 +83,25 @@ class IcfValueConverterTest {
   }
 
   @Test
-  void shouldNotReturnCollectionsLabelIfNoIcfCodeIsProvided() {
+  void shouldNotReturnCollectionsLabelIfIcfCodeIsNull() {
     final var value = CertificateDataIcfValue.builder()
         .text(TEXT_VALUE)
+        .icfCodes(null)
+        .build();
+    final var config = createConfig();
+    final var element = createElement(config, value);
+    final var expectedValue = CertificateQuestionValueText.builder()
+        .value(TEXT_VALUE)
+        .build();
+    final var result = icfValueConverter.convert(element);
+    assertEquals(expectedValue, result);
+  }
+
+  @Test
+  void shouldNotReturnCollectionsLabelIfIcfCodeIsEmpty() {
+    final var value = CertificateDataIcfValue.builder()
+        .text(TEXT_VALUE)
+        .icfCodes(Collections.emptyList())
         .build();
     final var config = createConfig();
     final var element = createElement(config, value);
