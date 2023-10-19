@@ -69,30 +69,45 @@ public class CodeValueConverter extends AbstractValueConverter {
 
   private CertificateQuestionValueText convertRadioMultipleCode(CertificateDataValueCode value,
       CertificateDataConfigRadioMultipleCode config) {
-    final var idToLabelMap = config.getList().stream()
-        .collect(
-            Collectors.toMap(
-                RadioMultipleCode::getId,
-                RadioMultipleCode::getLabel
-            )
-        );
+    return convertMultipleCode(
+        value,
+        config.getList(),
+        RadioMultipleCode::getId,
+        RadioMultipleCode::getLabel
+    );
+  }
+
+  private static CertificateQuestionValueText convertDropdown(
+      CertificateDataValueCode value, CertificateDataConfigDropdown config) {
+    return convertMultipleCode(
+        value,
+        config.getList(),
+        DropdownItem::getId,
+        DropdownItem::getLabel
+    );
+  }
+
+  private static <T> CertificateQuestionValueText convertMultipleCode(
+      CertificateDataValueCode value,
+      List<T> list,
+      Function<T, String> getId,
+      Function<T, String> getLabel) {
+    final var idToLabelMap = convertIdToLabelMap(list, getId, getLabel);
     return createTextValue(
         idToLabelMap.getOrDefault(value.getId(), value.getId())
     );
   }
 
-  private static CertificateQuestionValueText convertDropdown(
-      CertificateDataValueCode codeValue, CertificateDataConfigDropdown dropdownConfig) {
-    final var idToLabelMap = dropdownConfig.getList().stream()
+  private static <T> Map<String, String> convertIdToLabelMap(List<T> list,
+      Function<T, String> getId, Function<T, String> getLabel) {
+    return list
+        .stream()
         .collect(
             Collectors.toMap(
-                DropdownItem::getId,
-                DropdownItem::getLabel
+                getId,
+                getLabel
             )
         );
-    return createTextValue(
-        idToLabelMap.getOrDefault(codeValue.getId(), codeValue.getId())
-    );
   }
 
   private CertificateQuestionValueText convertRadioMultipleCodeOptionalDropdown(
