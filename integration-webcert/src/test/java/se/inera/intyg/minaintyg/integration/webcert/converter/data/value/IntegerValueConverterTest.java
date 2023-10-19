@@ -14,6 +14,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 class IntegerValueConverterTest {
 
   private final ValueConverter integerValueConverter = new IntegerValueConverter();
+  public static final String UNIT_OF_MEASUREMENT = "%";
+
 
   @Test
   void shallReturnIntegerValueType() {
@@ -60,5 +62,23 @@ class IntegerValueConverterTest {
         .build();
 
     assertThrows(IllegalArgumentException.class, () -> integerValueConverter.convert(element));
+  }
+
+  @Test
+  void shallReturnTextValueWithIntegerAndUnitOfMeasurementIfBothExists() {
+    final var expectedValue = CertificateQuestionValueText.builder()
+        .value("10%")
+        .build();
+
+    final var element = CertificateDataElement.builder()
+        .value(
+            CertificateDataValueInteger.builder()
+                .value(10)
+                .unitOfMeasurement(UNIT_OF_MEASUREMENT)
+                .build()
+        ).build();
+
+    final var actualValue = integerValueConverter.convert(element);
+    assertEquals(expectedValue, actualValue);
   }
 }
