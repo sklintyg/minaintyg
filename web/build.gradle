@@ -130,6 +130,9 @@ war.dependsOn createVersionPropertyFile
 dependencies {
     compile "se.inera.intyg.schemas:schemas-contract:${schemasContractVersion}"
 
+    // javax.jws-api dependency added to remove "warning: unknown enum constant ParameterStyle.BARE" (used by cxf-rt-frontend 3.5.5)
+    implementation "javax.jws:javax.jws-api:${javaxJwsApiVersion}"
+
     compile "se.riv.itintegration.monitoring:itintegration-monitoring-schemas:${rivtaItintegrationMonitoringSchemasVersion}"
     compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:${intygClinicalprocessSchemasVersion}"
 
