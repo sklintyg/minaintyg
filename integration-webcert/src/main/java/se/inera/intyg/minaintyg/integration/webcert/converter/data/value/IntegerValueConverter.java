@@ -21,7 +21,7 @@ public class IntegerValueConverter extends AbstractValueConverter {
                 return NOT_PROVIDED_VALUE;
               }
               return CertificateQuestionValueText.builder()
-                  .value(integerValue.getValue().toString())
+                  .value(getValue(integerValue))
                   .build();
             }
         )
@@ -38,5 +38,12 @@ public class IntegerValueConverter extends AbstractValueConverter {
       return Optional.of(integerValue);
     }
     return Optional.empty();
+  }
+
+  private String getValue(CertificateDataValueInteger integerValue) {
+    if (integerValue.getUnitOfMeasurement() != null) {
+      return integerValue.getValue() + integerValue.getUnitOfMeasurement();
+    }
+    return integerValue.getValue().toString();
   }
 }
