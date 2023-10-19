@@ -41,85 +41,6 @@ class MedicalInvestigationValueConverterTest {
   public static final String INVESTIGATION_TYPE_ID_FOUR = "INVESTIGATION_TYPE_ID_FOUR";
   private final ValueConverter medicalInvestigationValueConverter = new MedicalInvestigationValueConverter();
 
-  private static CertificateDataValueMedicalInvestigationList createMedicalInvestigationValues(
-      CertificateDataValueMedicalInvestigation... values) {
-    return CertificateDataValueMedicalInvestigationList.builder()
-        .list(
-            List.of(values)
-        )
-        .build();
-  }
-
-  private static CertificateDataValueMedicalInvestigation createMedicalInvestigationValue(
-      String INVESTIGATION_TYPE_ID_ONE, String dateOne, String INFORMATION_SOURCE_ONE) {
-    return CertificateDataValueMedicalInvestigation.builder()
-        .investigationType(
-            CertificateDataValueCode.builder()
-                .id(INVESTIGATION_TYPE_ID)
-                .code(INVESTIGATION_TYPE_ID_ONE)
-                .build()
-        )
-        .date(
-            CertificateDataValueDate.builder()
-                .id(DATE_ID)
-                .date(dateOne != null ? LocalDate.parse(dateOne) : null)
-                .build()
-        )
-        .informationSource(
-            CertificateDataTextValue.builder()
-                .id(INFORMATION_SOURCE_ID)
-                .text(INFORMATION_SOURCE_ONE)
-                .build()
-        )
-        .build();
-  }
-
-  private static CertificateDataConfigMedicalInvestigation createConfig() {
-    return CertificateDataConfigMedicalInvestigation.builder()
-        .typeText(INVESTIGATION_TYPE_HEADER)
-        .dateText(DATE_HEADER)
-        .informationSourceText(INFORMATION_SOURCE_HEADER)
-        .list(
-            List.of(
-                MedicalInvestigation.builder()
-                    .typeOptions(
-                        List.of(
-                            CodeItem.builder()
-                                .id(INVESTIGATION_TYPE_ID)
-                                .code(INVESTIGATION_TYPE_ID_ONE)
-                                .label(INVESTIGATION_TYPE_LABEL_ONE)
-                                .build(),
-                            CodeItem.builder()
-                                .id(INVESTIGATION_TYPE_ID)
-                                .code(INVESTIGATION_TYPE_ID_TWO)
-                                .label(INVESTIGATION_TYPE_LABEL_TWO)
-                                .build(),
-                            CodeItem.builder()
-                                .id(INVESTIGATION_TYPE_ID)
-                                .code(INVESTIGATION_TYPE_ID_THREE)
-                                .label(INVESTIGATION_TYPE_LABEL_THREE)
-                                .build()
-                        )
-                    )
-                    .build()
-            )
-        )
-        .build();
-  }
-
-  private static List<String> createHeadings(String... headings) {
-    return List.of(headings);
-  }
-
-  @SafeVarargs
-  private static List<List<String>> createValues(List<String>... values) {
-    return List.of(values);
-  }
-
-  private static List<String> createValue(String... values) {
-    return List.of(values);
-  }
-
   @Test
   void shallReturnYearValueType() {
     assertEquals(CertificateDataValueType.MEDICAL_INVESTIGATION_LIST,
@@ -366,5 +287,84 @@ class MedicalInvestigationValueConverterTest {
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
+  }
+
+  private static CertificateDataValueMedicalInvestigationList createMedicalInvestigationValues(
+      CertificateDataValueMedicalInvestigation... values) {
+    return CertificateDataValueMedicalInvestigationList.builder()
+        .list(
+            List.of(values)
+        )
+        .build();
+  }
+
+  private static CertificateDataValueMedicalInvestigation createMedicalInvestigationValue(
+      String INVESTIGATION_TYPE_ID_ONE, String dateOne, String INFORMATION_SOURCE_ONE) {
+    return CertificateDataValueMedicalInvestigation.builder()
+        .investigationType(
+            CertificateDataValueCode.builder()
+                .id(INVESTIGATION_TYPE_ID)
+                .code(INVESTIGATION_TYPE_ID_ONE)
+                .build()
+        )
+        .date(
+            CertificateDataValueDate.builder()
+                .id(DATE_ID)
+                .date(dateOne != null ? LocalDate.parse(dateOne) : null)
+                .build()
+        )
+        .informationSource(
+            CertificateDataTextValue.builder()
+                .id(INFORMATION_SOURCE_ID)
+                .text(INFORMATION_SOURCE_ONE)
+                .build()
+        )
+        .build();
+  }
+
+  private static CertificateDataConfigMedicalInvestigation createConfig() {
+    return CertificateDataConfigMedicalInvestigation.builder()
+        .typeText(INVESTIGATION_TYPE_HEADER)
+        .dateText(DATE_HEADER)
+        .informationSourceText(INFORMATION_SOURCE_HEADER)
+        .list(
+            List.of(
+                MedicalInvestigation.builder()
+                    .typeOptions(
+                        List.of(
+                            CodeItem.builder()
+                                .id(INVESTIGATION_TYPE_ID)
+                                .code(INVESTIGATION_TYPE_ID_ONE)
+                                .label(INVESTIGATION_TYPE_LABEL_ONE)
+                                .build(),
+                            CodeItem.builder()
+                                .id(INVESTIGATION_TYPE_ID)
+                                .code(INVESTIGATION_TYPE_ID_TWO)
+                                .label(INVESTIGATION_TYPE_LABEL_TWO)
+                                .build(),
+                            CodeItem.builder()
+                                .id(INVESTIGATION_TYPE_ID)
+                                .code(INVESTIGATION_TYPE_ID_THREE)
+                                .label(INVESTIGATION_TYPE_LABEL_THREE)
+                                .build()
+                        )
+                    )
+                    .build()
+            )
+        )
+        .build();
+  }
+
+  private static List<String> createHeadings(String... headings) {
+    return List.of(headings);
+  }
+
+  @SafeVarargs
+  private static List<List<String>> createValues(List<String>... values) {
+    return List.of(values);
+  }
+
+  private static List<String> createValue(String... values) {
+    return List.of(values);
   }
 }

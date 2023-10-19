@@ -21,6 +21,34 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
 
   public static final String MISSING_LABEL = "Saknas";
 
+  @Override
+  public CertificateDataValueType getType() {
+    return CertificateDataValueType.MEDICAL_INVESTIGATION_LIST;
+  }
+
+  @Override
+  protected CertificateQuestionValue convertToValue(CertificateDataElement element) {
+    final var value = getValue(element.getValue());
+    final var config = getConfig(element.getConfig());
+    return createTableValue(value, config);
+  }
+
+  private Optional<CertificateDataConfigMedicalInvestigation> getConfig(
+      CertificateDataConfig config) {
+    if (config instanceof CertificateDataConfigMedicalInvestigation configMedicalInvestigation) {
+      return Optional.of(configMedicalInvestigation);
+    }
+    return Optional.empty();
+  }
+
+  private Optional<List<CertificateDataValueMedicalInvestigation>> getValue(
+      CertificateDataValue value) {
+    if (value instanceof CertificateDataValueMedicalInvestigationList investigationListValue) {
+      return Optional.ofNullable(investigationListValue.getList());
+    }
+    return Optional.empty();
+  }
+
   private static CertificateQuestionValue createTableValue(
       Optional<List<CertificateDataValueMedicalInvestigation>> values,
       Optional<CertificateDataConfigMedicalInvestigation> config) {
@@ -100,33 +128,5 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
 
   private static List<String> row(String... headers) {
     return List.of(headers);
-  }
-
-  @Override
-  public CertificateDataValueType getType() {
-    return CertificateDataValueType.MEDICAL_INVESTIGATION_LIST;
-  }
-
-  @Override
-  protected CertificateQuestionValue convertToValue(CertificateDataElement element) {
-    final var value = getValue(element.getValue());
-    final var config = getConfig(element.getConfig());
-    return createTableValue(value, config);
-  }
-
-  private Optional<CertificateDataConfigMedicalInvestigation> getConfig(
-      CertificateDataConfig config) {
-    if (config instanceof CertificateDataConfigMedicalInvestigation configMedicalInvestigation) {
-      return Optional.of(configMedicalInvestigation);
-    }
-    return Optional.empty();
-  }
-
-  private Optional<List<CertificateDataValueMedicalInvestigation>> getValue(
-      CertificateDataValue value) {
-    if (value instanceof CertificateDataValueMedicalInvestigationList investigationListValue) {
-      return Optional.ofNullable(investigationListValue.getList());
-    }
-    return Optional.empty();
   }
 }
