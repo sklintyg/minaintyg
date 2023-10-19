@@ -13,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMessage;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
@@ -390,6 +391,34 @@ class CertificateDataConverterTest {
             )
             .value(
                 CertificateDataValueBoolean.builder().build()
+            )
+            .build()
+    );
+
+    final var actualCategories = certificateDataConverter.convert(elements);
+
+    assertEquals(expectedCategories, actualCategories);
+  }
+
+  @Test
+  void shallExcludeQuestionsOfTypeMessageFromConversion() {
+    final var expectedCategories = List.of(
+        createCertificateCategory(CAT_ONE_TEXT,
+            createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)
+        )
+    );
+
+    final var elements = List.of(
+        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+        createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID),
+        CertificateDataElement.builder()
+            .id(QN_TWO_ID)
+            .index(2)
+            .parent(QN_ONE_ID)
+            .config(
+                CertificateDataConfigMessage.builder()
+                    .message(QN_ONE_TEXT)
+                    .build()
             )
             .build()
     );
