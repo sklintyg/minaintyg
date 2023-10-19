@@ -33,6 +33,22 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
     return createTableValue(value, config);
   }
 
+  private Optional<CertificateDataConfigMedicalInvestigation> getConfig(
+      CertificateDataConfig config) {
+    if (config instanceof CertificateDataConfigMedicalInvestigation configMedicalInvestigation) {
+      return Optional.of(configMedicalInvestigation);
+    }
+    return Optional.empty();
+  }
+
+  private Optional<List<CertificateDataValueMedicalInvestigation>> getValue(
+      CertificateDataValue value) {
+    if (value instanceof CertificateDataValueMedicalInvestigationList investigationListValue) {
+      return Optional.ofNullable(investigationListValue.getList());
+    }
+    return Optional.empty();
+  }
+
   private static CertificateQuestionValue createTableValue(
       Optional<List<CertificateDataValueMedicalInvestigation>> values,
       Optional<CertificateDataConfigMedicalInvestigation> config) {
@@ -59,6 +75,7 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
       Optional<CertificateDataConfigMedicalInvestigation> config) {
     return values.map(investigationList ->
             investigationList.stream()
+                .filter(investigation -> !isValueEmpty(investigation))
                 .map(investigation ->
                     List.of(
                         convertInvestigationCode(investigation.getInvestigationType().getCode(),
@@ -86,7 +103,22 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
   }
 
   private static boolean isEmpty(Optional<List<CertificateDataValueMedicalInvestigation>> values) {
-    return values.map(List::isEmpty).orElse(true);
+    return values.map(MedicalInvestigationValueConverter::isValueListEmpty).orElse(true);
+  }
+
+  private static boolean isValueListEmpty(List<CertificateDataValueMedicalInvestigation> values) {
+    return values.isEmpty()
+        || values.stream().allMatch(MedicalInvestigationValueConverter::isValueEmpty);
+  }
+
+  private static boolean isValueEmpty(
+      CertificateDataValueMedicalInvestigation medicalInvestigation) {
+    return medicalInvestigation.getDate() == null
+        || medicalInvestigation.getDate().getDate() == null
+        || medicalInvestigation.getInvestigationType() == null
+        || medicalInvestigation.getInvestigationType().getCode() == null
+        || medicalInvestigation.getInformationSource() == null
+        || medicalInvestigation.getInformationSource().getText() == null;
   }
 
   private static String header(Optional<CertificateDataConfigMedicalInvestigation> config,
@@ -96,21 +128,5 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
 
   private static List<String> row(String... headers) {
     return List.of(headers);
-  }
-
-  private Optional<CertificateDataConfigMedicalInvestigation> getConfig(
-      CertificateDataConfig config) {
-    if (config instanceof CertificateDataConfigMedicalInvestigation configMedicalInvestigation) {
-      return Optional.of(configMedicalInvestigation);
-    }
-    return Optional.empty();
-  }
-
-  private Optional<List<CertificateDataValueMedicalInvestigation>> getValue(
-      CertificateDataValue value) {
-    if (value instanceof CertificateDataValueMedicalInvestigationList investigationListValue) {
-      return Optional.ofNullable(investigationListValue.getList());
-    }
-    return Optional.empty();
   }
 }
