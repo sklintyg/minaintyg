@@ -66,6 +66,7 @@ public class CertificateDataConverter {
       Map<String, List<CertificateDataElement>> parentQuestionMap) {
     return parentQuestionMap.getOrDefault(element.getId(), Collections.emptyList()).stream()
         .filter(notHidden())
+        .filter(notMessage())
         .sorted(Comparator.comparingInt(CertificateDataElement::getIndex))
         .map(question ->
             CertificateQuestion.builder()
@@ -137,5 +138,9 @@ public class CertificateDataConverter {
 
   private static Predicate<CertificateDataElement> notHidden() {
     return element -> !CertificateDataElementStyleEnum.HIDDEN.equals(element.getStyle());
+  }
+
+  private static Predicate<CertificateDataElement> notMessage() {
+    return element -> !element.getConfig().getType().equals(CertificateDataConfigTypes.UE_MESSAGE);
   }
 }

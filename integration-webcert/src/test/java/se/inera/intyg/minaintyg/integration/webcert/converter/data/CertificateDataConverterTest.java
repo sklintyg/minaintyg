@@ -13,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMessage;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
@@ -393,6 +394,51 @@ class CertificateDataConverterTest {
             )
             .build()
     );
+
+    final var actualCategories = certificateDataConverter.convert(elements);
+
+    assertEquals(expectedCategories, actualCategories);
+  }
+
+  @Test
+  void shallExcludeQuestionsOfTypeMessageFromConversion() {
+    final var expectedCategories = List.of(
+        createCertificateCategory(CAT_ONE_TEXT,
+            createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE)
+        )
+    );
+
+    final var elements = List.of(
+        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+        CertificateDataElement.builder()
+            .id(QN_ONE_ID)
+            .index(1)
+            .parent(CAT_ONE_ID)
+            .config(
+                CertificateDataConfigTextArea.builder()
+                    .text(QN_ONE_TEXT)
+                    .build()
+            )
+            .value(
+                CertificateDataTextValue.builder()
+                    .text(QN_ONE_VALUE)
+                    .build()
+            )
+            .build(),
+        CertificateDataElement.builder()
+            .id(QN_TWO_ID)
+            .index(2)
+            .parent(QN_ONE_ID)
+            .config(
+                CertificateDataConfigMessage.builder()
+                    .message(QN_ONE_TEXT)
+                    .build()
+            )
+            .build()
+    );
+
+    doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
+        .when(textValueConverter).convert(elements.get(1));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
