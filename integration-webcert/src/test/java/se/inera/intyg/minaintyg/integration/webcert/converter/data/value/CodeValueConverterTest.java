@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigDropdown;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioMultipleCodeOptionalDropdown;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.DropdownItem;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.RadioMultipleCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.RadioMultipleCodeOptionalDropdown;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
@@ -163,6 +165,60 @@ class CodeValueConverterTest {
         )
         .build();
 
+    final var result = codeValueConverter.convert(element);
+    assertEquals(expectedValue, result);
+  }
+
+  @Test
+  void shallIncludeCodeWithRadioMultipleCodeConfig() {
+    final var expectedValue = CertificateQuestionValueText.builder()
+        .value(LABEL_ONE)
+        .build();
+
+    final var element = CertificateDataElement.builder()
+        .config(
+            CertificateDataConfigRadioMultipleCode.builder()
+                .list(
+                    List.of(
+                        RadioMultipleCode.builder()
+                            .id(ID_ONE)
+                            .label(LABEL_ONE)
+                            .build()
+                    )
+                )
+                .build()
+        )
+        .value(
+            createCodeValue(ID_ONE)
+        )
+        .build();
+    final var result = codeValueConverter.convert(element);
+    assertEquals(expectedValue, result);
+  }
+
+  @Test
+  void shallIncludeCodeWhenIdIsNotFoundInRadioMultipleCodeConfig() {
+    final var expectedValue = CertificateQuestionValueText.builder()
+        .value(ID_ONE)
+        .build();
+
+    final var element = CertificateDataElement.builder()
+        .config(
+            CertificateDataConfigRadioMultipleCode.builder()
+                .list(
+                    List.of(
+                        RadioMultipleCode.builder()
+                            .id(ID_TWO)
+                            .label(LABEL_ONE)
+                            .build()
+                    )
+                )
+                .build()
+        )
+        .value(
+            createCodeValue(ID_ONE)
+        )
+        .build();
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
