@@ -404,27 +404,13 @@ class CertificateDataConverterTest {
   void shallExcludeQuestionsOfTypeMessageFromConversion() {
     final var expectedCategories = List.of(
         createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE)
+            createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)
         )
     );
 
     final var elements = List.of(
         createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigTextArea.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .value(
-                CertificateDataTextValue.builder()
-                    .text(QN_ONE_VALUE)
-                    .build()
-            )
-            .build(),
+        createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID),
         CertificateDataElement.builder()
             .id(QN_TWO_ID)
             .index(2)
@@ -436,9 +422,6 @@ class CertificateDataConverterTest {
             )
             .build()
     );
-
-    doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
-        .when(textValueConverter).convert(elements.get(1));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
