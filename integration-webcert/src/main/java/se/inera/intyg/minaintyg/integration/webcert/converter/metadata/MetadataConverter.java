@@ -20,7 +20,6 @@ public class MetadataConverter {
   public CertificateMetadata convert(CertificateMetadataDTO metadataDTO) {
     return CertificateMetadata.builder()
         .id(metadataDTO.getId())
-        .name(metadataDTO.getName())
         .type(convertType(metadataDTO))
         .issuer(convertIssuer(metadataDTO))
         .unit(convertUnit(metadataDTO))
@@ -35,7 +34,7 @@ public class MetadataConverter {
   private CertificateType convertType(CertificateMetadataDTO metadataDTO) {
     return CertificateType.builder()
         .id(metadataDTO.getType())
-        .name(metadataDTO.getTypeName())
+        .name(metadataDTO.getName())
         .version(metadataDTO.getTypeVersion())
         .build();
   }

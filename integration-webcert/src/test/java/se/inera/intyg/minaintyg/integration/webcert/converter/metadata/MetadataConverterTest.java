@@ -28,7 +28,6 @@ class MetadataConverterTest {
   public static final LocalDateTime ISSUED = LocalDateTime.now();
   public static final String ISSUED_NAME = "issuedName";
   public static final String TYPE_ID = "typeId";
-  public static final String TYPE_NAME = "typeName";
   public static final String TYPE_VERSION = "typeVersion";
   public static final String UNIT_ID = "unitId";
   public static final String UNIT_NAME = "unitName";
@@ -52,7 +51,6 @@ class MetadataConverterTest {
         .id(ID)
         .name(NAME)
         .type(TYPE_ID)
-        .typeName(TYPE_NAME)
         .typeVersion(TYPE_VERSION)
         .issuedBy(Staff.builder()
             .fullName(ISSUED_NAME)
@@ -81,12 +79,6 @@ class MetadataConverterTest {
   }
 
   @Test
-  void shallConvertCertificateName() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(NAME, actualMetadata.getName());
-  }
-
-  @Test
   void shallConvertTypeId() {
     final var actualMetadata = metadataConverter.convert(metadataDTO.build());
     assertEquals(TYPE_ID, actualMetadata.getType().getId());
@@ -95,7 +87,7 @@ class MetadataConverterTest {
   @Test
   void shallConvertTypeName() {
     final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(TYPE_NAME, actualMetadata.getType().getName());
+    assertEquals(NAME, actualMetadata.getType().getName());
   }
 
   @Test
