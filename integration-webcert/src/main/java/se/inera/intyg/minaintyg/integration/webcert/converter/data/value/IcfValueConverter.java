@@ -46,7 +46,8 @@ public class IcfValueConverter extends AbstractValueConverter {
 
   private static String buildFormattedString(List<String> icfCodes, String text,
       String collectionsLabel) {
-    return collectionsLabel + LINE_BREAK + icfCodes + DOUBLE_LINE_BREAK + text;
+    final var stringOfIcfCodes = String.join(", ", icfCodes);
+    return collectionsLabel + LINE_BREAK + stringOfIcfCodes + DOUBLE_LINE_BREAK + text;
   }
 
   private static CertificateQuestionValueText getText(String value) {
