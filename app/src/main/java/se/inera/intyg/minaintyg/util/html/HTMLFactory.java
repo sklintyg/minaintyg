@@ -21,9 +21,7 @@ public class HTMLFactory {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
-
     final var text = convertLineSeparatorsIfPresent(value);
-
     return startTag(tagName, className) + text + endTag(tagName);
   }
 
