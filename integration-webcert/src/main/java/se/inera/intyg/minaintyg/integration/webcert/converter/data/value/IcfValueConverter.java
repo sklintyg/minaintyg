@@ -26,11 +26,10 @@ public class IcfValueConverter extends AbstractValueConverter {
     final var icfCodes = value.getIcfCodes();
     final var text = value.getText();
 
-    return icfCodesNullOrEmpty(icfCodes) ? getText(text)
-        : getTextWithIcfCodes(element, icfCodes, text);
+    return hasIcfCodes(icfCodes) ? getText(text) : getTextWithIcfCodes(element, icfCodes, text);
   }
 
-  private static boolean icfCodesNullOrEmpty(List<String> icfCodes) {
+  private static boolean hasIcfCodes(List<String> icfCodes) {
     return icfCodes == null || icfCodes.isEmpty();
   }
 
