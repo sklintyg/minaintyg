@@ -13,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCategory;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigHeader;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMessage;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
@@ -98,6 +99,36 @@ class CertificateDataConverterTest {
     final var elements = List.of(
         createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
         createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID)
+    );
+
+    final var actualCategories = certificateDataConverter.convert(elements);
+
+    assertEquals(expectedCategories, actualCategories);
+  }
+
+  @Test
+  void shallConvertCategoryWithUeHeaderQuestion() {
+    final var expectedCategories = List.of(
+        createCertificateCategory(CAT_ONE_TEXT,
+            CertificateQuestion.builder()
+                .title(QN_ONE_TEXT)
+                .value(CertificateQuestionValueText.builder().build())
+                .build()
+        )
+    );
+
+    final var elements = List.of(
+        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+        CertificateDataElement.builder()
+            .id(QN_ONE_ID)
+            .index(1)
+            .parent(CAT_ONE_ID)
+            .config(
+                CertificateDataConfigHeader.builder()
+                    .text(QN_ONE_TEXT)
+                    .build()
+            )
+            .build()
     );
 
     final var actualCategories = certificateDataConverter.convert(elements);

@@ -17,6 +17,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigHeader;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
@@ -102,6 +103,10 @@ public class CertificateDataConverter {
 
   public CertificateQuestionValue toValue(CertificateDataElement element,
       List<CertificateDataElement> subQuestions) {
+    if (headerElement(element)) {
+      return CertificateQuestionValueText.builder().build();
+    }
+
     if (missingValue(element)) {
       return CertificateQuestionValueText.builder()
           .value(NOT_PROVIDED)
@@ -118,6 +123,10 @@ public class CertificateDataConverter {
     return valueConverter.includeSubquestions() ?
         valueConverter.convert(element, subQuestions) :
         valueConverter.convert(element);
+  }
+
+  private static boolean headerElement(CertificateDataElement element) {
+    return element.getConfig() instanceof CertificateDataConfigHeader;
   }
 
   private static CertificateDataValueType valueType(CertificateDataElement element) {
