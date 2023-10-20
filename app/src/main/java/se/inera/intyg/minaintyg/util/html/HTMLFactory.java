@@ -11,7 +11,7 @@ public class HTMLFactory {
   private static final String END_ATTRIBUTE_TAG = "\"";
   private static final String SPACE = " ";
   public static final String LINE_SEPARATOR = "\n";
-  public static final String BREAK_ROW = "<br/>";
+  public static final String BR_TAG = "<br/>";
 
   private HTMLFactory() {
     throw new IllegalStateException("Utility class");
@@ -33,7 +33,7 @@ public class HTMLFactory {
   }
 
   private static String convertLineSeparators(String value) {
-    return value.replace(LINE_SEPARATOR, BREAK_ROW);
+    return value.replace(LINE_SEPARATOR, BR_TAG);
   }
 
   private static boolean hasLineSeparators(String value) {
