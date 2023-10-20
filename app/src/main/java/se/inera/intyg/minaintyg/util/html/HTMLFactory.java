@@ -29,12 +29,12 @@ public class HTMLFactory {
 
   private static String convertLineSeparatorsIfPresent(String value) {
     if (hasLineSeparators(value)) {
-      return convertLineSepartors(value);
+      return convertLineSeparators(value);
     }
     return value;
   }
 
-  private static String convertLineSepartors(String value) {
+  private static String convertLineSeparators(String value) {
     return value.replace(LINE_SEPARATOR, BREAK_ROW);
   }
 
