@@ -42,6 +42,13 @@ class HTMLFactoryTest {
     assertEquals("<tag>Value<br/>Value</tag>", result);
   }
 
+  @Test
+  void shouldConvertMultipleLineSeparatorsToBr() {
+    final var result = HTMLFactory.tag("tag", "Value\nValue\nValue");
+
+    assertEquals("<tag>Value<br/>Value<br/>Value</tag>", result);
+  }
+
   @Nested
   class WithClassName {
 
@@ -78,6 +85,13 @@ class HTMLFactoryTest {
       final var result = HTMLFactory.tag("tag", "class", "Value\nValue");
 
       assertEquals("<tag className=\"class\">Value<br/>Value</tag>", result);
+    }
+
+    @Test
+    void shouldConvertMultipleLineSeparatorsToBr() {
+      final var result = HTMLFactory.tag("tag", "class", "Value\nValue\nValue");
+
+      assertEquals("<tag className=\"class\">Value<br/>Value<br/>Value</tag>", result);
     }
   }
 }
