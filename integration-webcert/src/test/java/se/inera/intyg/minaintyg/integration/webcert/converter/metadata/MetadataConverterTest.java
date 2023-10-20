@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doReturn;
+import static se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary.builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,10 +15,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO.CertificateMetadataDTOBuilder;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Staff;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Unit;
 
@@ -183,7 +184,7 @@ class MetadataConverterTest {
         .label(null)
         .build());
 
-    final var expectedMetadata = CertificateSummary.builder()
+    final var expectedMetadata = builder()
         .label(null)
         .build();
 
@@ -197,7 +198,7 @@ class MetadataConverterTest {
         .value(null)
         .build());
 
-    final var expectedMetadata = CertificateSummary.builder()
+    final var expectedMetadata = builder()
         .value(null)
         .build();
 
@@ -209,7 +210,7 @@ class MetadataConverterTest {
   void shallReturnSummaryWithNullLabelAndNullValueIfNoSummary() {
     metadataDTO.summary(null);
 
-    final var expectedMetadata = CertificateSummary.builder()
+    final var expectedMetadata = builder()
         .label(null)
         .value(null)
         .build();
