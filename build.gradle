@@ -6,16 +6,17 @@ plugins {
 }
 
 ext {
-    commonVersion = System.properties['commonVersion'] ?: '3.19.1-SNAPSHOT'
-    infraVersion = System.properties['infraVersion'] ?: '3.19.1-SNAPSHOT'
+    commonVersion = System.properties['commonVersion'] ?: '3.20.0-SNAPSHOT'
+    infraVersion = System.properties['infraVersion'] ?: '3.20.0-SNAPSHOT'
     refDataVersion = System.properties['refDataVersion'] ?: '1.0-SNAPSHOT'
 
-    schemasContractVersion = "2.1.8"
-    intygClinicalprocessSchemasVersion = "1.0.24"
-    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5"
+    schemasContractVersion = "2.1.8.1"
+    intygClinicalprocessSchemasVersion = "1.0.24.1"
+    rivtaItintegrationMonitoringSchemasVersion = "1.0.0.5.1"
 
     cxfVersion = "3.5.5"
     esapiVersion = "2.2.0.0"
+    javaxJwsApiVersion = "1.1"
     swaggerJaxrsVersion = "1.6.0"
     openWsVersion = "1.5.4"
     shedlockSpringVersion = "4.42.0"
