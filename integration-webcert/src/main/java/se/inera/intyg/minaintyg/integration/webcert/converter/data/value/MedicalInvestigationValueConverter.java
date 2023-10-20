@@ -19,8 +19,6 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 @Component
 public class MedicalInvestigationValueConverter extends AbstractValueConverter {
 
-  public static final String MISSING_LABEL = "Saknas";
-
   @Override
   public CertificateDataValueType getType() {
     return CertificateDataValueType.MEDICAL_INVESTIGATION_LIST;
@@ -78,27 +76,46 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
                 .filter(investigation -> !isValueEmpty(investigation))
                 .map(investigation ->
                     List.of(
-                        convertInvestigationCode(investigation.getInvestigationType().getCode(),
-                            config),
-                        investigation.getDate().getDate().toString(),
-                        investigation.getInformationSource().getText()
+                        convertInvestigationCode(investigation, config),
+                        getDate(investigation),
+                        getInformationSource(investigation)
                     ))
                 .toList()
         )
         .orElse(Collections.emptyList());
   }
 
-  private static String convertInvestigationCode(String investigationCode,
+  private static String getInformationSource(
+      CertificateDataValueMedicalInvestigation investigation) {
+    return investigation.getInformationSource() != null
+        && investigation.getInformationSource().getText() != null
+        ? investigation.getInformationSource().getText() : MISSING_LABEL;
+  }
+
+  private static String getDate(CertificateDataValueMedicalInvestigation investigation) {
+    return investigation.getDate() != null
+        && investigation.getDate().getDate() != null
+        ? investigation.getDate().getDate().toString() : MISSING_LABEL;
+  }
+
+  private static String convertInvestigationCode(
+      CertificateDataValueMedicalInvestigation investigation,
       Optional<CertificateDataConfigMedicalInvestigation> config) {
+    if (investigation.getInvestigationType() == null
+        || investigation.getInvestigationType().getCode() == null) {
+      return MISSING_LABEL;
+    }
+
     return config.flatMap(investigationConfig -> investigationConfig.getList().stream().findAny())
         .map(medicalInvestigation ->
             medicalInvestigation.getTypeOptions().stream()
-                .filter(item -> item.getCode().equals(investigationCode))
+                .filter(
+                    item -> item.getCode().equals(investigation.getInvestigationType().getCode()))
                 .findAny()
                 .map(CodeItem::getLabel)
-                .orElse(investigationCode)
+                .orElse(investigation.getInvestigationType().getCode())
         )
-        .orElse(investigationCode);
+        .orElse(investigation.getInvestigationType().getCode());
 
   }
 
@@ -113,12 +130,12 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
 
   private static boolean isValueEmpty(
       CertificateDataValueMedicalInvestigation medicalInvestigation) {
-    return medicalInvestigation.getDate() == null
-        || medicalInvestigation.getDate().getDate() == null
-        || medicalInvestigation.getInvestigationType() == null
-        || medicalInvestigation.getInvestigationType().getCode() == null
-        || medicalInvestigation.getInformationSource() == null
-        || medicalInvestigation.getInformationSource().getText() == null;
+    return (medicalInvestigation.getDate() == null
+        || medicalInvestigation.getDate().getDate() == null)
+        && (medicalInvestigation.getInvestigationType() == null
+        || medicalInvestigation.getInvestigationType().getCode() == null)
+        && (medicalInvestigation.getInformationSource() == null
+        || medicalInvestigation.getInformationSource().getText() == null);
   }
 
   private static String header(Optional<CertificateDataConfigMedicalInvestigation> config,

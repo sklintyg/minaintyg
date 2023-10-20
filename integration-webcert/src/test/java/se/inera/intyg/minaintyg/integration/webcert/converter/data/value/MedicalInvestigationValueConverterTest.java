@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.MISSING_LABEL;
 import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.NOT_PROVIDED_VALUE;
 
 import java.time.LocalDate;
@@ -61,8 +62,9 @@ class MedicalInvestigationValueConverterTest {
   }
 
   @Test
-  void shallReturnNotProvidedValueIfDateIsNull() {
+  void shallReturnNotProvidedValueIfAllValuesAreNull() {
     final var element = CertificateDataElement.builder()
+        .config(createConfig())
         .value(
             createMedicalInvestigationValues(
                 createMedicalInvestigationValue(
@@ -78,8 +80,40 @@ class MedicalInvestigationValueConverterTest {
   }
 
   @Test
-  void shallReturnNotProvidedValueIfInformationSourceTextIsNull() {
+  void shallReturnMissingValueIfDateIsNull() {
     final var element = CertificateDataElement.builder()
+        .config(createConfig())
+        .value(
+            createMedicalInvestigationValues(
+                createMedicalInvestigationValue(
+                    INVESTIGATION_TYPE_ID_ONE,
+                    null,
+                    INFORMATION_SOURCE_ONE)
+            )
+        )
+        .build();
+
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)
+            )
+        )
+        .build();
+
+    final var actualValue = medicalInvestigationValueConverter.convert(element);
+    assertEquals(expectedValue, actualValue);
+  }
+
+  @Test
+  void shallReturnMissingValueIfInformationSourceTextIsNull() {
+    final var element = CertificateDataElement.builder()
+        .config(
+            createConfig()
+        )
         .value(
             createMedicalInvestigationValues(
                 createMedicalInvestigationValue(
@@ -90,13 +124,25 @@ class MedicalInvestigationValueConverterTest {
         )
         .build();
 
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)
+            )
+        )
+        .build();
+
     final var actualValue = medicalInvestigationValueConverter.convert(element);
-    assertEquals(NOT_PROVIDED_VALUE, actualValue);
+    assertEquals(expectedValue, actualValue);
   }
 
   @Test
-  void shallReturnNotProvidedValueIfInvestigationTypeCodeIsNull() {
+  void shallReturnMissingValueIfInvestigationTypeCodeIsNull() {
     final var element = CertificateDataElement.builder()
+        .config(createConfig())
         .value(
             createMedicalInvestigationValues(
                 createMedicalInvestigationValue(
@@ -107,69 +153,25 @@ class MedicalInvestigationValueConverterTest {
         )
         .build();
 
-    final var actualValue = medicalInvestigationValueConverter.convert(element);
-    assertEquals(NOT_PROVIDED_VALUE, actualValue);
-  }
-
-  @Test
-  void shallReturnNotProvidedValueIfDateValueIsNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            createMedicalInvestigationValues(
-                CertificateDataValueMedicalInvestigation.builder()
-                    .investigationType(null)
-                    .date(
-                        CertificateDataValueDate
-                            .builder()
-                            .date(LocalDate.parse(DATE_ONE))
-                            .build()
-                    )
-                    .informationSource(
-                        CertificateDataTextValue.builder()
-                            .id(INFORMATION_SOURCE_ID)
-                            .text(INFORMATION_SOURCE_ONE)
-                            .build()
-                    )
-                    .build()
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)
             )
         )
         .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
-    assertEquals(NOT_PROVIDED_VALUE, actualValue);
+    assertEquals(expectedValue, actualValue);
   }
 
   @Test
-  void shallReturnNotProvidedValueIfInformationSourceIsNull() {
+  void shallReturnMissingValueIfDateValueIsNull() {
     final var element = CertificateDataElement.builder()
-        .value(
-            createMedicalInvestigationValues(
-                CertificateDataValueMedicalInvestigation.builder()
-                    .investigationType(
-                        CertificateDataValueCode.builder()
-                            .id(INVESTIGATION_TYPE_ID)
-                            .code(INVESTIGATION_TYPE_ID_ONE)
-                            .build()
-                    )
-                    .date(
-                        CertificateDataValueDate
-                            .builder()
-                            .date(LocalDate.parse(DATE_ONE))
-                            .build()
-                    )
-                    .informationSource(null)
-                    .build()
-            )
-        )
-        .build();
-
-    final var actualValue = medicalInvestigationValueConverter.convert(element);
-    assertEquals(NOT_PROVIDED_VALUE, actualValue);
-  }
-
-  @Test
-  void shallReturnNotProvidedValueIfInvestigationTypeIsNull() {
-    final var element = CertificateDataElement.builder()
+        .config(createConfig())
         .value(
             createMedicalInvestigationValues(
                 CertificateDataValueMedicalInvestigation.builder()
@@ -191,8 +193,99 @@ class MedicalInvestigationValueConverterTest {
         )
         .build();
 
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)
+            )
+        )
+        .build();
+
     final var actualValue = medicalInvestigationValueConverter.convert(element);
-    assertEquals(NOT_PROVIDED_VALUE, actualValue);
+    assertEquals(expectedValue, actualValue);
+  }
+
+  @Test
+  void shallReturnMissingValueIfInformationSourceIsNull() {
+    final var element = CertificateDataElement.builder()
+        .config(createConfig())
+        .value(
+            createMedicalInvestigationValues(
+                CertificateDataValueMedicalInvestigation.builder()
+                    .investigationType(
+                        CertificateDataValueCode.builder()
+                            .id(INVESTIGATION_TYPE_ID)
+                            .code(INVESTIGATION_TYPE_ID_ONE)
+                            .build()
+                    )
+                    .date(
+                        CertificateDataValueDate
+                            .builder()
+                            .date(LocalDate.parse(DATE_ONE))
+                            .build()
+                    )
+                    .informationSource(null)
+                    .build()
+            )
+        )
+        .build();
+
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)
+            )
+        )
+        .build();
+
+    final var actualValue = medicalInvestigationValueConverter.convert(element);
+    assertEquals(expectedValue, actualValue);
+  }
+
+  @Test
+  void shallReturnMissingValueIfInvestigationTypeIsNull() {
+    final var element = CertificateDataElement.builder()
+        .config(createConfig())
+        .value(
+            createMedicalInvestigationValues(
+                CertificateDataValueMedicalInvestigation.builder()
+                    .investigationType(null)
+                    .date(
+                        CertificateDataValueDate
+                            .builder()
+                            .date(LocalDate.parse(DATE_ONE))
+                            .build()
+                    )
+                    .informationSource(
+                        CertificateDataTextValue.builder()
+                            .id(INFORMATION_SOURCE_ID)
+                            .text(INFORMATION_SOURCE_ONE)
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build();
+
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(
+            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
+        )
+        .values(
+            createValues(
+                createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)
+            )
+        )
+        .build();
+
+    final var actualValue = medicalInvestigationValueConverter.convert(element);
+    assertEquals(expectedValue, actualValue);
   }
 
   @Test
