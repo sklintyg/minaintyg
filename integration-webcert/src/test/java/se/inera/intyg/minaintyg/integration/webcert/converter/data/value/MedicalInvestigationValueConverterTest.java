@@ -68,9 +68,9 @@ class MedicalInvestigationValueConverterTest {
         .value(
             createMedicalInvestigationValues(
                 createMedicalInvestigationValue(
-                    INVESTIGATION_TYPE_ID_ONE,
                     null,
-                    INFORMATION_SOURCE_ONE)
+                    null,
+                    null)
             )
         )
         .build();
