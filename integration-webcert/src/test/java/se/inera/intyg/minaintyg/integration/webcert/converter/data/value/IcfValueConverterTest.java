@@ -74,7 +74,7 @@ class IcfValueConverterTest {
     final var config = createConfig();
     final var element = createElement(config, value);
     final var valueString =
-        COLLECTIONS_LABEL + "\n" + ICF_CODE_1 + ", " + ICF_CODE_2 + "\n" + "\n" + TEXT_VALUE;
+        COLLECTIONS_LABEL + "\n" + ICF_CODE_1 + " - " + ICF_CODE_2 + "\n" + "\n" + TEXT_VALUE;
     final var expectedValue = CertificateQuestionValueText.builder()
         .value(valueString)
         .build();

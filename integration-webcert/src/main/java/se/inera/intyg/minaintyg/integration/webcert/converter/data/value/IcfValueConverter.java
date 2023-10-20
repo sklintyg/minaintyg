@@ -26,11 +26,10 @@ public class IcfValueConverter extends AbstractValueConverter {
     final var icfCodes = value.getIcfCodes();
     final var text = value.getText();
 
-    return icfCodesNotNullOrEmpty(icfCodes) ? getTextWithIcfCodes(element, icfCodes, text)
-        : getText(text);
+    return hasIcfCodes(icfCodes) ? getTextWithIcfCodes(element, icfCodes, text) : getText(text);
   }
 
-  private static boolean icfCodesNotNullOrEmpty(List<String> icfCodes) {
+  private static boolean hasIcfCodes(List<String> icfCodes) {
     return icfCodes != null && !icfCodes.isEmpty();
   }
 
@@ -46,7 +45,7 @@ public class IcfValueConverter extends AbstractValueConverter {
 
   private static String buildFormattedString(List<String> icfCodes, String text,
       String collectionsLabel) {
-    final var stringOfIcfCodes = String.join(", ", icfCodes);
+    final var stringOfIcfCodes = String.join(" - ", icfCodes);
     return collectionsLabel + LINE_BREAK + stringOfIcfCodes + DOUBLE_LINE_BREAK + text;
   }
 
