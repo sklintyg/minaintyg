@@ -103,8 +103,8 @@ public class CertificateDataConverter {
 
   public CertificateQuestionValue toValue(CertificateDataElement element,
       List<CertificateDataElement> subQuestions) {
-    if (element.getConfig() instanceof CertificateDataConfigHeader) {
-      return null;
+    if (headerElement(element)) {
+      return CertificateQuestionValueText.builder().build();
     }
 
     if (missingValue(element)) {
@@ -123,6 +123,10 @@ public class CertificateDataConverter {
     return valueConverter.includeSubquestions() ?
         valueConverter.convert(element, subQuestions) :
         valueConverter.convert(element);
+  }
+
+  private static boolean headerElement(CertificateDataElement element) {
+    return element.getConfig() instanceof CertificateDataConfigHeader;
   }
 
   private static CertificateDataValueType valueType(CertificateDataElement element) {

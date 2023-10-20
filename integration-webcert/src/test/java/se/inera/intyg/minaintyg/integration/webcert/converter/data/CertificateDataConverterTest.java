@@ -112,7 +112,7 @@ class CertificateDataConverterTest {
         createCertificateCategory(CAT_ONE_TEXT,
             CertificateQuestion.builder()
                 .title(QN_ONE_TEXT)
-                .value(null)
+                .value(CertificateQuestionValueText.builder().build())
                 .build()
         )
     );
