@@ -20,6 +20,7 @@ public class CertificateMetadata {
   CertificateType type;
   CertificateIssuer issuer;
   CertificateUnit unit;
+  CertificateUnit careUnit;
   List<CertificateEvent> events;
   List<CertificateStatusType> statuses;
   LocalDateTime issued;

@@ -9,4 +9,9 @@ public class CertificateUnit {
 
   String id;
   String name;
+  String address;
+  String zipCode;
+  String city;
+  String phoneNumber;
+  String email;
 }
