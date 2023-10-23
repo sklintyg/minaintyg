@@ -63,7 +63,7 @@ public class FormattedQuestionConverter {
   }
 
   private String subQuestionLabel(String label) {
-    return HTMLTextFactory.h5(label);
+    return HTMLTextFactory.h4(label);
   }
 
   private String value(CertificateQuestionValue value) {
