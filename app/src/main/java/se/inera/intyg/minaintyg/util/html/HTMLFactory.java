@@ -10,6 +10,8 @@ public class HTMLFactory {
   private static final String START_ATTRIBUTE_TAG = "=\"";
   private static final String END_ATTRIBUTE_TAG = "\"";
   private static final String SPACE = " ";
+  private static final String LINE_SEPARATOR = "\n";
+  private static final String BR_TAG = "<br/>";
 
   private HTMLFactory() {
     throw new IllegalStateException("Utility class");
@@ -19,8 +21,16 @@ public class HTMLFactory {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
+    final var text = convertLineSeparatorsIfPresent(value);
+    return startTag(tagName, className) + text + endTag(tagName);
+  }
 
-    return startTag(tagName, className) + value + endTag(tagName);
+  private static String convertLineSeparatorsIfPresent(String value) {
+    return convertLineSeparators(value);
+  }
+
+  private static String convertLineSeparators(String value) {
+    return value.replace(LINE_SEPARATOR, BR_TAG);
   }
 
   public static String tag(String tagName, String value) {
