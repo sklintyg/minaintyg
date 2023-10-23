@@ -88,4 +88,5 @@ public class MetadataConverter {
   private static boolean recipientIsNull(CertificateMetadataDTO metadataDTO) {
     return metadataDTO.getRecipient() == null;
   }
+
 }
