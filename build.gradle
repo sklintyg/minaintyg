@@ -17,7 +17,7 @@ ext {
     cxfVersion = "3.6.2"
     esapiVersion = "2.2.0.0"
     javaxJwsApiVersion = "1.1"
-    swaggerJaxrsVersion = "1.6.12"
+    swaggerJaxrsVersion = "1.6.11"
     openWsVersion = "1.5.4"
     shedlockSpringVersion = "4.46.0"
     springSecuritySaml2CoreVersion = "1.0.3.RELEASE"
