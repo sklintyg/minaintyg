@@ -9,6 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Unit;
 
 @Component
 @RequiredArgsConstructor
@@ -22,8 +23,8 @@ public class MetadataConverter {
         .id(metadataDTO.getId())
         .type(convertType(metadataDTO))
         .issuer(convertIssuer(metadataDTO))
-        .unit(convertUnit(metadataDTO))
-        .careUnit(convertCareUnit(metadataDTO))
+        .unit(convertUnit(metadataDTO.getUnit()))
+        .careUnit(convertUnit(metadataDTO.getCareUnit()))
         .events(eventConverter.convert(metadataDTO))
         .statuses(statusConverter.convert(metadataDTO))
         .issued(metadataDTO.getCreated())
@@ -46,27 +47,15 @@ public class MetadataConverter {
         .build();
   }
 
-  private CertificateUnit convertUnit(CertificateMetadataDTO metadataDTO) {
+  private CertificateUnit convertUnit(Unit unit) {
     return CertificateUnit.builder()
-        .id(metadataDTO.getUnit().getUnitId())
-        .name(metadataDTO.getUnit().getUnitName())
-        .address(metadataDTO.getUnit().getAddress())
-        .zipCode(metadataDTO.getUnit().getZipCode())
-        .city(metadataDTO.getUnit().getCity())
-        .phoneNumber(metadataDTO.getUnit().getPhoneNumber())
-        .email(metadataDTO.getUnit().getEmail())
-        .build();
-  }
-
-  CertificateUnit convertCareUnit(CertificateMetadataDTO metadataDTO) {
-    return CertificateUnit.builder()
-        .id(metadataDTO.getCareUnit().getUnitId())
-        .name(metadataDTO.getCareUnit().getUnitName())
-        .address(metadataDTO.getCareUnit().getAddress())
-        .zipCode(metadataDTO.getCareUnit().getZipCode())
-        .city(metadataDTO.getCareUnit().getCity())
-        .phoneNumber(metadataDTO.getCareUnit().getPhoneNumber())
-        .email(metadataDTO.getCareUnit().getEmail())
+        .id(unit.getUnitId())
+        .name(unit.getUnitName())
+        .address(unit.getAddress())
+        .zipCode(unit.getZipCode())
+        .city(unit.getCity())
+        .phoneNumber(unit.getPhoneNumber())
+        .email(unit.getEmail())
         .build();
   }
 
