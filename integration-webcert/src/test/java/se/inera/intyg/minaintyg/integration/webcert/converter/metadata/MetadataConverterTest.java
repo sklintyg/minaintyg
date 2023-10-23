@@ -8,6 +8,7 @@ import static se.inera.intyg.minaintyg.integration.api.certificate.model.common.
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,12 +33,25 @@ class MetadataConverterTest {
   public static final String TYPE_VERSION = "typeVersion";
   public static final String UNIT_ID = "unitId";
   public static final String UNIT_NAME = "unitName";
+  public static final String UNIT_ADRESS = "unitAdress";
+  public static final String UNIT_ZIPCODE = "unitZipcode";
+  public static final String UNIT_CITY = "unitCity";
+  public static final String UNIT_PHONE_NUMBER = "unitPhoneNumber";
+  public static final String UNIT_EMAIL = "unitEmail";
+  public static final String CARE_UNIT_ID = "careUnitId";
+  public static final String CARE_UNIT_NAME = "careUnitName";
+  public static final String CARE_UNIT_ADRESS = "careUnitAdress";
+  public static final String CARE_UNIT_ZIPCODE = "careUnitZipcode";
+  public static final String CARE_UNIT_CITY = "careUnitCity";
+  public static final String CARE_UNIT_PHONE_NUMBER = "careUnitPhoneNumber";
+  public static final String CARE_UNIT_EMAIL = "careUnitEmail";
   public static final String RECIPIENT_NAME = "recipientName";
   public static final String RECIPIENT_ID = "recipientId";
   public static final LocalDateTime RECIPIENT_SENT = LocalDateTime.now();
   public static final String SUMMARY_LABEL = "summaryLabel";
   public static final String SUMMARY_VALUE = "summaryValue";
   public static final String NAME = "certificateName";
+
   @Mock
   private EventConverter eventConverter;
   @Mock
@@ -56,10 +70,23 @@ class MetadataConverterTest {
         .issuedBy(Staff.builder()
             .fullName(ISSUED_NAME)
             .build())
-        .unit(Unit
-            .builder()
+        .unit(Unit.builder()
             .unitId(UNIT_ID)
             .unitName(UNIT_NAME)
+            .address(UNIT_ADRESS)
+            .zipCode(UNIT_ZIPCODE)
+            .city(UNIT_CITY)
+            .phoneNumber(UNIT_PHONE_NUMBER)
+            .email(UNIT_EMAIL)
+            .build())
+        .careUnit(Unit.builder()
+            .unitId(CARE_UNIT_ID)
+            .unitName(CARE_UNIT_NAME)
+            .address(CARE_UNIT_ADRESS)
+            .zipCode(CARE_UNIT_ZIPCODE)
+            .city(CARE_UNIT_CITY)
+            .phoneNumber(CARE_UNIT_PHONE_NUMBER)
+            .email(CARE_UNIT_EMAIL)
             .build())
         .created(ISSUED)
         .recipient(CertificateRecipient.builder()
@@ -80,39 +107,9 @@ class MetadataConverterTest {
   }
 
   @Test
-  void shallConvertTypeId() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(TYPE_ID, actualMetadata.getType().getId());
-  }
-
-  @Test
-  void shallConvertTypeName() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(NAME, actualMetadata.getType().getName());
-  }
-
-  @Test
-  void shallConvertTypeVersion() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(TYPE_VERSION, actualMetadata.getType().getVersion());
-  }
-
-  @Test
   void shallConvertIssuer() {
     final var actualMetadata = metadataConverter.convert(metadataDTO.build());
     assertEquals(ISSUED_NAME, actualMetadata.getIssuer().getName());
-  }
-
-  @Test
-  void shallConvertUnitId() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(UNIT_ID, actualMetadata.getUnit().getId());
-  }
-
-  @Test
-  void shallConvertUnitName() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(UNIT_NAME, actualMetadata.getUnit().getName());
   }
 
   @Test
@@ -139,83 +136,205 @@ class MetadataConverterTest {
     assertEquals(ISSUED, actualMetadata.getIssued());
   }
 
-  @Test
-  void shallConvertRecipientId() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(RECIPIENT_ID, actualMetadata.getRecipient().getId());
+  @Nested
+  class ConvertType {
+
+    @Test
+    void shallConvertTypeId() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(TYPE_ID, actualMetadata.getType().getId());
+    }
+
+    @Test
+    void shallConvertTypeName() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(NAME, actualMetadata.getType().getName());
+    }
+
+    @Test
+    void shallConvertTypeVersion() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(TYPE_VERSION, actualMetadata.getType().getVersion());
+    }
   }
 
-  @Test
-  void shallConvertRecipientName() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(RECIPIENT_NAME, actualMetadata.getRecipient().getName());
+  @Nested
+  class ConvertUnit {
+
+    @Test
+    void shallConvertUnitId() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_ID, actualMetadata.getUnit().getId());
+    }
+
+    @Test
+    void shallConvertUnitName() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_NAME, actualMetadata.getUnit().getName());
+    }
+
+    @Test
+    void shallConvertUnitAdress() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_ADRESS, actualMetadata.getUnit().getAddress());
+    }
+
+    @Test
+    void shallConvertUnitZipcode() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_ZIPCODE, actualMetadata.getUnit().getZipCode());
+    }
+
+    @Test
+    void shallConvertUnitCity() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_CITY, actualMetadata.getUnit().getCity());
+    }
+
+    @Test
+    void shallConvertUnitPhoneNumber() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_PHONE_NUMBER, actualMetadata.getUnit().getPhoneNumber());
+    }
+
+    @Test
+    void shallConvertUnitEmail() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(UNIT_EMAIL, actualMetadata.getUnit().getEmail());
+    }
   }
 
-  @Test
-  void shallConvertRecipientSent() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(RECIPIENT_SENT, actualMetadata.getRecipient().getSent());
+  @Nested
+  class ConvertCareUnit {
+
+    @Test
+    void shallConvertCareUnitId() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_ID, actualMetadata.getCareUnit().getId());
+    }
+
+    @Test
+    void shallConvertCareUnitName() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_NAME, actualMetadata.getCareUnit().getName());
+    }
+
+    @Test
+    void shallConvertCareUnitAdress() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_ADRESS, actualMetadata.getCareUnit().getAddress());
+    }
+
+    @Test
+    void shallConvertCareUnitZipcode() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_ZIPCODE, actualMetadata.getCareUnit().getZipCode());
+    }
+
+    @Test
+    void shallConvertCareUnitCity() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_CITY, actualMetadata.getCareUnit().getCity());
+    }
+
+    @Test
+    void shallConvertCareUnitPhoneNumber() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_PHONE_NUMBER, actualMetadata.getCareUnit().getPhoneNumber());
+    }
+
+    @Test
+    void shallConvertCareUnitEmail() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_UNIT_EMAIL, actualMetadata.getCareUnit().getEmail());
+    }
   }
 
-  @Test
-  void shallReturnNullIfNoRecipient() {
-    metadataDTO.recipient(null);
+  @Nested
+  class ConvertRecipient {
 
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertNull(actualMetadata.getRecipient(),
-        "Recipient was %s".formatted(actualMetadata.getRecipient()));
+    @Test
+    void shallConvertRecipientId() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(RECIPIENT_ID, actualMetadata.getRecipient().getId());
+    }
+
+    @Test
+    void shallConvertRecipientName() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(RECIPIENT_NAME, actualMetadata.getRecipient().getName());
+    }
+
+    @Test
+    void shallConvertRecipientSent() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(RECIPIENT_SENT, actualMetadata.getRecipient().getSent());
+    }
+
+    @Test
+    void shallReturnNullIfNoRecipient() {
+      metadataDTO.recipient(null);
+
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertNull(actualMetadata.getRecipient(),
+          "Recipient was %s".formatted(actualMetadata.getRecipient()));
+    }
   }
 
-  @Test
-  void shallConvertSummaryLabel() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(SUMMARY_LABEL, actualMetadata.getSummary().getLabel());
-  }
+  @Nested
+  class ConvertSummary {
 
-  @Test
-  void shallConvertSummaryValue() {
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(SUMMARY_VALUE, actualMetadata.getSummary().getValue());
-  }
+    @Test
+    void shallConvertSummaryLabel() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(SUMMARY_LABEL, actualMetadata.getSummary().getLabel());
+    }
 
-  @Test
-  void shallReturnNullSummaryLabelIfNoSummaryLabel() {
-    metadataDTO.summary(CertificateSummary.builder()
-        .label(null)
-        .build());
+    @Test
+    void shallConvertSummaryValue() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(SUMMARY_VALUE, actualMetadata.getSummary().getValue());
+    }
 
-    final var expectedMetadata = builder()
-        .label(null)
-        .build();
+    @Test
+    void shallReturnNullSummaryLabelIfNoSummaryLabel() {
+      metadataDTO.summary(CertificateSummary.builder()
+          .label(null)
+          .build());
 
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(expectedMetadata, actualMetadata.getSummary());
-  }
+      final var expectedMetadata = builder()
+          .label(null)
+          .build();
 
-  @Test
-  void shallReturnNullSummaryValueIfNoSummaryValue() {
-    metadataDTO.summary(CertificateSummary.builder()
-        .value(null)
-        .build());
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(expectedMetadata, actualMetadata.getSummary());
+    }
 
-    final var expectedMetadata = builder()
-        .value(null)
-        .build();
+    @Test
+    void shallReturnNullSummaryValueIfNoSummaryValue() {
+      metadataDTO.summary(CertificateSummary.builder()
+          .value(null)
+          .build());
 
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(expectedMetadata, actualMetadata.getSummary());
-  }
+      final var expectedMetadata = builder()
+          .value(null)
+          .build();
 
-  @Test
-  void shallReturnSummaryWithNullLabelAndNullValueIfNoSummary() {
-    metadataDTO.summary(null);
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(expectedMetadata, actualMetadata.getSummary());
+    }
 
-    final var expectedMetadata = builder()
-        .label(null)
-        .value(null)
-        .build();
+    @Test
+    void shallReturnSummaryWithNullLabelAndNullValueIfNoSummary() {
+      metadataDTO.summary(null);
 
-    final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-    assertEquals(expectedMetadata, actualMetadata.getSummary());
+      final var expectedMetadata = builder()
+          .label(null)
+          .value(null)
+          .build();
+
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(expectedMetadata, actualMetadata.getSummary());
+    }
   }
 }
