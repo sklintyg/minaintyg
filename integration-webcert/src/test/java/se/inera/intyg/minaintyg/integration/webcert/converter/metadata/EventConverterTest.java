@@ -178,8 +178,8 @@ class EventConverterTest {
   @Test
   void shallConvertReplacingCertificateThatHasBeenReplacedToReplacedEvent() {
     final var expectedEvent = List.of(
-        createReplaceEvent(REPLACES_DESCRIPTION),
-        createReplaceEvent(REPLACED_DESCRIPTION)
+        createEvent(REPLACES_DESCRIPTION, LocalDateTime.now().plusDays(1)),
+        createEvent(REPLACED_DESCRIPTION, LocalDateTime.now())
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
@@ -222,11 +222,46 @@ class EventConverterTest {
     assertEquals(Collections.emptyList(), actualEvents);
   }
 
+  @Test
+  void shallSortEventsOnCreationTimestamp() {
+    final var sent = LocalDateTime.now();
+    final var replaced = LocalDateTime.now().plusDays(1);
+
+    final var expectedEvents = List.of(
+        createEvent(REPLACES_DESCRIPTION, replaced),
+        CertificateEvent.builder()
+            .description("Skickat till recipientName")
+            .timestamp(sent)
+            .build()
+    );
+
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .recipient(CertificateRecipient.builder()
+            .name("recipientName")
+            .sent(sent)
+            .build())
+        .relations(
+            CertificateRelations.builder()
+                .parent(
+                    createRelation(expectedEvents.get(0), CertificateRelationType.COMPLEMENTED)
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(expectedEvents, actualEvents);
+  }
+
   private static CertificateEvent createReplaceEvent(String description) {
+    return createEvent(description, TIMESTAMP);
+  }
+
+  private static CertificateEvent createEvent(String description, LocalDateTime timestamp) {
     return CertificateEvent.builder()
         .certificateId("id")
         .description(description)
-        .timestamp(TIMESTAMP)
+        .timestamp(timestamp)
         .build();
   }
 
