@@ -9,7 +9,9 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
@@ -27,7 +29,8 @@ public class SendCertificateService {
     final var certificateResponse = getCertificate(request.getCertificateId());
     final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
-    sendCertificate(request, user, recipient);
+    sendCertificate(request, user, certificateResponse.getCertificate());
+
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
         certificateResponse.getCertificate().getMetadata().getType().getId(),
@@ -35,11 +38,22 @@ public class SendCertificateService {
     );
   }
 
+  private static boolean isReplaced(Certificate certificate) {
+    final var statuses = certificate.getMetadata().getStatuses();
+    return statuses != null
+        && statuses.stream().anyMatch(status -> status == CertificateStatusType.REPLACED);
+  }
 
-  private void sendCertificate(SendCertificateRequest request,
-      MinaIntygUser user, CertificateRecipient recipient) {
 
-    validateAction(recipient);
+  private void sendCertificate(
+      SendCertificateRequest request,
+      MinaIntygUser user,
+      Certificate certificate
+  ) {
+
+    final var recipient = certificate.getMetadata().getRecipient();
+
+    validateAction(recipient, isReplaced(certificate));
 
     sendCertificateIntegrationService.send(
         SendCertificateIntegrationRequest
@@ -60,7 +74,11 @@ public class SendCertificateService {
     );
   }
 
-  private void validateAction(CertificateRecipient recipient) {
+  private void validateAction(CertificateRecipient recipient, boolean isReplaced) {
+    if (isReplaced) {
+      throw new IllegalStateException("Cannot send replaced certificate");
+    }
+
     if (recipient == null) {
       throw new IllegalStateException("Cannot send certificate if no recipient");
     }
