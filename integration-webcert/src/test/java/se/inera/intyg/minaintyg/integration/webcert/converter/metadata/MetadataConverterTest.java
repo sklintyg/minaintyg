@@ -279,6 +279,16 @@ class MetadataConverterTest {
       assertNull(actualMetadata.getRecipient(),
           "Recipient was %s".formatted(actualMetadata.getRecipient()));
     }
+
+    @Test
+    void shallReturnNullIfCertificateIsReplaced() {
+      final var expectedMetadata = List.of(CertificateStatusType.REPLACED);
+      doReturn(expectedMetadata).when(statusConverter).convert(metadataDTO.build());
+
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertNull(actualMetadata.getRecipient(),
+          "Recipient was %s".formatted(actualMetadata.getRecipient()));
+    }
   }
 
   @Nested

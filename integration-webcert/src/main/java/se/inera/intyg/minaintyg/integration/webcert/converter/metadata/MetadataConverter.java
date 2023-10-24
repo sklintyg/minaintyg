@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateIssuer;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateSummary;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
@@ -60,7 +61,7 @@ public class MetadataConverter {
   }
 
   private CertificateRecipient convertRecipient(CertificateMetadataDTO metadataDTO) {
-    if (recipientIsNull(metadataDTO)) {
+    if (recipientIsNull(metadataDTO) || certificateIsReplaced(metadataDTO)) {
       return null;
     }
     return CertificateRecipient.builder()
@@ -89,4 +90,7 @@ public class MetadataConverter {
     return metadataDTO.getRecipient() == null;
   }
 
+  private boolean certificateIsReplaced(CertificateMetadataDTO metadataDTO) {
+    return statusConverter.convert(metadataDTO).contains(CertificateStatusType.REPLACED);
+  }
 }
