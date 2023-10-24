@@ -40,7 +40,9 @@ public class EventConverter {
     createReplacedEvent(metadataDTO)
         .ifPresent(events::add);
 
-    return events;
+    return events.stream()
+        .sorted(Comparator.comparing(CertificateEvent::getTimestamp).reversed())
+        .toList();
   }
 
   private static boolean isSent(CertificateMetadataDTO metadataDTO) {
