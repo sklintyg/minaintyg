@@ -228,7 +228,7 @@ class EventConverterTest {
     final var replaced = LocalDateTime.now().plusDays(1);
 
     final var expectedEvents = List.of(
-        createEvent(REPLACES_DESCRIPTION, replaced),
+        createEvent(REPLACES_DESCRIPTION, replaced, "id"),
         createEvent("Skickat till recipientName", sent)
     );
 
@@ -251,12 +251,19 @@ class EventConverterTest {
   }
 
   private static CertificateEvent createReplaceEvent(String description) {
-    return createEvent(description, TIMESTAMP);
+    return createEvent(description, TIMESTAMP, "id");
   }
 
   private static CertificateEvent createEvent(String description, LocalDateTime timestamp) {
+    return createEvent(description, timestamp, null);
+  }
+
+  private static CertificateEvent createEvent(
+      String description,
+      LocalDateTime timestamp,
+      String certificateId) {
     return CertificateEvent.builder()
-        .certificateId("id")
+        .certificateId(certificateId)
         .description(description)
         .timestamp(timestamp)
         .build();
