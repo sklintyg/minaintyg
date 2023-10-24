@@ -4,12 +4,10 @@ import static java.util.function.Predicate.not;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
@@ -42,17 +40,9 @@ public class EventConverter {
     createReplacedEvent(metadataDTO)
         .ifPresent(events::add);
 
-    return events
-        .stream()
-        .sorted(Comparator.comparing(CertificateEvent::getTimestamp))
-        .collect(Collectors.collectingAndThen(
-                Collectors.toList(),
-                list -> {
-                  Collections.reverse(list);
-                  return list;
-                }
-            )
-        );
+    return events.stream()
+        .sorted(Comparator.comparing(CertificateEvent::getTimestamp).reversed())
+        .toList();
   }
 
   private static boolean isSent(CertificateMetadataDTO metadataDTO) {

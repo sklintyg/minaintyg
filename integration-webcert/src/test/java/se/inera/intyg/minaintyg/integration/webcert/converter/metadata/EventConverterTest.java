@@ -229,10 +229,7 @@ class EventConverterTest {
 
     final var expectedEvents = List.of(
         createEvent(REPLACES_DESCRIPTION, replaced),
-        CertificateEvent.builder()
-            .description("Skickat till recipientName")
-            .timestamp(sent)
-            .build()
+        createEvent("Skickat till recipientName", sent)
     );
 
     final var metadataDTO = CertificateMetadataDTO.builder()
