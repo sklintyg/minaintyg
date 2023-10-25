@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,11 @@ public class GetCertificateListFilterService {
   private List<String> getYears(List<CertificateListItem> certificateListItems) {
     return getList(
         certificateListItems,
-        certificate -> String.valueOf(certificate.getIssued().getYear())
-    );
+        certificate -> certificate.getIssued().getYear()
+    ).stream()
+        .sorted(Comparator.reverseOrder())
+        .map(String::valueOf)
+        .toList();
   }
 
   private List<CertificateTypeFilter> getCertificateTypes(
@@ -46,6 +50,7 @@ public class GetCertificateListFilterService {
         .stream()
         .map(this::convertCertificateTypeFilter)
         .distinct()
+        .sorted(Comparator.comparing(CertificateTypeFilter::getName))
         .toList();
   }
 
@@ -58,11 +63,14 @@ public class GetCertificateListFilterService {
   }
 
   private List<CertificateUnit> getUnits(List<CertificateListItem> certificateListItems) {
-    return getList(certificateListItems, CertificateListItem::getUnit);
+    return getList(certificateListItems, CertificateListItem::getUnit)
+        .stream()
+        .sorted(Comparator.comparing(CertificateUnit::getName))
+        .toList();
   }
 
   private List<CertificateStatusType> getStatuses() {
-    return List.of(CertificateStatusType.SENT, CertificateStatusType.NOT_SENT);
+    return List.of(CertificateStatusType.NOT_SENT, CertificateStatusType.SENT);
   }
 
   private <T> List<T> getList(List<CertificateListItem> certificateListItems,

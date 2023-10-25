@@ -18,26 +18,50 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTypeFilter;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificateListFilterServiceTest {
 
-  private static final CertificateListItem CERTIFICATE_LIST_ITEM = CertificateListItem
+  private static final String UNIT_ID = "UNIT_ID";
+  private static final String A_UNIT_NAME = "A_UNIT_NAME";
+  private static final String B_UNIT_NAME = "B_UNIT_NAME";
+  private static final String A_TYPE_NAME = "A_TYPE_NAME";
+  private static final String B_TYPE_NAME = "B_TYPE_NAME";
+  private static final String ID = "ID";
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM_1 = CertificateListItem
       .builder()
       .issued(LocalDateTime.now())
       .type(
           CertificateType
               .builder()
-              .name("NAME")
-              .id("ID")
-              .build()
+              .name(A_TYPE_NAME)
+              .id(ID).build()
       )
       .unit(
           CertificateUnit
               .builder()
-              .id("UNIT_ID")
-              .name("UNIT_NAME")
+              .id(UNIT_ID)
+              .name(A_UNIT_NAME)
+              .build()
+      )
+      .build();
+
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM_2 = CertificateListItem
+      .builder()
+      .issued(LocalDateTime.now().minusYears(10))
+      .type(
+          CertificateType
+              .builder()
+              .name(B_TYPE_NAME)
+              .id(ID).build()
+      )
+      .unit(
+          CertificateUnit
+              .builder()
+              .id(UNIT_ID)
+              .name(B_UNIT_NAME)
               .build()
       )
       .build();
@@ -51,38 +75,37 @@ class GetCertificateListFilterServiceTest {
     when(listCertificatesService.get(any(ListCertificatesRequest.class))).thenReturn(
         ListCertificatesResponse
             .builder()
-            .content(List.of(CERTIFICATE_LIST_ITEM))
+            .content(List.of(CERTIFICATE_LIST_ITEM_2, CERTIFICATE_LIST_ITEM_1))
             .build()
     );
   }
-
 
   @Test
   void shouldSetSentStatus() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CertificateStatusType.SENT, result.getStatuses().get(0));
+    assertEquals(CertificateStatusType.SENT, result.getStatuses().get(1));
   }
 
   @Test
   void shouldSetNotSentStatus() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CertificateStatusType.NOT_SENT, result.getStatuses().get(1));
+    assertEquals(CertificateStatusType.NOT_SENT, result.getStatuses().get(0));
   }
 
   @Test
   void shouldSetUnits() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CERTIFICATE_LIST_ITEM.getUnit(), result.getUnits().get(0));
+    assertEquals(CERTIFICATE_LIST_ITEM_1.getUnit(), result.getUnits().get(0));
   }
 
   @Test
   void shouldSetCertificateTypeName() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CERTIFICATE_LIST_ITEM.getType().getName(),
+    assertEquals(CERTIFICATE_LIST_ITEM_1.getType().getName(),
         result.getCertificateTypes().get(0).getName());
   }
 
@@ -90,7 +113,7 @@ class GetCertificateListFilterServiceTest {
   void shouldSetCertificateTypeId() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CERTIFICATE_LIST_ITEM.getType().getId(),
+    assertEquals(CERTIFICATE_LIST_ITEM_1.getType().getId(),
         result.getCertificateTypes().get(0).getId());
   }
 
@@ -105,6 +128,60 @@ class GetCertificateListFilterServiceTest {
   void shouldSetTotal() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(1, result.getTotal());
+    assertEquals(2, result.getTotal());
+  }
+
+  @Test
+  void shouldSortTypeNamesAlphabetically() {
+    final var result = getCertificateListFilterService.get();
+
+    final var expectedResult = List.of(CertificateTypeFilter.builder()
+            .name(A_TYPE_NAME)
+            .id(ID)
+            .build(),
+        CertificateTypeFilter.builder()
+            .name(B_TYPE_NAME)
+            .id(ID)
+            .build()
+    );
+
+    assertEquals(expectedResult, result.getCertificateTypes());
+  }
+
+  @Test
+  void shouldSortUnitsAlphabetically() {
+    final var result = getCertificateListFilterService.get();
+
+    final var expectedResult = List.of(CertificateUnit
+            .builder()
+            .id(UNIT_ID)
+            .name(A_UNIT_NAME)
+            .build(),
+        CertificateUnit
+            .builder()
+            .id(UNIT_ID)
+            .name(B_UNIT_NAME)
+            .build()
+    );
+
+    assertEquals(expectedResult, result.getUnits());
+  }
+
+  @Test
+  void shouldSortStatusesAlphabetically() {
+    final var result = getCertificateListFilterService.get();
+
+    assertEquals(List.of(CertificateStatusType.NOT_SENT, CertificateStatusType.SENT),
+        result.getStatuses());
+  }
+
+  @Test
+  void shouldSortYearsDescending() {
+    final var result = getCertificateListFilterService.get();
+
+    final var expectedResult = List.of(String.valueOf(LocalDateTime.now().getYear()),
+        String.valueOf(LocalDateTime.now().minusYears(10).getYear()));
+
+    assertEquals(expectedResult, result.getYears());
   }
 }
