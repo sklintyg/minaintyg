@@ -56,6 +56,26 @@ class FormattedQuestionConverterTest {
   }
 
   @Test
+  void shouldReturnHTMLWithHeader() {
+    final var question = CertificateQuestion.builder()
+        .title("Title")
+        .header("Header")
+        .label("Label")
+        .value(
+            CertificateQuestionValueList
+                .builder()
+                .values(List.of("element 1", "element 2"))
+                .build())
+        .build();
+
+    final var result = formattedQuestionConverter.convert(question);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Header</h3><h4 className=\"ids-heading-4\">Title</h4><h4 className=\"ids-heading-4\">Label</h4><ul><li>element 1</li><li>element 2</li></ul>",
+        result);
+  }
+
+  @Test
   void shouldReturnHTMLWithoutTitle() {
     final var question = CertificateQuestion.builder()
         .label("Label")

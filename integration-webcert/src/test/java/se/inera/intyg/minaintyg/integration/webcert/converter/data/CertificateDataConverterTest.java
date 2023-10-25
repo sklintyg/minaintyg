@@ -32,6 +32,7 @@ class CertificateDataConverterTest {
   private static final String QN_ONE_ID = "QN_ONE_ID";
   public static final String QN_ONE_TEXT = "QN_ONE_TEXT";
   private static final String QN_ONE_LABEL = "QN_ONE_LABEL";
+  private static final String QN_ONE_HEADER = "QN_ONE_HEADER";
   private static final String QN_ONE_VALUE = "QN_ONE_VALUE";
   private static final String QN_TWO_ID = "QN_TWO_ID";
   public static final String QN_TWO_TEXT = "QN_TWO_TEXT";
@@ -99,6 +100,24 @@ class CertificateDataConverterTest {
     final var elements = List.of(
         createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
         createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID)
+    );
+
+    final var actualCategories = certificateDataConverter.convert(elements);
+
+    assertEquals(expectedCategories, actualCategories);
+  }
+
+  @Test
+  void shallConvertCategoryWithQuestionWithHeader() {
+    final var expectedCategories = List.of(
+        createCertificateCategory(CAT_ONE_TEXT,
+            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE, QN_ONE_HEADER)
+        )
+    );
+
+    final var elements = List.of(
+        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID, QN_ONE_HEADER)
     );
 
     final var actualCategories = certificateDataConverter.convert(elements);
@@ -468,10 +487,11 @@ class CertificateDataConverterTest {
   }
 
   private static CertificateQuestion createCertificateQuestion(String title,
-      String label, String value, CertificateQuestion... subQuestion) {
+      String label, String value, String header, CertificateQuestion... subQuestion) {
     return CertificateQuestion.builder()
         .title(title)
         .label(label)
+        .header(header)
         .value(
             CertificateQuestionValueText.builder()
                 .value(value)
@@ -479,6 +499,11 @@ class CertificateDataConverterTest {
         )
         .subQuestions(List.of(subQuestion))
         .build();
+  }
+
+  private static CertificateQuestion createCertificateQuestion(String title,
+      String label, String value, CertificateQuestion... subQuestion) {
+    return createCertificateQuestion(title, label, value, null, subQuestion);
   }
 
   private static CertificateDataElement createCategoryElement(
@@ -496,6 +521,11 @@ class CertificateDataConverterTest {
 
   private static CertificateDataElement createQuestionElement(String text, String label, String id,
       int index, String parent) {
+    return createQuestionElement(text, label, id, index, parent, null);
+  }
+
+  private static CertificateDataElement createQuestionElement(String text, String label, String id,
+      int index, String parent, String header) {
     return CertificateDataElement.builder()
         .id(id)
         .index(index)
@@ -504,6 +534,7 @@ class CertificateDataConverterTest {
             CertificateDataConfigTextArea.builder()
                 .text(text)
                 .label(label)
+                .header(header)
                 .build()
         )
         .build();

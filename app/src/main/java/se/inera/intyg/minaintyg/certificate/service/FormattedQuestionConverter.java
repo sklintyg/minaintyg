@@ -5,7 +5,6 @@ import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFac
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.table;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.text;
 
-import java.util.function.UnaryOperator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
@@ -32,22 +31,32 @@ public class FormattedQuestionConverter {
   }
 
   private String convertQuestion(CertificateQuestion question) {
-    return question(question, this::questionTitle, this::questionLabel);
+    if (question.getHeader() != null && !question.getHeader().isEmpty()) {
+      return HTMLUtility.join(
+          questionHeader(question.getHeader()),
+          subQuestionTitle(question.getTitle()),
+          questionLabel(question.getLabel()),
+          value(question.getValue())
+      );
+    }
+
+    return HTMLUtility.join(
+        questionTitle(question.getTitle()),
+        questionLabel(question.getLabel()),
+        value(question.getValue())
+    );
   }
 
   private String convertSubQuestion(CertificateQuestion question) {
-    return question(question, this::subQuestionTitle, this::subQuestionLabel);
-  }
-
-  private String question(
-      CertificateQuestion question,
-      UnaryOperator<String> getTitle,
-      UnaryOperator<String> getLabel) {
     return HTMLUtility.join(
-        getTitle.apply(question.getTitle()),
-        getLabel.apply(question.getLabel()),
+        subQuestionTitle(question.getTitle()),
+        subQuestionLabel(question.getLabel()),
         value(question.getValue())
     );
+  }
+
+  private String questionHeader(String title) {
+    return HTMLTextFactory.h3(title);
   }
 
   private String questionTitle(String title) {
