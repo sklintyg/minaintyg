@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +65,7 @@ class EventConverterTest {
   }
 
   @Test
-  void shallConvertReplacedCertificateToReplacedEvent() {
+  void shallConvertReplacedCertificateToReplacedEventIfReplacingCertificateIsSigned() {
     final var expectedEvent = List.of(
         createReplaceEvent(REPLACED_DESCRIPTION)
     );
@@ -83,6 +84,28 @@ class EventConverterTest {
 
     final var actualEvents = eventConverter.convert(metadataDTO);
     assertEquals(expectedEvent, actualEvents);
+  }
+
+  @Test
+  void shallNotConvertReplacedCertificateToReplacedEventIfReplacingCertificateIsNotSigned() {
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        createRelation(createReplaceEvent(REPLACED_DESCRIPTION),
+                            CertificateRelationType.REPLACED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    Arrays.stream(metadataDTO.getRelations().getChildren()).findFirst().orElseThrow()
+        .setStatus(CertificateStatus.UNSIGNED);
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.EMPTY_LIST, actualEvents);
   }
 
   @Test

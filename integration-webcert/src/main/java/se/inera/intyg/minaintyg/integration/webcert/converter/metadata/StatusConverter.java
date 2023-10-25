@@ -4,6 +4,7 @@ import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateCo
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelation;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateStatus;
 
 @Component
 public class StatusConverter {
@@ -19,7 +21,7 @@ public class StatusConverter {
   public List<CertificateStatusType> convert(CertificateMetadataDTO metadataDTO) {
     final var events = new ArrayList<CertificateStatusType>();
 
-    if (isReplaced(metadataDTO)) {
+    if (isReplaced(metadataDTO) && replacingCertificateIsSigned(metadataDTO)) {
       events.add(CertificateStatusType.REPLACED);
       return events;
     }
@@ -37,6 +39,11 @@ public class StatusConverter {
     }
 
     return events;
+  }
+
+  private static boolean replacingCertificateIsSigned(CertificateMetadataDTO metadataDTO) {
+    return Arrays.stream(metadataDTO.getRelations().getChildren())
+        .anyMatch(child -> CertificateStatus.SIGNED.equals(child.getStatus()));
   }
 
   private static boolean notReplaced(CertificateMetadataDTO metadataDTO) {

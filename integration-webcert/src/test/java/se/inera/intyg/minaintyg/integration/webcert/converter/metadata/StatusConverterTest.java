@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
@@ -121,7 +122,7 @@ class StatusConverterTest {
   class Replaced {
 
     @Test
-    void shallConvertToReplacedIfCertificateIsReplaced() {
+    void shallConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsSigned() {
       final var metadataDTO = CertificateMetadataDTO.builder()
           .created(OLD_DATE)
           .relations(
@@ -131,6 +132,22 @@ class StatusConverterTest {
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
+    }
+
+    @Test
+    void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsNotSigned() {
+      final var metadataDTO = CertificateMetadataDTO.builder()
+          .created(OLD_DATE)
+          .relations(
+              createChild(CertificateRelationType.REPLACED)
+          )
+          .build();
+
+      Arrays.stream(metadataDTO.getRelations().getChildren())
+          .findFirst().orElseThrow().setStatus(CertificateStatus.UNSIGNED);
+
+      final var actualStatuses = statusConverter.convert(metadataDTO);
+      assertEquals(Collections.EMPTY_LIST, actualStatuses);
     }
 
     @Test

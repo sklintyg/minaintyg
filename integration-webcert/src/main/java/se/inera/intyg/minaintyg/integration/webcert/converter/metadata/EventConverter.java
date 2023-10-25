@@ -1,7 +1,5 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
-import static java.util.function.Predicate.not;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -59,7 +57,7 @@ public class EventConverter {
 
     return Arrays.stream(metadataDTO.getRelations().getChildren())
         .filter(isReplacedCertificate())
-        .filter(not(isRevoked()))
+        .filter(isSigned())
         .max(Comparator.comparing(CertificateRelation::getCreated))
         .map(relation -> createEvent(relation, EVENT_REPLACED));
   }
@@ -69,8 +67,8 @@ public class EventConverter {
         || metadataDTO.getRelations().getChildren() == null;
   }
 
-  private Predicate<? super CertificateRelation> isRevoked() {
-    return child -> CertificateStatus.REVOKED.equals(child.getStatus());
+  private Predicate<? super CertificateRelation> isSigned() {
+    return child -> CertificateStatus.SIGNED.equals(child.getStatus());
   }
 
   private static Predicate<CertificateRelation> isReplacedCertificate() {
