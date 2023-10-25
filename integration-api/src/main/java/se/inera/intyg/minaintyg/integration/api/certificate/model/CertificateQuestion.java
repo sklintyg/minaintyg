@@ -12,6 +12,7 @@ public class CertificateQuestion {
 
   String title;
   String label;
+  String header;
   CertificateQuestionValue value;
   @Builder.Default
   List<CertificateQuestion> subQuestions = Collections.emptyList();

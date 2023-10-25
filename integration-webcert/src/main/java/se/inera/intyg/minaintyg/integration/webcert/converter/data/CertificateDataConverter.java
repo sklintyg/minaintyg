@@ -73,6 +73,7 @@ public class CertificateDataConverter {
             CertificateQuestion.builder()
                 .title(toTitle(question))
                 .label(toLabel(question))
+                .header(toHeader(question))
                 .value(
                     toValue(
                         question,
@@ -88,17 +89,19 @@ public class CertificateDataConverter {
   }
 
   public static String toTitle(CertificateDataElement element) {
-    if (element.getConfig().getText() == null || element.getConfig().getText().isEmpty()) {
-      return null;
-    }
-    return element.getConfig().getText();
+    return getString(element.getConfig().getText());
   }
 
   private static String toLabel(CertificateDataElement element) {
-    if (element.getConfig().getLabel() == null || element.getConfig().getLabel().isEmpty()) {
-      return null;
-    }
-    return element.getConfig().getLabel();
+    return getString(element.getConfig().getLabel());
+  }
+
+  private static String toHeader(CertificateDataElement element) {
+    return getString(element.getConfig().getHeader());
+  }
+
+  private static String getString(String text) {
+    return text == null || text.isEmpty() ? null : text;
   }
 
   public CertificateQuestionValue toValue(CertificateDataElement element,
