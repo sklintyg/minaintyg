@@ -68,12 +68,9 @@ public class StatusConverter {
       return false;
     }
 
-    final var isReplaced = Stream.of(metadataDTO.getRelations().getChildren())
-        .anyMatch(isReplacedCertificate());
-    final var isReplacementSigned = Stream.of(metadataDTO.getRelations().getChildren())
+    return Stream.of(metadataDTO.getRelations().getChildren())
+        .filter(isReplacedCertificate())
         .anyMatch(child -> CertificateStatus.SIGNED.equals(child.getStatus()));
-
-    return isReplaced && isReplacementSigned;
   }
 
   private static boolean noChildRelations(CertificateMetadataDTO metadataDTO) {
