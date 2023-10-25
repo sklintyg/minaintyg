@@ -4,7 +4,6 @@ import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateCo
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -21,7 +20,7 @@ public class StatusConverter {
   public List<CertificateStatusType> convert(CertificateMetadataDTO metadataDTO) {
     final var events = new ArrayList<CertificateStatusType>();
 
-    if (isReplaced(metadataDTO) && replacingCertificateIsSigned(metadataDTO)) {
+    if (isReplaced(metadataDTO)) {
       events.add(CertificateStatusType.REPLACED);
       return events;
     }
@@ -39,11 +38,6 @@ public class StatusConverter {
     }
 
     return events;
-  }
-
-  private static boolean replacingCertificateIsSigned(CertificateMetadataDTO metadataDTO) {
-    return Arrays.stream(metadataDTO.getRelations().getChildren())
-        .anyMatch(child -> CertificateStatus.SIGNED.equals(child.getStatus()));
   }
 
   private static boolean notReplaced(CertificateMetadataDTO metadataDTO) {
@@ -73,8 +67,13 @@ public class StatusConverter {
     if (noChildRelations(metadataDTO)) {
       return false;
     }
-    return Stream.of(metadataDTO.getRelations().getChildren())
+
+    final var isReplaced = Stream.of(metadataDTO.getRelations().getChildren())
         .anyMatch(isReplacedCertificate());
+    final var isReplacementSigned = Stream.of(metadataDTO.getRelations().getChildren())
+        .anyMatch(child -> CertificateStatus.SIGNED.equals(child.getStatus()));
+
+    return isReplaced && isReplacementSigned;
   }
 
   private static boolean noChildRelations(CertificateMetadataDTO metadataDTO) {
