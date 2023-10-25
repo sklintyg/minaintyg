@@ -12,6 +12,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelation;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelationType;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateStatus;
 
 @Component
 public class StatusConverter {
@@ -66,8 +67,10 @@ public class StatusConverter {
     if (noChildRelations(metadataDTO)) {
       return false;
     }
+
     return Stream.of(metadataDTO.getRelations().getChildren())
-        .anyMatch(isReplacedCertificate());
+        .filter(isReplacedCertificate())
+        .anyMatch(child -> CertificateStatus.SIGNED.equals(child.getStatus()));
   }
 
   private static boolean noChildRelations(CertificateMetadataDTO metadataDTO) {

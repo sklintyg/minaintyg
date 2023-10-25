@@ -64,7 +64,7 @@ class EventConverterTest {
   }
 
   @Test
-  void shallConvertReplacedCertificateToReplacedEvent() {
+  void shallConvertReplacedCertificateToReplacedEventIfReplacingCertificateIsSigned() {
     final var expectedEvent = List.of(
         createReplaceEvent(REPLACED_DESCRIPTION)
     );
@@ -74,7 +74,8 @@ class EventConverterTest {
             CertificateRelations.builder()
                 .children(
                     createChildRelations(
-                        createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED)
+                        createRelation(expectedEvent.get(0), CertificateRelationType.REPLACED,
+                            CertificateStatus.SIGNED)
                     )
                 )
                 .build()
@@ -83,6 +84,81 @@ class EventConverterTest {
 
     final var actualEvents = eventConverter.convert(metadataDTO);
     assertEquals(expectedEvent, actualEvents);
+  }
+
+  @Test
+  void shallNotConvertReplacedCertificateToReplacedEventIfReplacingCertificateUnsigned() {
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        createRelation(createReplaceEvent(REPLACED_DESCRIPTION),
+                            CertificateRelationType.REPLACED, CertificateStatus.UNSIGNED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.EMPTY_LIST, actualEvents);
+  }
+  @Test
+  void shallNotConvertReplacedCertificateToReplacedEventIfReplacingCertificateRevoked() {
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        createRelation(createReplaceEvent(REPLACED_DESCRIPTION),
+                            CertificateRelationType.REPLACED, CertificateStatus.REVOKED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.EMPTY_LIST, actualEvents);
+  }
+
+  @Test
+  void shallNotConvertReplacedCertificateToReplacedEventIfReplacingCertificateLocked() {
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        createRelation(createReplaceEvent(REPLACED_DESCRIPTION),
+                            CertificateRelationType.REPLACED, CertificateStatus.LOCKED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.EMPTY_LIST, actualEvents);
+  }
+
+  @Test
+  void shallNotConvertReplacedCertificateToReplacedEventIfReplacingCertificateLockedRevoked() {
+    final var metadataDTO = CertificateMetadataDTO.builder()
+        .relations(
+            CertificateRelations.builder()
+                .children(
+                    createChildRelations(
+                        createRelation(createReplaceEvent(REPLACED_DESCRIPTION),
+                            CertificateRelationType.REPLACED, CertificateStatus.LOCKED_REVOKED)
+                    )
+                )
+                .build()
+        )
+        .build();
+
+    final var actualEvents = eventConverter.convert(metadataDTO);
+    assertEquals(Collections.EMPTY_LIST, actualEvents);
   }
 
   @Test
@@ -274,14 +350,19 @@ class EventConverterTest {
     return relations;
   }
 
-  @NotNull
   private static CertificateRelation createRelation(CertificateEvent expectedEvent,
       CertificateRelationType certificateRelationType) {
+    return createRelation(expectedEvent, certificateRelationType, CertificateStatus.SIGNED);
+  }
+
+  @NotNull
+  private static CertificateRelation createRelation(CertificateEvent expectedEvent,
+      CertificateRelationType certificateRelationType, CertificateStatus certificateStatus) {
     return CertificateRelation.builder()
         .type(certificateRelationType)
         .certificateId(expectedEvent.getCertificateId())
         .created(expectedEvent.getTimestamp())
-        .status(CertificateStatus.SIGNED)
+        .status(certificateStatus)
         .build();
   }
 }

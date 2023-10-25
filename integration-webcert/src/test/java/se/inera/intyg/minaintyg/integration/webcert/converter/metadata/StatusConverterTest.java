@@ -121,16 +121,68 @@ class StatusConverterTest {
   class Replaced {
 
     @Test
-    void shallConvertToReplacedIfCertificateIsReplaced() {
+    void shallConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsSigned() {
       final var metadataDTO = CertificateMetadataDTO.builder()
           .created(OLD_DATE)
           .relations(
-              createChild(CertificateRelationType.REPLACED)
+              createChild(CertificateRelationType.REPLACED, CertificateStatus.SIGNED)
           )
           .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
+    }
+
+    @Test
+    void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsUnsigned() {
+      final var metadataDTO = CertificateMetadataDTO.builder()
+          .created(OLD_DATE)
+          .relations(
+              createChild(CertificateRelationType.REPLACED, CertificateStatus.UNSIGNED)
+          )
+          .build();
+
+      final var actualStatuses = statusConverter.convert(metadataDTO);
+      assertEquals(Collections.EMPTY_LIST, actualStatuses);
+    }
+
+    @Test
+    void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsRevoked() {
+      final var metadataDTO = CertificateMetadataDTO.builder()
+          .created(OLD_DATE)
+          .relations(
+              createChild(CertificateRelationType.REPLACED, CertificateStatus.REVOKED)
+          )
+          .build();
+
+      final var actualStatuses = statusConverter.convert(metadataDTO);
+      assertEquals(Collections.EMPTY_LIST, actualStatuses);
+    }
+
+    @Test
+    void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsLocked() {
+      final var metadataDTO = CertificateMetadataDTO.builder()
+          .created(OLD_DATE)
+          .relations(
+              createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED)
+          )
+          .build();
+
+      final var actualStatuses = statusConverter.convert(metadataDTO);
+      assertEquals(Collections.EMPTY_LIST, actualStatuses);
+    }
+
+    @Test
+    void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsLockedRevoked() {
+      final var metadataDTO = CertificateMetadataDTO.builder()
+          .created(OLD_DATE)
+          .relations(
+              createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED_REVOKED)
+          )
+          .build();
+
+      final var actualStatuses = statusConverter.convert(metadataDTO);
+      assertEquals(Collections.EMPTY_LIST, actualStatuses);
     }
 
     @Test
@@ -284,6 +336,11 @@ class StatusConverterTest {
   }
 
   private CertificateRelations createChild(CertificateRelationType type) {
+    return createChild(type, CertificateStatus.SIGNED);
+  }
+
+  private CertificateRelations createChild(CertificateRelationType type,
+      CertificateStatus certificateStatus) {
     return CertificateRelations.builder()
         .children(
             new CertificateRelation[]{
@@ -291,7 +348,7 @@ class StatusConverterTest {
                     .type(type)
                     .certificateId("id")
                     .created(LocalDateTime.now())
-                    .status(CertificateStatus.SIGNED)
+                    .status(certificateStatus)
                     .build()}
         )
         .build();
