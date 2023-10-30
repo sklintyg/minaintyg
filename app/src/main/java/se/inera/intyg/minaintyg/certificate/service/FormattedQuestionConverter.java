@@ -5,6 +5,7 @@ import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFac
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.table;
 import static se.inera.intyg.minaintyg.util.html.CertificateQuestionValueHTMLFactory.text;
 
+import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
@@ -35,14 +36,14 @@ public class FormattedQuestionConverter {
       return HTMLUtility.join(
           questionHeader(question.getHeader()),
           subQuestionTitle(question.getTitle()),
-          questionLabel(question.getLabel()),
+          questionLabel(question.getLabel(), question.getTitle()),
           value(question.getValue())
       );
     }
 
     return HTMLUtility.join(
         questionTitle(question.getTitle()),
-        questionLabel(question.getLabel()),
+        questionLabel(question.getLabel(), question.getTitle()),
         value(question.getValue())
     );
   }
@@ -50,7 +51,7 @@ public class FormattedQuestionConverter {
   private String convertSubQuestion(CertificateQuestion question) {
     return HTMLUtility.join(
         subQuestionTitle(question.getTitle()),
-        subQuestionLabel(question.getLabel()),
+        questionLabel(question.getLabel(), question.getTitle()),
         value(question.getValue())
     );
   }
@@ -67,12 +68,8 @@ public class FormattedQuestionConverter {
     return HTMLTextFactory.h4(title);
   }
 
-  private String questionLabel(String label) {
-    return HTMLTextFactory.h4(label);
-  }
-
-  private String subQuestionLabel(String label) {
-    return HTMLTextFactory.h4(label);
+  private String questionLabel(String label, String title) {
+    return Strings.isNullOrEmpty(title) ? HTMLTextFactory.h3(label) : HTMLTextFactory.h4(label);
   }
 
   private String value(CertificateQuestionValue value) {
