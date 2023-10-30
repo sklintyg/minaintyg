@@ -8,7 +8,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigViewTable;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.ViewColumn;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
@@ -16,6 +15,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 
 @Component
 public class ViewTableValueConverter extends AbstractValueConverter {
+
+  public static final String EMPTY = "";
 
   @Override
   public CertificateDataValueType getType() {
@@ -70,7 +71,7 @@ public class ViewTableValueConverter extends AbstractValueConverter {
     return getConfig(config).map(c -> c
         .getColumns()
         .stream()
-        .map(ViewColumn::getText)
+        .map(column -> column.getText() != null ? column.getText() : EMPTY)
         .toList()).orElseGet(() -> List.of(MISSING_LABEL));
   }
 }
