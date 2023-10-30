@@ -22,6 +22,7 @@ class ViewTableValueConverterTest {
   private static final String VALUE_1 = "value1";
   private static final String VALUE_2 = "value2";
   private static final String VALUE_3 = "value3";
+  private static final String MISSING_HEADING = "";
   private static final String HEADING_1 = "heading1";
   private static final String HEADING_2 = "heading2";
   private static final String HEADING_3 = "heading3";
@@ -65,7 +66,7 @@ class ViewTableValueConverterTest {
     );
 
     final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(List.of(HEADING_1, HEADING_2, HEADING_3))
+        .headings(List.of(MISSING_HEADING, HEADING_1, HEADING_2, HEADING_3))
         .values(
             List.of(
                 List.of(VALUE_1, VALUE_2, VALUE_3)

@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
@@ -16,6 +17,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 
 @Component
 public class ViewTableValueConverter extends AbstractValueConverter {
+
+  public static final String EMPTY = "";
 
   @Override
   public CertificateDataValueType getType() {
@@ -67,10 +70,21 @@ public class ViewTableValueConverter extends AbstractValueConverter {
   }
 
   private List<String> getHeadings(CertificateDataConfig config) {
-    return getConfig(config).map(c -> c
-        .getColumns()
-        .stream()
-        .map(ViewColumn::getText)
-        .toList()).orElseGet(() -> List.of(MISSING_LABEL));
+    final var optionalConfig = getConfig(config);
+
+    if (optionalConfig.isEmpty()) {
+      return List.of(MISSING_LABEL);
+    }
+
+    final var emptyHeadingList = List.of(EMPTY);
+
+    return Stream.concat(
+            emptyHeadingList.stream(),
+            optionalConfig.get()
+                .getColumns()
+                .stream()
+                .map(ViewColumn::getText)
+        )
+        .toList();
   }
 }
