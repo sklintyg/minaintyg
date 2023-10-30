@@ -56,6 +56,24 @@ class FormattedQuestionConverterTest {
   }
 
   @Test
+  void shouldReturnHTMLWithLabelButWithoutTitle() {
+    final var question = CertificateQuestion.builder()
+        .label("Label")
+        .value(
+            CertificateQuestionValueList
+                .builder()
+                .values(List.of("element 1", "element 2"))
+                .build())
+        .build();
+
+    final var result = formattedQuestionConverter.convert(question);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Label</h3><ul><li>element 1</li><li>element 2</li></ul>",
+        result);
+  }
+
+  @Test
   void shouldReturnHTMLWithHeader() {
     final var question = CertificateQuestion.builder()
         .title("Title")
@@ -72,24 +90,6 @@ class FormattedQuestionConverterTest {
 
     assertEquals(
         "<h3 className=\"ids-heading-3\">Header</h3><h4 className=\"ids-heading-4\">Title</h4><h4 className=\"ids-heading-4\">Label</h4><ul><li>element 1</li><li>element 2</li></ul>",
-        result);
-  }
-
-  @Test
-  void shouldReturnHTMLWithoutTitle() {
-    final var question = CertificateQuestion.builder()
-        .label("Label")
-        .value(
-            CertificateQuestionValueList
-                .builder()
-                .values(List.of("element 1", "element 2"))
-                .build())
-        .build();
-
-    final var result = formattedQuestionConverter.convert(question);
-
-    assertEquals(
-        "<h4 className=\"ids-heading-4\">Label</h4><ul><li>element 1</li><li>element 2</li></ul>",
         result);
   }
 
@@ -139,6 +139,31 @@ class FormattedQuestionConverterTest {
 
     assertEquals(
         "<h3 className=\"ids-heading-3\">Complete title</h3><h4 className=\"ids-heading-4\">Complete label</h4><p>Complete text</p><h4 className=\"ids-heading-4\">Title</h4><h4 className=\"ids-heading-4\">Label</h4><p>element 1</p>",
+        result);
+  }
+
+  @Test
+  void shouldReturnHTMLWithLabelButWithoutTitleForSubQuestion() {
+    final var question = CertificateQuestion.builder()
+        .subQuestions(
+            List.of(
+                CertificateQuestion.builder()
+                    .label("Label")
+                    .value(
+                        CertificateQuestionValueList
+                            .builder()
+                            .values(List.of("element 1", "element 2"))
+                            .build()
+                    )
+                    .build()
+            )
+        )
+        .build();
+
+    final var result = formattedQuestionConverter.convert(question);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Label</h3><ul><li>element 1</li><li>element 2</li></ul>",
         result);
   }
 
