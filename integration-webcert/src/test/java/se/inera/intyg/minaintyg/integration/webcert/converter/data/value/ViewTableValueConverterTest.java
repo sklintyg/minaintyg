@@ -78,6 +78,54 @@ class ViewTableValueConverterTest {
   }
 
   @Test
+  void shouldConvertValueIncludingEmptyHeading() {
+    final var elements = createElement(
+        CertificateDataConfigViewTable.builder()
+            .columns(
+                List.of(
+                    ViewColumn.builder().build(),
+                    ViewColumn.builder().text(HEADING_2).build(),
+                    ViewColumn.builder().text(HEADING_3).build()
+                )
+            )
+            .build(),
+        CertificateDataValueViewTable.builder()
+            .rows(List.of(
+                CertificateDataValueViewRow
+                    .builder()
+                    .columns(List.of(
+                        CertificateDataTextValue
+                            .builder()
+                            .text(VALUE_1)
+                            .build(),
+                        CertificateDataTextValue
+                            .builder()
+                            .text(VALUE_2)
+                            .build(),
+                        CertificateDataTextValue
+                            .builder()
+                            .text(VALUE_3)
+                            .build()
+                    ))
+                    .build()
+            ))
+            .build()
+    );
+
+    final var expectedResult = CertificateQuestionValueTable.builder()
+        .headings(List.of("", HEADING_2, HEADING_3))
+        .values(
+            List.of(
+                List.of(VALUE_1, VALUE_2, VALUE_3)
+            )
+        )
+        .build();
+
+    final var result = valueConverter.convert(elements);
+    assertEquals(expectedResult, result);
+  }
+
+  @Test
   void shouldConvertWhenNoValue() {
     final var elements = createElement(
         CertificateDataConfigViewTable.builder().build(),
