@@ -1,13 +1,17 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.ResourceLink;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.ResourceLinkConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
 
@@ -18,6 +22,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
   private final GetCertificateFromWebcertService getCertificateFromWebcertService;
   private final MetadataConverter metadataConverter;
   private final CertificateDataConverter certificateDataConverter;
+  private final ResourceLinkConverter resourceLinkConverter;
 
   @Override
   public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
@@ -28,7 +33,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
-  
+
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
@@ -42,7 +47,21 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
                 )
                 .build()
         )
+        .resourceLinks(
+            convertResourceLinks(response)
+        )
         .build();
+  }
+
+  private List<ResourceLink> convertResourceLinks(CertificateResponseDTO response) {
+    if (response.getResourceLinks() == null) {
+      return Collections.emptyList();
+    }
+
+    return response.getResourceLinks()
+        .stream()
+        .map(resourceLinkConverter::convert)
+        .toList();
   }
 
   private static boolean validateResponse(CertificateResponseDTO response) {

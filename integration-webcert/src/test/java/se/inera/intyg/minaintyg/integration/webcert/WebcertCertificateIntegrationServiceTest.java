@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -16,12 +18,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.ResourceLink;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.ResourceLinkDTO;
+import se.inera.intyg.minaintyg.integration.webcert.converter.ResourceLinkConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
 
@@ -31,6 +36,9 @@ class WebcertCertificateIntegrationServiceTest {
   private static final String ID = "id";
   private static final String NAME = "name";
   private static final String CERTIFICATE_ID = "certificateId";
+  public static final GetCertificateIntegrationRequest REQUEST = GetCertificateIntegrationRequest.builder()
+      .certificateId(CERTIFICATE_ID)
+      .build();
   @Mock
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
@@ -39,6 +47,9 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Mock
   private MetadataConverter metadataConverter;
+
+  @Mock
+  private ResourceLinkConverter resourceLinkConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -154,5 +165,62 @@ class WebcertCertificateIntegrationServiceTest {
 
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedMetadata, result.getCertificate().getMetadata());
+  }
+
+  @Test
+  void shouldReturnResponseWithResourceLinks() {
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .resourceLinks(
+            List.of(ResourceLinkDTO.builder().build(), ResourceLinkDTO.builder().build())
+        )
+        .build();
+
+    final var expectedResourceLink = ResourceLink.builder().name("NAME").build();
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+    when(resourceLinkConverter.convert(any(ResourceLinkDTO.class)))
+        .thenReturn(expectedResourceLink);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    verify(resourceLinkConverter, times(2)).convert(any(ResourceLinkDTO.class));
+    assertEquals(2, result.getResourceLinks().size());
+    assertEquals(expectedResourceLink, result.getResourceLinks().get(0));
+  }
+
+  @Test
+  void shouldReturnEmptyListIfResourceLinksIsNull() {
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .build();
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    assertEquals(0, result.getResourceLinks().size());
   }
 }
