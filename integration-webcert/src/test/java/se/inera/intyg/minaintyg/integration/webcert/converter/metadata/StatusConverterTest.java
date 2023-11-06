@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateConstants.DAYS_LIMIT_FOR_STATUS_NEW;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -17,9 +18,12 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Certific
 
 class StatusConverterTest {
 
-  public static final LocalDateTime OLD_DATE = LocalDateTime.now().minusDays(15);
-  public static final LocalDateTime NEW_DATE = LocalDateTime.now().minusDays(13);
-  public static final LocalDateTime LAST_DAY_AS_NEW = LocalDateTime.now().minusDays(14);
+  public static final LocalDateTime OLD_DATE = LocalDateTime.now()
+      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
+  public static final LocalDateTime NEW_DATE = LocalDateTime.now()
+      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
+  public static final LocalDateTime LAST_DAY_AS_NEW = LocalDateTime.now()
+      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW);
   public static final String RECIPIENT_ID = "Id";
   private final StatusConverter statusConverter = new StatusConverter();
 

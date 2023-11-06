@@ -18,14 +18,15 @@ public class CertificateStatusService {
       LocalDateTime issued) {
 
     final var statuses = getStatusesFromRelations(relations);
+
+    if (isReplaced(statuses)) {
+      return getListOfStatuses(statuses);
+    }
+
     statuses.add(CertificateStatusFactory.sent(recipient));
     statuses.add(CertificateStatusFactory.newStatus(issued));
 
-    return statuses
-        .stream()
-        .filter(Optional::isPresent)
-        .map(Optional::get)
-        .toList();
+    return getListOfStatuses(statuses);
   }
 
   private List<Optional<CertificateStatusType>> getStatusesFromRelations(
@@ -35,5 +36,18 @@ public class CertificateStatusService {
         .filter((relation) -> relation.getType() == CertificateRelationType.REPLACED)
         .map(CertificateStatusFactory::replaced)
         .collect(Collectors.toList());
+  }
+
+  private static boolean isReplaced(List<Optional<CertificateStatusType>> statuses) {
+    return !statuses.isEmpty();
+  }
+
+  private static List<CertificateStatusType> getListOfStatuses(
+      List<Optional<CertificateStatusType>> statuses) {
+    return statuses
+        .stream()
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .toList();
   }
 }
