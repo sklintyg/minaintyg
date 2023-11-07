@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.common;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 
@@ -12,4 +13,5 @@ public class AvailableFunction {
   String title;
   String description;
   String body;
+  List<Information> information;
 }
