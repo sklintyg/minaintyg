@@ -124,6 +124,15 @@ class CertificateStatusServiceTest {
   }
 
   @Test
+  void shouldOnlyIncludeReplacedIfCertificateIsBothNewAndReplaced() {
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, null,
+        NEW_ISSUED);
+
+    assertEquals(1, response.size());
+    assertEquals(CertificateStatusType.REPLACED, response.get(0));
+  }
+
+  @Test
   void shouldIncludeBothSentAndNewIfSentAndNewerThanTheLimitForNewCertificates() {
     final var response = certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT,
         NEW_ISSUED);
@@ -142,4 +151,5 @@ class CertificateStatusServiceTest {
     assertEquals(CertificateStatusType.NOT_SENT, response.get(0));
     assertEquals(CertificateStatusType.NEW, response.get(1));
   }
+
 }
