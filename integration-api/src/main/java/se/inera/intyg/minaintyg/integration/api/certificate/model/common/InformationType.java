@@ -1,5 +1,5 @@
 package se.inera.intyg.minaintyg.integration.api.certificate.model.common;
 
 public enum InformationType {
-  OPTION
+  OPTIONS, ALERT
 }
