@@ -27,7 +27,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.ResourceLink;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 
 @ExtendWith(MockitoExtension.class)
@@ -142,7 +142,7 @@ class CertificateControllerTest {
                 .content(List.of(FormattedCertificateCategory.builder().build()))
                 .build()
         )
-        .resourceLinks(List.of(ResourceLink.builder().build()))
+        .availableFunctions(List.of(AvailableFunction.builder().build()))
         .build();
 
     @BeforeEach
@@ -172,10 +172,10 @@ class CertificateControllerTest {
       }
 
       @Test
-      void shouldSetResourceLinks() {
+      void shouldSetAvailableFunctions() {
         final var response = certificateController.getCertificate(CERTIFICATE_ID);
 
-        assertEquals(expectedResponse.getResourceLinks(), response.getResourceLinks());
+        assertEquals(expectedResponse.getAvailableFunctions(), response.getAvailableFunctions());
       }
     }
   }

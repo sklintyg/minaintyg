@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -18,15 +16,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.ResourceLink;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.ResourceLinkDTO;
-import se.inera.intyg.minaintyg.integration.webcert.converter.ResourceLinkConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
 
@@ -47,9 +43,6 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Mock
   private MetadataConverter metadataConverter;
-
-  @Mock
-  private ResourceLinkConverter resourceLinkConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -168,7 +161,7 @@ class WebcertCertificateIntegrationServiceTest {
   }
 
   @Test
-  void shouldReturnResponseWithResourceLinks() {
+  void shouldReturnResponseWithAvailableFunctions() {
     final var response = CertificateResponseDTO.builder()
         .certificate(
             CertificateDTO.builder()
@@ -183,25 +176,19 @@ class WebcertCertificateIntegrationServiceTest {
                 )
                 .build()
         )
-        .resourceLinks(
-            List.of(ResourceLinkDTO.builder().build(), ResourceLinkDTO.builder().build())
+        .availableFunctions(
+            List.of(AvailableFunction.builder().build(), AvailableFunction.builder().build())
         )
         .build();
-
-    final var expectedResourceLink = ResourceLink.builder().name("NAME").build();
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
-    when(resourceLinkConverter.convert(any(ResourceLinkDTO.class)))
-        .thenReturn(expectedResourceLink);
 
     final var result = webcertCertificateIntegrationService.get(REQUEST);
 
-    verify(resourceLinkConverter, times(2)).convert(any(ResourceLinkDTO.class));
-    assertEquals(2, result.getResourceLinks().size());
-    assertEquals(expectedResourceLink, result.getResourceLinks().get(0));
+    assertEquals(response.getAvailableFunctions(), result.getAvailableFunctions());
   }
 
   @Test
-  void shouldReturnEmptyListIfResourceLinksIsNull() {
+  void shouldReturnEmptyListIfAvailableFunctionsIsNull() {
     final var response = CertificateResponseDTO.builder()
         .certificate(
             CertificateDTO.builder()
@@ -221,6 +208,6 @@ class WebcertCertificateIntegrationServiceTest {
 
     final var result = webcertCertificateIntegrationService.get(REQUEST);
 
-    assertEquals(0, result.getResourceLinks().size());
+    assertEquals(0, result.getAvailableFunctions().size());
   }
 }

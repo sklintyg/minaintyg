@@ -23,7 +23,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.ResourceLink;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 
@@ -54,7 +54,7 @@ class GetCertificateServiceTest {
               .categories(List.of(CertificateCategory.builder().build()))
               .build()
       )
-      .resourceLinks(List.of(ResourceLink.builder().build()))
+      .availableFunctions(List.of(AvailableFunction.builder().build()))
       .build();
 
   @Mock
@@ -134,10 +134,10 @@ class GetCertificateServiceTest {
     }
 
     @Test
-    void shouldSetResourceLinks() {
+    void shouldSetAvailableFunctions() {
       final var response = getCertificateService.get(REQUEST);
 
-      assertEquals(EXPECTED_RESPONSE.getResourceLinks(), response.getResourceLinks());
+      assertEquals(EXPECTED_RESPONSE.getAvailableFunctions(), response.getAvailableFunctions());
     }
   }
 

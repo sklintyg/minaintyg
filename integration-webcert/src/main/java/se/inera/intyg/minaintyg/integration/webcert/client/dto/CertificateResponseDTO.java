@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 
 @Data
 @Builder
@@ -13,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class CertificateResponseDTO {
 
   private CertificateDTO certificate;
-  private List<ResourceLinkDTO> resourceLinks;
+  private List<AvailableFunction> availableFunctions;
 }

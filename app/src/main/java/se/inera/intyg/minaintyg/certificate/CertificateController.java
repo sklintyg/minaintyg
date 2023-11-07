@@ -56,7 +56,7 @@ public class CertificateController {
     return CertificateResponseDTO
         .builder()
         .certificate(response.getCertificate())
-        .resourceLinks(response.getResourceLinks())
+        .availableFunctions(response.getAvailableFunctions())
         .build();
   }
 
