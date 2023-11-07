@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.certificate.dto.PrintCertificateRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.PrintCertificateResponseDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.PrintCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 
 @RestController
@@ -25,6 +29,7 @@ public class CertificateController {
   private final ListCertificatesService listCertificatesService;
   private final GetCertificateService getCertificateService;
   private final SendCertificateService sendCertificateService;
+  private final PrintCertificateService printCertificateService;
 
   @PostMapping
   public CertificateListResponseDTO listCertificates(
@@ -67,5 +72,25 @@ public class CertificateController {
             .certificateId(certificateId)
             .build()
     );
+  }
+
+  @PostMapping("/{certificateId}/print")
+  public PrintCertificateResponseDTO printCertificate(
+      @PathVariable String certificateId,
+      @RequestBody PrintCertificateRequestDTO request) {
+
+    final var response = printCertificateService.print(
+        PrintCertificateRequest
+            .builder()
+            .certificateId(certificateId)
+            .customizationId(request.getCustomizationId())
+            .build()
+    );
+
+    return PrintCertificateResponseDTO
+        .builder()
+        .filename(response.getFilename())
+        .pdfData(response.getPdfData())
+        .build();
   }
 }

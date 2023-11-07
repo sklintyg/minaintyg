@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HexFormat;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.PrintCertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.PrintCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
@@ -24,6 +27,8 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
@@ -46,6 +51,8 @@ class CertificateControllerTest {
   GetCertificateService getCertificateService;
   @Mock
   SendCertificateService sendCertificateService;
+  @Mock
+  PrintCertificateService printCertificateService;
 
   @InjectMocks
   CertificateController certificateController;
@@ -181,6 +188,58 @@ class CertificateControllerTest {
 
       verify(sendCertificateService).send(captor.capture());
       assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
+    }
+  }
+
+  @Nested
+  class PrintCertificate {
+
+    private static final PrintCertificateRequestDTO REQUEST = PrintCertificateRequestDTO.builder()
+        .customizationId("C_ID")
+        .build();
+
+    @BeforeEach
+    void setup() {
+      when(printCertificateService.print(any(PrintCertificateRequest.class)))
+          .thenReturn(EXPECTED_RESPONSE);
+    }
+
+    private static final PrintCertificateResponse EXPECTED_RESPONSE = PrintCertificateResponse
+        .builder()
+        .filename("PRINT")
+        .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
+        .build();
+
+    @Test
+    void shouldUseCertificateIdInRequest() {
+      certificateController.printCertificate(CERTIFICATE_ID, REQUEST);
+      final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
+
+      verify(printCertificateService).print(captor.capture());
+      assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
+    }
+
+    @Test
+    void shouldUseCustomizationIdInRequest() {
+      certificateController.printCertificate(CERTIFICATE_ID, REQUEST);
+      final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
+
+      verify(printCertificateService).print(captor.capture());
+      assertEquals(REQUEST.getCustomizationId(), captor.getValue().getCustomizationId());
+    }
+
+    @Test
+    void shouldReturnFilenameReturnedFromService() {
+      final var response = certificateController.printCertificate(CERTIFICATE_ID, REQUEST);
+
+      assertEquals(EXPECTED_RESPONSE.getFilename(), response.getFilename());
+    }
+
+    @Test
+    void shouldReturnPdfDataReturnedFromService() {
+      final var response = certificateController.printCertificate(CERTIFICATE_ID, REQUEST);
+
+      assertEquals(EXPECTED_RESPONSE.getPdfData(), response.getPdfData());
     }
   }
 }

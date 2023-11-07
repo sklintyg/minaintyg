@@ -37,6 +37,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, type, recipient);
   }
 
+  @Override
+  public void logCertificatePrinted(String certificateId) {
+    logEvent(MonitoringEvent.CERTIFICATE_PRINTED, certificateId);
+  }
+
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
     log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
   }
@@ -52,7 +57,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
-    CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'");
+    CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
+    CERTIFICATE_PRINTED("Certificate '{}' printed");
     private final String message;
 
     MonitoringEvent(String message) {
