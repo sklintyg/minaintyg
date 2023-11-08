@@ -12,5 +12,5 @@ public interface MonitoringLogService {
 
   void logCertificateSent(String certificateId, String type, String recipient);
 
-  void logCertificatePrinted(String certificateId);
+  void logCertificatePrinted(String certificateId, String certificateType, boolean isEmployerCopy);
 }

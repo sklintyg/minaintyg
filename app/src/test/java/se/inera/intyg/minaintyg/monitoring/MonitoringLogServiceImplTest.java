@@ -106,10 +106,19 @@ class MonitoringLogServiceImplTest {
     }
 
     @Test
-    void shouldLogWhenCertificateIsPrinted() {
-      monitoringLogService.logCertificatePrinted("ID");
+    void shouldLogWhenCertificateIsPrintedMinimal() {
+      monitoringLogService.logCertificatePrinted("ID", "TYPE", true);
 
-      verifyLog(Level.INFO, "CERTIFICATE_PRINTED Certificate 'ID' printed");
+      verifyLog(Level.INFO,
+          "INTYG_PRINT_PDF Intyg 'ID' of type 'TYPE' was printed as PDF with 'MINIMAL' content");
+    }
+
+    @Test
+    void shouldLogWhenCertificateIsPrintedFull() {
+      monitoringLogService.logCertificatePrinted("ID", "TYPE", false);
+
+      verifyLog(Level.INFO,
+          "INTYG_PRINT_PDF Intyg 'ID' of type 'TYPE' was printed as PDF with 'FULL' content");
     }
   }
 }
