@@ -6,7 +6,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateRequestDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateResponseDTO;
 
 @Service
@@ -33,12 +35,19 @@ public class PrintCertificateFromWebcertService {
   }
 
   public PrintCertificateResponseDTO print(PrintCertificateIntegrationRequest request) {
-    return webClient.get().uri(uriBuilder -> uriBuilder
+    return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(endpoint)
-            .build(request))
+            .build(request.getCertificateId())
+        )
+        .body(Mono.just(
+            PrintCertificateRequestDTO
+                .builder()
+                .customizationId(request.getCustomizationId())
+                .build()
+        ), PrintCertificateRequestDTO.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(PrintCertificateResponseDTO.class)
