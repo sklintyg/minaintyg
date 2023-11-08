@@ -21,6 +21,7 @@ import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 
 @RestController
@@ -93,14 +94,20 @@ public class CertificateController {
             .build()
     );
 
+    final var responseHeaders = getHttpHeaders(httpServletRequest, response);
+
+    return ResponseEntity.ok()
+        .headers(responseHeaders)
+        .body(response.getPdfData());
+  }
+
+  private static HttpHeaders getHttpHeaders(HttpServletRequest httpServletRequest,
+      PrintCertificateResponse response) {
     final var userAgent = httpServletRequest.getHeader("User-Agent");
     final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
         ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
     final var responseHeaders = new HttpHeaders();
     responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
-
-    return ResponseEntity.ok()
-        .headers(responseHeaders)
-        .body(response.getPdfData());
+    return responseHeaders;
   }
 }
