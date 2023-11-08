@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
@@ -31,6 +32,9 @@ class WebcertCertificateIntegrationServiceTest {
   private static final String ID = "id";
   private static final String NAME = "name";
   private static final String CERTIFICATE_ID = "certificateId";
+  public static final GetCertificateIntegrationRequest REQUEST = GetCertificateIntegrationRequest.builder()
+      .certificateId(CERTIFICATE_ID)
+      .build();
   @Mock
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
@@ -154,5 +158,56 @@ class WebcertCertificateIntegrationServiceTest {
 
     final var result = webcertCertificateIntegrationService.get(request);
     assertEquals(expectedMetadata, result.getCertificate().getMetadata());
+  }
+
+  @Test
+  void shouldReturnResponseWithAvailableFunctions() {
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .availableFunctions(
+            List.of(AvailableFunction.builder().build(), AvailableFunction.builder().build())
+        )
+        .build();
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    assertEquals(response.getAvailableFunctions(), result.getAvailableFunctions());
+  }
+
+  @Test
+  void shouldReturnEmptyListIfAvailableFunctionsIsNull() {
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .build();
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    assertEquals(0, result.getAvailableFunctions().size());
   }
 }

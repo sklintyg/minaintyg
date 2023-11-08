@@ -15,6 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
@@ -22,6 +23,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 
@@ -52,6 +54,7 @@ class GetCertificateServiceTest {
               .categories(List.of(CertificateCategory.builder().build()))
               .build()
       )
+      .availableFunctions(List.of(AvailableFunction.builder().build()))
       .build();
 
   @Mock
@@ -93,7 +96,7 @@ class GetCertificateServiceTest {
   }
 
   @Nested
-  class GetCompleteCertificate {
+  class Request {
 
     @Test
     void shouldSetCertificateId() {
@@ -107,7 +110,7 @@ class GetCertificateServiceTest {
   }
 
   @Nested
-  class Converter {
+  class Response {
 
     @Test
     void shouldSendCertificateToConverter() {
@@ -117,6 +120,24 @@ class GetCertificateServiceTest {
 
       verify(formattedCertificateConverter).convert(captor.capture());
       assertEquals(EXPECTED_RESPONSE.getCertificate(), captor.getValue());
+    }
+
+    @Test
+    void shouldSetConvertedCertificate() {
+      final var expectedFormattedCertificate = FormattedCertificate.builder().build();
+      when(formattedCertificateConverter.convert(any(Certificate.class)))
+          .thenReturn(expectedFormattedCertificate);
+
+      final var response = getCertificateService.get(REQUEST);
+
+      assertEquals(response.getCertificate(), expectedFormattedCertificate);
+    }
+
+    @Test
+    void shouldSetAvailableFunctions() {
+      final var response = getCertificateService.get(REQUEST);
+
+      assertEquals(EXPECTED_RESPONSE.getAvailableFunctions(), response.getAvailableFunctions());
     }
   }
 

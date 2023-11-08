@@ -32,6 +32,7 @@ public class GetCertificateService {
 
     return GetCertificateResponse.builder()
         .certificate(formattedCertificateConverter.convert(response.getCertificate()))
+        .availableFunctions(response.getAvailableFunctions())
         .build();
   }
 }
