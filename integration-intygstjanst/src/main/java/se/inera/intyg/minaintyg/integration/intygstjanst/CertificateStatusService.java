@@ -17,9 +17,12 @@ public class CertificateStatusService {
       CertificateRecipientDTO recipient,
       LocalDateTime issued) {
 
-    final var statuses = getStatusesFromRelations(relations);
-    statuses.add(CertificateStatusFactory.sent(recipient));
-    statuses.add(CertificateStatusFactory.newStatus(issued));
+    final var statuses = getReplacedStatusFromRelations(relations);
+
+    if (notReplaced(statuses)) {
+      statuses.add(CertificateStatusFactory.sent(recipient));
+      statuses.add(CertificateStatusFactory.newStatus(issued));
+    }
 
     return statuses
         .stream()
@@ -28,12 +31,19 @@ public class CertificateStatusService {
         .toList();
   }
 
-  private List<Optional<CertificateStatusType>> getStatusesFromRelations(
+  private List<Optional<CertificateStatusType>> getReplacedStatusFromRelations(
       List<CertificateRelationDTO> relations) {
     return relations
         .stream()
-        .filter((relation) -> relation.getType() == CertificateRelationType.REPLACED)
+        .filter(relation -> relation.getType() == CertificateRelationType.REPLACED)
         .map(CertificateStatusFactory::replaced)
         .collect(Collectors.toList());
+  }
+
+  private static boolean notReplaced(List<Optional<CertificateStatusType>> statuses) {
+    return statuses.stream()
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .noneMatch(relation -> relation == CertificateStatusType.REPLACED);
   }
 }
