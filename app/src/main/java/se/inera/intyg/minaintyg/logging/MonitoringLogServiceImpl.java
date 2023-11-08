@@ -36,18 +36,25 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   public void logCertificateSent(String certificateId, String type, String recipient) {
     logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, type, recipient);
   }
-  
+
   @Override
   public void logCertificatePrinted(
       String certificateId,
       String certificateType,
-      boolean isEmployerCopy) {
-    logEvent(
-        MonitoringEvent.INTYG_PRINT_PDF,
-        certificateId,
-        certificateType,
-        isEmployerCopy ? "MINIMAL" : "FULL"
-    );
+      boolean printCompleteCertificate) {
+    if (!printCompleteCertificate) {
+      logEvent(
+          MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY,
+          certificateId,
+          certificateType
+      );
+    } else {
+      logEvent(
+          MonitoringEvent.CERTIFICATE_PRINTED_FULLY,
+          certificateId,
+          certificateType
+      );
+    }
   }
 
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
@@ -66,7 +73,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
     CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
-    INTYG_PRINT_PDF("Intyg '{}' of type '{}' was printed as PDF with '{}' content");
+    CERTIFICATE_PRINTED_FULLY(
+        "Certificate '{}' of type '{}' was printed including all information"),
+    CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy");
     private final String message;
 
     MonitoringEvent(String message) {

@@ -110,7 +110,7 @@ class MonitoringLogServiceImplTest {
       monitoringLogService.logCertificatePrinted("ID", "TYPE", true);
 
       verifyLog(Level.INFO,
-          "INTYG_PRINT_PDF Intyg 'ID' of type 'TYPE' was printed as PDF with 'MINIMAL' content");
+          "CERTIFICATE_PRINTED_FULLY Certificate 'ID' of type 'TYPE' was printed as employer copy");
     }
 
     @Test
@@ -118,7 +118,7 @@ class MonitoringLogServiceImplTest {
       monitoringLogService.logCertificatePrinted("ID", "TYPE", false);
 
       verifyLog(Level.INFO,
-          "INTYG_PRINT_PDF Intyg 'ID' of type 'TYPE' was printed as PDF with 'FULL' content");
+          "CERTIFICATE_PRINTED_FULLY Certificate 'ID' of type 'TYPE' was printed including all information");
     }
   }
 }
