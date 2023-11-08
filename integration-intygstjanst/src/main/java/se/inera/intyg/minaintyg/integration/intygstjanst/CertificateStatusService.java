@@ -24,30 +24,26 @@ public class CertificateStatusService {
       statuses.add(CertificateStatusFactory.newStatus(issued));
     }
 
-    return getListOfStatuses(statuses);
+    return statuses
+        .stream()
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .toList();
   }
 
   private List<Optional<CertificateStatusType>> getReplacedStatusFromRelations(
       List<CertificateRelationDTO> relations) {
     return relations
         .stream()
-        .filter((relation) -> relation.getType() == CertificateRelationType.REPLACED)
+        .filter(relation -> relation.getType() == CertificateRelationType.REPLACED)
         .map(CertificateStatusFactory::replaced)
         .collect(Collectors.toList());
   }
 
   private static boolean notReplaced(List<Optional<CertificateStatusType>> statuses) {
     return statuses.stream()
-        .map(statusType -> statusType.orElse(null))
-        .noneMatch((relation) -> relation == CertificateStatusType.REPLACED);
-  }
-
-  private static List<CertificateStatusType> getListOfStatuses(
-      List<Optional<CertificateStatusType>> statuses) {
-    return statuses
-        .stream()
         .filter(Optional::isPresent)
         .map(Optional::get)
-        .toList();
+        .noneMatch(relation -> relation == CertificateStatusType.REPLACED);
   }
 }
