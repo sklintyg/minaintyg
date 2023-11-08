@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
@@ -28,7 +29,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
       throw new IllegalArgumentException(
           "Certificate was not found, certificateId: " + request.getCertificateId());
     }
-  
+
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
@@ -42,8 +43,14 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
                 )
                 .build()
         )
+        .availableFunctions(
+            response.getAvailableFunctions() == null
+                ? Collections.emptyList()
+                : response.getAvailableFunctions()
+        )
         .build();
   }
+
 
   private static boolean validateResponse(CertificateResponseDTO response) {
     return response.getCertificate() == null || response.getCertificate().getData() == null

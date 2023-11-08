@@ -28,78 +28,79 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 @RequestMapping("/api/certificate")
 public class CertificateController {
 
-    private static final String CONTENT_DISPOSITION = "Content-Disposition";
+  private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
-    private final ListCertificatesService listCertificatesService;
-    private final GetCertificateService getCertificateService;
-    private final SendCertificateService sendCertificateService;
-    private final PrintCertificateService printCertificateService;
+  private final ListCertificatesService listCertificatesService;
+  private final GetCertificateService getCertificateService;
+  private final SendCertificateService sendCertificateService;
+  private final PrintCertificateService printCertificateService;
 
-    @PostMapping
-    public CertificateListResponseDTO listCertificates(
-        @RequestBody CertificateListRequestDTO request) {
-        final var listCertificatesRequest =
-            ListCertificatesRequest
-                .builder()
-                .years(request.getYears())
-                .certificateTypes(request.getCertificateTypes())
-                .units(request.getUnits())
-                .statuses(request.getStatuses())
-                .build();
-
-        return CertificateListResponseDTO
+  @PostMapping
+  public CertificateListResponseDTO listCertificates(
+      @RequestBody CertificateListRequestDTO request) {
+    final var listCertificatesRequest =
+        ListCertificatesRequest
             .builder()
-            .content(listCertificatesService.get(listCertificatesRequest).getContent())
+            .years(request.getYears())
+            .certificateTypes(request.getCertificateTypes())
+            .units(request.getUnits())
+            .statuses(request.getStatuses())
             .build();
-    }
 
-    @GetMapping("/{certificateId}")
-    public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
-        final var response = getCertificateService.get(
-            GetCertificateRequest
-                .builder()
-                .certificateId(certificateId)
-                .build()
-        );
+    return CertificateListResponseDTO
+        .builder()
+        .content(listCertificatesService.get(listCertificatesRequest).getContent())
+        .build();
+  }
 
-        return CertificateResponseDTO
+  @GetMapping("/{certificateId}")
+  public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
+    final var response = getCertificateService.get(
+        GetCertificateRequest
             .builder()
-            .certificate(response.getCertificate())
-            .build();
-    }
+            .certificateId(certificateId)
+            .build()
+    );
 
-    @PostMapping("/{certificateId}/send")
-    public void sendCertificateToRecipient(@PathVariable String certificateId) {
-        sendCertificateService.send(
-            SendCertificateRequest
-                .builder()
-                .certificateId(certificateId)
-                .build()
-        );
-    }
+    return CertificateResponseDTO
+        .builder()
+        .certificate(response.getCertificate())
+        .availableFunctions(response.getAvailableFunctions())
+        .build();
+  }
 
-    @PostMapping("/{certificateId}/print")
-    public ResponseEntity printCertificate(
-        HttpServletRequest httpServletRequest,
-        @PathVariable String certificateId,
-        @RequestBody PrintCertificateRequestDTO request) {
+  @PostMapping("/{certificateId}/send")
+  public void sendCertificateToRecipient(@PathVariable String certificateId) {
+    sendCertificateService.send(
+        SendCertificateRequest
+            .builder()
+            .certificateId(certificateId)
+            .build()
+    );
+  }
 
-        final var response = printCertificateService.print(
-            PrintCertificateRequest
-                .builder()
-                .certificateId(certificateId)
-                .customizationId(request.getCustomizationId())
-                .build()
-        );
+  @PostMapping("/{certificateId}/print")
+  public ResponseEntity printCertificate(
+      HttpServletRequest httpServletRequest,
+      @PathVariable String certificateId,
+      @RequestBody PrintCertificateRequestDTO request) {
 
-        final var userAgent = httpServletRequest.getHeader("User-Agent");
-        final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
-            ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
-        final var responseHeaders = new HttpHeaders();
-        responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
+    final var response = printCertificateService.print(
+        PrintCertificateRequest
+            .builder()
+            .certificateId(certificateId)
+            .customizationId(request.getCustomizationId())
+            .build()
+    );
 
-        return ResponseEntity.ok()
-            .headers(responseHeaders)
-            .body(response.getPdfData());
-    }
+    final var userAgent = httpServletRequest.getHeader("User-Agent");
+    final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
+        ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
+    final var responseHeaders = new HttpHeaders();
+    responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
+
+    return ResponseEntity.ok()
+        .headers(responseHeaders)
+        .body(response.getPdfData());
+  }
 }

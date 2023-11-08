@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static se.inera.intyg.minaintyg.integration.api.certificate.CertificateConstants.DAYS_LIMIT_FOR_STATUS_NEW;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -17,8 +18,10 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 @ExtendWith(MockitoExtension.class)
 class CertificateStatusServiceTest {
 
-  private static final LocalDateTime NEW_ISSUED = LocalDateTime.now();
-  private static final LocalDateTime OLD_ISSUED = LocalDateTime.now().minusMonths(2);
+  private static final LocalDateTime NEW_ISSUED = LocalDateTime.now()
+      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
+  private static final LocalDateTime OLD_ISSUED = LocalDateTime.now()
+      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
   private static final CertificateRecipientDTO SENT_RECIPIENT = CertificateRecipientDTO
       .builder()
       .id("id")
@@ -43,7 +46,7 @@ class CertificateStatusServiceTest {
   CertificateStatusService certificateStatusService;
 
   @Test
-  void shouldIncludeNewIfNewerThanAMonth() {
+  void shouldIncludeNewIfNewerThanTheLimitForNewCertificates() {
     final var response = certificateStatusService.get(Collections.emptyList(), null, NEW_ISSUED);
 
     assertEquals(1, response.size());
@@ -51,7 +54,7 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldNotIncludeNewIfOlderThanAMonth() {
+  void shouldNotIncludeNewIfOlderThanTheLimitForNewCertificates() {
     final var response = certificateStatusService.get(Collections.emptyList(), null, OLD_ISSUED);
 
     assertEquals(0, response.size());
@@ -105,10 +108,48 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldNotIncludeSeveralStatuses() {
-    final var response = certificateStatusService.get(REPLACED_RELATIONS, SENT_RECIPIENT,
+  void shouldOnlyIncludeReplacedIfCertificateIsBothSentAndReplaced() {
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, SENT_RECIPIENT, null);
+
+    assertEquals(1, response.size());
+    assertEquals(CertificateStatusType.REPLACED, response.get(0));
+  }
+
+  @Test
+  void shouldOnlyIncludeReplacedIfCertificateIsBothNotSentAndReplaced() {
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, NOT_SENT_RECIPIENT, null);
+
+    assertEquals(1, response.size());
+    assertEquals(CertificateStatusType.REPLACED, response.get(0));
+  }
+
+  @Test
+  void shouldOnlyIncludeReplacedIfCertificateIsBothNewAndReplaced() {
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, null,
         NEW_ISSUED);
 
-    assertEquals(3, response.size());
+    assertEquals(1, response.size());
+    assertEquals(CertificateStatusType.REPLACED, response.get(0));
   }
+
+  @Test
+  void shouldIncludeBothSentAndNewIfSentAndNewerThanTheLimitForNewCertificates() {
+    final var response = certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT,
+        NEW_ISSUED);
+
+    assertEquals(2, response.size());
+    assertEquals(CertificateStatusType.SENT, response.get(0));
+    assertEquals(CertificateStatusType.NEW, response.get(1));
+  }
+
+  @Test
+  void shouldIncludeBothNotSentAndNewIfSentIsNullAndNewerThanTheLimitForNewCertificates() {
+    final var response = certificateStatusService.get(Collections.emptyList(), NOT_SENT_RECIPIENT,
+        NEW_ISSUED);
+
+    assertEquals(2, response.size());
+    assertEquals(CertificateStatusType.NOT_SENT, response.get(0));
+    assertEquals(CertificateStatusType.NEW, response.get(1));
+  }
+
 }
