@@ -29,85 +29,85 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 @RequestMapping("/api/certificate")
 public class CertificateController {
 
-  private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
 
-  private final ListCertificatesService listCertificatesService;
-  private final GetCertificateService getCertificateService;
-  private final SendCertificateService sendCertificateService;
-  private final PrintCertificateService printCertificateService;
+    private final ListCertificatesService listCertificatesService;
+    private final GetCertificateService getCertificateService;
+    private final SendCertificateService sendCertificateService;
+    private final PrintCertificateService printCertificateService;
 
-  @PostMapping
-  public CertificateListResponseDTO listCertificates(
-      @RequestBody CertificateListRequestDTO request) {
-    final var listCertificatesRequest =
-        ListCertificatesRequest
+    @PostMapping
+    public CertificateListResponseDTO listCertificates(
+        @RequestBody CertificateListRequestDTO request) {
+        final var listCertificatesRequest =
+            ListCertificatesRequest
+                .builder()
+                .years(request.getYears())
+                .certificateTypes(request.getCertificateTypes())
+                .units(request.getUnits())
+                .statuses(request.getStatuses())
+                .build();
+
+        return CertificateListResponseDTO
             .builder()
-            .years(request.getYears())
-            .certificateTypes(request.getCertificateTypes())
-            .units(request.getUnits())
-            .statuses(request.getStatuses())
+            .content(listCertificatesService.get(listCertificatesRequest).getContent())
             .build();
+    }
 
-    return CertificateListResponseDTO
-        .builder()
-        .content(listCertificatesService.get(listCertificatesRequest).getContent())
-        .build();
-  }
+    @GetMapping("/{certificateId}")
+    public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
+        final var response = getCertificateService.get(
+            GetCertificateRequest
+                .builder()
+                .certificateId(certificateId)
+                .build()
+        );
 
-  @GetMapping("/{certificateId}")
-  public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
-    final var response = getCertificateService.get(
-        GetCertificateRequest
+        return CertificateResponseDTO
             .builder()
-            .certificateId(certificateId)
-            .build()
-    );
+            .certificate(response.getCertificate())
+            .availableFunctions(response.getAvailableFunctions())
+            .build();
+    }
 
-    return CertificateResponseDTO
-        .builder()
-        .certificate(response.getCertificate())
-        .availableFunctions(response.getAvailableFunctions())
-        .build();
-  }
+    @PostMapping("/{certificateId}/send")
+    public void sendCertificateToRecipient(@PathVariable String certificateId) {
+        sendCertificateService.send(
+            SendCertificateRequest
+                .builder()
+                .certificateId(certificateId)
+                .build()
+        );
+    }
 
-  @PostMapping("/{certificateId}/send")
-  public void sendCertificateToRecipient(@PathVariable String certificateId) {
-    sendCertificateService.send(
-        SendCertificateRequest
-            .builder()
-            .certificateId(certificateId)
-            .build()
-    );
-  }
+    @PostMapping(value = "/{certificateId}/pdf", produces = "application/pdf")
+    public ResponseEntity printCertificate(
+        HttpServletRequest httpServletRequest,
+        @PathVariable String certificateId,
+        @RequestBody PrintCertificateRequestDTO request) {
 
-  @PostMapping(value = "/{certificateId}/print", produces = "application/pdf")
-  public ResponseEntity printCertificate(
-      HttpServletRequest httpServletRequest,
-      @PathVariable String certificateId,
-      @RequestBody PrintCertificateRequestDTO request) {
+        final var response = printCertificateService.print(
+            PrintCertificateRequest
+                .builder()
+                .certificateId(certificateId)
+                .customizationId(request.getCustomizationId())
+                .build()
+        );
 
-    final var response = printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId(certificateId)
-            .customizationId(request.getCustomizationId())
-            .build()
-    );
+        final var responseHeaders = getHttpHeaders(httpServletRequest, response);
 
-    final var responseHeaders = getHttpHeaders(httpServletRequest, response);
+        return ResponseEntity.ok()
+            .headers(responseHeaders)
+            .body(response.getPdfData());
+    }
 
-    return ResponseEntity.ok()
-        .headers(responseHeaders)
-        .body(response.getPdfData());
-  }
-
-  private static HttpHeaders getHttpHeaders(HttpServletRequest httpServletRequest,
-      PrintCertificateResponse response) {
-    final var userAgent = httpServletRequest.getHeader("User-Agent");
-    final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
-        ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
-    final var responseHeaders = new HttpHeaders();
-    responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
-    return responseHeaders;
-  }
+    private static HttpHeaders getHttpHeaders(HttpServletRequest httpServletRequest,
+        PrintCertificateResponse response) {
+        final var userAgent = httpServletRequest.getHeader("User-Agent");
+        final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
+            ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
+        final var responseHeaders = new HttpHeaders();
+        responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
+        return responseHeaders;
+    }
 }

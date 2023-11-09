@@ -54,10 +54,5 @@ public class WebcertPrintCertificateIntegrationService implements
       throw new IllegalArgumentException(
           "Invalid request was provided, certificateId was not defined.");
     }
-
-    if (request.getCustomizationId() == null || request.getCustomizationId().isEmpty()) {
-      throw new IllegalArgumentException(
-          "Invalid request was provided, customizationId was not defined.");
-    }
   }
 }
