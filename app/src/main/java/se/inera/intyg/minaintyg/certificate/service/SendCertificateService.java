@@ -10,6 +10,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
@@ -28,7 +29,7 @@ public class SendCertificateService {
     final var certificateResponse = getCertificate(request.getCertificateId());
     final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
-    sendCertificate(request, user, certificateResponse.getCertificate());
+    sendCertificate(request, user, certificateResponse);
 
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
@@ -40,17 +41,17 @@ public class SendCertificateService {
   private void sendCertificate(
       SendCertificateRequest request,
       MinaIntygUser user,
-      Certificate certificate
+      GetCertificateIntegrationResponse certificateResponse
   ) {
 
-    validateAction(certificate);
+    validateAction(certificateResponse);
 
     sendCertificateIntegrationService.send(
         SendCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
             .patientId(user.getPersonId())
-            .recipient(certificate.getMetadata().getRecipient().getId())
+            .recipient(certificateResponse.getCertificate().getMetadata().getRecipient().getId())
             .build()
     );
   }
@@ -70,23 +71,17 @@ public class SendCertificateService {
         && statuses.stream().anyMatch(status -> status == CertificateStatusType.REPLACED);
   }
 
-  private void validateAction(Certificate certificate) {
-    final var recipient = certificate.getMetadata().getRecipient();
+  private void validateAction(GetCertificateIntegrationResponse response) {
 
-    if (isReplaced(certificate)) {
+    if (isReplaced(response.getCertificate())) {
       throw new IllegalStateException("Cannot send replaced certificate");
     }
 
-    if (recipient == null) {
-      throw new IllegalStateException("Cannot send certificate if no recipient");
-    }
-
-    if (recipient.getId() == null || recipient.getId().isEmpty() || recipient.getId().isBlank()) {
-      throw new IllegalStateException("Cannot send certificate with invalid recipient");
-    }
-
-    if (recipient.getSent() != null) {
-      throw new IllegalStateException("Cannot send already sent certificate");
+    if (response.getAvailableFunctions().stream()
+        .noneMatch(availableFunction ->
+            availableFunction.getType() == AvailableFunctionType.SEND_CERTIFICATE)
+    ) {
+      throw new IllegalStateException("Certificate cannot be sent");
     }
   }
 }
