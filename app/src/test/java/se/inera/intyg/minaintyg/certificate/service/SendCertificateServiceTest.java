@@ -7,7 +7,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +27,9 @@ import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateInteg
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
@@ -46,15 +47,6 @@ class SendCertificateServiceTest {
       .builder()
       .certificateId(CERTIFICATE_ID)
       .build();
-
-  private static final Certificate CERTIFICATE_SENT = getCertificate(
-      CertificateRecipient
-          .builder()
-          .id(RECIPIENT_ID)
-          .name(RECIPIENT_NAME)
-          .sent(LocalDateTime.now())
-          .build()
-  );
 
   private static final Certificate CERTIFICATE_NOT_SENT = getCertificate(
       CertificateRecipient
@@ -85,19 +77,6 @@ class SendCertificateServiceTest {
         .build()));
   }
 
-  @Test
-  void shouldNotSendReplacedCertificate() {
-    when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-        .thenReturn(
-            GetCertificateIntegrationResponse
-                .builder()
-                .certificate(getCertificateWithStatus(CertificateStatusType.REPLACED))
-                .build()
-        );
-
-    assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
-  }
-
   @Nested
   class HasRecipient {
 
@@ -105,7 +84,15 @@ class SendCertificateServiceTest {
     void setup() {
       when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
           .thenReturn(
-              GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NOT_SENT).build()
+              GetCertificateIntegrationResponse.builder()
+                  .certificate(CERTIFICATE_NOT_SENT)
+                  .availableFunctions(List.of(
+                          AvailableFunction.builder()
+                              .type(AvailableFunctionType.SEND_CERTIFICATE)
+                              .build()
+                      )
+                  )
+                  .build()
           );
     }
 
@@ -181,39 +168,16 @@ class SendCertificateServiceTest {
   @Nested
   class ActionValidation {
 
-    @Nested
-    class AlreadySent {
+    @Test
+    void shouldThrowExceptionIfNoAvailableFunction() {
+      when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
+          .thenReturn(
+              GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
+                  .availableFunctions(Collections.emptyList())
+                  .build()
+          );
 
-      @BeforeEach
-      void setup() {
-        when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-            .thenReturn(
-                GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_SENT).build()
-            );
-      }
-
-      @Test
-      void shouldThrowException() {
-        assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
-      }
-    }
-
-    @Nested
-    class NoRecipient {
-
-      @BeforeEach
-      void setup() {
-        when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-            .thenReturn(
-                GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
-                    .build()
-            );
-      }
-
-      @Test
-      void shouldThrowException() {
-        assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
-      }
+      assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
     }
   }
 
@@ -224,30 +188,6 @@ class SendCertificateServiceTest {
             CertificateMetadata
                 .builder()
                 .recipient(certificateRecipient)
-                .type(
-                    CertificateType
-                        .builder()
-                        .id(TYPE_ID)
-                        .name(TYPE_NAME)
-                        .build()
-                )
-                .build()
-        )
-        .build();
-  }
-
-  private static Certificate getCertificateWithStatus(CertificateStatusType status) {
-    return Certificate
-        .builder()
-        .metadata(
-            CertificateMetadata
-                .builder()
-                .recipient(CertificateRecipient
-                    .builder()
-                    .id(RECIPIENT_ID)
-                    .name(RECIPIENT_NAME)
-                    .build())
-                .statuses(List.of(status))
                 .type(
                     CertificateType
                         .builder()
