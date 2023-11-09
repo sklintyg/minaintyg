@@ -37,7 +37,12 @@ import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
 class ErrorControllerTest {
 
   private static final LogErrorRequestDTO REQUEST = LogErrorRequestDTO.builder()
-      .error(ErrorDataDTO.builder().id("id").build())
+      .error(ErrorDataDTO.builder()
+          .id("id")
+          .message("message")
+          .code("code")
+          .stackTrace("stackTrace")
+          .build())
       .build();
 
   @Mock
