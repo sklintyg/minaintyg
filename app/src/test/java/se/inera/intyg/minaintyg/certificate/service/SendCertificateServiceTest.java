@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -49,15 +48,6 @@ class SendCertificateServiceTest {
       .builder()
       .certificateId(CERTIFICATE_ID)
       .build();
-
-  private static final Certificate CERTIFICATE_SENT = getCertificate(
-      CertificateRecipient
-          .builder()
-          .id(RECIPIENT_ID)
-          .name(RECIPIENT_NAME)
-          .sent(LocalDateTime.now())
-          .build()
-  );
 
   private static final Certificate CERTIFICATE_NOT_SENT = getCertificate(
       CertificateRecipient
