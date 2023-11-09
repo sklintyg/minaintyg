@@ -14,35 +14,35 @@ import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 @RequiredArgsConstructor
 public class PrintCertificateService {
 
-    private final MonitoringLogService monitoringLogService;
-    private final PrintCertificateIntegrationService printCertificateIntegrationService;
-    private final GetCertificateService getCertificateService;
+  private final MonitoringLogService monitoringLogService;
+  private final PrintCertificateIntegrationService printCertificateIntegrationService;
+  private final GetCertificateService getCertificateService;
 
-    public PrintCertificateResponse print(PrintCertificateRequest request) {
-        final var isModifiedPrintRequest = !Strings.isNullOrEmpty(request.getCustomizationId());
-        final var certificate = getCertificateService.get(GetCertificateRequest
+  public PrintCertificateResponse print(PrintCertificateRequest request) {
+    final var isModifiedPrintRequest = !Strings.isNullOrEmpty(request.getCustomizationId());
+    final var certificate = getCertificateService.get(GetCertificateRequest
+        .builder()
+        .certificateId(request.getCertificateId())
+        .build());
+
+    final var response = printCertificateIntegrationService.print(
+        PrintCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
-            .build());
+            .customizationId(request.getCustomizationId())
+            .build()
+    );
 
-        final var response = printCertificateIntegrationService.print(
-            PrintCertificateIntegrationRequest
-                .builder()
-                .certificateId(request.getCertificateId())
-                .customizationId(request.getCustomizationId())
-                .build()
-        );
+    monitoringLogService.logCertificatePrinted(
+        request.getCertificateId(),
+        certificate.getCertificate().getMetadata().getType().getId(),
+        isModifiedPrintRequest
+    );
 
-        monitoringLogService.logCertificatePrinted(
-            request.getCertificateId(),
-            certificate.getCertificate().getMetadata().getType().getId(),
-            isModifiedPrintRequest
-        );
-
-        return PrintCertificateResponse
-            .builder()
-            .filename(response.getFilename())
-            .pdfData(response.getPdfData())
-            .build();
-    }
+    return PrintCertificateResponse
+        .builder()
+        .filename(response.getFilename())
+        .pdfData(response.getPdfData())
+        .build();
+  }
 }
