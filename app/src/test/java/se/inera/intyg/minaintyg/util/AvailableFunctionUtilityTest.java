@@ -26,7 +26,7 @@ class AvailableFunctionUtilityTest {
     }
 
     @Test
-    void shouldReturnFalseIfIncludedNotInList() {
+    void shouldReturnFalseIfNotIncludedInList() {
       final var response = AvailableFunctionUtility.includesFunction(
           List.of(
               AvailableFunction.builder().type(AvailableFunctionType.PRINT_CERTIFICATE).build()),
