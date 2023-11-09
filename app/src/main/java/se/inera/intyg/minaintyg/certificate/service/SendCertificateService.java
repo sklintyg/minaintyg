@@ -14,6 +14,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Availab
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
+import se.inera.intyg.minaintyg.util.AvailableFunctionUtility;
 
 @Service
 @RequiredArgsConstructor
@@ -77,10 +78,9 @@ public class SendCertificateService {
       throw new IllegalStateException("Cannot send replaced certificate");
     }
 
-    if (response.getAvailableFunctions().stream()
-        .noneMatch(availableFunction ->
-            availableFunction.getType() == AvailableFunctionType.SEND_CERTIFICATE)
-    ) {
+    if (!AvailableFunctionUtility.includesFunction(
+        response.getAvailableFunctions(),
+        AvailableFunctionType.SEND_CERTIFICATE)) {
       throw new IllegalStateException("Certificate cannot be sent");
     }
   }
