@@ -7,6 +7,7 @@ import lombok.Value;
 @Builder
 public class Information {
 
-  InformationType type;
   String id;
+  String text;
+  InformationType type;
 }
