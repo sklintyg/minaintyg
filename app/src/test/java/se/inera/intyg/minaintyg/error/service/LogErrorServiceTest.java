@@ -35,7 +35,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
-import se.inera.intyg.minaintyg.error.dto.ErrorData;
+import se.inera.intyg.minaintyg.error.service.dto.ErrorData;
 import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
@@ -76,7 +76,7 @@ class LogErrorServiceTest {
       when(userService.getLoggedInUser())
           .thenReturn(Optional.of(MinaIntygUser.builder().build()));
     }
-    
+
     @Test
     void shouldLogUsingId() {
       final var captor = ArgumentCaptor.forClass(String.class);

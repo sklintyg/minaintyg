@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.error.dto.LogErrorRequestDTO;
 import se.inera.intyg.minaintyg.error.service.LogErrorService;
+import se.inera.intyg.minaintyg.error.service.dto.ErrorData;
 import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
 
 @Slf4j
@@ -23,7 +24,14 @@ public class ErrorController {
 
     logErrorService.log(
         LogErrorRequest.builder()
-            .error(request.getError())
+            .error(
+                ErrorData.builder()
+                    .id(request.getError().getId())
+                    .code(request.getError().getCode())
+                    .message(request.getError().getMessage())
+                    .stackTrace(request.getError().getStackTrace())
+                    .build()
+            )
             .build()
     );
   }

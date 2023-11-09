@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.minaintyg.error.dto;
+package se.inera.intyg.minaintyg.error.service.dto;
 
 import lombok.Builder;
 import lombok.Value;

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LogErrorRequestDTO {
 
-  private ErrorData error;
+  private ErrorDataDTO error;
 }
