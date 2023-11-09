@@ -9,9 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 import se.inera.intyg.minaintyg.util.AvailableFunctionUtility;
@@ -66,18 +64,7 @@ public class SendCertificateService {
     );
   }
 
-  private static boolean isReplaced(Certificate certificate) {
-    final var statuses = certificate.getMetadata().getStatuses();
-    return statuses != null
-        && statuses.stream().anyMatch(status -> status == CertificateStatusType.REPLACED);
-  }
-
   private void validateAction(GetCertificateIntegrationResponse response) {
-
-    if (isReplaced(response.getCertificate())) {
-      throw new IllegalStateException("Cannot send replaced certificate");
-    }
-
     if (!AvailableFunctionUtility.includesFunction(
         response.getAvailableFunctions(),
         AvailableFunctionType.SEND_CERTIFICATE)) {

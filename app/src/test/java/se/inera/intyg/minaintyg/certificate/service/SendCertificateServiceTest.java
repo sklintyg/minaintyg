@@ -30,7 +30,6 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMet
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
@@ -76,25 +75,6 @@ class SendCertificateServiceTest {
         .builder()
         .personId(PATIENT_ID)
         .build()));
-  }
-
-  @Test
-  void shouldNotSendReplacedCertificate() {
-    when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-        .thenReturn(
-            GetCertificateIntegrationResponse
-                .builder()
-                .certificate(getCertificateWithStatus(CertificateStatusType.REPLACED))
-                .availableFunctions(List.of(
-                        AvailableFunction.builder()
-                            .type(AvailableFunctionType.SEND_CERTIFICATE)
-                            .build()
-                    )
-                )
-                .build()
-        );
-
-    assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
   }
 
   @Nested
@@ -189,25 +169,6 @@ class SendCertificateServiceTest {
   class ActionValidation {
 
     @Test
-    void shouldThrowExceptionIfReplacedCertificate() {
-      when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-          .thenReturn(
-              GetCertificateIntegrationResponse
-                  .builder()
-                  .certificate(getCertificateWithStatus(CertificateStatusType.REPLACED))
-                  .availableFunctions(List.of(
-                          AvailableFunction.builder()
-                              .type(AvailableFunctionType.SEND_CERTIFICATE)
-                              .build()
-                      )
-                  )
-                  .build()
-          );
-
-      assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
-    }
-
-    @Test
     void shouldThrowExceptionIfNoAvailableFunction() {
       when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
           .thenReturn(
@@ -227,30 +188,6 @@ class SendCertificateServiceTest {
             CertificateMetadata
                 .builder()
                 .recipient(certificateRecipient)
-                .type(
-                    CertificateType
-                        .builder()
-                        .id(TYPE_ID)
-                        .name(TYPE_NAME)
-                        .build()
-                )
-                .build()
-        )
-        .build();
-  }
-
-  private static Certificate getCertificateWithStatus(CertificateStatusType status) {
-    return Certificate
-        .builder()
-        .metadata(
-            CertificateMetadata
-                .builder()
-                .recipient(CertificateRecipient
-                    .builder()
-                    .id(RECIPIENT_ID)
-                    .name(RECIPIENT_NAME)
-                    .build())
-                .statuses(List.of(status))
                 .type(
                     CertificateType
                         .builder()
