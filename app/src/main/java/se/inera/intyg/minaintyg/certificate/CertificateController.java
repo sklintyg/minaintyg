@@ -81,7 +81,7 @@ public class CertificateController {
   }
 
   @PostMapping(value = "/{certificateId}/pdf", produces = "application/pdf")
-  public ResponseEntity printCertificate(
+  public ResponseEntity<byte[]> printCertificate(
       HttpServletRequest httpServletRequest,
       @PathVariable String certificateId,
       @RequestBody PrintCertificateRequestDTO request) {
