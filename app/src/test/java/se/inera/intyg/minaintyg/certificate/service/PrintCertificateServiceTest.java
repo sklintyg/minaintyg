@@ -172,13 +172,34 @@ class PrintCertificateServiceTest {
     }
 
     @Test
-    void shouldPerformMonitorLoggingWithIsNotEmployerCopy() {
+    void shouldPerformMonitorLoggingWithIsNotEmployerCopyIfCustomizationIdIsNull() {
         final var captor = ArgumentCaptor.forClass(Boolean.class);
 
         printCertificateService.print(
             PrintCertificateRequest
                 .builder()
                 .certificateId("ID")
+                .build()
+        );
+
+        verify(monitorLogService, times(1)).logCertificatePrinted(
+            anyString(),
+            anyString(),
+            captor.capture()
+        );
+
+        assertFalse(captor.getValue());
+    }
+
+    @Test
+    void shouldPerformMonitorLoggingWithIsNotEmployerCopyIfCustomizationIdIsEmpty() {
+        final var captor = ArgumentCaptor.forClass(Boolean.class);
+
+        printCertificateService.print(
+            PrintCertificateRequest
+                .builder()
+                .certificateId("ID")
+                .customizationId("")
                 .build()
         );
 
