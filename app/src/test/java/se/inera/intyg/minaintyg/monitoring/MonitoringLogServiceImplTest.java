@@ -105,4 +105,32 @@ class MonitoringLogServiceImplTest {
           "CERTIFICATE_SEND Certificate 'id' of type 'lisjp' sent to 'recipient'");
     }
   }
+
+  @Nested
+  class LogClientError {
+
+    @Test
+    void shouldLogClientErrorWithStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", "stack trace");
+
+      verifyLog(Level.ERROR,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'stack trace'");
+    }
+
+    @Test
+    void shouldLogClientErrorWithNoStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", null);
+
+      verifyLog(Level.ERROR,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
+    }
+    
+    @Test
+    void shouldLogClientErrorWithEmptyStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", "");
+
+      verifyLog(Level.ERROR,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
+    }
+  }
 }
