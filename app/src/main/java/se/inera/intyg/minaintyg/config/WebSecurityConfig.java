@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,8 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -50,6 +53,7 @@ public class WebSecurityConfig {
   public static final String TESTABILITY_API = "/api/testability/**";
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
+  private static final String ERROR_LOGIN = "/error/login/";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
   private final Environment environment;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
@@ -117,6 +121,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
+            .failureHandler(getForwardAuthenticationFailureHandler())
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .requestCache(cacheConfigurer -> cacheConfigurer
@@ -138,6 +143,11 @@ public class WebSecurityConfig {
         .saml2Metadata(withDefaults());
 
     return http.build();
+  }
+
+  public AuthenticationFailureHandler getForwardAuthenticationFailureHandler() {
+    final var id = String.valueOf(UUID.randomUUID());
+    return new ForwardAuthenticationFailureHandler(ERROR_LOGIN + id);
   }
 
   private void configureTestability(HttpSecurity http) throws Exception {
