@@ -10,12 +10,10 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 @RequiredArgsConstructor
 public class WebcertIntegrationConfig {
 
-  private final ExchangeFilterFunctionProvider exchangeFilterFunctionProvider;
-
   @Bean(name = "webcertWebClient")
   public WebClient webClientForWebcert() {
     return WebClient.builder()
-        .filter(exchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
+        .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
   }
 }

@@ -10,12 +10,10 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 @RequiredArgsConstructor
 public class IntygstjanstIntegrationConfig {
 
-    private final ExchangeFilterFunctionProvider exchangeFilterFunctionProvider;
-
-    @Bean(name = "intygstjanstWebClient")
-    public WebClient webClientForIntygstjanst() {
-        return WebClient.builder()
-            .filter(exchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
-            .build();
-    }
+  @Bean(name = "intygstjanstWebClient")
+  public WebClient webClientForIntygstjanst() {
+    return WebClient.builder()
+        .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
+        .build();
+  }
 }

@@ -10,12 +10,10 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 @RequiredArgsConstructor
 public class IntegrationConfig {
 
-  private final ExchangeFilterFunctionProvider exchangeFilterFunctionProvider;
-
   @Bean(name = "intygProxyWebClient")
   public WebClient webClientForIntygProxy() {
     return WebClient.builder()
-        .filter(exchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
+        .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
   }
 }
