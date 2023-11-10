@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClientRequestExceptio
 class ExceptionThrowableFunctionTest {
 
   private static final String EXPECTED_APPLICATION_NAME = "applicationName";
+  private static final String TEST = "test";
   private WebClientRequestException webClientRequestException;
 
   @BeforeEach
@@ -19,7 +20,7 @@ class ExceptionThrowableFunctionTest {
     webClientRequestException = new WebClientRequestException(
         new RuntimeException(),
         HttpMethod.GET,
-        URI.create("test"),
+        URI.create(TEST),
         HttpHeaders.EMPTY
     );
   }
