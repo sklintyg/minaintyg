@@ -13,4 +13,6 @@ public interface MonitoringLogService {
   void logCertificateSent(String certificateId, String type, String recipient);
 
   void logClientError(String id, String code, String message, String stackTrace);
+
+  void logCertificatePrinted(String certificateId, String certificateType, boolean isEmployerCopy);
 }

@@ -40,6 +40,26 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   @Override
+  public void logCertificatePrinted(
+      String certificateId,
+      String certificateType,
+      boolean printCompleteCertificate) {
+    if (!printCompleteCertificate) {
+      logEvent(
+          MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY,
+          certificateId,
+          certificateType
+      );
+    } else {
+      logEvent(
+          MonitoringEvent.CERTIFICATE_PRINTED_FULLY,
+          certificateId,
+          certificateType
+      );
+    }
+  }
+
+  @Override
   public void logClientError(String id, String code, String message, String stackTrace) {
     logEvent(MonitoringEvent.CLIENT_ERROR, id, code, message,
         Strings.isNullOrEmpty(stackTrace) ? NO_STACK_TRACE : stackTrace);
@@ -61,6 +81,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
     CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
+    CERTIFICATE_PRINTED_FULLY(
+        "Certificate '{}' of type '{}' was printed including all information"),
+    CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy"),
     CLIENT_ERROR(
         "Received error from client with errorId '{}' with error code '{}', message '{}' and stacktrace '{}'");
     private final String message;
