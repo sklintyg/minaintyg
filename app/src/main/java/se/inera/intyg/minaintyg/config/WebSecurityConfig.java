@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
+import static se.inera.intyg.minaintyg.auth.SessionController.SESSION_STATUS_CHECK_URI;
 
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
 import org.springframework.boot.ssl.SslBundles;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -38,6 +40,7 @@ import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
+import se.inera.intyg.minaintyg.auth.SessionTimeoutFilter;
 import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
 
 @Slf4j
@@ -181,5 +184,14 @@ public class WebSecurityConfig {
     }
     throw new IllegalArgumentException(
         "Could not extract attribute '" + PERSON_ID_ATTRIBUTE + "' from Saml2Authentication.");
+  }
+
+  @Bean
+  public FilterRegistrationBean<SessionTimeoutFilter> sessionTimeoutFilter() {
+    final var filterRegistrationBean = new FilterRegistrationBean<SessionTimeoutFilter>();
+    filterRegistrationBean.addInitParameter("skipRenewSessionUrls", SESSION_STATUS_CHECK_URI);
+    filterRegistrationBean.addUrlPatterns("/*");
+
+    return filterRegistrationBean;
   }
 }
