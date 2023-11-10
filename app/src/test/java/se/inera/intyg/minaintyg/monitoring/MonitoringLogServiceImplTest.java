@@ -104,5 +104,21 @@ class MonitoringLogServiceImplTest {
       verifyLog(Level.INFO,
           "CERTIFICATE_SEND Certificate 'id' of type 'lisjp' sent to 'recipient'");
     }
+
+    @Test
+    void shouldLogWhenCertificateIsPrintedMinimal() {
+      monitoringLogService.logCertificatePrinted("ID", "TYPE", false);
+
+      verifyLog(Level.INFO,
+          "CERTIFICATE_PRINTED_EMPLOYER_COPY Certificate 'ID' of type 'TYPE' was printed as employer copy");
+    }
+
+    @Test
+    void shouldLogWhenCertificateIsPrintedFull() {
+      monitoringLogService.logCertificatePrinted("ID", "TYPE", true);
+
+      verifyLog(Level.INFO,
+          "CERTIFICATE_PRINTED_FULLY Certificate 'ID' of type 'TYPE' was printed including all information");
+    }
   }
 }
