@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +29,6 @@ import org.springframework.security.saml2.provider.service.registration.RelyingP
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -38,6 +36,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
+import se.inera.intyg.minaintyg.auth.CustomAuthenticationFailureHandler;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -53,8 +52,8 @@ public class WebSecurityConfig {
   public static final String TESTABILITY_API = "/api/testability/**";
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
-  private static final String ERROR_LOGIN = "/error/login/";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
+  private final CustomAuthenticationFailureHandler authenticationFailureHandler;
   private final Environment environment;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
@@ -121,7 +120,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
-            .failureHandler(getForwardAuthenticationFailureHandler())
+            .failureHandler(getCustomFailureHandler())
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .requestCache(cacheConfigurer -> cacheConfigurer
@@ -145,9 +144,8 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  public AuthenticationFailureHandler getForwardAuthenticationFailureHandler() {
-    final var id = String.valueOf(UUID.randomUUID());
-    return new ForwardAuthenticationFailureHandler(ERROR_LOGIN + id);
+  public AuthenticationFailureHandler getCustomFailureHandler() {
+    return new CustomAuthenticationFailureHandler();
   }
 
   private void configureTestability(HttpSecurity http) throws Exception {
