@@ -10,7 +10,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 import se.inera.intyg.minaintyg.util.AvailableFunctionUtility;
 

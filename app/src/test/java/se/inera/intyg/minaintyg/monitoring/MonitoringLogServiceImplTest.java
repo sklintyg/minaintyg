@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
-import se.inera.intyg.minaintyg.logging.MonitoringLogServiceImpl;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogServiceImpl;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)

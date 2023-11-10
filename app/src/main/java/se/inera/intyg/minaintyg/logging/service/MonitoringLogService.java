@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.logging;
+package se.inera.intyg.minaintyg.logging.service;
 
 public interface MonitoringLogService {
 

@@ -16,23 +16,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
-import se.inera.intyg.minaintyg.error.service.dto.ErrorData;
-import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.LogErrorService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.dto.LogErrorRequest;
 import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class LogErrorServiceTest {
 
-  private static final ErrorData ERROR = ErrorData.builder()
+  private static final LogErrorRequest REQUEST = LogErrorRequest.builder()
       .id("ID")
       .code("CODE")
       .message("MESSAGE")
       .stackTrace("STACK TRACE")
-      .build();
-
-  private static final LogErrorRequest REQUEST = LogErrorRequest.builder()
-      .error(ERROR)
       .build();
 
   @Mock
@@ -70,7 +66,7 @@ class LogErrorServiceTest {
           anyString(),
           anyString()
       );
-      assertEquals(ERROR.getId(), captor.getValue());
+      assertEquals(REQUEST.getId(), captor.getValue());
     }
 
     @Test
@@ -85,7 +81,7 @@ class LogErrorServiceTest {
           anyString(),
           anyString()
       );
-      assertEquals(ERROR.getCode(), captor.getValue());
+      assertEquals(REQUEST.getCode(), captor.getValue());
     }
 
     @Test
@@ -100,7 +96,7 @@ class LogErrorServiceTest {
           captor.capture(),
           anyString()
       );
-      assertEquals(ERROR.getMessage(), captor.getValue());
+      assertEquals(REQUEST.getMessage(), captor.getValue());
     }
 
     @Test
@@ -115,7 +111,7 @@ class LogErrorServiceTest {
           anyString(),
           captor.capture()
       );
-      assertEquals(ERROR.getStackTrace(), captor.getValue());
+      assertEquals(REQUEST.getStackTrace(), captor.getValue());
     }
   }
 }

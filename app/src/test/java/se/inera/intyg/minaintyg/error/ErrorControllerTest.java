@@ -9,21 +9,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.error.dto.ErrorDataDTO;
-import se.inera.intyg.minaintyg.error.dto.LogErrorRequestDTO;
-import se.inera.intyg.minaintyg.error.service.LogErrorService;
-import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
+import se.inera.intyg.minaintyg.logging.ErrorController;
+import se.inera.intyg.minaintyg.logging.dto.LogErrorRequestDTO;
+import se.inera.intyg.minaintyg.logging.service.LogErrorService;
+import se.inera.intyg.minaintyg.logging.service.dto.LogErrorRequest;
 
 @ExtendWith(MockitoExtension.class)
 class ErrorControllerTest {
 
   private static final LogErrorRequestDTO REQUEST = LogErrorRequestDTO.builder()
-      .error(ErrorDataDTO.builder()
-          .id("id")
-          .message("message")
-          .code("code")
-          .stackTrace("stackTrace")
-          .build())
+      .id("id")
+      .message("message")
+      .code("code")
+      .stackTrace("stackTrace")
       .build();
 
   @Mock
@@ -39,7 +37,7 @@ class ErrorControllerTest {
     errorController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
-    assertEquals(REQUEST.getError().getId(), captor.getValue().getError().getId());
+    assertEquals(REQUEST.getId(), captor.getValue().getId());
   }
 
   @Test
@@ -49,7 +47,7 @@ class ErrorControllerTest {
     errorController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
-    assertEquals(REQUEST.getError().getCode(), captor.getValue().getError().getCode());
+    assertEquals(REQUEST.getCode(), captor.getValue().getCode());
   }
 
   @Test
@@ -59,7 +57,7 @@ class ErrorControllerTest {
     errorController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
-    assertEquals(REQUEST.getError().getMessage(), captor.getValue().getError().getMessage());
+    assertEquals(REQUEST.getMessage(), captor.getValue().getMessage());
   }
 
   @Test
@@ -69,6 +67,6 @@ class ErrorControllerTest {
     errorController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
-    assertEquals(REQUEST.getError().getStackTrace(), captor.getValue().getError().getStackTrace());
+    assertEquals(REQUEST.getStackTrace(), captor.getValue().getStackTrace());
   }
 }

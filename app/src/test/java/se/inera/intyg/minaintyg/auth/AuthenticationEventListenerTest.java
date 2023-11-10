@@ -18,7 +18,7 @@ import org.springframework.security.authentication.event.InteractiveAuthenticati
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @ExtendWith(MockitoExtension.class)
 class AuthenticationEventListenerTest {

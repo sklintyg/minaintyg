@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.error.dto;
+package se.inera.intyg.minaintyg.logging.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ErrorDataDTO {
+public class LogErrorRequestDTO {
 
   private String id;
   private String code;

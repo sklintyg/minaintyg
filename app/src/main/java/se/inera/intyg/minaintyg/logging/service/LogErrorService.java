@@ -1,9 +1,8 @@
-package se.inera.intyg.minaintyg.error.service;
+package se.inera.intyg.minaintyg.logging.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.error.service.dto.LogErrorRequest;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.dto.LogErrorRequest;
 import se.inera.intyg.minaintyg.user.UserService;
 
 @RequiredArgsConstructor
@@ -18,12 +17,11 @@ public class LogErrorService {
       throw new IllegalStateException("Error cannot be logged if user is not defined");
     }
 
-    final var error = request.getError();
     monitoringLogService.logClientError(
-        error.getId(),
-        error.getCode(),
-        error.getMessage(),
-        error.getStackTrace()
+        request.getId(),
+        request.getCode(),
+        request.getMessage(),
+        request.getStackTrace()
     );
   }
 }
