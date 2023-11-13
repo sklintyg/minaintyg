@@ -111,7 +111,7 @@ class SessionTimeoutServiceTest {
 
       assertEquals(LAST_ACCESS_TIME, session.getAttribute(LAST_ACCESS_ATTRIBUTE));
     }
-
+    
     @Test
     void shouldNotInvalidateSessionIfNotExpiredIncludedURL() {
       sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);

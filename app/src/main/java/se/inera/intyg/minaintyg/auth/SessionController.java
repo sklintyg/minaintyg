@@ -18,7 +18,7 @@ public class SessionController {
   SessionStatusResponseDTO getSessionStatus(HttpServletRequest request) {
     return createSessionStatusResponse(request);
   }
-
+  
   private SessionStatusResponseDTO createSessionStatusResponse(HttpServletRequest request) {
     final var session = request.getSession(false);
     final var secondsLeft = request.getAttribute(SECONDS_UNTIL_EXPIRE);
