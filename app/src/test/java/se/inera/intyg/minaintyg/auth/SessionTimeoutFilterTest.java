@@ -1,36 +1,28 @@
 package se.inera.intyg.minaintyg.auth;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static se.inera.intyg.minaintyg.auth.SessionTimeoutFilter.TIME_TO_INVALIDATE_ATTRIBUTE_NAME;
 
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.time.Instant;
+import java.io.IOException;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class SessionTimeoutFilterTest {
 
-  private static final String SKIP_RENEW_URL = "/test";
-  private static final String OTHER_URL = "/any.html";
-  private static final int FIVE_SECONDS_AGO = 5000;
-  private static final int ONE_SECOND = 1;
-  private static final int HALF_AN_HOUR = 1800;
-
-  private SessionTimeoutFilter filter;
+  private static final List<String> SKIP_RENEW_URLS = List.of("/test");
 
   @Mock
   HttpServletRequest request;
@@ -38,123 +30,55 @@ class SessionTimeoutFilterTest {
   HttpServletResponse response;
   @Mock
   FilterChain filterChain;
+
   @Mock
-  HttpSession session;
+  SessionTimeoutService sessionTimeoutService;
+  @InjectMocks
+  SessionTimeoutFilter filter;
 
   @BeforeEach
-  void setupFilter() throws Exception {
-    filter = new SessionTimeoutFilter();
-    filter.setSkipRenewSessionUrls(SKIP_RENEW_URL);
-    filter.initFilterBean();
-  }
-
-  @Nested
-  class InvalidSession {
-
-    @BeforeEach
-    void setup() {
-      when(session.getMaxInactiveInterval()).thenReturn(ONE_SECOND);
-    }
-
-    @Test
-    void shouldFilterInvalidSession() throws Exception {
-      setupMocks(OTHER_URL);
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session).invalidate();
-      verify(session, never()).setAttribute(any(), any());
-    }
-
-    @Test
-    void shouldFilterInvalidSessionWithSkipUrl() throws Exception {
-      setupMocks(SKIP_RENEW_URL);
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session).invalidate();
-      verify(session, never()).setAttribute(any(), any());
-    }
-  }
-
-  @Nested
-  class ValidSession {
-
-    @BeforeEach
-    void setup() {
-      when(session.getMaxInactiveInterval()).thenReturn(HALF_AN_HOUR);
-    }
-
-    @Test
-    void shouldFilterValidSession() throws Exception {
-      setupMocks(OTHER_URL);
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session, never()).invalidate();
-      verify(session).setAttribute(eq(SessionTimeoutFilter.LAST_ACCESS_TIME_ATTRIBUTE_NAME), any());
-
-    }
-
-    @Test
-    void shouldFilterValidSessionWithSkipUrl() throws Exception {
-      setupMocks(SKIP_RENEW_URL);
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session, never()).invalidate();
-      verify(session, never()).setAttribute(any(), any());
-
-    }
-
-    @Test
-    void shouldNotInvalidateSessionIfTimeToInvalidateHasNotPassed() throws Exception {
-      setupMocksWithTimeToInvalidate(Instant.now().plusSeconds(2).toEpochMilli());
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session, never()).invalidate();
-      verify(session, never()).setAttribute(any(), any());
-    }
-
-    @Test
-    void shouldNotInvalidateSessionIfTimeToInvalidateIsNull() throws Exception {
-      setupMocksWithTimeToInvalidate(null);
-
-      filter.doFilterInternal(request, response, filterChain);
-
-      verify(filterChain).doFilter(request, response);
-      verify(session, never()).invalidate();
-      verify(session, never()).setAttribute(any(), any());
-    }
+  void setup() {
+    filter.setSkipRenewSessionUrls(SKIP_RENEW_URLS);
   }
 
   @Test
-  void shouldInvalidateSessionIfTimeToInvalidateHasPassed() throws Exception {
-    setupMocksWithTimeToInvalidate(Instant.now().minusSeconds(1).toEpochMilli());
+  void shouldCallServiceWithRequest() throws ServletException, IOException {
+    final var captor = ArgumentCaptor.forClass(HttpServletRequest.class);
 
     filter.doFilterInternal(request, response, filterChain);
 
-    verify(filterChain).doFilter(request, response);
-    verify(session, times(1)).invalidate();
-    verify(session, never()).setAttribute(any(), any());
+    verify(sessionTimeoutService).checkSessionValidity(captor.capture(), anyList());
+    assertEquals(request, captor.getValue());
   }
 
-  private void setupMocksWithTimeToInvalidate(Long timeToInvalidate) {
-    setupMocks(SessionTimeoutFilterTest.SKIP_RENEW_URL);
-    doReturn(timeToInvalidate).when(session).getAttribute(TIME_TO_INVALIDATE_ATTRIBUTE_NAME);
+  @Test
+  void shouldCallServiceWithSkipUrls() throws ServletException, IOException {
+    final var captor = ArgumentCaptor.forClass(List.class);
+
+    filter.doFilterInternal(request, response, filterChain);
+
+    verify(sessionTimeoutService)
+        .checkSessionValidity(any(HttpServletRequest.class), captor.capture());
+    assertEquals(SKIP_RENEW_URLS, captor.getValue());
   }
 
-  private void setupMocks(String reportedRequestURI) {
-    when(request.getSession(false)).thenReturn(session);
-    when(request.getRequestURI()).thenReturn(reportedRequestURI);
-    when(session.getAttribute(SessionTimeoutFilter.LAST_ACCESS_TIME_ATTRIBUTE_NAME))
-        .thenReturn(System.currentTimeMillis() - FIVE_SECONDS_AGO);
+  @Test
+  void shouldCallFilterChainWithRequest() throws ServletException, IOException {
+    final var captor = ArgumentCaptor.forClass(HttpServletRequest.class);
+
+    filter.doFilterInternal(request, response, filterChain);
+
+    verify(filterChain).doFilter(captor.capture(), any());
+    assertEquals(request, captor.getValue());
   }
 
+  @Test
+  void shouldCallFilterChainWithResponse() throws ServletException, IOException {
+    final var captor = ArgumentCaptor.forClass(HttpServletResponse.class);
+
+    filter.doFilterInternal(request, response, filterChain);
+
+    verify(filterChain).doFilter(any(), captor.capture());
+    assertEquals(response, captor.getValue());
+  }
 }
