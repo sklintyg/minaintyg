@@ -76,7 +76,7 @@ class MonitoringLogServiceImplTest {
     void shouldLogWhenUserLoginFailed() {
       monitoringLogService.logUserLoginFailed(ERROR_ID, SOMETHING_WENT_WRONG);
       verifyLog(Level.ERROR,
-          "CITIZEN_LOGIN_FAIL Citizen failed to login, error id '" + ERROR_ID
+          "CITIZEN_LOGIN_FAILURE Citizen failed to login, error id '" + ERROR_ID
               + "' exception message '" + SOMETHING_WENT_WRONG + "'");
     }
   }
