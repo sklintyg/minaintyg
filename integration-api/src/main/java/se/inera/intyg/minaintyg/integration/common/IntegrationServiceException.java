@@ -1,14 +1,16 @@
 package se.inera.intyg.minaintyg.integration.common;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Value;
 
-@EqualsAndHashCode(callSuper = true)
-@Value
-@Builder
 public class IntegrationServiceException extends RuntimeException {
 
-  String applicationName;
-  String message;
+  private final String applicationName;
+
+  public IntegrationServiceException(String message, Throwable cause, String applicationName) {
+    super(message, cause);
+    this.applicationName = applicationName;
+  }
+  
+  public String getApplicationName() {
+    return applicationName;
+  }
 }

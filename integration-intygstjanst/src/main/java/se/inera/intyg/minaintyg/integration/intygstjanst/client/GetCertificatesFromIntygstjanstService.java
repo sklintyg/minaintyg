@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
@@ -50,7 +51,11 @@ public class GetCertificatesFromIntygstjanstService {
         .share()
         .onErrorMap(
             WebClientRequestException.class,
-            ExceptionThrowableFunction.get(APPLICATION_INTYGSTJANST)
+            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYGSTJANST)
+        )
+        .onErrorMap(
+            GatewayTimeout.class,
+            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSTJANST)
         )
         .block();
   }

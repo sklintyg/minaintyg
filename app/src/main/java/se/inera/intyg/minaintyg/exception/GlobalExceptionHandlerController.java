@@ -12,9 +12,9 @@ public class GlobalExceptionHandlerController {
 
   @ExceptionHandler(IntegrationServiceException.class)
   public ResponseEntity<String> handleCommunicationError(IntegrationServiceException exception) {
-    log.error("Unable to establish integration with '{}' {}",
+    log.error("Unable to establish integration with '{}' stacktrace {}",
         exception.getApplicationName(),
-        exception.getMessage()
+        exception.getStackTrace()
     );
     return ResponseEntity
         .status(503)
