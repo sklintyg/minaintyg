@@ -1,5 +1,7 @@
 package se.inera.intyg.minaintyg.auth;
 
+import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_STATUS_PING;
+import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_STATUS_REQUEST_MAPPING;
 import static se.inera.intyg.minaintyg.auth.SessionTimeoutService.SECONDS_UNTIL_EXPIRE;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,14 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.auth.dto.SessionStatusResponseDTO;
 
 @RestController
-@RequestMapping("/api/session-auth-check")
+@RequestMapping(SESSION_STATUS_REQUEST_MAPPING)
 public class SessionController {
-
-  private static final String SESSION_STATUS_REQUEST_MAPPING = "/api/session-auth-check";
-  private static final String SESSION_STATUS_PING = "/ping";
-
-  public static final String SESSION_STATUS_CHECK_URI =
-      SESSION_STATUS_REQUEST_MAPPING + SESSION_STATUS_PING;
 
   @GetMapping(SESSION_STATUS_PING)
   SessionStatusResponseDTO getSessionStatus(HttpServletRequest request) {
