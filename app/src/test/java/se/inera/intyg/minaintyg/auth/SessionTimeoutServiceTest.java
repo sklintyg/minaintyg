@@ -120,21 +120,22 @@ class SessionTimeoutServiceTest {
     }
 
     @Test
-    void shouldSetMsUntilExpireForExcludedUrl() {
+    void shouldSetUntilExpireForExcludedUrl() {
       session.setAttribute(LAST_ACCESS_ATTRIBUTE,
           System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(24)
       );
       sessionTimeoutService.checkSessionValidity(request, List.of(ACTUAL_URL));
 
-      assertEquals(TimeUnit.MINUTES.toMillis(1), (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE),
-          100);
+      assertEquals(TimeUnit.MINUTES.toSeconds(1),
+          (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE), 100);
     }
 
     @Test
-    void shouldSetMsUntilExpireForIncludedUrl() {
+    void shouldSetSecondsUntilExpireForIncludedUrl() {
       sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
 
-      assertEquals(SESSION_EXPIRATION_LIMIT, session.getAttribute(SECONDS_UNTIL_EXPIRE));
+      assertEquals(TimeUnit.MILLISECONDS.toSeconds(SESSION_EXPIRATION_LIMIT),
+          (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE));
     }
   }
 }

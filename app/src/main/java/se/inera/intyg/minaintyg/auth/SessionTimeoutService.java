@@ -37,8 +37,12 @@ public class SessionTimeoutService {
       return;
     }
 
-    session.setAttribute(SECONDS_UNTIL_EXPIRE, SESSION_EXPIRATION_LIMIT);
+    session.setAttribute(SECONDS_UNTIL_EXPIRE, getSeconds(SESSION_EXPIRATION_LIMIT));
     session.setAttribute(LAST_ACCESS_ATTRIBUTE, System.currentTimeMillis());
+  }
+
+  private static Long getSeconds(Long ms) {
+    return TimeUnit.MILLISECONDS.toSeconds(ms);
   }
 
   private static boolean isExcludedURL(HttpServletRequest request, List<String> excludedUrls) {
@@ -53,7 +57,7 @@ public class SessionTimeoutService {
   private static Long getExpirationTime(HttpSession session) {
     final var inactiveTime =
         System.currentTimeMillis() - getLastAccessedTime(session);
-    return SESSION_EXPIRATION_LIMIT - inactiveTime;
+    return getSeconds(SESSION_EXPIRATION_LIMIT - inactiveTime);
   }
 
   private static boolean isSessionExpired(HttpSession session) {
