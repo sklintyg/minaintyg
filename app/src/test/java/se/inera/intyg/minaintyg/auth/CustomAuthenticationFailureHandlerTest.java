@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -50,6 +51,9 @@ class CustomAuthenticationFailureHandlerTest {
   @Captor
   private ArgumentCaptor<String> stringArgumentCaptor;
 
+  @Captor
+  private ArgumentCaptor<StackTraceElement[]> stackTraceCaptor;
+
   @BeforeEach
   void setUp() {
     when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
@@ -59,7 +63,7 @@ class CustomAuthenticationFailureHandlerTest {
   void shouldForwardWithGeneratedErrorId() throws ServletException, IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
     verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture(),
-        eq(exception.getMessage()));
+        eq(exception.getMessage()), any());
     verify(request.getRequestDispatcher(ERROR_LOGIN_URL + stringArgumentCaptor.getValue())).forward(
         request, response);
   }
@@ -68,15 +72,24 @@ class CustomAuthenticationFailureHandlerTest {
   void shouldLogUserLoginFailedWithErrorId() throws ServletException, IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
     verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture(),
-        eq(exception.getMessage()));
+        eq(exception.getMessage()), any());
     assertNotNull(stringArgumentCaptor.getValue());
   }
 
   @Test
   void shouldLogUserLoginFailedWithMessageFromException() throws ServletException, IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(anyString(), stringArgumentCaptor.capture());
+    verify(monitoringLogService).logUserLoginFailed(anyString(), stringArgumentCaptor.capture(),
+        any());
     assertEquals(AUTHENTICATION_FAILED, stringArgumentCaptor.getValue());
+  }
+
+  @Test
+  void shouldLogUserLoginFailedWithStacktraceFromException() throws ServletException, IOException {
+    authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
+    verify(monitoringLogService).logUserLoginFailed(anyString(), eq(exception.getMessage()),
+        stackTraceCaptor.capture());
+    assertEquals(exception.getStackTrace().length, stackTraceCaptor.getValue().length);
   }
 
   @Test

@@ -30,6 +30,7 @@ class MonitoringLogServiceImplTest {
   private static final String PERSON_ID = "personId";
   private static final String SOMETHING_WENT_WRONG = "something went wrong";
   private static final String ERROR_ID = "errorId";
+  private static final StackTraceElement[] STACK_TRACE = new StackTraceElement[0];
   @InjectMocks
   private MonitoringLogServiceImpl monitoringLogService;
   @Captor
@@ -74,10 +75,10 @@ class MonitoringLogServiceImplTest {
 
     @Test
     void shouldLogWhenUserLoginFailed() {
-      monitoringLogService.logUserLoginFailed(ERROR_ID, SOMETHING_WENT_WRONG);
+      monitoringLogService.logUserLoginFailed(ERROR_ID, SOMETHING_WENT_WRONG, STACK_TRACE);
       verifyLog(Level.ERROR,
           "CITIZEN_LOGIN_FAILURE Citizen failed to login, error id '" + ERROR_ID
-              + "' exception message '" + SOMETHING_WENT_WRONG + "'");
+              + "' exception message '" + SOMETHING_WENT_WRONG + "' stacktrace '[]'");
     }
   }
 

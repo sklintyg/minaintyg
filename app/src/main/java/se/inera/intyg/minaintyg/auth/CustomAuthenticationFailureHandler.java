@@ -25,7 +25,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException, ServletException {
     final var errorId = String.valueOf(UUID.randomUUID());
-    monitoringLogService.logUserLoginFailed(errorId, exception.getMessage());
+    monitoringLogService.logUserLoginFailed(errorId, exception.getMessage(),
+        exception.getStackTrace());
     request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
     request.getRequestDispatcher(ERROR_LOGIN_URL + errorId).forward(request, response);
   }

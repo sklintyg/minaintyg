@@ -4,7 +4,7 @@ public interface MonitoringLogService {
 
   void logUserLogin(String personId, String loginMethod);
 
-  void logUserLoginFailed(String errorId, String exceptionMessage);
+  void logUserLoginFailed(String errorId, String exceptionMessage, StackTraceElement[] stackTrace);
 
   void logUserLogout(String personId, String loginMethod);
 
