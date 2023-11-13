@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.logging;
+package se.inera.intyg.minaintyg.logging.service;
 
 public interface MonitoringLogService {
 
@@ -13,4 +13,8 @@ public interface MonitoringLogService {
   void logCertificateRead(String certificateId, String type);
 
   void logCertificateSent(String certificateId, String type, String recipient);
+
+  void logClientError(String id, String code, String message, String stackTrace);
+
+  void logCertificatePrinted(String certificateId, String certificateType, boolean isEmployerCopy);
 }

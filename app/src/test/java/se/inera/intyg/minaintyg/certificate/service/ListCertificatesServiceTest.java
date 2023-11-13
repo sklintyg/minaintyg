@@ -25,7 +25,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIn
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)

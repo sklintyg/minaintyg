@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @Slf4j
 @Component

@@ -6,7 +6,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @Service
 @RequiredArgsConstructor

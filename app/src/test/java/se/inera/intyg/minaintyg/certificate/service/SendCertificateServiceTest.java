@@ -31,7 +31,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Availab
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunctionType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)

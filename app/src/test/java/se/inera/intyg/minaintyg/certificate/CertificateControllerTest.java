@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HexFormat;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -14,9 +15,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletRequest;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
+import se.inera.intyg.minaintyg.certificate.dto.PrintCertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
+import se.inera.intyg.minaintyg.certificate.service.PrintCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificateCategory;
@@ -24,6 +28,8 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesResponse;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
+import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateListItem;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
@@ -33,6 +39,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Certifi
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
 
+  private static final String CONTENT_DISPOSITION = "Content-Disposition";
   private static final List<String> YEARS = List.of("2020");
   private static final List<String> UNITS = List.of("unit1");
   private static final List<String> TYPES = List.of("lisjp");
@@ -41,12 +48,24 @@ class CertificateControllerTest {
   private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS = List.of(
       CertificateListItem.builder().build());
 
+  private static final PrintCertificateRequestDTO PRINT_REQUEST = PrintCertificateRequestDTO.builder()
+      .customizationId("C_ID")
+      .build();
+
+  private static final PrintCertificateResponse PRINT_RESPONSE = PrintCertificateResponse
+      .builder()
+      .filename("PRINT")
+      .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
+      .build();
+
   @Mock
   ListCertificatesService listCertificatesService;
   @Mock
   GetCertificateService getCertificateService;
   @Mock
   SendCertificateService sendCertificateService;
+  @Mock
+  PrintCertificateService printCertificateService;
 
   @InjectMocks
   CertificateController certificateController;
@@ -190,6 +209,104 @@ class CertificateControllerTest {
 
       verify(sendCertificateService).send(captor.capture());
       assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
+    }
+  }
+
+  @Nested
+  class PrintCertificate {
+
+    private MockHttpServletRequest httpServletRequest;
+
+    @BeforeEach
+    void setup() {
+      httpServletRequest = new MockHttpServletRequest();
+      httpServletRequest.addHeader("User-Agent",
+          "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");
+
+      when(printCertificateService.print(any(PrintCertificateRequest.class)))
+          .thenReturn(PRINT_RESPONSE);
+    }
+
+    @Test
+    void shouldUseCertificateIdInRequest() {
+      certificateController.printCertificate(httpServletRequest, CERTIFICATE_ID, PRINT_REQUEST);
+      final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
+
+      verify(printCertificateService).print(captor.capture());
+      assertEquals(CERTIFICATE_ID, captor.getValue().getCertificateId());
+    }
+
+    @Test
+    void shouldUseCustomizationIdInRequest() {
+      certificateController.printCertificate(httpServletRequest, CERTIFICATE_ID, PRINT_REQUEST);
+      final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
+
+      verify(printCertificateService).print(captor.capture());
+      assertEquals(PRINT_REQUEST.getCustomizationId(), captor.getValue().getCustomizationId());
+    }
+
+    @Nested
+    class PrintInInternetExplorer {
+
+      @BeforeEach
+      void setup() {
+        httpServletRequest.addHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");
+      }
+
+      @Test
+      void shouldReturnConvertedFilenameReturnedFromServiceAsHeader() {
+        final var response = certificateController.printCertificate(httpServletRequest,
+            CERTIFICATE_ID, PRINT_REQUEST);
+
+        assertEquals(
+            List.of("attachment; filename=\"" + PRINT_RESPONSE.getFilename() + "\""),
+            response.getHeaders().get(CONTENT_DISPOSITION)
+        );
+      }
+
+      @Test
+      void shouldReturnPdfDataReturnedFromServiceInBody() {
+        final var response = certificateController.printCertificate(httpServletRequest,
+            CERTIFICATE_ID, PRINT_REQUEST);
+
+        assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
+      }
+    }
+  }
+
+  @Nested
+  class PrintCertificateOtherBrowser {
+
+    private MockHttpServletRequest httpServletRequest;
+
+    @BeforeEach
+    void setup() {
+      httpServletRequest = new MockHttpServletRequest();
+      httpServletRequest.addHeader("User-Agent",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36");
+
+      when(printCertificateService.print(any(PrintCertificateRequest.class)))
+          .thenReturn(PRINT_RESPONSE);
+    }
+
+    @Test
+    void shouldReturnConvertedFilenameReturnedFromServiceAsHeader() {
+      final var response = certificateController.printCertificate(httpServletRequest,
+          CERTIFICATE_ID, PRINT_REQUEST);
+
+      assertEquals(
+          List.of("inline"),
+          response.getHeaders().get(CONTENT_DISPOSITION)
+      );
+    }
+
+    @Test
+    void shouldReturnPdfDataReturnedFromServiceInBody() {
+      final var response = certificateController.printCertificate(httpServletRequest,
+          CERTIFICATE_ID, PRINT_REQUEST);
+
+      assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
     }
   }
 }
