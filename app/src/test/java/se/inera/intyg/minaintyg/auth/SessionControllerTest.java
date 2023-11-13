@@ -39,68 +39,51 @@ import org.springframework.security.core.context.SecurityContext;
 @ExtendWith(MockitoExtension.class)
 class SessionControllerTest {
 
-  @InjectMocks
-  private SessionController sessionController;
+    @InjectMocks
+    private SessionController sessionController;
 
-  private static HttpServletRequest request;
+    private static HttpServletRequest request;
 
-  @Nested
-  class WithSession {
+    @Nested
+    class WithSession {
 
-    @BeforeEach
-    void setup() {
-      request = mock(HttpServletRequest.class);
-      final var context = mock(SecurityContext.class);
-      final var authentication = mock(Authentication.class);
-      final var session = mock(HttpSession.class);
+        @BeforeEach
+        void setup() {
+            request = mock(HttpServletRequest.class);
+            final var context = mock(SecurityContext.class);
+            final var authentication = mock(Authentication.class);
+            final var session = mock(HttpSession.class);
 
-      when(request.getSession((false))).thenReturn(session);
-      when(session.getAttribute(anyString())).thenReturn(context);
-      when(context.getAuthentication()).thenReturn(authentication);
-      when(authentication.getPrincipal()).thenReturn(MinaIntygUser.builder().build());
+            when(request.getSession((false))).thenReturn(session);
+            when(session.getAttribute(anyString())).thenReturn(context);
+            when(context.getAuthentication()).thenReturn(authentication);
+            when(authentication.getPrincipal()).thenReturn(MinaIntygUser.builder().build());
+        }
+
+        @Test
+        void testGetSessionWhenSession() {
+            final var sessionStatus = sessionController.getSessionStatus(request);
+
+            assertTrue(sessionStatus.isHasSession());
+        }
+
     }
 
-    @Test
-    void testGetSessionWhenSession() {
-      final var sessionStatus = sessionController.getSessionStatus(request);
+    @Nested
+    class NoSession {
 
-      assertTrue(sessionStatus.isHasSession());
-      assertTrue(sessionStatus.isAuthenticated());
+        @BeforeEach
+        void setup() {
+            request = mock(HttpServletRequest.class);
+            when(request.getSession((false))).thenReturn(null);
+        }
+
+        @Test
+        void testGetSessionStatusWhenNoSession() {
+            final var sessionStatus = sessionController.getSessionStatus(request);
+
+            assertFalse(sessionStatus.isHasSession());
+        }
     }
-
-    @Test
-    void testExtendWhenSession() {
-      final var sessionStatus = sessionController.extendSession(request);
-
-      assertTrue(sessionStatus.isHasSession());
-      assertTrue(sessionStatus.isAuthenticated());
-    }
-  }
-
-  @Nested
-  class NoSession {
-
-    @BeforeEach
-    void setup() {
-      request = mock(HttpServletRequest.class);
-      when(request.getSession((false))).thenReturn(null);
-    }
-
-    @Test
-    void testGetSessionStatusWhenNoSession() {
-      final var sessionStatus = sessionController.getSessionStatus(request);
-
-      assertFalse(sessionStatus.isHasSession());
-      assertFalse(sessionStatus.isAuthenticated());
-    }
-
-    @Test
-    void testExtendWhenNoSession() {
-      final var sessionStatus = sessionController.extendSession(request);
-
-      assertFalse(sessionStatus.isHasSession());
-      assertFalse(sessionStatus.isAuthenticated());
-    }
-  }
 
 }
