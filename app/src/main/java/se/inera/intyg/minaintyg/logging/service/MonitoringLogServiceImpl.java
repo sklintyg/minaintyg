@@ -1,6 +1,7 @@
-package se.inera.intyg.minaintyg.logging;
+package se.inera.intyg.minaintyg.logging.service;
 
 
+import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.common.logging.LogMarkers;
@@ -11,6 +12,7 @@ import se.inera.intyg.minaintyg.util.HashUtility;
 public class MonitoringLogServiceImpl implements MonitoringLogService {
 
   private static final String SPACE = " ";
+  private static final String NO_STACK_TRACE = "NO_STACK_TRACE";
 
   @Override
   public void logUserLogin(String personId, String loginMethod) {
@@ -57,6 +59,12 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     }
   }
 
+  @Override
+  public void logClientError(String id, String code, String message, String stackTrace) {
+    logEvent(MonitoringEvent.CLIENT_ERROR, id, code, message,
+        Strings.isNullOrEmpty(stackTrace) ? NO_STACK_TRACE : stackTrace);
+  }
+
   private void logEvent(MonitoringEvent event, Object... logMsgArgs) {
     log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
   }
@@ -75,7 +83,9 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     CERTIFICATE_SEND("Certificate '{}' of type '{}' sent to '{}'"),
     CERTIFICATE_PRINTED_FULLY(
         "Certificate '{}' of type '{}' was printed including all information"),
-    CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy");
+    CERTIFICATE_PRINTED_EMPLOYER_COPY("Certificate '{}' of type '{}' was printed as employer copy"),
+    CLIENT_ERROR(
+        "Received error from client with errorId '{}' with error code '{}', message '{}' and stacktrace '{}'");
     private final String message;
 
     MonitoringEvent(String message) {

@@ -8,7 +8,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationService;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @Service
 @RequiredArgsConstructor

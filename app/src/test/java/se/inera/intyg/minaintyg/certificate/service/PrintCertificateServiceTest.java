@@ -27,7 +27,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateInte
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @ExtendWith(MockitoExtension.class)
 class PrintCertificateServiceTest {

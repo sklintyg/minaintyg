@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.monitoring.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
-import se.inera.intyg.minaintyg.logging.MonitoringLogServiceImpl;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogServiceImpl;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
@@ -119,6 +119,34 @@ class MonitoringLogServiceImplTest {
 
       verifyLog(Level.INFO,
           "CERTIFICATE_PRINTED_FULLY Certificate 'ID' of type 'TYPE' was printed including all information");
+    }
+  }
+
+  @Nested
+  class LogClientError {
+
+    @Test
+    void shouldLogClientErrorWithStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", "stack trace");
+
+      verifyLog(Level.INFO,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'stack trace'");
+    }
+
+    @Test
+    void shouldLogClientErrorWithNoStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", null);
+
+      verifyLog(Level.INFO,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
+    }
+
+    @Test
+    void shouldLogClientErrorWithEmptyStackTrace() {
+      monitoringLogService.logClientError("id", "code", "message", "");
+
+      verifyLog(Level.INFO,
+          "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
     }
   }
 }
