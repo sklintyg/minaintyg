@@ -30,13 +30,19 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException, ServletException {
     final var errorId = String.valueOf(UUID.randomUUID());
+    handleLogEvents(response, exception, errorId);
+    request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+    request.getRequestDispatcher(addErrorIdToUrl(errorId)).forward(request, response);
+  }
+
+  private void handleLogEvents(HttpServletResponse response, AuthenticationException exception,
+      String errorId) {
     log.error(
         String.format("Failed login attempt with errorId '%s' - exception %s", errorId, exception)
     );
     monitoringLogService.logUserLoginFailed(exception.getMessage());
-    //TODO: Add client log
-    request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
-    request.getRequestDispatcher(addErrorIdToUrl(errorId)).forward(request, response);
+    monitoringLogService.logClientError(errorId, String.valueOf(response.getStatus()),
+        exception.getMessage(), null);
   }
 
   private String addErrorIdToUrl(String errorId) {

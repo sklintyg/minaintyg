@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -64,6 +65,12 @@ class CustomAuthenticationFailureHandlerTest {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
     verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture());
     assertEquals(AUTHENTICATION_FAILED, stringArgumentCaptor.getValue());
+  }
+
+  @Test
+  void shouldLogClientError() throws ServletException, IOException {
+    authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
+    verify(monitoringLogService).logClientError(anyString(), anyString(), anyString(), eq(null));
   }
 
   @Test
