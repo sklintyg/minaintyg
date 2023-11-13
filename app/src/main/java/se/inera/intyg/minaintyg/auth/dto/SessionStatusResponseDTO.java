@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SessionStatusResponseDTO {
 
-    private boolean hasSession;
-    private long secondsUntilExpire;
+  private boolean hasSession;
+  private long secondsUntilExpire;
 }

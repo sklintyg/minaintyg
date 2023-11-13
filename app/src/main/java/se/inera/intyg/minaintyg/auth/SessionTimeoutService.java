@@ -41,7 +41,7 @@ public class SessionTimeoutService {
   private static Long getSeconds(Long ms) {
     return TimeUnit.MILLISECONDS.toSeconds(ms);
   }
-
+  
   private static boolean isExcludedURL(HttpServletRequest request, List<String> excludedUrls) {
     return excludedUrls.stream().anyMatch(url -> request.getRequestURI().contains(url));
   }
