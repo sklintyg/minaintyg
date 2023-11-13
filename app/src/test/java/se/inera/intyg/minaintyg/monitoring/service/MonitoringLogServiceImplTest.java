@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.monitoring;
+package se.inera.intyg.minaintyg.monitoring.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

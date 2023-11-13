@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.error.service;
+package se.inera.intyg.minaintyg.monitoring.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;

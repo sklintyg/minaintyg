@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.error;
+package se.inera.intyg.minaintyg.monitoring;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -9,13 +9,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.logging.ErrorController;
+import se.inera.intyg.minaintyg.logging.LogController;
 import se.inera.intyg.minaintyg.logging.dto.LogErrorRequestDTO;
 import se.inera.intyg.minaintyg.logging.service.LogErrorService;
 import se.inera.intyg.minaintyg.logging.service.dto.LogErrorRequest;
 
 @ExtendWith(MockitoExtension.class)
-class ErrorControllerTest {
+class LogControllerTest {
 
   private static final LogErrorRequestDTO REQUEST = LogErrorRequestDTO.builder()
       .id("id")
@@ -28,13 +28,13 @@ class ErrorControllerTest {
   private LogErrorService logErrorService;
 
   @InjectMocks
-  private ErrorController errorController;
+  private LogController logController;
 
   @Test
   void shouldCallServiceWithErrorId() {
     final var captor = ArgumentCaptor.forClass(LogErrorRequest.class);
 
-    errorController.logError(REQUEST);
+    logController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
     assertEquals(REQUEST.getId(), captor.getValue().getId());
@@ -44,7 +44,7 @@ class ErrorControllerTest {
   void shouldCallServiceWithErrorCode() {
     final var captor = ArgumentCaptor.forClass(LogErrorRequest.class);
 
-    errorController.logError(REQUEST);
+    logController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
     assertEquals(REQUEST.getCode(), captor.getValue().getCode());
@@ -54,7 +54,7 @@ class ErrorControllerTest {
   void shouldCallServiceWithErrorMessage() {
     final var captor = ArgumentCaptor.forClass(LogErrorRequest.class);
 
-    errorController.logError(REQUEST);
+    logController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
     assertEquals(REQUEST.getMessage(), captor.getValue().getMessage());
@@ -64,7 +64,7 @@ class ErrorControllerTest {
   void shouldCallServiceWithErrorStackTrace() {
     final var captor = ArgumentCaptor.forClass(LogErrorRequest.class);
 
-    errorController.logError(REQUEST);
+    logController.logError(REQUEST);
 
     verify(logErrorService).log(captor.capture());
     assertEquals(REQUEST.getStackTrace(), captor.getValue().getStackTrace());

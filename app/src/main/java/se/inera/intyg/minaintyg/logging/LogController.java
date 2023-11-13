@@ -12,12 +12,12 @@ import se.inera.intyg.minaintyg.logging.service.dto.LogErrorRequest;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/error")
-public class ErrorController {
+@RequestMapping("/api/log")
+public class LogController {
 
   private final LogErrorService logErrorService;
 
-  @PostMapping
+  @PostMapping("/error")
   public void logError(LogErrorRequestDTO request) {
     log.debug("Logging error with id: '{}'", request.getId());
     logErrorService.log(
