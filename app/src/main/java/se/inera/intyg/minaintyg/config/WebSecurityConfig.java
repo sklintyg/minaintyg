@@ -28,7 +28,6 @@ import org.springframework.security.saml2.provider.service.registration.InMemory
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -120,7 +119,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
-            .failureHandler(getCustomAuthenticationFailureHandler())
+            .failureHandler(customAuthenticationFailureHandler)
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .requestCache(cacheConfigurer -> cacheConfigurer
@@ -142,10 +141,6 @@ public class WebSecurityConfig {
         .saml2Metadata(withDefaults());
 
     return http.build();
-  }
-
-  public AuthenticationFailureHandler getCustomAuthenticationFailureHandler() {
-    return customAuthenticationFailureHandler;
   }
 
   private void configureTestability(HttpSecurity http) throws Exception {

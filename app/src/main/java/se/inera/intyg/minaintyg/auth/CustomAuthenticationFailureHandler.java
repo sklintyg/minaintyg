@@ -36,10 +36,10 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     monitoringLogService.logUserLoginFailed(exception.getMessage());
     //TODO: Add client log
     request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
-    request.getRequestDispatcher(getUrl(errorId)).forward(request, response);
+    request.getRequestDispatcher(addErrorIdToUrl(errorId)).forward(request, response);
   }
 
-  private String getUrl(String errorId) {
+  private String addErrorIdToUrl(String errorId) {
     return errorLoginUrl.replace("{errorId}", errorId);
   }
 }
