@@ -75,10 +75,10 @@ class MonitoringLogServiceImplTest {
 
     @Test
     void shouldLogWhenUserLoginFailed() {
-      monitoringLogService.logUserLoginFailed(ERROR_ID, SOMETHING_WENT_WRONG, STACK_TRACE);
-      verifyLog(Level.ERROR,
-          "CITIZEN_LOGIN_FAILURE Citizen failed to login, error id '" + ERROR_ID
-              + "' exception message '" + SOMETHING_WENT_WRONG + "' stacktrace '[]'");
+      monitoringLogService.logUserLoginFailed(SOMETHING_WENT_WRONG);
+      verifyLog(Level.INFO,
+          "CITIZEN_LOGIN_FAILURE Citizen failed to login, exception message '"
+              + SOMETHING_WENT_WRONG + "'");
     }
   }
 

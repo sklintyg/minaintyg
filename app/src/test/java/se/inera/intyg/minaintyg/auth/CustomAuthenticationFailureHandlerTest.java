@@ -1,10 +1,7 @@
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,17 +15,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
-import se.inera.intyg.minaintyg.logging.MonitoringLogService;
+import se.inera.intyg.minaintyg.logging.MonitoringLogServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class CustomAuthenticationFailureHandlerTest {
-
-  private static final String ERROR_LOGIN_URL = "/error/login/";
 
   private static final String AUTHENTICATION_FAILED = "Authentication failed";
   private static final AuthenticationException exception = new AuthenticationException(
@@ -36,7 +30,7 @@ class CustomAuthenticationFailureHandlerTest {
   };
 
   @Mock
-  private MonitoringLogService monitoringLogService;
+  private MonitoringLogServiceImpl monitoringLogService;
 
   @Mock
   private HttpServletRequest request;
@@ -45,51 +39,31 @@ class CustomAuthenticationFailureHandlerTest {
   @Mock
   private RequestDispatcher requestDispatcher;
 
-  @InjectMocks
   private CustomAuthenticationFailureHandler authenticationFailureHandler;
 
   @Captor
   private ArgumentCaptor<String> stringArgumentCaptor;
 
-  @Captor
-  private ArgumentCaptor<StackTraceElement[]> stackTraceCaptor;
-
   @BeforeEach
   void setUp() {
+    authenticationFailureHandler = new CustomAuthenticationFailureHandler(
+        "errorLoginUrl/{errorId}",
+        monitoringLogService
+    );
     when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
   }
 
   @Test
-  void shouldForwardWithGeneratedErrorId() throws ServletException, IOException {
+  void shouldForward() throws ServletException, IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture(),
-        eq(exception.getMessage()), any());
-    verify(request.getRequestDispatcher(ERROR_LOGIN_URL + stringArgumentCaptor.getValue())).forward(
-        request, response);
-  }
-
-  @Test
-  void shouldLogUserLoginFailedWithErrorId() throws ServletException, IOException {
-    authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture(),
-        eq(exception.getMessage()), any());
-    assertNotNull(stringArgumentCaptor.getValue());
+    verify(request.getRequestDispatcher(anyString())).forward(request, response);
   }
 
   @Test
   void shouldLogUserLoginFailedWithMessageFromException() throws ServletException, IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(anyString(), stringArgumentCaptor.capture(),
-        any());
+    verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture());
     assertEquals(AUTHENTICATION_FAILED, stringArgumentCaptor.getValue());
-  }
-
-  @Test
-  void shouldLogUserLoginFailedWithStacktraceFromException() throws ServletException, IOException {
-    authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(anyString(), eq(exception.getMessage()),
-        stackTraceCaptor.capture());
-    assertEquals(exception.getStackTrace().length, stackTraceCaptor.getValue().length);
   }
 
   @Test

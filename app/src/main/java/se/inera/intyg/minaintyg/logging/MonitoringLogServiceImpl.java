@@ -18,9 +18,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   @Override
-  public void logUserLoginFailed(String errorId, String exceptionMessage,
-      StackTraceElement[] stackTrace) {
-    logErrorEvent(MonitoringEvent.CITIZEN_LOGIN_FAILURE, errorId, exceptionMessage, stackTrace);
+  public void logUserLoginFailed(String exceptionMessage) {
+    logEvent(MonitoringEvent.CITIZEN_LOGIN_FAILURE, exceptionMessage);
   }
 
   @Override
@@ -47,10 +46,6 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
     log.info(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
   }
 
-  private void logErrorEvent(MonitoringEvent event, Object... logMsgArgs) {
-    log.error(LogMarkers.MONITORING, buildMessage(event), logMsgArgs);
-  }
-
   private String buildMessage(MonitoringEvent logEvent) {
     final var logMsg = new StringBuilder();
     logMsg.append(logEvent.name()).append(SPACE).append(logEvent.getMessage());
@@ -60,7 +55,7 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   private enum MonitoringEvent {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
     CITIZEN_LOGIN_FAILURE(
-        "Citizen failed to login, error id '{}' exception message '{}' stacktrace '{}'"),
+        "Citizen failed to login, exception message '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),
