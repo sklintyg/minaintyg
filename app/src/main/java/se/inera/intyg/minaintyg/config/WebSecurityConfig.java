@@ -53,8 +53,8 @@ public class WebSecurityConfig {
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
-  private final CustomAuthenticationFailureHandler authenticationFailureHandler;
   private final Environment environment;
+  private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
   @Value("${spring.ssl.bundle.jks.app.keystore.password}")
@@ -120,7 +120,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
-            .failureHandler(getCustomFailureHandler())
+            .failureHandler(getCustomAuthenticationFailureHandler())
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .requestCache(cacheConfigurer -> cacheConfigurer
@@ -144,8 +144,8 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  public AuthenticationFailureHandler getCustomFailureHandler() {
-    return new CustomAuthenticationFailureHandler();
+  public AuthenticationFailureHandler getCustomAuthenticationFailureHandler() {
+    return customAuthenticationFailureHandler;
   }
 
   private void configureTestability(HttpSecurity http) throws Exception {
