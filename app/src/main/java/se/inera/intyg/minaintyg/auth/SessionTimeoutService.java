@@ -11,11 +11,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SessionTimeoutService {
 
-  public static final String LAST_ACCESS_ATTRIBUTE = "LastAccess";
-  public static final String SECONDS_UNTIL_EXPIRE = "SecondsUntilExpire";
-  public static final Long SESSION_EXPIRATION_LIMIT = TimeUnit.MINUTES.toMillis(25);
-
-
   public void checkSessionValidity(HttpServletRequest request, List<String> excludedUrls) {
     final var session = request.getSession(false);
 
@@ -33,12 +28,14 @@ public class SessionTimeoutService {
       HttpServletRequest request,
       List<String> excludedUrls) {
     if (isExcludedURL(request, excludedUrls)) {
-      session.setAttribute(SECONDS_UNTIL_EXPIRE, getExpirationTime(session));
+      session.setAttribute(SessionConstants.SECONDS_UNTIL_EXPIRE, getExpirationTime(session));
       return;
     }
 
-    session.setAttribute(SECONDS_UNTIL_EXPIRE, getSeconds(SESSION_EXPIRATION_LIMIT));
-    session.setAttribute(LAST_ACCESS_ATTRIBUTE, System.currentTimeMillis());
+    session.setAttribute(
+        SessionConstants.SECONDS_UNTIL_EXPIRE,
+        getSeconds(SessionConstants.SESSION_EXPIRATION_LIMIT));
+    session.setAttribute(SessionConstants.LAST_ACCESS_ATTRIBUTE, System.currentTimeMillis());
   }
 
   private static Long getSeconds(Long ms) {
@@ -50,19 +47,18 @@ public class SessionTimeoutService {
   }
 
   private static Long getLastAccessedTime(HttpSession session) {
-    return session.getAttribute(LAST_ACCESS_ATTRIBUTE) != null
-        ? (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE) : 0;
+    return session.getAttribute(SessionConstants.LAST_ACCESS_ATTRIBUTE) != null
+        ? (Long) session.getAttribute(SessionConstants.LAST_ACCESS_ATTRIBUTE) : 0;
   }
 
   private static Long getExpirationTime(HttpSession session) {
     final var inactiveTime =
         System.currentTimeMillis() - getLastAccessedTime(session);
-    return getSeconds(SESSION_EXPIRATION_LIMIT - inactiveTime);
+    return getSeconds(SessionConstants.SESSION_EXPIRATION_LIMIT - inactiveTime);
   }
 
   private static boolean isSessionExpired(HttpSession session) {
     final var inactiveTime = System.currentTimeMillis() - getLastAccessedTime(session);
-    return inactiveTime > SESSION_EXPIRATION_LIMIT;
+    return inactiveTime > SessionConstants.SESSION_EXPIRATION_LIMIT;
   }
-
 }

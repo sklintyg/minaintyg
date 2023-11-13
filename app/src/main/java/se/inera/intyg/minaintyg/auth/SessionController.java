@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.auth;
 
+import static se.inera.intyg.minaintyg.auth.SessionConstants.SECONDS_UNTIL_EXPIRE;
 import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_STATUS_PING;
 import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_STATUS_REQUEST_MAPPING;
-import static se.inera.intyg.minaintyg.auth.SessionTimeoutService.SECONDS_UNTIL_EXPIRE;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
