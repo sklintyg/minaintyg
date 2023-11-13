@@ -4,6 +4,8 @@ public interface MonitoringLogService {
 
   void logUserLogin(String personId, String loginMethod);
 
+  void logUserLoginFailed(String errorId, String exceptionMessage);
+
   void logUserLogout(String personId, String loginMethod);
 
   void logListCertificates(String personId, int nbrOfCertificates);
