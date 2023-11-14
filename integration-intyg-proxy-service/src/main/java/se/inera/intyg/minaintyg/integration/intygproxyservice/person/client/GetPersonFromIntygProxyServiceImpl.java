@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
-import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_WEBCERT;
+import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,11 +51,11 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
         .share()
         .onErrorMap(
             WebClientRequestException.class,
-            ExceptionThrowableFunction.webClientRequest(APPLICATION_WEBCERT)
+            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYG_PROXY_SERVICE)
         )
         .onErrorMap(
             GatewayTimeout.class,
-            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_WEBCERT)
+            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYG_PROXY_SERVICE)
         )
         .block();
   }
