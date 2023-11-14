@@ -20,6 +20,11 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
   }
 
   @Override
+  public void logUserLoginFailed(String exceptionMessage) {
+    logEvent(MonitoringEvent.CITIZEN_LOGIN_FAILURE, exceptionMessage);
+  }
+
+  @Override
   public void logUserLogout(String personId, String loginMethod) {
     logEvent(MonitoringEvent.CITIZEN_LOGOUT, HashUtility.hash(personId), loginMethod);
   }
@@ -77,6 +82,8 @@ public class MonitoringLogServiceImpl implements MonitoringLogService {
 
   private enum MonitoringEvent {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
+    CITIZEN_LOGIN_FAILURE(
+        "Citizen failed to login, exception message '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),

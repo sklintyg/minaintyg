@@ -36,6 +36,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
+import se.inera.intyg.minaintyg.auth.CustomAuthenticationFailureHandler;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -54,6 +55,7 @@ public class WebSecurityConfig {
   public static final String APP_BUNDLE_NAME = "app";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
   private final Environment environment;
+  private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
   @Value("${spring.ssl.bundle.jks.app.keystore.password}")
@@ -120,6 +122,7 @@ public class WebSecurityConfig {
                     getOpenSaml4AuthenticationProvider()
                 )
             )
+            .failureHandler(customAuthenticationFailureHandler)
             .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
         )
         .requestCache(cacheConfigurer -> cacheConfigurer

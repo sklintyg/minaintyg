@@ -28,6 +28,9 @@ import se.inera.intyg.minaintyg.util.HashUtility;
 class MonitoringLogServiceImplTest {
 
   private static final String PERSON_ID = "personId";
+  private static final String SOMETHING_WENT_WRONG = "something went wrong";
+  private static final String ERROR_ID = "errorId";
+  private static final StackTraceElement[] STACK_TRACE = new StackTraceElement[0];
   @InjectMocks
   private MonitoringLogServiceImpl monitoringLogService;
   @Captor
@@ -64,6 +67,18 @@ class MonitoringLogServiceImplTest {
       final var hashedPersonId = HashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "CITIZEN_LOGIN Citizen '" + hashedPersonId + "' logged in using login method 'ELVA77'");
+    }
+  }
+
+  @Nested
+  class LogUserLoginFailed {
+
+    @Test
+    void shouldLogWhenUserLoginFailed() {
+      monitoringLogService.logUserLoginFailed(SOMETHING_WENT_WRONG);
+      verifyLog(Level.INFO,
+          "CITIZEN_LOGIN_FAILURE Citizen failed to login, exception message '"
+              + SOMETHING_WENT_WRONG + "'");
     }
   }
 
