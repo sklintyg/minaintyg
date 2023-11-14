@@ -1,21 +1,17 @@
 package se.inera.intyg.minaintyg.auth;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.mock.web.MockHttpSession;
 
 @ExtendWith(MockitoExtension.class)
 class SessionControllerTest {
@@ -28,26 +24,30 @@ class SessionControllerTest {
   @Nested
   class WithSession {
 
+    private static final Long SECONDS_UNTIL_EXPIRE = 10L;
+
     @BeforeEach
     void setup() {
       request = mock(HttpServletRequest.class);
-      final var context = mock(SecurityContext.class);
-      final var authentication = mock(Authentication.class);
-      final var session = mock(HttpSession.class);
+      final var session = new MockHttpSession();
+      session.setAttribute(SessionConstants.SECONDS_UNTIL_EXPIRE, SECONDS_UNTIL_EXPIRE);
 
-      when(request.getSession((false))).thenReturn(session);
-      when(session.getAttribute(anyString())).thenReturn(context);
-      when(context.getAuthentication()).thenReturn(authentication);
-      when(authentication.getPrincipal()).thenReturn(MinaIntygUser.builder().build());
+      when(request.getSession(false)).thenReturn(session);
     }
 
     @Test
-    void testGetSessionWhenSession() {
+    void shallReturnHasSessionTrue() {
       final var sessionStatus = sessionController.getSessionStatus(request);
 
-      assertTrue(sessionStatus.isHasSession());
+      assertEquals(Boolean.TRUE, sessionStatus.isHasSession());
     }
 
+    @Test
+    void shallReturnSecondsUntilExpire() {
+      final var sessionStatus = sessionController.getSessionStatus(request);
+
+      assertEquals(SECONDS_UNTIL_EXPIRE, sessionStatus.getSecondsUntilExpire());
+    }
   }
 
   @Nested
@@ -60,11 +60,17 @@ class SessionControllerTest {
     }
 
     @Test
-    void testGetSessionStatusWhenNoSession() {
+    void shallReturnHasSessionFalse() {
       final var sessionStatus = sessionController.getSessionStatus(request);
 
-      assertFalse(sessionStatus.isHasSession());
+      assertEquals(Boolean.FALSE, sessionStatus.isHasSession());
+    }
+
+    @Test
+    void shallReturnSecondsUntilExpireAsZero() {
+      final var sessionStatus = sessionController.getSessionStatus(request);
+
+      assertEquals(0, sessionStatus.getSecondsUntilExpire());
     }
   }
-
 }

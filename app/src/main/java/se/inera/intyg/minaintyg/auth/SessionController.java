@@ -18,15 +18,17 @@ public class SessionController {
   SessionStatusResponseDTO getSessionStatus(HttpServletRequest request) {
     return createSessionStatusResponse(request);
   }
-  
+
   private SessionStatusResponseDTO createSessionStatusResponse(HttpServletRequest request) {
     final var session = request.getSession(false);
-    final var secondsLeft = request.getAttribute(SECONDS_UNTIL_EXPIRE);
+    if (session == null) {
+      return SessionStatusResponseDTO.builder().build();
+    }
 
+    final var secondsLeft = session.getAttribute(SECONDS_UNTIL_EXPIRE);
     return SessionStatusResponseDTO.builder()
-        .hasSession(session != null)
+        .hasSession(true)
         .secondsUntilExpire(secondsLeft == null ? 0 : (Long) secondsLeft)
         .build();
   }
-
 }

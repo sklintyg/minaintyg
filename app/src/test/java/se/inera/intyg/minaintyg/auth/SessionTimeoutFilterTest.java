@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 
 import jakarta.servlet.FilterChain;
@@ -10,7 +9,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,8 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class SessionTimeoutFilterTest {
-
-  private static final List<String> SKIP_RENEW_URLS = List.of("/test");
 
   @Mock
   HttpServletRequest request;
@@ -38,7 +34,7 @@ class SessionTimeoutFilterTest {
 
   @BeforeEach
   void setup() {
-    filter.setSkipRenewSessionUrls(SKIP_RENEW_URLS);
+
   }
 
   @Test
@@ -47,19 +43,8 @@ class SessionTimeoutFilterTest {
 
     filter.doFilterInternal(request, response, filterChain);
 
-    verify(sessionTimeoutService).checkSessionValidity(captor.capture(), anyList());
+    verify(sessionTimeoutService).checkSessionValidity(captor.capture());
     assertEquals(request, captor.getValue());
-  }
-
-  @Test
-  void shouldCallServiceWithSkipUrls() throws ServletException, IOException {
-    final var captor = ArgumentCaptor.forClass(List.class);
-
-    filter.doFilterInternal(request, response, filterChain);
-
-    verify(sessionTimeoutService)
-        .checkSessionValidity(any(HttpServletRequest.class), captor.capture());
-    assertEquals(SKIP_RENEW_URLS, captor.getValue());
   }
 
   @Test

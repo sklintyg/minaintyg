@@ -5,19 +5,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
+@Component
 @RequiredArgsConstructor
 public class SessionTimeoutFilter extends OncePerRequestFilter {
 
   private final SessionTimeoutService sessionTimeoutService;
-
-  @Setter
-  private List<String> skipRenewSessionUrls;
 
   @Override
   protected void doFilterInternal(
@@ -26,7 +24,7 @@ public class SessionTimeoutFilter extends OncePerRequestFilter {
       FilterChain filterChain)
       throws ServletException, IOException {
 
-    sessionTimeoutService.checkSessionValidity(request, skipRenewSessionUrls);
+    sessionTimeoutService.checkSessionValidity(request);
 
     filterChain.doFilter(request, response);
   }

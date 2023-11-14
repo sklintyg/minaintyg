@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
-import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_STATUS_CHECK_URI;
 
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
 import org.springframework.boot.ssl.SslBundles;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -31,6 +29,7 @@ import org.springframework.security.saml2.provider.service.registration.RelyingP
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -102,7 +101,8 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http,
-      RelyingPartyRegistrationRepository relyingPartyRegistrationRepository) throws Exception {
+      RelyingPartyRegistrationRepository relyingPartyRegistrationRepository,
+      SessionTimeoutFilter sessionTimeoutFilter) throws Exception {
 
     if (environment.acceptsProfiles(Profiles.of(TESTABILITY_PROFILE))) {
       configureTestability(http);
@@ -137,6 +137,7 @@ public class WebSecurityConfig {
             .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
         )
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+        .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
         .saml2Metadata(withDefaults());
 
@@ -184,14 +185,5 @@ public class WebSecurityConfig {
     }
     throw new IllegalArgumentException(
         "Could not extract attribute '" + PERSON_ID_ATTRIBUTE + "' from Saml2Authentication.");
-  }
-
-  @Bean
-  public FilterRegistrationBean<SessionTimeoutFilter> sessionTimeoutFilter() {
-    final var filterRegistrationBean = new FilterRegistrationBean<SessionTimeoutFilter>();
-    filterRegistrationBean.addInitParameter("skipRenewSessionUrls", SESSION_STATUS_CHECK_URI);
-    filterRegistrationBean.addUrlPatterns("/*");
-
-    return filterRegistrationBean;
   }
 }

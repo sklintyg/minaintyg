@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.minaintyg.auth.SessionConstants.LAST_ACCESS_ATTRIBUTE;
 import static se.inera.intyg.minaintyg.auth.SessionConstants.SECONDS_UNTIL_EXPIRE;
-import static se.inera.intyg.minaintyg.auth.SessionConstants.SESSION_EXPIRATION_LIMIT;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,13 +22,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class SessionTimeoutServiceTest {
 
-  private static final List<String> EXCLUDED_URLS = List.of("url");
   private static final String ACTUAL_URL = "localhost/api/ping";
+  private static final List<String> EXCLUDED_URLS = List.of("url");
+  private static final List<String> EXCLUDED_ACTUAL_URLS = List.of(ACTUAL_URL);
+  public static final int HUNDRED_SECONDS = 100;
   public static final long LAST_ACCESS_TIME = System.currentTimeMillis();
+  public static final int TIMEOUT_LIMIT_IN_MINUTES = 25;
+  public static final long TIMEOUT_LIMIT_IN_SECONDS = TimeUnit.MINUTES.toSeconds(
+      TIMEOUT_LIMIT_IN_MINUTES);
 
   HttpServletRequest request;
   MockHttpSession session = new MockHttpSession();
@@ -38,12 +43,52 @@ class SessionTimeoutServiceTest {
   private SessionTimeoutService sessionTimeoutService;
 
   @BeforeEach
-  void setup() {
-    request = mock(HttpServletRequest.class);
+  void setUp() {
+    ReflectionTestUtils.setField(sessionTimeoutService, "timeoutLimitInMinutes",
+        TIMEOUT_LIMIT_IN_MINUTES);
+    ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_URLS);
+  }
 
-    when(request.getSession(anyBoolean())).thenReturn(session);
-    session.setAttribute(LAST_ACCESS_ATTRIBUTE, LAST_ACCESS_TIME);
-    session.setAttribute(SECONDS_UNTIL_EXPIRE, 0L);
+  @Nested
+  class TestNoSession {
+
+    @BeforeEach
+    void setup() {
+      request = mock(HttpServletRequest.class);
+    }
+
+    @Test
+    void shouldHandleIfNoSession() {
+      sessionTimeoutService.checkSessionValidity(request);
+      verify(request).getSession(false);
+    }
+  }
+
+  @Nested
+  class TestNewSession {
+
+    @BeforeEach
+    void setup() {
+      request = mock(HttpServletRequest.class);
+
+      when(request.getSession(anyBoolean())).thenReturn(session);
+      when(request.getRequestURI()).thenReturn(ACTUAL_URL);
+    }
+
+    @Test
+    void shouldSetLastAccessAttributeToNowWhenCheckingValidityForTheFirstTime() {
+      sessionTimeoutService.checkSessionValidity(request);
+      assertEquals(
+          System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE), 100
+      );
+    }
+
+    @Test
+    void shouldSetTimeToExpireToInitialValue() {
+      sessionTimeoutService.checkSessionValidity(request);
+      assertEquals(TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
+          (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE));
+    }
   }
 
   @Nested
@@ -51,21 +96,25 @@ class SessionTimeoutServiceTest {
 
     @BeforeEach
     void setup() {
+      request = mock(HttpServletRequest.class);
+
+      when(request.getSession(anyBoolean())).thenReturn(session);
       session.setAttribute(LAST_ACCESS_ATTRIBUTE,
-          System.currentTimeMillis() - (SESSION_EXPIRATION_LIMIT + 1000)
+          System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(TIMEOUT_LIMIT_IN_MINUTES) - 1000
       );
+      session.setAttribute(SECONDS_UNTIL_EXPIRE, 0L);
     }
 
     @Test
     void shouldInvalidateSessionIfExpiredIncludedURL() {
-      sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertTrue(session.isInvalid());
     }
 
     @Test
     void shouldInvalidateSessionIfExpiredExcludedURL() {
-      sessionTimeoutService.checkSessionValidity(request, List.of(ACTUAL_URL));
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertTrue(session.isInvalid());
     }
@@ -76,72 +125,85 @@ class SessionTimeoutServiceTest {
 
     @BeforeEach
     void setup() {
+      request = mock(HttpServletRequest.class);
+
+      when(request.getSession(anyBoolean())).thenReturn(session);
+      session.setAttribute(LAST_ACCESS_ATTRIBUTE, LAST_ACCESS_TIME);
+      session.setAttribute(SECONDS_UNTIL_EXPIRE, 600);
+
       when(request.getRequestURI()).thenReturn(ACTUAL_URL);
     }
 
     @Test
     void shouldNotCreateNewSessionWhenCallingGetSession() {
       final var captor = ArgumentCaptor.forClass(Boolean.class);
-      sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
+      sessionTimeoutService.checkSessionValidity(request);
 
       verify(request).getSession(captor.capture());
       assertFalse(captor.getValue());
-
     }
 
     @Test
     void shouldResetLastAccessedTimeIfIncludedUrl() {
-      sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
+      sessionTimeoutService.checkSessionValidity(request);
 
-      assertEquals(System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE));
+      assertEquals(System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE),
+          100);
       assertNotEquals(LAST_ACCESS_TIME, (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE));
-
     }
 
     @Test
     void shouldNotResetLastAccessedTimeIfExcludedUrl() {
-      sessionTimeoutService.checkSessionValidity(request, List.of(ACTUAL_URL));
+      ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_ACTUAL_URLS);
+
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertEquals(LAST_ACCESS_TIME, session.getAttribute(LAST_ACCESS_ATTRIBUTE));
     }
 
     @Test
     void shouldNotResetLastAccessedTimeIfUrlContainsExcludedUrl() {
-      sessionTimeoutService.checkSessionValidity(request, List.of("/api/ping"));
+      ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_ACTUAL_URLS);
+
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertEquals(LAST_ACCESS_TIME, session.getAttribute(LAST_ACCESS_ATTRIBUTE));
     }
-    
+
     @Test
     void shouldNotInvalidateSessionIfNotExpiredIncludedURL() {
-      sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertFalse(session.isInvalid());
     }
 
     @Test
     void shouldNotInvalidateSessionIfNotExpiredExcludedURL() {
-      sessionTimeoutService.checkSessionValidity(request, List.of(ACTUAL_URL));
+      sessionTimeoutService.checkSessionValidity(request);
 
       assertFalse(session.isInvalid());
     }
 
     @Test
-    void shouldSetUntilExpireForExcludedUrl() {
-      session.setAttribute(LAST_ACCESS_ATTRIBUTE,
-          System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(24)
-      );
-      sessionTimeoutService.checkSessionValidity(request, List.of(ACTUAL_URL));
+    void shouldUpdateSecondsUntilExpireToTimePassedSinceLastAccess() {
+      final var expectedSecondsUntilExpire = TIMEOUT_LIMIT_IN_SECONDS - HUNDRED_SECONDS;
 
-      assertEquals(TimeUnit.MINUTES.toSeconds(1),
-          (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE), 100);
+      session.setAttribute(
+          LAST_ACCESS_ATTRIBUTE, LAST_ACCESS_TIME - TimeUnit.SECONDS.toMillis(HUNDRED_SECONDS)
+      );
+      ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_ACTUAL_URLS);
+
+      sessionTimeoutService.checkSessionValidity(request);
+
+      assertEquals(expectedSecondsUntilExpire, (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE),
+          5);
     }
 
     @Test
     void shouldSetSecondsUntilExpireForIncludedUrl() {
-      sessionTimeoutService.checkSessionValidity(request, EXCLUDED_URLS);
+      sessionTimeoutService.checkSessionValidity(request);
 
-      assertEquals(TimeUnit.MILLISECONDS.toSeconds(SESSION_EXPIRATION_LIMIT),
+      assertEquals(TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
           (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE));
     }
   }
