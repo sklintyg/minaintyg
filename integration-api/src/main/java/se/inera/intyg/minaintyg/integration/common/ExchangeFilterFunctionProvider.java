@@ -6,15 +6,17 @@ import static se.inera.intyg.minaintyg.integration.common.constants.MDCLogConsta
 import static se.inera.intyg.minaintyg.integration.common.constants.MDCLogConstants.MDC_TRACE_ID_KEY;
 
 import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import reactor.core.publisher.Mono;
 
-@Component
 public class ExchangeFilterFunctionProvider {
 
-  public ExchangeFilterFunction addHeadersFromMDCToRequest() {
+  private ExchangeFilterFunctionProvider() {
+    throw new IllegalStateException("Utility class");
+  }
+
+  public static ExchangeFilterFunction addHeadersFromMDCToRequest() {
     return ExchangeFilterFunction.ofRequestProcessor(
         request -> Mono.just(ClientRequest.from(request)
             .headers(httpHeaders -> {

@@ -1,13 +1,18 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
+import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 
 @Service
 public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
@@ -44,6 +49,14 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
         .retrieve()
         .bodyToMono(PersonSvarDTO.class)
         .share()
+        .onErrorMap(
+            WebClientRequestException.class,
+            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYG_PROXY_SERVICE)
+        )
+        .onErrorMap(
+            GatewayTimeout.class,
+            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYG_PROXY_SERVICE)
+        )
         .block();
   }
 }

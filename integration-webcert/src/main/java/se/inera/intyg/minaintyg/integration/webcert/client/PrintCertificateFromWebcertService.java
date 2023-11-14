@@ -1,13 +1,18 @@
 package se.inera.intyg.minaintyg.integration.webcert.client;
 
+import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_WEBCERT;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateRequestDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateResponseDTO;
 
@@ -52,6 +57,14 @@ public class PrintCertificateFromWebcertService {
         .retrieve()
         .bodyToMono(PrintCertificateResponseDTO.class)
         .share()
+        .onErrorMap(
+            WebClientRequestException.class,
+            ExceptionThrowableFunction.webClientRequest(APPLICATION_WEBCERT)
+        )
+        .onErrorMap(
+            GatewayTimeout.class,
+            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_WEBCERT)
+        )
         .block();
   }
 }
