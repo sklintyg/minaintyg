@@ -29,6 +29,7 @@ import org.springframework.security.saml2.provider.service.registration.RelyingP
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -38,6 +39,7 @@ import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
+import se.inera.intyg.minaintyg.auth.SessionTimeoutFilter;
 import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
 
 @Slf4j
@@ -99,7 +101,8 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http,
-      RelyingPartyRegistrationRepository relyingPartyRegistrationRepository) throws Exception {
+      RelyingPartyRegistrationRepository relyingPartyRegistrationRepository,
+      SessionTimeoutFilter sessionTimeoutFilter) throws Exception {
 
     if (environment.acceptsProfiles(Profiles.of(TESTABILITY_PROFILE))) {
       configureTestability(http);
@@ -134,6 +137,7 @@ public class WebSecurityConfig {
             .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
         )
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+        .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
         .saml2Metadata(withDefaults());
 
