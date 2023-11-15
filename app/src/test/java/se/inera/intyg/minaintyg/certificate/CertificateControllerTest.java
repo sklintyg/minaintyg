@@ -48,8 +48,9 @@ class CertificateControllerTest {
   private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS = List.of(
       CertificateListItem.builder().build());
 
+  private static final String CUSTOMIZATION_ID = "C_ID";
   private static final PrintCertificateRequestDTO PRINT_REQUEST = PrintCertificateRequestDTO.builder()
-      .customizationId("C_ID")
+      .customizationId(CUSTOMIZATION_ID)
       .build();
 
   private static final PrintCertificateResponse PRINT_RESPONSE = PrintCertificateResponse
@@ -229,7 +230,7 @@ class CertificateControllerTest {
 
     @Test
     void shouldUseCertificateIdInRequest() {
-      certificateController.printCertificate(httpServletRequest, CERTIFICATE_ID, PRINT_REQUEST);
+      certificateController.printCertificate(CERTIFICATE_ID, CUSTOMIZATION_ID);
       final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
 
       verify(printCertificateService).print(captor.capture());
@@ -238,7 +239,7 @@ class CertificateControllerTest {
 
     @Test
     void shouldUseCustomizationIdInRequest() {
-      certificateController.printCertificate(httpServletRequest, CERTIFICATE_ID, PRINT_REQUEST);
+      certificateController.printCertificate(CERTIFICATE_ID, CUSTOMIZATION_ID);
       final var captor = ArgumentCaptor.forClass(PrintCertificateRequest.class);
 
       verify(printCertificateService).print(captor.capture());
@@ -255,20 +256,9 @@ class CertificateControllerTest {
       }
 
       @Test
-      void shouldReturnConvertedFilenameReturnedFromServiceAsHeader() {
-        final var response = certificateController.printCertificate(httpServletRequest,
-            CERTIFICATE_ID, PRINT_REQUEST);
-
-        assertEquals(
-            List.of("attachment; filename=\"" + PRINT_RESPONSE.getFilename() + "\""),
-            response.getHeaders().get(CONTENT_DISPOSITION)
-        );
-      }
-
-      @Test
       void shouldReturnPdfDataReturnedFromServiceInBody() {
-        final var response = certificateController.printCertificate(httpServletRequest,
-            CERTIFICATE_ID, PRINT_REQUEST);
+        final var response = certificateController.printCertificate(
+            CERTIFICATE_ID, CUSTOMIZATION_ID);
 
         assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
       }
@@ -292,8 +282,8 @@ class CertificateControllerTest {
 
     @Test
     void shouldReturnConvertedFilenameReturnedFromServiceAsHeader() {
-      final var response = certificateController.printCertificate(httpServletRequest,
-          CERTIFICATE_ID, PRINT_REQUEST);
+      final var response = certificateController.printCertificate(
+          CERTIFICATE_ID, CUSTOMIZATION_ID);
 
       assertEquals(
           List.of("inline"),
@@ -303,8 +293,8 @@ class CertificateControllerTest {
 
     @Test
     void shouldReturnPdfDataReturnedFromServiceInBody() {
-      final var response = certificateController.printCertificate(httpServletRequest,
-          CERTIFICATE_ID, PRINT_REQUEST);
+      final var response = certificateController.printCertificate(
+          CERTIFICATE_ID, CUSTOMIZATION_ID);
 
       assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
     }
