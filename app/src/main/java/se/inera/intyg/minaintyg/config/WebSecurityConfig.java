@@ -37,6 +37,7 @@ import org.springframework.security.web.savedrequest.NullRequestCache;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.CustomAuthenticationFailureHandler;
+import se.inera.intyg.minaintyg.auth.CustomXFrameOptionsHeaderWriter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
@@ -56,6 +57,7 @@ public class WebSecurityConfig {
   private final MinaIntygUserDetailService minaIntygUserDetailService;
   private final Environment environment;
   private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+  private final CustomXFrameOptionsHeaderWriter customXFrameOptionsHeaderWriter;
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
   @Value("${spring.ssl.bundle.jks.app.keystore.password}")
@@ -142,6 +144,7 @@ public class WebSecurityConfig {
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
+        .headers(header -> header.addHeaderWriter(customXFrameOptionsHeaderWriter))
         .saml2Metadata(withDefaults());
 
     return http.build();

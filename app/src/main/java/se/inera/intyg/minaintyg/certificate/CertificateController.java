@@ -1,6 +1,5 @@
 package se.inera.intyg.minaintyg.certificate;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateResponseDTO;
-import se.inera.intyg.minaintyg.certificate.dto.PrintCertificateRequestDTO;
 import se.inera.intyg.minaintyg.certificate.service.GetCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.ListCertificatesService;
 import se.inera.intyg.minaintyg.certificate.service.PrintCertificateService;
@@ -21,7 +19,6 @@ import se.inera.intyg.minaintyg.certificate.service.SendCertificateService;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
-import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 
 @RestController
@@ -30,6 +27,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 public class CertificateController {
 
   private static final String CONTENT_DISPOSITION = "Content-Disposition";
+  private static final String INLINE = "inline";
 
   private final ListCertificatesService listCertificatesService;
   private final GetCertificateService getCertificateService;
@@ -80,34 +78,29 @@ public class CertificateController {
     );
   }
 
-  @PostMapping(value = "/{certificateId}/pdf", produces = "application/pdf")
+  @GetMapping(value = "/{certificateId}/pdf/{customizationId}", produces = "application/pdf")
   public ResponseEntity<byte[]> printCertificate(
-      HttpServletRequest httpServletRequest,
       @PathVariable String certificateId,
-      @RequestBody PrintCertificateRequestDTO request) {
+      @PathVariable(required = false) String customizationId) {
 
     final var response = printCertificateService.print(
         PrintCertificateRequest
             .builder()
             .certificateId(certificateId)
-            .customizationId(request.getCustomizationId())
+            .customizationId(customizationId)
             .build()
     );
 
-    final var responseHeaders = getHttpHeaders(httpServletRequest, response);
+    final var responseHeaders = getHttpHeaders();
 
     return ResponseEntity.ok()
         .headers(responseHeaders)
         .body(response.getPdfData());
   }
 
-  private static HttpHeaders getHttpHeaders(HttpServletRequest httpServletRequest,
-      PrintCertificateResponse response) {
-    final var userAgent = httpServletRequest.getHeader("User-Agent");
-    final var contentDisposition = userAgent.matches(".*Trident/\\d+.*|.*MSIE \\d+.*")
-        ? "attachment; filename=\"" + response.getFilename() + "\"" : "inline";
+  private static HttpHeaders getHttpHeaders() {
     final var responseHeaders = new HttpHeaders();
-    responseHeaders.set(CONTENT_DISPOSITION, contentDisposition);
+    responseHeaders.set(CONTENT_DISPOSITION, INLINE);
     return responseHeaders;
   }
 }
