@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListRequestDTO;
 import se.inera.intyg.minaintyg.certificate.dto.CertificateListResponseDTO;
@@ -78,10 +79,10 @@ public class CertificateController {
     );
   }
 
-  @GetMapping(value = "/{certificateId}/pdf/{customizationId}", produces = "application/pdf")
+  @GetMapping(value = "/{certificateId}/pdf", produces = "application/pdf")
   public ResponseEntity<byte[]> printCertificate(
       @PathVariable String certificateId,
-      @PathVariable(required = false) String customizationId) {
+      @RequestParam(required = false) String customizationId) {
 
     final var response = printCertificateService.print(
         PrintCertificateRequest
