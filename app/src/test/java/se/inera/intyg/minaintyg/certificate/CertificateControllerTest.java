@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.HexFormat;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateLis
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTextType;
 
 @ExtendWith(MockitoExtension.class)
 class CertificateControllerTest {
@@ -163,6 +165,7 @@ class CertificateControllerTest {
                 .build()
         )
         .availableFunctions(List.of(AvailableFunction.builder().build()))
+        .texts(Map.of(CertificateTextType.DESCRIPTION, "TEXT"))
         .build();
 
     @BeforeEach
@@ -196,6 +199,13 @@ class CertificateControllerTest {
         final var response = certificateController.getCertificate(CERTIFICATE_ID);
 
         assertEquals(expectedResponse.getAvailableFunctions(), response.getAvailableFunctions());
+      }
+
+      @Test
+      void shouldSetTexts() {
+        final var response = certificateController.getCertificate(CERTIFICATE_ID);
+
+        assertEquals(expectedResponse.getTexts(), response.getTexts());
       }
     }
   }

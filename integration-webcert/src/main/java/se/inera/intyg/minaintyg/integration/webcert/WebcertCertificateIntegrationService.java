@@ -11,6 +11,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateRespon
 import se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction.AvailableFunctionConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.text.CertificateTextConverter;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
   private final MetadataConverter metadataConverter;
   private final CertificateDataConverter certificateDataConverter;
   private final AvailableFunctionConverter availableFunctionConverter;
+  private final CertificateTextConverter certificateTextConverter;
 
   @Override
   public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
@@ -46,6 +48,11 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
         )
         .availableFunctions(
             availableFunctionConverter.convert(response.getAvailableFunctions())
+        )
+        .texts(
+            response.getTexts().stream()
+                .map(certificateTextConverter::convert)
+                .toList()
         )
         .build();
   }

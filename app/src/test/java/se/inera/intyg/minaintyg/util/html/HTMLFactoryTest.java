@@ -36,6 +36,13 @@ class HTMLFactoryTest {
   }
 
   @Test
+  void shouldReturnCorrectTagWithAttribute() {
+    final var result = HTMLFactory.tag("tag", null, "Value", "attribute", "attributeValue");
+
+    assertEquals("<tag attribute=\"attributeValue\">Value</tag>", result);
+  }
+
+  @Test
   void shouldConvertLineSeparatorsToBr() {
     final var result = HTMLFactory.tag("tag", "Value\nValue");
 
@@ -57,6 +64,13 @@ class HTMLFactoryTest {
       final var result = HTMLFactory.tag("tag", "class", "Value");
 
       assertEquals("<tag className=\"class\">Value</tag>", result);
+    }
+
+    @Test
+    void shouldReturnCorrectTagWithAttribute() {
+      final var result = HTMLFactory.tag("tag", "class", "Value", "attribute", "attributeValue");
+
+      assertEquals("<tag className=\"class\" attribute=\"attributeValue\">Value</tag>", result);
     }
 
     @Test

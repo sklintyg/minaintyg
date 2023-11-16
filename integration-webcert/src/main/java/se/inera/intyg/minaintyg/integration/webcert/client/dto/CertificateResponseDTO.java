@@ -14,4 +14,5 @@ public class CertificateResponseDTO {
 
   private CertificateDTO certificate;
   private List<AvailableFunctionDTO> availableFunctions;
+  private List<CertificateTextDTO> texts;
 }

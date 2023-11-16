@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
@@ -24,9 +26,11 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateTextDTO;
 import se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction.AvailableFunctionConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
+import se.inera.intyg.minaintyg.integration.webcert.converter.text.CertificateTextConverter;
 
 @ExtendWith(MockitoExtension.class)
 class WebcertCertificateIntegrationServiceTest {
@@ -48,6 +52,9 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Mock
   private AvailableFunctionConverter availableFunctionConverter;
+
+  @Mock
+  private CertificateTextConverter certificateTextConverter;
 
   @InjectMocks
   private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
@@ -108,6 +115,7 @@ class WebcertCertificateIntegrationServiceTest {
                 )
                 .build()
         )
+        .texts(Collections.emptyList())
         .build();
     final var expectedResult = List.of(
         CertificateCategory.builder().build()
@@ -142,6 +150,7 @@ class WebcertCertificateIntegrationServiceTest {
                 )
                 .build()
         )
+        .texts(Collections.emptyList())
         .build();
 
     final var expectedMetadata = CertificateMetadata.builder()
@@ -192,6 +201,7 @@ class WebcertCertificateIntegrationServiceTest {
                 AvailableFunctionDTO.builder().build()
             )
         )
+        .texts(Collections.emptyList())
         .build();
 
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
@@ -201,5 +211,42 @@ class WebcertCertificateIntegrationServiceTest {
     final var result = webcertCertificateIntegrationService.get(REQUEST);
 
     assertEquals(expectedAvailableFunctions, result.getAvailableFunctions());
+  }
+
+  @Test
+  void shouldReturnResponseWithTexts() {
+    final var expectedCertificateText = CertificateText.builder().build();
+
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .texts(
+            List.of(
+                CertificateTextDTO.builder().build(),
+                CertificateTextDTO.builder().build()
+            )
+        )
+        .build();
+
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+    when(certificateTextConverter.convert(any(CertificateTextDTO.class)))
+        .thenReturn(expectedCertificateText);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    assertEquals(2, result.getTexts().size());
+    assertEquals(expectedCertificateText, result.getTexts().get(0));
+    assertEquals(expectedCertificateText, result.getTexts().get(1));
   }
 }

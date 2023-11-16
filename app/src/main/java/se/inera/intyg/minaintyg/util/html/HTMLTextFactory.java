@@ -8,6 +8,7 @@ public class HTMLTextFactory {
   private static final String IDS_HEADING_3 = "ids-heading-3";
   private static final String IDS_HEADING_4 = "ids-heading-4";
   private static final String IDS_HEADING_5 = "ids-heading-5";
+
   private HTMLTextFactory() {
     throw new IllegalStateException("Utility class");
   }
@@ -30,6 +31,10 @@ public class HTMLTextFactory {
 
   public static String p(String value) {
     return tag("p", value);
+  }
+
+  public static String link(String url, String name) {
+    return tag("IDSLink", null, name, "href", url);
   }
 
 }

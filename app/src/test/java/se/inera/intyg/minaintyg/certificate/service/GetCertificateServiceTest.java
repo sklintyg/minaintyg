@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -23,7 +24,9 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateCategory;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTextType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
@@ -35,6 +38,10 @@ class GetCertificateServiceTest {
   private static final GetCertificateRequest REQUEST = GetCertificateRequest
       .builder()
       .certificateId(ID)
+      .build();
+
+  private static final CertificateText TEXT = CertificateText.builder()
+      .type(CertificateTextType.DESCRIPTION)
       .build();
 
   private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
@@ -54,8 +61,10 @@ class GetCertificateServiceTest {
               .categories(List.of(CertificateCategory.builder().build()))
               .build()
       )
+      .texts(List.of(TEXT))
       .availableFunctions(List.of(AvailableFunction.builder().build()))
       .build();
+  private static final String EXPECTED_CONVERTED_TEXT = "Example text";
 
   @Mock
   MonitoringLogService monitoringLogService;
@@ -63,12 +72,16 @@ class GetCertificateServiceTest {
   FormattedCertificateConverter formattedCertificateConverter;
   @Mock
   GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock
+  CertificateTextConverter certificateTextConverter;
   @InjectMocks
   GetCertificateService getCertificateService;
 
   @BeforeEach
   void setup() {
     when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
+    when(certificateTextConverter.convert(any(CertificateText.class)))
+        .thenReturn(EXPECTED_CONVERTED_TEXT);
   }
 
   @Nested
@@ -138,6 +151,22 @@ class GetCertificateServiceTest {
       final var response = getCertificateService.get(REQUEST);
 
       assertEquals(EXPECTED_RESPONSE.getAvailableFunctions(), response.getAvailableFunctions());
+    }
+
+    @Test
+    void shouldSetCertificateTextWithTypeAsKey() {
+      final var response = getCertificateService.get(REQUEST);
+
+      assertTrue(response.getTexts().containsKey(CertificateTextType.DESCRIPTION));
+    }
+
+    @Test
+    void shouldSetConvertedCertificateText() {
+      final var response = getCertificateService.get(REQUEST);
+
+      assertEquals(EXPECTED_CONVERTED_TEXT,
+          response.getTexts().get(CertificateTextType.DESCRIPTION)
+      );
     }
   }
 
