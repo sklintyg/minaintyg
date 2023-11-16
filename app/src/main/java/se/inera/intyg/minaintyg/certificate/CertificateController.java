@@ -27,6 +27,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
 public class CertificateController {
 
   private static final String CONTENT_DISPOSITION = "Content-Disposition";
+  private static final String INLINE = "inline";
 
   private final ListCertificatesService listCertificatesService;
   private final GetCertificateService getCertificateService;
@@ -99,7 +100,7 @@ public class CertificateController {
 
   private static HttpHeaders getHttpHeaders() {
     final var responseHeaders = new HttpHeaders();
-    responseHeaders.set(CONTENT_DISPOSITION, "inline");
+    responseHeaders.set(CONTENT_DISPOSITION, INLINE);
     return responseHeaders;
   }
 }
