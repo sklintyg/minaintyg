@@ -25,6 +25,16 @@ class CertificateTextConverterTest {
       )
       .build();
 
+  private static final CertificateText TEXT_WITH_SAME_LINKS = CertificateText
+      .builder()
+      .text("Text {L1} with link {L1}")
+      .links(
+          List.of(
+              CertificateLink.builder().id("L1").url("https://test.com").name("Länknamn").build()
+          )
+      )
+      .build();
+
   private static final CertificateText TEXT_WITH_LINKS = CertificateText
       .builder()
       .text("Text {L1} with links {L2}")
@@ -62,6 +72,15 @@ class CertificateTextConverterTest {
 
     assertEquals(
         "Text <IDSLink href=\"https://test.com\">Länknamn</IDSLink> with links <IDSLink href=\"https://test2.com\">Länknamn 2</IDSLink>",
+        response);
+  }
+
+  @Test
+  void shouldReturnTextWithFormattedLinkTwice() {
+    final var response = certificateTextConverter.convert(TEXT_WITH_SAME_LINKS);
+
+    assertEquals(
+        "Text <IDSLink href=\"https://test.com\">Länknamn</IDSLink> with link <IDSLink href=\"https://test.com\">Länknamn</IDSLink>",
         response);
   }
 }
