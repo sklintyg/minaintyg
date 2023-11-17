@@ -52,7 +52,11 @@ public class FormattedQuestionConverter {
     return HTMLUtility.join(
         subQuestionTitle(question.getTitle()),
         subQuestionLabel(question.getLabel(), question.getTitle()),
-        value(question.getValue())
+        value(question.getValue()),
+        HTMLUtility.fromList(
+            question.getSubQuestions(),
+            this::convertSubQuestion
+        )
     );
   }
 

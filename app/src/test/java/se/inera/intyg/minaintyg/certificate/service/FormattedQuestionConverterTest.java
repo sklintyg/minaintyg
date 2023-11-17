@@ -143,6 +143,45 @@ class FormattedQuestionConverterTest {
   }
 
   @Test
+  void shouldReturnHTMLWithSeveralLayersOfSubQuestions() {
+    final var question = CertificateQuestion.builder()
+        .title("Title")
+        .label("Label")
+        .value(
+            CertificateQuestionValueText
+                .builder()
+                .value("element 1")
+                .build()
+        )
+        .subQuestions(List.of(
+                CertificateQuestion.builder()
+                    .title("Title sub question 2")
+                    .label("Label sub question 2")
+                    .value(
+                        CertificateQuestionValueText.builder().value("element 2").build()
+                    )
+                    .build()
+            )
+        )
+        .build();
+
+    final var completeQuestion = CertificateQuestion.builder()
+        .subQuestions(List.of(question))
+        .title("Complete title")
+        .label("Complete label")
+        .value(
+            CertificateQuestionValueText.builder().value("Complete text").build()
+        )
+        .build();
+
+    final var result = formattedQuestionConverter.convert(completeQuestion);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Complete title</h3><h4 className=\"ids-heading-4\">Complete label</h4><p>Complete text</p><h4 className=\"ids-heading-4\">Title</h4><h5 className=\"ids-heading-5\">Label</h5><p>element 1</p><h4 className=\"ids-heading-4\">Title sub question 2</h4><h5 className=\"ids-heading-5\">Label sub question 2</h5><p>element 2</p>",
+        result);
+  }
+
+  @Test
   void shouldReturnHTMLWithLabelButWithoutTitleForSubQuestion() {
     final var question = CertificateQuestion.builder()
         .subQuestions(
