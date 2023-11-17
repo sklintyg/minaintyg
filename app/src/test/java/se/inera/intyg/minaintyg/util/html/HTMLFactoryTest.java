@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -37,9 +38,12 @@ class HTMLFactoryTest {
 
   @Test
   void shouldReturnCorrectTagWithAttribute() {
-    final var result = HTMLFactory.tag("tag", null, "Value", "attribute", "attributeValue");
+    final var attributes = new HashMap<String, String>();
+    attributes.put("attribute", "attributeValue");
+    attributes.put("href", "url");
+    final var result = HTMLFactory.tag("tag", null, "Value", attributes);
 
-    assertEquals("<tag attribute=\"attributeValue\">Value</tag>", result);
+    assertEquals("<tag attribute=\"attributeValue\" href=\"url\">Value</tag>", result);
   }
 
   @Test
@@ -67,10 +71,15 @@ class HTMLFactoryTest {
     }
 
     @Test
-    void shouldReturnCorrectTagWithAttribute() {
-      final var result = HTMLFactory.tag("tag", "class", "Value", "attribute", "attributeValue");
+    void shouldReturnCorrectTagWithAttributes() {
+      final var attributes = new HashMap<String, String>();
+      attributes.put("attribute", "attributeValue");
+      attributes.put("href", "url");
 
-      assertEquals("<tag className=\"class\" attribute=\"attributeValue\">Value</tag>", result);
+      final var result = HTMLFactory.tag("tag", "class", "Value", attributes);
+
+      assertEquals("<tag className=\"class\" attribute=\"attributeValue\" href=\"url\">Value</tag>",
+          result);
     }
 
     @Test

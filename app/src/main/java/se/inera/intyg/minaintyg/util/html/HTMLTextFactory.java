@@ -2,6 +2,8 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static se.inera.intyg.minaintyg.util.html.HTMLFactory.tag;
 
+import java.util.HashMap;
+
 public class HTMLTextFactory {
 
   private static final String IDS_HEADING_2 = "ids-heading-2";
@@ -34,7 +36,11 @@ public class HTMLTextFactory {
   }
 
   public static String link(String url, String name) {
-    return tag("IDSLink", null, name, "href", url);
+    final var attributes = new HashMap<String, String>();
+    attributes.put("href", url);
+    attributes.put("target", "_blank");
+
+    return tag("a", null, name, attributes);
   }
 
 }

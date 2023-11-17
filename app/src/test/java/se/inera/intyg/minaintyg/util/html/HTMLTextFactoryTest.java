@@ -18,7 +18,7 @@ class HTMLTextFactoryTest {
   void shouldReturnLink() {
     final var result = HTMLTextFactory.link("url", "value");
 
-    assertEquals("<IDSLink href=\"url\">value</IDSLink>", result);
+    assertEquals("<a href=\"url\" target=\"_blank\">value</a>", result);
   }
 
   @Nested

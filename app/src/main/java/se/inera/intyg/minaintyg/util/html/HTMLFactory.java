@@ -1,5 +1,8 @@
 package se.inera.intyg.minaintyg.util.html;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class HTMLFactory {
 
   private static final String START_FIRST_TAG = "<";
@@ -18,31 +21,31 @@ public class HTMLFactory {
   }
 
   public static String tag(String tagName, String className, String value) {
-    return tag(tagName, className, value, null, null);
+    return tag(tagName, className, value, null);
   }
 
-  public static String tag(String tagName, String className, String value, String attributeName,
-      String attributeValue) {
+  public static String tag(String tagName, String className, String value,
+      Map<String, String> attributes) {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
+
+    final var formattedAttributes = formatAttributes(attributes);
     final var text = convertLineSeparatorsIfPresent(value);
-    return startTag(tagName, className, attributeName, attributeValue) + text + endTag(tagName);
+
+    return startTag(tagName, className, formattedAttributes) + text + endTag(tagName);
   }
 
   public static String tag(String tagName, String value) {
-    return tag(tagName, null, value, null, null);
+    return tag(tagName, null, value, null);
   }
 
-  private static String startTag(String tagName, String className, String attributeName,
-      String attributeValue) {
-    
-    final var attribute = buildTag(attributeName, attributeValue);
+  private static String startTag(String tagName, String className, String attributes) {
     final var classNameTag = buildTag(CLASSNAME, className);
 
     return START_FIRST_TAG + tagName
         + classNameTag
-        + attribute
+        + attributes
         + START_SECOND_TAG;
 
   }
@@ -62,5 +65,15 @@ public class HTMLFactory {
 
   private static String convertLineSeparators(String value) {
     return value.replace(LINE_SEPARATOR, BR_TAG);
+  }
+
+  private static String formatAttributes(Map<String, String> attributes) {
+    if (attributes == null) {
+      return "";
+    }
+
+    return attributes.entrySet().stream()
+        .map(entry -> buildTag(entry.getKey(), entry.getValue()))
+        .collect(Collectors.joining());
   }
 }

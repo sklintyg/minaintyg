@@ -62,7 +62,7 @@ class CertificateTextConverterTest {
     final var response = certificateTextConverter.convert(TEXT_WITH_LINK);
 
     assertEquals(
-        "Text <IDSLink href=\"https://test.com\">Länknamn</IDSLink> with link",
+        "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with link",
         response);
   }
 
@@ -71,7 +71,7 @@ class CertificateTextConverterTest {
     final var response = certificateTextConverter.convert(TEXT_WITH_LINKS);
 
     assertEquals(
-        "Text <IDSLink href=\"https://test.com\">Länknamn</IDSLink> with links <IDSLink href=\"https://test2.com\">Länknamn 2</IDSLink>",
+        "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with links <a href=\"https://test2.com\" target=\"_blank\">Länknamn 2</a>",
         response);
   }
 
@@ -80,7 +80,7 @@ class CertificateTextConverterTest {
     final var response = certificateTextConverter.convert(TEXT_WITH_SAME_LINKS);
 
     assertEquals(
-        "Text <IDSLink href=\"https://test.com\">Länknamn</IDSLink> with link <IDSLink href=\"https://test.com\">Länknamn</IDSLink>",
+        "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with link <a href=\"https://test.com\" target=\"_blank\">Länknamn</a>",
         response);
   }
 }
