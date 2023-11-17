@@ -1,11 +1,14 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction.AvailableFunctionConverter;
@@ -49,14 +52,16 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
         .availableFunctions(
             availableFunctionConverter.convert(response.getAvailableFunctions())
         )
-        .texts(
-            response.getTexts().stream()
-                .map(certificateTextConverter::convert)
-                .toList()
-        )
+        .texts(getTexts(response))
         .build();
   }
 
+  private List<CertificateText> getTexts(CertificateResponseDTO response) {
+    return response.getTexts() == null ? Collections.emptyList() :
+        response.getTexts().stream()
+            .map(certificateTextConverter::convert)
+            .toList();
+  }
 
   private static boolean validateResponse(CertificateResponseDTO response) {
     return response.getCertificate() == null || response.getCertificate().getData() == null

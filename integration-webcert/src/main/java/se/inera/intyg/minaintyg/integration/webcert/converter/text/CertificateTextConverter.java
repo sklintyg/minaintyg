@@ -1,7 +1,10 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.text;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateLink;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateTextDTO;
 
@@ -16,10 +19,15 @@ public class CertificateTextConverter {
         .text(text.getText())
         .type(text.getType())
         .links(
-            text.getLinks().stream()
-                .map(certificateLinkConverter::convert)
-                .toList()
+            convertLinks(text)
         )
         .build();
+  }
+
+  private List<CertificateLink> convertLinks(CertificateTextDTO text) {
+    return text.getLinks() == null ? Collections.emptyList()
+        : text.getLinks().stream()
+            .map(certificateLinkConverter::convert)
+            .toList();
   }
 }

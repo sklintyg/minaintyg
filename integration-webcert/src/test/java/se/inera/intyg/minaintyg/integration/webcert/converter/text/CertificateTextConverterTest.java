@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,43 +42,60 @@ class CertificateTextConverterTest {
       .links(List.of(linkDTO, linkDTO))
       .build();
 
+  private static final CertificateTextDTO certificateTextNoLinks = CertificateTextDTO
+      .builder()
+      .text("TEXT")
+      .type(CertificateTextType.DESCRIPTION)
+      .build();
+
   @Mock
   CertificateLinkConverter certificateLinkConverter;
 
   @InjectMocks
   CertificateTextConverter certificateTextConverter;
 
-  @BeforeEach
-  void setup() {
-    when(certificateLinkConverter.convert(any(CertificateLinkDTO.class)))
-        .thenReturn(link);
+  @Nested
+  class HasLinks {
+
+    @BeforeEach
+    void setup() {
+      when(certificateLinkConverter.convert(any(CertificateLinkDTO.class)))
+          .thenReturn(link);
+    }
+
+    @Test
+    void shouldConvertText() {
+      final var response = certificateTextConverter.convert(certificateText);
+
+      assertEquals(certificateText.getText(), response.getText());
+    }
+
+    @Test
+    void shouldConvertType() {
+      final var response = certificateTextConverter.convert(certificateText);
+
+      assertEquals(certificateText.getType(), response.getType());
+    }
+
+    @Test
+    void shouldConvertLink() {
+      final var response = certificateTextConverter.convert(certificateText);
+
+      assertEquals(link, response.getLinks().get(0));
+    }
+
+    @Test
+    void shouldConvertLinks() {
+      final var response = certificateTextConverter.convert(certificateText);
+
+      assertEquals(2, response.getLinks().size());
+    }
   }
 
   @Test
-  void shouldConvertText() {
-    final var response = certificateTextConverter.convert(certificateText);
+  void shouldConvertNullLinks() {
+    final var response = certificateTextConverter.convert(certificateTextNoLinks);
 
-    assertEquals(certificateText.getText(), response.getText());
-  }
-
-  @Test
-  void shouldConvertType() {
-    final var response = certificateTextConverter.convert(certificateText);
-
-    assertEquals(certificateText.getType(), response.getType());
-  }
-
-  @Test
-  void shouldConvertLink() {
-    final var response = certificateTextConverter.convert(certificateText);
-
-    assertEquals(link, response.getLinks().get(0));
-  }
-
-  @Test
-  void shouldConvertLinks() {
-    final var response = certificateTextConverter.convert(certificateText);
-
-    assertEquals(2, response.getLinks().size());
+    assertEquals(Collections.emptyList(), response.getLinks());
   }
 }

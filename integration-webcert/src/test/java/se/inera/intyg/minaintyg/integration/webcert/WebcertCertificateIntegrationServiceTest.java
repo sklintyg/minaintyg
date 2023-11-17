@@ -249,4 +249,31 @@ class WebcertCertificateIntegrationServiceTest {
     assertEquals(expectedCertificateText, result.getTexts().get(0));
     assertEquals(expectedCertificateText, result.getTexts().get(1));
   }
+
+  @Test
+  void shouldReturnResponseWithNoTexts() {
+    final var expectedCertificateText = Collections.emptyList();
+
+    final var response = CertificateResponseDTO.builder()
+        .certificate(
+            CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .build()
+                )
+                .build()
+        )
+        .build();
+
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
+
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
+
+    assertEquals(expectedCertificateText, result.getTexts());
+  }
 }
