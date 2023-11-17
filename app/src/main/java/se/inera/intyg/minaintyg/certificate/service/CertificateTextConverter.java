@@ -13,19 +13,19 @@ import se.inera.intyg.minaintyg.util.html.HTMLTextFactory;
 @RequiredArgsConstructor
 public class CertificateTextConverter {
 
-  public String convert(CertificateText text) {
-    if (text.getLinks() == null || text.getLinks().isEmpty()) {
-      return text.getText();
+  public String convert(CertificateText certificateText) {
+    if (certificateText.getLinks() == null || certificateText.getLinks().isEmpty()) {
+      return certificateText.getText();
     }
 
-    final var linkIds = getLinkIds(text);
-    final var formattedLinks = getFormattedLinks(text);
+    final var linkIds = getLinkIds(certificateText);
+    final var formattedLinks = getFormattedLinks(certificateText);
 
-    return StringUtils.replaceEach(text.getText(), linkIds, formattedLinks);
+    return StringUtils.replaceEach(certificateText.getText(), linkIds, formattedLinks);
   }
 
-  private String[] getFormattedLinks(CertificateText text) {
-    return toArray(text.getLinks(), this::formatLink);
+  private String[] getFormattedLinks(CertificateText certificateText) {
+    return toArray(certificateText.getLinks(), this::formatLink);
   }
 
   private String[] getLinkIds(CertificateText text) {

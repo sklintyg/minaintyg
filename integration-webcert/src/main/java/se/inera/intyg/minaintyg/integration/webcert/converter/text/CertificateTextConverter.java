@@ -14,12 +14,12 @@ public class CertificateTextConverter {
 
   private final CertificateLinkConverter certificateLinkConverter;
 
-  public CertificateText convert(CertificateTextDTO text) {
+  public CertificateText convert(CertificateTextDTO certificateText) {
     return CertificateText.builder()
-        .text(text.getText())
-        .type(text.getType())
+        .text(certificateText.getText())
+        .type(certificateText.getType())
         .links(
-            convertLinks(text)
+            convertLinks(certificateText)
         )
         .build();
   }
