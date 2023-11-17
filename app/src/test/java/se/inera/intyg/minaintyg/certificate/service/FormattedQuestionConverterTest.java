@@ -138,7 +138,7 @@ class FormattedQuestionConverterTest {
     final var result = formattedQuestionConverter.convert(completeQuestion);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Complete title</h3><h4 className=\"ids-heading-4\">Complete label</h4><p>Complete text</p><h4 className=\"ids-heading-4\">Title</h4><h4 className=\"ids-heading-4\">Label</h4><p>element 1</p>",
+        "<h3 className=\"ids-heading-3\">Complete title</h3><h4 className=\"ids-heading-4\">Complete label</h4><p>Complete text</p><h4 className=\"ids-heading-4\">Title</h4><h5 className=\"ids-heading-5\">Label</h5><p>element 1</p>",
         result);
   }
 
@@ -163,7 +163,7 @@ class FormattedQuestionConverterTest {
     final var result = formattedQuestionConverter.convert(question);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Label</h3><ul><li>element 1</li><li>element 2</li></ul>",
+        "<h4 className=\"ids-heading-4\">Label</h4><ul><li>element 1</li><li>element 2</li></ul>",
         result);
   }
 
