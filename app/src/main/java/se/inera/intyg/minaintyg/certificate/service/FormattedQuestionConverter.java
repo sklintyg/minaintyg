@@ -51,7 +51,7 @@ public class FormattedQuestionConverter {
   private String convertSubQuestion(CertificateQuestion question) {
     return HTMLUtility.join(
         subQuestionTitle(question.getTitle()),
-        questionLabel(question.getLabel(), question.getTitle()),
+        subQuestionLabel(question.getLabel(), question.getTitle()),
         value(question.getValue())
     );
   }
@@ -70,6 +70,10 @@ public class FormattedQuestionConverter {
 
   private String questionLabel(String label, String title) {
     return Strings.isNullOrEmpty(title) ? HTMLTextFactory.h3(label) : HTMLTextFactory.h4(label);
+  }
+
+  private String subQuestionLabel(String label, String title) {
+    return Strings.isNullOrEmpty(title) ? HTMLTextFactory.h4(label) : HTMLTextFactory.h5(label);
   }
 
   private String value(CertificateQuestionValue value) {
