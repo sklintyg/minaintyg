@@ -20,7 +20,7 @@ import se.inera.intyg.minaintyg.util.html.HTMLUtility;
 @Service
 @RequiredArgsConstructor
 public class FormattedQuestionConverter {
-
+  
   public String convert(CertificateQuestion question) {
     return HTMLUtility.join(
         convertQuestion(question),
