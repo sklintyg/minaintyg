@@ -73,14 +73,14 @@ class GetCertificateServiceTest {
   @Mock
   GetCertificateIntegrationService getCertificateIntegrationService;
   @Mock
-  CertificateTextConverter certificateTextConverter;
+  FormattedCertificateTextConverter formattedCertificateTextConverter;
   @InjectMocks
   GetCertificateService getCertificateService;
 
   @BeforeEach
   void setup() {
     when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
-    when(certificateTextConverter.convert(any(CertificateText.class)))
+    when(formattedCertificateTextConverter.convert(any(CertificateText.class)))
         .thenReturn(EXPECTED_CONVERTED_TEXT);
   }
 

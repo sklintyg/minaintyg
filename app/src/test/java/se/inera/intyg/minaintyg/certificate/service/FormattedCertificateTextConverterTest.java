@@ -11,7 +11,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateLin
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 
 @ExtendWith(MockitoExtension.class)
-class CertificateTextConverterTest {
+class FormattedCertificateTextConverterTest {
 
   private static final CertificateText TEXT_NO_LINKS = CertificateText.builder()
       .text("TEXT_NO_LINKS").build();
@@ -48,18 +48,18 @@ class CertificateTextConverterTest {
 
 
   @InjectMocks
-  private CertificateTextConverter certificateTextConverter;
+  private FormattedCertificateTextConverter formattedCertificateTextConverter;
 
   @Test
   void shouldReturnTextWithoutLink() {
-    final var response = certificateTextConverter.convert(TEXT_NO_LINKS);
+    final var response = formattedCertificateTextConverter.convert(TEXT_NO_LINKS);
 
     assertEquals(TEXT_NO_LINKS.getText(), response);
   }
 
   @Test
   void shouldReturnTextWithFormattedLink() {
-    final var response = certificateTextConverter.convert(TEXT_WITH_LINK);
+    final var response = formattedCertificateTextConverter.convert(TEXT_WITH_LINK);
 
     assertEquals(
         "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with link",
@@ -68,7 +68,7 @@ class CertificateTextConverterTest {
 
   @Test
   void shouldReturnTextWithFormattedLinks() {
-    final var response = certificateTextConverter.convert(TEXT_WITH_LINKS);
+    final var response = formattedCertificateTextConverter.convert(TEXT_WITH_LINKS);
 
     assertEquals(
         "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with links <a href=\"https://test2.com\" target=\"_blank\">Länknamn 2</a>",
@@ -77,7 +77,7 @@ class CertificateTextConverterTest {
 
   @Test
   void shouldReturnTextWithFormattedLinkTwice() {
-    final var response = certificateTextConverter.convert(TEXT_WITH_SAME_LINKS);
+    final var response = formattedCertificateTextConverter.convert(TEXT_WITH_SAME_LINKS);
 
     assertEquals(
         "Text <a href=\"https://test.com\" target=\"_blank\">Länknamn</a> with link <a href=\"https://test.com\" target=\"_blank\">Länknamn</a>",
