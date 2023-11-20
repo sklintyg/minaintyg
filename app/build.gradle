@@ -8,6 +8,7 @@ dependencies {
     implementation project(":integration-api")
     runtimeOnly project(":integration-webcert")
     runtimeOnly project(":integration-intyg-proxy-service")
+    runtimeOnly project(":integration-intygsadmin")
     runtimeOnly project(":integration-intygstjanst")
 
     implementation "org.springframework.boot:spring-boot-starter-security"
