@@ -165,7 +165,7 @@ class CertificateControllerTest {
                 .build()
         )
         .availableFunctions(List.of(AvailableFunction.builder().build()))
-        .texts(Map.of(CertificateTextType.DESCRIPTION, "TEXT"))
+        .texts(Map.of(CertificateTextType.PREAMBLE_TEXT, "TEXT"))
         .build();
 
     @BeforeEach
