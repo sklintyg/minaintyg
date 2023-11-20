@@ -11,7 +11,7 @@ import se.inera.intyg.minaintyg.util.html.HTMLTextFactory;
 
 @Service
 @RequiredArgsConstructor
-public class CertificateTextConverter {
+public class FormattedCertificateTextConverter {
 
   public String convert(CertificateText certificateText) {
     if (certificateText.getLinks() == null || certificateText.getLinks().isEmpty()) {

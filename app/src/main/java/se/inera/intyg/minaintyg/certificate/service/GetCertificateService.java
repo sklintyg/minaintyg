@@ -17,7 +17,7 @@ public class GetCertificateService {
   private final GetCertificateIntegrationService getCertificateIntegrationService;
   private final MonitoringLogService monitoringLogService;
   private final FormattedCertificateConverter formattedCertificateConverter;
-  private final CertificateTextConverter certificateTextConverter;
+  private final FormattedCertificateTextConverter formattedCertificateTextConverter;
 
   public GetCertificateResponse get(GetCertificateRequest request) {
 
@@ -39,7 +39,8 @@ public class GetCertificateService {
         .texts(
             response.getTexts().stream()
                 .collect(
-                    Collectors.toMap(CertificateText::getType, certificateTextConverter::convert))
+                    Collectors.toMap(CertificateText::getType,
+                        formattedCertificateTextConverter::convert))
         )
         .build();
   }
