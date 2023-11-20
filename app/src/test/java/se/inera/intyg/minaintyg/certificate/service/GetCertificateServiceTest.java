@@ -41,7 +41,7 @@ class GetCertificateServiceTest {
       .build();
 
   private static final CertificateText TEXT = CertificateText.builder()
-      .type(CertificateTextType.DESCRIPTION)
+      .type(CertificateTextType.PREAMBLE_TEXT)
       .build();
 
   private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
@@ -157,7 +157,7 @@ class GetCertificateServiceTest {
     void shouldSetCertificateTextWithTypeAsKey() {
       final var response = getCertificateService.get(REQUEST);
 
-      assertTrue(response.getTexts().containsKey(CertificateTextType.DESCRIPTION));
+      assertTrue(response.getTexts().containsKey(CertificateTextType.PREAMBLE_TEXT));
     }
 
     @Test
@@ -165,7 +165,7 @@ class GetCertificateServiceTest {
       final var response = getCertificateService.get(REQUEST);
 
       assertEquals(EXPECTED_CONVERTED_TEXT,
-          response.getTexts().get(CertificateTextType.DESCRIPTION)
+          response.getTexts().get(CertificateTextType.PREAMBLE_TEXT)
       );
     }
   }

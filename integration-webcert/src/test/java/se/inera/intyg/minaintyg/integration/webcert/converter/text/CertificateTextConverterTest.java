@@ -38,14 +38,14 @@ class CertificateTextConverterTest {
   private static final CertificateTextDTO certificateText = CertificateTextDTO
       .builder()
       .text("TEXT")
-      .type(CertificateTextType.DESCRIPTION)
+      .type(CertificateTextType.PREAMBLE_TEXT)
       .links(List.of(linkDTO, linkDTO))
       .build();
 
   private static final CertificateTextDTO certificateTextNoLinks = CertificateTextDTO
       .builder()
       .text("TEXT")
-      .type(CertificateTextType.DESCRIPTION)
+      .type(CertificateTextType.PREAMBLE_TEXT)
       .build();
 
   @Mock
