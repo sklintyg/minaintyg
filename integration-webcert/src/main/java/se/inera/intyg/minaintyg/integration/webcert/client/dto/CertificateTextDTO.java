@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTextType;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CertificateResponseDTO {
+@Builder
+public class CertificateTextDTO {
 
-  private CertificateDTO certificate;
-  private List<AvailableFunctionDTO> availableFunctions;
-  private List<CertificateTextDTO> texts;
+  String text;
+  CertificateTextType type;
+  List<CertificateLinkDTO> links;
+
 }

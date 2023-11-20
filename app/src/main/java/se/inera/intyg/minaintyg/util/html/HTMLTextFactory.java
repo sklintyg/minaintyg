@@ -2,12 +2,15 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static se.inera.intyg.minaintyg.util.html.HTMLFactory.tag;
 
+import java.util.HashMap;
+
 public class HTMLTextFactory {
 
   private static final String IDS_HEADING_2 = "ids-heading-2";
   private static final String IDS_HEADING_3 = "ids-heading-3";
   private static final String IDS_HEADING_4 = "ids-heading-4";
   private static final String IDS_HEADING_5 = "ids-heading-5";
+
   private HTMLTextFactory() {
     throw new IllegalStateException("Utility class");
   }
@@ -30,6 +33,14 @@ public class HTMLTextFactory {
 
   public static String p(String value) {
     return tag("p", value);
+  }
+
+  public static String link(String url, String name) {
+    final var attributes = new HashMap<String, String>();
+    attributes.put("href", url);
+    attributes.put("target", "_blank");
+
+    return tag("a", null, name, attributes);
   }
 
 }

@@ -14,6 +14,13 @@ class HTMLTextFactoryTest {
     assertEquals("<p>title</p>", result);
   }
 
+  @Test
+  void shouldReturnLink() {
+    final var result = HTMLTextFactory.link("url", "value");
+
+    assertEquals("<a href=\"url\" target=\"_blank\">value</a>", result);
+  }
+
   @Nested
   class Headings {
 

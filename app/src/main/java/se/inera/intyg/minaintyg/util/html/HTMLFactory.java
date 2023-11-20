@@ -1,5 +1,8 @@
 package se.inera.intyg.minaintyg.util.html;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class HTMLFactory {
 
   private static final String START_FIRST_TAG = "<";
@@ -18,11 +21,42 @@ public class HTMLFactory {
   }
 
   public static String tag(String tagName, String className, String value) {
+    return tag(tagName, className, value, null);
+  }
+
+  public static String tag(String tagName, String className, String value,
+      Map<String, String> attributes) {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
+
+    final var formattedAttributes = formatAttributes(attributes);
     final var text = convertLineSeparatorsIfPresent(value);
-    return startTag(tagName, className) + text + endTag(tagName);
+
+    return startTag(tagName, className, formattedAttributes) + text + endTag(tagName);
+  }
+
+  public static String tag(String tagName, String value) {
+    return tag(tagName, null, value, null);
+  }
+
+  private static String startTag(String tagName, String className, String attributes) {
+    final var classNameTag = buildTag(CLASSNAME, className);
+
+    return START_FIRST_TAG + tagName
+        + classNameTag
+        + attributes
+        + START_SECOND_TAG;
+
+  }
+
+  private static String buildTag(String name, String value) {
+    return name == null || value == null ? "" :
+        SPACE + name + START_ATTRIBUTE_TAG + value + END_ATTRIBUTE_TAG;
+  }
+
+  private static String endTag(String tagName) {
+    return END_FIRST_TAG + tagName + END_SECOND_TAG;
   }
 
   private static String convertLineSeparatorsIfPresent(String value) {
@@ -33,22 +67,13 @@ public class HTMLFactory {
     return value.replace(LINE_SEPARATOR, BR_TAG);
   }
 
-  public static String tag(String tagName, String value) {
-    return tag(tagName, null, value);
-  }
-
-
-  private static String startTag(String tagName, String className) {
-    if (className != null) {
-      return START_FIRST_TAG + tagName + SPACE
-          + CLASSNAME + START_ATTRIBUTE_TAG + className + END_ATTRIBUTE_TAG
-          + START_SECOND_TAG;
+  private static String formatAttributes(Map<String, String> attributes) {
+    if (attributes == null) {
+      return "";
     }
 
-    return START_FIRST_TAG + tagName + START_SECOND_TAG;
-  }
-
-  private static String endTag(String tagName) {
-    return END_FIRST_TAG + tagName + END_SECOND_TAG;
+    return attributes.entrySet().stream()
+        .map(entry -> buildTag(entry.getKey(), entry.getValue()))
+        .collect(Collectors.joining());
   }
 }

@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,16 @@ class HTMLFactoryTest {
   }
 
   @Test
+  void shouldReturnCorrectTagWithAttribute() {
+    final var attributes = new HashMap<String, String>();
+    attributes.put("attribute", "attributeValue");
+    attributes.put("href", "url");
+    final var result = HTMLFactory.tag("tag", null, "Value", attributes);
+
+    assertEquals("<tag attribute=\"attributeValue\" href=\"url\">Value</tag>", result);
+  }
+
+  @Test
   void shouldConvertLineSeparatorsToBr() {
     final var result = HTMLFactory.tag("tag", "Value\nValue");
 
@@ -57,6 +68,18 @@ class HTMLFactoryTest {
       final var result = HTMLFactory.tag("tag", "class", "Value");
 
       assertEquals("<tag className=\"class\">Value</tag>", result);
+    }
+
+    @Test
+    void shouldReturnCorrectTagWithAttributes() {
+      final var attributes = new HashMap<String, String>();
+      attributes.put("attribute", "attributeValue");
+      attributes.put("href", "url");
+
+      final var result = HTMLFactory.tag("tag", "class", "Value", attributes);
+
+      assertEquals("<tag className=\"class\" attribute=\"attributeValue\" href=\"url\">Value</tag>",
+          result);
     }
 
     @Test

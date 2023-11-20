@@ -66,6 +66,7 @@ public class CertificateController {
         .builder()
         .certificate(response.getCertificate())
         .availableFunctions(response.getAvailableFunctions())
+        .texts(response.getTexts())
         .build();
   }
 
