@@ -78,7 +78,7 @@ class SendCertificateServiceTest {
   }
 
   @Nested
-  class HasRecipient {
+  class SendActionIsAllowed {
 
     @BeforeEach
     void setup() {
@@ -89,6 +89,7 @@ class SendCertificateServiceTest {
                   .availableFunctions(List.of(
                           AvailableFunction.builder()
                               .type(AvailableFunctionType.SEND_CERTIFICATE)
+                              .enabled(true)
                               .build()
                       )
                   )
@@ -174,6 +175,25 @@ class SendCertificateServiceTest {
           .thenReturn(
               GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
                   .availableFunctions(Collections.emptyList())
+                  .build()
+          );
+
+      assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
+    }
+
+    @Test
+    void shouldThrowExceptionIfDisabledAvailableFunction() {
+      when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
+          .thenReturn(
+              GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
+                  .availableFunctions(
+                      List.of(
+                          AvailableFunction.builder()
+                              .enabled(false)
+                              .type(AvailableFunctionType.SEND_CERTIFICATE)
+                              .build()
+                      )
+                  )
                   .build()
           );
 

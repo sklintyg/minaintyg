@@ -10,10 +10,10 @@ public class AvailableFunctionUtility {
 
   }
 
-  public static boolean includesFunction(
+  public static boolean includesEnabledFunction(
       List<AvailableFunction> functions,
       AvailableFunctionType type) {
-    return functions.stream().anyMatch(function -> function.getType() == type);
+    return functions.stream()
+        .anyMatch(function -> function.getType() == type && function.isEnabled());
   }
-
 }

@@ -65,7 +65,7 @@ public class SendCertificateService {
   }
 
   private void validateAction(GetCertificateIntegrationResponse response) {
-    if (!AvailableFunctionUtility.includesFunction(
+    if (!AvailableFunctionUtility.includesEnabledFunction(
         response.getAvailableFunctions(),
         AvailableFunctionType.SEND_CERTIFICATE)) {
       throw new IllegalStateException("Certificate cannot be sent");

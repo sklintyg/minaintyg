@@ -13,12 +13,16 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Availab
 class AvailableFunctionUtilityTest {
 
   @Nested
-  class TestIncludesFunction {
+  class TestIncludesEnabledFunction {
 
     @Test
-    void shouldReturnTrueIfIncludedInList() {
-      final var response = AvailableFunctionUtility.includesFunction(
-          List.of(AvailableFunction.builder().type(AvailableFunctionType.SEND_CERTIFICATE).build()),
+    void shouldReturnTrueIfIncludedInListAndEnabled() {
+      final var response = AvailableFunctionUtility.includesEnabledFunction(
+          List.of(
+              AvailableFunction.builder()
+                  .type(AvailableFunctionType.SEND_CERTIFICATE)
+                  .enabled(true)
+                  .build()),
           AvailableFunctionType.SEND_CERTIFICATE
       );
 
@@ -26,8 +30,20 @@ class AvailableFunctionUtilityTest {
     }
 
     @Test
+    void shouldReturnFalseIfIncludedInListAndDisabled() {
+      final var response = AvailableFunctionUtility.includesEnabledFunction(
+          List.of(AvailableFunction.builder()
+              .type(AvailableFunctionType.SEND_CERTIFICATE)
+              .enabled(false).build()),
+          AvailableFunctionType.SEND_CERTIFICATE
+      );
+
+      assertFalse(response);
+    }
+
+    @Test
     void shouldReturnFalseIfNotIncludedInList() {
-      final var response = AvailableFunctionUtility.includesFunction(
+      final var response = AvailableFunctionUtility.includesEnabledFunction(
           List.of(
               AvailableFunction.builder().type(AvailableFunctionType.PRINT_CERTIFICATE).build()),
           AvailableFunctionType.SEND_CERTIFICATE
@@ -38,7 +54,7 @@ class AvailableFunctionUtilityTest {
 
     @Test
     void shouldReturnFalseIfEmptyList() {
-      final var response = AvailableFunctionUtility.includesFunction(
+      final var response = AvailableFunctionUtility.includesEnabledFunction(
           Collections.emptyList(),
           AvailableFunctionType.SEND_CERTIFICATE
       );
