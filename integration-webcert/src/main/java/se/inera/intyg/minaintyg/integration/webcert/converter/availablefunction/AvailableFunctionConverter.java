@@ -25,6 +25,7 @@ public class AvailableFunctionConverter {
                 .type(availableFunctionDTO.getType())
                 .body(availableFunctionDTO.getBody())
                 .information(convertInformation(availableFunctionDTO.getInformation()))
+                .enabled(availableFunctionDTO.isEnabled())
                 .build()
         )
         .toList();
