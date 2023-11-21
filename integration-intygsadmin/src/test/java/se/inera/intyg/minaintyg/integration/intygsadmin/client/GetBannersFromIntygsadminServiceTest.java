@@ -45,8 +45,7 @@ class GetBannersFromIntygsadminServiceTest {
 
   @Test
   void shouldReturnBannersDTO() throws JsonProcessingException {
-    final var expectedResponse = new BannerDTO[1];
-    expectedResponse[0] = new BannerDTO();
+    final var expectedResponse = new BannerDTO[]{BannerDTO.builder().build()};
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
