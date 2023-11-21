@@ -12,12 +12,14 @@ public class IntygsadminBannerIntegrationService implements GetBannerIntegration
 
   private final GetBannersFromIntygsadminService getBannersFromIntygsadminService;
   private final BannerConverter bannerConverter;
+  private final BannerFilterService bannersFilterService;
 
   @Override
   public GetBannerIntegrationResponse get() {
     final var banners = getBannersFromIntygsadminService.get();
+    final var filteredBanners = bannersFilterService.filter(banners);
     return GetBannerIntegrationResponse.builder()
-        .banners(bannerConverter.convert(banners))
+        .banners(bannerConverter.convert(filteredBanners))
         .build();
   }
 }

@@ -17,9 +17,7 @@ public class BannerConverter {
 
   private static Banner toBanner(BannerDTO bannerDTO) {
     return Banner.builder()
-        .id(bannerDTO.getId())
-        .application(bannerDTO.getApplication())
-        .createdAt(bannerDTO.getCreatedAt())
+        .id(bannerDTO.getId().toString())
         .displayFrom(bannerDTO.getDisplayFrom())
         .displayTo(bannerDTO.getDisplayTo())
         .message(bannerDTO.getMessage())

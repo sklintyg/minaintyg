@@ -41,9 +41,7 @@ class BannerConverterTest {
 
   private static final List<Banner> EXPECTED_BANNER = List.of(
       Banner.builder()
-          .id(ID)
-          .application(Application.MINA_INTYG)
-          .createdAt(NOW)
+          .id(ID.toString())
           .displayFrom(NOW)
           .displayTo(DISPLAY_TO)
           .message(MESSAGE)
@@ -61,18 +59,6 @@ class BannerConverterTest {
   void shouldConvertId() {
     final var result = bannerConverter.convert(BANNER_DTO);
     assertEquals(EXPECTED_BANNER.get(0).getId(), result.get(0).getId());
-  }
-
-  @Test
-  void shouldConvertApplication() {
-    final var result = bannerConverter.convert(BANNER_DTO);
-    assertEquals(EXPECTED_BANNER.get(0).getApplication(), result.get(0).getApplication());
-  }
-
-  @Test
-  void shouldConvertCreatedAt() {
-    final var result = bannerConverter.convert(BANNER_DTO);
-    assertEquals(EXPECTED_BANNER.get(0).getCreatedAt(), result.get(0).getCreatedAt());
   }
 
   @Test
