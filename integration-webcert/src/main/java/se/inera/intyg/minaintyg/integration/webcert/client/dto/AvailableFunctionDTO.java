@@ -20,4 +20,5 @@ public class AvailableFunctionDTO {
   private String title;
   private String body;
   private List<InformationDTO> information;
+  private boolean enabled;
 }

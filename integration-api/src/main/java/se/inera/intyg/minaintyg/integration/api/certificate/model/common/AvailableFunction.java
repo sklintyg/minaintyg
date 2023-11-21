@@ -14,4 +14,5 @@ public class AvailableFunction {
   String description;
   String body;
   List<Information> information;
+  boolean enabled;
 }

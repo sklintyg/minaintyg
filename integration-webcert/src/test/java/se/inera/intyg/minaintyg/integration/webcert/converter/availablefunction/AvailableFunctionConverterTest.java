@@ -130,6 +130,44 @@ class AvailableFunctionConverterTest {
   }
 
   @Test
+  void shallReturnEnabled() {
+    final var expected = availableFunctions(
+        AvailableFunction.builder()
+            .enabled(true)
+            .build()
+    );
+
+    final var actual = availableFunctionConverter.convert(
+        availableFunctionDTOs(
+            AvailableFunctionDTO.builder()
+                .enabled(true)
+                .build()
+        )
+    );
+
+    assertEquals(value(expected).isEnabled(), value(actual).isEnabled());
+  }
+
+  @Test
+  void shallReturnDisbled() {
+    final var expected = availableFunctions(
+        AvailableFunction.builder()
+            .enabled(false)
+            .build()
+    );
+
+    final var actual = availableFunctionConverter.convert(
+        availableFunctionDTOs(
+            AvailableFunctionDTO.builder()
+                .enabled(false)
+                .build()
+        )
+    );
+
+    assertEquals(value(expected).isEnabled(), value(actual).isEnabled());
+  }
+
+  @Test
   void shallReturnInformationListEmptyWhenNull() {
     final var expected = availableFunctions(
         AvailableFunction.builder()
