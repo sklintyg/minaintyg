@@ -30,19 +30,16 @@ public class IntygsadminBannerIntegrationService implements GetBannerIntegration
         .banners(
             bannerConverter.convert(
                 getBannersFromCache().orElseGet(
-                    () -> getBannersFromIntygsadmin(Application.MINA_INTYG)
+                    this::getActiveBannersFromIntygsadmin
                 )
             )
         )
         .build();
   }
 
-  public BannerDTO[] getBannersFromIntygsadmin(Application application) {
+  public BannerDTO[] getActiveBannersFromIntygsadmin() {
     final var banners = getBannersFromIntygsadminService.get();
-    final var filteredBanners = bannersFilterService.filter(banners);
-    Objects.requireNonNull(cacheManager.getCache(BANNERS))
-        .put(application, filteredBanners);
-    return filteredBanners;
+    return bannersFilterService.filter(banners);
   }
 
   private Optional<BannerDTO[]> getBannersFromCache() {
