@@ -24,7 +24,9 @@ class BannerFilterServiceTest {
             .displayTo(LocalDateTime.now().plusDays(2))
             .build()
     };
+
     final var result = bannerFilterService.filter(bannerDTOS);
+
     assertEquals(0, result.length);
   }
 
@@ -35,7 +37,9 @@ class BannerFilterServiceTest {
             .application(Application.MINA_INTYG)
             .build()
     };
+
     final var result = bannerFilterService.filter(bannerDTOS);
+
     assertEquals(0, result.length);
   }
 
@@ -49,7 +53,9 @@ class BannerFilterServiceTest {
             .displayTo(LocalDateTime.now().plusMinutes(10))
             .build()
     };
+
     final var result = bannerFilterService.filter(bannerDTOS);
+
     assertEquals(1, result.length);
   }
 
@@ -67,7 +73,9 @@ class BannerFilterServiceTest {
             .displayTo(LocalDateTime.now().plusDays(10))
             .build()
     };
+
     final var result = bannerFilterService.filter(bannerDTOS);
+
     assertEquals(1, result.length);
   }
 
@@ -85,7 +93,9 @@ class BannerFilterServiceTest {
             .displayTo(LocalDateTime.now().plusDays(10))
             .build()
     };
+
     final var result = bannerFilterService.filter(bannerDTOS);
+    
     assertEquals(1, result.length);
   }
 }
