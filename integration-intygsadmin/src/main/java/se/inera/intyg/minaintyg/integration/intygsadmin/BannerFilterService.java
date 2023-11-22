@@ -24,7 +24,7 @@ public class BannerFilterService {
   }
 
   private static boolean isActive(BannerDTO bannerDTO) {
-    if (isNull(bannerDTO.getDisplayFrom()) || isNull(bannerDTO.getDisplayTo())) {
+    if (bannerDTO.getDisplayFrom() == null || bannerDTO.getDisplayTo() == null) {
       return false;
     }
     return beforeOrEquals(bannerDTO.getDisplayFrom()) && afterOrEquals(bannerDTO.getDisplayTo());
@@ -36,9 +36,5 @@ public class BannerFilterService {
 
   private static boolean beforeOrEquals(LocalDateTime dateTime) {
     return dateTime.isBefore(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now());
-  }
-
-  private static boolean isNull(LocalDateTime dateTime) {
-    return dateTime == null;
   }
 }
