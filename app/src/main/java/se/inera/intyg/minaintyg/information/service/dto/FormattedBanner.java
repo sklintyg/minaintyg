@@ -5,8 +5,8 @@ import lombok.Value;
 
 @Value
 @Builder
-public class Banner {
+public class FormattedBanner {
 
-  String headline;
+  FormattedBannerType type;
   String content;
 }

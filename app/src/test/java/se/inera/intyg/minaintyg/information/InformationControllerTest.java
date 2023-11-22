@@ -11,12 +11,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.information.service.GetBannersService;
-import se.inera.intyg.minaintyg.information.service.dto.Banner;
+import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
 
 @ExtendWith(MockitoExtension.class)
 class InformationControllerTest {
 
-  private static final List<Banner> EXPECTED_BANNERS = List.of(Banner.builder().build());
+  private static final List<FormattedBanner> EXPECTED_BANNERS = List.of(
+      FormattedBanner.builder().build());
 
   private static final InformationResponseDTO EXPECTED_RESPONSE = InformationResponseDTO.builder()
       .banners(EXPECTED_BANNERS)
