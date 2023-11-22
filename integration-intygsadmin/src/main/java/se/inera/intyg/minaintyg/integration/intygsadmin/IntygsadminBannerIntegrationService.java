@@ -5,7 +5,6 @@ import static se.inera.intyg.minaintyg.integration.intygsadmin.configuration.Red
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
@@ -15,7 +14,6 @@ import se.inera.intyg.minaintyg.integration.intygsadmin.client.GetBannersFromInt
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class IntygsadminBannerIntegrationService implements GetBannerIntegrationService {
 
