@@ -1,14 +1,12 @@
 package se.inera.intyg.minaintyg.information.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.information.service.dto.FormattedBannerType;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
 import se.inera.intyg.minaintyg.integration.api.banner.model.BannerPriority;
 
-@Service
-@RequiredArgsConstructor
+@Component
 public class FormattedBannerConverter {
 
   public FormattedBanner convert(Banner banner) {
