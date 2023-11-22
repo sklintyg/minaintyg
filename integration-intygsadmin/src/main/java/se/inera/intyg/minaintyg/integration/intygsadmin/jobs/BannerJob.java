@@ -24,9 +24,8 @@ public class BannerJob {
   @SchedulerLock(name = JOB_NAME, lockAtLeastFor = LOCK_AT_LEAST, lockAtMostFor = LOCK_AT_MOST)
   public void executeBannerJob() {
     LockAssert.assertLocked();
-    final var getBannerIntegrationResponse = intygsadminBannerIntegrationService.getBannersFromIntygsadmin(
+    intygsadminBannerIntegrationService.getBannersFromIntygsadmin(
         Application.MINA_INTYG
     );
-    log.info("Banners from IA '{}'", (Object) getBannerIntegrationResponse);
   }
 }
