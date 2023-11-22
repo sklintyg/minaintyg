@@ -43,10 +43,13 @@ class IntygsadminBannerIntegrationServiceTest {
     final var expectedResponse = GetBannerIntegrationResponse.builder()
         .banners(CONVERTED_BANNERS)
         .build();
+
     when(cacheManager.getCache(anyString())).thenReturn(cache);
     when(cache.get(Application.MINA_INTYG, BannerDTO[].class)).thenReturn(INTYGSADMIN_RESPONSE);
     when(bannerConverter.convert(INTYGSADMIN_RESPONSE)).thenReturn(CONVERTED_BANNERS);
+
     final var result = intygsadminBannerIntegrationService.get();
+
     assertEquals(expectedResponse, result);
   }
 
@@ -55,6 +58,7 @@ class IntygsadminBannerIntegrationServiceTest {
     final var expectedResponse = GetBannerIntegrationResponse.builder()
         .banners(CONVERTED_BANNERS)
         .build();
+
     when(cacheManager.getCache(anyString())).thenReturn(cache);
     when(cache.get(Application.MINA_INTYG, BannerDTO[].class)).thenReturn(null);
     when(bannersFromIntygsadminService.get()).thenReturn(
@@ -62,7 +66,9 @@ class IntygsadminBannerIntegrationServiceTest {
     );
     when(bannerFilterService.filter(INTYGSADMIN_RESPONSE)).thenReturn(INTYGSADMIN_RESPONSE);
     when(bannerConverter.convert(INTYGSADMIN_RESPONSE)).thenReturn(CONVERTED_BANNERS);
+
     final var result = intygsadminBannerIntegrationService.get();
+    
     assertEquals(expectedResponse, result);
   }
 }

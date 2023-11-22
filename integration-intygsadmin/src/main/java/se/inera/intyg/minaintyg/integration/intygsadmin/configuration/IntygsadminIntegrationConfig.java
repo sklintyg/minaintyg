@@ -9,7 +9,7 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 public class IntygsadminIntegrationConfig {
 
   @Bean(name = "intygsadminWebClient")
-  public WebClient webClientForIntygstjanst() {
+  public WebClient webClientForIntygsadmin() {
     return WebClient.builder()
         .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
