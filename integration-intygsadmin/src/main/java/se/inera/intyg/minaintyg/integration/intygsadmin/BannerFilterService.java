@@ -11,12 +11,12 @@ public class BannerFilterService {
 
   public BannerDTO[] filter(BannerDTO[] bannerDTOS) {
     return Arrays.stream(bannerDTOS)
-        .filter(BannerFilterService::isMinaIntygBanner)
+        .filter(BannerFilterService::isCorrectApplication)
         .filter(BannerFilterService::isActive)
         .toArray(BannerDTO[]::new);
   }
 
-  private static boolean isMinaIntygBanner(BannerDTO bannerDTO) {
+  private static boolean isCorrectApplication(BannerDTO bannerDTO) {
     if (bannerDTO.getApplication() == null) {
       return false;
     }
