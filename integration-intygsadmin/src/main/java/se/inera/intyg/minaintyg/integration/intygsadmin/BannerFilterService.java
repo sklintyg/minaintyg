@@ -1,10 +1,10 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
+import se.inera.intyg.minaintyg.integration.intygsadmin.util.DateUtil;
 
 @Service
 public class BannerFilterService {
@@ -27,14 +27,7 @@ public class BannerFilterService {
     if (bannerDTO.getDisplayFrom() == null || bannerDTO.getDisplayTo() == null) {
       return false;
     }
-    return beforeOrEquals(bannerDTO.getDisplayFrom()) && afterOrEquals(bannerDTO.getDisplayTo());
-  }
-
-  private static boolean afterOrEquals(LocalDateTime dateTime) {
-    return dateTime.isAfter(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now());
-  }
-
-  private static boolean beforeOrEquals(LocalDateTime dateTime) {
-    return dateTime.isBefore(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now());
+    return DateUtil.beforeOrEquals(bannerDTO.getDisplayFrom()) && DateUtil.afterOrEquals(
+        bannerDTO.getDisplayTo());
   }
 }
