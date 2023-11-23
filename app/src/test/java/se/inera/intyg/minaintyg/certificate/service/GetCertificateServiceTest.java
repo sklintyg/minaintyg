@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
@@ -29,145 +31,162 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Availab
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTextType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificateServiceTest {
 
-  private static final String ID = "ID";
-  private static final String TYPE = "Type";
-  private static final GetCertificateRequest REQUEST = GetCertificateRequest
-      .builder()
-      .certificateId(ID)
-      .build();
+    private static final String ID = "ID";
+    private static final String TYPE = "Type";
+    private static final GetCertificateRequest REQUEST = GetCertificateRequest
+        .builder()
+        .certificateId(ID)
+        .build();
 
-  private static final CertificateText TEXT = CertificateText.builder()
-      .type(CertificateTextType.PREAMBLE_TEXT)
-      .build();
+    private static final CertificateText TEXT = CertificateText.builder()
+        .type(CertificateTextType.PREAMBLE_TEXT)
+        .build();
 
-  private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
-      .builder()
-      .certificate(
-          Certificate
-              .builder()
-              .metadata(CertificateMetadata
-                  .builder()
-                  .type(
-                      CertificateType
-                          .builder()
-                          .id(TYPE)
-                          .build()
-                  )
-                  .build())
-              .categories(List.of(CertificateCategory.builder().build()))
-              .build()
-      )
-      .texts(List.of(TEXT))
-      .availableFunctions(List.of(AvailableFunction.builder().build()))
-      .build();
-  private static final String EXPECTED_CONVERTED_TEXT = "Example text";
+    private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
+        .builder()
+        .certificate(
+            Certificate
+                .builder()
+                .metadata(CertificateMetadata
+                    .builder()
+                    .type(
+                        CertificateType
+                            .builder()
+                            .id(TYPE)
+                            .build()
+                    )
+                    .build())
+                .categories(List.of(CertificateCategory.builder().build()))
+                .build()
+        )
+        .texts(List.of(TEXT))
+        .availableFunctions(List.of(AvailableFunction.builder().build()))
+        .build();
+    private static final String EXPECTED_CONVERTED_TEXT = "Example text";
+    public static final String PERSON_ID = "PERSON_ID";
 
-  @Mock
-  MonitoringLogService monitoringLogService;
-  @Mock
-  FormattedCertificateConverter formattedCertificateConverter;
-  @Mock
-  GetCertificateIntegrationService getCertificateIntegrationService;
-  @Mock
-  FormattedCertificateTextConverter formattedCertificateTextConverter;
-  @InjectMocks
-  GetCertificateService getCertificateService;
+    @Mock
+    MonitoringLogService monitoringLogService;
+    @Mock
+    FormattedCertificateConverter formattedCertificateConverter;
+    @Mock
+    GetCertificateIntegrationService getCertificateIntegrationService;
+    @Mock
+    UserService userService;
+    @Mock
+    FormattedCertificateTextConverter formattedCertificateTextConverter;
+    @InjectMocks
+    GetCertificateService getCertificateService;
 
-  @BeforeEach
-  void setup() {
-    when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
-    when(formattedCertificateTextConverter.convert(any(CertificateText.class)))
-        .thenReturn(EXPECTED_CONVERTED_TEXT);
-  }
+    @BeforeEach
+    void setup() {
+        when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
+        when(formattedCertificateTextConverter.convert(any(CertificateText.class)))
+            .thenReturn(EXPECTED_CONVERTED_TEXT);
 
-  @Nested
-  class MonitorLogService {
-
-    @Test
-    void shouldLogWithCertificateId() {
-      final var captor = ArgumentCaptor.forClass(String.class);
-
-      getCertificateService.get(REQUEST);
-
-      verify(monitoringLogService).logCertificateRead(captor.capture(), anyString());
-      assertEquals(ID, captor.getValue());
+        when(userService.getLoggedInUser())
+            .thenReturn(Optional.of(MinaIntygUser.builder().personId(PERSON_ID).build()));
     }
 
-    @Test
-    void shouldLogWithCertificateType() {
-      final var captor = ArgumentCaptor.forClass(String.class);
+    @Nested
+    class MonitorLogService {
 
-      getCertificateService.get(REQUEST);
+        @Test
+        void shouldLogWithCertificateId() {
+            final var captor = ArgumentCaptor.forClass(String.class);
 
-      verify(monitoringLogService).logCertificateRead(anyString(), captor.capture());
-      assertEquals(TYPE, captor.getValue());
-    }
-  }
+            getCertificateService.get(REQUEST);
 
-  @Nested
-  class Request {
+            verify(monitoringLogService).logCertificateRead(captor.capture(), anyString());
+            assertEquals(ID, captor.getValue());
+        }
 
-    @Test
-    void shouldSetCertificateId() {
-      final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
+        @Test
+        void shouldLogWithCertificateType() {
+            final var captor = ArgumentCaptor.forClass(String.class);
 
-      getCertificateService.get(REQUEST);
+            getCertificateService.get(REQUEST);
 
-      verify(getCertificateIntegrationService).get(captor.capture());
-      assertEquals(ID, captor.getValue().getCertificateId());
-    }
-  }
-
-  @Nested
-  class Response {
-
-    @Test
-    void shouldSendCertificateToConverter() {
-      final var captor = ArgumentCaptor.forClass(Certificate.class);
-
-      getCertificateService.get(REQUEST);
-
-      verify(formattedCertificateConverter).convert(captor.capture());
-      assertEquals(EXPECTED_RESPONSE.getCertificate(), captor.getValue());
+            verify(monitoringLogService).logCertificateRead(anyString(), captor.capture());
+            assertEquals(TYPE, captor.getValue());
+        }
     }
 
-    @Test
-    void shouldSetConvertedCertificate() {
-      final var expectedFormattedCertificate = FormattedCertificate.builder().build();
-      when(formattedCertificateConverter.convert(any(Certificate.class)))
-          .thenReturn(expectedFormattedCertificate);
+    @Nested
+    class Request {
 
-      final var response = getCertificateService.get(REQUEST);
+        @Test
+        void shouldSetCertificateId() {
+            final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
 
-      assertEquals(response.getCertificate(), expectedFormattedCertificate);
+            getCertificateService.get(REQUEST);
+
+            verify(getCertificateIntegrationService).get(captor.capture());
+            assertEquals(ID, captor.getValue().getCertificateId());
+        }
+
+        @Test
+        void shouldSetPersonId() {
+            final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
+
+            getCertificateService.get(REQUEST);
+
+            verify(getCertificateIntegrationService).get(captor.capture());
+            assertEquals(PERSON_ID, captor.getValue().getPersonId());
+        }
     }
 
-    @Test
-    void shouldSetAvailableFunctions() {
-      final var response = getCertificateService.get(REQUEST);
+    @Nested
+    class Response {
 
-      assertEquals(EXPECTED_RESPONSE.getAvailableFunctions(), response.getAvailableFunctions());
+        @Test
+        void shouldSendCertificateToConverter() {
+            final var captor = ArgumentCaptor.forClass(Certificate.class);
+
+            getCertificateService.get(REQUEST);
+
+            verify(formattedCertificateConverter).convert(captor.capture());
+            assertEquals(EXPECTED_RESPONSE.getCertificate(), captor.getValue());
+        }
+
+        @Test
+        void shouldSetConvertedCertificate() {
+            final var expectedFormattedCertificate = FormattedCertificate.builder().build();
+            when(formattedCertificateConverter.convert(any(Certificate.class)))
+                .thenReturn(expectedFormattedCertificate);
+
+            final var response = getCertificateService.get(REQUEST);
+
+            assertEquals(response.getCertificate(), expectedFormattedCertificate);
+        }
+
+        @Test
+        void shouldSetAvailableFunctions() {
+            final var response = getCertificateService.get(REQUEST);
+
+            assertEquals(EXPECTED_RESPONSE.getAvailableFunctions(), response.getAvailableFunctions());
+        }
+
+        @Test
+        void shouldSetCertificateTextWithTypeAsKey() {
+            final var response = getCertificateService.get(REQUEST);
+
+            assertTrue(response.getTexts().containsKey(CertificateTextType.PREAMBLE_TEXT));
+        }
+
+        @Test
+        void shouldSetConvertedCertificateText() {
+            final var response = getCertificateService.get(REQUEST);
+
+            assertEquals(EXPECTED_CONVERTED_TEXT,
+                response.getTexts().get(CertificateTextType.PREAMBLE_TEXT)
+            );
+        }
     }
-
-    @Test
-    void shouldSetCertificateTextWithTypeAsKey() {
-      final var response = getCertificateService.get(REQUEST);
-
-      assertTrue(response.getTexts().containsKey(CertificateTextType.PREAMBLE_TEXT));
-    }
-
-    @Test
-    void shouldSetConvertedCertificateText() {
-      final var response = getCertificateService.get(REQUEST);
-
-      assertEquals(EXPECTED_CONVERTED_TEXT,
-          response.getTexts().get(CertificateTextType.PREAMBLE_TEXT)
-      );
-    }
-  }
 
 }
