@@ -11,6 +11,9 @@ public class LockProviderConfig {
 
   private static final String INTYG = "intyg";
 
+  public static final String LOCK_AT_MOST = "PT10M";
+  public static final String LOCK_AT_LEAST = "PT30S";
+
   @Bean
   public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
     return new RedisLockProvider(connectionFactory, INTYG);
