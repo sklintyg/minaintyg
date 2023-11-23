@@ -17,10 +17,10 @@ public class GetBannerIntegrationResponseService {
   private final GetBannerIntegrationService getBannerIntegrationService;
 
   public GetBannerIntegrationResponse get() {
-    return getBannersFromCache().orElseGet(getBannerIntegrationService::get);
+    return getBannerResponseFromCache().orElseGet(getBannerIntegrationService::get);
   }
 
-  private Optional<GetBannerIntegrationResponse> getBannersFromCache() {
+  private Optional<GetBannerIntegrationResponse> getBannerResponseFromCache() {
     return Optional.ofNullable(
         Objects.requireNonNull(cacheManager.getCache(RedisConfig.BANNERS_CACHE))
             .get(RedisConfig.BANNERS_CACHE_KEY, GetBannerIntegrationResponse.class)
