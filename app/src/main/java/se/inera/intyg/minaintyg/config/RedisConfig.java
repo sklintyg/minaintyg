@@ -20,7 +20,7 @@ public class RedisConfig {
   @Bean
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     return RedisCacheManager.builder(connectionFactory)
-        .withCacheConfiguration(BANNERS_CACHE, redisCacheConfiguration(Duration.ofMinutes(1)))
+        .withCacheConfiguration(BANNERS_CACHE, redisCacheConfiguration(Duration.ofDays(1)))
         .build();
   }
 
