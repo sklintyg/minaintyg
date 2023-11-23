@@ -5,13 +5,14 @@ import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
 
 @Configuration
 public class LockProviderConfig {
 
+  private static final String INTYG = "intyg";
+
   @Bean
   public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
-    return new RedisLockProvider(connectionFactory, Application.MINA_INTYG.name());
+    return new RedisLockProvider(connectionFactory, INTYG);
   }
 }

@@ -2,7 +2,6 @@ dependencies {
     implementation project(':integration-api')
 
     implementation 'org.springframework:spring-context'
-    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     compileOnly 'org.projectlombok:lombok'

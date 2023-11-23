@@ -14,12 +14,13 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 @Configuration
 public class RedisConfig {
 
-  public static final String BANNERS = "banners";
+  public static final String BANNERS_CACHE = "banners";
+  public static final String BANNERS_CACHE_KEY = "intyg";
 
   @Bean
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     return RedisCacheManager.builder(connectionFactory)
-        .withCacheConfiguration(BANNERS, redisCacheConfiguration(Duration.ofMinutes(1)))
+        .withCacheConfiguration(BANNERS_CACHE, redisCacheConfiguration(Duration.ofMinutes(1)))
         .build();
   }
 

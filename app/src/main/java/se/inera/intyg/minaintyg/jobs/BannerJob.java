@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
 
 @Component
 @RequiredArgsConstructor
@@ -27,7 +26,8 @@ public class BannerJob {
   public void executeBannerJob() {
     LockAssert.assertLocked();
     final var banners = getBannerIntegrationService.get();
-    Objects.requireNonNull(cacheManager.getCache(RedisConfig.BANNERS))
-        .put(Application.MINA_INTYG, banners);
+    Objects.requireNonNull(
+        cacheManager.getCache(RedisConfig.BANNERS_CACHE)
+    ).put(RedisConfig.BANNERS_CACHE_KEY, banners);
   }
 }
