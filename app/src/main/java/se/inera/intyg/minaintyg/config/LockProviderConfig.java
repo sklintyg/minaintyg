@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.intygsadmin.configuration;
+package se.inera.intyg.minaintyg.config;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;

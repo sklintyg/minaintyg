@@ -11,6 +11,7 @@ dependencies {
     runtimeOnly project(":integration-intygsadmin")
     runtimeOnly project(":integration-intygstjanst")
 
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
@@ -18,6 +19,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "org.springframework.session:spring-session-data-redis"
     implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
     implementation "com.google.guava:guava"
 
     compileOnly "org.projectlombok:lombok"
