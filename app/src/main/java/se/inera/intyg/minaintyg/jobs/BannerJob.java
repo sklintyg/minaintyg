@@ -2,7 +2,6 @@ package se.inera.intyg.minaintyg.jobs;
 
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import net.javacrumbs.shedlock.core.LockAssert;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,7 +22,6 @@ public class BannerJob {
   @Scheduled(cron = "${intygsadmin.cron}")
   @SchedulerLock(name = JOB_NAME, lockAtLeastFor = LockProviderConfig.LOCK_AT_LEAST, lockAtMostFor = LockProviderConfig.LOCK_AT_MOST)
   public void executeBannerJob() {
-    LockAssert.assertLocked();
     final var banners = getBannerIntegrationService.get();
     Objects.requireNonNull(
         cacheManager.getCache(RedisConfig.BANNERS_CACHE)
