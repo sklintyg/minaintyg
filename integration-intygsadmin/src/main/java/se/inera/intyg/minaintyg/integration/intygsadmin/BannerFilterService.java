@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin;
 
-import java.util.Arrays;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
@@ -9,11 +9,11 @@ import se.inera.intyg.minaintyg.integration.intygsadmin.util.DateUtil;
 @Service
 public class BannerFilterService {
 
-  public BannerDTO[] filter(BannerDTO[] bannerDTOS) {
-    return Arrays.stream(bannerDTOS)
+  public List<BannerDTO> filter(List<BannerDTO> bannerDTOS) {
+    return bannerDTOS.stream()
         .filter(BannerFilterService::isCorrectApplication)
         .filter(BannerFilterService::isActive)
-        .toArray(BannerDTO[]::new);
+        .toList();
   }
 
   private static boolean isCorrectApplication(BannerDTO bannerDTO) {

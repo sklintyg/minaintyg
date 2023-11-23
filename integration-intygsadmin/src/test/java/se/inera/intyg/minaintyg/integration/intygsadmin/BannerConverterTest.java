@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class BannerConverterTest {
   private static final String MESSAGE = "message";
   private static final BannerPriority BANNER_PRIORITY = BannerPriority.LAG;
   private static final LocalDateTime DISPLAY_TO = LocalDateTime.now().plusDays(5);
-  private static final BannerDTO[] BANNER_DTO = new BannerDTO[]{
+  private static final List<BannerDTO> BANNER_DTO = List.of(
       BannerDTO.builder()
           .id(ID)
           .application(MINA_INTYG)
@@ -37,13 +38,11 @@ class BannerConverterTest {
           .message(MESSAGE)
           .priority(BANNER_PRIORITY)
           .build()
-  };
+  );
 
   private static final List<Banner> EXPECTED_BANNER = List.of(
       Banner.builder()
           .id(ID.toString())
-          .displayFrom(NOW)
-          .displayTo(DISPLAY_TO)
           .message(MESSAGE)
           .priority(BANNER_PRIORITY)
           .build()
@@ -51,7 +50,7 @@ class BannerConverterTest {
 
   @Test
   void shouldReturnEmptyListIfNoActiveBannersArePresent() {
-    final var result = bannerConverter.convert(new BannerDTO[]{});
+    final var result = bannerConverter.convert(Collections.emptyList());
     assertTrue(result.isEmpty());
   }
 
@@ -59,18 +58,6 @@ class BannerConverterTest {
   void shouldConvertId() {
     final var result = bannerConverter.convert(BANNER_DTO);
     assertEquals(EXPECTED_BANNER.get(0).getId(), result.get(0).getId());
-  }
-
-  @Test
-  void shouldConverDisplayFrom() {
-    final var result = bannerConverter.convert(BANNER_DTO);
-    assertEquals(EXPECTED_BANNER.get(0).getDisplayFrom(), result.get(0).getDisplayFrom());
-  }
-
-  @Test
-  void shouldConvertDisplayTo() {
-    final var result = bannerConverter.convert(BANNER_DTO);
-    assertEquals(EXPECTED_BANNER.get(0).getDisplayTo(), result.get(0).getDisplayTo());
   }
 
   @Test

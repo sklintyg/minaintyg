@@ -1,8 +1,10 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,84 +20,94 @@ class BannerFilterServiceTest {
 
   @Test
   void shouldFilterOnNullValuesForApplication() {
-    final var bannerDTOS = new BannerDTO[]{
+    final var bannerDTOS = List.of(
         BannerDTO.builder()
             .displayFrom(LocalDateTime.now().minusDays(1))
             .displayTo(LocalDateTime.now().plusDays(2))
             .build()
-    };
+    );
 
     final var result = bannerFilterService.filter(bannerDTOS);
 
-    assertEquals(0, result.length);
+    assertTrue(result.isEmpty());
   }
 
   @Test
   void shouldFilterOnNullValuesForDisplayFromAndTo() {
-    final var bannerDTOS = new BannerDTO[]{
+    final var bannerDTOS = List.of(
         BannerDTO.builder()
             .application(Application.MINA_INTYG)
             .build()
-    };
+    );
 
     final var result = bannerFilterService.filter(bannerDTOS);
 
-    assertEquals(0, result.length);
+    assertTrue(result.isEmpty());
   }
 
   @Test
   void shouldFilterOnApplicationName() {
-    final var bannerDTOS = new BannerDTO[]{
+    final var expectedBanner = BannerDTO.builder()
+        .application(Application.MINA_INTYG)
+        .displayFrom(LocalDateTime.now())
+        .displayTo(LocalDateTime.now().plusMinutes(10))
+        .build();
+
+    final var bannerDTOS = List.of(
         BannerDTO.builder().build(),
         BannerDTO.builder()
             .application(Application.MINA_INTYG)
             .displayFrom(LocalDateTime.now())
             .displayTo(LocalDateTime.now().plusMinutes(10))
             .build()
-    };
+    );
 
     final var result = bannerFilterService.filter(bannerDTOS);
 
-    assertEquals(1, result.length);
+    assertEquals(expectedBanner, result.get(0));
   }
 
   @Test
   void shouldFilterOnDisplayFrom() {
-    final var bannerDTOS = new BannerDTO[]{
+    final var expectedBanner = BannerDTO.builder()
+        .application(Application.MINA_INTYG)
+        .displayFrom(LocalDateTime.now().minusDays(5))
+        .displayTo(LocalDateTime.now().plusDays(10))
+        .build();
+
+    final var bannerDTOS = List.of(
         BannerDTO.builder()
             .application(Application.MINA_INTYG)
             .displayFrom(LocalDateTime.now().plusDays(1))
             .displayTo(LocalDateTime.now().plusDays(10))
             .build(),
-        BannerDTO.builder()
-            .application(Application.MINA_INTYG)
-            .displayFrom(LocalDateTime.now().minusDays(5))
-            .displayTo(LocalDateTime.now().plusDays(10))
-            .build()
-    };
+        expectedBanner
+    );
 
     final var result = bannerFilterService.filter(bannerDTOS);
 
-    assertEquals(1, result.length);
+    assertEquals(expectedBanner, result.get(0));
   }
 
   @Test
   void shouldFilterOnDisplayTo() {
-    final var bannerDTOS = new BannerDTO[]{
+    final var expectedBanner = BannerDTO.builder()
+        .application(Application.MINA_INTYG)
+        .displayFrom(LocalDateTime.now().minusDays(5))
+        .displayTo(LocalDateTime.now().plusDays(10))
+        .build();
+
+    final var bannerDTOS = List.of(
         BannerDTO.builder()
             .application(Application.MINA_INTYG)
             .displayFrom(LocalDateTime.now().minusDays(1))
             .displayTo(LocalDateTime.now().minusDays(1))
             .build(),
-        BannerDTO.builder()
-            .application(Application.MINA_INTYG)
-            .displayFrom(LocalDateTime.now().minusDays(5))
-            .displayTo(LocalDateTime.now().plusDays(10))
-            .build()
-    };
+        expectedBanner
+    );
 
     final var result = bannerFilterService.filter(bannerDTOS);
-    
-    assertEquals(1, result.length);
+
+    assertEquals(expectedBanner, result.get(0));
   }
 }

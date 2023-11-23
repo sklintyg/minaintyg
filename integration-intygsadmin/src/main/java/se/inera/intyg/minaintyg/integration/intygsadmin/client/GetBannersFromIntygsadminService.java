@@ -2,6 +2,9 @@ package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSTJANST;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -36,8 +39,8 @@ public class GetBannersFromIntygsadminService {
     this.endpoint = endpoint;
   }
 
-  public BannerDTO[] get() {
-    return webClient.get().uri(uriBuilder -> uriBuilder
+  public List<BannerDTO> get() {
+    final var banners = webClient.get().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
@@ -56,5 +59,7 @@ public class GetBannersFromIntygsadminService {
             ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSTJANST)
         )
         .block();
+    
+    return banners != null ? Arrays.stream(banners).toList() : Collections.emptyList();
   }
 }

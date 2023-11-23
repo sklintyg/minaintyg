@@ -17,7 +17,7 @@ import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 @ExtendWith(MockitoExtension.class)
 class IntygsadminBannerIntegrationServiceTest {
 
-  private static final BannerDTO[] INTYGSADMIN_RESPONSE = {BannerDTO.builder().build()};
+  private static final List<BannerDTO> INTYGSADMIN_RESPONSE = List.of(BannerDTO.builder().build());
   private static final List<Banner> CONVERTED_BANNERS = List.of(Banner.builder().build());
   @Mock
   private BannerConverter bannerConverter;
