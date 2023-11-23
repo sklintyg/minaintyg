@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
-import se.inera.intyg.minaintyg.logging.service.MonitoringLogServiceImpl;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,10 +29,8 @@ class MonitoringLogServiceImplTest {
 
   private static final String PERSON_ID = "personId";
   private static final String SOMETHING_WENT_WRONG = "something went wrong";
-  private static final String ERROR_ID = "errorId";
-  private static final StackTraceElement[] STACK_TRACE = new StackTraceElement[0];
   @InjectMocks
-  private MonitoringLogServiceImpl monitoringLogService;
+  private MonitoringLogService monitoringLogService;
   @Captor
   private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
   @Mock

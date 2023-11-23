@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
-import se.inera.intyg.minaintyg.logging.service.MonitoringLogServiceImpl;
+import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @ExtendWith(MockitoExtension.class)
 class CustomAuthenticationFailureHandlerTest {
@@ -31,7 +31,7 @@ class CustomAuthenticationFailureHandlerTest {
   };
 
   @Mock
-  private MonitoringLogServiceImpl monitoringLogService;
+  private MonitoringLogService monitoringLogService;
 
   @Mock
   private HttpServletRequest request;
