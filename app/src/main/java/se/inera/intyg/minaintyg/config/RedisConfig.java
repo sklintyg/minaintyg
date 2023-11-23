@@ -14,8 +14,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 @Configuration
 public class RedisConfig {
 
-  public static final String BANNERS_CACHE = "banners";
-  public static final String BANNERS_CACHE_KEY = "intyg";
+  public static final String BANNERS_CACHE = "minaintyg:bannerCache";
+  public static final String BANNERS_CACHE_KEY = "banners";
 
   @Bean
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {

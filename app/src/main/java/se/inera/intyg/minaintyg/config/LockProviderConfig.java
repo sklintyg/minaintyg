@@ -9,13 +9,14 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 @Configuration
 public class LockProviderConfig {
 
-  private static final String INTYG = "intyg";
+  private static final String MINA_INTYG = "minaintyg";
 
   public static final String LOCK_AT_MOST = "PT10M";
   public static final String LOCK_AT_LEAST = "PT30S";
+  public static final String DEFAULT_LOCK_AT_MOST = "10m";
 
   @Bean
   public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
-    return new RedisLockProvider(connectionFactory, INTYG);
+    return new RedisLockProvider(connectionFactory, MINA_INTYG);
   }
 }

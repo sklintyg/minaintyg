@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
+import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.ApplicationDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +36,7 @@ class BannerFilterServiceTest {
   void shouldFilterOnNullValuesForDisplayFromAndTo() {
     final var bannerDTOS = List.of(
         BannerDTO.builder()
-            .application(Application.MINA_INTYG)
+            .application(ApplicationDTO.MINA_INTYG)
             .build()
     );
 
@@ -48,7 +48,7 @@ class BannerFilterServiceTest {
   @Test
   void shouldFilterOnApplicationName() {
     final var expectedBanner = BannerDTO.builder()
-        .application(Application.MINA_INTYG)
+        .application(ApplicationDTO.MINA_INTYG)
         .displayFrom(LocalDateTime.now())
         .displayTo(LocalDateTime.now().plusMinutes(10))
         .build();
@@ -56,7 +56,7 @@ class BannerFilterServiceTest {
     final var bannerDTOS = List.of(
         BannerDTO.builder().build(),
         BannerDTO.builder()
-            .application(Application.MINA_INTYG)
+            .application(ApplicationDTO.MINA_INTYG)
             .displayFrom(LocalDateTime.now())
             .displayTo(LocalDateTime.now().plusMinutes(10))
             .build()
@@ -70,14 +70,14 @@ class BannerFilterServiceTest {
   @Test
   void shouldFilterOnDisplayFrom() {
     final var expectedBanner = BannerDTO.builder()
-        .application(Application.MINA_INTYG)
+        .application(ApplicationDTO.MINA_INTYG)
         .displayFrom(LocalDateTime.now().minusDays(5))
         .displayTo(LocalDateTime.now().plusDays(10))
         .build();
 
     final var bannerDTOS = List.of(
         BannerDTO.builder()
-            .application(Application.MINA_INTYG)
+            .application(ApplicationDTO.MINA_INTYG)
             .displayFrom(LocalDateTime.now().plusDays(1))
             .displayTo(LocalDateTime.now().plusDays(10))
             .build(),
@@ -92,14 +92,14 @@ class BannerFilterServiceTest {
   @Test
   void shouldFilterOnDisplayTo() {
     final var expectedBanner = BannerDTO.builder()
-        .application(Application.MINA_INTYG)
+        .application(ApplicationDTO.MINA_INTYG)
         .displayFrom(LocalDateTime.now().minusDays(5))
         .displayTo(LocalDateTime.now().plusDays(10))
         .build();
 
     final var bannerDTOS = List.of(
         BannerDTO.builder()
-            .application(Application.MINA_INTYG)
+            .application(ApplicationDTO.MINA_INTYG)
             .displayFrom(LocalDateTime.now().minusDays(1))
             .displayTo(LocalDateTime.now().minusDays(1))
             .build(),

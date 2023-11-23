@@ -2,7 +2,7 @@ package se.inera.intyg.minaintyg.integration.intygsadmin;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
+import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.ApplicationDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.util.DateUtil;
 
@@ -20,7 +20,7 @@ public class BannerFilterService {
     if (bannerDTO.getApplication() == null) {
       return false;
     }
-    return bannerDTO.getApplication().equals(Application.MINA_INTYG);
+    return bannerDTO.getApplication().equals(ApplicationDTO.MINA_INTYG);
   }
 
   private static boolean isActive(BannerDTO bannerDTO) {

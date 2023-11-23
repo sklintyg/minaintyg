@@ -11,13 +11,19 @@ import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationServi
 
 @Service
 @RequiredArgsConstructor
-public class GetBannerIntegrationResponseService {
+public class BannerRepository {
 
   private final CacheManager cacheManager;
   private final GetBannerIntegrationService getBannerIntegrationService;
 
   public GetBannerIntegrationResponse get() {
     return getBannerResponseFromCache().orElseGet(getBannerIntegrationService::get);
+  }
+
+  public void load() {
+    final var getBannerIntegrationResponse = getBannerIntegrationService.get();
+    Objects.requireNonNull(cacheManager.getCache(RedisConfig.BANNERS_CACHE))
+        .put(RedisConfig.BANNERS_CACHE_KEY, getBannerIntegrationResponse);
   }
 
   private Optional<GetBannerIntegrationResponse> getBannerResponseFromCache() {
