@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.integration.webcert;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,6 +21,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMet
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.AvailableFunction;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
+import se.inera.intyg.minaintyg.integration.common.IllegalCertificateAccessException;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.AvailableFunctionDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
@@ -27,6 +29,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataEl
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateTextDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Patient;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.PersonId;
 import se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction.AvailableFunctionConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
@@ -38,9 +42,15 @@ class WebcertCertificateIntegrationServiceTest {
   private static final String ID = "id";
   private static final String NAME = "name";
   private static final String CERTIFICATE_ID = "certificateId";
+  private static final String PERSON_ID = "personId";
+  private static final String PERSON_ID_DASH = "person-Id";
+  private static final Patient PATIENT = Patient.builder().personId(
+      PersonId.builder().id(PERSON_ID).build()).build();
   public static final GetCertificateIntegrationRequest REQUEST = GetCertificateIntegrationRequest.builder()
       .certificateId(CERTIFICATE_ID)
+      .personId(PERSON_ID)
       .build();
+
   @Mock
   private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
@@ -85,22 +95,65 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Test
   void shouldThrowIfNoCertificateWasFound() {
-    final var request = GetCertificateIntegrationRequest.builder()
-        .certificateId(CERTIFICATE_ID)
-        .build();
-    when(getCertificateFromWebcertService.get(request)).thenReturn(
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(
         CertificateResponseDTO.builder()
             .certificate(null)
             .build()
     );
-    assertThrows(RuntimeException.class, () -> webcertCertificateIntegrationService.get(request));
+    assertThrows(RuntimeException.class, () -> webcertCertificateIntegrationService.get(REQUEST));
+  }
+
+  @Test
+  void shouldNotThrowErrorIfPatientIdIsNotMatchWithDash() {
+    final var request = GetCertificateIntegrationRequest.builder()
+        .certificateId(CERTIFICATE_ID)
+        .personId(PERSON_ID_DASH)
+        .build();
+
+    when(getCertificateFromWebcertService.get(request)).thenReturn(
+        CertificateResponseDTO.builder()
+            .certificate(CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .patient(PATIENT)
+                        .build()
+                )
+                .build())
+            .build()
+    );
+    assertDoesNotThrow(() -> webcertCertificateIntegrationService.get(request));
+  }
+
+  @Test
+  void shouldThrowErrorIfPatientIdIsNotMatchForCertificatePatientId() {
+    final var request = GetCertificateIntegrationRequest.builder()
+        .certificateId(CERTIFICATE_ID)
+        .personId("NO_MATCH")
+        .build();
+
+    when(getCertificateFromWebcertService.get(request)).thenReturn(
+        CertificateResponseDTO.builder()
+            .certificate(CertificateDTO.builder()
+                .data(
+                    Map.of(ID, CertificateDataElement.builder().build())
+                )
+                .metadata(
+                    CertificateMetadataDTO.builder()
+                        .patient(PATIENT)
+                        .build()
+                )
+                .build())
+            .build()
+    );
+    assertThrows(IllegalCertificateAccessException.class,
+        () -> webcertCertificateIntegrationService.get(request));
   }
 
   @Test
   void shouldReturnGetCertificateIntegrationResponseWithCategories() {
-    final var request = GetCertificateIntegrationRequest.builder()
-        .certificateId(CERTIFICATE_ID)
-        .build();
     final var response = CertificateResponseDTO.builder()
         .certificate(
             CertificateDTO.builder()
@@ -111,6 +164,7 @@ class WebcertCertificateIntegrationServiceTest {
                     CertificateMetadataDTO.builder()
                         .id(ID)
                         .name(NAME)
+                        .patient(PATIENT)
                         .build()
                 )
                 .build()
@@ -120,22 +174,19 @@ class WebcertCertificateIntegrationServiceTest {
     final var expectedResult = List.of(
         CertificateCategory.builder().build()
     );
-    when(getCertificateFromWebcertService.get(request)).thenReturn(response);
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
     when(certificateDataConverter.convert(anyList())).thenReturn(
         expectedResult);
     when(metadataConverter.convert(any(CertificateMetadataDTO.class))).thenReturn(
         CertificateMetadata.builder()
             .build());
 
-    final var result = webcertCertificateIntegrationService.get(request);
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
     assertEquals(expectedResult, result.getCertificate().getCategories());
   }
 
   @Test
   void shouldReturnGetCertificateIntegrationResponseWithMetaData() {
-    final var request = GetCertificateIntegrationRequest.builder()
-        .certificateId(CERTIFICATE_ID)
-        .build();
     final var response = CertificateResponseDTO.builder()
         .certificate(
             CertificateDTO.builder()
@@ -146,6 +197,7 @@ class WebcertCertificateIntegrationServiceTest {
                     CertificateMetadataDTO.builder()
                         .id(ID)
                         .name(NAME)
+                        .patient(PATIENT)
                         .build()
                 )
                 .build()
@@ -162,7 +214,7 @@ class WebcertCertificateIntegrationServiceTest {
         )
         .build();
 
-    when(getCertificateFromWebcertService.get(request)).thenReturn(response);
+    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
     when(certificateDataConverter.convert(anyList())).thenReturn(
         List.of(CertificateCategory.builder().build()
         )
@@ -170,7 +222,7 @@ class WebcertCertificateIntegrationServiceTest {
     when(metadataConverter.convert(any(CertificateMetadataDTO.class))).thenReturn(
         expectedMetadata);
 
-    final var result = webcertCertificateIntegrationService.get(request);
+    final var result = webcertCertificateIntegrationService.get(REQUEST);
     assertEquals(expectedMetadata, result.getCertificate().getMetadata());
   }
 
@@ -191,6 +243,7 @@ class WebcertCertificateIntegrationServiceTest {
                     CertificateMetadataDTO.builder()
                         .id(ID)
                         .name(NAME)
+                        .patient(PATIENT)
                         .build()
                 )
                 .build()
@@ -227,6 +280,7 @@ class WebcertCertificateIntegrationServiceTest {
                     CertificateMetadataDTO.builder()
                         .id(ID)
                         .name(NAME)
+                        .patient(PATIENT)
                         .build()
                 )
                 .build()
@@ -264,6 +318,7 @@ class WebcertCertificateIntegrationServiceTest {
                     CertificateMetadataDTO.builder()
                         .id(ID)
                         .name(NAME)
+                        .patient(PATIENT)
                         .build()
                 )
                 .build()

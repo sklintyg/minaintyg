@@ -9,8 +9,10 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
+import se.inera.intyg.minaintyg.integration.common.IllegalCertificateAccessException;
 import se.inera.intyg.minaintyg.integration.webcert.client.GetCertificateFromWebcertService;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Patient;
 import se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction.AvailableFunctionConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.CertificateDataConverter;
 import se.inera.intyg.minaintyg.integration.webcert.converter.metadata.MetadataConverter;
@@ -30,12 +32,7 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
   public GetCertificateIntegrationResponse get(GetCertificateIntegrationRequest request) {
     validateRequest(request);
     final var response = getCertificateFromWebcertService.get(request);
-
-    if (validateResponse(response)) {
-      throw new IllegalArgumentException(
-          "Certificate was not found, certificateId: " + request.getCertificateId());
-    }
-
+    validateResponse(request, response);
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
@@ -63,16 +60,38 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
             .toList();
   }
 
-  private static boolean validateResponse(CertificateResponseDTO response) {
-    return response.getCertificate() == null || response.getCertificate().getData() == null
-        || response.getCertificate().getData().isEmpty();
+  private void validateRequest(GetCertificateIntegrationRequest request) {
+    if (request == null) {
+      throw new IllegalArgumentException("Request invalid - was null");
+    }
+
+    if (request.getCertificateId() == null || request.getCertificateId().isEmpty()) {
+      throw new IllegalArgumentException("Request invalid - missing certificateId");
+    }
+
+    if (request.getPersonId() == null || request.getPersonId().isEmpty()) {
+      throw new IllegalArgumentException("Request invalid - missing personId");
+    }
   }
 
-  private void validateRequest(GetCertificateIntegrationRequest request) {
-    if (request == null || request.getCertificateId() == null || request.getCertificateId()
-        .isEmpty()) {
+  private static void validateResponse(GetCertificateIntegrationRequest request,
+      CertificateResponseDTO response) {
+    final var certificate = response.getCertificate();
+    if (certificate == null || certificate.getData() == null || certificate.getData().isEmpty()) {
       throw new IllegalArgumentException(
-          "Valid request was not provided, must contain certificate id");
+          "Certificate was not found, certificateId: " + request.getCertificateId());
     }
+
+    if (isInvalidPersonId(request.getPersonId(), certificate.getMetadata().getPatient())) {
+      throw new IllegalCertificateAccessException(
+          "PersonId does not match for certificate '%s'".formatted(request.getCertificateId())
+      );
+    }
+  }
+
+  private static boolean isInvalidPersonId(String personId, Patient patient) {
+    return !personId.replace("-", "").equalsIgnoreCase(
+        patient.getPersonId().getId().replace("-", "")
+    );
   }
 }
