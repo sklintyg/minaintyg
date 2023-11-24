@@ -12,7 +12,7 @@ class FormattedBannerConverterTest {
   private static final Banner BANNER = Banner.builder()
       .id("ID")
       .message("MESSAGE")
-      .priority(BannerPriority.HOG)
+      .priority(BannerPriority.HIGH)
       .build();
 
   private final FormattedBannerConverter formattedBannerConverter = new FormattedBannerConverter();
@@ -25,17 +25,17 @@ class FormattedBannerConverterTest {
   }
 
   @Test
-  void shouldSetTypeErrorIfHog() {
+  void shouldSetTypeErrorIfHigh() {
     final var response = formattedBannerConverter.convert(
-        Banner.builder().priority(BannerPriority.HOG).build());
+        Banner.builder().priority(BannerPriority.HIGH).build());
 
     assertEquals(FormattedBannerType.ERROR, response.getType());
   }
 
   @Test
-  void shouldSetTypeObserveMedel() {
+  void shouldSetTypeObserveMedium() {
     final var response = formattedBannerConverter.convert(
-        Banner.builder().priority(BannerPriority.MEDEL).build());
+        Banner.builder().priority(BannerPriority.MEDIUM).build());
 
     assertEquals(FormattedBannerType.OBSERVE, response.getType());
   }
@@ -43,7 +43,7 @@ class FormattedBannerConverterTest {
   @Test
   void shouldSetTypeInfoIfLow() {
     final var response = formattedBannerConverter.convert(
-        Banner.builder().priority(BannerPriority.LAG).build());
+        Banner.builder().priority(BannerPriority.LOW).build());
 
     assertEquals(FormattedBannerType.INFO, response.getType());
   }

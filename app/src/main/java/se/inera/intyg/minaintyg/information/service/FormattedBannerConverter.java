@@ -18,9 +18,9 @@ public class FormattedBannerConverter {
 
   private FormattedBannerType convertType(BannerPriority priority) {
     return switch (priority) {
-      case HOG -> FormattedBannerType.ERROR;
-      case MEDEL -> FormattedBannerType.OBSERVE;
-      case LAG -> FormattedBannerType.INFO;
+      case HIGH -> FormattedBannerType.ERROR;
+      case MEDIUM -> FormattedBannerType.OBSERVE;
+      case LOW -> FormattedBannerType.INFO;
     };
   }
 }
