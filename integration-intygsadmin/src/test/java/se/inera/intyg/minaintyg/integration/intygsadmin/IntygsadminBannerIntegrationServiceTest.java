@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,31 +17,34 @@ import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 @ExtendWith(MockitoExtension.class)
 class IntygsadminBannerIntegrationServiceTest {
 
-  private static final BannerDTO[] INTYGSADMIN_RESPONSE = {BannerDTO.builder().build()};
+  private static final List<BannerDTO> INTYGSADMIN_RESPONSE = List.of(BannerDTO.builder().build());
   private static final List<Banner> CONVERTED_BANNERS = List.of(Banner.builder().build());
   @Mock
   private BannerConverter bannerConverter;
 
   @Mock
   private GetBannersFromIntygsadminService bannersFromIntygsadminService;
+  @Mock
+  private BannerFilterService bannerFilterService;
 
   @InjectMocks
   private IntygsadminBannerIntegrationService intygsadminBannerIntegrationService;
 
-  @BeforeEach
-  void setUp() {
-    when(bannersFromIntygsadminService.get()).thenReturn(
-        INTYGSADMIN_RESPONSE
-    );
-    when(bannerConverter.convert(INTYGSADMIN_RESPONSE)).thenReturn(CONVERTED_BANNERS);
-  }
 
   @Test
-  void shouldReturnListOfBanners() {
+  void shouldReturnListOfBannersIntygsadmin() {
     final var expectedResponse = GetBannerIntegrationResponse.builder()
         .banners(CONVERTED_BANNERS)
         .build();
+
+    when(bannersFromIntygsadminService.get()).thenReturn(
+        INTYGSADMIN_RESPONSE
+    );
+    when(bannerFilterService.filter(INTYGSADMIN_RESPONSE)).thenReturn(INTYGSADMIN_RESPONSE);
+    when(bannerConverter.convert(INTYGSADMIN_RESPONSE)).thenReturn(CONVERTED_BANNERS);
+
     final var result = intygsadminBannerIntegrationService.get();
+
     assertEquals(expectedResponse, result);
   }
 }

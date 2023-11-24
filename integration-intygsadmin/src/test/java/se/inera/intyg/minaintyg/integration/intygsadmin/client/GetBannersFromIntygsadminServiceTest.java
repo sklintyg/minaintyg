@@ -1,12 +1,15 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.List;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,12 +48,22 @@ class GetBannersFromIntygsadminServiceTest {
 
   @Test
   void shouldReturnBannersDTO() throws JsonProcessingException {
-    final var expectedResponse = new BannerDTO[]{BannerDTO.builder().build()};
+    final var expectedResponse = List.of(BannerDTO.builder().build());
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
 
     final var actualResponse = getBannersFromIntygsadminService.get();
-    Assertions.assertEquals(expectedResponse[0], actualResponse[0]);
+    assertEquals(expectedResponse, actualResponse);
+  }
+
+  @Test
+  void shouldReturnEmptyList() throws JsonProcessingException {
+    mockWebServer.enqueue(
+        new MockResponse().setBody(objectMapper.writeValueAsString(null))
+            .addHeader("Content-Type", "application/json"));
+
+    final var actualResponse = getBannersFromIntygsadminService.get();
+    assertTrue(actualResponse.isEmpty());
   }
 }

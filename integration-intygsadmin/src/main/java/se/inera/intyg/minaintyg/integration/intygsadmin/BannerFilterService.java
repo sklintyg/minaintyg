@@ -1,44 +1,33 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.List;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
+import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.ApplicationDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
+import se.inera.intyg.minaintyg.integration.intygsadmin.util.DateUtil;
 
 @Service
 public class BannerFilterService {
 
-  public BannerDTO[] filter(BannerDTO[] bannerDTOS) {
-    return Arrays.stream(bannerDTOS)
-        .filter(BannerFilterService::isMinaIntygBanner)
+  public List<BannerDTO> filter(List<BannerDTO> bannerDTOS) {
+    return bannerDTOS.stream()
+        .filter(BannerFilterService::isCorrectApplication)
         .filter(BannerFilterService::isActive)
-        .toArray(BannerDTO[]::new);
+        .toList();
   }
 
-  private static boolean isMinaIntygBanner(BannerDTO bannerDTO) {
+  private static boolean isCorrectApplication(BannerDTO bannerDTO) {
     if (bannerDTO.getApplication() == null) {
       return false;
     }
-    return bannerDTO.getApplication().equals(Application.MINA_INTYG);
+    return bannerDTO.getApplication().equals(ApplicationDTO.MINA_INTYG);
   }
 
   private static boolean isActive(BannerDTO bannerDTO) {
-    if (isNull(bannerDTO.getDisplayFrom()) || isNull(bannerDTO.getDisplayTo())) {
+    if (bannerDTO.getDisplayFrom() == null || bannerDTO.getDisplayTo() == null) {
       return false;
     }
-    return beforeOrEquals(bannerDTO.getDisplayFrom()) && afterOrEquals(bannerDTO.getDisplayTo());
-  }
-
-  private static boolean afterOrEquals(LocalDateTime dateTime) {
-    return dateTime.isAfter(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now());
-  }
-
-  private static boolean beforeOrEquals(LocalDateTime dateTime) {
-    return dateTime.isBefore(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now());
-  }
-
-  private static boolean isNull(LocalDateTime dateTime) {
-    return dateTime == null;
+    return DateUtil.beforeOrEquals(bannerDTO.getDisplayFrom()) && DateUtil.afterOrEquals(
+        bannerDTO.getDisplayTo());
   }
 }

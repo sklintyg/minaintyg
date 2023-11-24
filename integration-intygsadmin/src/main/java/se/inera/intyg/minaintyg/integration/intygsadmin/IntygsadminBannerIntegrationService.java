@@ -1,10 +1,12 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.GetBannersFromIntygsadminService;
+import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -16,10 +18,13 @@ public class IntygsadminBannerIntegrationService implements GetBannerIntegration
 
   @Override
   public GetBannerIntegrationResponse get() {
-    final var banners = getBannersFromIntygsadminService.get();
-    final var filteredBanners = bannersFilterService.filter(banners);
     return GetBannerIntegrationResponse.builder()
-        .banners(bannerConverter.convert(filteredBanners))
+        .banners(bannerConverter.convert(getActiveBannersFromIntygsadmin()))
         .build();
+  }
+
+  private List<BannerDTO> getActiveBannersFromIntygsadmin() {
+    final var banners = getBannersFromIntygsadminService.get();
+    return bannersFilterService.filter(banners);
   }
 }

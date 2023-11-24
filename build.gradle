@@ -5,6 +5,7 @@ plugins {
 
 ext {
     springbootMavenBomVersion = '3.1.2'
+    shedlockSpringVersion = '5.10.0'
 }
 
 group = 'se.inera.intyg.minaintyg'

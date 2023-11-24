@@ -2,6 +2,9 @@ package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSTJANST;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -10,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
-import se.inera.intyg.minaintyg.integration.api.banner.model.Application;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
+import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.ApplicationDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
 
 @Service
@@ -36,13 +39,13 @@ public class GetBannersFromIntygsadminService {
     this.endpoint = endpoint;
   }
 
-  public BannerDTO[] get() {
-    return webClient.get().uri(uriBuilder -> uriBuilder
+  public List<BannerDTO> get() {
+    final var banners = webClient.get().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(endpoint)
-            .build(Application.MINA_INTYG))
+            .build(ApplicationDTO.MINA_INTYG))
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(BannerDTO[].class)
@@ -56,5 +59,7 @@ public class GetBannersFromIntygsadminService {
             ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSTJANST)
         )
         .block();
+
+    return banners != null ? Arrays.stream(banners).toList() : Collections.emptyList();
   }
 }
