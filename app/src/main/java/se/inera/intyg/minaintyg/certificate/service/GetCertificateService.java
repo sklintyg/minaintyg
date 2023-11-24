@@ -9,6 +9,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegr
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateText;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @Service
 @RequiredArgsConstructor
@@ -18,13 +19,15 @@ public class GetCertificateService {
   private final MonitoringLogService monitoringLogService;
   private final FormattedCertificateConverter formattedCertificateConverter;
   private final FormattedCertificateTextConverter formattedCertificateTextConverter;
+  private final UserService userService;
 
   public GetCertificateResponse get(GetCertificateRequest request) {
-
+    final var loggedInUser = userService.getLoggedInUser().orElseThrow();
     final var response = getCertificateIntegrationService.get(
         GetCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
+            .personId(loggedInUser.getPersonId())
             .build()
     );
 

@@ -70,5 +70,15 @@ class BannerRepositoryTest {
 
       verify(cache).put(RedisConfig.BANNERS_CACHE_KEY, EXPECTED_RESPONSE);
     }
+
+    @Test
+    void shouldReturnBannerResponse() {
+      when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
+      when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
+
+      final var result = bannerRepository.load();
+
+      assertEquals(EXPECTED_RESPONSE, result);
+    }
   }
 }

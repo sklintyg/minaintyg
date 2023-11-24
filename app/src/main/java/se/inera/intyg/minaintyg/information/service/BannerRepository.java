@@ -17,13 +17,14 @@ public class BannerRepository {
   private final GetBannerIntegrationService getBannerIntegrationService;
 
   public GetBannerIntegrationResponse get() {
-    return getBannerResponseFromCache().orElseGet(getBannerIntegrationService::get);
+    return getBannerResponseFromCache().orElseGet(this::load);
   }
 
-  public void load() {
+  public GetBannerIntegrationResponse load() {
     final var getBannerIntegrationResponse = getBannerIntegrationService.get();
     Objects.requireNonNull(cacheManager.getCache(RedisConfig.BANNERS_CACHE))
         .put(RedisConfig.BANNERS_CACHE_KEY, getBannerIntegrationResponse);
+    return getBannerIntegrationResponse;
   }
 
   private Optional<GetBannerIntegrationResponse> getBannerResponseFromCache() {

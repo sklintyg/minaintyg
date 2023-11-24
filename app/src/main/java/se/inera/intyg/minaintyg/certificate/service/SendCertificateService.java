@@ -25,7 +25,7 @@ public class SendCertificateService {
 
   public void send(SendCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
-    final var certificateResponse = getCertificate(request.getCertificateId());
+    final var certificateResponse = getCertificate(request.getCertificateId(), user.getPersonId());
     final var recipient = certificateResponse.getCertificate().getMetadata().getRecipient();
 
     sendCertificate(request, user, certificateResponse);
@@ -55,11 +55,12 @@ public class SendCertificateService {
     );
   }
 
-  private GetCertificateIntegrationResponse getCertificate(String certificateId) {
+  private GetCertificateIntegrationResponse getCertificate(String certificateId, String personId) {
     return getCertificateIntegrationService.get(
         GetCertificateIntegrationRequest
             .builder()
             .certificateId(certificateId)
+            .personId(personId)
             .build()
     );
   }

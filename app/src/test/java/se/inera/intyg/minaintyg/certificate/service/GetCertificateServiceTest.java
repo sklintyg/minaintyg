@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
@@ -29,6 +31,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.common.Availab
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateTextType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificateServiceTest {
@@ -65,6 +68,7 @@ class GetCertificateServiceTest {
       .availableFunctions(List.of(AvailableFunction.builder().build()))
       .build();
   private static final String EXPECTED_CONVERTED_TEXT = "Example text";
+  public static final String PERSON_ID = "PERSON_ID";
 
   @Mock
   MonitoringLogService monitoringLogService;
@@ -72,6 +76,8 @@ class GetCertificateServiceTest {
   FormattedCertificateConverter formattedCertificateConverter;
   @Mock
   GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock
+  UserService userService;
   @Mock
   FormattedCertificateTextConverter formattedCertificateTextConverter;
   @InjectMocks
@@ -82,6 +88,9 @@ class GetCertificateServiceTest {
     when(getCertificateIntegrationService.get(any())).thenReturn(EXPECTED_RESPONSE);
     when(formattedCertificateTextConverter.convert(any(CertificateText.class)))
         .thenReturn(EXPECTED_CONVERTED_TEXT);
+
+    when(userService.getLoggedInUser())
+        .thenReturn(Optional.of(MinaIntygUser.builder().personId(PERSON_ID).build()));
   }
 
   @Nested
@@ -119,6 +128,16 @@ class GetCertificateServiceTest {
 
       verify(getCertificateIntegrationService).get(captor.capture());
       assertEquals(ID, captor.getValue().getCertificateId());
+    }
+
+    @Test
+    void shouldSetPersonId() {
+      final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
+
+      getCertificateService.get(REQUEST);
+
+      verify(getCertificateIntegrationService).get(captor.capture());
+      assertEquals(PERSON_ID, captor.getValue().getPersonId());
     }
   }
 
