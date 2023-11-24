@@ -47,6 +47,7 @@ class BannerFilterServiceTest {
 
   @Test
   void shouldFilterOnApplicationName() {
+
     final var expectedBanner = BannerDTO.builder()
         .application(ApplicationDTO.MINA_INTYG)
         .displayFrom(LocalDateTime.now())
@@ -57,8 +58,8 @@ class BannerFilterServiceTest {
         BannerDTO.builder().build(),
         BannerDTO.builder()
             .application(ApplicationDTO.MINA_INTYG)
-            .displayFrom(LocalDateTime.now())
-            .displayTo(LocalDateTime.now().plusMinutes(10))
+            .displayFrom(expectedBanner.getDisplayFrom())
+            .displayTo(expectedBanner.getDisplayTo())
             .build()
     );
 

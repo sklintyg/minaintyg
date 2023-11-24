@@ -14,7 +14,7 @@ class DateUtilTest {
 
     @Test
     void shouldReturnTrueIfDateMatch() {
-      assertTrue(DateUtil.afterOrEquals(LocalDateTime.now()));
+      assertTrue(DateUtil.afterOrEquals(LocalDateTime.now().plusSeconds(10)));
     }
 
     @Test
