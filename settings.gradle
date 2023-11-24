@@ -5,4 +5,5 @@ include 'integration-api'
 include 'integration-webcert'
 include 'integration-intyg-proxy-service'
 include 'integration-intygstjanst'
+include 'integration-intygsadmin'
 
