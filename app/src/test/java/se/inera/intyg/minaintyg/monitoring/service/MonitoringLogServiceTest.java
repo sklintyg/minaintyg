@@ -25,7 +25,7 @@ import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
-class MonitoringLogServiceImplTest {
+class MonitoringLogServiceTest {
 
   private static final String PERSON_ID = "personId";
   private static final String SOMETHING_WENT_WRONG = "something went wrong";
