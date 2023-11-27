@@ -17,6 +17,7 @@ import org.springframework.cache.CacheManager;
 import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
+import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
 
 @ExtendWith(MockitoExtension.class)
 class BannerRepositoryTest {
@@ -88,6 +89,15 @@ class BannerRepositoryTest {
       final var result = bannerRepository.load();
 
       assertEquals(EXPECTED_RESPONSE, result);
+    }
+
+    @Test
+    void shouldReturnEmptyResponseIfCommunicationErrorWithIntygsadmin() {
+      when(getBannerIntegrationService.get()).thenThrow(IntegrationServiceException.class);
+
+      final var result = bannerRepository.load();
+
+      assertEquals(GetBannerIntegrationResponse.builder().build(), result);
     }
   }
 }
