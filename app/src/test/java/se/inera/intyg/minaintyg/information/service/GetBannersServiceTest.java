@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
-import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,7 +29,7 @@ class GetBannersServiceTest {
   private static final FormattedBanner EXPECTED_FORMATTED_BANNER = FormattedBanner.builder()
       .build();
   @Mock
-  private GetBannerIntegrationService getBannerIntegrationService;
+  private BannerRepository bannerRepository;
 
   @Mock
   private FormattedBannerConverter formattedBannerConverter;
@@ -43,7 +42,7 @@ class GetBannersServiceTest {
     when(formattedBannerConverter.convert(any(Banner.class)))
         .thenReturn(EXPECTED_FORMATTED_BANNER);
 
-    when(getBannerIntegrationService.get())
+    when(bannerRepository.get())
         .thenReturn(
             GetBannerIntegrationResponse.builder()
                 .banners(EXPECTED_BANNERS)
