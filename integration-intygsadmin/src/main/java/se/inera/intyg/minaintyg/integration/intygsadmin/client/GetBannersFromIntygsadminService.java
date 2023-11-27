@@ -1,6 +1,6 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
-import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSTJANST;
+import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSADMIN;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,11 +52,11 @@ public class GetBannersFromIntygsadminService {
         .share()
         .onErrorMap(
             WebClientRequestException.class,
-            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYGSTJANST)
+            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYGSADMIN)
         )
         .onErrorMap(
             GatewayTimeout.class,
-            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSTJANST)
+            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSADMIN)
         )
         .block();
 

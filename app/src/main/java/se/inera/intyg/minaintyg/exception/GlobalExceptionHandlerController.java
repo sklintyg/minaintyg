@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import se.inera.intyg.minaintyg.integration.common.IllegalCertificateAccessException;
 import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
+import se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @Slf4j
@@ -22,9 +23,20 @@ public class GlobalExceptionHandlerController {
         exception.getApplicationName(),
         exception.getStackTrace()
     );
+
+    if (errorRelatedToIntygsadmin(exception)) {
+      return ResponseEntity
+          .status(200)
+          .build();
+    }
+    
     return ResponseEntity
         .status(503)
         .build();
+  }
+
+  private static boolean errorRelatedToIntygsadmin(IntegrationServiceException exception) {
+    return exception.getApplicationName().equals(ApplicationConstants.APPLICATION_INTYGSADMIN);
   }
 
   @ExceptionHandler(IllegalCertificateAccessException.class)
