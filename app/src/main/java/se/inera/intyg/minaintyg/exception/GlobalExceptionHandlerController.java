@@ -24,14 +24,8 @@ public class GlobalExceptionHandlerController {
         exception.getStackTrace()
     );
 
-    if (errorRelatedToIntygsadmin(exception)) {
-      return ResponseEntity
-          .status(200)
-          .build();
-    }
-    
     return ResponseEntity
-        .status(503)
+        .status(errorRelatedToIntygsadmin(exception) ? 200 : 503)
         .build();
   }
 
