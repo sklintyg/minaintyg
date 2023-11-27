@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import org.springframework.cache.CacheManager;
 import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
+import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
 
 @ExtendWith(MockitoExtension.class)
 class BannerRepositoryTest {
@@ -28,6 +31,9 @@ class BannerRepositoryTest {
   @Mock
   private GetBannerIntegrationService getBannerIntegrationService;
 
+  @Mock
+  private ObjectMapper objectMapper;
+
   @InjectMocks
   private BannerRepository bannerRepository;
 
@@ -35,10 +41,12 @@ class BannerRepositoryTest {
   class Get {
 
     @Test
-    void shouldGetBannerResponseFromCache() {
+    void shouldGetBannerResponseFromCache() throws JsonProcessingException {
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
-      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, GetBannerIntegrationResponse.class)).thenReturn(
-          EXPECTED_RESPONSE);
+      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class)).thenReturn(
+          EXPECTED_RESPONSE.toString());
+      when(objectMapper.readValue(EXPECTED_RESPONSE.toString(),
+          GetBannerIntegrationResponse.class)).thenReturn(EXPECTED_RESPONSE);
 
       final var response = bannerRepository.get();
 
@@ -48,7 +56,7 @@ class BannerRepositoryTest {
     @Test
     void shouldGetBannerResponseFromBannerIntegrationService() {
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
-      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, GetBannerIntegrationResponse.class)).thenReturn(
+      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class)).thenReturn(
           null);
       when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
 
@@ -62,13 +70,15 @@ class BannerRepositoryTest {
   class Load {
 
     @Test
-    void shouldUpdateCache() {
+    void shouldUpdateCache() throws JsonProcessingException {
       when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
+      when(objectMapper.writeValueAsString(EXPECTED_RESPONSE)).thenReturn(
+          EXPECTED_RESPONSE.toString());
 
       bannerRepository.load();
 
-      verify(cache).put(RedisConfig.BANNERS_CACHE_KEY, EXPECTED_RESPONSE);
+      verify(cache).put(RedisConfig.BANNERS_CACHE_KEY, EXPECTED_RESPONSE.toString());
     }
 
     @Test
@@ -79,6 +89,15 @@ class BannerRepositoryTest {
       final var result = bannerRepository.load();
 
       assertEquals(EXPECTED_RESPONSE, result);
+    }
+
+    @Test
+    void shouldReturnEmptyResponseIfCommunicationErrorWithIntygsadmin() {
+      when(getBannerIntegrationService.get()).thenThrow(IntegrationServiceException.class);
+
+      final var result = bannerRepository.load();
+
+      assertEquals(GetBannerIntegrationResponse.builder().build(), result);
     }
   }
 }

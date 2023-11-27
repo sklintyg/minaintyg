@@ -22,6 +22,7 @@ public class GlobalExceptionHandlerController {
         exception.getApplicationName(),
         exception.getStackTrace()
     );
+
     return ResponseEntity
         .status(503)
         .build();

@@ -9,4 +9,5 @@ public class ApplicationConstants {
   public static final String APPLICATION_WEBCERT = "Webcert";
   public static final String APPLICATION_INTYG_PROXY_SERVICE = "Intyg proxy service";
   public static final String APPLICATION_INTYGSTJANST = "Intygstjanst";
+  public static final String APPLICATION_INTYGSADMIN = "Intygsadmin";
 }
