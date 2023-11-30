@@ -68,6 +68,8 @@ public class WebSecurityConfig {
   private String assertionConsumerServiceLocation;
   @Value("${saml.sp.single.logout.service.location}")
   private String singleLogoutServiceLocation;
+  @Value("${saml.sp.single.logout.service.response.location}")
+  private String singleLogoutServiceResponseLocation;
   @Value("${saml.login.success.url}")
   private String samlLoginSuccessUrl;
   @Value("${saml.login.success.url.always.use}")
@@ -93,6 +95,7 @@ public class WebSecurityConfig {
         .registrationId(AuthenticationConstants.ELEG_PARTY_REGISTRATION_ID)
         .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
         .singleLogoutServiceLocation(singleLogoutServiceLocation)
+        .singleLogoutServiceResponseLocation(singleLogoutServiceResponseLocation)
         .signingX509Credentials(signing ->
             signing.add(
                 Saml2X509Credential.signing(appPrivateKey, appCertificate)
