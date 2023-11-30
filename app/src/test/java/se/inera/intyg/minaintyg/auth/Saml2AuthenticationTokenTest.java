@@ -57,7 +57,7 @@ class Saml2AuthenticationTokenTest {
   }
 
   @Test
-  void shallReturnFalseWhenEquals() {
+  void shallReturnFalseWhenNotEquals() {
     final var token = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
     final var tokenTwo = new Saml2AuthenticationToken(mock(MinaIntygUser.class),
         saml2Authentication);
@@ -65,7 +65,7 @@ class Saml2AuthenticationTokenTest {
   }
 
   @Test
-  void shallReturnSameHashCodesWhenNotEqual() {
+  void shallReturnSameHashCodesWhenEqual() {
     final var token = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
     final var tokenTwo = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
     assertEquals(token.hashCode(), tokenTwo.hashCode());
