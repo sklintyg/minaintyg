@@ -74,6 +74,8 @@ public class WebSecurityConfig {
   private String samlLoginSuccessUrl;
   @Value("${saml.login.success.url.always.use}")
   private boolean samlLoginSuccessUrlAlwaysUse;
+  @Value("${saml.logout.success.url}")
+  private String samlLogoutSuccessUrl;
 
   @Bean
   public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository(
@@ -147,6 +149,7 @@ public class WebSecurityConfig {
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
+        .logout(logout -> logout.logoutSuccessUrl(samlLogoutSuccessUrl))
         .headers(header -> header.addHeaderWriter(customXFrameOptionsHeaderWriter))
         .saml2Metadata(withDefaults());
 
