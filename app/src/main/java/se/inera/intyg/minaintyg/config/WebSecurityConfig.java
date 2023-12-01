@@ -159,8 +159,9 @@ public class WebSecurityConfig {
 
   private void configureTestability(HttpSecurity http) throws Exception {
     http
-        .authorizeHttpRequests(request -> request.
-            requestMatchers(TESTABILITY_API).permitAll()
+        .authorizeHttpRequests(request -> request
+            .requestMatchers(TESTABILITY_API).permitAll()
+            .requestMatchers(SAML_LOGOUT_ENDPOINTS).permitAll()
         )
         .csrf(csrfConfigurer -> csrfConfigurer
             .ignoringRequestMatchers(TESTABILITY_API)
