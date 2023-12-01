@@ -52,6 +52,7 @@ public class WebSecurityConfig {
 
   public static final String TESTABILITY_PROFILE = "testability";
   public static final String TESTABILITY_API = "/api/testability/**";
+  public static final String SAML_LOGOUT_ENDPOINTS = "/logout/saml2/slo/**";
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
@@ -163,6 +164,7 @@ public class WebSecurityConfig {
         )
         .csrf(csrfConfigurer -> csrfConfigurer
             .ignoringRequestMatchers(TESTABILITY_API)
+            .ignoringRequestMatchers(SAML_LOGOUT_ENDPOINTS)
         );
   }
 
