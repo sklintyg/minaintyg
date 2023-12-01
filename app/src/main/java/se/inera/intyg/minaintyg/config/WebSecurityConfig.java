@@ -120,7 +120,10 @@ public class WebSecurityConfig {
 
     http
         .authorizeHttpRequests(request -> request.
-            requestMatchers(HEALTH_CHECK_ENDPOINT).permitAll().
+            requestMatchers(
+                HEALTH_CHECK_ENDPOINT,
+                SAML_LOGOUT_ENDPOINTS
+            ).permitAll().
             anyRequest().fullyAuthenticated()
         )
         .saml2Login(saml2 -> saml2
@@ -146,6 +149,7 @@ public class WebSecurityConfig {
         .csrf(csrfConfigurer -> csrfConfigurer
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+            .ignoringRequestMatchers(SAML_LOGOUT_ENDPOINTS)
         )
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
@@ -159,12 +163,11 @@ public class WebSecurityConfig {
 
   private void configureTestability(HttpSecurity http) throws Exception {
     http
-        .authorizeHttpRequests(request -> request.
-            requestMatchers(TESTABILITY_API).permitAll()
+        .authorizeHttpRequests(request -> request
+            .requestMatchers(TESTABILITY_API).permitAll()
         )
         .csrf(csrfConfigurer -> csrfConfigurer
             .ignoringRequestMatchers(TESTABILITY_API)
-            .ignoringRequestMatchers(SAML_LOGOUT_ENDPOINTS)
         );
   }
 
