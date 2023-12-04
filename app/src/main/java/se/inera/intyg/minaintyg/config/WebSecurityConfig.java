@@ -52,7 +52,7 @@ public class WebSecurityConfig {
 
   public static final String TESTABILITY_PROFILE = "testability";
   public static final String TESTABILITY_API = "/api/testability/**";
-  public static final String SAML_LOGOUT_ENDPOINTS = "/logout/saml2/slo/**";
+  public static final String SAML_LOGOUT_ENDPOINTS = "/logout/saml2/**";
   public static final String HEALTH_CHECK_ENDPOINT = "/actuator/health";
   public static final String APP_BUNDLE_NAME = "app";
   private final MinaIntygUserDetailService minaIntygUserDetailService;
@@ -154,7 +154,6 @@ public class WebSecurityConfig {
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
-        .logout(logout -> logout.logoutSuccessUrl(samlLogoutSuccessUrl))
         .headers(header -> header.addHeaderWriter(customXFrameOptionsHeaderWriter))
         .saml2Metadata(withDefaults());
 
