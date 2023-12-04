@@ -154,6 +154,7 @@ public class WebSecurityConfig {
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
+        .logout(logout -> logout.logoutSuccessUrl(samlLogoutSuccessUrl))
         .headers(header -> header.addHeaderWriter(customXFrameOptionsHeaderWriter))
         .saml2Metadata(withDefaults());
 
