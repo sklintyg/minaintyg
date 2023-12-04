@@ -24,6 +24,9 @@ class DiagnosisListValueConverterTest {
   private static final String CODE_ONE_DESCRIPTION = "CODE_ONE_DESCRIPTION";
   private static final String CODE_TWO = "CODE_TWO";
   private static final String CODE_TWO_DESCRIPTION = "CODE_TWO_DESCRIPTION";
+  public static final String DIAGNOSIS = "Diagnos";
+  private static final String DIAGNOSIS_CODY_WITH_TERMINOLOGY = "Diagnoskod enligt %s";
+
 
   private final ValueConverter diagnosisListValueConverter = new DiagnosisListValueConverter();
 
@@ -46,10 +49,11 @@ class DiagnosisListValueConverterTest {
   }
 
   @Test
-  void shallReturnOneDiagnosisWithTerminologyOne() {
+  void shallReturnOneDiagnosisWithTerminologyOneAndDiagnosis() {
     final var expectedResult = CertificateQuestionValueTable.builder()
         .headings(
-            createHeadings(TERMINOLOGY_LABEL_ONE, "")
+            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
+                DIAGNOSIS)
         )
         .values(
             createValues(
@@ -74,10 +78,11 @@ class DiagnosisListValueConverterTest {
   }
 
   @Test
-  void shallReturnOneDiagnosisWithTerminologyTwo() {
+  void shallReturnOneDiagnosisWithTerminologyTwoAndDiagnosis() {
     final var expectedResult = CertificateQuestionValueTable.builder()
         .headings(
-            createHeadings(TERMINOLOGY_LABEL_TWO, "")
+            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_TWO),
+                DIAGNOSIS)
         )
         .values(
             createValues(
@@ -102,10 +107,11 @@ class DiagnosisListValueConverterTest {
   }
 
   @Test
-  void shallReturnOneDiagnosisWithMissingTerminology() {
+  void shallReturnOneDiagnosisWithMissingTerminologyAndDiagnosis() {
     final var expectedResult = CertificateQuestionValueTable.builder()
         .headings(
-            createHeadings(TERMINOLOGY_ID_THREE, "")
+            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_ID_THREE),
+                DIAGNOSIS)
         )
         .values(
             createValues(
@@ -133,7 +139,8 @@ class DiagnosisListValueConverterTest {
   void shallReturnManyDiagnoses() {
     final var expectedResult = CertificateQuestionValueTable.builder()
         .headings(
-            createHeadings(TERMINOLOGY_LABEL_ONE, "")
+            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
+                DIAGNOSIS)
         )
         .values(
             createValues(
