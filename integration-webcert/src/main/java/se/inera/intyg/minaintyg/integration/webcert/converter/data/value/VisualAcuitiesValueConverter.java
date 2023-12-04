@@ -57,12 +57,7 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
 
   private static List<TableElement> dataElements(List<String> values) {
     return values.stream()
-        .map(value ->
-            TableElement.builder()
-                .type(TableElementType.DATA)
-                .value(value)
-                .build()
-        )
+        .map(VisualAcuitiesValueConverter::dataElement)
         .toList();
   }
 
