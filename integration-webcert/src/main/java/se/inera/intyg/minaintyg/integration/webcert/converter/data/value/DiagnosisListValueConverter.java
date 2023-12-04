@@ -18,8 +18,9 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 @Component
 public class DiagnosisListValueConverter extends AbstractValueConverter {
 
-  public static final String EMPTY = "";
+  public static final String DIAGNOSIS = "Diagnos";
   public static final String MISSING = "Saknas";
+  private static final String DIAGNOSIS_CODE_WITH_TERMINLOGOY_LABEL = "Diagnoskod enligt %s";
 
   @Override
   public CertificateDataValueType getType() {
@@ -47,8 +48,10 @@ public class DiagnosisListValueConverter extends AbstractValueConverter {
   private static List<String> getHeadings(List<CertificateDataValueDiagnosis> diagnoses,
       List<DiagnosesTerminology> terminologies) {
     return List.of(
-        getTerminologyLabel(diagnoses, terminologies),
-        EMPTY
+        String.format(
+            DIAGNOSIS_CODE_WITH_TERMINLOGOY_LABEL, getTerminologyLabel(diagnoses, terminologies)
+        ),
+        DIAGNOSIS
     );
   }
 
