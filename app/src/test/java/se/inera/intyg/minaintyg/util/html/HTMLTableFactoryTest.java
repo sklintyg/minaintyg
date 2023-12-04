@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElement;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElementType;
 
 class HTMLTableFactoryTest {
 
@@ -20,7 +22,23 @@ class HTMLTableFactoryTest {
   }
 
   @Test
-  void shouldReturnUlWithTwoTr() {
+  void shouldReturnGeneralTableWithOneTr() {
+    final var result = HTMLTableFactory.table(
+        List.of(
+            List.of(
+                TableElement.builder().type(TableElementType.HEADING).value("heading").build(),
+                TableElement.builder().type(TableElementType.DATA).value("data").build()
+            )
+        )
+    );
+
+    assertEquals(
+        "<table className=\"ids-table\"><tbody><tr><th>heading</th><td>data</td></tr></tbody></table>",
+        result);
+  }
+
+  @Test
+  void shouldReturnTableWithTwoTr() {
     final var result = HTMLTableFactory.table(
         List.of(List.of("Value 1", "Value 2"), List.of("Value 3", "Value 4")),
         List.of("heading 1", "heading 2")

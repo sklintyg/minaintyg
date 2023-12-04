@@ -5,7 +5,9 @@ import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueGeneralTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElement;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElementType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigVisualAcuity;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.VisualAcuity;
@@ -48,16 +50,33 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithoutCorrectionAsTable() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "0,1", "-", "Nej"),
-                createValue(LEFT_EYE_LABEL, "1,1", "-", "Nej"),
-                createValue(BINOCULAR_LABEL, "2,0", "-", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("0,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("1,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("2,0"),
+                    getDataElement("-"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -87,16 +106,33 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithCorrectionAsTable() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "-", "0,1", "Nej"),
-                createValue(LEFT_EYE_LABEL, "-", "1,1", "Nej"),
-                createValue(BINOCULAR_LABEL, "-", "2,0", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("-"),
+                    getDataElement("0,1"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("-"),
+                    getDataElement("1,1"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("-"),
+                    getDataElement("2,0"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -126,16 +162,33 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnContactLensesAsTable() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "0,1", "2,0", "Nej"),
-                createValue(LEFT_EYE_LABEL, "1,1", "0,1", "Ja"),
-                createValue(BINOCULAR_LABEL, "2,0", "1,1", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("0,1"),
+                    getDataElement("2,0"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("1,1"),
+                    getDataElement("0,1"),
+                    getDataElement("Ja")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("2,0"),
+                    getDataElement("1,1"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -165,16 +218,33 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithoutCorrectionWithCorrectionContactLensesAsTable() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "-", "-", "Ja"),
-                createValue(LEFT_EYE_LABEL, "-", "-", "Nej"),
-                createValue(BINOCULAR_LABEL, "-", "-", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("-"),
+                    getDataElement("-"),
+                    getDataElement("Ja")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("-"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("-"),
+                    getDataElement("-"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -204,16 +274,33 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnLeftAndRightWithoutBinocularsAsTable() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "0,1", "-", "Nej"),
-                createValue(LEFT_EYE_LABEL, "1,1", "-", "Nej"),
-                createValue(BINOCULAR_LABEL, "-", "-", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("0,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("1,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("-"),
+                    getDataElement("-"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -240,16 +327,34 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnConsiderNullContactLensesAsFalse() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings("", WITHOUT_CORRECTION_LABEL, WITH_CORRECTION_LABEL,
-                CONTACT_LENSES_LABEL)
-        )
+
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
         .values(
-            createValues(
-                createValue(RIGHT_EYE_LABEL, "0,1", "-", "Nej"),
-                createValue(LEFT_EYE_LABEL, "1,1", "-", "Nej"),
-                createValue(BINOCULAR_LABEL, "-", "-", "-")
+            List.of(
+                List.of(
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)
+                ),
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("0,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("1,1"),
+                    getDataElement("-"),
+                    getDataElement("Nej")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("-"),
+                    getDataElement("-"),
+                    getDataElement("-")
+                )
             )
         )
         .build();
@@ -336,16 +441,17 @@ class VisualAcuitiesValueConverterTest {
     return builder.build();
   }
 
-  private static List<String> createHeadings(String... headings) {
-    return List.of(headings);
+  private static TableElement getDataElement(String value) {
+    return TableElement.builder()
+        .type(TableElementType.DATA)
+        .value(value)
+        .build();
   }
 
-  @SafeVarargs
-  private static List<List<String>> createValues(List<String>... values) {
-    return List.of(values);
-  }
-
-  private static List<String> createValue(String... values) {
-    return List.of(values);
+  private static TableElement getHeadingElement(String value) {
+    return TableElement.builder()
+        .type(TableElementType.HEADING)
+        .value(value)
+        .build();
   }
 }
