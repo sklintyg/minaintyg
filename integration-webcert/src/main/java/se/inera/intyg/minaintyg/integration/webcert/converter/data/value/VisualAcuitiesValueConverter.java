@@ -69,22 +69,24 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
     }
 
     return CertificateQuestionValueGeneralTable.builder()
+        .headings(
+            List.of(
+                dataElement(EMPTY),
+                headingElement(headerLabel(config,
+                    CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
+                ),
+                headingElement(
+                    headerLabel(config,
+                        CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
+                ),
+                headingElement(
+                    headerLabel(config,
+                        CertificateDataConfigVisualAcuity::getContactLensesLabel)
+                )
+            )
+        )
         .values(
             List.of(
-                List.of(
-                    dataElement(EMPTY),
-                    headingElement(headerLabel(config,
-                        CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
-                    ),
-                    headingElement(
-                        headerLabel(config,
-                            CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
-                    ),
-                    headingElement(
-                        headerLabel(config,
-                            CertificateDataConfigVisualAcuity::getContactLensesLabel)
-                    )
-                ),
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getRightEye)),
                     dataElements(value(values, CertificateDataValueVisualAcuities::getRightEye))),

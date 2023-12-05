@@ -26,7 +26,7 @@ public class CertificateQuestionValueHTMLFactory {
   }
 
   public static String table(CertificateQuestionValueGeneralTable question) {
-    return HTMLTableFactory.table(question.getValues());
+    return HTMLTableFactory.generalTable(question.getValues(), question.getHeadings());
   }
 
   public static String list(CertificateQuestionValueList question) {

@@ -22,18 +22,18 @@ class HTMLTableFactoryTest {
   }
 
   @Test
-  void shouldReturnGeneralTableWithOneTr() {
-    final var result = HTMLTableFactory.table(
+  void shouldReturnGeneralTable() {
+    final var result = HTMLTableFactory.generalTable(
         List.of(
             List.of(
-                TableElement.builder().type(TableElementType.HEADING).value("heading").build(),
                 TableElement.builder().type(TableElementType.DATA).value("data").build()
             )
-        )
+        ),
+        List.of(TableElement.builder().type(TableElementType.HEADING).value("heading").build())
     );
 
     assertEquals(
-        "<table className=\"ids-table\"><tbody><tr><th>heading</th><td>data</td></tr></tbody></table>",
+        "<table className=\"ids-table\"><thead><tr><th>heading</th></tr></thead><tbody><tr><td>data</td></tr></tbody></table>",
         result);
   }
 

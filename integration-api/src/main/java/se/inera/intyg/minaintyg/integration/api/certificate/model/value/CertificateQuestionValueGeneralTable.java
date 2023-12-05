@@ -8,6 +8,7 @@ import lombok.Value;
 @Builder
 public class CertificateQuestionValueGeneralTable implements CertificateQuestionValue {
 
+  List<TableElement> headings;
   List<List<TableElement>> values;
 
   @Override
