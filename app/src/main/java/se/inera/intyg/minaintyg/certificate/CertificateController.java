@@ -80,7 +80,7 @@ public class CertificateController {
     );
   }
 
-  @GetMapping(value = "/{certificateId}/pdf", produces = "application/pdf")
+  @GetMapping(value = "/{certificateId}/pdf/{fileName}", produces = "application/pdf")
   public ResponseEntity<byte[]> printCertificate(
       @PathVariable String certificateId,
       @RequestParam(required = false) String customizationId) {
