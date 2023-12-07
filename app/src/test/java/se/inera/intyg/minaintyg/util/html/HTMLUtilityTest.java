@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.util.html;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +38,13 @@ class HTMLUtilityTest {
     final var response = HTMLUtility.fromList(List.of(S1, S2), HTMLTextFactory::p);
 
     assertEquals(response, "<p>" + S1 + "</p><p>" + S2 + "</p>");
+  }
+
+  @Test
+  void shouldReturEmptyStringIfListIsEmpty() {
+    final var response = HTMLUtility.fromList(Collections.emptyList(), HTMLTextFactory::p);
+
+    assertEquals("", response);
   }
 
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueGeneralTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueItemList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
@@ -89,6 +90,7 @@ public class FormattedQuestionConverter {
       case TEXT -> text((CertificateQuestionValueText) value);
       case LIST -> list((CertificateQuestionValueList) value);
       case TABLE -> table((CertificateQuestionValueTable) value);
+      case GENERAL_TABLE -> table((CertificateQuestionValueGeneralTable) value);
       case ITEM_LIST -> itemList((CertificateQuestionValueItemList) value);
     };
   }

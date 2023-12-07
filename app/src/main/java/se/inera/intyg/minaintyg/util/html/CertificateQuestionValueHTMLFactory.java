@@ -5,6 +5,7 @@ import static se.inera.intyg.minaintyg.util.html.HTMLTextFactory.p;
 import static se.inera.intyg.minaintyg.util.html.HTMLUtility.fromList;
 import static se.inera.intyg.minaintyg.util.html.HTMLUtility.join;
 
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueGeneralTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueItemList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
@@ -22,6 +23,10 @@ public class CertificateQuestionValueHTMLFactory {
 
   public static String table(CertificateQuestionValueTable question) {
     return HTMLTableFactory.table(question.getValues(), question.getHeadings());
+  }
+
+  public static String table(CertificateQuestionValueGeneralTable question) {
+    return HTMLTableFactory.generalTable(question.getValues(), question.getHeadings());
   }
 
   public static String list(CertificateQuestionValueList question) {

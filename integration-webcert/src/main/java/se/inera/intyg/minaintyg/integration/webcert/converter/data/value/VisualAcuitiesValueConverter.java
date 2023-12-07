@@ -6,7 +6,9 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueGeneralTable;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElement;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElementType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigVisualAcuity;
@@ -39,6 +41,26 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
     return createTableValue(value, config);
   }
 
+  private static TableElement headingElement(String value) {
+    return TableElement.builder()
+        .type(TableElementType.HEADING)
+        .value(value)
+        .build();
+  }
+
+  private static TableElement dataElement(String value) {
+    return TableElement.builder()
+        .type(TableElementType.DATA)
+        .value(value)
+        .build();
+  }
+
+  private static List<TableElement> dataElements(List<String> values) {
+    return values.stream()
+        .map(VisualAcuitiesValueConverter::dataElement)
+        .toList();
+  }
+
   private static CertificateQuestionValue createTableValue(
       Optional<CertificateDataValueVisualAcuities> values,
       Optional<CertificateDataConfigVisualAcuity> config) {
@@ -46,28 +68,36 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
       return NOT_PROVIDED_VALUE;
     }
 
-    return CertificateQuestionValueTable.builder()
+    return CertificateQuestionValueGeneralTable.builder()
         .headings(
-            row(
-                EMPTY,
-                headerLabel(config, CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel),
-                headerLabel(config, CertificateDataConfigVisualAcuity::getWithCorrectionLabel),
-                headerLabel(config, CertificateDataConfigVisualAcuity::getContactLensesLabel)
+            List.of(
+                dataElement(EMPTY),
+                headingElement(headerLabel(config,
+                    CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
+                ),
+                headingElement(
+                    headerLabel(config,
+                        CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
+                ),
+                headingElement(
+                    headerLabel(config,
+                        CertificateDataConfigVisualAcuity::getContactLensesLabel)
+                )
             )
         )
         .values(
             List.of(
                 row(
-                    label(config, CertificateDataConfigVisualAcuity::getRightEye),
-                    value(values, CertificateDataValueVisualAcuities::getRightEye)
+                    headingElement(label(config, CertificateDataConfigVisualAcuity::getRightEye)),
+                    dataElements(value(values, CertificateDataValueVisualAcuities::getRightEye))),
+                row(
+                    headingElement(label(config, CertificateDataConfigVisualAcuity::getLeftEye)),
+                    dataElements(value(values, CertificateDataValueVisualAcuities::getLeftEye))
                 ),
                 row(
-                    label(config, CertificateDataConfigVisualAcuity::getLeftEye),
-                    value(values, CertificateDataValueVisualAcuities::getLeftEye)
-                ),
-                row(
-                    label(config, CertificateDataConfigVisualAcuity::getBinocular),
-                    value(values, CertificateDataValueVisualAcuities::getBinocular, false)
+                    headingElement(label(config, CertificateDataConfigVisualAcuity::getBinocular)),
+                    dataElements(
+                        value(values, CertificateDataValueVisualAcuities::getBinocular, false))
                 )
             )
         )
@@ -84,12 +114,8 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
         .orElse(MISSING_LABEL);
   }
 
-  private static List<String> row(String label, List<String> value) {
+  private static List<TableElement> row(TableElement label, List<TableElement> value) {
     return Stream.concat(Stream.of(label), value.stream()).toList();
-  }
-
-  private static List<String> row(String... headers) {
-    return List.of(headers);
   }
 
   private static String label(Optional<CertificateDataConfigVisualAcuity> config,

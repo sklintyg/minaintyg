@@ -8,9 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateQuestion;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueGeneralTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueList;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElement;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableElementType;
 
 @ExtendWith(MockitoExtension.class)
 class FormattedQuestionConverterTest {
@@ -224,6 +227,37 @@ class FormattedQuestionConverterTest {
 
     assertEquals(
         "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4><table className=\"ids-table\"><thead><th>heading 1</th><th>heading 2</th></thead><tbody><tr><td>Value 1</td><td>Value 2</td></tr></tbody></table>",
+        result);
+  }
+
+  @Test
+  void shouldReturnHTMLForGeneralTable() {
+    final var question = CertificateQuestion.builder()
+        .title("Title")
+        .label("Label")
+        .value(
+            CertificateQuestionValueGeneralTable
+                .builder()
+                .values(List.of(
+                    List.of(
+                        TableElement.builder().type(TableElementType.DATA).value("").build(),
+                        TableElement.builder().type(TableElementType.HEADING).value("h 1").build(),
+                        TableElement.builder().type(TableElementType.HEADING).value("h 2").build()
+                    ),
+                    List.of(
+                        TableElement.builder().type(TableElementType.HEADING).value("h 3").build(),
+                        TableElement.builder().type(TableElementType.DATA).value("d 1").build(),
+                        TableElement.builder().type(TableElementType.DATA).value("d 2").build()
+                    )
+                ))
+                .build()
+        )
+        .build();
+
+    final var result = formattedQuestionConverter.convert(question);
+
+    assertEquals(
+        "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4><table className=\"ids-table\"><tbody><tr><td></td><th>h 1</th><th>h 2</th></tr><tr><th>h 3</th><td>d 1</td><td>d 2</td></tr></tbody></table>",
         result);
   }
 
