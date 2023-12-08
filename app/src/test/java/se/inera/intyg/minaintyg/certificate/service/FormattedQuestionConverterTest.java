@@ -238,12 +238,14 @@ class FormattedQuestionConverterTest {
         .value(
             CertificateQuestionValueGeneralTable
                 .builder()
-                .values(List.of(
+                .headings(
                     List.of(
                         TableElement.builder().type(TableElementType.DATA).value("").build(),
                         TableElement.builder().type(TableElementType.HEADING).value("h 1").build(),
                         TableElement.builder().type(TableElementType.HEADING).value("h 2").build()
-                    ),
+                    )
+                )
+                .values(List.of(
                     List.of(
                         TableElement.builder().type(TableElementType.HEADING).value("h 3").build(),
                         TableElement.builder().type(TableElementType.DATA).value("d 1").build(),
@@ -257,7 +259,7 @@ class FormattedQuestionConverterTest {
     final var result = formattedQuestionConverter.convert(question);
 
     assertEquals(
-        "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4><table className=\"ids-table\"><tbody><tr><td></td><th>h 1</th><th>h 2</th></tr><tr><th>h 3</th><td>d 1</td><td>d 2</td></tr></tbody></table>",
+        "<h3 className=\"ids-heading-3\">Title</h3><h4 className=\"ids-heading-4\">Label</h4><table className=\"ids-table\"><thead><tr><td></td><th>h 1</th><th>h 2</th></tr></thead><tbody><tr><th>h 3</th><td>d 1</td><td>d 2</td></tr></tbody></table>",
         result);
   }
 
