@@ -28,10 +28,10 @@ public class HTMLTableFactory {
   }
 
   private static String table(String tbody, String thead) {
-    final var tableHeading = thead.isEmpty() ? "" : tag("thead", thead);
+    final var tableHeading = thead.isEmpty() ? "" : tag("thead", thead, true);
     final var tableContent = HTMLUtility.join(tableHeading, tbody);
 
-    return tag("table", "ids-table", tableContent);
+    return tag("table", "ids-table", tableContent, true);
   }
 
   private static String td(String value) {
@@ -39,11 +39,11 @@ public class HTMLTableFactory {
   }
 
   private static String th(String value) {
-    return tag("th", value);
+    return tag("th", value, true);
   }
 
   private static String tr(String value) {
-    return tag("tr", value);
+    return tag("tr", value, true);
   }
 
   private static <T> String tbody(List<List<T>> values, Function<T, String> mapper) {
@@ -52,7 +52,7 @@ public class HTMLTableFactory {
         value -> tr(HTMLUtility.fromList(value, mapper))
     );
 
-    return tag("tbody", tbody);
+    return tag("tbody", tbody, true);
   }
 
   private static String tableElement(TableElement element) {

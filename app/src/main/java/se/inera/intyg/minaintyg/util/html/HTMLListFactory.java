@@ -13,7 +13,7 @@ public class HTMLListFactory {
   public static String ul(List<String> values) {
     final var content = HTMLUtility.fromList(values, HTMLListFactory::li);
 
-    return tag("ul", content);
+    return tag("ul", content, true);
   }
 
   private static String li(String value) {

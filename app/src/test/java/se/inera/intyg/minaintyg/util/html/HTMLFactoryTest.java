@@ -60,6 +60,27 @@ class HTMLFactoryTest {
     assertEquals("<tag>Value<br/>Value<br/>Value</tag>", result);
   }
 
+  @Test
+  void shouldConvertSpecialCharactersAsDefault() {
+    final var result = HTMLFactory.tag("p", "Value<Value");
+
+    assertEquals("<p>Value&lt;Value</p>", result);
+  }
+
+  @Test
+  void shouldConvertSpecialCharactersIfNotParent() {
+    final var result = HTMLFactory.tag("p", "Value<Value", false);
+
+    assertEquals("<p>Value&lt;Value</p>", result);
+  }
+
+  @Test
+  void shouldNotConvertSpecialCharactersIfParent() {
+    final var result = HTMLFactory.tag("p", "Value<p>Value</p> test", true);
+
+    assertEquals("<p>Value<p>Value</p> test</p>", result);
+  }
+
   @Nested
   class WithClassName {
 
@@ -101,6 +122,27 @@ class HTMLFactoryTest {
       final var result = HTMLFactory.tag("", "className", null);
 
       assertEquals("", result);
+    }
+
+    @Test
+    void shouldConvertSpecialCharactersAsDefault() {
+      final var result = HTMLFactory.tag("p", "class", "Value<Value");
+
+      assertEquals("<p className=\"class\">Value&lt;Value</p>", result);
+    }
+
+    @Test
+    void shouldConvertSpecialCharactersIfNotParent() {
+      final var result = HTMLFactory.tag("p", "class", "Value<Value", false);
+
+      assertEquals("<p className=\"class\">Value&lt;Value</p>", result);
+    }
+
+    @Test
+    void shouldNotConvertSpecialCharactersIfParent() {
+      final var result = HTMLFactory.tag("p", "class", "Value<p>Value</p> test", true);
+
+      assertEquals("<p className=\"class\">Value<p>Value</p> test</p>", result);
     }
 
     @Test
