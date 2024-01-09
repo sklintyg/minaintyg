@@ -22,37 +22,37 @@ public class HTMLFactory {
     throw new IllegalStateException("Utility class");
   }
 
-  public static String tag(String tagName, String className, String value, boolean isParent) {
-    return tag(tagName, className, value, null, isParent);
+  public static String tagWithChildren(String tagName, String className, String children) {
+    return tag(tagName, className, children, null, false);
+  }
+
+  public static String tagWithChildren(String tagName, String children) {
+    return tag(tagName, null, children, null, false);
   }
 
   public static String tag(String tagName, String className, String value) {
-    return tag(tagName, className, value, null, false);
+    return tag(tagName, className, value, null, true);
   }
 
   public static String tag(String tagName, String className, String value,
       Map<String, String> attributes) {
-    return tag(tagName, className, value, attributes, false);
+    return tag(tagName, className, value, attributes, true);
   }
 
   public static String tag(String tagName, String className, String value,
-      Map<String, String> attributes, boolean isParent) {
+      Map<String, String> attributes, boolean shouldFormat) {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
 
     final var formattedAttributes = formatAttributes(attributes);
-    final var text = formatText(value, isParent);
+    final var text = formatText(value, shouldFormat);
 
     return startTag(tagName, className, formattedAttributes) + text + endTag(tagName);
   }
 
   public static String tag(String tagName, String value) {
-    return tag(tagName, null, value, null, false);
-  }
-
-  public static String tag(String tagName, String value, boolean isParent) {
-    return tag(tagName, null, value, null, isParent);
+    return tag(tagName, null, value, null, true);
   }
 
   private static String startTag(String tagName, String className, String attributes) {
@@ -74,8 +74,8 @@ public class HTMLFactory {
     return END_FIRST_TAG + tagName + END_SECOND_TAG;
   }
 
-  private static String formatText(String value, boolean isParent) {
-    final var convertedText = isParent ? value : htmlEscape(value);
+  private static String formatText(String value, boolean shouldFormat) {
+    final var convertedText = shouldFormat ? htmlEscape(value, "UTF-8") : value;
     return convertLineSeparators(convertedText);
   }
 
