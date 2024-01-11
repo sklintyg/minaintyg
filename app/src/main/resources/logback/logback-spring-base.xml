@@ -12,8 +12,15 @@
       <onMatch>DENY</onMatch>
       <onMismatch>ACCEPT</onMismatch>
     </filter>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${TIMESTAMP} ${LEVEL} [console,${SESSION},${TRACE}] --- ${LOGGER} : ${LINE}</pattern>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <fieldNames>
+        <timestamp>timestamp</timestamp>
+        <version>version</version>
+        <message>message</message>
+        <logger>logger</logger>
+        <thread>thread</thread>
+        <stackTrace>stackTrace</stackTrace>
+      </fieldNames>
     </encoder>
   </appender>
 
@@ -23,8 +30,17 @@
       <onMatch>ACCEPT</onMatch>
       <onMismatch>DENY</onMismatch>
     </filter>
-    <encoder class="se.inera.intyg.minaintyg.common.pattern.UserPatternLayout">
-      <pattern>${TIMESTAMP} ${LEVEL} [monitoring,${SESSION},${TRACE},%user] --- %boldGreen(${LOGGER}) : ${LINE}</pattern>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <fieldNames>
+        <timestamp>timestamp</timestamp>
+        <version>version</version>
+        <message>message</message>
+        <logger>logger</logger>
+        <thread>thread</thread>
+        <stackTrace>stackTrace</stackTrace>
+        <session>session</session>
+        <trace>trace</trace>
+      </fieldNames>
     </encoder>
   </appender>
 </included>
