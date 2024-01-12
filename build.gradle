@@ -20,6 +20,13 @@ allprojects {
     }
 }
 
+sonar {
+    properties {
+        property "sonar.projectKey", "intyg-minaintyg"
+        property "sonar.projectName", "intyg-minaintyg"
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
@@ -66,7 +73,6 @@ subprojects {
 
     sonar {
         properties {
-            property "sonar.projectKey", "intyg-minaintyg"
             property "sonar.exclusions", "**/integration/api/**/*,**/testability/*,**/dto/**/*"
             property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
         }
