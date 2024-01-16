@@ -24,7 +24,13 @@ sonar {
     properties {
         property "sonar.projectKey", "intyg-minaintyg"
         property "sonar.projectName", "intyg-minaintyg"
+        property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
+        property "sonar.dependencyCheck.jsonReportPath", "${buildDir}/reports/dependency-check-report.json"
     }
+}
+
+dependencyCheck {
+    formats = List.of("HTML", "JSON")
 }
 
 subprojects {
@@ -67,14 +73,9 @@ subprojects {
         }
     }
 
-    dependencyCheck {
-        formats = List.of("HTML", "JSON")
-    }
-
     sonar {
         properties {
             property "sonar.exclusions", "**/integration/api/**/*,**/testability/*,**/dto/**/*"
-            property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
         }
     }
 }
