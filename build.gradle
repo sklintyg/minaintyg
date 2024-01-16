@@ -24,7 +24,13 @@ sonar {
     properties {
         property "sonar.projectKey", "intyg-minaintyg"
         property "sonar.projectName", "intyg-minaintyg"
+        property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
+        property "sonar.dependencyCheck.jsonReportPath", "${buildDir}/reports/dependency-check-report.json"
     }
+}
+
+dependencyCheck {
+    formats = List.of("HTML", "JSON")
 }
 
 subprojects {
@@ -61,20 +67,9 @@ subprojects {
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: [
-                        "**/testability/*"
+                        "**/testability/**", "**/integration/api/**", "**/dto/**"
                 ])
             }))
-        }
-    }
-
-    dependencyCheck {
-        formats = List.of("HTML", "JSON")
-    }
-
-    sonar {
-        properties {
-            property "sonar.exclusions", "**/integration/api/**/*,**/testability/*,**/dto/**/*"
-            property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
         }
     }
 }
