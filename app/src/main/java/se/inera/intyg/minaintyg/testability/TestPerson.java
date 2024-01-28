@@ -1,10 +1,14 @@
 package se.inera.intyg.minaintyg.testability;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TestPerson {
 
   String personId;

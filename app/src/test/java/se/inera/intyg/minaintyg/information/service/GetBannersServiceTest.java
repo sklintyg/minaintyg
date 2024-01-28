@@ -14,7 +14,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
+import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
 

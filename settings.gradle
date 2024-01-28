@@ -6,4 +6,5 @@ include 'integration-webcert'
 include 'integration-intyg-proxy-service'
 include 'integration-intygstjanst'
 include 'integration-intygsadmin'
+include 'integration-test'
 

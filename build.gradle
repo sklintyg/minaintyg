@@ -67,7 +67,8 @@ subprojects {
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: [
-                        "**/testability/*"
+                        "**/testability/**",
+                        "**/integrationtest/**",
                 ])
             }))
         }
@@ -75,7 +76,7 @@ subprojects {
 
     sonar {
         properties {
-            property "sonar.exclusions", "**/integration/api/**/*,**/testability/*,**/dto/**/*"
+            property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
         }
     }
 }

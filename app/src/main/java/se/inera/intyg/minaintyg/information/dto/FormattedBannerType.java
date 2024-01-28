@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.information.service.dto;
+package se.inera.intyg.minaintyg.information.dto;
 
 public enum FormattedBannerType {
   ERROR, OBSERVE, INFO

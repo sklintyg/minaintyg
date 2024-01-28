@@ -3,7 +3,7 @@ package se.inera.intyg.minaintyg.information.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBannerType;
+import se.inera.intyg.minaintyg.information.dto.FormattedBannerType;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
 import se.inera.intyg.minaintyg.integration.api.banner.model.BannerPriority;
 
