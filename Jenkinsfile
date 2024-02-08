@@ -92,7 +92,7 @@ pipeline {
                         whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
                         println("whichDocker: ${whichDocker}")
 
-                        String group = sh (script: "cat /etc/group | grep docker | grep -oPm1 (?<=docker:x:)(\\d*)", returnStdout: true).toString().trim()
+                        String group = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
                         println("group1: ${group}")
 
 
