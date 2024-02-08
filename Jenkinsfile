@@ -109,7 +109,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker}"
+                    //args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker}"
                 }
             }
             steps {
