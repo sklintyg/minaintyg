@@ -34,6 +34,7 @@ String buildName
 String currentStage
 String recipients
 String pwd
+String whichDocker
 List<Map<String, String>> allCommitIds = []
 Map<String, String> error = [stage: '', error: '']
 
@@ -88,8 +89,8 @@ pipeline {
                         String s = sh (script: "pwd", returnStdout: true).toString().trim()
                         pwd = "${s}/integration-test/src/test/java"
 
-                        String t = sh (script: "ls -al /run", returnStdout: true).toString().trim()
-                        println("VAR/RUN: ${t}")
+                        whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
+                        println("whichDocker: ${whichDocker}")
 
 
                     } catch(e) {
@@ -108,7 +109,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock"
+                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker}"
                 }
             }
             steps {
