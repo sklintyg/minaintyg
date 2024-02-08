@@ -92,6 +92,9 @@ pipeline {
                         whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
                         println("whichDocker: ${whichDocker}")
 
+                        String group = sh (script: "cat /etc/group | grep docker", returnStdout: true).toString().trim()
+                        println("group1: ${group}")
+
 
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
@@ -116,8 +119,9 @@ pipeline {
                 script {
                     try {
                         script {
-                            String containers = sh (script: "docker ps", returnStdout: true).toString().trim()
-                            println("containers: ${containers}")
+
+                            String group = sh (script: "cat /etc/group | grep docker", returnStdout: true).toString().trim()
+                            println("group2: ${group}")
 
                             currentStage = STAGE_NAME
                             sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
