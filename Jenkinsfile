@@ -33,6 +33,7 @@ String buildUrl
 String buildName
 String currentStage
 String recipients
+String pwd
 List<Map<String, String>> allCommitIds = []
 Map<String, String> error = [stage: '', error: '']
 
@@ -84,6 +85,8 @@ pipeline {
                         //setLatestTag = SET_LATEST_TAG
                         //triggerDeployBks = TRIGGER_DEPLOY_BKS
                         //skipDeploySit2 = SKIP_DEPLOY_SIT2
+                        pwd = sh (script: "pwd", returnStdout: true).toString().trim()
+
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
                         throw e
@@ -100,7 +103,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args "-v /var/run/docker.sock:/var/run/docker.sock"
+                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock"
                 }
             }
             steps {
