@@ -85,7 +85,8 @@ pipeline {
                         //setLatestTag = SET_LATEST_TAG
                         //triggerDeployBks = TRIGGER_DEPLOY_BKS
                         //skipDeploySit2 = SKIP_DEPLOY_SIT2
-                        pwd = sh (script: "pwd", returnStdout: true).toString().trim()
+                        String s = sh (script: "pwd", returnStdout: true).toString().trim()
+                        pwd = "${s}/integration-test/src/test/java"
 
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
