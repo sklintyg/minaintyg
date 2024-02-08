@@ -81,9 +81,9 @@ pipeline {
                         String contextPathConfig = essJob.getProperty(name: 'context.path')
                         contextPath = contextPathConfig ? contextPathConfig : 'ROOT'
 
-                        setLatestTag = SET_LATEST_TAG
-                        triggerDeployBks = TRIGGER_DEPLOY_BKS
-                        skipDeploySit2 = SKIP_DEPLOY_SIT2
+                        //setLatestTag = SET_LATEST_TAG
+                        //triggerDeployBks = TRIGGER_DEPLOY_BKS
+                        //skipDeploySit2 = SKIP_DEPLOY_SIT2
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
                         throw e
@@ -100,6 +100,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
+                    args "-v /var/run/docker.sock:/var/run/docker.sock"
                 }
             }
             steps {
