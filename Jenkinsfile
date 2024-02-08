@@ -92,7 +92,7 @@ pipeline {
                         whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
                         println("whichDocker: ${whichDocker}")
 
-                        String group = sh (script: "cat /etc/group | grep docker", returnStdout: true).toString().trim()
+                        String group = sh (script: "cat /etc/group | grep docker | grep -oPm1 (?<=docker:x:)(\\d*)", returnStdout: true).toString().trim()
                         println("group1: ${group}")
 
 
@@ -120,8 +120,8 @@ pipeline {
                     try {
                         script {
 
-                            //String whoami = sh (script: "whoami", returnStdout: true).toString().trim()
-                            //println("whoami: ${whoami}")
+                            String id = sh (script: "id", returnStdout: true).toString().trim()
+                            println("id: ${id}")
 
                             String sock = sh (script: "ls -l /var/run/docker.sock", returnStdout: true).toString().trim()
                             println("sock: ${sock}")
