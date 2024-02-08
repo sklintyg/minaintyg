@@ -120,8 +120,14 @@ pipeline {
                     try {
                         script {
 
-                            String group = sh (script: "cat /etc/group | grep docker", returnStdout: true).toString().trim()
-                            println("group2: ${group}")
+                            String whoami = sh (script: "whoami", returnStdout: true).toString().trim()
+                            println("whoami: ${whoami}")
+
+                            String sock = sh (script: "ls -l /var/run/docker.sock", returnStdout: true).toString().trim()
+                            println("sock: ${sock}")
+
+                            String group = sh (script: "cat /etc/group", returnStdout: true).toString().trim()
+                            println("group: ${group}")
 
                             currentStage = STAGE_NAME
                             sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
