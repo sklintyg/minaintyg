@@ -120,8 +120,8 @@ pipeline {
                     try {
                         script {
 
-                            String whoami = sh (script: "whoami", returnStdout: true).toString().trim()
-                            println("whoami: ${whoami}")
+                            //String whoami = sh (script: "whoami", returnStdout: true).toString().trim()
+                            //println("whoami: ${whoami}")
 
                             String sock = sh (script: "ls -l /var/run/docker.sock", returnStdout: true).toString().trim()
                             println("sock: ${sock}")
