@@ -88,6 +88,10 @@ pipeline {
                         String s = sh (script: "pwd", returnStdout: true).toString().trim()
                         pwd = "${s}/integration-test/src/test/java"
 
+                        String t = sh (script: "ls -al /var/run", returnStdout: true).toString().trim()
+                        println("VAR/RUN: ${t}")
+
+
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
                         throw e
@@ -110,12 +114,16 @@ pipeline {
             steps {
                 script {
                     try {
-                        currentStage = STAGE_NAME
-                        sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
-                            -DcommonVersion=${commonVersion} -Dfile.encoding=UTF-8"
+                        script {
+                            currentStage = STAGE_NAME
+                            docker {
+                                sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
+                                    -DcommonVersion=${commonVersion} -Dfile.encoding=UTF-8"
 
-                        resolvedInfraVersion = resolveLibraryVersion(artifact, 'infra', infraVersion, 'dependencies.infra.version.resolved')
-                        resolvedCommonVersion = resolveLibraryVersion(artifact, 'common', commonVersion, 'dependencies.common.version.resolved')
+                                resolvedInfraVersion = resolveLibraryVersion(artifact, 'infra', infraVersion, 'dependencies.infra.version.resolved')
+                                resolvedCommonVersion = resolveLibraryVersion(artifact, 'common', commonVersion, 'dependencies.common.version.resolved')
+                            }
+                        }
                     } catch(e) {
                         error = [stage: STAGE_NAME, error: e as String]
                         throw e
