@@ -87,15 +87,9 @@ pipeline {
                         //setLatestTag = SET_LATEST_TAG
                         //triggerDeployBks = TRIGGER_DEPLOY_BKS
                         //skipDeploySit2 = SKIP_DEPLOY_SIT2
-//                        String s = sh (script: "pwd", returnStdout: true).toString().trim()
-//                        pwd = "${s}/integration-test/src/test/java"
-//
-//                        whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
-//                        println("whichDocker: ${whichDocker}")
 
-                        dockerGroup = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
-                        println("group1: ${dockerGroup}")
-
+                        dockerGroup = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'",
+                                returnStdout: true).toString().trim()
 
                     } catch(e) {
                         error = [stage: env.STAGE_NAME, error: e as String]
@@ -126,12 +120,28 @@ pipeline {
 
                             resolvedInfraVersion = resolveLibraryVersion(artifact, 'infra', infraVersion, 'dependencies.infra.version.resolved')
                             resolvedCommonVersion = resolveLibraryVersion(artifact, 'common', commonVersion, 'dependencies.common.version.resolved')
-
                         }
                     } catch(e) {
                         error = [stage: STAGE_NAME, error: e as String]
                         throw e
                     }
+                }
+            }
+        }
+        stage('Publish Test Report') {
+            when {
+                expression { gradleBuildArgs.contains('testAggregateTestReport') }
+            }
+            steps {
+                script {
+                    publishHTML([
+                            allowMissing         : true,
+                            alwaysLinkToLastBuild: true,
+                            keepAll              : true,
+                            reportDir            : "build/reports/tests/unit-test/aggregated-results",
+                            reportFiles          : "index.html",
+                            reportName           : 'Unit test report'
+                    ])
                 }
             }
         }
