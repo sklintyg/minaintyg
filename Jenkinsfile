@@ -35,6 +35,7 @@ String currentStage
 String recipients
 String pwd
 String whichDocker
+String group
 List<Map<String, String>> allCommitIds = []
 Map<String, String> error = [stage: '', error: '']
 
@@ -92,7 +93,7 @@ pipeline {
                         whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
                         println("whichDocker: ${whichDocker}")
 
-                        String group = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
+                        group = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
                         println("group1: ${group}")
 
 
@@ -112,7 +113,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker}"
+                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker} --group-add ${group}"
                 }
             }
             steps {
@@ -125,9 +126,6 @@ pipeline {
 
                             String sock = sh (script: "ls -l /var/run/docker.sock", returnStdout: true).toString().trim()
                             println("sock: ${sock}")
-
-                            String group = sh (script: "cat /etc/group", returnStdout: true).toString().trim()
-                            println("group: ${group}")
 
                             currentStage = STAGE_NAME
                             sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
