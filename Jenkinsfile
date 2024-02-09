@@ -35,7 +35,7 @@ String currentStage
 String recipients
 String pwd
 String whichDocker
-String group
+String dockerGroup
 List<Map<String, String>> allCommitIds = []
 Map<String, String> error = [stage: '', error: '']
 
@@ -87,13 +87,13 @@ pipeline {
                         //setLatestTag = SET_LATEST_TAG
                         //triggerDeployBks = TRIGGER_DEPLOY_BKS
                         //skipDeploySit2 = SKIP_DEPLOY_SIT2
-                        String s = sh (script: "pwd", returnStdout: true).toString().trim()
-                        pwd = "${s}/integration-test/src/test/java"
+//                        String s = sh (script: "pwd", returnStdout: true).toString().trim()
+//                        pwd = "${s}/integration-test/src/test/java"
+//
+//                        whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
+//                        println("whichDocker: ${whichDocker}")
 
-                        whichDocker = sh (script: "which docker", returnStdout: true).toString().trim()
-                        println("whichDocker: ${whichDocker}")
-
-                        group = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
+                        dockerGroup = sh (script: "cat /etc/group | grep docker | grep -oPm1 '(?<=docker:x:)(\\d*)'", returnStdout: true).toString().trim()
                         println("group1: ${group}")
 
 
@@ -113,20 +113,13 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args "-v ${pwd}:${pwd} -w ${pwd} -v /var/run/docker.sock:/var/run/docker.sock -v ${whichDocker}:${whichDocker} --group-add ${group}"
+                    args "-v /var/run/docker.sock:/var/run/docker.sock --group-add ${dockerGroup}"
                 }
             }
             steps {
                 script {
                     try {
                         script {
-
-                            String id = sh (script: "id", returnStdout: true).toString().trim()
-                            println("id: ${id}")
-
-                            String sock = sh (script: "ls -l /var/run/docker.sock", returnStdout: true).toString().trim()
-                            println("sock: ${sock}")
-
                             currentStage = STAGE_NAME
                             sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
                                 -DcommonVersion=${commonVersion} -Dfile.encoding=UTF-8"
