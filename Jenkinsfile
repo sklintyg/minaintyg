@@ -113,7 +113,7 @@ pipeline {
                     registryCredentialsId dockerCredential
                     reuseNode true
                     alwaysPull true
-                    args ["-v /var/run/docker.sock:/var/run/docker.sock", "--group-add ${dockerGroup}"]
+                    args "-v /var/run/docker.sock:/var/run/docker.sock --group-add ${dockerGroup}"
                 }
             }
             steps {
