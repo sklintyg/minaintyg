@@ -16,12 +16,27 @@ dependencies {
     testImplementation 'org.mock-server:mockserver-client-java:5.15.0'
 }
 
-tasks.register('integrationTest', Test) {
-    description = 'Runs integration tests.'
-    group = 'verification'
+testing {
+    suites {
+        integrationTest(JvmTestSuite) {
+            TestSuiteType.INTEGRATION_TEST
+            description = 'Runs integration tests.'
+            group = 'verification'
 
-    useJUnitPlatform {
+            sources {
+                java {
+                    srcDirs = ['src/test/java']
+                }
+                resources {
+                    srcDirs = ['src/test/resources']
+                }
+            }
+
+            configurations {
+                integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+                integrationTestImplementation.extendsFrom testImplementation
+                integrationTestCompileOnly.extendsFrom testCompileOnly
+            }
+        }
     }
-
-    doNotTrackState("IntegrationTests should always be run on will")
 }
