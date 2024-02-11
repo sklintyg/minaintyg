@@ -33,9 +33,15 @@ String buildUrl
 String buildName
 String currentStage
 String recipients
-String pwd
-String whichDocker
 String dockerGroup
+
+Boolean unitTestReportExists
+String unitTestReportName = 'Unit Test Report'
+String unitTestReportPath = 'build/reports/tests/unit-test/aggregated-results'
+Boolean integrationTestReportExists
+String integrationTestReportName = 'Integration Test Report'
+String integrationTestReportPath = 'build/reports/tests/integration-test/aggregated-results'
+
 List<Map<String, String>> allCommitIds = []
 Map<String, String> error = [stage: '', error: '']
 
@@ -113,14 +119,14 @@ pipeline {
             steps {
                 script {
                     try {
-                        script {
-                            currentStage = STAGE_NAME
-                            sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
-                                -DcommonVersion=${commonVersion} -Dfile.encoding=UTF-8"
+                        currentStage = STAGE_NAME
+                        sh script: "gradle ${gradleBuildArgs} -DbuildVersion=${version} -DinfraVersion=${infraVersion} \
+                            -DcommonVersion=${commonVersion} -Dfile.encoding=UTF-8"
 
-                            resolvedInfraVersion = resolveLibraryVersion(artifact, 'infra', infraVersion, 'dependencies.infra.version.resolved')
-                            resolvedCommonVersion = resolveLibraryVersion(artifact, 'common', commonVersion, 'dependencies.common.version.resolved')
-                        }
+                        resolvedInfraVersion = resolveLibraryVersion(artifact, 'infra', infraVersion, 'dependencies.infra.version.resolved')
+                        resolvedCommonVersion = resolveLibraryVersion(artifact, 'common', commonVersion, 'dependencies.common.version.resolved')
+                        unitTestReportExists = fileExists("${unitTestReportPath}/index.html")
+                        integrationTestReportExists = fileExists("${integrationTestReportPath}/index.html")
                     } catch(e) {
                         error = [stage: STAGE_NAME, error: e as String]
                         throw e
@@ -128,20 +134,24 @@ pipeline {
                 }
             }
         }
-        stage('Publish Test Report') {
+        stage('Publish Test Reports') {
             when {
-                expression { gradleBuildArgs.contains('testAggregateTestReport') }
+                expression { unitTestReportExists || integrationTestReportExists }
             }
             steps {
                 script {
-                    publishHTML([
-                            allowMissing         : true,
-                            alwaysLinkToLastBuild: true,
-                            keepAll              : true,
-                            reportDir            : "build/reports/tests/unit-test/aggregated-results",
-                            reportFiles          : "index.html",
-                            reportName           : 'Unit test report'
-                    ])
+                    currentStage = STAGE_NAME
+                    try {
+                        if (unitTestReportExists) {
+                            publishHTML(getPublishReportInfo(unitTestReportPath, unitTestReportName))
+                        }
+                        if (integrationTestReportExists) {
+                            publishHTML(getPublishReportInfo(integrationTestReportPath, integrationTestReportName))
+                        }
+                    } catch(e) {
+                        error = [stage: STAGE_NAME, error: e as String]
+                        throw e
+                    }
                 }
             }
         }
@@ -343,6 +353,17 @@ private List<Map<String, String>> sortCommitIdsByTimestamp(List<Map<String, Stri
     commitIds.sort {a, b -> b.timestamp <=> a.timestamp }
     println("COMMITS_SINCE_PREVIUOS_SUCCESS:\n${commitIds.join("\n")}")
     return commitIds
+}
+
+private static Map getPublishReportInfo(String testReportPath, String testReportName) {
+    return [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : testReportPath,
+            reportFiles          : "index.html",
+            reportName           : testReportName
+    ]
 }
 
 private List<String> getLogErrors() {

@@ -31,11 +31,15 @@ testing {
                     srcDirs = ['src/test/resources']
                 }
             }
-
             configurations {
                 integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
                 integrationTestImplementation.extendsFrom testImplementation
                 integrationTestCompileOnly.extendsFrom testCompileOnly
+            }
+            targets.all {
+                testTask.configure {
+                    shouldRunAfter(test)
+                }
             }
         }
     }
