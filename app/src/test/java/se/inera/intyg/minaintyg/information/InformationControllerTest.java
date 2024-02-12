@@ -9,9 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.information.service.GetBannersService;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
 
 @ExtendWith(MockitoExtension.class)
 class InformationControllerTest {

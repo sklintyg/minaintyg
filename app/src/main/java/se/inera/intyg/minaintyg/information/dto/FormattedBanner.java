@@ -1,6 +1,5 @@
-package se.inera.intyg.minaintyg.testability;
+package se.inera.intyg.minaintyg.information.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestPersonResponse {
+public class FormattedBanner {
 
-  private List<TestPerson> testPerson;
-
+  FormattedBannerType type;
+  String content;
 }

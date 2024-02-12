@@ -3,7 +3,7 @@ package se.inera.intyg.minaintyg.information.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
+import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.information.service;
 
 import org.springframework.stereotype.Component;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBanner;
-import se.inera.intyg.minaintyg.information.service.dto.FormattedBannerType;
+import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
+import se.inera.intyg.minaintyg.information.dto.FormattedBannerType;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
 import se.inera.intyg.minaintyg.integration.api.banner.model.BannerPriority;
 

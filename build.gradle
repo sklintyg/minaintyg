@@ -1,17 +1,20 @@
 plugins {
-    id 'org.springframework.boot' version '3.1.2'
-    id 'io.spring.dependency-management' version '1.1.2'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'org.sonarqube' version '4.4.1.3373'
     id 'org.owasp.dependencycheck' version '8.4.0'
+    id 'test-report-aggregation'
+    id 'application'
 }
 
 ext {
-    springbootMavenBomVersion = '3.1.2'
-    shedlockSpringVersion = '5.10.0'
+    springbootMavenBomVersion = '3.2.2'
+    shedlockSpringVersion = '5.10.2'
 }
 
 group = 'se.inera.intyg.minaintyg'
 version = System.properties['buildVersion'] ?: '4.0.0-SNAPSHOT'
+mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
 
 allprojects {
     repositories {
@@ -67,7 +70,8 @@ subprojects {
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: [
-                        "**/testability/*"
+                        "**/testability/**",
+                        "**/integrationtest/**",
                 ])
             }))
         }
@@ -75,7 +79,25 @@ subprojects {
 
     sonar {
         properties {
-            property "sonar.exclusions", "**/integration/api/**/*,**/testability/*,**/dto/**/*"
+            property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
         }
+    }
+}
+
+reporting {
+    reports {
+        integrationTestAggregateTestReport(AggregateTestReport) {
+            testType = TestSuiteType.INTEGRATION_TEST
+        }
+    }
+
+    dependencies {
+        testReportAggregation project(':app')
+        testReportAggregation project(':integration-api')
+        testReportAggregation project(':integration-intyg-proxy-service')
+        testReportAggregation project(':integration-intygsadmin')
+        testReportAggregation project(':integration-intygstjanst')
+        testReportAggregation project(':integration-test')
+        testReportAggregation project(':integration-webcert')
     }
 }
