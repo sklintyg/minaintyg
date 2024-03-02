@@ -1,9 +1,7 @@
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -53,7 +51,7 @@ class Saml2AuthenticationTokenTest {
   void shallReturnTrueWhenEquals() {
     final var token = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
     final var tokenTwo = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
-    assertTrue(token.equals(tokenTwo));
+    assertEquals(token, tokenTwo);
   }
 
   @Test
@@ -61,7 +59,7 @@ class Saml2AuthenticationTokenTest {
     final var token = new Saml2AuthenticationToken(minaIntygUser, saml2Authentication);
     final var tokenTwo = new Saml2AuthenticationToken(mock(MinaIntygUser.class),
         saml2Authentication);
-    assertFalse(token.equals(tokenTwo));
+    assertNotEquals(token, tokenTwo);
   }
 
   @Test

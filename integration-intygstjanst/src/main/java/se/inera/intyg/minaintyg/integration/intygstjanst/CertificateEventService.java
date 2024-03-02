@@ -2,7 +2,7 @@ package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateEvent;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
@@ -15,11 +15,13 @@ public class CertificateEventService {
   public List<CertificateEvent> get(List<CertificateRelationDTO> relations,
       CertificateRecipientDTO recipient) {
 
-    final var events = getEventsFromRelations(relations);
-    events.add(CertificateEventFactory.sent(recipient));
+    final var events = Stream.concat(
+            getEventsFromRelations(relations).stream(),
+            Stream.of(CertificateEventFactory.sent(recipient))
+        )
+        .toList();
 
-    return events
-        .stream()
+    return events.stream()
         .filter(Optional::isPresent)
         .map(Optional::get)
         .toList();
@@ -27,10 +29,9 @@ public class CertificateEventService {
 
   private List<Optional<CertificateEvent>> getEventsFromRelations(
       List<CertificateRelationDTO> relations) {
-    return relations
-        .stream()
+    return relations.stream()
         .map(this::getEvent)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private Optional<CertificateEvent> getEvent(CertificateRelationDTO relation) {

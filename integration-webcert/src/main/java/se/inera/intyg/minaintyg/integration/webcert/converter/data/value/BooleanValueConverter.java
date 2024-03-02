@@ -31,10 +31,14 @@ public class BooleanValueConverter extends AbstractValueConverter {
 
   private String getDisplayValueFromConfig(CertificateDataConfig config, Boolean value) {
     if (config instanceof final CertificateDataConfigCheckboxBoolean checkboxBoolean) {
-      return value ? checkboxBoolean.getSelectedText() : checkboxBoolean.getUnselectedText();
+      return Boolean.TRUE.equals(value)
+          ? checkboxBoolean.getSelectedText()
+          : checkboxBoolean.getUnselectedText();
     }
     if (config instanceof final CertificateDataConfigRadioBoolean radioBoolean) {
-      return value ? radioBoolean.getSelectedText() : radioBoolean.getUnselectedText();
+      return Boolean.TRUE.equals(value)
+          ? radioBoolean.getSelectedText()
+          : radioBoolean.getUnselectedText();
     }
     return value.toString();
   }

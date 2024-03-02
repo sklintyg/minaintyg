@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.sonarqube' version '4.4.1.3373'
-    id 'org.owasp.dependencycheck' version '8.4.0'
+    id 'org.owasp.dependencycheck' version '9.0.9'
     id 'test-report-aggregation'
     id 'application'
 }
@@ -10,6 +10,10 @@ plugins {
 ext {
     springbootMavenBomVersion = '3.2.2'
     shedlockSpringVersion = '5.10.2'
+
+    ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
+    shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
+    nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
 }
 
 group = 'se.inera.intyg.minaintyg'
@@ -18,8 +22,10 @@ mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
 
 allprojects {
     repositories {
+        mavenLocal()
+        maven { url "${ineraMavenRepository}" }
+        maven { url "${shibbolethMavenRepository}" }
         mavenCentral()
-        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
     }
 }
 
@@ -34,13 +40,16 @@ sonar {
 
 dependencyCheck {
     formats = List.of("HTML", "JSON")
+
+    nvd {
+        datafeedUrl="${nvdMirror}"
+    }
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
-    apply plugin: 'org.owasp.dependencycheck'
 
     sourceCompatibility = '17'
     targetCompatibility = '17'
