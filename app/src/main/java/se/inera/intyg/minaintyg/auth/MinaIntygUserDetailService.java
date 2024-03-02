@@ -32,15 +32,17 @@ public class MinaIntygUserDetailService {
   }
 
   private static void handleCommunicationFault(Status status) {
-    log.error("Error communicating with IntygProxyService, status from response: '{}",
-        status);
-    throw new RuntimeException("Error communication with IntygProxyService. Status: " + status);
+    log.error("Error communicating with IntygProxyService, status from response: '{}", status);
+    throw new IllegalStateException(
+        "Error communication with IntygProxyService. Status: '%s' ".formatted(status)
+    );
   }
 
   private void validatePersonId(String personId) {
     if (personId == null || personId.trim().isEmpty()) {
       throw new IllegalArgumentException(
-          String.format("personId must have a valid value: '%s'", personId));
+          "personId must have a valid value: '%s'".formatted(personId)
+      );
     }
   }
 }

@@ -20,7 +20,7 @@ import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.Pers
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @ExtendWith(MockitoExtension.class)
-class PersonIntegrationServiceTest {
+class PersonIntegrationIntegrationServiceTest {
 
   @Mock
   private GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService;
@@ -29,7 +29,7 @@ class PersonIntegrationServiceTest {
   private PersonSvarConverter personSvarConverter;
 
   @InjectMocks
-  private PersonIntegrationIntegrationService personIntegrationService;
+  private PersonIntegrationIntegrationService personIntegrationIntegrationService;
 
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_NAME = "personName";
@@ -39,21 +39,25 @@ class PersonIntegrationServiceTest {
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfPersonRequestIsNull() {
-      assertThrows(IllegalArgumentException.class, () -> personIntegrationService.getPerson(null));
+      assertThrows(IllegalArgumentException.class,
+          () -> personIntegrationIntegrationService.getPerson(null)
+      );
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsNullPersonId() {
       final var personRequest = GetPersonIntegrationRequest.builder().personId(null).build();
       assertThrows(IllegalArgumentException.class,
-          () -> personIntegrationService.getPerson(personRequest));
+          () -> personIntegrationIntegrationService.getPerson(personRequest)
+      );
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfPersonRequestContainsEmptyPersonId() {
       final var personRequest = GetPersonIntegrationRequest.builder().personId("").build();
       assertThrows(IllegalArgumentException.class,
-          () -> personIntegrationService.getPerson(personRequest));
+          () -> personIntegrationIntegrationService.getPerson(personRequest)
+      );
     }
 
     @Test
@@ -62,7 +66,8 @@ class PersonIntegrationServiceTest {
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenThrow(
           RuntimeException.class);
       assertThrows(RuntimeException.class,
-          () -> personIntegrationService.getPerson(personRequest));
+          () -> personIntegrationIntegrationService.getPerson(personRequest)
+      );
     }
   }
 
@@ -75,7 +80,7 @@ class PersonIntegrationServiceTest {
       final var personSvarDTO = getPersonResponse();
       when(getPersonFromIntygProxyService.getPersonFromIntygProxy(personRequest)).thenReturn(
           personSvarDTO);
-      final var actualResult = personIntegrationService.getPerson(personRequest);
+      final var actualResult = personIntegrationIntegrationService.getPerson(personRequest);
       assertEquals(GetPersonIntegrationResponse.class, actualResult.getClass());
     }
 
@@ -88,7 +93,7 @@ class PersonIntegrationServiceTest {
           personSvarDTO);
       when(personSvarConverter.convertPerson(personSvarDTO.getPerson())).thenReturn(
           expectedResult);
-      final var actualResult = personIntegrationService.getPerson(personRequest);
+      final var actualResult = personIntegrationIntegrationService.getPerson(personRequest);
       assertEquals(expectedResult, actualResult.getPerson());
     }
 
@@ -102,7 +107,7 @@ class PersonIntegrationServiceTest {
           personSvarDTO);
       when(personSvarConverter.convertStatus(personSvarDTO.getStatus())).thenReturn(
           expectedResult);
-      final var actualResult = personIntegrationService.getPerson(personRequest);
+      final var actualResult = personIntegrationIntegrationService.getPerson(personRequest);
       assertEquals(expectedResult, actualResult.getStatus());
     }
   }

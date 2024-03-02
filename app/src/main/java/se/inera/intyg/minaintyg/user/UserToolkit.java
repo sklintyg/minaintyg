@@ -6,6 +6,10 @@ import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 
 public class UserToolkit {
 
+  private UserToolkit() {
+
+  }
+
   public static Optional<MinaIntygUser> getUserFromPrincipal() {
     final var auth = SecurityContextHolder.getContext().getAuthentication();
 

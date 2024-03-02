@@ -21,15 +21,11 @@ public class IntygstjanstCertificateIntegrationService implements
   @Override
   public GetCertificateListIntegrationResponse get(GetCertificateListIntegrationRequest request) {
     validateRequest(request);
-    try {
-      final var response = getCertificatesFromIntygstjanstService.get(request);
-      return GetCertificateListIntegrationResponse
-          .builder()
-          .content(convertContent(response))
-          .build();
-    } catch (Exception exception) {
-      throw new RuntimeException(exception);
-    }
+    final var response = getCertificatesFromIntygstjanstService.get(request);
+    return GetCertificateListIntegrationResponse
+        .builder()
+        .content(convertContent(response))
+        .build();
   }
 
   private List<CertificateListItem> convertContent(CertificatesResponseDTO response) {

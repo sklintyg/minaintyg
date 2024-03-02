@@ -1,9 +1,9 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRelationType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateStatusType;
@@ -16,16 +16,16 @@ public class CertificateStatusService {
   public List<CertificateStatusType> get(List<CertificateRelationDTO> relations,
       CertificateRecipientDTO recipient,
       LocalDateTime issued) {
-
-    final var statuses = getReplacedStatusFromRelations(relations);
+    final var statuses = new ArrayList<>(
+        getReplacedStatusFromRelations(relations)
+    );
 
     if (notReplaced(statuses)) {
       statuses.add(CertificateStatusFactory.sent(recipient));
       statuses.add(CertificateStatusFactory.newStatus(issued));
     }
 
-    return statuses
-        .stream()
+    return statuses.stream()
         .filter(Optional::isPresent)
         .map(Optional::get)
         .toList();
@@ -37,7 +37,7 @@ public class CertificateStatusService {
         .stream()
         .filter(relation -> relation.getType() == CertificateRelationType.REPLACED)
         .map(CertificateStatusFactory::replaced)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private static boolean notReplaced(List<Optional<CertificateStatusType>> statuses) {

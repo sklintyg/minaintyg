@@ -19,16 +19,12 @@ public class PersonIntegrationIntegrationService implements GetPersonIntegration
   @Override
   public GetPersonIntegrationResponse getPerson(GetPersonIntegrationRequest personRequest) {
     validateRequest(personRequest);
-    try {
-      final var personSvarDTO = getPersonFromIntygProxyService.getPersonFromIntygProxy(
-          personRequest);
-      return GetPersonIntegrationResponse.builder()
-          .person(personSvarConverter.convertPerson(personSvarDTO.getPerson()))
-          .status(personSvarConverter.convertStatus(personSvarDTO.getStatus()))
-          .build();
-    } catch (Exception exception) {
-      throw new RuntimeException(exception);
-    }
+    final var personSvarDTO = getPersonFromIntygProxyService.getPersonFromIntygProxy(
+        personRequest);
+    return GetPersonIntegrationResponse.builder()
+        .person(personSvarConverter.convertPerson(personSvarDTO.getPerson()))
+        .status(personSvarConverter.convertStatus(personSvarDTO.getStatus()))
+        .build();
   }
 
   private void validateRequest(GetPersonIntegrationRequest personRequest) {

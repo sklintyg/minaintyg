@@ -18,9 +18,8 @@ class BooleanValueConverterTest {
   private static final String NOT_PROVIDED = "Ej angivet";
   private static final String TRUE_BOOLEAN = "Ja";
   private static final String FALSE_BOOLEAN = "Nej";
-  private final String TRUE = "true";
 
-  private ValueConverter booleanValueConverter = new BooleanValueConverter();
+  private final ValueConverter booleanValueConverter = new BooleanValueConverter();
 
   @Nested
   class ConfigRadioBoolean {
@@ -141,7 +140,7 @@ class BooleanValueConverterTest {
             .build());
 
     final var expectedResult = CertificateQuestionValueText.builder()
-        .value(TRUE)
+        .value("true")
         .build();
 
     final var result = booleanValueConverter.convert(elements);
