@@ -11,7 +11,6 @@ import java.security.cert.X509Certificate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.session.DefaultCookieSerializerCustomizer;
 import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +33,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.NullRequestCache;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 import se.inera.intyg.minaintyg.auth.AuthenticationConstants;
 import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.CustomAuthenticationFailureHandler;
@@ -43,6 +43,7 @@ import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 import se.inera.intyg.minaintyg.auth.SessionTimeoutFilter;
 import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
+import se.inera.intyg.minaintyg.common.MinaIntygCookieSerializer;
 
 @Slf4j
 @Configuration
@@ -76,6 +77,8 @@ public class WebSecurityConfig {
   private boolean samlLoginSuccessUrlAlwaysUse;
   @Value("${saml.logout.success.url}")
   private String samlLogoutSuccessUrl;
+  @Value("${cookie.serializer.same.site.none.exclusion:true}")
+  private boolean useSameSiteNoneExclusion;
 
   @Bean
   public RelyingPartyRegistrationRepository relyingPartyRegistrationRepository(
@@ -166,10 +169,9 @@ public class WebSecurityConfig {
         );
   }
 
-  // https://stackoverflow.com/questions/72508155/spring-saml2-and-spring-session-savedrequest-not-retrieved-cannot-redirect-to
   @Bean
-  public DefaultCookieSerializerCustomizer cookieSerializerCustomizer() {
-    return cookieSerializer -> cookieSerializer.setSameSite(null);
+  public DefaultCookieSerializer cookieSerializer() {
+    return new MinaIntygCookieSerializer(useSameSiteNoneExclusion);
   }
 
   private OpenSaml4AuthenticationProvider getOpenSaml4AuthenticationProvider() {
