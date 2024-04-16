@@ -10,7 +10,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigSickLeavePeriod;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxDateRangeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxDateRange;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRangeList;
@@ -67,9 +67,9 @@ public class DateRangeListValueConverter extends AbstractValueConverter {
         .orElse(Collections.emptyMap());
   }
 
-  private Optional<CertificateDataConfigSickLeavePeriod> getSickLeavePeriodConfig(
+  private Optional<CertificateDataConfigCheckboxDateRangeList> getSickLeavePeriodConfig(
       CertificateDataConfig config) {
-    if (config instanceof CertificateDataConfigSickLeavePeriod configSickLeavePeriod) {
+    if (config instanceof CertificateDataConfigCheckboxDateRangeList configSickLeavePeriod) {
       return Optional.of(configSickLeavePeriod);
     }
     return Optional.empty();

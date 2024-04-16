@@ -16,7 +16,7 @@ public class CertificateDataValueCauseOfDeath implements CertificateDataValue {
   CertificateDataValueType type = CertificateDataValueType.CAUSE_OF_DEATH;
   String id;
   CertificateDataValueDate debut;
-  CertificateDataTextValue description;
+  CertificateDataValueText description;
   CertificateDataValueCode specification;
 
   @JsonPOJOBuilder(withPrefix = "")

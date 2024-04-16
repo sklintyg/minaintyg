@@ -6,15 +6,15 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigSickLeavePeriod.CertificateDataConfigSickLeavePeriodBuilder;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxDateRangeList.CertificateDataConfigCheckboxDateRangeListBuilder;
 
-@JsonDeserialize(builder = CertificateDataConfigSickLeavePeriodBuilder.class)
+@JsonDeserialize(builder = CertificateDataConfigCheckboxDateRangeListBuilder.class)
 @Value
 @Builder
-public class CertificateDataConfigSickLeavePeriod implements CertificateDataConfig {
+public class CertificateDataConfigCheckboxDateRangeList implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_SICK_LEAVE_PERIOD;
+  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_CHECKBOX_DATE_RANGE_LIST;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -31,7 +31,7 @@ public class CertificateDataConfigSickLeavePeriod implements CertificateDataConf
   List<CheckboxDateRange> list;
 
   @JsonPOJOBuilder(withPrefix = "")
-  public static class CertificateDataConfigSickLeavePeriodBuilder {
+  public static class CertificateDataConfigCheckboxDateRangeListBuilder {
 
   }
 }

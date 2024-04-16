@@ -15,7 +15,7 @@ public class CertificateDataValueViewRow implements CertificateDataValue {
 
   @Getter(onMethod = @__(@Override))
   CertificateDataValueType type = CertificateDataValueType.VIEW_ROW;
-  List<CertificateDataTextValue> columns;
+  List<CertificateDataValueText> columns;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class CertificateDataValueViewRowBuilder {
