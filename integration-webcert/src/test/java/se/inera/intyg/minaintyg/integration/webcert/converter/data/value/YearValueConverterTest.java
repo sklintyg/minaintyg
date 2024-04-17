@@ -7,7 +7,7 @@ import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueYear;
 
@@ -55,7 +55,7 @@ class YearValueConverterTest {
   void shallThrowIllegalArgumentIfWrongType() {
     final var element = CertificateDataElement.builder()
         .value(
-            CertificateDataTextValue.builder().build()
+            CertificateDataValueText.builder().build()
         )
         .build();
 

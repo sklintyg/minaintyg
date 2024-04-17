@@ -7,8 +7,8 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 
 class TextValueConverterTest {
 
@@ -21,7 +21,7 @@ class TextValueConverterTest {
   void shouldConvertCertificateDataTextValue() {
     final var elements = createElement(
         CertificateDataConfigTextArea.builder().build(),
-        CertificateDataTextValue.builder()
+        CertificateDataValueText.builder()
             .text(TEXT_VALUE)
             .build()
     );
@@ -38,7 +38,7 @@ class TextValueConverterTest {
   void shouldConvertCertificateDataTextValueWithNoValue() {
     final var elements = createElement(
         CertificateDataConfigTextArea.builder().build(),
-        CertificateDataTextValue.builder()
+        CertificateDataValueText.builder()
             .build()
     );
 

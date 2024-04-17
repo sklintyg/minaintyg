@@ -8,8 +8,8 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfig;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigViewTable;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueViewTable;
 
@@ -59,7 +59,7 @@ public class ViewTableValueConverter extends AbstractValueConverter {
                 .stream()
                 .map(row -> row.getColumns()
                     .stream()
-                    .map(CertificateDataTextValue::getText)
+                    .map(CertificateDataValueText::getText)
                     .toList()
                 )
                 .toList()

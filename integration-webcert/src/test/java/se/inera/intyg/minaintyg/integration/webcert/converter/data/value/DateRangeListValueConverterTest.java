@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigSickLeavePeriod;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigCheckboxDateRangeList;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CheckboxDateRange;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRange;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRangeList;
@@ -234,9 +234,9 @@ class DateRangeListValueConverterTest {
     return List.of(values);
   }
 
-  private static CertificateDataConfigSickLeavePeriod createSickLeaveConfig(
+  private static CertificateDataConfigCheckboxDateRangeList createSickLeaveConfig(
       CheckboxDateRange... config) {
-    return CertificateDataConfigSickLeavePeriod.builder()
+    return CertificateDataConfigCheckboxDateRangeList.builder()
         .list(
             List.of(
                 config

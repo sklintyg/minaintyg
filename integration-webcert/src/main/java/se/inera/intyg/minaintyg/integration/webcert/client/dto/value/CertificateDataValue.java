@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     use = JsonTypeInfo.Id.NAME,
     property = "type")
 @JsonSubTypes({
-    @Type(value = CertificateDataTextValue.class, name = "TEXT"),
+    @Type(value = CertificateDataValueText.class, name = "TEXT"),
     @Type(value = CertificateDataValueBoolean.class, name = "BOOLEAN"),
     @Type(value = CertificateDataValueDateList.class, name = "DATE_LIST"),
     @Type(value = CertificateDataValueDate.class, name = "DATE"),

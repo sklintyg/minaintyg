@@ -12,11 +12,11 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataEl
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMedicalInvestigation;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CodeItem;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.MedicalInvestigation;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueMedicalInvestigation;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueMedicalInvestigationList;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 
 class MedicalInvestigationValueConverterTest {
@@ -183,7 +183,7 @@ class MedicalInvestigationValueConverterTest {
                     )
                     .date(null)
                     .informationSource(
-                        CertificateDataTextValue.builder()
+                        CertificateDataValueText.builder()
                             .id(INFORMATION_SOURCE_ID)
                             .text(INFORMATION_SOURCE_ONE)
                             .build()
@@ -263,7 +263,7 @@ class MedicalInvestigationValueConverterTest {
                             .build()
                     )
                     .informationSource(
-                        CertificateDataTextValue.builder()
+                        CertificateDataValueText.builder()
                             .id(INFORMATION_SOURCE_ID)
                             .text(INFORMATION_SOURCE_ONE)
                             .build()
@@ -407,7 +407,7 @@ class MedicalInvestigationValueConverterTest {
                 .build()
         )
         .informationSource(
-            CertificateDataTextValue.builder()
+            CertificateDataValueText.builder()
                 .id(INFORMATION_SOURCE_ID)
                 .text(INFORMATION_SOURCE_ONE)
                 .build()

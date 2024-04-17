@@ -17,9 +17,9 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigMessage;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigRadioBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueBoolean;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueCode;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
 
@@ -311,7 +311,7 @@ class CertificateDataConverterTest {
                     .build()
             )
             .value(
-                CertificateDataTextValue.builder()
+                CertificateDataValueText.builder()
                     .text(QN_ONE_VALUE)
                     .build()
             )

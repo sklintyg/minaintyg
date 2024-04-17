@@ -16,7 +16,7 @@ public class CertificateDataValueMedicalInvestigation implements CertificateData
   @Getter(onMethod = @__(@Override))
   CertificateDataValueType type = CertificateDataValueType.MEDICAL_INVESTIGATION;
   CertificateDataValueDate date;
-  CertificateDataTextValue informationSource;
+  CertificateDataValueText informationSource;
   CertificateDataValueCode investigationType;
 
   @JsonPOJOBuilder(withPrefix = "")

@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDate;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 
 class DateValueConverterTest {
@@ -56,7 +56,7 @@ class DateValueConverterTest {
   void shallThrowIllegalArgumentIfWrongType() {
     final var element = CertificateDataElement.builder()
         .value(
-            CertificateDataTextValue.builder().build()
+            CertificateDataValueText.builder().build()
         )
         .build();
 

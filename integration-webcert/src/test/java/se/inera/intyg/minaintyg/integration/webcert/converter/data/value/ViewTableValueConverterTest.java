@@ -12,8 +12,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTextArea;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigViewTable;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.ViewColumn;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataTextValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueText;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueViewRow;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueViewTable;
 
@@ -46,15 +46,15 @@ class ViewTableValueConverterTest {
                 CertificateDataValueViewRow
                     .builder()
                     .columns(List.of(
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_1)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_2)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_3)
                             .build()
@@ -94,15 +94,15 @@ class ViewTableValueConverterTest {
                 CertificateDataValueViewRow
                     .builder()
                     .columns(List.of(
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_1)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_2)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_3)
                             .build()
@@ -149,15 +149,15 @@ class ViewTableValueConverterTest {
                 CertificateDataValueViewRow
                     .builder()
                     .columns(List.of(
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_1)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_2)
                             .build(),
-                        CertificateDataTextValue
+                        CertificateDataValueText
                             .builder()
                             .text(VALUE_3)
                             .build()
