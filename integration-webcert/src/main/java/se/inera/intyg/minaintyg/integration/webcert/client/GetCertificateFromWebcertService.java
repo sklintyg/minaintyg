@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
+import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
@@ -38,12 +39,14 @@ public class GetCertificateFromWebcertService {
   }
 
   public CertificateResponseDTO get(GetCertificateIntegrationRequest request) {
-    return webClient.get().uri(uriBuilder -> uriBuilder
+    return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(endpoint)
-            .build(request.getCertificateId()))
+            .build(request.getCertificateId())
+        )
+        .body(Mono.just(request), GetCertificateIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
         .bodyToMono(CertificateResponseDTO.class)
