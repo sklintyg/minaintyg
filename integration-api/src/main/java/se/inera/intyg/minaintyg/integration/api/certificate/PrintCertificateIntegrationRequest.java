@@ -9,4 +9,5 @@ public class PrintCertificateIntegrationRequest {
 
   String certificateId;
   String customizationId;
+  String personId;
 }

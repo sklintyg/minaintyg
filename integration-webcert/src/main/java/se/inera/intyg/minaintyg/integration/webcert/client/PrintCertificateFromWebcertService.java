@@ -51,6 +51,7 @@ public class PrintCertificateFromWebcertService {
             PrintCertificateRequestDTO
                 .builder()
                 .customizationId(request.getCustomizationId())
+                .personId(request.getPersonId())
                 .build()
         ), PrintCertificateRequestDTO.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
