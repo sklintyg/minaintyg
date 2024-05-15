@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PrintCertificateRequestDTO {
 
-    private String customizationId;
+  private String customizationId;
+  private String personId;
 }

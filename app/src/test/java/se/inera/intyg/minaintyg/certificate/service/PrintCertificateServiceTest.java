@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HexFormat;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.auth.LoginMethod;
+import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
@@ -28,6 +31,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateInte
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
+import se.inera.intyg.minaintyg.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class PrintCertificateServiceTest {
@@ -42,12 +46,15 @@ class PrintCertificateServiceTest {
       .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
       .build();
   public static final String TYPE = "TYPE";
+  private static final String PERSON_ID = "personId";
   @Mock
   PrintCertificateIntegrationService printCertificateIntegrationService;
   @Mock
   MonitoringLogService monitorLogService;
   @Mock
   GetCertificateService getCertificateService;
+  @Mock
+  UserService userService;
   @InjectMocks
   PrintCertificateService printCertificateService;
 
@@ -74,6 +81,8 @@ class PrintCertificateServiceTest {
             )
             .build()
         );
+    when(userService.getLoggedInUser()).thenReturn(
+        Optional.of(new MinaIntygUser(PERSON_ID, "personName", LoginMethod.ELVA77)));
   }
 
   @Test
@@ -104,6 +113,16 @@ class PrintCertificateServiceTest {
 
     verify(printCertificateIntegrationService).print(captor.capture());
     assertEquals(REQUEST.getCustomizationId(), captor.getValue().getCustomizationId());
+  }
+
+  @Test
+  void shouldSendPersonIdInRequest() {
+    final var captor = ArgumentCaptor.forClass(PrintCertificateIntegrationRequest.class);
+
+    printCertificateService.print(REQUEST);
+
+    verify(printCertificateIntegrationService).print(captor.capture());
+    assertEquals(PERSON_ID, captor.getValue().getPersonId());
   }
 
   @Test

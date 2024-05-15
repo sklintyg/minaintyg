@@ -32,6 +32,7 @@ class WebcertPrintCertificateIntegrationServiceTest {
       .builder()
       .certificateId("ID")
       .customizationId("C_ID")
+      .personId("PERSON_ID")
       .build();
 
   @Mock
@@ -90,6 +91,31 @@ class WebcertPrintCertificateIntegrationServiceTest {
       final var request = PrintCertificateIntegrationRequest.builder()
           .certificateId("")
           .customizationId("id")
+          .build();
+
+      assertThrows(IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request)
+      );
+    }
+
+    @Test
+    void shouldThrowErrorIfPersonIdIsNull() {
+      final var request = PrintCertificateIntegrationRequest.builder()
+          .customizationId("id")
+          .certificateId("id")
+          .build();
+
+      assertThrows(IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request)
+      );
+    }
+
+    @Test
+    void shouldThrowErrorIfPersonIdIsEmpty() {
+      final var request = PrintCertificateIntegrationRequest.builder()
+          .certificateId("id")
+          .customizationId("id")
+          .personId("")
           .build();
 
       assertThrows(IllegalArgumentException.class,
