@@ -1,81 +1,104 @@
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.WebAttributes;
+import org.springframework.security.saml2.core.Saml2Error;
+import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticationException;
+import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @ExtendWith(MockitoExtension.class)
 class CustomAuthenticationFailureHandlerTest {
 
-  private static final String AUTHENTICATION_FAILED = "Authentication failed";
-  private static final AuthenticationException exception = new AuthenticationException(
-      AUTHENTICATION_FAILED) {
-  };
-
   @Mock
   private MonitoringLogService monitoringLogService;
-
-  @Mock
-  private HttpServletRequest request;
-  @Mock
-  private HttpServletResponse response;
-  @Mock
-  private RequestDispatcher requestDispatcher;
-
-  private CustomAuthenticationFailureHandler authenticationFailureHandler;
 
   @Captor
   private ArgumentCaptor<String> stringArgumentCaptor;
 
+  private static final String AUTHENTICATION_FAILED = "Authentication failed";
+  private static final String CONTEXT_PATH = "contextpath";
+  private static final String ERROR_LOGIN_UNDERAGE_URL = "/errorLoginUnderageUrl";
+  private static final String ERROR_LOGIN_URL = "/errorLoginUrl/{errorId}";
+  private static final AuthenticationException exception = new AuthenticationException(
+      AUTHENTICATION_FAILED) {
+  };
+
+  private CustomAuthenticationFailureHandler authenticationFailureHandler;
+  private MockHttpServletRequest request;
+  private MockHttpServletResponse response;
+
   @BeforeEach
   void setUp() {
     authenticationFailureHandler = new CustomAuthenticationFailureHandler(
-        "errorLoginUrl/{errorId}",
+        ERROR_LOGIN_URL,
+        ERROR_LOGIN_UNDERAGE_URL,
         monitoringLogService
     );
-    when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+
+    request = new MockHttpServletRequest();
+    request.setContextPath(CONTEXT_PATH);
+    response = new MockHttpServletResponse();
   }
 
   @Test
-  void shouldForward() throws ServletException, IOException {
+  void shouldRedirectToErrorUrl() throws IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(request.getRequestDispatcher(anyString())).forward(request, response);
+    assertTrue(Objects.requireNonNull(response.getHeader("Location"))
+        .contains(CONTEXT_PATH + "/errorLoginUrl/"));
   }
 
   @Test
-  void shouldLogUserLoginFailedWithMessageFromException() throws ServletException, IOException {
+  void shouldLogUserLoginFailedWithMessageFromException() throws IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
     verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture());
     assertEquals(AUTHENTICATION_FAILED, stringArgumentCaptor.getValue());
   }
 
   @Test
-  void shouldLogClientError() throws ServletException, IOException {
+  void shouldLogClientError() throws IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
     verify(monitoringLogService).logClientError(anyString(), anyString(), anyString(), eq(null));
   }
 
-  @Test
-  void shouldSetCorrectRequestAttribute() throws ServletException, IOException {
-    authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(request).setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+  @Nested
+  class HandleLoginAgeLimitException {
+
+    private static final String AGE_LIMIT_EXCEPTION_MESSAGE = "underage person";
+
+    private final Saml2Error saml2Error = new Saml2Error("ERROR_CODE", "description");
+    private final LoginAgeLimitException ageLimitException =
+        new LoginAgeLimitException(AGE_LIMIT_EXCEPTION_MESSAGE);
+    private final Saml2AuthenticationException saml2Exception =
+        new Saml2AuthenticationException(saml2Error, ageLimitException);
+
+    @Test
+    void shouldRedirectToErrorUnderageUrl() throws IOException {
+      authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
+      assertEquals(CONTEXT_PATH + ERROR_LOGIN_UNDERAGE_URL, response.getHeader("Location"));
+    }
+
+    @Test
+    void shouldMonitorLogLoginFailure() throws IOException {
+      authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
+      verify(monitoringLogService).logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE);
+    }
   }
 }
