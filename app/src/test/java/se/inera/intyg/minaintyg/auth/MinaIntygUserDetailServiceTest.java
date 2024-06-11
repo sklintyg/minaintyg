@@ -126,6 +126,13 @@ class MinaIntygUserDetailServiceTest {
     }
 
     @Test
+    void shouldNotThrowLoginAgeLimitExceptionIfAboveAgeLimitForCoordinationNumber() {
+      final var coordinationNumber = getCoordinationNumber(-1);
+      assertDoesNotThrow(
+          () -> minaIntygUserDetailService.buildPrincipal(coordinationNumber, LoginMethod.ELVA77));
+    }
+
+    @Test
     void shouldNotThrowLoginAgeLimitExceptionIfExactlyAgeLimit() {
       final var personId = getPersonId(0);
       assertDoesNotThrow(
@@ -133,10 +140,24 @@ class MinaIntygUserDetailServiceTest {
     }
 
     @Test
+    void shouldNotThrowLoginAgeLimitExceptionIfExactlyAgeLimitForCoordinationNumber() {
+      final var coordinationNumber = getCoordinationNumber(0);
+      assertDoesNotThrow(
+          () -> minaIntygUserDetailService.buildPrincipal(coordinationNumber, LoginMethod.ELVA77));
+    }
+
+    @Test
     void shouldThrowLoginAgeLimitExceptionIfBelowAgeLimit() {
       final var personId = getPersonId(1);
       assertThrows(LoginAgeLimitException.class,
           () -> minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77));
+    }
+
+    @Test
+    void shouldThrowLoginAgeLimitExceptionIfBelowAgeLimitForCoordinationNumber() {
+      final var getCoordinationNumber = getCoordinationNumber(1);
+      assertThrows(LoginAgeLimitException.class,
+          () -> minaIntygUserDetailService.buildPrincipal(getCoordinationNumber, LoginMethod.ELVA77));
     }
 
     @Test
@@ -167,6 +188,16 @@ class MinaIntygUserDetailServiceTest {
       when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
           .thenReturn(getPersonResponse(personId));
       return personId;
+    }
+
+    private String getCoordinationNumber(int plusDays) {
+      final var birthDate = LocalDate.now(ZoneId.systemDefault()).minusYears(LOGIN_AGE_LIMIT)
+          .plusDays(plusDays).format(DateTimeFormatter.BASIC_ISO_DATE);
+      final var dayOfBirth = Integer.parseInt(birthDate.substring(6, 8));
+      final var coordinationNumber= birthDate.substring(0, 6) + (dayOfBirth + 60) + "1234";
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(getPersonResponse(coordinationNumber));
+      return coordinationNumber;
     }
   }
 

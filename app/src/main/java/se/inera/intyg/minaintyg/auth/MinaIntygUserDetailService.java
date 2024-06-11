@@ -65,9 +65,23 @@ public class MinaIntygUserDetailService {
   }
 
   private boolean belowLoginAgeLimit(String personId) {
-    final var personBirthDate = LocalDate.parse(personId.substring(0, 8),
-        DateTimeFormatter.BASIC_ISO_DATE);
-    return personBirthDate.plusYears(loginAgeLimit).isAfter(LocalDate.now(ZoneId.systemDefault()));
+    String birthDate = personId.substring(0, 8);
+    final var dayOfMonth = Integer.parseInt(birthDate.substring(6, 8));
+
+    if (isCoordinationNumber(dayOfMonth)) {
+      birthDate = handleCoordinationNumber(birthDate, dayOfMonth);
+    }
+
+    final var date = LocalDate.parse(birthDate, DateTimeFormatter.BASIC_ISO_DATE);
+    return date.plusYears(loginAgeLimit).isAfter(LocalDate.now(ZoneId.systemDefault()));
+  }
+
+  private boolean isCoordinationNumber(int dayOfMonth) {
+    return dayOfMonth > 60;
+  }
+
+  private String handleCoordinationNumber(String birthDate, int dayOfMonth) {
+    return birthDate.substring(0, 6).concat(String.valueOf(dayOfMonth - 60));
   }
 
   private void handleUnderagePerson(String personId) {
