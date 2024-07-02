@@ -1,5 +1,6 @@
 package se.inera.intyg.minaintyg.auth;
 
+import com.google.common.base.Strings;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -81,7 +82,8 @@ public class MinaIntygUserDetailService {
   }
 
   private String handleCoordinationNumber(String birthDate, int dayOfMonth) {
-    return birthDate.substring(0, 6).concat(String.valueOf(dayOfMonth - 60));
+    final var dayValue = String.valueOf(dayOfMonth - 60);
+    return birthDate.substring(0, 6).concat(Strings.padStart(dayValue, 2, '0'));
   }
 
   private void handleUnderagePerson(String personId) {
