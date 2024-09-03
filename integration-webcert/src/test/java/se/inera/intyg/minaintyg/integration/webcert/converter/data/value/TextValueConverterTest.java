@@ -50,6 +50,23 @@ class TextValueConverterTest {
     assertEquals(expectedResult, result);
   }
 
+  @Test
+  void shouldConvertCertificateDataTextValueWithEmptyValue() {
+    final var elements = createElement(
+        CertificateDataConfigTextArea.builder().build(),
+        CertificateDataValueText.builder()
+            .text("")
+            .build()
+    );
+
+    final var expectedResult = CertificateQuestionValueText.builder()
+        .value(NOT_PROVIDED)
+        .build();
+
+    final var result = valueConverter.convert(elements);
+    assertEquals(expectedResult, result);
+  }
+
   private static CertificateDataElement createElement(CertificateDataConfig config,
       CertificateDataValue value) {
     return CertificateDataElement.builder()

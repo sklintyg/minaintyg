@@ -23,7 +23,7 @@ public class TextValueConverter extends AbstractValueConverter {
 
   private static CertificateQuestionValueText getText(String value) {
     return CertificateQuestionValueText.builder()
-        .value(value != null ? value : NOT_PROVIDED)
+        .value(value == null || value.isBlank() ? NOT_PROVIDED : value)
         .build();
   }
 }
