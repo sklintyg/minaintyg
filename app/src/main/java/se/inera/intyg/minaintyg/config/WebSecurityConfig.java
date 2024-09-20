@@ -186,7 +186,9 @@ public class WebSecurityConfig {
       }
       final var personId = getAttribute(authentication);
       final var principal = minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
-      return new Saml2AuthenticationToken(principal, authentication);
+      final var saml2AuthenticationToken = new Saml2AuthenticationToken(principal, authentication);
+      saml2AuthenticationToken.setAuthenticated(true);
+      return saml2AuthenticationToken;
     });
     return authenticationProvider;
   }
