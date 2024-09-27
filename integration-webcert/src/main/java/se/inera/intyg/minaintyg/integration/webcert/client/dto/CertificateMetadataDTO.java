@@ -1,10 +1,12 @@
 package se.inera.intyg.minaintyg.integration.webcert.client.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateConfirmationModal;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRelations;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateStatus;
@@ -30,8 +32,8 @@ public class CertificateMetadataDTO {
   private boolean testCertificate;
   private boolean forwarded;
   private boolean sent;
+  private boolean availableForCitizen;
   private String sentTo;
-  private CertificateRecipient recipient;
   private CertificateRelations relations;
   private Unit unit;
   private Unit careUnit;
@@ -41,6 +43,13 @@ public class CertificateMetadataDTO {
   private long version;
   private boolean latestMajorVersion;
   private LocalDateTime readyForSign;
+  private LocalDateTime signed;
+  private LocalDateTime modified;
   private String responsibleHospName;
+  private CertificateRecipient recipient;
   private CertificateSummary summary;
+  private CertificateConfirmationModal confirmationModal;
+  private boolean validForSign;
+  private String externalReference;
+  private List<CertificateMessageType> messageTypes;
 }
