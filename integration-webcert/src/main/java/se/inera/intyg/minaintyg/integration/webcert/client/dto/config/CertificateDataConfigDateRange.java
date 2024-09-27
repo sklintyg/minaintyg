@@ -13,7 +13,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigDateRange implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_DATE_RANGE;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_DATE_RANGE;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -26,6 +26,8 @@ public class CertificateDataConfigDateRange implements CertificateDataConfig {
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   String id;
   String fromLabel;
   String toLabel;

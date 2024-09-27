@@ -13,7 +13,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigTextField implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_TEXTFIELD;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_TEXTFIELD;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -26,6 +26,8 @@ public class CertificateDataConfigTextField implements CertificateDataConfig {
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   String id;
 
   @JsonPOJOBuilder(withPrefix = "")

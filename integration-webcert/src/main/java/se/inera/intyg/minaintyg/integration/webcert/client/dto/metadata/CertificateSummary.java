@@ -1,17 +1,21 @@
 package se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateSummary.CertificateSummaryBuilder;
 
-@Data
+@JsonDeserialize(builder = CertificateSummaryBuilder.class)
+@Value
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class CertificateSummary {
 
   String label;
   String value;
 
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class CertificateSummaryBuilder {
+
+  }
 }

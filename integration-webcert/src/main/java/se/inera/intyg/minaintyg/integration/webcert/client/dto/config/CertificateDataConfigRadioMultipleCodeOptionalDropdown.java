@@ -15,7 +15,7 @@ public class CertificateDataConfigRadioMultipleCodeOptionalDropdown implements
     CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_RADIO_MULTIPLE_CODE_OPTIONAL_DROPDOWN;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_RADIO_MULTIPLE_CODE_OPTIONAL_DROPDOWN;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -28,6 +28,8 @@ public class CertificateDataConfigRadioMultipleCodeOptionalDropdown implements
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   Layout layout;
   List<RadioMultipleCodeOptionalDropdown> list;
 

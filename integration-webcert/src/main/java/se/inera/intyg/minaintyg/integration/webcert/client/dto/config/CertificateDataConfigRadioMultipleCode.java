@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigRadioMultipleCode implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_RADIO_MULTIPLE_CODE;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_RADIO_MULTIPLE_CODE;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -27,6 +27,8 @@ public class CertificateDataConfigRadioMultipleCode implements CertificateDataCo
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   Layout layout;
   List<RadioMultipleCode> list;
 

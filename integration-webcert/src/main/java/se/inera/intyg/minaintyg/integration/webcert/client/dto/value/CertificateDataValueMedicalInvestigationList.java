@@ -15,6 +15,7 @@ public class CertificateDataValueMedicalInvestigationList implements Certificate
 
   @Getter(onMethod = @__(@Override))
   CertificateDataValueType type = CertificateDataValueType.MEDICAL_INVESTIGATION_LIST;
+  String id;
   List<CertificateDataValueMedicalInvestigation> list;
 
   @JsonPOJOBuilder(withPrefix = "")

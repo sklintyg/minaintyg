@@ -40,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public interface CertificateDataConfig {
 
-  CertificateDataConfigTypes getType();
+  CertificateDataConfigType getType();
 
   String getHeader();
 
@@ -53,5 +53,7 @@ public interface CertificateDataConfig {
   String getDescription();
 
   Accordion getAccordion();
+
+  Message getMessage();
 
 }
