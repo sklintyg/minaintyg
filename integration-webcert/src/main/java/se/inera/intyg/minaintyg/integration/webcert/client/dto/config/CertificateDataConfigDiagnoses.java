@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigDiagnoses implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_DIAGNOSES;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_DIAGNOSES;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -27,6 +27,8 @@ public class CertificateDataConfigDiagnoses implements CertificateDataConfig {
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   List<DiagnosesTerminology> terminology;
   List<DiagnosesListItem> list;
 

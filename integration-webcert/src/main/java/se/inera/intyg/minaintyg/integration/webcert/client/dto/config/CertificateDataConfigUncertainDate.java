@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigUncertainDate implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_UNCERTAIN_DATE;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_UNCERTAIN_DATE;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -27,6 +27,8 @@ public class CertificateDataConfigUncertainDate implements CertificateDataConfig
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   String id;
   List<String> allowedYears;
   boolean unknownYear;

@@ -13,7 +13,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigHeader implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_HEADER;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_HEADER;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -26,6 +26,8 @@ public class CertificateDataConfigHeader implements CertificateDataConfig {
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class CertificateDataConfigHeaderBuilder {

@@ -18,7 +18,7 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.Certific
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElementStyleEnum;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigHeader;
-import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigTypes;
+import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.CertificateDataConfigType;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
 import se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter;
 
@@ -145,7 +145,7 @@ public class CertificateDataConverter {
   }
 
   private boolean elementIsCategory(CertificateDataElement element) {
-    return element.getConfig().getType().equals(CertificateDataConfigTypes.CATEGORY);
+    return element.getConfig().getType().equals(CertificateDataConfigType.CATEGORY);
   }
 
   private static Predicate<CertificateDataElement> notHidden() {
@@ -153,6 +153,6 @@ public class CertificateDataConverter {
   }
 
   private static Predicate<CertificateDataElement> notMessage() {
-    return element -> !element.getConfig().getType().equals(CertificateDataConfigTypes.UE_MESSAGE);
+    return element -> !element.getConfig().getType().equals(CertificateDataConfigType.UE_MESSAGE);
   }
 }

@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigMedicalInvestigation implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_MEDICAL_INVESTIGATION;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_MEDICAL_INVESTIGATION;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -27,6 +27,8 @@ public class CertificateDataConfigMedicalInvestigation implements CertificateDat
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   String typeText;
   String dateText;
   String informationSourceText;

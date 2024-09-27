@@ -14,7 +14,7 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.Certificat
 public class CertificateDataConfigVisualAcuity implements CertificateDataConfig {
 
   @Getter(onMethod = @__(@Override))
-  CertificateDataConfigTypes type = CertificateDataConfigTypes.UE_VISUAL_ACUITY;
+  CertificateDataConfigType type = CertificateDataConfigType.UE_VISUAL_ACUITY;
   @Getter(onMethod = @__(@Override))
   String header;
   @Getter(onMethod = @__(@Override))
@@ -27,6 +27,8 @@ public class CertificateDataConfigVisualAcuity implements CertificateDataConfig 
   String description;
   @Getter(onMethod = @__(@Override))
   Accordion accordion;
+  @Getter(onMethod = @__(@Override))
+  Message message;
   String withoutCorrectionLabel;
   String withCorrectionLabel;
   String contactLensesLabel;
