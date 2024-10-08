@@ -8,8 +8,9 @@ plugins {
 }
 
 ext {
+    mockServerClientVersion = '5.15.0'
     springbootMavenBomVersion = '3.3.4'
-    shedlockSpringVersion = '5.10.2'
+    shedlockSpringVersion = '5.16.0'
 
     ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
     shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
