@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSTJANST;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.SendCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
 public class SendCertificateUsingIntygstjanstService {
@@ -36,6 +38,7 @@ public class SendCertificateUsingIntygstjanstService {
     this.endpoint = endpoint;
   }
 
+  @PerformanceLogging(eventAction = "send-certificate-from-it", eventType = EVENT_TYPE_INFO)
   public void send(SendCertificateIntegrationRequest request) {
     webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)

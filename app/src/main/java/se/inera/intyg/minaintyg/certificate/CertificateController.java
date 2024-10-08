@@ -1,5 +1,8 @@
 package se.inera.intyg.minaintyg.certificate;
 
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_CHANGE;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.ListCertificatesRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +40,7 @@ public class CertificateController {
   private final PrintCertificateService printCertificateService;
 
   @PostMapping
+  @PerformanceLogging(eventAction = "list-certificates", eventType = EVENT_TYPE_ACCESSED)
   public CertificateListResponseDTO listCertificates(
       @RequestBody CertificateListRequestDTO request) {
     final var listCertificatesRequest =
@@ -54,6 +59,7 @@ public class CertificateController {
   }
 
   @GetMapping("/{certificateId}")
+  @PerformanceLogging(eventAction = "retrieve-certificate", eventType = EVENT_TYPE_ACCESSED)
   public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
     final var response = getCertificateService.get(
         GetCertificateRequest
@@ -71,6 +77,7 @@ public class CertificateController {
   }
 
   @PostMapping("/{certificateId}/send")
+  @PerformanceLogging(eventAction = "send-certificate", eventType = EVENT_TYPE_CHANGE)
   public void sendCertificateToRecipient(@PathVariable String certificateId) {
     sendCertificateService.send(
         SendCertificateRequest
@@ -81,6 +88,7 @@ public class CertificateController {
   }
 
   @GetMapping(value = "/{certificateId}/pdf/{fileName}", produces = "application/pdf")
+  @PerformanceLogging(eventAction = "print-certificate", eventType = EVENT_TYPE_ACCESSED)
   public ResponseEntity<byte[]> printCertificate(
       @PathVariable String certificateId,
       @RequestParam(required = false) String customizationId) {

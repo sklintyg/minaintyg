@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygstjanst.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSTJANST;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
 public class GetCertificatesFromIntygstjanstService {
@@ -37,6 +39,7 @@ public class GetCertificatesFromIntygstjanstService {
     this.endpoint = endpoint;
   }
 
+  @PerformanceLogging(eventAction = "retrieve-certificate-list-from-it", eventType = EVENT_TYPE_INFO)
   public CertificatesResponseDTO get(GetCertificateListIntegrationRequest request) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)

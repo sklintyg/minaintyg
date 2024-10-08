@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSADMIN;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.ApplicationDTO;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
 public class GetBannersFromIntygsadminService {
@@ -39,6 +41,7 @@ public class GetBannersFromIntygsadminService {
     this.endpoint = endpoint;
   }
 
+  @PerformanceLogging(eventAction = "retrieve-banners-from-ia", eventType = EVENT_TYPE_INFO)
   public List<BannerDTO> get() {
     final var banners = webClient.get().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
