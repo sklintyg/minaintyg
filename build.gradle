@@ -42,7 +42,7 @@ dependencyCheck {
     formats = List.of("HTML", "JSON")
 
     nvd {
-        datafeedUrl="${nvdMirror}"
+        datafeedUrl = "${nvdMirror}"
     }
 }
 
@@ -51,8 +51,8 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
 
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 
     configurations {
         compileOnly {
