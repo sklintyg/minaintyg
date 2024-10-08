@@ -11,6 +11,7 @@ dependencies {
     runtimeOnly project(":integration-intygsadmin")
     runtimeOnly project(":integration-intygstjanst")
 
+    implementation "co.elastic.logging:logback-ecs-encoder:${logbackEcsEncoderVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
