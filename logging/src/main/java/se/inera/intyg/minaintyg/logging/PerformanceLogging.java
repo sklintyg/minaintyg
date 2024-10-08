@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstjanst.logging;
+package se.inera.intyg.minaintyg.logging;
 
-import static se.inera.intyg.intygstjanst.logging.MdcLogConstants.EVENT_CATEGORY_API;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_CATEGORY_API;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -29,12 +29,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PerformanceLogging {
 
-    String eventType();
+  String eventType();
 
-    String eventAction();
+  String eventAction();
 
-    String eventCategory() default EVENT_CATEGORY_API;
+  String eventCategory() default EVENT_CATEGORY_API;
 
-    boolean isActive() default true;
+  boolean isActive() default true;
 
 }

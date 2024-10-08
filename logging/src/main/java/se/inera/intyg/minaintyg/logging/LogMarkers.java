@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstjanst.logging;
+package se.inera.intyg.minaintyg.logging;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 public final class LogMarkers {
 
-    public static final Marker MONITORING = MarkerFactory.getMarker("Monitoring");
-    public static final Marker PERFORMANCE = MarkerFactory.getMarker("Performance");
+  public static final Marker MONITORING = MarkerFactory.getMarker("Monitoring");
+  public static final Marker PERFORMANCE = MarkerFactory.getMarker("Performance");
 
-    private LogMarkers() {
-    }
+  private LogMarkers() {
+  }
 
 }
