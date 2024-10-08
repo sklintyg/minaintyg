@@ -13,7 +13,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-test'
     testImplementation 'org.testcontainers:mockserver'
-    testImplementation 'org.mock-server:mockserver-client-java:5.15.0'
+    testImplementation "org.mock-server:mockserver-client-java:${mockServerClientVersion}"
 }
 
 testing {

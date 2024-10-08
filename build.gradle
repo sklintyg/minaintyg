@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '3.2.8'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
     id 'org.sonarqube' version '4.4.1.3373'
     id 'org.owasp.dependencycheck' version '10.0.4'
     id 'test-report-aggregation'
@@ -8,8 +8,9 @@ plugins {
 }
 
 ext {
-    springbootMavenBomVersion = '3.2.8'
-    shedlockSpringVersion = '5.10.2'
+    mockServerClientVersion = '5.15.0'
+    springbootMavenBomVersion = '3.3.4'
+    shedlockSpringVersion = '5.16.0'
 
     ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
     shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
@@ -17,7 +18,7 @@ ext {
 }
 
 group = 'se.inera.intyg.minaintyg'
-version = System.properties['buildVersion'] ?: '4.0.0-SNAPSHOT'
+version = System.properties['buildVersion'] ?: '4.1.0-SNAPSHOT'
 mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
 
 allprojects {
@@ -42,7 +43,7 @@ dependencyCheck {
     formats = List.of("HTML", "JSON")
 
     nvd {
-        datafeedUrl="${nvdMirror}"
+        datafeedUrl = "${nvdMirror}"
     }
 }
 
@@ -51,8 +52,8 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
 
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 
     configurations {
         compileOnly {
