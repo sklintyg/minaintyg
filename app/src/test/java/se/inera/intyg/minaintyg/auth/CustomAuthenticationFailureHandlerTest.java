@@ -68,7 +68,7 @@ class CustomAuthenticationFailureHandlerTest {
   @Test
   void shouldLogUserLoginFailedWithMessageFromException() throws IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture());
+    verify(monitoringLogService).logUserLoginFailed(stringArgumentCaptor.capture(), eq("-"));
     assertEquals(AUTHENTICATION_FAILED, stringArgumentCaptor.getValue());
   }
 
@@ -85,7 +85,7 @@ class CustomAuthenticationFailureHandlerTest {
 
     private final Saml2Error saml2Error = new Saml2Error("ERROR_CODE", "description");
     private final LoginAgeLimitException ageLimitException =
-        new LoginAgeLimitException(AGE_LIMIT_EXCEPTION_MESSAGE);
+        new LoginAgeLimitException(AGE_LIMIT_EXCEPTION_MESSAGE, LoginMethod.ELVA77);
     private final Saml2AuthenticationException saml2Exception =
         new Saml2AuthenticationException(saml2Error, ageLimitException);
 
@@ -98,7 +98,8 @@ class CustomAuthenticationFailureHandlerTest {
     @Test
     void shouldMonitorLogLoginFailure() throws IOException {
       authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
-      verify(monitoringLogService).logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE);
+      verify(monitoringLogService).logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE,
+          LoginMethod.ELVA77.name());
     }
   }
 }

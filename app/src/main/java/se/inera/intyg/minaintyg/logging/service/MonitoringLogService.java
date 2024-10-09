@@ -31,11 +31,12 @@ public class MonitoringLogService {
     }
   }
 
-  public void logUserLoginFailed(String exceptionMessage) {
+  public void logUserLoginFailed(String exceptionMessage, String loginMethod) {
     try (MdcCloseableMap mdc =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CITIZEN_LOGIN_FAILURE))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
+            .put(MdcLogConstants.EVENT_LOGIN_METHOD, loginMethod)
             .build()
     ) {
       logEvent(MonitoringEvent.CITIZEN_LOGIN_FAILURE, exceptionMessage);

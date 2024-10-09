@@ -32,8 +32,11 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException {
 
-    if (exception.getCause() instanceof LoginAgeLimitException) {
-      monitoringLogService.logUserLoginFailed(exception.getMessage());
+    if (exception.getCause() instanceof LoginAgeLimitException loginAgeLimitException) {
+      monitoringLogService.logUserLoginFailed(
+          loginAgeLimitException.getMessage(),
+          loginAgeLimitException.loginMethod().value()
+      );
       response.sendRedirect(request.getContextPath() + errorLoginUnderageUrl);
       return;
     }
@@ -48,7 +51,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     log.error(
         String.format("Failed login attempt with errorId '%s' - exception %s", errorId, exception)
     );
-    monitoringLogService.logUserLoginFailed(exception.getMessage());
+    monitoringLogService.logUserLoginFailed(exception.getMessage(), "-");
     monitoringLogService.logClientError(errorId, String.valueOf(response.getStatus()),
         exception.getMessage(), null);
   }

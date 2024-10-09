@@ -73,7 +73,7 @@ class MonitoringLogServiceTest {
 
     @Test
     void shouldLogWhenUserLoginFailed() {
-      monitoringLogService.logUserLoginFailed(SOMETHING_WENT_WRONG);
+      monitoringLogService.logUserLoginFailed(SOMETHING_WENT_WRONG, LoginMethod.ELVA77.name());
       verifyLog(Level.INFO,
           "CITIZEN_LOGIN_FAILURE Citizen failed to login, exception message '"
               + SOMETHING_WENT_WRONG + "'");
