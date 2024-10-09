@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.webcert.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_WEBCERT;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
 public class GetCertificateFromWebcertService {
@@ -38,6 +40,7 @@ public class GetCertificateFromWebcertService {
 
   }
 
+  @PerformanceLogging(eventAction = "retrieve-certificate-from-wc", eventType = EVENT_TYPE_INFO)
   public CertificateResponseDTO get(GetCertificateIntegrationRequest request) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)

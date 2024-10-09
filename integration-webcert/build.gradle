@@ -1,16 +1,17 @@
 dependencies {
+    implementation project(":logging")
     implementation project(':integration-api')
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    compileOnly 'org.projectlombok:lombok'
 
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    compileOnly 'org.projectlombok:lombok'
-
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "com.squareup.okhttp3:okhttp"
     testImplementation "com.squareup.okhttp3:mockwebserver"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 tasks.named('test') {

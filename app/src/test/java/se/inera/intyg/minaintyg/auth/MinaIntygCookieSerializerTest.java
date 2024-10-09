@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.common;
+package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -8,9 +8,10 @@ plugins {
 }
 
 ext {
+    logbackEcsEncoderVersion = '1.6.0'
     mockServerClientVersion = '5.15.0'
-    springbootMavenBomVersion = '3.3.4'
     shedlockSpringVersion = '5.16.0'
+    springbootMavenBomVersion = '3.3.4'
 
     ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
     shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
@@ -109,5 +110,6 @@ reporting {
         testReportAggregation project(':integration-intygstjanst')
         testReportAggregation project(':integration-test')
         testReportAggregation project(':integration-webcert')
+        testReportAggregation project(':logging')
     }
 }

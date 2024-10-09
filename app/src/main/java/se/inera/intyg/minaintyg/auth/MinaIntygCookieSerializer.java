@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.common;
+package se.inera.intyg.minaintyg.auth;
 
 import java.util.regex.Pattern;
 import org.springframework.boot.web.server.Cookie.SameSite;

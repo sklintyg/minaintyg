@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<configuration>
-  <property name="APP_NAME" value="${APP_NAME:-minaintyg}"/>
+<configuration scan="true" debug="true" scanPeriod="15 seconds">
   <include resource="logback/logback-spring-base.xml"/>
 
-  <logger name="org.springframework" level="WARN" />
-  <logger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="WARN" />
-  <logger name="org.springframework.http" level="WARN" />
-  <logger name="org.springframework.security" level="WARN" />
-  <logger name="org.springframework.web" level="WARN" />
+  <springProfile name="dev">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+    </root>
+  </springProfile>
 
-  <!-- Monitoring logger -->
-  <logger name="se.inera.intyg.minaintyg.logging.service.MonitoringLogService" level="INFO" />
-
-  <root level="INFO">
-    <appender-ref ref="CONSOLE" />
-    <appender-ref ref="MONITORING" />
-  </root>
+  <springProfile name="!dev">
+    <root level="INFO">
+      <appender-ref ref="ECS_JSON_CONSOLE"/>
+    </root>
+  </springProfile>
 </configuration>

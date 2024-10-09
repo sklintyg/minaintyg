@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
+import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
+import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
 public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
@@ -37,6 +39,7 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
   }
 
   @Override
+  @PerformanceLogging(eventAction = "retrieve-person-from-ips", eventType = EVENT_TYPE_INFO)
   public PersonSvarDTO getPersonFromIntygProxy(GetPersonIntegrationRequest personRequest) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)

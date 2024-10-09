@@ -39,11 +39,11 @@ import se.inera.intyg.minaintyg.auth.CsrfCookieFilter;
 import se.inera.intyg.minaintyg.auth.CustomAuthenticationFailureHandler;
 import se.inera.intyg.minaintyg.auth.CustomXFrameOptionsHeaderWriter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
+import se.inera.intyg.minaintyg.auth.MinaIntygCookieSerializer;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
 import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 import se.inera.intyg.minaintyg.auth.SessionTimeoutFilter;
 import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
-import se.inera.intyg.minaintyg.common.MinaIntygCookieSerializer;
 
 @Slf4j
 @Configuration

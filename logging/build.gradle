@@ -1,0 +1,16 @@
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    implementation "ch.qos.logback:logback-classic"
+    implementation "jakarta.servlet:jakarta.servlet-api"
+    implementation "org.aspectj:aspectjweaver"
+    implementation "org.springframework:spring-webmvc"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
