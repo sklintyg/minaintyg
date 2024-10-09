@@ -1,5 +1,6 @@
-
 dependencies {
+    implementation project(":logging")
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
