@@ -110,5 +110,6 @@ reporting {
         testReportAggregation project(':integration-intygstjanst')
         testReportAggregation project(':integration-test')
         testReportAggregation project(':integration-webcert')
+        testReportAggregation project(':logging')
     }
 }
