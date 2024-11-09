@@ -13,7 +13,7 @@ public class CertificateConfirmationModal {
 
   String title;
   String text;
-  String alert;
+  Alert alert;
   String checkboxText;
   CertificateModalActionType primaryAction;
   CertificateModalActionType secondaryAction;

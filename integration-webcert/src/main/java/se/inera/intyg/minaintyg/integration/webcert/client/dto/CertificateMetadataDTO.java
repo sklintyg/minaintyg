@@ -49,6 +49,7 @@ public class CertificateMetadataDTO {
   private CertificateRecipient recipient;
   private CertificateSummary summary;
   private CertificateConfirmationModal confirmationModal;
+  private CertificateConfirmationModal signConfirmationModal;
   private boolean validForSign;
   private String externalReference;
   private List<CertificateMessageType> messageTypes;
