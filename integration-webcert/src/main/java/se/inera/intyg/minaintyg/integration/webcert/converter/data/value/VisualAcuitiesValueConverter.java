@@ -68,36 +68,31 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
       return NOT_PROVIDED_VALUE;
     }
 
+    final var contactLensesIncluded = config
+        .map(configValue -> configValue.getContactLensesLabel() != null)
+        .orElse(false);
+
     return CertificateQuestionValueGeneralTable.builder()
         .headings(
-            List.of(
-                dataElement(EMPTY),
-                headingElement(headerLabel(config,
-                    CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
-                ),
-                headingElement(
-                    headerLabel(config,
-                        CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
-                ),
-                headingElement(
-                    headerLabel(config,
-                        CertificateDataConfigVisualAcuity::getContactLensesLabel)
-                )
-            )
+            getHeadings(config, contactLensesIncluded)
         )
         .values(
             List.of(
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getRightEye)),
-                    dataElements(value(values, CertificateDataValueVisualAcuities::getRightEye))),
+                    dataElements(
+                        value(values, CertificateDataValueVisualAcuities::getRightEye, true,
+                            contactLensesIncluded))),
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getLeftEye)),
-                    dataElements(value(values, CertificateDataValueVisualAcuities::getLeftEye))
+                    dataElements(value(values, CertificateDataValueVisualAcuities::getLeftEye, true,
+                        contactLensesIncluded))
                 ),
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getBinocular)),
                     dataElements(
-                        value(values, CertificateDataValueVisualAcuities::getBinocular, false))
+                        value(values, CertificateDataValueVisualAcuities::getBinocular, false,
+                            contactLensesIncluded))
                 )
             )
         )
@@ -106,6 +101,36 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
 
   private static boolean isEmpty(Optional<CertificateDataValueVisualAcuities> values) {
     return values.isEmpty() || values.get().getRightEye() == null;
+  }
+
+  private static List<TableElement> getHeadings(Optional<CertificateDataConfigVisualAcuity> config,
+      boolean includeContactLenses) {
+    if (Boolean.FALSE.equals(includeContactLenses)) {
+      return List.of(
+          dataElement(EMPTY),
+          headingElement(headerLabel(config,
+              CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
+          ),
+          headingElement(
+              headerLabel(config,
+                  CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
+          )
+      );
+    }
+
+    return List.of(
+        dataElement(EMPTY),
+        headingElement(headerLabel(config,
+            CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
+        ),
+        headingElement(
+            headerLabel(config,
+                CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
+        ),
+        headingElement(
+            headerLabel(config, CertificateDataConfigVisualAcuity::getContactLensesLabel)
+        )
+    );
   }
 
   private static String headerLabel(Optional<CertificateDataConfigVisualAcuity> config,
@@ -126,13 +151,22 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
   }
 
   private static List<String> value(Optional<CertificateDataValueVisualAcuities> values,
-      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualActuity) {
-    return value(values, getVisualActuity, true);
+      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualActuity,
+      boolean displayContactLenses, Boolean contactLensesIncluded) {
+    return values(values, getVisualActuity, displayContactLenses, contactLensesIncluded);
   }
 
-  private static List<String> value(Optional<CertificateDataValueVisualAcuities> values,
+  private static List<String> values(Optional<CertificateDataValueVisualAcuities> values,
       Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualActuity,
-      boolean includeContactLenses) {
+      boolean includeContactLenses, boolean contactLensesIncluded) {
+
+    if (Boolean.FALSE.equals(contactLensesIncluded)) {
+      return List.of(
+          value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithoutCorrection),
+          value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithCorrection)
+      );
+    }
+
     return List.of(
         value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithoutCorrection),
         value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithCorrection),
