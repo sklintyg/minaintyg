@@ -85,7 +85,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -143,7 +143,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -201,7 +201,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -259,7 +259,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -317,7 +317,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -373,7 +373,7 @@ class VisualAcuitiesValueConverterTest {
 
     final var element = CertificateDataElement.builder()
         .config(
-            createVisualAcuityConfiguration()
+            createVisualAcuityConfiguration(true)
         )
         .value(
             CertificateDataValueVisualAcuities.builder()
@@ -391,17 +391,72 @@ class VisualAcuitiesValueConverterTest {
     assertEquals(expectedValue, actualValue);
   }
 
-  private static CertificateDataConfigVisualAcuity createVisualAcuityConfiguration() {
+  @Test
+  void shallExcludeContactLensesColumnAndRows() {
+    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
+        .headings(
+            List.of(
+                getDataElement(""),
+                getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                getHeadingElement(WITH_CORRECTION_LABEL)
+            )
+        )
+        .values(
+            List.of(
+                List.of(
+                    getHeadingElement(RIGHT_EYE_LABEL),
+                    getDataElement("0,1"),
+                    getDataElement("-")
+                ),
+                List.of(
+                    getHeadingElement(LEFT_EYE_LABEL),
+                    getDataElement("1,1"),
+                    getDataElement("-")
+                ),
+                List.of(
+                    getHeadingElement(BINOCULAR_LABEL),
+                    getDataElement("2,0"),
+                    getDataElement("-")
+                )
+            )
+        )
+        .build();
+
+    final var element = CertificateDataElement.builder()
+        .config(
+            createVisualAcuityConfiguration(false)
+        )
+        .value(
+            CertificateDataValueVisualAcuities.builder()
+                .rightEye(
+                    createVisualActuityValue("0,1", null, null)
+                )
+                .leftEye(
+                    createVisualActuityValue("1,1", null, null)
+                )
+                .binocular(
+                    createVisualActuityValue("2,0", null, null)
+                )
+                .build()
+        )
+        .build();
+
+    final var actualValue = visualAcuitiesValueConverter.convert(element);
+    assertEquals(expectedValue, actualValue);
+  }
+
+  private static CertificateDataConfigVisualAcuity createVisualAcuityConfiguration(
+      boolean includeContactLenses) {
     return CertificateDataConfigVisualAcuity.builder()
         .withoutCorrectionLabel(WITHOUT_CORRECTION_LABEL)
         .withCorrectionLabel(WITH_CORRECTION_LABEL)
-        .contactLensesLabel(CONTACT_LENSES_LABEL)
+        .contactLensesLabel(includeContactLenses ? CONTACT_LENSES_LABEL : null)
         .rightEye(
             VisualAcuity.builder()
                 .label(RIGHT_EYE_LABEL)
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
-                .contactLensesId(CONTACT_LENSES_ID)
+                .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
                 .build()
         )
         .leftEye(
@@ -409,7 +464,7 @@ class VisualAcuitiesValueConverterTest {
                 .label(LEFT_EYE_LABEL)
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
-                .contactLensesId(CONTACT_LENSES_ID)
+                .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
                 .build()
         )
         .binocular(
@@ -417,7 +472,7 @@ class VisualAcuitiesValueConverterTest {
                 .label(BINOCULAR_LABEL)
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
-                .contactLensesId(CONTACT_LENSES_ID)
+                .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
                 .build()
         )
         .build();
