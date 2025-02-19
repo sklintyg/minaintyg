@@ -3,23 +3,27 @@ package se.inera.intyg.minaintyg.logging.service;
 
 import com.google.common.base.Strings;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.logging.HashUtility;
 import se.inera.intyg.minaintyg.logging.LogMarkers;
 import se.inera.intyg.minaintyg.logging.MdcCloseableMap;
 import se.inera.intyg.minaintyg.logging.MdcLogConstants;
-import se.inera.intyg.minaintyg.util.HashUtility;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MonitoringLogService {
+
+  private final HashUtility hashUtility;
 
   private static final String SPACE = " ";
   private static final String NO_STACK_TRACE = "NO_STACK_TRACE";
 
   public void logUserLogin(String personId, String loginMethod) {
-    final var hashedPersonId = HashUtility.hash(personId);
-    try (MdcCloseableMap mdc =
+    final var hashedPersonId = hashUtility.hash(personId);
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CITIZEN_LOGIN))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
@@ -32,7 +36,7 @@ public class MonitoringLogService {
   }
 
   public void logUserLoginFailed(String exceptionMessage, String loginMethod) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CITIZEN_LOGIN_FAILURE))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
@@ -44,8 +48,8 @@ public class MonitoringLogService {
   }
 
   public void logUserLogout(String personId, String loginMethod) {
-    final var hashedPersonId = HashUtility.hash(personId);
-    try (MdcCloseableMap mdc =
+    final var hashedPersonId = hashUtility.hash(personId);
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CITIZEN_LOGOUT))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
@@ -58,18 +62,18 @@ public class MonitoringLogService {
   }
 
   public void logListCertificates(String personId, int nbrOfCertificates) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.LIST_CERTIFICATES))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
             .build()
     ) {
-      logEvent(MonitoringEvent.LIST_CERTIFICATES, HashUtility.hash(personId), nbrOfCertificates);
+      logEvent(MonitoringEvent.LIST_CERTIFICATES, hashUtility.hash(personId), nbrOfCertificates);
     }
   }
 
   public void logCertificateRead(String certificateId, String type) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CERTIFICATE_READ))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
@@ -82,7 +86,7 @@ public class MonitoringLogService {
   }
 
   public void logCertificateSent(String certificateId, String type, String recipient) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CERTIFICATE_SEND))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_CHANGE)
@@ -107,7 +111,7 @@ public class MonitoringLogService {
   }
 
   private void logCertificatePrintedFully(String certificateId, String certificateType) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.CERTIFICATE_PRINTED_FULLY))
@@ -125,7 +129,7 @@ public class MonitoringLogService {
   }
 
   private void logCertificatePrintedEmployeeCopy(String certificateId, String certificateType) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY))
@@ -144,7 +148,7 @@ public class MonitoringLogService {
 
   public void logClientError(String id, String code, String message, String stackTrace) {
     final var stackTraceText = Strings.isNullOrEmpty(stackTrace) ? NO_STACK_TRACE : stackTrace;
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CLIENT_ERROR))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
@@ -159,7 +163,7 @@ public class MonitoringLogService {
   }
 
   public void logIllegalCertificateAccess(String message) {
-    try (MdcCloseableMap mdc =
+    try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.ILLEGAL_CERTIFICATE_ACCESS))
@@ -177,9 +181,7 @@ public class MonitoringLogService {
   }
 
   private String buildMessage(MonitoringEvent logEvent) {
-    final var logMsg = new StringBuilder();
-    logMsg.append(logEvent.name()).append(SPACE).append(logEvent.getMessage());
-    return logMsg.toString();
+    return logEvent.name() + SPACE + logEvent.getMessage();
   }
 
   private String toEventType(MonitoringEvent monitoringEvent) {

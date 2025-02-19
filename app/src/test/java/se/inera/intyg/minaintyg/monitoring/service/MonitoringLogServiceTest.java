@@ -18,11 +18,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
+import se.inera.intyg.minaintyg.logging.HashUtility;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
-import se.inera.intyg.minaintyg.util.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
 class MonitoringLogServiceTest {
@@ -35,9 +37,12 @@ class MonitoringLogServiceTest {
   private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
   @Mock
   private Appender<ILoggingEvent> mockAppender;
+  @Spy
+  private HashUtility hashUtility;
 
   @BeforeEach
   void setUp() {
+    ReflectionTestUtils.setField(hashUtility, "salt", "salt");
     final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
     logger.addAppender(mockAppender);
   }
@@ -62,7 +67,7 @@ class MonitoringLogServiceTest {
     @Test
     void shouldLogWhenUserLogin() {
       monitoringLogService.logUserLogin(PERSON_ID, LoginMethod.ELVA77.name());
-      final var hashedPersonId = HashUtility.hash(PERSON_ID);
+      final var hashedPersonId = hashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "CITIZEN_LOGIN Citizen '" + hashedPersonId + "' logged in using login method 'ELVA77'");
     }
@@ -86,7 +91,7 @@ class MonitoringLogServiceTest {
     @Test
     void shouldLogWhenUserLogout() {
       monitoringLogService.logUserLogout(PERSON_ID, LoginMethod.ELVA77.name());
-      final var hashedPersonId = HashUtility.hash(PERSON_ID);
+      final var hashedPersonId = hashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "CITIZEN_LOGOUT Citizen '" + hashedPersonId + "' logged out using login method 'ELVA77'");
     }
@@ -98,7 +103,7 @@ class MonitoringLogServiceTest {
     @Test
     void shouldLogWhenUserListsCertificate() {
       monitoringLogService.logListCertificates(PERSON_ID, 10);
-      final var hashedPersonId = HashUtility.hash(PERSON_ID);
+      final var hashedPersonId = hashUtility.hash(PERSON_ID);
       verifyLog(Level.INFO,
           "LIST_CERTIFICATES Citizen '" + hashedPersonId + "' listed '10' certificates");
     }

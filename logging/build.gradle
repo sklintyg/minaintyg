@@ -4,6 +4,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
 
     implementation "ch.qos.logback:logback-classic"
+    implementation "com.google.guava:guava:${guavaVersion}"
     implementation "jakarta.servlet:jakarta.servlet-api"
     implementation "org.aspectj:aspectjweaver"
     implementation "org.springframework:spring-webmvc"

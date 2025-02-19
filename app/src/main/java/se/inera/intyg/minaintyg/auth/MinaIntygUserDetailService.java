@@ -12,7 +12,7 @@ import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
-import se.inera.intyg.minaintyg.util.HashUtility;
+import se.inera.intyg.minaintyg.logging.HashUtility;
 
 @Slf4j
 @Service
@@ -23,6 +23,7 @@ public class MinaIntygUserDetailService {
   @Value("${login.age.limit}")
   private long loginAgeLimit;
 
+  private final HashUtility hashUtility;
   private final GetPersonIntegrationService getPersonIntegrationService;
 
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
@@ -88,7 +89,7 @@ public class MinaIntygUserDetailService {
 
   private void handleUnderagePerson(String personId, LoginMethod loginMethod) {
     final var errorMessage = "Access denied for underage person with id '%s'."
-        .formatted(HashUtility.hash(personId));
+        .formatted(hashUtility.hash(personId));
     log.warn(errorMessage);
     throw new LoginAgeLimitException(errorMessage, loginMethod);
   }
