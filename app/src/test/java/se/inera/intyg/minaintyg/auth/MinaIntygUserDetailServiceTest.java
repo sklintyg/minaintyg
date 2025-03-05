@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
@@ -25,7 +26,7 @@ import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRespo
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Person;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
-import se.inera.intyg.minaintyg.util.HashUtility;
+import se.inera.intyg.minaintyg.logging.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
 class MinaIntygUserDetailServiceTest {
@@ -36,6 +37,8 @@ class MinaIntygUserDetailServiceTest {
 
   @Mock
   private GetPersonIntegrationService getPersonIntegrationService;
+  @Spy
+  private HashUtility hashUtility;
 
   @InjectMocks
   private MinaIntygUserDetailService minaIntygUserDetailService;
@@ -43,6 +46,7 @@ class MinaIntygUserDetailServiceTest {
   @BeforeEach
   void setup() {
     ReflectionTestUtils.setField(minaIntygUserDetailService, "loginAgeLimit", LOGIN_AGE_LIMIT);
+    ReflectionTestUtils.setField(hashUtility, "salt", "salt");
   }
 
   @Test
@@ -167,7 +171,7 @@ class MinaIntygUserDetailServiceTest {
           () -> minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77));
 
       assertFalse(e.getMessage().contains(personId));
-      assertTrue(e.getMessage().contains(HashUtility.hash(personId)));
+      assertTrue(e.getMessage().contains(hashUtility.hash(personId)));
     }
 
     @Test

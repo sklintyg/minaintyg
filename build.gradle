@@ -8,6 +8,7 @@ plugins {
 }
 
 ext {
+    guavaVersion = '33.4.0-jre'
     logbackEcsEncoderVersion = '1.6.0'
     mockServerClientVersion = '5.15.0'
     shedlockSpringVersion = '5.16.0'

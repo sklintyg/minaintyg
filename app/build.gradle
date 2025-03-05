@@ -22,7 +22,6 @@ dependencies {
     implementation "org.springframework.session:spring-session-data-redis"
     implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
-    implementation "com.google.guava:guava"
 
     compileOnly "org.projectlombok:lombok"
 
