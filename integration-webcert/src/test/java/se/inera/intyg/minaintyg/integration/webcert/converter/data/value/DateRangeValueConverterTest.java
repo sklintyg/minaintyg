@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.NOT_PROVIDED_VALUE;
 
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRange;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueType;
@@ -62,8 +63,13 @@ class DateRangeValueConverterTest {
 
   @Test
   void shallReturnTextValueWithDateRangeIfDateRangeExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value("2023-01-01 - 2023-01-10")
+    final var expectedValue = CertificateQuestionValueTable.builder()
+        .headings(List.of("Från och med", "Till och med"))
+        .values(
+            List.of(
+                List.of("2023-01-01", "2023-01-10")
+            )
+        )
         .build();
 
     final var element = CertificateDataElement.builder()
