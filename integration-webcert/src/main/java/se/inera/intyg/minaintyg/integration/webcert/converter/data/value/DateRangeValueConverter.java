@@ -1,9 +1,10 @@
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValue;
-import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueText;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.value.CertificateQuestionValueTable;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValue;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.CertificateDataValueDateRange;
@@ -11,6 +12,9 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.value.Certificate
 
 @Component
 public class DateRangeValueConverter extends AbstractValueConverter {
+
+  private static final String FROM_HEADING = "Från och med";
+  private static final String TO_HEADING = "Till och med";
 
   @Override
   public CertificateDataValueType getType() {
@@ -24,8 +28,13 @@ public class DateRangeValueConverter extends AbstractValueConverter {
               if (isEmpty(dateRange)) {
                 return NOT_PROVIDED_VALUE;
               }
-              return CertificateQuestionValueText.builder()
-                  .value("%s - %s".formatted(dateRange.getFrom(), dateRange.getTo()))
+              return CertificateQuestionValueTable.builder()
+                  .headings(List.of(FROM_HEADING, TO_HEADING))
+                  .values(
+                      List.of(
+                          List.of(dateRange.getFrom().toString(), dateRange.getTo().toString())
+                      )
+                  )
                   .build();
             }
         )
