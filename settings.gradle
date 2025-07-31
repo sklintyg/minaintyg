@@ -1,3 +1,15 @@
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        maven { url = "https://nexus.drift.inera.se/repository/it-public/" }
+    }
+    versionCatalogs {
+        libs {
+            from("se.inera.intyg.bom:catalog:${System.properties['intygBomVersion'] ?: '0.0.1-SNAPSHOT'}")
+        }
+    }
+}
+
 rootProject.name = 'minaintyg'
 
 include 'app'
