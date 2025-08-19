@@ -23,7 +23,7 @@ public class ListCertificatesService {
     final var response = getCertificateListIntegrationService.get(
         GetCertificateListIntegrationRequest
             .builder()
-            .patientId(user.getPersonId())
+            .patientId(user.getUserId())
             .years(request.getYears())
             .units(request.getUnits())
             .statuses(request.getStatuses())
@@ -31,7 +31,7 @@ public class ListCertificatesService {
             .build()
     );
 
-    monitoringLogService.logListCertificates(user.getPersonId(), response.getContent().size());
+    monitoringLogService.logListCertificates(user.getUserId(), response.getContent().size());
 
     return ListCertificatesResponse.builder()
         .content(response.getContent())

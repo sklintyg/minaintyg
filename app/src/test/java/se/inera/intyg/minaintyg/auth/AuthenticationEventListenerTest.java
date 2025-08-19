@@ -42,7 +42,7 @@ class AuthenticationEventListenerTest {
       interactiveAuthenticationSuccessEvent = new InteractiveAuthenticationSuccessEvent(
           new Saml2AuthenticationToken(
               MinaIntygUser.builder()
-                  .personId(PERSON_ID)
+                  .userId(PERSON_ID)
                   .loginMethod(LOGIN_METHOD)
                   .build(), mock(Saml2Authentication.class)
           ), this.getClass()
@@ -95,7 +95,7 @@ class AuthenticationEventListenerTest {
       logoutSuccessEvent = new LogoutSuccessEvent(
           new Saml2AuthenticationToken(
               MinaIntygUser.builder()
-                  .personId(PERSON_ID)
+                  .userId(PERSON_ID)
                   .loginMethod(LOGIN_METHOD)
                   .build(), mock(Saml2Authentication.class)
           )

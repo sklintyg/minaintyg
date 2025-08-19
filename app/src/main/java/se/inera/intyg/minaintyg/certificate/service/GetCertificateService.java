@@ -27,7 +27,7 @@ public class GetCertificateService {
         GetCertificateIntegrationRequest
             .builder()
             .certificateId(request.getCertificateId())
-            .personId(loggedInUser.getPersonId())
+            .personId(loggedInUser.getUserId())
             .build()
     );
 

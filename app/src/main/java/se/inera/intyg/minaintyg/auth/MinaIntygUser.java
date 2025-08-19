@@ -19,13 +19,13 @@ public class MinaIntygUser implements Saml2AuthenticatedPrincipal, Serializable 
 
   @Serial
   private static final long serialVersionUID = 1L;
-  private String personId;
-  private String personName;
+  private String userId;
+  private String userName;
   private LoginMethod loginMethod;
 
   @Override
   public String getName() {
-    return getPersonName();
+    return getUserName();
   }
 
   @Override

@@ -6,8 +6,8 @@ import org.mockserver.client.MockServerClient;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.MediaType;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonSvarDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.UserDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.UserResponseDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @RequiredArgsConstructor
@@ -15,7 +15,7 @@ public class IntygProxyServiceMock {
 
   private final MockServerClient mockServerClient;
 
-  public static final PersonDTO ATHENA_REACT_ANDERSSON = PersonDTO.builder()
+  public static final UserDTO ATHENA_REACT_ANDERSSON = UserDTO.builder()
       .personnummer("194011306125")
       .namn("Athena React Andersson")
       .fornamn("Athena")
@@ -23,14 +23,14 @@ public class IntygProxyServiceMock {
       .efternamn("Andersson")
       .build();
 
-  public void foundPerson(PersonDTO person) {
+  public void foundPerson(UserDTO person) {
     try {
       mockServerClient.when(HttpRequest.request("/api/v1/person"))
           .respond(
               HttpResponse
                   .response(
                       new ObjectMapper().writeValueAsString(
-                          PersonSvarDTO.builder()
+                          UserResponseDTO.builder()
                               .status(StatusDTO.FOUND)
                               .person(
                                   person

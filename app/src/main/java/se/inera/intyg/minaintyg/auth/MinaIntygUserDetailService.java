@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.exception.UserInactiveException;
-import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
-import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.logging.HashUtility;
 
@@ -25,40 +25,40 @@ public class MinaIntygUserDetailService {
   private long loginAgeLimit;
 
   private final HashUtility hashUtility;
-  private final GetPersonIntegrationService getPersonIntegrationService;
+  private final GetUserIntegrationService getUserIntegrationService;
 
-  public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
-    validatePersonId(personId);
-    final var personResponse = getPersonIntegrationService.getPerson(
-        GetPersonIntegrationRequest.builder()
-            .personId(personId)
+  public MinaIntygUser buildPrincipal(String userId, LoginMethod loginMethod) {
+    validateUserId(userId);
+    final var userResponse = getUserIntegrationService.getUser(
+        GetUserIntegrationRequest.builder()
+            .userId(userId)
             .build()
     );
 
-    if (!personResponse.getStatus().equals(Status.FOUND)) {
-      handleCommunicationFault(personResponse.getStatus());
+    if (!userResponse.getStatus().equals(Status.FOUND)) {
+      handleCommunicationFault(userResponse.getStatus());
     }
 
-    final var personIdFromResponse = personResponse.getPerson().getPersonId();
+    final var userIdFromResponse = userResponse.getUser().getUserId();
 
-    if (!personResponse.getPerson().isActive()) {
-      handleInactiveUser(personIdFromResponse, loginMethod);
+    if (!userResponse.getUser().isActive()) {
+      handleInactiveUser(userIdFromResponse, loginMethod);
     }
 
-    if (belowLoginAgeLimit(personIdFromResponse)) {
-      handleUnderagePerson(personIdFromResponse, loginMethod);
+    if (belowLoginAgeLimit(userIdFromResponse)) {
+      handleUnderagePerson(userIdFromResponse, loginMethod);
     }
 
     return MinaIntygUser.builder()
-        .personId(personIdFromResponse)
-        .personName(personResponse.getPerson().getName())
+        .userId(userIdFromResponse)
+        .userName(userResponse.getUser().getName())
         .loginMethod(loginMethod)
         .build();
   }
 
-  private void handleInactiveUser(String personId, LoginMethod loginMethod) {
+  private void handleInactiveUser(String userId, LoginMethod loginMethod) {
     final var errorMessage = "Access denied for inactive user with id '%s'."
-        .formatted(hashUtility.hash(personId));
+        .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
     throw new UserInactiveException(errorMessage, loginMethod);
   }
@@ -70,16 +70,16 @@ public class MinaIntygUserDetailService {
     );
   }
 
-  private void validatePersonId(String personId) {
-    if (personId == null || personId.trim().isEmpty()) {
+  private void validateUserId(String userId) {
+    if (userId == null || userId.trim().isEmpty()) {
       throw new IllegalArgumentException(
-          "personId must have a valid value: '%s'".formatted(personId)
+          "userId must have a valid value: '%s'".formatted(userId)
       );
     }
   }
 
-  private boolean belowLoginAgeLimit(String personId) {
-    String birthDate = personId.substring(0, 8);
+  private boolean belowLoginAgeLimit(String userId) {
+    String birthDate = userId.substring(0, 8);
     final var dayOfMonth = Integer.parseInt(birthDate.substring(6, 8));
 
     if (isCoordinationNumber(dayOfMonth)) {
@@ -99,9 +99,9 @@ public class MinaIntygUserDetailService {
     return birthDate.substring(0, 6).concat(Strings.padStart(dayValue, 2, '0'));
   }
 
-  private void handleUnderagePerson(String personId, LoginMethod loginMethod) {
+  private void handleUnderagePerson(String userId, LoginMethod loginMethod) {
     final var errorMessage = "Access denied for underage person with id '%s'."
-        .formatted(hashUtility.hash(personId));
+        .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
     throw new LoginAgeLimitException(errorMessage, loginMethod);
   }

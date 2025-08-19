@@ -24,8 +24,8 @@ class UserToolkitTest {
   @Test
   void shouldReturnOptionalEmptyPrincipalIsNotInstanceOfMinaIntygUser() {
     final var expectedResult = MinaIntygUser.builder()
-        .personId(PERSON_ID)
-        .personName(PERSON_NAME)
+        .userId(PERSON_ID)
+        .userName(PERSON_NAME)
         .loginMethod(LOGIN_METHOD)
         .build();
     TestPrincipalHelper.setMinaIntygUserAsPrincipal(expectedResult);

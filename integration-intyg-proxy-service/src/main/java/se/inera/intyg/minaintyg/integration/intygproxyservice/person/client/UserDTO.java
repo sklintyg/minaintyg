@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class PersonSvarDTO {
+@AllArgsConstructor
+public class UserDTO {
 
-  private PersonDTO person;
-  private StatusDTO status;
+  private String personnummer;
+  private String namn;
+  private String fornamn;
+  private String mellannamn;
+  private String efternamn;
 }

@@ -33,7 +33,7 @@ public class PrintCertificateService {
             .builder()
             .certificateId(request.getCertificateId())
             .customizationId(request.getCustomizationId())
-            .personId(loggedInUser.getPersonId())
+            .personId(loggedInUser.getUserId())
             .build()
     );
 

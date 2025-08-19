@@ -73,7 +73,7 @@ class SendCertificateServiceTest {
   void setup() {
     when(userService.getLoggedInUser()).thenReturn(Optional.of(MinaIntygUser
         .builder()
-        .personId(PATIENT_ID)
+        .userId(PATIENT_ID)
         .build()));
   }
 

@@ -34,8 +34,8 @@ class UserControllerTest {
             .build());
     when(userService.getLoggedInUser()).thenReturn(
         Optional.of(MinaIntygUser.builder()
-            .personId(PERSON_ID)
-            .personName(PERSON_NAME)
+            .userId(PERSON_ID)
+            .userName(PERSON_NAME)
             .loginMethod(LoginMethod.ELVA77)
             .build())
     );

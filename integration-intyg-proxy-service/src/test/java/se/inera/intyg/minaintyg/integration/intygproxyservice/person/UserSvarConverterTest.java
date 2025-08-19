@@ -7,41 +7,41 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonSvarDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.UserDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.UserResponseDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @ExtendWith(MockitoExtension.class)
-class PersonSvarConverterTest {
+class UserSvarConverterTest {
 
   private static final String PERSON_ID = "personId";
   private static final String FIRSTNAME = "firstname";
   private static final String LASTNAME = "lastNnme";
   private static final String SURNAME = "surname";
 
-  private final PersonSvarConverter personConverterService = new PersonSvarConverter();
+  private final UserResponseConverter personConverterService = new UserResponseConverter();
 
   @Nested
-  class ConvertPersonName {
+  class ConvertUserName {
 
     @Test
     void shouldReturnPersonWithPersonId() {
       final var personResponse = getPersonResponse(null, null);
-      final var result = personConverterService.convertPerson(personResponse.getPerson());
-      assertEquals(PERSON_ID, result.getPersonId());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
+      assertEquals(PERSON_ID, result.getUserId());
     }
 
     @Test
     void shouldReturnPersonWithPersonName() {
       final var personResponse = getPersonResponse(null, null);
-      final var result = personConverterService.convertPerson(personResponse.getPerson());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
       assertEquals(FIRSTNAME + " " + LASTNAME, result.getName());
     }
 
     @Test
     void shouldReturnPersonWithPersonNameIncludingSurname() {
       final var personResponse = getPersonResponse(SURNAME, null);
-      final var result = personConverterService.convertPerson(personResponse.getPerson());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
       assertEquals(FIRSTNAME + " " + SURNAME + " " + LASTNAME, result.getName());
     }
   }
@@ -72,10 +72,10 @@ class PersonSvarConverterTest {
   }
 
 
-  private PersonSvarDTO getPersonResponse(String surname, StatusDTO statusDTO) {
-    return PersonSvarDTO.builder()
+  private UserResponseDTO getPersonResponse(String surname, StatusDTO statusDTO) {
+    return UserResponseDTO.builder()
         .person(
-            PersonDTO.builder()
+            UserDTO.builder()
                 .fornamn(FIRSTNAME)
                 .mellannamn(surname)
                 .efternamn(LASTNAME)
