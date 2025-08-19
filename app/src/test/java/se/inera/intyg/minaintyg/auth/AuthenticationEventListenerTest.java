@@ -23,7 +23,7 @@ import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 @ExtendWith(MockitoExtension.class)
 class AuthenticationEventListenerTest {
 
-  private static final String PERSON_ID = "1912121212";
+  private static final String USER_ID = "1912121212";
   private static final LoginMethod LOGIN_METHOD = LoginMethod.ELVA77;
 
   @Mock
@@ -42,7 +42,7 @@ class AuthenticationEventListenerTest {
       interactiveAuthenticationSuccessEvent = new InteractiveAuthenticationSuccessEvent(
           new Saml2AuthenticationToken(
               MinaIntygUser.builder()
-                  .userId(PERSON_ID)
+                  .userId(USER_ID)
                   .loginMethod(LOGIN_METHOD)
                   .build(), mock(Saml2Authentication.class)
           ), this.getClass()
@@ -57,7 +57,7 @@ class AuthenticationEventListenerTest {
 
       verify(monitoringLogService).logUserLogin(stringArgumentCaptor.capture(), anyString());
 
-      assertEquals(PERSON_ID, stringArgumentCaptor.getValue());
+      assertEquals(USER_ID, stringArgumentCaptor.getValue());
     }
 
     @Test
@@ -95,7 +95,7 @@ class AuthenticationEventListenerTest {
       logoutSuccessEvent = new LogoutSuccessEvent(
           new Saml2AuthenticationToken(
               MinaIntygUser.builder()
-                  .userId(PERSON_ID)
+                  .userId(USER_ID)
                   .loginMethod(LOGIN_METHOD)
                   .build(), mock(Saml2Authentication.class)
           )
@@ -110,7 +110,7 @@ class AuthenticationEventListenerTest {
 
       verify(monitoringLogService).logUserLogout(stringArgumentCaptor.capture(), anyString());
 
-      assertEquals(PERSON_ID, stringArgumentCaptor.getValue());
+      assertEquals(USER_ID, stringArgumentCaptor.getValue());
     }
 
     @Test

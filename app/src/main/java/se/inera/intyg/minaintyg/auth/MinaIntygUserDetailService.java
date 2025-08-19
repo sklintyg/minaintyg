@@ -46,7 +46,7 @@ public class MinaIntygUserDetailService {
     }
 
     if (belowLoginAgeLimit(userIdFromResponse)) {
-      handleUnderagePerson(userIdFromResponse, loginMethod);
+      handleUnderageUser(userIdFromResponse, loginMethod);
     }
 
     return MinaIntygUser.builder()
@@ -99,7 +99,7 @@ public class MinaIntygUserDetailService {
     return birthDate.substring(0, 6).concat(Strings.padStart(dayValue, 2, '0'));
   }
 
-  private void handleUnderagePerson(String userId, LoginMethod loginMethod) {
+  private void handleUnderageUser(String userId, LoginMethod loginMethod) {
     final var errorMessage = "Access denied for underage person with id '%s'."
         .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);

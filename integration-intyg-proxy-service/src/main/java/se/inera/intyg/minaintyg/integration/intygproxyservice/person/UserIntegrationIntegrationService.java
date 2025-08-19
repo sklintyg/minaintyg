@@ -22,7 +22,7 @@ public class UserIntegrationIntegrationService implements GetUserIntegrationServ
     final var userResponseDTO = getUserFromIntygProxyService.getUserFromIntygProxy(
         personRequest);
     return GetUserIntegrationResponse.builder()
-        .user(userResponseConverter.convertUser(userResponseDTO.getPerson()))
+        .user(userResponseConverter.convertUser(userResponseDTO.getUser()))
         .status(userResponseConverter.convertStatus(userResponseDTO.getStatus()))
         .build();
   }
