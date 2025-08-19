@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
+import se.inera.intyg.minaintyg.exception.UserInactiveException;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
@@ -40,6 +41,10 @@ public class MinaIntygUserDetailService {
 
     final var personIdFromResponse = personResponse.getPerson().getPersonId();
 
+    if (!personResponse.getPerson().isActive()) {
+      handleInactiveUser(personIdFromResponse, loginMethod);
+    }
+
     if (belowLoginAgeLimit(personIdFromResponse)) {
       handleUnderagePerson(personIdFromResponse, loginMethod);
     }
@@ -49,6 +54,13 @@ public class MinaIntygUserDetailService {
         .personName(personResponse.getPerson().getName())
         .loginMethod(loginMethod)
         .build();
+  }
+
+  private void handleInactiveUser(String personId, LoginMethod loginMethod) {
+    final var errorMessage = "Access denied for inactive user with id '%s'."
+        .formatted(hashUtility.hash(personId));
+    log.warn(errorMessage);
+    throw new UserInactiveException(errorMessage, loginMethod);
   }
 
   private static void handleCommunicationFault(Status status) {
