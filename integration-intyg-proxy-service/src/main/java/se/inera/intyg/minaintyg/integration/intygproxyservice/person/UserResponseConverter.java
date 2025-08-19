@@ -22,6 +22,7 @@ public class UserResponseConverter {
     return User.builder()
         .userId(userDTO.getPersonnummer())
         .name(buildUserName(userDTO))
+        .isActive(userDTO.isActive())
         .build();
   }
 

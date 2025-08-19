@@ -16,4 +16,5 @@ public class UserDTO {
   private String fornamn;
   private String mellannamn;
   private String efternamn;
+  private boolean isActive;
 }
