@@ -21,6 +21,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
+import se.inera.intyg.minaintyg.exception.UserInactiveException;
 import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationService;
@@ -34,6 +35,7 @@ class MinaIntygUserDetailServiceTest {
   private static final String USER_ID = "191212121212";
   private static final String USER_NAME = "Arnold Johansson";
   private static final long LOGIN_AGE_LIMIT = 16L;
+  private static final boolean USER_IS_ACTIVE = true;
 
   @Mock
   private GetUserIntegrationService getUserIntegrationService;
@@ -117,6 +119,26 @@ class MinaIntygUserDetailServiceTest {
     final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(USER_ID,
         expectedUser.getLoginMethod());
     assertEquals(expectedUser.getLoginMethod(), principal.getLoginMethod());
+  }
+
+  @Nested
+  class UserIsActive {
+    @Test
+    void shouldThrowUserInactiveExceptionIfUserIsNotActive() {
+      final var puResponse = getUserResponse(Status.FOUND, USER_ID, !USER_IS_ACTIVE);
+      when(getUserIntegrationService.getUser(any(GetUserIntegrationRequest.class))).thenReturn(
+          puResponse);
+      final var e = assertThrows(UserInactiveException.class,
+          () -> minaIntygUserDetailService.buildPrincipal(USER_ID, LoginMethod.ELVA77));
+      assertTrue(e.getMessage().contains(hashUtility.hash(USER_ID)));
+    }
+    @Test
+    void shouldNotThrowUserInactiveExceptionIfUserIsActive() {
+      final var puResponse = getUserResponse(Status.FOUND, USER_ID, USER_IS_ACTIVE);
+      when(getUserIntegrationService.getUser(any(GetUserIntegrationRequest.class))).thenReturn(
+          puResponse);
+      assertDoesNotThrow(() -> minaIntygUserDetailService.buildPrincipal(USER_ID, LoginMethod.ELVA77));
+    }
   }
 
   @Nested
@@ -219,6 +241,20 @@ class MinaIntygUserDetailServiceTest {
             User.builder()
                 .name(USER_NAME)
                 .userId(userId)
+                .isActive(USER_IS_ACTIVE)
+                .build()
+        )
+        .status(status)
+        .build();
+  }
+
+  private static GetUserIntegrationResponse getUserResponse(Status status, String userId, boolean isActive) {
+    return GetUserIntegrationResponse.builder()
+        .user(
+            User.builder()
+                .name(USER_NAME)
+                .userId(userId)
+                .isActive(isActive)
                 .build()
         )
         .status(status)
