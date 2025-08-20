@@ -20,7 +20,7 @@ public class FakeAuthenticationToken extends AbstractAuthenticationToken {
 
   @Override
   public Object getCredentials() {
-    return minaIntygUser.getUserId();
+    return minaIntygUser.getPersonId();
   }
 
   @Override

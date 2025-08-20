@@ -12,12 +12,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
 import reactor.core.publisher.Mono;
-import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
-public class GetUserFromIntygProxyServiceImpl implements GetUserFromIntygProxyService {
+public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
 
   private final WebClient webClient;
   private final String scheme;
@@ -25,7 +25,7 @@ public class GetUserFromIntygProxyServiceImpl implements GetUserFromIntygProxySe
   private final int port;
   private final String puEndpoint;
 
-  public GetUserFromIntygProxyServiceImpl(
+  public GetPersonFromIntygProxyServiceImpl(
       @Qualifier(value = "intygProxyWebClient") WebClient webClient,
       @Value("${integration.intygproxyservice.scheme}") String scheme,
       @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
@@ -40,17 +40,17 @@ public class GetUserFromIntygProxyServiceImpl implements GetUserFromIntygProxySe
 
   @Override
   @PerformanceLogging(eventAction = "retrieve-person-from-ips", eventType = EVENT_TYPE_INFO)
-  public UserResponseDTO getUserFromIntygProxy(GetUserIntegrationRequest userRequest) {
+  public PersonSvarDTO getPersonFromIntygProxy(GetPersonIntegrationRequest personRequest) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(puEndpoint)
             .build())
-        .body(Mono.just(userRequest), GetUserIntegrationRequest.class)
+        .body(Mono.just(personRequest), GetPersonIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
-        .bodyToMono(UserResponseDTO.class)
+        .bodyToMono(PersonSvarDTO.class)
         .share()
         .onErrorMap(
             WebClientRequestException.class,

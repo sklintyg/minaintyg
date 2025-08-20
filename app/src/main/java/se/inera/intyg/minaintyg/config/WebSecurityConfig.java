@@ -1,7 +1,7 @@
 package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.USER_ID_ATTRIBUTE;
+import static se.inera.intyg.minaintyg.auth.AuthenticationConstants.PERSON_ID_ATTRIBUTE;
 
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -184,8 +184,8 @@ public class WebSecurityConfig {
         //TODO: Look into better error handling when working with Authentication-jira
         return null;
       }
-      final var userId = getAttribute(authentication);
-      final var principal = minaIntygUserDetailService.buildPrincipal(userId, LoginMethod.ELVA77);
+      final var personId = getAttribute(authentication);
+      final var principal = minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
       final var saml2AuthenticationToken = new Saml2AuthenticationToken(principal, authentication);
       saml2AuthenticationToken.setAuthenticated(true);
       return saml2AuthenticationToken;
@@ -196,10 +196,10 @@ public class WebSecurityConfig {
   private String getAttribute(Saml2Authentication samlCredential) {
     final var principal = (DefaultSaml2AuthenticatedPrincipal) samlCredential.getPrincipal();
     final var attributes = principal.getAttributes();
-    if (attributes.containsKey(USER_ID_ATTRIBUTE)) {
-      return (String) attributes.get(USER_ID_ATTRIBUTE).get(0);
+    if (attributes.containsKey(PERSON_ID_ATTRIBUTE)) {
+      return (String) attributes.get(PERSON_ID_ATTRIBUTE).get(0);
     }
     throw new IllegalArgumentException(
-        "Could not extract attribute '" + USER_ID_ATTRIBUTE + "' from Saml2Authentication.");
+        "Could not extract attribute '" + PERSON_ID_ATTRIBUTE + "' from Saml2Authentication.");
   }
 }

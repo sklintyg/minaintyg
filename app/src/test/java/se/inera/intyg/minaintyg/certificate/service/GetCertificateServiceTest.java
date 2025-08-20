@@ -90,7 +90,7 @@ class GetCertificateServiceTest {
         .thenReturn(EXPECTED_CONVERTED_TEXT);
 
     when(userService.getLoggedInUser())
-        .thenReturn(Optional.of(MinaIntygUser.builder().userId(PERSON_ID).build()));
+        .thenReturn(Optional.of(MinaIntygUser.builder().personId(PERSON_ID).build()));
   }
 
   @Nested

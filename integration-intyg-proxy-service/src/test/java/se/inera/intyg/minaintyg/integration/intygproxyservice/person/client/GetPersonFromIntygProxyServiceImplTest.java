@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
-import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 
 @ExtendWith(MockitoExtension.class)
-class GetUserFromIntygProxyServiceImplTest {
+class GetPersonFromIntygProxyServiceImplTest {
 
   private static MockWebServer mockWebServer;
-  private GetUserFromIntygProxyServiceImpl getPersonFromIntygProxyService;
+  private GetPersonFromIntygProxyServiceImpl getPersonFromIntygProxyService;
 
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_FIRSTNAME = "Arnold";
@@ -42,17 +42,17 @@ class GetUserFromIntygProxyServiceImplTest {
     final var scheme = "http";
     final var baseUrl = "localhost";
     final var getPersonEndpoint = "/api/v1/person";
-    getPersonFromIntygProxyService = new GetUserFromIntygProxyServiceImpl(
+    getPersonFromIntygProxyService = new GetPersonFromIntygProxyServiceImpl(
         WebClient.create(baseUrl), scheme, baseUrl,
         mockWebServer.getPort(), getPersonEndpoint);
   }
 
   @Test
   void shouldReturnPersonResponse() throws JsonProcessingException {
-    final var personRequest = GetUserIntegrationRequest.builder().userId(PERSON_ID).build();
-    final var expectedResponse = UserResponseDTO.builder()
+    final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
+    final var expectedResponse = PersonSvarDTO.builder()
         .person(
-            UserDTO.builder()
+            PersonDTO.builder()
                 .personnummer(PERSON_ID)
                 .fornamn(PERSON_FIRSTNAME)
                 .efternamn(PERSON_LASTNAME)
@@ -63,7 +63,7 @@ class GetUserFromIntygProxyServiceImplTest {
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
-    final var actualResponse = getPersonFromIntygProxyService.getUserFromIntygProxy(
+    final var actualResponse = getPersonFromIntygProxyService.getPersonFromIntygProxy(
         personRequest);
     Assertions.assertEquals(expectedResponse, actualResponse);
   }

@@ -2,13 +2,13 @@ package se.inera.intyg.minaintyg.integration.intygproxyservice.person;
 
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import se.inera.intyg.minaintyg.integration.api.person.model.User;
+import se.inera.intyg.minaintyg.integration.api.person.model.Person;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.UserDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @Component
-public class UserResponseConverter {
+public class PersonSvarConverter {
 
   private static final String SPACE = " ";
   private static final String EMPTY = "";
@@ -18,10 +18,10 @@ public class UserResponseConverter {
       StatusDTO.ERROR, Status.ERROR
   );
 
-  public User convertUser(UserDTO userDTO) {
-    return User.builder()
-        .userId(userDTO.getPersonnummer())
-        .name(buildUserName(userDTO))
+  public Person convertPerson(PersonDTO personDTO) {
+    return Person.builder()
+        .personId(personDTO.getPersonnummer())
+        .name(buildPersonName(personDTO))
         .build();
   }
 
@@ -29,11 +29,11 @@ public class UserResponseConverter {
     return STATUS_MAP.get(statusDTO);
   }
 
-  private String buildUserName(UserDTO userDTO) {
-    return userDTO.getFornamn()
+  private String buildPersonName(PersonDTO personDTO) {
+    return personDTO.getFornamn()
         + SPACE
-        + includeMiddleName(userDTO.getMellannamn())
-        + userDTO.getEfternamn();
+        + includeMiddleName(personDTO.getMellannamn())
+        + personDTO.getEfternamn();
   }
 
   private String includeMiddleName(String middleName) {

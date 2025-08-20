@@ -20,8 +20,8 @@ public class UserController {
   public UserResponseDTO getUser() {
     return userService.getLoggedInUser().map(minaIntygUser ->
         UserResponseDTO.builder()
-            .personId(minaIntygUser.getUserId())
-            .personName(minaIntygUser.getUserName())
+            .personId(minaIntygUser.getPersonId())
+            .personName(minaIntygUser.getPersonName())
             .loginMethod(minaIntygUser.getLoginMethod())
             .build()
     ).orElse(null);

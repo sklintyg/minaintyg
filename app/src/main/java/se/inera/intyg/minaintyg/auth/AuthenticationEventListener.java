@@ -29,7 +29,7 @@ public class AuthenticationEventListener {
     final var minaIntygUser = getMinaIntygUser(success.getAuthentication().getPrincipal());
     minaIntygUser.ifPresent(user ->
         monitoringLogService.logUserLogin(
-            user.getUserId(),
+            user.getPersonId(),
             user.getLoginMethod().value()
         )
     );
@@ -60,7 +60,7 @@ public class AuthenticationEventListener {
     final var minaIntygUser = getMinaIntygUser(success.getAuthentication().getPrincipal());
     minaIntygUser.ifPresent(user ->
         monitoringLogService.logUserLogout(
-            user.getUserId(),
+            user.getPersonId(),
             user.getLoginMethod().value()
         )
     );

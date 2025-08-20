@@ -5,9 +5,9 @@ import lombok.Value;
 
 @Value
 @Builder
-public class User {
+public class Person {
 
-  String userId;
+  String personId;
   String name;
   boolean isActive;
 }

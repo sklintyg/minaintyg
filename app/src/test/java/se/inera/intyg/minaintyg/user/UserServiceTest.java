@@ -28,8 +28,8 @@ class UserServiceTest {
     void shouldReturnUserFromPrincipal() {
       final var expectedUser = Optional.of(
           MinaIntygUser.builder()
-              .userId(PERSON_ID)
-              .userName(PERSON_NAME)
+              .personId(PERSON_ID)
+              .personName(PERSON_NAME)
               .loginMethod(LOGIN_METHOD)
               .build()
       );
