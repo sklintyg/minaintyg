@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,84 +36,86 @@ public class MinaIntygUserDetailService {
   private final Environment environment;
 
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
-    validatePersonId(personId);
-
+    validateUserId(personId);
     boolean useCitizenService = Arrays.stream(environment.getActiveProfiles())
         .anyMatch(CITIZEN_PROFILE::equalsIgnoreCase);
-
     if (useCitizenService) {
       final var citizenResponse = getCitizenIntegrationService.getCitizen(
           GetCitizenIntegrationRequest.builder()
               .citizenId(personId)
               .build()
       );
-
-      final var citizenIdFromResponse = citizenResponse.getCitizen().getCitizenId();
-
-      if (!citizenResponse.getCitizen().isActive()) {
-        handleInactiveUser(citizenIdFromResponse, loginMethod);
-      }
-
-      if (belowLoginAgeLimit(citizenIdFromResponse)) {
-        handleUnderagePerson(citizenIdFromResponse, loginMethod);
-      }
-
-      return MinaIntygUser.builder()
-          .personId(citizenIdFromResponse)
-          .personName(citizenResponse.getCitizen().getName())
-          .loginMethod(loginMethod)
-          .build();
-
+      return buildMinaIntygUserFromResponse(
+          citizenResponse.getStatus(),
+          () -> citizenResponse.getCitizen().getCitizenId(),
+          () -> citizenResponse.getCitizen().getName(),
+          () -> citizenResponse.getCitizen().isActive(),
+          loginMethod
+      );
     } else {
-
       final var personResponse = getPersonIntegrationService.getPerson(
           GetPersonIntegrationRequest.builder()
               .personId(personId)
               .build()
       );
-
-      if (!personResponse.getStatus().equals(Status.FOUND)) {
-        handleCommunicationFault(personResponse.getStatus());
-      }
-
-      final var personIdFromResponse = personResponse.getPerson().getPersonId();
-
-      if (belowLoginAgeLimit(personIdFromResponse)) {
-        handleUnderagePerson(personIdFromResponse, loginMethod);
-      }
-
-      return MinaIntygUser.builder()
-          .personId(personIdFromResponse)
-          .personName(personResponse.getPerson().getName())
-          .loginMethod(loginMethod)
-          .build();
+      return buildMinaIntygUserFromResponse(
+          personResponse.getStatus(),
+          () -> personResponse.getPerson().getPersonId(),
+          () -> personResponse.getPerson().getName(),
+          () -> personResponse.getPerson().isActive(),
+          loginMethod
+      );
     }
   }
 
-  private void handleInactiveUser(String personId, LoginMethod loginMethod) {
-    final var errorMessage = "Access denied for inactive user with id '%s'."
-        .formatted(hashUtility.hash(personId));
+  private MinaIntygUser buildMinaIntygUserFromResponse(
+      Object status,
+      Supplier<String> idSupplier,
+      Supplier<String> nameSupplier,
+      Supplier<Boolean> isActiveSupplier,
+      LoginMethod loginMethod
+  ) {
+    if (!status.equals(Status.FOUND)) {
+      handleCommunicationFault(status);
+    }
+    final var userId = idSupplier.get();
+    if (!isActiveSupplier.get()) {
+      handleInactiveUser(userId, loginMethod);
+    }
+    if (belowLoginAgeLimit(userId)) {
+      handleUnderageUser(userId, loginMethod);
+    }
+    return MinaIntygUser.builder()
+        .personId(userId)
+        .personName(nameSupplier.get())
+        .loginMethod(loginMethod)
+        .build();
+  }
+
+  private void handleInactiveUser(String userId, LoginMethod loginMethod) {
+    final var errorMessage = "Access denied for inactive citizen with id '%s'."
+        .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
     throw new UserInactiveException(errorMessage, loginMethod);
   }
 
-  private static void handleCommunicationFault(Status status) {
+  private static void handleCommunicationFault(Object status) {
     log.error("Error communicating with IntygProxyService, status from response: '{}'", status);
     throw new IllegalStateException(
         "Error communication with IntygProxyService. Status: '%s' ".formatted(status)
     );
   }
 
-  private void validatePersonId(String personId) {
-    if (personId == null || personId.trim().isEmpty()) {
+  private void validateUserId(String userId) {
+    if (userId == null || userId.trim().isEmpty()) {
       throw new IllegalArgumentException(
-          "personId must have a valid value: '%s'".formatted(personId)
+          "personId must have a valid value: '%s'".formatted(userId)
       );
     }
   }
 
-  private boolean belowLoginAgeLimit(String personId) {
-    String birthDate = personId.substring(0, 8);
+  private boolean belowLoginAgeLimit(String userId) {
+    String birthDate = userId.substring(0, 8);
     final var dayOfMonth = Integer.parseInt(birthDate.substring(6, 8));
 
     if (isCoordinationNumber(dayOfMonth)) {
@@ -132,9 +135,9 @@ public class MinaIntygUserDetailService {
     return birthDate.substring(0, 6).concat(Strings.padStart(dayValue, 2, '0'));
   }
 
-  private void handleUnderagePerson(String personId, LoginMethod loginMethod) {
+  private void handleUnderageUser(String userId, LoginMethod loginMethod) {
     final var errorMessage = "Access denied for underage person with id '%s'."
-        .formatted(hashUtility.hash(personId));
+        .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
     throw new LoginAgeLimitException(errorMessage, loginMethod);
   }

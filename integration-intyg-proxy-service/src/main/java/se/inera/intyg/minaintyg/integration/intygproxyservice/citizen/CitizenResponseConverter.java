@@ -22,6 +22,7 @@ public class CitizenResponseConverter {
     return Citizen.builder()
         .citizenId(citizenDTO.getPersonnummer())
         .name(buildCitizenName(citizenDTO))
+        .isActive(citizenDTO.isActive())
         .build();
   }
 
