@@ -39,6 +39,7 @@ public class MinaIntygUserDetailService {
     validateUserId(personId);
     boolean useCitizenService = Arrays.stream(environment.getActiveProfiles())
         .anyMatch(CITIZEN_PROFILE::equalsIgnoreCase);
+
     if (useCitizenService) {
       final var citizenResponse = getCitizenIntegrationService.getCitizen(
           GetCitizenIntegrationRequest.builder()
@@ -75,7 +76,12 @@ public class MinaIntygUserDetailService {
       Supplier<Boolean> isActiveSupplier,
       LoginMethod loginMethod
   ) {
-    if (!status.equals(Status.FOUND)) {
+
+    if (status instanceof Status && !status.equals(Status.FOUND)) {
+      handleCommunicationFault(status);
+    }
+    if (status instanceof se.inera.intyg.minaintyg.integration.api.citizen.model.Status && !status.equals(
+        se.inera.intyg.minaintyg.integration.api.citizen.model.Status.FOUND)) {
       handleCommunicationFault(status);
     }
     final var userId = idSupplier.get();
