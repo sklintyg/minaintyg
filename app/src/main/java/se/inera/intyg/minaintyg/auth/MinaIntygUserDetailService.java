@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
-import se.inera.intyg.minaintyg.exception.UserInactiveException;
+import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
@@ -102,7 +102,7 @@ public class MinaIntygUserDetailService {
     final var errorMessage = "Access denied for inactive citizen with id '%s'."
         .formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
-    throw new UserInactiveException(errorMessage, loginMethod);
+    throw new CitizenInactiveException(errorMessage, loginMethod);
   }
 
   private static void handleCommunicationFault(Object status) {

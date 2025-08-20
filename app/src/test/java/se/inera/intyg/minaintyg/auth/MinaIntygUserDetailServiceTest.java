@@ -21,6 +21,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.env.Environment;
 import org.springframework.test.util.ReflectionTestUtils;
+import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
@@ -261,6 +262,15 @@ class MinaIntygUserDetailServiceTest {
     }
 
     @Test
+    void shoudlThrowCitizenInactiveExceptionIfCitizenIsInactive() {
+      final var response = getCitizenResponse(se.inera.intyg.minaintyg.integration.api.citizen.model.Status.FOUND,
+          CITIZEN_ID, false);
+      when(getCitizenIntegrationService.getCitizen(any())).thenReturn(response);
+      assertThrows(CitizenInactiveException.class,
+          () -> minaIntygUserDetailService.buildPrincipal(CITIZEN_ID, LoginMethod.ELVA77));
+    }
+
+    @Test
     void shouldThrowRuntimeExceptionIfResponseHasStatusNotFound() {
       final var response = getCitizenResponse(se.inera.intyg.minaintyg.integration.api.citizen.model.Status.NOT_FOUND);
       when(getCitizenIntegrationService.getCitizen(any())).thenReturn(response);
@@ -407,6 +417,20 @@ class MinaIntygUserDetailServiceTest {
                   .name(CITIZEN_NAME)
                   .citizenId(citizenId)
                   .isActive(true)
+                  .build()
+          )
+          .status(status)
+          .build();
+    }
+
+    private static se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationResponse getCitizenResponse(
+        se.inera.intyg.minaintyg.integration.api.citizen.model.Status status, String citizenId, boolean isActive) {
+      return se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationResponse.builder()
+          .citizen(
+              se.inera.intyg.minaintyg.integration.api.citizen.model.Citizen.builder()
+                  .name(CITIZEN_NAME)
+                  .citizenId(citizenId)
+                  .isActive(isActive)
                   .build()
           )
           .status(status)
