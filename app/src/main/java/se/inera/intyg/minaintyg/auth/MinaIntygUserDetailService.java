@@ -4,12 +4,16 @@ import com.google.common.base.Strings;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.exception.UserInactiveException;
+import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
@@ -20,40 +24,69 @@ import se.inera.intyg.minaintyg.logging.HashUtility;
 @RequiredArgsConstructor
 public class MinaIntygUserDetailService {
 
-
   @Value("${login.age.limit}")
   private long loginAgeLimit;
 
+  private final String CITIZEN_PROFILE = "citizen";
+
   private final HashUtility hashUtility;
   private final GetPersonIntegrationService getPersonIntegrationService;
+  private final GetCitizenIntegrationService getCitizenIntegrationService;
+  private final Environment environment;
 
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
-    final var personResponse = getPersonIntegrationService.getPerson(
-        GetPersonIntegrationRequest.builder()
-            .personId(personId)
-            .build()
-    );
 
-    if (!personResponse.getStatus().equals(Status.FOUND)) {
-      handleCommunicationFault(personResponse.getStatus());
+    boolean useCitizenService = Arrays.stream(environment.getActiveProfiles())
+        .anyMatch(CITIZEN_PROFILE::equalsIgnoreCase);
+
+    if (useCitizenService) {
+      final var citizenResponse = getCitizenIntegrationService.getCitizen(
+          GetCitizenIntegrationRequest.builder()
+              .citizenId(personId)
+              .build()
+      );
+
+      final var personIdFromResponse = citizenResponse.getCitizen().getCitizenId();
+
+      if (!citizenResponse.getCitizen().isActive()) {
+        handleInactiveUser(personIdFromResponse, loginMethod);
+      }
+
+      if (belowLoginAgeLimit(personIdFromResponse)) {
+        handleUnderagePerson(personIdFromResponse, loginMethod);
+      }
+
+      return MinaIntygUser.builder()
+          .personId(personIdFromResponse)
+          .personName(citizenResponse.getCitizen().getName())
+          .loginMethod(loginMethod)
+          .build();
+
+    } else {
+
+      final var personResponse = getPersonIntegrationService.getPerson(
+          GetPersonIntegrationRequest.builder()
+              .personId(personId)
+              .build()
+      );
+
+      if (!personResponse.getStatus().equals(Status.FOUND)) {
+        handleCommunicationFault(personResponse.getStatus());
+      }
+
+      final var personIdFromResponse = personResponse.getPerson().getPersonId();
+
+      if (belowLoginAgeLimit(personIdFromResponse)) {
+        handleUnderagePerson(personIdFromResponse, loginMethod);
+      }
+
+      return MinaIntygUser.builder()
+          .personId(personIdFromResponse)
+          .personName(personResponse.getPerson().getName())
+          .loginMethod(loginMethod)
+          .build();
     }
-
-    final var personIdFromResponse = personResponse.getPerson().getPersonId();
-
-    if (!personResponse.getPerson().isActive()) {
-      handleInactiveUser(personIdFromResponse, loginMethod);
-    }
-
-    if (belowLoginAgeLimit(personIdFromResponse)) {
-      handleUnderagePerson(personIdFromResponse, loginMethod);
-    }
-
-    return MinaIntygUser.builder()
-        .personId(personIdFromResponse)
-        .personName(personResponse.getPerson().getName())
-        .loginMethod(loginMethod)
-        .build();
   }
 
   private void handleInactiveUser(String personId, LoginMethod loginMethod) {
