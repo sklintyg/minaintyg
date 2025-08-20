@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResponseDTO {
 
-  private UserDTO user;
+  private UserDTO person;
   private StatusDTO status;
 }

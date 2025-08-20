@@ -19,11 +19,11 @@ import se.inera.intyg.minaintyg.integration.api.person.GetUserIntegrationRequest
 class GetUserFromIntygProxyServiceImplTest {
 
   private static MockWebServer mockWebServer;
-  private GetUserFromIntygProxyServiceImpl getUserFromIntygProxyService;
+  private GetUserFromIntygProxyServiceImpl getPersonFromIntygProxyService;
 
-  private static final String User_ID = "191212121212";
-  private static final String USER_FIRSTNAME = "Arnold";
-  private static final String USER_LASTNAME = "Johansson";
+  private static final String PERSON_ID = "191212121212";
+  private static final String PERSON_FIRSTNAME = "Arnold";
+  private static final String PERSON_LASTNAME = "Johansson";
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @BeforeAll
@@ -41,21 +41,21 @@ class GetUserFromIntygProxyServiceImplTest {
   void initialize() {
     final var scheme = "http";
     final var baseUrl = "localhost";
-    final var getUserEndpoint = "/api/v1/user";
-    getUserFromIntygProxyService = new GetUserFromIntygProxyServiceImpl(
+    final var getPersonEndpoint = "/api/v1/person";
+    getPersonFromIntygProxyService = new GetUserFromIntygProxyServiceImpl(
         WebClient.create(baseUrl), scheme, baseUrl,
-        mockWebServer.getPort(), getUserEndpoint);
+        mockWebServer.getPort(), getPersonEndpoint);
   }
 
   @Test
-  void shouldReturnUserResponse() throws JsonProcessingException {
-    final var personRequest = GetUserIntegrationRequest.builder().userId(User_ID).build();
+  void shouldReturnPersonResponse() throws JsonProcessingException {
+    final var personRequest = GetUserIntegrationRequest.builder().userId(PERSON_ID).build();
     final var expectedResponse = UserResponseDTO.builder()
-        .user(
+        .person(
             UserDTO.builder()
-                .personnummer(User_ID)
-                .fornamn(USER_FIRSTNAME)
-                .efternamn(USER_LASTNAME)
+                .personnummer(PERSON_ID)
+                .fornamn(PERSON_FIRSTNAME)
+                .efternamn(PERSON_LASTNAME)
                 .build()
         )
         .status(StatusDTO.FOUND)
@@ -63,7 +63,7 @@ class GetUserFromIntygProxyServiceImplTest {
     mockWebServer.enqueue(
         new MockResponse().setBody(objectMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
-    final var actualResponse = getUserFromIntygProxyService.getUserFromIntygProxy(
+    final var actualResponse = getPersonFromIntygProxyService.getUserFromIntygProxy(
         personRequest);
     Assertions.assertEquals(expectedResponse, actualResponse);
   }

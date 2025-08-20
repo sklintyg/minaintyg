@@ -75,7 +75,7 @@ class InformationIT {
 
   @Test
   void shallReturnEmptyBannersIfNoBannersReturned() {
-    intygProxyServiceMock.foundUser(ATHENA_REACT_ANDERSSON);
+    intygProxyServiceMock.foundPerson(ATHENA_REACT_ANDERSSON);
     intygsadminMock.emptyBanners();
 
     api.testabilityFakeLogin(ATHENA_REACT_ANDERSSON.getPersonnummer());
@@ -89,7 +89,7 @@ class InformationIT {
 
   @Test
   void shallReturnActiveBanner() {
-    intygProxyServiceMock.foundUser(ATHENA_REACT_ANDERSSON);
+    intygProxyServiceMock.foundPerson(ATHENA_REACT_ANDERSSON);
     intygsadminMock.foundBanners(
         activeBanner(BannerPriorityDTO.HOG, "This is a message with high priority")
     );

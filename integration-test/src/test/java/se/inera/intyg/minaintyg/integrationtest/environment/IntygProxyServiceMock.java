@@ -23,17 +23,17 @@ public class IntygProxyServiceMock {
       .efternamn("Andersson")
       .build();
 
-  public void foundUser(UserDTO user) {
+  public void foundPerson(UserDTO person) {
     try {
-      mockServerClient.when(HttpRequest.request("/api/v1/user"))
+      mockServerClient.when(HttpRequest.request("/api/v1/person"))
           .respond(
               HttpResponse
                   .response(
                       new ObjectMapper().writeValueAsString(
                           UserResponseDTO.builder()
                               .status(StatusDTO.FOUND)
-                              .user(
-                                  user
+                              .person(
+                                  person
                               )
                               .build()
                       )

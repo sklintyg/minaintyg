@@ -91,7 +91,7 @@ class UserIntegrationIntegrationServiceTest {
       final var personSvarDTO = getPersonResponse();
       when(getPersonFromIntygProxyService.getUserFromIntygProxy(personRequest)).thenReturn(
           personSvarDTO);
-      when(userResponseConverter.convertUser(personSvarDTO.getUser())).thenReturn(
+      when(userResponseConverter.convertUser(personSvarDTO.getPerson())).thenReturn(
           expectedResult);
       final var actualResult = userIntegrationIntegrationService.getUser(personRequest);
       assertEquals(expectedResult, actualResult.getUser());
@@ -121,7 +121,7 @@ class UserIntegrationIntegrationServiceTest {
 
   private static UserResponseDTO getPersonResponse() {
     return UserResponseDTO.builder()
-        .user(
+        .person(
             UserDTO.builder()
                 .personnummer(PERSON_ID)
                 .build()

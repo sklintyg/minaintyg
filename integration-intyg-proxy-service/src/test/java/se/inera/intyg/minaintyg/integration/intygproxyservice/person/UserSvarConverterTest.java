@@ -27,21 +27,21 @@ class UserSvarConverterTest {
     @Test
     void shouldReturnPersonWithPersonId() {
       final var personResponse = getPersonResponse(null, null);
-      final var result = personConverterService.convertUser(personResponse.getUser());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
       assertEquals(PERSON_ID, result.getUserId());
     }
 
     @Test
     void shouldReturnPersonWithPersonName() {
       final var personResponse = getPersonResponse(null, null);
-      final var result = personConverterService.convertUser(personResponse.getUser());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
       assertEquals(FIRSTNAME + " " + LASTNAME, result.getName());
     }
 
     @Test
     void shouldReturnPersonWithPersonNameIncludingSurname() {
       final var personResponse = getPersonResponse(SURNAME, null);
-      final var result = personConverterService.convertUser(personResponse.getUser());
+      final var result = personConverterService.convertUser(personResponse.getPerson());
       assertEquals(FIRSTNAME + " " + SURNAME + " " + LASTNAME, result.getName());
     }
   }
@@ -74,7 +74,7 @@ class UserSvarConverterTest {
 
   private UserResponseDTO getPersonResponse(String surname, StatusDTO statusDTO) {
     return UserResponseDTO.builder()
-        .user(
+        .person(
             UserDTO.builder()
                 .fornamn(FIRSTNAME)
                 .mellannamn(surname)
