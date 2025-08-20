@@ -47,18 +47,18 @@ public class MinaIntygUserDetailService {
               .build()
       );
 
-      final var personIdFromResponse = citizenResponse.getCitizen().getCitizenId();
+      final var citizenIdFromResponse = citizenResponse.getCitizen().getCitizenId();
 
       if (!citizenResponse.getCitizen().isActive()) {
-        handleInactiveUser(personIdFromResponse, loginMethod);
+        handleInactiveUser(citizenIdFromResponse, loginMethod);
       }
 
-      if (belowLoginAgeLimit(personIdFromResponse)) {
-        handleUnderagePerson(personIdFromResponse, loginMethod);
+      if (belowLoginAgeLimit(citizenIdFromResponse)) {
+        handleUnderagePerson(citizenIdFromResponse, loginMethod);
       }
 
       return MinaIntygUser.builder()
-          .personId(personIdFromResponse)
+          .personId(citizenIdFromResponse)
           .personName(citizenResponse.getCitizen().getName())
           .loginMethod(loginMethod)
           .build();
