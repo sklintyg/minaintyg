@@ -9,6 +9,5 @@ public class Person {
 
   String personId;
   String name;
-  @Builder.Default
-  boolean isActive = true;
+  Boolean isActive;
 }

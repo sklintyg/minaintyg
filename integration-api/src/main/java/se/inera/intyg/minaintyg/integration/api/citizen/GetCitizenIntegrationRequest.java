@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetCitizenIntegrationRequest {
 
-  private String citizenId;
+  private String personId;
 }

@@ -1,10 +1,12 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client;
 
+import static se.inera.intyg.minaintyg.integration.api.citizen.CitizenConstants.CITIZEN_IPS_INTEGRATION;
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
 import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
+@Profile(CITIZEN_IPS_INTEGRATION)
 public class GetCitizenFromIntygProxyServiceImpl implements GetCitizenFromIntygProxyService {
 
   private final WebClient webClient;
@@ -30,16 +33,16 @@ public class GetCitizenFromIntygProxyServiceImpl implements GetCitizenFromIntygP
       @Value("${integration.intygproxyservice.scheme}") String scheme,
       @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
       @Value("${integration.intygproxyservice.port}") int port,
-      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint) {
+      @Value("${integration.intygproxyservice.citizen.endpoint}") String citizenEndpoint) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
     this.port = port;
-    this.puEndpoint = puEndpoint;
+    this.puEndpoint = citizenEndpoint;
   }
 
   @Override
-  @PerformanceLogging(eventAction = "retrieve-person-from-ips", eventType = EVENT_TYPE_INFO)
+  @PerformanceLogging(eventAction = "retrieve-citizen-from-ips", eventType = EVENT_TYPE_INFO)
   public CitizenResponseDTO getCitizenFromIntygProxy(GetCitizenIntegrationRequest citizenRequest) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)

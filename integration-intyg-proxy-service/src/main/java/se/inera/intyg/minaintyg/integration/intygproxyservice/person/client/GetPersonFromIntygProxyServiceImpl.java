@@ -1,10 +1,12 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
+import static se.inera.intyg.minaintyg.integration.api.citizen.CitizenConstants.CITIZEN_IPS_INTEGRATION;
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
 import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_INFO;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
+@Profile("!" + CITIZEN_IPS_INTEGRATION)
 public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
 
   private final WebClient webClient;

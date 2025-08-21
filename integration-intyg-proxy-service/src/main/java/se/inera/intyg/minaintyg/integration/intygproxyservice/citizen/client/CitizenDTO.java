@@ -14,7 +14,6 @@ public class CitizenDTO {
   private String personnummer;
   private String namn;
   private String fornamn;
-  private String mellannamn;
   private String efternamn;
   private boolean isActive;
 }

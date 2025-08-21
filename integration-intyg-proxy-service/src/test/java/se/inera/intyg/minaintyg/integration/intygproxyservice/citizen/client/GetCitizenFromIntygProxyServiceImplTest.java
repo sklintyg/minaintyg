@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @ExtendWith(MockitoExtension.class)
 class GetCitizenFromIntygProxyServiceImplTest {
@@ -49,7 +50,7 @@ class GetCitizenFromIntygProxyServiceImplTest {
 
   @Test
   void shouldReturnPersonResponse() throws JsonProcessingException {
-    final var citizenRequest = GetCitizenIntegrationRequest.builder().citizenId(PERSON_ID).build();
+    final var citizenRequest = GetCitizenIntegrationRequest.builder().personId(PERSON_ID).build();
     final var expectedResponse = CitizenResponseDTO.builder()
         .citizen(
             CitizenDTO.builder()

@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.citizen;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Nested;
@@ -11,12 +12,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationResponse;
-import se.inera.intyg.minaintyg.integration.api.citizen.model.Citizen;
-import se.inera.intyg.minaintyg.integration.api.citizen.model.Status;
+import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.person.model.Person;
+import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client.CitizenDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client.CitizenResponseDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client.GetCitizenFromIntygProxyServiceImpl;
-import se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client.StatusDTO;
+import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
 
 @ExtendWith(MockitoExtension.class)
 class CitizenIntegrationIntegrationServiceTest {
@@ -39,33 +41,23 @@ class CitizenIntegrationIntegrationServiceTest {
     @Test
     void shouldThrowIlligalArgumentExceptionIfCitizenRequestIsNull() {
       assertThrows(IllegalArgumentException.class,
-          () -> citizenIntegrationIntegrationService.getCitizen(null)
+          () -> citizenIntegrationIntegrationService.getPerson(null)
       );
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfCitizenRequestContainsNullCitizenId() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId(null).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(null).build();
       assertThrows(IllegalArgumentException.class,
-          () -> citizenIntegrationIntegrationService.getCitizen(personRequest)
+          () -> citizenIntegrationIntegrationService.getPerson(personRequest)
       );
     }
 
     @Test
     void shouldThrowIlligalArgumentExceptionIfCitizenRequestContainsEmptyCitizenId() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId("").build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId("").build();
       assertThrows(IllegalArgumentException.class,
-          () -> citizenIntegrationIntegrationService.getCitizen(personRequest)
-      );
-    }
-
-    @Test
-    void shouldReturnStatusErrorIfCommunicationErrorWithIntygProxyOccurs() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId(CITIZEN_ID).build();
-      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(personRequest)).thenThrow(
-          RuntimeException.class);
-      assertThrows(RuntimeException.class,
-          () -> citizenIntegrationIntegrationService.getCitizen(personRequest)
+          () -> citizenIntegrationIntegrationService.getPerson(personRequest)
       );
     }
   }
@@ -75,46 +67,52 @@ class CitizenIntegrationIntegrationServiceTest {
 
     @Test
     void shouldReturnCitizenResponse() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId(CITIZEN_ID).build();
-      final var personSvarDTO = getCitizenResponse();
-      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(personRequest)).thenReturn(
-          personSvarDTO);
-      final var actualResult = citizenIntegrationIntegrationService.getCitizen(personRequest);
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(CITIZEN_ID).build();
+      final var citizenRequest = GetCitizenIntegrationRequest.builder()
+          .personId(CITIZEN_ID).build();
+      final var citizenResponse = getCitizenResponse();
+      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(citizenRequest)).thenReturn(
+          citizenResponse);
+      final var actualResult = citizenIntegrationIntegrationService.getPerson(personRequest);
       assertEquals(GetCitizenIntegrationResponse.class, actualResult.getClass());
     }
 
     @Test
     void shouldReturnCitizenResponseWithConvertedCitizen() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId(CITIZEN_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(CITIZEN_ID).build();
+      final var citizenRequest = GetCitizenIntegrationRequest.builder()
+          .personId(CITIZEN_ID).build();
       final var expectedResult = getCitizen();
       final var personSvarDTO = getCitizenResponse();
-      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(personRequest)).thenReturn(
+      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(citizenRequest)).thenReturn(
           personSvarDTO);
       when(citizenResponseConverter.convertCitizen(personSvarDTO.getCitizen())).thenReturn(
           expectedResult);
-      final var actualResult = citizenIntegrationIntegrationService.getCitizen(personRequest);
-      assertEquals(expectedResult, actualResult.getCitizen());
+      final var actualResult = citizenIntegrationIntegrationService.getPerson(personRequest);
+      assertEquals(expectedResult, actualResult.getPerson());
     }
 
 
     @Test
     void shouldReturnCitizenResponseWithConvertedStatus() {
-      final var personRequest = GetCitizenIntegrationRequest.builder().citizenId(CITIZEN_ID).build();
+      final var personRequest = GetPersonIntegrationRequest.builder().personId(CITIZEN_ID).build();
+      final var citizenRequest = GetCitizenIntegrationRequest.builder().personId(CITIZEN_ID)
+          .build();
       final var expectedResult = Status.FOUND;
       final var personSvarDTO = getCitizenResponse();
-      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(personRequest)).thenReturn(
+      when(getCitizenFromIntygProxyService.getCitizenFromIntygProxy(citizenRequest)).thenReturn(
           personSvarDTO);
       when(citizenResponseConverter.convertStatus(personSvarDTO.getStatus())).thenReturn(
           expectedResult);
-      final var actualResult = citizenIntegrationIntegrationService.getCitizen(personRequest);
+      final var actualResult = citizenIntegrationIntegrationService.getPerson(personRequest);
       assertEquals(expectedResult, actualResult.getStatus());
     }
   }
 
-  private static Citizen getCitizen() {
-    return Citizen.builder()
+  private static Person getCitizen() {
+    return Person.builder()
         .name(CITIZEN_NAME)
-        .citizenId(CITIZEN_ID)
+        .personId(CITIZEN_ID)
         .build();
   }
 

@@ -22,6 +22,7 @@ public class PersonSvarConverter {
     return Person.builder()
         .personId(personDTO.getPersonnummer())
         .name(buildPersonName(personDTO))
+        .isActive(true)
         .build();
   }
 
