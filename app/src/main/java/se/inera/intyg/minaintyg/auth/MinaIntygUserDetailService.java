@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
-import se.inera.intyg.minaintyg.integration.api.PersonIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.common.PersonIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;

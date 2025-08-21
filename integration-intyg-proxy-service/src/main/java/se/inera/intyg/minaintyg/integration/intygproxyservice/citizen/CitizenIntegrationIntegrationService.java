@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import se.inera.intyg.minaintyg.integration.api.PersonIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.common.PersonIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
