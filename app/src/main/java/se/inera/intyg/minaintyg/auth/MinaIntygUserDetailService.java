@@ -71,9 +71,9 @@ public class MinaIntygUserDetailService {
 
   private MinaIntygUser buildMinaIntygUserFromResponse(
       Object status,
-      Supplier<String> idSupplier,
-      Supplier<String> nameSupplier,
-      Supplier<Boolean> isActiveSupplier,
+      Supplier<String> id,
+      Supplier<String> name,
+      Supplier<Boolean> isActive,
       LoginMethod loginMethod
   ) {
 
@@ -84,8 +84,8 @@ public class MinaIntygUserDetailService {
         se.inera.intyg.minaintyg.integration.api.citizen.model.Status.FOUND)) {
       handleCommunicationFault(status);
     }
-    final var userId = idSupplier.get();
-    if (!isActiveSupplier.get()) {
+    final var userId = id.get();
+    if (!isActive.get()) {
       handleInactiveUser(userId, loginMethod);
     }
     if (belowLoginAgeLimit(userId)) {
@@ -93,7 +93,7 @@ public class MinaIntygUserDetailService {
     }
     return MinaIntygUser.builder()
         .personId(userId)
-        .personName(nameSupplier.get())
+        .personName(name.get())
         .loginMethod(loginMethod)
         .build();
   }
