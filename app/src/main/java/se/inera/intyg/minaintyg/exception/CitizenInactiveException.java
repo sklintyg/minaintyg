@@ -1,8 +1,9 @@
 package se.inera.intyg.minaintyg.exception;
 
+import org.springframework.security.core.AuthenticationException;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 
-public class CitizenInactiveException extends RuntimeException {
+public class CitizenInactiveException extends AuthenticationException {
 
   private LoginMethod loginMethod;
 
