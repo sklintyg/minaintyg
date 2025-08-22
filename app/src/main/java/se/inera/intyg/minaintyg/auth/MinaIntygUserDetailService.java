@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
+import se.inera.intyg.minaintyg.integration.common.PersonIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
@@ -28,27 +30,42 @@ public class MinaIntygUserDetailService {
 
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
-    final var personResponse = getPersonIntegrationService.getPerson(
+    final var personIntegrationResponse = getPersonIntegrationService.getPerson(
         GetPersonIntegrationRequest.builder()
             .personId(personId)
             .build()
     );
 
-    if (!personResponse.getStatus().equals(Status.FOUND)) {
-      handleCommunicationFault(personResponse.getStatus());
+    if (!personIntegrationResponse.getStatus().equals(Status.FOUND)) {
+      handleCommunicationFault(personIntegrationResponse.getStatus());
     }
 
-    final var personIdFromResponse = personResponse.getPerson().getPersonId();
+    final var personIdFromResponse = personIntegrationResponse.getPerson().getPersonId();
 
     if (belowLoginAgeLimit(personIdFromResponse)) {
       handleUnderagePerson(personIdFromResponse, loginMethod);
     }
 
+    if (inactivatedAccount(personIntegrationResponse)) {
+      handleInactiveUser(personIdFromResponse, loginMethod);
+    }
+
     return MinaIntygUser.builder()
         .personId(personIdFromResponse)
-        .personName(personResponse.getPerson().getName())
+        .personName(personIntegrationResponse.getPerson().getName())
         .loginMethod(loginMethod)
         .build();
+  }
+
+  private static boolean inactivatedAccount(PersonIntegrationResponse personIntegrationResponse) {
+    return Boolean.FALSE.equals(personIntegrationResponse.getPerson().getIsActive());
+  }
+
+  private void handleInactiveUser(String userId, LoginMethod loginMethod) {
+    final var errorMessage = "Access denied for inactive citizen with id '%s'."
+        .formatted(hashUtility.hash(userId));
+    log.warn(errorMessage);
+    throw new CitizenInactiveException(errorMessage, loginMethod);
   }
 
   private static void handleCommunicationFault(Status status) {

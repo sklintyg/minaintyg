@@ -36,7 +36,7 @@ tasks.named("test") {
 }
 
 bootRun {
-    systemProperty("spring.profiles.active", "testability,dev")
+    systemProperty("spring.profiles.active", "testability,dev,citizen-ips-integration")
     systemProperty("application.dir", "${applicationDir}")
     systemProperty("spring.config.additional-location", "file:${applicationDir}/config/")
 }
