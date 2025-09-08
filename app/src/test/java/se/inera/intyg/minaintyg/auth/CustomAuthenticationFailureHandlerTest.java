@@ -21,6 +21,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.saml2.core.Saml2Error;
 import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticationException;
+import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
@@ -36,6 +37,7 @@ class CustomAuthenticationFailureHandlerTest {
   private static final String AUTHENTICATION_FAILED = "Authentication failed";
   private static final String CONTEXT_PATH = "contextpath";
   private static final String ERROR_LOGIN_UNDERAGE_URL = "/errorLoginUnderageUrl";
+  private static final String ERROR_LOGIN_INACTIVE_URL = "/errorInactiveUser";
   private static final String ERROR_LOGIN_URL = "/errorLoginUrl/{errorId}";
   private static final AuthenticationException exception = new AuthenticationException(
       AUTHENTICATION_FAILED) {
@@ -50,7 +52,8 @@ class CustomAuthenticationFailureHandlerTest {
     authenticationFailureHandler = new CustomAuthenticationFailureHandler(
         ERROR_LOGIN_URL,
         ERROR_LOGIN_UNDERAGE_URL,
-        monitoringLogService
+        monitoringLogService,
+        ERROR_LOGIN_INACTIVE_URL
     );
 
     request = new MockHttpServletRequest();
@@ -99,6 +102,31 @@ class CustomAuthenticationFailureHandlerTest {
     void shouldMonitorLogLoginFailure() throws IOException {
       authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
       verify(monitoringLogService).logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE,
+          LoginMethod.ELVA77.name());
+    }
+  }
+
+  @Nested
+  class HandleCitizenInactiveException {
+
+    private static final String MESSAGE = "message";
+
+    private final Saml2Error saml2Error = new Saml2Error("ERROR_CODE", "description");
+    private final CitizenInactiveException citizenInactiveException =
+        new CitizenInactiveException(MESSAGE, LoginMethod.ELVA77);
+    private final Saml2AuthenticationException saml2Exception =
+        new Saml2AuthenticationException(saml2Error, citizenInactiveException);
+
+    @Test
+    void shouldRedirectToErrorInactiveUrl() throws IOException {
+      authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
+      assertEquals(CONTEXT_PATH + ERROR_LOGIN_INACTIVE_URL, response.getHeader("Location"));
+    }
+
+    @Test
+    void shouldMonitorLogLoginFailure() throws IOException {
+      authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
+      verify(monitoringLogService).logUserLoginFailed(MESSAGE,
           LoginMethod.ELVA77.name());
     }
   }
