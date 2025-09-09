@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class InformationResponseDTO {
 
   List<FormattedBanner> banners;
+  String environment;
 }
