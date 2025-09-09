@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.minaintyg.information.config.EnvironmentConfig;
 import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.information.service.GetBannersService;
@@ -18,6 +19,8 @@ class InformationControllerTest {
 
   private static final List<FormattedBanner> EXPECTED_BANNERS = List.of(
       FormattedBanner.builder().build());
+  private static final String EXPECTED_ENVIRONMENT = "staging";
+
 
   private static final InformationResponseDTO EXPECTED_RESPONSE = InformationResponseDTO.builder()
       .banners(EXPECTED_BANNERS)
@@ -25,6 +28,8 @@ class InformationControllerTest {
 
   @Mock
   GetBannersService getBannersService;
+  @Mock
+  EnvironmentConfig environmentConfig;
 
   @InjectMocks
   InformationController informationController;
@@ -36,5 +41,30 @@ class InformationControllerTest {
     final var response = informationController.getInformation();
 
     assertEquals(EXPECTED_RESPONSE, response);
+  }
+
+  @Test
+  void shouldReturnConfigResponseWithEnvironment() {
+    when(environmentConfig.getEnvironmentType()).thenReturn(EXPECTED_ENVIRONMENT);
+
+    final var response = informationController.getInformation();
+
+    assertEquals(EXPECTED_ENVIRONMENT, response.getEnvironment());
+  }
+
+  @Test
+  void shouldReturnConfigResponseWithBannersAndEnvironment() {
+
+    final var expectedResponse = InformationResponseDTO.builder()
+        .banners(EXPECTED_BANNERS)
+        .environment(EXPECTED_ENVIRONMENT)
+        .build();
+
+    when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
+    when(environmentConfig.getEnvironmentType()).thenReturn(EXPECTED_ENVIRONMENT);
+
+    final var response = informationController.getInformation();
+
+    assertEquals(expectedResponse, response);
   }
 }
