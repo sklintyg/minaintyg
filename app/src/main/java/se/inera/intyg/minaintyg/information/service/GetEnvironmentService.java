@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetEnvironmentService {
 
-  @Value("${environment:prod}")
+  @Value("${application.environment:prod}")
   private String environmentType;
 
 
