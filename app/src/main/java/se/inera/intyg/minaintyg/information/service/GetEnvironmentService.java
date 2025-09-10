@@ -13,8 +13,7 @@ public class GetEnvironmentService {
   public String get() {
     if (environmentType.isBlank()) {
       return null;
-    } else {
-      return environmentType;
     }
+    return environmentType;
   }
 }
