@@ -9,10 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.inera.intyg.minaintyg.information.service.GetEnvironmentService;
 import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.information.service.GetBannersService;
+import se.inera.intyg.minaintyg.information.service.GetEnvironmentService;
 
 @ExtendWith(MockitoExtension.class)
 class InformationControllerTest {
@@ -20,7 +20,6 @@ class InformationControllerTest {
   private static final List<FormattedBanner> EXPECTED_BANNERS = List.of(
       FormattedBanner.builder().build());
   private static final String EXPECTED_ENVIRONMENT = "staging";
-
 
   private static final InformationResponseDTO EXPECTED_RESPONSE = InformationResponseDTO.builder()
       .banners(EXPECTED_BANNERS)

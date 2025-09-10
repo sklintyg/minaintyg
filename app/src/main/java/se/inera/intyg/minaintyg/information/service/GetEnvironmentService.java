@@ -6,14 +6,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetEnvironmentService {
 
-  @Value("${application.environment:prod}")
+  @Value("${application.environment}")
   private String environmentType;
 
-
   public String get() {
-    if (environmentType.isBlank()) {
-      return null;
-    }
     return environmentType;
   }
 }
