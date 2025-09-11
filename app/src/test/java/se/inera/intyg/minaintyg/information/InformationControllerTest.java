@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.information;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +45,7 @@ class InformationControllerTest {
 
   @Test
   void shouldReturnConfigResponseWithEnvironment() {
-    when(getEnvironmentConfigService.get()).thenReturn(EXPECTED_ENVIRONMENT);
+    when(getEnvironmentConfigService.get()).thenReturn(Collections.emptyMap());
 
     final var response = informationController.getInformation();
 
@@ -56,11 +57,11 @@ class InformationControllerTest {
 
     final var expectedResponse = InformationResponseDTO.builder()
         .banners(EXPECTED_BANNERS)
-        .environment(EXPECTED_ENVIRONMENT)
+        .environment(Collections.emptyMap())
         .build();
 
     when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
-    when(getEnvironmentConfigService.get()).thenReturn(EXPECTED_ENVIRONMENT);
+    when(getEnvironmentConfigService.get()).thenReturn(Collections.emptyMap());
 
     final var response = informationController.getInformation();
 
