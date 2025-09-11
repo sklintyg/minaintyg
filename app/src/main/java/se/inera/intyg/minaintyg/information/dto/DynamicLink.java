@@ -10,5 +10,6 @@ public class DynamicLink {
 
   String id;
   String name;
-  Map<String, String> urls;
+  Map<String, String> url;
+  boolean isAgentModeSupported;
 }
