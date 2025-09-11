@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class InformationResponseDTO {
 
   List<FormattedBanner> banners;
-  Map<String, DynamicLink> environment;
+  Map<String, FormattedDynamicLink> environment;
 }
