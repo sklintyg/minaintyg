@@ -29,7 +29,7 @@ public class GetEnvironmentConfigService {
     return FormattedDynamicLink.builder()
         .id(link.getId())
         .name(link.getName())
-        .url(link.getUrls().get(environmentType))
+        .url(link.getUrl().getOrDefault(environmentType, link.getUrl().get("prod")))
         .build();
   }
 }
