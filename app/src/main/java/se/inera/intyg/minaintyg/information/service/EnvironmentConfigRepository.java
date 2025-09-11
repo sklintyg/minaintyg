@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -21,7 +22,7 @@ public class EnvironmentConfigRepository {
 
   private final ObjectMapper objectMapper;
   private final ResourceLoader resourceLoader;
-  
+
   private Map<String, DynamicLink> linkMap;
 
   @PostConstruct
@@ -35,8 +36,8 @@ public class EnvironmentConfigRepository {
           new TypeReference<>() {
           }
       );
-      linkMap = dynamicLinks.stream().collect(
-          java.util.stream.Collectors.toMap(DynamicLink::getId, Function.identity()));
+      linkMap = dynamicLinks.stream()
+          .collect(Collectors.toMap(DynamicLink::getId, Function.identity()));
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load dynamic links for environment: " + location,
           e);
