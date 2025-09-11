@@ -23,11 +23,11 @@ public class InformationController {
   @PerformanceLogging(eventAction = "retrieve-information", eventType = EVENT_TYPE_ACCESSED)
   public InformationResponseDTO getInformation() {
     final var banners = getBannersService.get();
-    final var environment = getEnvironmentConfigService.get();
+    final var links = getEnvironmentConfigService.get();
 
     return InformationResponseDTO.builder()
         .banners(banners)
-        .environment(environment)
+        .links(links)
         .build();
   }
 }
