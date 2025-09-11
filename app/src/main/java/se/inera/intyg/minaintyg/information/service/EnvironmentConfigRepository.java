@@ -47,4 +47,8 @@ public class EnvironmentConfigRepository {
           e);
     }
   }
+
+  public Map<String, DynamicLink> get() {
+    return linkMap;
+  }
 }
