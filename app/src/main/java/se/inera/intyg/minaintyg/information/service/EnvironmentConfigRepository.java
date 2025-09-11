@@ -16,18 +16,13 @@ import se.inera.intyg.minaintyg.information.dto.DynamicLink;
 @Service
 public class EnvironmentConfigRepository {
 
-  String location;
-  ObjectMapper objectMapper;
-  ResourceLoader resourceLoader;
-  Map<String, DynamicLink> linkMap;
+  @Value("${application.environment.links.file}")
+  private String location;
 
-  public EnvironmentConfigRepository(
-      @Value("${application.environment.links.file}") String location, ObjectMapper objectMapper,
-      ResourceLoader resourceLoader) {
-    this.location = location;
-    this.objectMapper = objectMapper;
-    this.resourceLoader = resourceLoader;
-  }
+  private final ObjectMapper objectMapper;
+  private final ResourceLoader resourceLoader;
+  
+  private Map<String, DynamicLink> linkMap;
 
   @PostConstruct
   public void init() {
