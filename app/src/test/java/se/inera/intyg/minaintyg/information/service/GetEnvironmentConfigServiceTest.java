@@ -5,17 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-class GetEnvironmentServiceTest {
+class GetEnvironmentConfigServiceTest {
 
   private static final String EXPECTED_ENVIRONMENT = "staging";
 
-  private final GetEnvironmentService getEnvironmentService = new GetEnvironmentService();
+  private final GetEnvironmentConfigService getEnvironmentConfigService = new GetEnvironmentConfigService();
 
   @Test
   void shouldReturnConfigEnvironment() {
-    ReflectionTestUtils.setField(getEnvironmentService, "environmentType", EXPECTED_ENVIRONMENT);
+    ReflectionTestUtils.setField(getEnvironmentConfigService, "environmentType",
+        EXPECTED_ENVIRONMENT);
 
-    final var response = getEnvironmentService.get();
+    final var response = getEnvironmentConfigService.get();
 
     assertEquals(EXPECTED_ENVIRONMENT, response);
   }

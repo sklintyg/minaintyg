@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.information.dto.FormattedBanner;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.information.service.GetBannersService;
-import se.inera.intyg.minaintyg.information.service.GetEnvironmentService;
+import se.inera.intyg.minaintyg.information.service.GetEnvironmentConfigService;
 
 @ExtendWith(MockitoExtension.class)
 class InformationControllerTest {
@@ -28,7 +28,7 @@ class InformationControllerTest {
   @Mock
   GetBannersService getBannersService;
   @Mock
-  GetEnvironmentService getEnvironmentService;
+  GetEnvironmentConfigService getEnvironmentConfigService;
 
   @InjectMocks
   InformationController informationController;
@@ -44,7 +44,7 @@ class InformationControllerTest {
 
   @Test
   void shouldReturnConfigResponseWithEnvironment() {
-    when(getEnvironmentService.get()).thenReturn(EXPECTED_ENVIRONMENT);
+    when(getEnvironmentConfigService.get()).thenReturn(EXPECTED_ENVIRONMENT);
 
     final var response = informationController.getInformation();
 
@@ -60,7 +60,7 @@ class InformationControllerTest {
         .build();
 
     when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
-    when(getEnvironmentService.get()).thenReturn(EXPECTED_ENVIRONMENT);
+    when(getEnvironmentConfigService.get()).thenReturn(EXPECTED_ENVIRONMENT);
 
     final var response = informationController.getInformation();
 
