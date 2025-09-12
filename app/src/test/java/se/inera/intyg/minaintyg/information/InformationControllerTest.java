@@ -26,6 +26,7 @@ class InformationControllerTest {
 
   private static final InformationResponseDTO EXPECTED_RESPONSE = InformationResponseDTO.builder()
       .banners(EXPECTED_BANNERS)
+      .links(EXPECTED_LINKS)
       .build();
 
   @Mock
