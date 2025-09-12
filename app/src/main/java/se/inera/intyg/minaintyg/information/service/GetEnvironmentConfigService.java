@@ -1,8 +1,6 @@
 package se.inera.intyg.minaintyg.information.service;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +17,10 @@ public class GetEnvironmentConfigService {
   private String environmentType;
   private final EnvironmentConfigRepository environmentConfigRepository;
 
-  public Map<String, FormattedDynamicLink> get() {
-    return environmentConfigRepository.get().values().stream()
+  public List<FormattedDynamicLink> get() {
+    return environmentConfigRepository.get().stream()
         .map(this::getFormattedDynamicLink)
-        .collect(Collectors.toMap(FormattedDynamicLink::getId, Function.identity()));
+        .toList();
   }
 
   private FormattedDynamicLink getFormattedDynamicLink(DynamicLink link) {
