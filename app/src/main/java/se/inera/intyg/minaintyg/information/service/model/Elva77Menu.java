@@ -12,7 +12,7 @@ import se.inera.intyg.minaintyg.information.service.model.Elva77Menu.Elva77MenuB
 @JsonDeserialize(builder = Elva77MenuBuilder.class)
 public class Elva77Menu {
 
-  List<DynamicLink> items;
+  List<Elva77MenuLinks> items;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class Elva77MenuBuilder {

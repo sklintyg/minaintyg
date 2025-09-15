@@ -7,11 +7,11 @@ import se.inera.intyg.minaintyg.information.service.model.DynamicLink;
 @Component
 public class DynamicLinkConverter {
 
-  public DynamicLinkDTO convert(DynamicLink link, String environmentType) {
+  public DynamicLinkDTO convert(DynamicLink link) {
     return DynamicLinkDTO.builder()
         .id(link.getId())
         .name(link.getName())
-        .url(link.getUrl().get(environmentType))
+        .url(link.getUrl())
         .build();
   }
 }

@@ -1,18 +1,15 @@
 package se.inera.intyg.minaintyg.information.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 import se.inera.intyg.minaintyg.information.service.model.DynamicLink;
 import se.inera.intyg.minaintyg.information.service.model.Elva77MenuConfig;
 
-@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class DynamicLinkRepository {
@@ -20,29 +17,35 @@ public class DynamicLinkRepository {
   @Value("${1177.menu.links.file}")
   private Resource resource;
 
-  private final ObjectMapper objectMapper;
-
   private final Elva77LinkLoader elva77LinkLoader;
 
   private Elva77MenuConfig linkList;
 
   @PostConstruct
   public void init() {
-    try {
-      this.linkList = elva77LinkLoader.load(resource, objectMapper);
-    } catch (IOException e) {
-      log.error("Failed to load dynamic links from file: {}", resource, e);
-      throw new IllegalStateException(e);
-    }
+    this.linkList = elva77LinkLoader.load(resource);
   }
 
-  public Elva77MenuConfig get() {
-    return linkList;
-  }
-
-  public List<DynamicLink> get(String environmentType) {
-    return linkList.getMenu().getItems().stream()
-        .filter(link -> link.getUrl().containsKey(environmentType))
+  public List<DynamicLink> get(String environment, String settingUrl) {
+    List<DynamicLink> links = linkList.getMenu().getItems().stream()
+        .map(link -> DynamicLink.builder()
+            .id(link.getId())
+            .name(link.getName())
+            .url(link.getUrl().get(environment))
+            .build())
         .toList();
+
+    return appendLink(settingUrl, links);
+  }
+
+  private List<DynamicLink> appendLink(String url, List<DynamicLink> dynamicLinks) {
+    DynamicLink settingLink = DynamicLink.builder()
+        .id("99")
+        .name("Inställningar")
+        .url(url)
+        .build();
+    List<DynamicLink> links = new ArrayList<>(dynamicLinks);
+    links.add(settingLink);
+    return links;
   }
 }

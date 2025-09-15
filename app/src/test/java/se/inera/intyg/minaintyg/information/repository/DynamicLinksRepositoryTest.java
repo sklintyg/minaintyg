@@ -1,13 +1,10 @@
 package se.inera.intyg.minaintyg.information.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,58 +16,70 @@ import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.minaintyg.information.service.DynamicLinkRepository;
 import se.inera.intyg.minaintyg.information.service.Elva77LinkLoader;
 import se.inera.intyg.minaintyg.information.service.model.DynamicLink;
+import se.inera.intyg.minaintyg.information.service.model.Elva77Menu;
 import se.inera.intyg.minaintyg.information.service.model.Elva77MenuConfig;
+import se.inera.intyg.minaintyg.information.service.model.Elva77MenuLinks;
 
 @ExtendWith(MockitoExtension.class)
 class DynamicLinksRepositoryTest {
 
   private DynamicLinkRepository repository;
 
+  public static final Elva77MenuLinks LINK = Elva77MenuLinks.builder()
+      .id("1")
+      .name("test")
+      .url(Map.of("prod", "https://prod.example.com/start"))
+      .isAgentModeSupported(false)
+      .build();
+
+  public static final Elva77Menu MENU = Elva77Menu.builder()
+      .items(List.of(LINK))
+      .build();
+
+  public static final Elva77MenuConfig MENU_CONFIG = Elva77MenuConfig.builder()
+      .menu(MENU)
+      .build();
+
+  final String dummyJsonPath = "links/1177-navbar-services-dummy.json";
+  final Resource dummyJson = new ClassPathResource(dummyJsonPath);
+
   @Mock
   private Elva77LinkLoader elva77LinkLoader;
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
-
   @BeforeEach
-  void setUp() throws Exception {
-    String dummyJsonPath = "links/1177-navbar-services-dummy.json";
-    final Resource dummyJson = new ClassPathResource(dummyJsonPath);
-    Elva77MenuConfig dummyConfig = objectMapper.readValue(dummyJson.getInputStream(),
-        Elva77MenuConfig.class);
-
-    when(elva77LinkLoader.load(dummyJson, objectMapper)).thenReturn(dummyConfig);
-
-    repository = new DynamicLinkRepository(objectMapper, elva77LinkLoader);
+  void setUp() {
+    repository = new DynamicLinkRepository(elva77LinkLoader);
     ReflectionTestUtils.setField(repository, "resource", dummyJson);
+  }
+
+  @Test
+  void shouldReturnExpectedLinks() {
+    when(elva77LinkLoader.load(dummyJson)).thenReturn(MENU_CONFIG);
     repository.init();
+
+    final var expected = DynamicLink.builder()
+        .id(LINK.getId())
+        .name(LINK.getName())
+        .url(LINK.getUrl().get("prod"))
+        .build();
+    final var actual = repository.get("prod", "https://st.sob.1177.se/").getFirst();
+
+    assertEquals(expected, actual);
   }
 
   @Test
-  void shouldReturnFullMenuConfig() {
-    Elva77MenuConfig menuConfig = repository.get();
-    assertNotNull(menuConfig);
-    assertEquals("1.0.0-test", menuConfig.getVersion());
-    assertEquals(3, menuConfig.getMenu().getItems().size());
-  }
+  void shouldAppendSettingsLink() {
+    when(elva77LinkLoader.load(dummyJson)).thenReturn(MENU_CONFIG);
+    repository.init();
 
-  @Test
-  void shouldReturnFilteredLinksForGivenEnvironment() {
-    List<DynamicLink> links = repository.get("prod");
-    assertNotNull(links);
-    assertEquals("https://prod.example.com/start",
-        links.getFirst().getUrl().get("prod"));
-  }
+    final var expected = DynamicLink.builder()
+        .id("99")
+        .name("Inställningar")
+        .url("https://st.sob.1177.se/")
+        .build();
+    
+    final var actual = repository.get("prod", "https://st.sob.1177.se/").getLast();
 
-  @Test
-  void shouldThrowExceptionWhenResourceIsInvalid() throws IOException {
-    final Resource invalidResource = new ClassPathResource("links/nonexistent.json");
-    when(elva77LinkLoader.load(invalidResource, objectMapper))
-        .thenThrow(new IOException("File not found"));
-
-    DynamicLinkRepository faultyRepository = new DynamicLinkRepository(objectMapper,
-        elva77LinkLoader);
-    ReflectionTestUtils.setField(faultyRepository, "resource", invalidResource);
-
-    assertThrows(IllegalStateException.class, faultyRepository::init);
+    assertEquals(expected, actual);
   }
 }
