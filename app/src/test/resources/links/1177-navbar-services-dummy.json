@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0-test",
+  "menu": {
+    "items": [
+      {
+        "id": 1,
+        "name": "Test Start",
+        "url": {
+          "prod": "https://prod.example.com/start",
+          "acc": "https://acc.example.com/start",
+          "sys": "https://sys.example.com/start"
+        },
+        "isAgentModeSupported": true
+      },
+      {
+        "id": 2,
+        "name": "Test Inbox",
+        "url": {
+          "prod": "https://prod.example.com/inbox",
+          "acc": "https://acc.example.com/inbox",
+          "sys": "https://sys.example.com/inbox"
+        },
+        "isAgentModeSupported": false
+      },
+      {
+        "id": 3,
+        "name": "Test Journal",
+        "url": {
+          "prod": "https://prod.example.com/journal",
+          "acc": "https://acc.example.com/journal",
+          "sys": "https://sys.example.com/journal"
+        },
+        "isAgentModeSupported": true
+      }
+    ]
+  }
+}
