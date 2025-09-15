@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.information.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,17 +65,12 @@ class DynamicLinksRepositoryTest {
   void shouldThrowExceptionWhenResourceIsInvalid() throws IOException {
     final Resource invalidResource = new ClassPathResource("links/nonexistent.json");
     when(elva77LinkLoader.load(invalidResource, objectMapper))
-        .thenThrow(new RuntimeException("File not found"));
+        .thenThrow(new IOException("File not found"));
 
     DynamicLinkRepository faultyRepository = new DynamicLinkRepository(objectMapper,
         elva77LinkLoader);
     ReflectionTestUtils.setField(faultyRepository, "resource", invalidResource);
 
-    try {
-      faultyRepository.init();
-    } catch (IllegalStateException e) {
-      assertEquals("Failed to load dynamic links for environment: nonexistent.json",
-          e.getMessage());
-    }
+    assertThrows(IllegalStateException.class, faultyRepository::init);
   }
 }

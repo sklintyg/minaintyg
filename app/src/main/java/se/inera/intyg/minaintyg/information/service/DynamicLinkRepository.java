@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.information.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class DynamicLinkRepository {
   public void init() {
     try {
       this.linkList = elva77LinkLoader.load(resource, objectMapper);
-    } catch (Exception e) {
+    } catch (IOException e) {
       log.error("Failed to load dynamic links from file: {}", resource, e);
       throw new IllegalStateException(e);
     }
