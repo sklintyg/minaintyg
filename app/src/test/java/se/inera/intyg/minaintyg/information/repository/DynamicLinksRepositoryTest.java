@@ -30,10 +30,9 @@ class DynamicLinksRepositoryTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  private final String dummyJsonPath = "links/1177-navbar-services-dummy.json";
-
   @BeforeEach
   void setUp() throws Exception {
+    String dummyJsonPath = "links/1177-navbar-services-dummy.json";
     final Resource dummyJson = new ClassPathResource(dummyJsonPath);
     Elva77MenuConfig dummyConfig = objectMapper.readValue(dummyJson.getInputStream(),
         Elva77MenuConfig.class);
