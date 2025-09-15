@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class InformationResponseDTO {
 
   List<FormattedBanner> banners;
-  List<FormattedDynamicLink> links;
+  List<DynamicLinkDTO> links;
 }
