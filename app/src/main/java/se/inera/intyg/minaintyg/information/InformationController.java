@@ -25,10 +25,12 @@ public class InformationController {
   public InformationResponseDTO getInformation() {
     final var banners = getBannersService.get();
     final var links = getDynamicLinksService.get();
+    final var environMentType = getDynamicLinksService.getEnvironmentType();
 
     return InformationResponseDTO.builder()
         .banners(banners)
         .links(links)
+        .environmentType(environMentType)
         .build();
   }
 }

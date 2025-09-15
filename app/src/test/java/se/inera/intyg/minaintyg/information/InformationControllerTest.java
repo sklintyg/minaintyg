@@ -56,4 +56,21 @@ class InformationControllerTest {
 
     assertEquals(EXPECTED_RESPONSE, response);
   }
+
+  @Test
+  void shouldReturnConfigResponseWithExpectedEnvironmentType() {
+    when(getDynamicLinksService.getEnvironmentType()).thenReturn("prod");
+    when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
+    when(getDynamicLinksService.get()).thenReturn(EXPECTED_LINKS);
+
+    final var expected = InformationResponseDTO.builder()
+        .banners(EXPECTED_BANNERS)
+        .links(EXPECTED_LINKS)
+        .environmentType("prod")
+        .build();
+
+    final var response = informationController.getInformation();
+
+    assertEquals(expected, response);
+  }
 }

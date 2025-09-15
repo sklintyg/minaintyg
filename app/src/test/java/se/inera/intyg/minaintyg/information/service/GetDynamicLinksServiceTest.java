@@ -52,4 +52,10 @@ class GetDynamicLinksServiceTest {
     assertEquals(1, result.size());
     assertEquals(expectedDTO, result.getFirst());
   }
+
+  @Test
+  void shouldReturnEnvironmentType() {
+    ReflectionTestUtils.setField(service, "environmentType", "prod");
+    assertEquals("prod", service.getEnvironmentType());
+  }
 }
