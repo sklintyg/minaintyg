@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Builder
 @Value
-public class FormattedDynamicLink {
+public class DynamicLinkDTO {
 
   String id;
   String name;
