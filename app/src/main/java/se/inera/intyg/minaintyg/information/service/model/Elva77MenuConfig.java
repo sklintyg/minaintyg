@@ -4,10 +4,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Value;
+import se.inera.intyg.minaintyg.information.service.model.Elva77MenuConfig.Elva77MenuConfigBuilder;
 
 @Value
 @Builder
-@JsonDeserialize(builder = Elva77MenuConfig.Elva77MenuConfigBuilder.class)
+@JsonDeserialize(builder = Elva77MenuConfigBuilder.class)
 public class Elva77MenuConfig {
 
   String version;
