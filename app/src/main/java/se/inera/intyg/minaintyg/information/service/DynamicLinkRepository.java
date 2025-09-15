@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 import se.inera.intyg.minaintyg.information.service.model.DynamicLink;
 import se.inera.intyg.minaintyg.information.service.model.Elva77MenuConfig;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class DynamicLinkRepository {
@@ -28,8 +30,8 @@ public class DynamicLinkRepository {
     try {
       this.linkList = elva77LinkLoader.load(resource, objectMapper);
     } catch (Exception e) {
-      throw new IllegalStateException(
-          "Failed to load dynamic links for environment: " + resource.getFilename(), e);
+      log.error("Failed to load dynamic links from file: {}", resource, e);
+      throw new IllegalStateException(e);
     }
   }
 
