@@ -14,5 +14,4 @@ public class InformationResponseDTO {
 
   List<FormattedBanner> banners;
   List<DynamicLinkDTO> links;
-  String environmentType;
 }
