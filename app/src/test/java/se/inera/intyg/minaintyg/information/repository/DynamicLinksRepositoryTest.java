@@ -70,6 +70,8 @@ class DynamicLinksRepositoryTest {
   @Test
   void shouldAppendSettingsLink() {
     when(elva77LinkLoader.load(dummyJson)).thenReturn(MENU_CONFIG);
+    ReflectionTestUtils.setField(repository, "settingName", "Inställningar");
+    ReflectionTestUtils.setField(repository, "settingId", "99");
     repository.init();
 
     final var expected = DynamicLink.builder()
@@ -77,7 +79,7 @@ class DynamicLinksRepositoryTest {
         .name("Inställningar")
         .url("https://st.sob.1177.se/")
         .build();
-    
+
     final var actual = repository.get("prod", "https://st.sob.1177.se/").getLast();
 
     assertEquals(expected, actual);

@@ -18,10 +18,10 @@ public class DynamicLinkRepository {
   private Resource resource;
 
   @Value("${1177.menu.setting.name:Inställningar}")
-  private String name;
+  private String settingName;
 
   @Value("${1177.menu.setting.id:99}")
-  private String id;
+  private String settingId;
 
   private final Elva77LinkLoader elva77LinkLoader;
 
@@ -46,8 +46,8 @@ public class DynamicLinkRepository {
 
   private List<DynamicLink> appendLink(String url, List<DynamicLink> dynamicLinks) {
     DynamicLink settingLink = DynamicLink.builder()
-        .id(id)
-        .name(name)
+        .id(settingId)
+        .name(settingName)
         .url(url)
         .build();
     return Stream.concat(dynamicLinks.stream(), Stream.of(settingLink)).toList();
