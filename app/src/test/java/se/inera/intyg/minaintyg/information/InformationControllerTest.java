@@ -3,6 +3,7 @@ package se.inera.intyg.minaintyg.information;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,11 +25,6 @@ class InformationControllerTest {
   private static final List<DynamicLinkDTO> EXPECTED_LINKS = List.of(
       DynamicLinkDTO.builder().build());
 
-  private static final InformationResponseDTO EXPECTED_RESPONSE = InformationResponseDTO.builder()
-      .banners(EXPECTED_BANNERS)
-      .links(EXPECTED_LINKS)
-      .build();
-
   @Mock
   GetBannersService getBannersService;
   @Mock
@@ -39,21 +35,27 @@ class InformationControllerTest {
 
   @Test
   void shouldReturnConfigResponseWithBanners() {
-    when(getDynamicLinksService.get()).thenReturn(EXPECTED_LINKS);
+    final var expected = InformationResponseDTO.builder()
+        .banners(EXPECTED_BANNERS)
+        .links(Collections.emptyList())
+        .build();
     when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
 
     final var response = informationController.getInformation();
 
-    assertEquals(EXPECTED_RESPONSE, response);
+    assertEquals(expected, response);
   }
 
   @Test
   void shouldReturnConfigResponseWithExpectedLinks() {
-    when(getBannersService.get()).thenReturn(EXPECTED_BANNERS);
+    final var expected = InformationResponseDTO.builder()
+        .links(EXPECTED_LINKS)
+        .banners(Collections.emptyList())
+        .build();
     when(getDynamicLinksService.get()).thenReturn(EXPECTED_LINKS);
 
     final var response = informationController.getInformation();
 
-    assertEquals(EXPECTED_RESPONSE, response);
+    assertEquals(expected, response);
   }
 }
