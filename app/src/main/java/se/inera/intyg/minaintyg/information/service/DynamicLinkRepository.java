@@ -23,6 +23,11 @@ public class DynamicLinkRepository {
   @Value("${1177.menu.setting.id:99}")
   private String settingId;
 
+  @Value("${application.environment}")
+  private String environmentType;
+  @Value("${1177.menu.setting.url}")
+  private String menuSettingUrl;
+
   private final Elva77LinkLoader elva77LinkLoader;
 
   private Elva77MenuConfig linkList;
@@ -32,20 +37,20 @@ public class DynamicLinkRepository {
     this.linkList = elva77LinkLoader.load(resource);
   }
 
-  public List<DynamicLink> get(String environment, String settingUrl) {
-    List<DynamicLink> links = linkList.getMenu().getItems().stream()
+  public List<DynamicLink> get() {
+    final var links = linkList.getMenu().getItems().stream()
         .map(link -> DynamicLink.builder()
             .id(link.getId())
             .name(link.getName())
-            .url(link.getUrl().get(environment))
+            .url(link.getUrl().get(environmentType))
             .build())
         .toList();
 
-    return appendLink(settingUrl, links);
+    return appendLink(menuSettingUrl, links);
   }
 
   private List<DynamicLink> appendLink(String url, List<DynamicLink> dynamicLinks) {
-    DynamicLink settingLink = DynamicLink.builder()
+    final var settingLink = DynamicLink.builder()
         .id(settingId)
         .name(settingName)
         .url(url)

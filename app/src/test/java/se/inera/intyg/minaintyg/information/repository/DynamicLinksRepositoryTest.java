@@ -50,11 +50,16 @@ class DynamicLinksRepositoryTest {
   void setUp() {
     repository = new DynamicLinkRepository(elva77LinkLoader);
     ReflectionTestUtils.setField(repository, "resource", dummyJson);
+    ReflectionTestUtils.setField(repository, "environmentType", "prod");
+    ReflectionTestUtils.setField(repository, "menuSettingUrl", "https://st.sob.1177.se/");
+    ReflectionTestUtils.setField(repository, "settingName", "Inställningar");
+    ReflectionTestUtils.setField(repository, "settingId", "99");
   }
 
   @Test
   void shouldReturnExpectedLinks() {
     when(elva77LinkLoader.load(dummyJson)).thenReturn(MENU_CONFIG);
+
     repository.init();
 
     final var expected = DynamicLink.builder()
@@ -62,7 +67,7 @@ class DynamicLinksRepositoryTest {
         .name(LINK.getName())
         .url(LINK.getUrl().get("prod"))
         .build();
-    final var actual = repository.get("prod", "https://st.sob.1177.se/").getFirst();
+    final var actual = repository.get().getFirst();
 
     assertEquals(expected, actual);
   }
@@ -70,8 +75,7 @@ class DynamicLinksRepositoryTest {
   @Test
   void shouldAppendSettingsLink() {
     when(elva77LinkLoader.load(dummyJson)).thenReturn(MENU_CONFIG);
-    ReflectionTestUtils.setField(repository, "settingName", "Inställningar");
-    ReflectionTestUtils.setField(repository, "settingId", "99");
+
     repository.init();
 
     final var expected = DynamicLink.builder()
@@ -80,7 +84,7 @@ class DynamicLinksRepositoryTest {
         .url("https://st.sob.1177.se/")
         .build();
 
-    final var actual = repository.get("prod", "https://st.sob.1177.se/").getLast();
+    final var actual = repository.get().getLast();
 
     assertEquals(expected, actual);
   }

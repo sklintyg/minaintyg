@@ -2,6 +2,7 @@ package se.inera.intyg.minaintyg.information.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.stream.Stream;
@@ -44,7 +45,7 @@ class Elva77LinkLoaderTest {
   void shouldLoadCorrectLinkName() {
     final var menuConfig = loader.load(LOCATION);
 
-    var firstLink = menuConfig.getMenu().getItems().getFirst();
+    final var firstLink = menuConfig.getMenu().getItems().getFirst();
     assertEquals("https://prod.example.com/start", firstLink.getUrl().get("prod"));
   }
 
@@ -52,13 +53,7 @@ class Elva77LinkLoaderTest {
   void shouldThrowExceptionForInvalidResource() {
     final var invalidResource = new ClassPathResource("links/non-existing-file.json");
 
-    try {
-      loader.load(invalidResource);
-    } catch (IllegalStateException e) {
-      assertEquals(
-          "Failed to load or parse resource: class path resource [links/non-existing-file.json]",
-          e.getMessage());
-    }
+    assertThrows(IllegalStateException.class, () -> loader.load(invalidResource));
   }
 
   @ParameterizedTest
@@ -66,9 +61,9 @@ class Elva77LinkLoaderTest {
   void shouldLoadCorrectUrlForEnvironment(String environment, String expectedUrl) {
     final var menuConfig = loader.load(LOCATION);
 
-    var firstLink = menuConfig.getMenu().getItems().getFirst();
+    final var firstLink = menuConfig.getMenu().getItems().getFirst();
 
-    String actualUrl = firstLink.getUrl().get(environment);
+    final var actualUrl = firstLink.getUrl().get(environment);
     assertEquals(expectedUrl, actualUrl);
   }
 
