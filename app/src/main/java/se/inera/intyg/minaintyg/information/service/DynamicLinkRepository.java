@@ -1,8 +1,8 @@
 package se.inera.intyg.minaintyg.information.service;
 
 import jakarta.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -16,6 +16,12 @@ public class DynamicLinkRepository {
 
   @Value("${1177.menu.links.file}")
   private Resource resource;
+
+  @Value("${1177.menu.setting.name:Inställningar}")
+  private String name;
+
+  @Value("${1177.menu.setting.id:99}")
+  private String id;
 
   private final Elva77LinkLoader elva77LinkLoader;
 
@@ -40,12 +46,10 @@ public class DynamicLinkRepository {
 
   private List<DynamicLink> appendLink(String url, List<DynamicLink> dynamicLinks) {
     DynamicLink settingLink = DynamicLink.builder()
-        .id("99")
-        .name("Inställningar")
+        .id(id)
+        .name(name)
         .url(url)
         .build();
-    List<DynamicLink> links = new ArrayList<>(dynamicLinks);
-    links.add(settingLink);
-    return links;
+    return Stream.concat(dynamicLinks.stream(), Stream.of(settingLink)).toList();
   }
 }
