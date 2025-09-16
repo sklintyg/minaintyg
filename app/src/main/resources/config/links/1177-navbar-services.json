@@ -66,9 +66,9 @@
         "id": 7,
         "name": "Intyg",
         "url": {
-          "prod": "https://intyg.1177.se/",
-          "acc": "https://Intyg.at.1177.se/",
-          "sys": "https://mi2-minaintyg-devtest.intyg.nordicmedtest.se"
+          "prod": "/",
+          "acc": "/",
+          "sys": "/"
         },
         "isAgentModeSupported": false
       },
