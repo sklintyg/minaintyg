@@ -1,6 +1,7 @@
 package se.inera.intyg.minaintyg.integrationtest.information;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static se.inera.intyg.minaintyg.integrationtest.environment.IntygProxyServiceMock.ATHENA_REACT_ANDERSSON;
 import static se.inera.intyg.minaintyg.integrationtest.util.BannerUtil.activeBanner;
@@ -105,5 +106,17 @@ class InformationIT {
     assertTrue(response.getBody().getBanners().contains(expectedBanner),
         "Expected banner %s but received %s".formatted(expectedBanner, response.getBody())
     );
+  }
+
+  @Test
+  void shallReturnMenuLinks() {
+    intygProxyServiceMock.foundPerson(ATHENA_REACT_ANDERSSON);
+    intygsadminMock.emptyBanners();
+
+    api.testabilityFakeLogin(ATHENA_REACT_ANDERSSON.getPersonnummer());
+
+    final var response = api.information();
+
+    assertFalse(response.getBody().getLinks().isEmpty(), "should contain menu links");
   }
 }
