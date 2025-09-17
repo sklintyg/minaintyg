@@ -52,8 +52,8 @@ class DynamicLinksRepositoryTest {
     ReflectionTestUtils.setField(repository, "resource", dummyJson);
     ReflectionTestUtils.setField(repository, "environmentType", "prod");
     ReflectionTestUtils.setField(repository, "menuSettingUrl", "https://st.sob.1177.se/");
-    ReflectionTestUtils.setField(repository, "settingName", "Inställningar");
-    ReflectionTestUtils.setField(repository, "settingId", "99");
+    ReflectionTestUtils.setField(repository, "menuSettingName", "Inställningar");
+    ReflectionTestUtils.setField(repository, "menuSettingId", "99");
   }
 
   @Test
