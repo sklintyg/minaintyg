@@ -17,14 +17,13 @@ public class DynamicLinkRepository {
   @Value("${1177.menu.links.file}")
   private Resource resource;
 
-  @Value("${1177.menu.setting.name:Inställningar}")
-  private String settingName;
-
-  @Value("${1177.menu.setting.id:99}")
-  private String settingId;
-
   @Value("${application.environment}")
   private String environmentType;
+
+  @Value("${1177.menu.setting.id:99}")
+  private String menuSettingId;
+  @Value("${1177.menu.setting.name:Inställningar}")
+  private String menuSettingName;
   @Value("${1177.menu.setting.url}")
   private String menuSettingUrl;
 
@@ -51,8 +50,8 @@ public class DynamicLinkRepository {
 
   private List<DynamicLink> appendLink(String url, List<DynamicLink> dynamicLinks) {
     final var settingLink = DynamicLink.builder()
-        .id(settingId)
-        .name(settingName)
+        .id(menuSettingId)
+        .name(menuSettingName)
         .url(url)
         .build();
     return Stream.concat(dynamicLinks.stream(), Stream.of(settingLink)).toList();
