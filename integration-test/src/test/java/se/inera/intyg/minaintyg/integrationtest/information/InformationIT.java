@@ -84,7 +84,7 @@ class InformationIT {
     final var response = api.information();
 
     assertTrue(response.getBody().getBanners().isEmpty(),
-        "Should not contain any banners when none active: %s" .formatted(response.getBody())
+        "Should not contain any banners when none active: %s".formatted(response.getBody())
     );
   }
 
@@ -104,7 +104,7 @@ class InformationIT {
     final var response = api.information();
 
     assertTrue(response.getBody().getBanners().contains(expectedBanner),
-        "Expected banner %s but received %s" .formatted(expectedBanner, response.getBody())
+        "Expected banner %s but received %s".formatted(expectedBanner, response.getBody())
     );
   }
 
