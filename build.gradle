@@ -34,12 +34,23 @@ allprojects {
     }
 }
 
-dependencyCheck {
-    formats = List.of("HTML", "JSON")
-
-    nvd {
-        datafeedUrl = "${nvdMirror}"
+sonar {
+    properties {
+        property "sonar.projectKey", "intyg-minaintyg"
+        property "sonar.projectName", "intyg-minaintyg"
+        property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
+        property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
+        property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
     }
+}
+
+dependencyCheck {
+    formats = ['HTML', 'JSON']
+    nvd.setDatafeedUrl(nvdMirror)
+    analyzers.setAssemblyEnabled(false)
+    analyzers.setNodeEnabled(false)
+    analyzers.ossIndex.setUsername(project.properties.get('ossIndexUsername'))
+    analyzers.ossIndex.setPassword(project.properties.get('ossIndexPassword'))
 }
 
 subprojects {
@@ -79,16 +90,6 @@ subprojects {
                         "**/integrationtest/**",
                 ])
             }))
-        }
-    }
-
-    sonar {
-        properties {
-            property "sonar.projectKey", "intyg-minaintyg"
-            property "sonar.projectName", "intyg-minaintyg"
-            property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory}/reports/dependency-check-report.html"
-            property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory}/reports/dependency-check-report.json"
-            property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
         }
     }
 
