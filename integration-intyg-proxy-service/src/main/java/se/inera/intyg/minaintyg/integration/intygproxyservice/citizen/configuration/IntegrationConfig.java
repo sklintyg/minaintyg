@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.intygproxyservice.person.configuration;
+package se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.configuration;
 
 import static se.inera.intyg.minaintyg.integration.api.citizen.CitizenConstants.CITIZEN_IPS_INTEGRATION;
 
@@ -11,10 +11,10 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 
 @Configuration
 @RequiredArgsConstructor
-@Profile("!" + CITIZEN_IPS_INTEGRATION)
+@Profile(CITIZEN_IPS_INTEGRATION)
 public class IntegrationConfig {
 
-  @Bean(name = "intygProxyWebClient")
+  @Bean(name = "intygProxyCitizenWebClient")
   public WebClient webClientForIntygProxy() {
     return WebClient.builder()
         .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())

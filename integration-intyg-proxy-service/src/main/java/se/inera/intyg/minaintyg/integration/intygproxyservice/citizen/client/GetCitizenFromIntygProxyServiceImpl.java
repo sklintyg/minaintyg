@@ -1,4 +1,4 @@
-package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
+package se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client;
 
 import static se.inera.intyg.minaintyg.integration.api.citizen.CitizenConstants.CITIZEN_IPS_INTEGRATION;
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYG_PROXY_SERVICE;
@@ -14,13 +14,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.GatewayTimeout;
 import reactor.core.publisher.Mono;
-import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.common.ExceptionThrowableFunction;
 import se.inera.intyg.minaintyg.logging.PerformanceLogging;
 
 @Service
-@Profile("!" + CITIZEN_IPS_INTEGRATION)
-public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygProxyService {
+@Profile(CITIZEN_IPS_INTEGRATION)
+public class GetCitizenFromIntygProxyServiceImpl implements GetCitizenFromIntygProxyService {
 
   private final WebClient webClient;
   private final String scheme;
@@ -28,32 +28,32 @@ public class GetPersonFromIntygProxyServiceImpl implements GetPersonFromIntygPro
   private final int port;
   private final String puEndpoint;
 
-  public GetPersonFromIntygProxyServiceImpl(
-      @Qualifier(value = "intygProxyWebClient") WebClient webClient,
+  public GetCitizenFromIntygProxyServiceImpl(
+      @Qualifier(value = "intygProxyCitizenWebClient") WebClient webClient,
       @Value("${integration.intygproxyservice.scheme}") String scheme,
       @Value("${integration.intygproxyservice.baseurl}") String baseUrl,
       @Value("${integration.intygproxyservice.port}") int port,
-      @Value("${integration.intygproxyservice.person.endpoint}") String puEndpoint) {
+      @Value("${integration.intygproxyservice.citizen.endpoint}") String citizenEndpoint) {
     this.webClient = webClient;
     this.scheme = scheme;
     this.baseUrl = baseUrl;
     this.port = port;
-    this.puEndpoint = puEndpoint;
+    this.puEndpoint = citizenEndpoint;
   }
 
   @Override
-  @PerformanceLogging(eventAction = "retrieve-person-from-ips", eventType = EVENT_TYPE_INFO)
-  public PersonSvarDTO getPersonFromIntygProxy(GetPersonIntegrationRequest personRequest) {
+  @PerformanceLogging(eventAction = "retrieve-citizen-from-ips", eventType = EVENT_TYPE_INFO)
+  public CitizenResponseDTO getCitizenFromIntygProxy(GetCitizenIntegrationRequest citizenRequest) {
     return webClient.post().uri(uriBuilder -> uriBuilder
             .scheme(scheme)
             .host(baseUrl)
             .port(port)
             .path(puEndpoint)
             .build())
-        .body(Mono.just(personRequest), GetPersonIntegrationRequest.class)
+        .body(Mono.just(citizenRequest), GetCitizenIntegrationRequest.class)
         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .retrieve()
-        .bodyToMono(PersonSvarDTO.class)
+        .bodyToMono(CitizenResponseDTO.class)
         .share()
         .onErrorMap(
             WebClientRequestException.class,

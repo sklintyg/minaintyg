@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
@@ -18,14 +19,17 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
   private final String errorLoginUrl;
   private final String errorLoginUnderageUrl;
+  private final String errorLoginInactiveUrl;
   private final MonitoringLogService monitoringLogService;
 
   public CustomAuthenticationFailureHandler(@Value("${error.login.url}") String errorLoginUrl,
       @Value("${error.login.underage.url}") String errorLoginUnderageUrl,
-      MonitoringLogService monitoringLogService) {
+      MonitoringLogService monitoringLogService,
+      @Value("${error.login.inactive.url}") String errorLoginInactiveUrl) {
     this.errorLoginUrl = errorLoginUrl;
     this.errorLoginUnderageUrl = errorLoginUnderageUrl;
     this.monitoringLogService = monitoringLogService;
+    this.errorLoginInactiveUrl = errorLoginInactiveUrl;
   }
 
   @Override
@@ -38,6 +42,15 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
           loginAgeLimitException.loginMethod().value()
       );
       response.sendRedirect(request.getContextPath() + errorLoginUnderageUrl);
+      return;
+    }
+
+    if (exception.getCause() instanceof CitizenInactiveException citizenInactiveException) {
+      monitoringLogService.logUserLoginFailed(
+          citizenInactiveException.getMessage(),
+          citizenInactiveException.loginMethod().value()
+      );
+      response.sendRedirect(request.getContextPath() + errorLoginInactiveUrl);
       return;
     }
 

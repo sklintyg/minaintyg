@@ -1,7 +1,10 @@
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person;
 
+import static se.inera.intyg.minaintyg.integration.api.citizen.CitizenConstants.CITIZEN_IPS_INTEGRATION;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationResponse;
@@ -10,6 +13,7 @@ import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.GetP
 
 @Slf4j
 @Service
+@Profile("!" + CITIZEN_IPS_INTEGRATION)
 @RequiredArgsConstructor
 public class PersonIntegrationIntegrationService implements GetPersonIntegrationService {
 

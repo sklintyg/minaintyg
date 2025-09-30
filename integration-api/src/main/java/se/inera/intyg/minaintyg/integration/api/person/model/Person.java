@@ -9,4 +9,5 @@ public class Person {
 
   String personId;
   String name;
+  Boolean isActive;
 }
