@@ -1,33 +1,35 @@
 plugins {
-    id 'org.springframework.boot' version '3.3.4'
-    id 'io.spring.dependency-management' version '1.1.6'
-    id 'org.sonarqube' version '4.4.1.3373'
-    id 'org.owasp.dependencycheck' version '10.0.4'
+    alias(libs.plugins.org.springframework.boot)
+    alias(libs.plugins.org.sonarqube)
+    alias(libs.plugins.org.owasp.dependencycheck)
+    alias(libs.plugins.com.github.ben.manes.versions)
     id 'test-report-aggregation'
     id 'application'
 }
 
 ext {
-    guavaVersion = '33.4.0-jre'
-    logbackEcsEncoderVersion = '1.6.0'
-    mockServerClientVersion = '5.15.0'
-    shedlockSpringVersion = '5.16.0'
-    springbootMavenBomVersion = '3.3.4'
+    intygBomVersion = System.properties['intygBomVersion'] ?: '0.0.1-SNAPSHOT'
 
     ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
     shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
+
     nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
+}
+
+application {
+    mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
 }
 
 group = 'se.inera.intyg.minaintyg'
 version = System.properties['buildVersion'] ?: '4.1.0-SNAPSHOT'
-mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
+
+apply from: 'gradle/configureIntygBom.gradle'
 
 allprojects {
     repositories {
         mavenLocal()
-        maven { url "${ineraMavenRepository}" }
-        maven { url "${shibbolethMavenRepository}" }
+        maven { url = ineraMavenRepository }
+        maven { url = shibbolethMavenRepository }
         mavenCentral()
     }
 }
@@ -36,26 +38,29 @@ sonar {
     properties {
         property "sonar.projectKey", "intyg-minaintyg"
         property "sonar.projectName", "intyg-minaintyg"
-        property "sonar.dependencyCheck.htmlReportPath", "${buildDir}/reports/dependency-check-report.html"
-        property "sonar.dependencyCheck.jsonReportPath", "${buildDir}/reports/dependency-check-report.json"
+        property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
+        property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
+        property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
     }
 }
 
 dependencyCheck {
-    formats = List.of("HTML", "JSON")
-
-    nvd {
-        datafeedUrl = "${nvdMirror}"
-    }
+    formats = ['HTML', 'JSON']
+    nvd.setDatafeedUrl(nvdMirror)
+    analyzers.setAssemblyEnabled(false)
+    analyzers.setNodeEnabled(false)
+    analyzers.ossIndex.setUsername(project.properties.get('ossIndexUsername'))
+    analyzers.ossIndex.setPassword(project.properties.get('ossIndexPassword'))
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
-    apply plugin: 'org.sonarqube'
 
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    java {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
 
     configurations {
         compileOnly {
@@ -63,12 +68,11 @@ subprojects {
         }
     }
 
-    apply plugin: 'io.spring.dependency-management'
-
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.boot:spring-boot-dependencies:${springbootMavenBomVersion}"
-        }
+    dependencies {
+        implementation platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        annotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        testImplementation platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        testAnnotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
     }
 
     jacocoTestReport {
@@ -89,17 +93,15 @@ subprojects {
         }
     }
 
-    sonar {
-        properties {
-            property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
-        }
+    tasks.withType(Test).configureEach {
+        jvmArgs '-Xshare:off'
     }
 }
 
 reporting {
     reports {
         integrationTestAggregateTestReport(AggregateTestReport) {
-            testType = TestSuiteType.INTEGRATION_TEST
+            testSuiteName = 'integrationTest'
         }
     }
 

@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version "3.3.4"
+    alias(libs.plugins.org.springframework.boot)
 }
 
 def applicationDir = "${rootProject.projectDir}/devops/dev"
@@ -12,7 +12,7 @@ dependencies {
     runtimeOnly project(":integration-intygsadmin")
     runtimeOnly project(":integration-intygstjanst")
 
-    implementation "co.elastic.logging:logback-ecs-encoder:${logbackEcsEncoderVersion}"
+    implementation "co.elastic.logging:logback-ecs-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-web"
@@ -20,8 +20,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-saml2-service-provider'
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "org.springframework.session:spring-session-data-redis"
-    implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockSpringVersion}"
-    implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring:${shedlockSpringVersion}"
+    implementation "net.javacrumbs.shedlock:shedlock-spring"
+    implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring"
 
     compileOnly "org.projectlombok:lombok"
 
@@ -31,8 +31,8 @@ dependencies {
     testImplementation "org.springframework.security:spring-security-test"
 }
 
-tasks.named("test") {
-    useJUnitPlatform()
+testing.suites {
+    test { useJUnitJupiter() }
 }
 
 bootRun {
