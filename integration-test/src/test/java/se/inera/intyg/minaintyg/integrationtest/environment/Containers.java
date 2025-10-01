@@ -1,32 +1,35 @@
 package se.inera.intyg.minaintyg.integrationtest.environment;
 
+import org.testcontainers.activemq.ActiveMQContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MockServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class Containers {
 
-  public static MockServerContainer MOCK_SERVER_CONTAINER;
-  public static GenericContainer<?> REDIS_CONTAINER;
+  public static MockServerContainer mockServerContainer;
+  public static GenericContainer<?> redisContainer;
+  public static ActiveMQContainer amqContainer;
 
   public static void ensureRunning() {
     mockServerContainer();
     redisContainer();
+    amqContainer();
   }
 
   private static void mockServerContainer() {
-    if (MOCK_SERVER_CONTAINER == null) {
-      MOCK_SERVER_CONTAINER = new MockServerContainer(
+    if (mockServerContainer == null) {
+      mockServerContainer = new MockServerContainer(
           DockerImageName.parse("mockserver/mockserver:5.15.0")
       );
     }
 
-    if (!MOCK_SERVER_CONTAINER.isRunning()) {
-      MOCK_SERVER_CONTAINER.start();
+    if (!mockServerContainer.isRunning()) {
+      mockServerContainer.start();
     }
 
-    final var mockServerContainerHost = MOCK_SERVER_CONTAINER.getHost();
-    final var mockServerContainerPort = String.valueOf(MOCK_SERVER_CONTAINER.getServerPort());
+    final var mockServerContainerHost = mockServerContainer.getHost();
+    final var mockServerContainerPort = String.valueOf(mockServerContainer.getServerPort());
 
     System.setProperty("integration.intygproxyservice.baseurl", mockServerContainerHost);
     System.setProperty("integration.intygproxyservice.port", mockServerContainerPort);
@@ -39,17 +42,33 @@ public class Containers {
   }
 
   private static void redisContainer() {
-    if (REDIS_CONTAINER == null) {
-      REDIS_CONTAINER = new GenericContainer<>(
+    if (redisContainer == null) {
+      redisContainer = new GenericContainer<>(
           DockerImageName.parse("redis:6.0.9-alpine")
       ).withExposedPorts(6379);
     }
 
-    if (!REDIS_CONTAINER.isRunning()) {
-      REDIS_CONTAINER.start();
+    if (!redisContainer.isRunning()) {
+      redisContainer.start();
     }
 
-    System.setProperty("spring.data.redis.host", REDIS_CONTAINER.getHost());
-    System.setProperty("spring.data.redis.port", REDIS_CONTAINER.getMappedPort(6379).toString());
+    System.setProperty("spring.data.redis.host", redisContainer.getHost());
+    System.setProperty("spring.data.redis.port", redisContainer.getMappedPort(6379).toString());
+  }
+
+  private static void amqContainer() {
+    if (amqContainer == null) {
+      amqContainer = new ActiveMQContainer("apache/activemq-classic:5.18.3")
+          .withUser("activemqUser")
+          .withPassword("activemqPassword");
+    }
+
+    if (!amqContainer.isRunning()) {
+      amqContainer.start();
+    }
+
+    System.setProperty("spring.activemq.user", amqContainer.getUser());
+    System.setProperty("spring.activemq.password", amqContainer.getPassword());
+    System.setProperty("spring.activemq.broker-url", amqContainer.getBrokerUrl());
   }
 }
