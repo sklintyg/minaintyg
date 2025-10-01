@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -20,6 +21,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
+import se.inera.intyg.minaintyg.integration.api.analytics.AnalyticsMessageFactory;
+import se.inera.intyg.minaintyg.integration.api.analytics.PublishAnalyticsMessage;
+import se.inera.intyg.minaintyg.integration.api.analytics.model.CertificateAnalyticsMessage;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
@@ -66,6 +70,10 @@ class SendCertificateServiceTest {
   UserService userService;
   @Mock
   GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock
+  AnalyticsMessageFactory analyticsMessageFactory;
+  @Mock
+  PublishAnalyticsMessage publishAnalyticsMessage;
   @InjectMocks
   SendCertificateService sendCertificateService;
 
@@ -162,6 +170,21 @@ class SendCertificateServiceTest {
 
         verify(monitoringLogService).logCertificateSent(anyString(), anyString(), captor.capture());
         assertEquals(RECIPIENT_ID, captor.getValue());
+      }
+    }
+
+    @Nested
+    class TestPublishAnalyticsMessage {
+
+      @Test
+      void shouldPublishAnalyticsMessageWhenCertificateIsPrinted() {
+        final var analyticsMessage = CertificateAnalyticsMessage.builder().build();
+        when(analyticsMessageFactory.certificateSent(CERTIFICATE_NOT_SENT))
+            .thenReturn(analyticsMessage);
+
+        sendCertificateService.send(REQUEST);
+
+        verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
       }
     }
   }

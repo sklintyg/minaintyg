@@ -21,13 +21,17 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
-import se.inera.intyg.minaintyg.certificate.service.dto.FormattedCertificate;
-import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateRequest;
-import se.inera.intyg.minaintyg.certificate.service.dto.GetCertificateResponse;
 import se.inera.intyg.minaintyg.certificate.service.dto.PrintCertificateRequest;
+import se.inera.intyg.minaintyg.integration.api.analytics.AnalyticsMessageFactory;
+import se.inera.intyg.minaintyg.integration.api.analytics.PublishAnalyticsMessage;
+import se.inera.intyg.minaintyg.integration.api.analytics.model.CertificateAnalyticsMessage;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
+import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationService;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
@@ -47,39 +51,49 @@ class PrintCertificateServiceTest {
       .build();
   public static final String TYPE = "TYPE";
   private static final String PERSON_ID = "personId";
+
   @Mock
   PrintCertificateIntegrationService printCertificateIntegrationService;
   @Mock
   MonitoringLogService monitorLogService;
   @Mock
-  GetCertificateService getCertificateService;
+  GetCertificateIntegrationService getCertificateIntegrationService;
   @Mock
   UserService userService;
+  @Mock
+  AnalyticsMessageFactory analyticsMessageFactory;
+  @Mock
+  PublishAnalyticsMessage publishAnalyticsMessage;
   @InjectMocks
   PrintCertificateService printCertificateService;
+
+  private Certificate certificate;
 
   @BeforeEach
   void setup() {
     when(printCertificateIntegrationService.print(any(PrintCertificateIntegrationRequest.class)))
         .thenReturn(EXPECTED_RESPONSE);
 
-    when(getCertificateService.get(any(GetCertificateRequest.class)))
-        .thenReturn(GetCertificateResponse
-            .builder()
-            .certificate(
-                FormattedCertificate
-                    .builder()
-                    .metadata(
-                        CertificateMetadata
-                            .builder()
-                            .type(
-                                CertificateType.builder().id(TYPE).build()
-                            )
-                            .build()
-                    )
-                    .build()
-            )
-            .build()
+    certificate = Certificate
+        .builder()
+        .metadata(
+            CertificateMetadata
+                .builder()
+                .type(
+                    CertificateType.builder().id(TYPE).build()
+                )
+                .build()
+        )
+        .build();
+
+    when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
+        .thenReturn(
+            GetCertificateIntegrationResponse
+                .builder()
+                .certificate(
+                    certificate
+                )
+                .build()
         );
     when(userService.getLoggedInUser()).thenReturn(
         Optional.of(new MinaIntygUser(PERSON_ID, "personName", LoginMethod.ELVA77)));
@@ -97,11 +111,11 @@ class PrintCertificateServiceTest {
 
   @Test
   void shouldSendCertificateIdInRequestToGetCertificate() {
-    final var captor = ArgumentCaptor.forClass(GetCertificateRequest.class);
+    final var captor = ArgumentCaptor.forClass(GetCertificateIntegrationRequest.class);
 
     printCertificateService.print(REQUEST);
 
-    verify(getCertificateService).get(captor.capture());
+    verify(getCertificateIntegrationService).get(captor.capture());
     assertEquals(REQUEST.getCertificateId(), captor.getValue().getCertificateId());
   }
 
@@ -229,5 +243,21 @@ class PrintCertificateServiceTest {
     );
 
     assertFalse(captor.getValue());
+  }
+
+  @Test
+  void shouldPublishAnalyticsMessageWhenCertificateIsPrinted() {
+    final var analyticsMessage = CertificateAnalyticsMessage.builder().build();
+    when(analyticsMessageFactory.certificatePrinted(certificate)).thenReturn(analyticsMessage);
+
+    printCertificateService.print(
+        PrintCertificateRequest
+            .builder()
+            .certificateId("ID")
+            .customizationId("")
+            .build()
+    );
+
+    verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
   }
 }

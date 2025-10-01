@@ -53,8 +53,8 @@ class InformationIT {
   void setUp() {
     this.api = new ApiUtil(restTemplate, port);
     this.mockServerClient = new MockServerClient(
-        Containers.MOCK_SERVER_CONTAINER.getHost(),
-        Containers.MOCK_SERVER_CONTAINER.getServerPort()
+        Containers.mockServerContainer.getHost(),
+        Containers.mockServerContainer.getServerPort()
     );
     this.intygProxyServiceMock = new IntygProxyServiceMock(mockServerClient);
     this.intygsadminMock = new IntygsadminMock(mockServerClient);
@@ -64,7 +64,7 @@ class InformationIT {
   void tearDown() throws Exception {
     api.testabilityFakeLogout();
     mockServerClient.reset();
-    Containers.REDIS_CONTAINER.execInContainer("redis-cli", "flushall");
+    Containers.redisContainer.execInContainer("redis-cli", "flushall");
   }
 
   @Test

@@ -5,8 +5,7 @@ public class MdcLogConstants {
   private MdcLogConstants() {
 
   }
-
-
+  
   public static final String ERROR_ID = "error.id";
   public static final String ERROR_CODE = "error.code";
   public static final String ERROR_MESSAGE = "error.message";

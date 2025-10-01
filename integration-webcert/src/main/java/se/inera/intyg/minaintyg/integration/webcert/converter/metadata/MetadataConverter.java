@@ -26,6 +26,7 @@ public class MetadataConverter {
         .issuer(convertIssuer(metadataDTO))
         .unit(convertUnit(metadataDTO.getUnit()))
         .careUnit(convertUnit(metadataDTO.getCareUnit()))
+        .careProvider(convertUnit(metadataDTO.getCareProvider()))
         .events(eventConverter.convert(metadataDTO))
         .statuses(statusConverter.convert(metadataDTO))
         .issued(metadataDTO.getCreated())

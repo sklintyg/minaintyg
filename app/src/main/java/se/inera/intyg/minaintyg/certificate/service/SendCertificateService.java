@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.auth.MinaIntygUser;
 import se.inera.intyg.minaintyg.certificate.service.dto.SendCertificateRequest;
+import se.inera.intyg.minaintyg.integration.api.analytics.AnalyticsMessageFactory;
+import se.inera.intyg.minaintyg.integration.api.analytics.PublishAnalyticsMessage;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateIntegrationService;
@@ -22,6 +24,8 @@ public class SendCertificateService {
   private final GetCertificateIntegrationService getCertificateIntegrationService;
   private final SendCertificateIntegrationService sendCertificateIntegrationService;
   private final UserService userService;
+  private final AnalyticsMessageFactory analyticsMessageFactory;
+  private final PublishAnalyticsMessage publishAnalyticsMessage;
 
   public void send(SendCertificateRequest request) {
     final var user = userService.getLoggedInUser().orElseThrow();
@@ -34,6 +38,10 @@ public class SendCertificateService {
         request.getCertificateId(),
         certificateResponse.getCertificate().getMetadata().getType().getId(),
         recipient.getId()
+    );
+
+    publishAnalyticsMessage.publishEvent(
+        analyticsMessageFactory.certificateSent(certificateResponse.getCertificate())
     );
   }
 
