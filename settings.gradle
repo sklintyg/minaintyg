@@ -14,10 +14,11 @@ rootProject.name = 'minaintyg'
 
 include 'app'
 include 'integration-api'
-include 'integration-webcert'
+include 'integration-certificate-analytics-service'
 include 'integration-intyg-proxy-service'
-include 'integration-intygstjanst'
 include 'integration-intygsadmin'
+include 'integration-intygstjanst'
 include 'integration-test'
+include 'integration-webcert'
 include 'logging'
 

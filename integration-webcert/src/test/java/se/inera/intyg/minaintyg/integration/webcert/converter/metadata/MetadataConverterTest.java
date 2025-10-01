@@ -45,6 +45,8 @@ class MetadataConverterTest {
   public static final String CARE_UNIT_CITY = "careUnitCity";
   public static final String CARE_UNIT_PHONE_NUMBER = "careUnitPhoneNumber";
   public static final String CARE_UNIT_EMAIL = "careUnitEmail";
+  public static final String CARE_PROVIDER_ID = "careProviderId";
+  public static final String CARE_PROVIDER_NAME = "careProviderName";
   public static final String RECIPIENT_NAME = "recipientName";
   public static final String RECIPIENT_ID = "recipientId";
   public static final LocalDateTime RECIPIENT_SENT = LocalDateTime.now();
@@ -87,6 +89,10 @@ class MetadataConverterTest {
             .city(CARE_UNIT_CITY)
             .phoneNumber(CARE_UNIT_PHONE_NUMBER)
             .email(CARE_UNIT_EMAIL)
+            .build())
+        .careProvider(Unit.builder()
+            .unitId(CARE_PROVIDER_ID)
+            .unitName(CARE_PROVIDER_NAME)
             .build())
         .created(ISSUED)
         .recipient(CertificateRecipient.builder()
@@ -247,6 +253,22 @@ class MetadataConverterTest {
     void shallConvertCareUnitEmail() {
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
       assertEquals(CARE_UNIT_EMAIL, actualMetadata.getCareUnit().getEmail());
+    }
+  }
+
+  @Nested
+  class ConvertCareProvider {
+
+    @Test
+    void shallConvertCareProviderId() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_PROVIDER_ID, actualMetadata.getCareProvider().getId());
+    }
+
+    @Test
+    void shallConvertCareProviderName() {
+      final var actualMetadata = metadataConverter.convert(metadataDTO.build());
+      assertEquals(CARE_PROVIDER_NAME, actualMetadata.getCareProvider().getName());
     }
   }
 
