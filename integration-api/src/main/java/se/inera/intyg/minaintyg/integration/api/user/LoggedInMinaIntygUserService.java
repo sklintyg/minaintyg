@@ -4,5 +4,5 @@ import se.inera.intyg.minaintyg.integration.api.user.model.LoggedInMinaIntygUser
 
 public interface LoggedInMinaIntygUserService {
 
-  LoggedInMinaIntygUser getLoggedInMinaIntygUser();
+  LoggedInMinaIntygUser loggedInMinaIntygUser();
 }

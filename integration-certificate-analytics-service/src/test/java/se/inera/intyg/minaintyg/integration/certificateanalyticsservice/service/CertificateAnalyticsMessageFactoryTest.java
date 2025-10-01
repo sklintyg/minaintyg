@@ -77,7 +77,7 @@ class CertificateAnalyticsMessageFactoryTest {
         .build();
 
     // Make this lenient to enable mocking to work in parameterized tests
-    lenient().when(loggedInMinaIntygUserService.getLoggedInMinaIntygUser())
+    lenient().when(loggedInMinaIntygUserService.loggedInMinaIntygUser())
         .thenReturn(loggedInMinaIntygUser);
 
     MDC.put(MdcLogConstants.SESSION_ID_KEY, EVENT_SESSION_ID);

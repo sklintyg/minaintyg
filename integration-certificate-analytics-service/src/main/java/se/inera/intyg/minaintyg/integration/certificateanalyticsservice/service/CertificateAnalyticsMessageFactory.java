@@ -31,7 +31,7 @@ public class CertificateAnalyticsMessageFactory implements AnalyticsMessageFacto
 
   private CertificateAnalyticsMessage create(Certificate certificate,
       CertificateAnalyticsMessageType type) {
-    final var loggedInMinaIntygUser = loggedInMinaIntygUserService.getLoggedInMinaIntygUser();
+    final var loggedInMinaIntygUser = loggedInMinaIntygUserService.loggedInMinaIntygUser();
     return CertificateAnalyticsMessage.builder()
         .event(
             AnalyticsEvent.builder()
