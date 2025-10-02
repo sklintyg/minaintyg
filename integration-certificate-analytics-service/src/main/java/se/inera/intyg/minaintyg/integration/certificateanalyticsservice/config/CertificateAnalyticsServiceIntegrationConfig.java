@@ -14,7 +14,7 @@ import org.springframework.jms.support.converter.MessageType;
 @Configuration
 public class CertificateAnalyticsServiceIntegrationConfig {
 
-  @Value("${certificate.analytics.message.queueName}")
+  @Value("${certificate.analytics.message.queue.name}")
   private String queueName;
 
   @Bean
