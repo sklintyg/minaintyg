@@ -108,6 +108,7 @@ reporting {
     dependencies {
         testReportAggregation project(':app')
         testReportAggregation project(':integration-api')
+        testReportAggregation project(':integration-certificate-analytics-service')
         testReportAggregation project(':integration-intyg-proxy-service')
         testReportAggregation project(':integration-intygsadmin')
         testReportAggregation project(':integration-intygstjanst')
