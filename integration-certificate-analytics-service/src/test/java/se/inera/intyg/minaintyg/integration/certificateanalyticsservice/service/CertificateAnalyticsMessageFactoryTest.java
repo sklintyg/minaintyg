@@ -7,6 +7,7 @@ import static org.mockito.Mockito.lenient;
 import java.util.function.Function;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,6 +20,7 @@ import se.inera.intyg.minaintyg.integration.api.analytics.model.CertificateAnaly
 import se.inera.intyg.minaintyg.integration.api.analytics.model.CertificateAnalyticsMessageType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.Certificate;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.CertificateMetadata;
+import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateRecipient;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateType;
 import se.inera.intyg.minaintyg.integration.api.certificate.model.common.CertificateUnit;
 import se.inera.intyg.minaintyg.integration.api.user.LoggedInMinaIntygUserService;
@@ -43,6 +45,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   private static final String EVENT_SESSION_ID = "event-session-id";
 
+  private static final String RECIPIENT_ID = "recipient-id";
+
   private Certificate certificate;
   private LoggedInMinaIntygUser loggedInMinaIntygUser;
 
@@ -66,6 +70,11 @@ class CertificateAnalyticsMessageFactoryTest {
                 .careProvider(
                     CertificateUnit.builder()
                         .id(CERTIFICATE_CARE_PROVIDER_ID)
+                        .build()
+                )
+                .recipient(
+                    CertificateRecipient.builder()
+                        .id(RECIPIENT_ID)
                         .build()
                 )
                 .build()
@@ -167,16 +176,30 @@ class CertificateAnalyticsMessageFactoryTest {
     assertEquals(CERTIFICATE_CARE_PROVIDER_ID, actual.getCertificate().getCareProviderId());
   }
 
+  @Test
+  void shallReturnCorrectRecipientIdForCertificateSent() {
+    final var actual = factory.certificateSent(
+        certificate,
+        certificate.getMetadata().getRecipient().getId()
+    );
+    assertEquals(RECIPIENT_ID, actual.getRecipient().getId());
+  }
+
   static Stream<Arguments> analyticsMessagesBasedOnCertificate() {
     return Stream.of(
         Arguments.of(
-            (Function<Certificate, CertificateAnalyticsMessage>) certificate -> factory.certificatePrinted(
-                certificate),
+            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
+                factory.certificatePrinted(certificate),
             CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN
         ),
         Arguments.of(
-            (Function<Certificate, CertificateAnalyticsMessage>) certificate -> factory.certificateSent(
-                certificate),
+            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
+                factory.certificatePrintedCustomized(certificate),
+            CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_CUSTOMIZED_BY_CITIZEN
+        ),
+        Arguments.of(
+            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
+                factory.certificateSent(certificate, RECIPIENT_ID),
             CertificateAnalyticsMessageType.CERTIFICATE_SENT_BY_CITIZEN
         )
     );

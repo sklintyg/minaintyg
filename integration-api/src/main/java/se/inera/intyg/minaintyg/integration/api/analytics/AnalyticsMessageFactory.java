@@ -7,5 +7,7 @@ public interface AnalyticsMessageFactory {
 
   CertificateAnalyticsMessage certificatePrinted(Certificate certificate);
 
-  CertificateAnalyticsMessage certificateSent(Certificate certificate);
+  CertificateAnalyticsMessage certificatePrintedCustomized(Certificate certificate);
+
+  CertificateAnalyticsMessage certificateSent(Certificate certificate, String recipient);
 }
