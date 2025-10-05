@@ -51,7 +51,9 @@ public class PrintCertificateService {
     );
 
     publishAnalyticsMessage.publishEvent(
-        analyticsMessageFactory.certificatePrinted(certificate.getCertificate())
+        isModifiedPrintRequest ?
+            analyticsMessageFactory.certificatePrintedCustomized(certificate.getCertificate()) :
+            analyticsMessageFactory.certificatePrinted(certificate.getCertificate())
     );
 
     return PrintCertificateResponse

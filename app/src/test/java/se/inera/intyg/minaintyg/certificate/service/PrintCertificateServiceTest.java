@@ -260,4 +260,21 @@ class PrintCertificateServiceTest {
 
     verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
   }
+
+  @Test
+  void shouldPublishAnalyticsMessageWhenCertificateIsPrintedCustomized() {
+    final var analyticsMessage = CertificateAnalyticsMessage.builder().build();
+    when(analyticsMessageFactory.certificatePrintedCustomized(certificate))
+        .thenReturn(analyticsMessage);
+
+    printCertificateService.print(
+        PrintCertificateRequest
+            .builder()
+            .certificateId("ID")
+            .customizationId("ID")
+            .build()
+    );
+
+    verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
+  }
 }

@@ -179,7 +179,7 @@ class SendCertificateServiceTest {
       @Test
       void shouldPublishAnalyticsMessageWhenCertificateIsPrinted() {
         final var analyticsMessage = CertificateAnalyticsMessage.builder().build();
-        when(analyticsMessageFactory.certificateSent(CERTIFICATE_NOT_SENT))
+        when(analyticsMessageFactory.certificateSent(CERTIFICATE_NOT_SENT, RECIPIENT_ID))
             .thenReturn(analyticsMessage);
 
         sendCertificateService.send(REQUEST);

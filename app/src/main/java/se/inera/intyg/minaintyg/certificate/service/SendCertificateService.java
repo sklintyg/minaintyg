@@ -41,7 +41,10 @@ public class SendCertificateService {
     );
 
     publishAnalyticsMessage.publishEvent(
-        analyticsMessageFactory.certificateSent(certificateResponse.getCertificate())
+        analyticsMessageFactory.certificateSent(
+            certificateResponse.getCertificate(),
+            recipient.getId()
+        )
     );
   }
 
