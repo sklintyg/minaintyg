@@ -49,6 +49,7 @@ dependencyCheck {
     nvd.setDatafeedUrl(nvdMirror)
     analyzers.setAssemblyEnabled(false)
     analyzers.setNodeEnabled(false)
+    analyzers.setCentralEnabled(false)
     analyzers.ossIndex.setUsername(project.properties.get('ossIndexUsername'))
     analyzers.ossIndex.setPassword(project.properties.get('ossIndexPassword'))
 }
