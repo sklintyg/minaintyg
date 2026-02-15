@@ -1,8 +1,6 @@
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
-
-    compileOnly 'org.projectlombok:lombok'
-
+    
     implementation "ch.qos.logback:logback-classic"
     implementation "com.google.guava:guava"
     implementation "jakarta.servlet:jakarta.servlet-api"

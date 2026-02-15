@@ -7,10 +7,6 @@ tasks.named('bootJar') {
     archiveFileName.set('app.jar')
 }
 
-tasks.named('jar') {
-    enabled = false
-}
-
 def applicationDir = "${rootProject.projectDir}/devops/dev"
 
 dependencies {
@@ -22,7 +18,6 @@ dependencies {
     runtimeOnly project(":integration-intygstjanst")
     runtimeOnly project(":integration-webcert")
 
-    implementation "co.elastic.logging:logback-ecs-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "net.javacrumbs.shedlock:shedlock-spring"
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring"
@@ -52,9 +47,7 @@ tasks.register("appRunDebug") {
     println("######## Running in Debug mode ########")
     doFirst {
         bootRun.configure {
-            jvmArgs = [
-                    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841",
-                    "-Dlogging.config=${applicationDir}/config/logback-spring.xml",]
+            jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8841",]
         }
     }
     finalizedBy("bootRun")
@@ -64,7 +57,7 @@ tasks.register("appRun") {
     println("######## Running in normal mode ########")
     doFirst {
         bootRun.configure {
-            jvmArgs = ["-Dlogging.config=${applicationDir}/config/logback-spring.xml"]
+            jvmArgs = []
         }
     }
     finalizedBy("bootRun")
