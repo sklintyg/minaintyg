@@ -11,7 +11,3 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
-
-testing.suites {
-    test { useJUnitJupiter() }
-}

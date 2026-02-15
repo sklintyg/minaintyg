@@ -1,5 +1,14 @@
 plugins {
+    alias(libs.plugins.org.cyclonedx.bom)
     alias(libs.plugins.org.springframework.boot)
+}
+
+tasks.named('bootJar') {
+    archiveFileName.set('app.jar')
+}
+
+tasks.named('jar') {
+    enabled = false
 }
 
 def applicationDir = "${rootProject.projectDir}/devops/dev"
@@ -31,10 +40,6 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
-}
-
-testing.suites {
-    test { useJUnitJupiter() }
 }
 
 bootRun {

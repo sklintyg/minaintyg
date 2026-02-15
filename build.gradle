@@ -1,72 +1,50 @@
 plugins {
-    alias(libs.plugins.org.springframework.boot)
-    alias(libs.plugins.org.sonarqube)
-    alias(libs.plugins.org.owasp.dependencycheck)
     alias(libs.plugins.com.github.ben.manes.versions)
-    id 'test-report-aggregation'
-    id 'application'
+    alias(libs.plugins.org.cyclonedx.bom)
+    alias(libs.plugins.org.sonarqube)
+    alias(libs.plugins.org.springframework.boot)
 }
-
-ext {
-    intygBomVersion = System.properties['intygBomVersion'] ?: '0.0.1-SNAPSHOT'
-
-    ineraMavenRepository = 'https://nexus.drift.inera.se/repository/it-public/'
-    shibbolethMavenRepository = 'https://build.shibboleth.net/nexus/content/repositories/releases/'
-
-    nvdMirror = 'https://vulnz-nvd-mirror-devtest.intyg.nordicmedtest.se'
-}
-
-application {
-    mainClassName = 'se.inera.intyg.minaintyg.MinaintygApplication'
-}
-
-group = 'se.inera.intyg.minaintyg'
-version = System.properties['buildVersion'] ?: '4.1.0-SNAPSHOT'
 
 apply from: 'gradle/configureIntygBom.gradle'
 
+springBoot {
+    mainClass = 'se.inera.intyg.minaintyg.MinaintygApplication'
+}
+
 allprojects {
+    apply plugin: 'java'
+    apply plugin: 'test-report-aggregation'
+
+    group = 'se.inera.intyg.minaintyg'
+    version = System.properties['buildVersion'] ?: '4.1.0-SNAPSHOT'
+
     repositories {
         mavenLocal()
-        maven { url = ineraMavenRepository }
-        maven { url = shibbolethMavenRepository }
+        maven { url "https://nexus.drift.inera.se/repository/it-public/" }
+        maven { url 'https://build.shibboleth.net/nexus/content/repositories/releases/' }
         mavenCentral()
     }
 }
 
-sonar {
-    properties {
-        property "sonar.projectKey", "intyg-minaintyg"
-        property "sonar.projectName", "intyg-minaintyg"
-        property "sonar.dependencyCheck.jsonReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.json" as String
-        property "sonar.dependencyCheck.htmlReportPath", "${layout.buildDirectory.get()}/reports/dependency-check-report.html" as String
-        property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
-    }
-}
-
-dependencyCheck {
-    formats = ['HTML', 'JSON']
-    nvd.setDatafeedUrl(nvdMirror)
-    analyzers.setAssemblyEnabled(false)
-    analyzers.setNodeEnabled(false)
-    analyzers.setCentralEnabled(false)
-    analyzers.ossIndex.setUsername(project.properties.get('ossIndexUsername'))
-    analyzers.ossIndex.setPassword(project.properties.get('ossIndexPassword'))
-}
-
 subprojects {
-    apply plugin: 'java'
     apply plugin: 'jacoco'
 
     java {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(javaVersion)
+        }
     }
 
     configurations {
+        mockitoAgent
         compileOnly {
             extendsFrom annotationProcessor
         }
+    }
+
+    compileJava {
+        options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
     }
 
     dependencies {
@@ -74,6 +52,23 @@ subprojects {
         annotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
         testImplementation platform("se.inera.intyg.bom:platform:${intygBomVersion}")
         testAnnotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        mockitoAgent platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        mockitoAgent("org.mockito:mockito-core") { transitive = false }
+    }
+
+    test {
+        jvmArgs += [
+                "-javaagent:${configurations.mockitoAgent.asPath}",
+                "-Xshare:off"
+        ]
+    }
+
+    testing {
+        suites {
+            test {
+                useJUnitJupiter()
+            }
+        }
     }
 
     jacocoTestReport {
@@ -94,8 +89,8 @@ subprojects {
         }
     }
 
-    tasks.withType(Test).configureEach {
-        jvmArgs '-Xshare:off'
+    tasks.matching { it.name == "cyclonedxDirectBom" }.configureEach { t ->
+        t.includeConfigs = ['^runtimeClasspath$']
     }
 }
 
@@ -106,15 +101,15 @@ reporting {
         }
     }
 
-    dependencies {
-        testReportAggregation project(':app')
-        testReportAggregation project(':integration-api')
-        testReportAggregation project(':integration-certificate-analytics-service')
-        testReportAggregation project(':integration-intyg-proxy-service')
-        testReportAggregation project(':integration-intygsadmin')
-        testReportAggregation project(':integration-intygstjanst')
-        testReportAggregation project(':integration-test')
-        testReportAggregation project(':integration-webcert')
-        testReportAggregation project(':logging')
+    subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
+        dependencies { testReportAggregation project(":${subprojectName}") }
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "intyg-minaintyg"
+        property "sonar.projectName", "intyg-minaintyg"
+        property "sonar.exclusions", "**/integration/api/**/*,**/testability/**,**/dto/**/*,**/integrationtest/**"
     }
 }
