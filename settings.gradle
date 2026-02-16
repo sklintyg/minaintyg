@@ -2,10 +2,11 @@ dependencyResolutionManagement {
     repositories {
         mavenLocal()
         maven { url = "https://nexus.drift.inera.se/repository/it-public/" }
+        gradlePluginPortal()
     }
     versionCatalogs {
         libs {
-            from("se.inera.intyg.bom:catalog:${System.properties['intygBomVersion'] ?: '0.0.1-SNAPSHOT'}")
+            from("se.inera.intyg.bom:catalog:${settings.ext.intygBomVersion}")
         }
     }
 }

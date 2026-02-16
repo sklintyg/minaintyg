@@ -1,8 +1,6 @@
 dependencies {
     annotationProcessor 'org.projectlombok:lombok'
-
-    compileOnly 'org.projectlombok:lombok'
-
+    
     implementation "ch.qos.logback:logback-classic"
     implementation "com.google.guava:guava"
     implementation "jakarta.servlet:jakarta.servlet-api"
@@ -10,8 +8,4 @@ dependencies {
     implementation "org.springframework:spring-webmvc"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-}
-
-testing.suites {
-    test { useJUnitJupiter() }
 }

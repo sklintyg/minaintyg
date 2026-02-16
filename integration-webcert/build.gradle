@@ -4,16 +4,10 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok'
 
-    compileOnly 'org.projectlombok:lombok'
-
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     testImplementation "com.squareup.okhttp3:okhttp"
     testImplementation "com.squareup.okhttp3:mockwebserver"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-}
-
-testing.suites {
-    test { useJUnitJupiter() }
 }
