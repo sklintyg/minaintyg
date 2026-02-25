@@ -153,7 +153,19 @@ public class WebSecurityConfig {
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
         .logout(logout -> logout.logoutSuccessUrl(samlLogoutSuccessUrl))
-        .headers(header -> header.addHeaderWriter(customXFrameOptionsHeaderWriter))
+        .headers(header -> header
+            .httpStrictTransportSecurity(hsts -> hsts
+                .includeSubDomains(true)
+                .maxAgeInSeconds(31536000)
+            )
+            .referrerPolicy(referrer -> referrer
+                .policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.ORIGIN_WHEN_CROSS_ORIGIN)
+            )
+            .contentSecurityPolicy(csp -> csp
+                .policyDirectives("frame-ancestors 'none'")
+            )
+            .addHeaderWriter(customXFrameOptionsHeaderWriter)
+        )
         .saml2Metadata(withDefaults());
 
     return http.build();
