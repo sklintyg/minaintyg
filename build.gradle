@@ -38,7 +38,6 @@ subprojects {
     }
 
     spotless {
-        enforceCheck = false
         java {
             target 'src/*/java/**/*.java'
             licenseHeaderFile(rootProject.file('spotless.license.txt'), 'package ')
