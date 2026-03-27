@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -30,37 +48,33 @@ import se.inera.intyg.minaintyg.integration.api.person.model.Status;
 import se.inera.intyg.minaintyg.logging.HashUtility;
 
 @ExtendWith(MockitoExtension.class)
-class
-MinaIntygUserDetailServiceTest {
+class MinaIntygUserDetailServiceTest {
 
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_NAME = "Arnold Johansson";
   private static final long LOGIN_AGE_LIMIT = 16L;
 
-  @Mock
-  private GetPersonIntegrationService getPersonIntegrationService;
-  @Spy
-  private HashUtility hashUtility;
+  @Mock private GetPersonIntegrationService getPersonIntegrationService;
+  @Spy private HashUtility hashUtility;
 
-  @InjectMocks
-  private MinaIntygUserDetailService minaIntygUserDetailService;
+  @InjectMocks private MinaIntygUserDetailService minaIntygUserDetailService;
 
   @Nested
   class ExceptionTests {
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfPersonIdIsNull() {
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> minaIntygUserDetailService.buildPrincipal(null, LoginMethod.ELVA77));
     }
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfPersonIdIsEmpty() {
-      assertThrows(IllegalArgumentException.class,
-          () -> minaIntygUserDetailService.buildPrincipal("",
-              LoginMethod.ELVA77));
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> minaIntygUserDetailService.buildPrincipal("", LoginMethod.ELVA77));
     }
-
   }
 
   @Nested
@@ -75,20 +89,20 @@ MinaIntygUserDetailServiceTest {
     @Test
     void shouldThrowRuntimeExceptionIfResponseHasStatusNotFound() {
       final var puResponse = getPersonResponse(Status.NOT_FOUND);
-      when(
-          getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class))).thenReturn(
-          puResponse);
-      assertThrows(RuntimeException.class,
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(puResponse);
+      assertThrows(
+          RuntimeException.class,
           () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
     }
 
     @Test
     void shouldThrowRuntimeExceptionIfResponseHasStatusError() {
       final var puResponse = getPersonResponse(Status.ERROR);
-      when(
-          getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class))).thenReturn(
-          puResponse);
-      assertThrows(RuntimeException.class,
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(puResponse);
+      assertThrows(
+          RuntimeException.class,
           () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
     }
 
@@ -97,30 +111,28 @@ MinaIntygUserDetailServiceTest {
       final var puResponse = getPersonResponse(Status.FOUND);
       when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
           .thenReturn(puResponse);
-      final var principal = minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-          LoginMethod.ELVA77);
+      final var principal =
+          minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
       assertEquals(principal.getClass(), MinaIntygUser.class);
     }
 
     @Test
     void shouldSetPersonIdFromPUResponseToUserObject() {
       final var puResponse = getPersonResponse(Status.FOUND);
-      when(
-          getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class))).thenReturn(
-          puResponse);
-      final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-          LoginMethod.ELVA77);
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(puResponse);
+      final var principal =
+          (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
       assertEquals(PERSON_ID, principal.getPersonId());
     }
 
     @Test
     void shouldSetNameFromPUResponseToUserObject() {
       final var puResponse = getPersonResponse(Status.FOUND);
-      when(
-          getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class))).thenReturn(
-          puResponse);
-      final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-          LoginMethod.ELVA77);
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(puResponse);
+      final var principal =
+          (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77);
       assertEquals(PERSON_NAME, principal.getPersonName());
     }
 
@@ -128,11 +140,11 @@ MinaIntygUserDetailServiceTest {
     void shouldSetLoginMethodToUserObject() {
       final var expectedUser = getUser();
       final var puResponse = getPersonResponse(Status.FOUND);
-      when(
-          getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class))).thenReturn(
-          puResponse);
-      final var principal = (MinaIntygUser) minaIntygUserDetailService.buildPrincipal(PERSON_ID,
-          expectedUser.getLoginMethod());
+      when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
+          .thenReturn(puResponse);
+      final var principal =
+          (MinaIntygUser)
+              minaIntygUserDetailService.buildPrincipal(PERSON_ID, expectedUser.getLoginMethod());
       assertEquals(expectedUser.getLoginMethod(), principal.getLoginMethod());
     }
 
@@ -150,8 +162,8 @@ MinaIntygUserDetailServiceTest {
       void shouldNotThrowLoginAgeLimitExceptionIfAboveAgeLimitForCoordinationNumber() {
         final var coordinationNumber = getCoordinationNumber(-1);
         assertDoesNotThrow(
-            () -> minaIntygUserDetailService.buildPrincipal(coordinationNumber,
-                LoginMethod.ELVA77));
+            () ->
+                minaIntygUserDetailService.buildPrincipal(coordinationNumber, LoginMethod.ELVA77));
       }
 
       @Test
@@ -165,30 +177,35 @@ MinaIntygUserDetailServiceTest {
       void shouldNotThrowLoginAgeLimitExceptionIfExactlyAgeLimitForCoordinationNumber() {
         final var coordinationNumber = getCoordinationNumber(0);
         assertDoesNotThrow(
-            () -> minaIntygUserDetailService.buildPrincipal(coordinationNumber,
-                LoginMethod.ELVA77));
+            () ->
+                minaIntygUserDetailService.buildPrincipal(coordinationNumber, LoginMethod.ELVA77));
       }
 
       @Test
       void shouldThrowLoginAgeLimitExceptionIfBelowAgeLimit() {
         final var personId = getPersonId(1);
-        assertThrows(LoginAgeLimitException.class,
+        assertThrows(
+            LoginAgeLimitException.class,
             () -> minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77));
       }
 
       @Test
       void shouldThrowLoginAgeLimitExceptionIfBelowAgeLimitForCoordinationNumber() {
         final var getCoordinationNumber = getCoordinationNumber(1);
-        assertThrows(LoginAgeLimitException.class,
-            () -> minaIntygUserDetailService.buildPrincipal(getCoordinationNumber,
-                LoginMethod.ELVA77));
+        assertThrows(
+            LoginAgeLimitException.class,
+            () ->
+                minaIntygUserDetailService.buildPrincipal(
+                    getCoordinationNumber, LoginMethod.ELVA77));
       }
 
       @Test
       void shouldHashPersonIdForLogMessage() {
         final var personId = getPersonId(1);
-        final var e = assertThrows(LoginAgeLimitException.class,
-            () -> minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77));
+        final var e =
+            assertThrows(
+                LoginAgeLimitException.class,
+                () -> minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77));
 
         assertFalse(e.getMessage().contains(personId));
         assertTrue(e.getMessage().contains(hashUtility.hash(personId)));
@@ -196,28 +213,39 @@ MinaIntygUserDetailServiceTest {
 
       @Test
       void shouldCheckAgeLimitAgainstPersonIdFromPU() {
-        final var personIdResponse = LocalDate.now(ZoneId.systemDefault())
-            .minusYears(LOGIN_AGE_LIMIT)
-            .plusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE).concat("1234");
+        final var personIdResponse =
+            LocalDate.now(ZoneId.systemDefault())
+                .minusYears(LOGIN_AGE_LIMIT)
+                .plusDays(1)
+                .format(DateTimeFormatter.BASIC_ISO_DATE)
+                .concat("1234");
 
         when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
             .thenReturn(getPersonResponse(personIdResponse));
 
-        assertThrows(LoginAgeLimitException.class,
+        assertThrows(
+            LoginAgeLimitException.class,
             () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
       }
 
       private String getPersonId(int plusDays) {
-        final var personId = LocalDate.now(ZoneId.systemDefault()).minusYears(LOGIN_AGE_LIMIT)
-            .plusDays(plusDays).format(DateTimeFormatter.BASIC_ISO_DATE).concat("1234");
+        final var personId =
+            LocalDate.now(ZoneId.systemDefault())
+                .minusYears(LOGIN_AGE_LIMIT)
+                .plusDays(plusDays)
+                .format(DateTimeFormatter.BASIC_ISO_DATE)
+                .concat("1234");
         when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
             .thenReturn(getPersonResponse(personId));
         return personId;
       }
 
       private String getCoordinationNumber(int plusDays) {
-        final var birthDate = LocalDate.now(ZoneId.systemDefault()).minusYears(LOGIN_AGE_LIMIT)
-            .plusDays(plusDays).format(DateTimeFormatter.BASIC_ISO_DATE);
+        final var birthDate =
+            LocalDate.now(ZoneId.systemDefault())
+                .minusYears(LOGIN_AGE_LIMIT)
+                .plusDays(plusDays)
+                .format(DateTimeFormatter.BASIC_ISO_DATE);
         final var dayOfBirth = Integer.parseInt(birthDate.substring(6, 8));
         final var coordinationNumber = birthDate.substring(0, 6) + (dayOfBirth + 60) + "1234";
         when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
@@ -226,24 +254,20 @@ MinaIntygUserDetailServiceTest {
       }
     }
 
-
     @Test
     void shoudlThrowCitizenInactiveExceptionIfCitizenIsInactive() {
-      final var personIntegrationResponse = GetPersonIntegrationResponse.builder()
-          .person(
-              Person.builder()
-                  .name(PERSON_NAME)
-                  .personId(PERSON_ID)
-                  .isActive(false)
-                  .build()
-          )
-          .status(Status.FOUND)
-          .build();
+      final var personIntegrationResponse =
+          GetPersonIntegrationResponse.builder()
+              .person(
+                  Person.builder().name(PERSON_NAME).personId(PERSON_ID).isActive(false).build())
+              .status(Status.FOUND)
+              .build();
 
       when(getPersonIntegrationService.getPerson(any(GetPersonIntegrationRequest.class)))
           .thenReturn(personIntegrationResponse);
 
-      assertThrows(CitizenInactiveException.class,
+      assertThrows(
+          CitizenInactiveException.class,
           () -> minaIntygUserDetailService.buildPrincipal(PERSON_ID, LoginMethod.ELVA77));
     }
 
@@ -257,12 +281,7 @@ MinaIntygUserDetailServiceTest {
 
     private static GetPersonIntegrationResponse getPersonResponse(Status status, String personId) {
       return GetPersonIntegrationResponse.builder()
-          .person(
-              Person.builder()
-                  .name(PERSON_NAME)
-                  .personId(personId)
-                  .build()
-          )
+          .person(Person.builder().name(PERSON_NAME).personId(personId).build())
           .status(status)
           .build();
     }

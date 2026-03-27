@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integrationtest.util;
 
 import java.util.Collections;
@@ -13,7 +31,6 @@ import org.springframework.http.ResponseEntity;
 import se.inera.intyg.minaintyg.auth.FakeCredentials;
 import se.inera.intyg.minaintyg.information.dto.InformationResponseDTO;
 import se.inera.intyg.minaintyg.testability.TestPersonResponse;
-
 
 @RequiredArgsConstructor
 public class ApiUtil {
@@ -32,10 +49,8 @@ public class ApiUtil {
         requestUrl,
         HttpMethod.GET,
         new HttpEntity<>(null, headers),
-        new ParameterizedTypeReference<>() {
-        },
-        Collections.emptyMap()
-    );
+        new ParameterizedTypeReference<>() {},
+        Collections.emptyMap());
   }
 
   public ResponseEntity<TestPersonResponse> testabilityGetPersons() {
@@ -45,28 +60,20 @@ public class ApiUtil {
         requestUrl,
         HttpMethod.GET,
         new HttpEntity<>(null, headers),
-        new ParameterizedTypeReference<>() {
-        },
-        Collections.emptyMap()
-    );
+        new ParameterizedTypeReference<>() {},
+        Collections.emptyMap());
   }
 
   public ResponseEntity<Void> testabilityFakeLogin(String personId) {
     final var requestUrl = "http://localhost:" + port + "/api/testability/fake";
     final var headers = new HttpHeaders();
-    final ResponseEntity<Void> response = this.restTemplate.exchange(
-        requestUrl,
-        HttpMethod.POST,
-        new HttpEntity<>(
-            FakeCredentials.builder()
-                .personId(personId)
-                .build(),
-            headers
-        ),
-        new ParameterizedTypeReference<>() {
-        },
-        Collections.emptyMap()
-    );
+    final ResponseEntity<Void> response =
+        this.restTemplate.exchange(
+            requestUrl,
+            HttpMethod.POST,
+            new HttpEntity<>(FakeCredentials.builder().personId(personId).build(), headers),
+            new ParameterizedTypeReference<>() {},
+            Collections.emptyMap());
 
     xsrfToken = getHeader(response, "XSRF-TOKEN");
     session = getHeader(response, "SESSION");
@@ -83,14 +90,11 @@ public class ApiUtil {
         requestUrl,
         HttpMethod.POST,
         new HttpEntity<>(null, headers),
-        new ParameterizedTypeReference<>() {
-        },
-        Collections.emptyMap()
-    );
+        new ParameterizedTypeReference<>() {},
+        Collections.emptyMap());
   }
 
-  @NotNull
-  private static String getHeader(ResponseEntity<Void> response, String s) {
+  @NotNull private static String getHeader(ResponseEntity<Void> response, String s) {
     return Objects.requireNonNull(response.getHeaders().get("Set-Cookie")).stream()
         .filter(str -> str.contains(s))
         .findAny()

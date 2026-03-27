@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,56 +72,51 @@ class MetadataConverterTest {
   public static final String SUMMARY_VALUE = "summaryValue";
   public static final String NAME = "certificateName";
 
-  @Mock
-  private EventConverter eventConverter;
-  @Mock
-  private StatusConverter statusConverter;
-  @InjectMocks
-  private MetadataConverter metadataConverter;
+  @Mock private EventConverter eventConverter;
+  @Mock private StatusConverter statusConverter;
+  @InjectMocks private MetadataConverter metadataConverter;
   private CertificateMetadataDTOBuilder metadataDTO;
 
   @BeforeEach
   void setup() {
-    metadataDTO = CertificateMetadataDTO.builder()
-        .id(ID)
-        .name(NAME)
-        .type(TYPE_ID)
-        .typeVersion(TYPE_VERSION)
-        .issuedBy(Staff.builder()
-            .fullName(ISSUED_NAME)
-            .build())
-        .unit(Unit.builder()
-            .unitId(UNIT_ID)
-            .unitName(UNIT_NAME)
-            .address(UNIT_ADRESS)
-            .zipCode(UNIT_ZIPCODE)
-            .city(UNIT_CITY)
-            .phoneNumber(UNIT_PHONE_NUMBER)
-            .email(UNIT_EMAIL)
-            .build())
-        .careUnit(Unit.builder()
-            .unitId(CARE_UNIT_ID)
-            .unitName(CARE_UNIT_NAME)
-            .address(CARE_UNIT_ADRESS)
-            .zipCode(CARE_UNIT_ZIPCODE)
-            .city(CARE_UNIT_CITY)
-            .phoneNumber(CARE_UNIT_PHONE_NUMBER)
-            .email(CARE_UNIT_EMAIL)
-            .build())
-        .careProvider(Unit.builder()
-            .unitId(CARE_PROVIDER_ID)
-            .unitName(CARE_PROVIDER_NAME)
-            .build())
-        .created(ISSUED)
-        .recipient(CertificateRecipient.builder()
-            .id(RECIPIENT_ID)
-            .name(RECIPIENT_NAME)
-            .sent(RECIPIENT_SENT)
-            .build())
-        .summary(CertificateSummary.builder()
-            .label(SUMMARY_LABEL)
-            .value(SUMMARY_VALUE)
-            .build());
+    metadataDTO =
+        CertificateMetadataDTO.builder()
+            .id(ID)
+            .name(NAME)
+            .type(TYPE_ID)
+            .typeVersion(TYPE_VERSION)
+            .issuedBy(Staff.builder().fullName(ISSUED_NAME).build())
+            .unit(
+                Unit.builder()
+                    .unitId(UNIT_ID)
+                    .unitName(UNIT_NAME)
+                    .address(UNIT_ADRESS)
+                    .zipCode(UNIT_ZIPCODE)
+                    .city(UNIT_CITY)
+                    .phoneNumber(UNIT_PHONE_NUMBER)
+                    .email(UNIT_EMAIL)
+                    .build())
+            .careUnit(
+                Unit.builder()
+                    .unitId(CARE_UNIT_ID)
+                    .unitName(CARE_UNIT_NAME)
+                    .address(CARE_UNIT_ADRESS)
+                    .zipCode(CARE_UNIT_ZIPCODE)
+                    .city(CARE_UNIT_CITY)
+                    .phoneNumber(CARE_UNIT_PHONE_NUMBER)
+                    .email(CARE_UNIT_EMAIL)
+                    .build())
+            .careProvider(
+                Unit.builder().unitId(CARE_PROVIDER_ID).unitName(CARE_PROVIDER_NAME).build())
+            .created(ISSUED)
+            .recipient(
+                CertificateRecipient.builder()
+                    .id(RECIPIENT_ID)
+                    .name(RECIPIENT_NAME)
+                    .sent(RECIPIENT_SENT)
+                    .build())
+            .summary(
+                CertificateSummary.builder().label(SUMMARY_LABEL).value(SUMMARY_VALUE).build());
   }
 
   @Test
@@ -298,7 +311,8 @@ class MetadataConverterTest {
       metadataDTO.recipient(null);
 
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-      assertNull(actualMetadata.getRecipient(),
+      assertNull(
+          actualMetadata.getRecipient(),
           "Recipient was %s".formatted(actualMetadata.getRecipient()));
     }
 
@@ -308,7 +322,8 @@ class MetadataConverterTest {
       doReturn(expectedMetadata).when(statusConverter).convert(metadataDTO.build());
 
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
-      assertNull(actualMetadata.getRecipient(),
+      assertNull(
+          actualMetadata.getRecipient(),
           "Recipient was %s".formatted(actualMetadata.getRecipient()));
     }
   }
@@ -330,13 +345,9 @@ class MetadataConverterTest {
 
     @Test
     void shallReturnNullSummaryLabelIfNoSummaryLabel() {
-      metadataDTO.summary(CertificateSummary.builder()
-          .label(null)
-          .build());
+      metadataDTO.summary(CertificateSummary.builder().label(null).build());
 
-      final var expectedMetadata = builder()
-          .label(null)
-          .build();
+      final var expectedMetadata = builder().label(null).build();
 
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
       assertEquals(expectedMetadata, actualMetadata.getSummary());
@@ -344,13 +355,9 @@ class MetadataConverterTest {
 
     @Test
     void shallReturnNullSummaryValueIfNoSummaryValue() {
-      metadataDTO.summary(CertificateSummary.builder()
-          .value(null)
-          .build());
+      metadataDTO.summary(CertificateSummary.builder().value(null).build());
 
-      final var expectedMetadata = builder()
-          .value(null)
-          .build();
+      final var expectedMetadata = builder().value(null).build();
 
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
       assertEquals(expectedMetadata, actualMetadata.getSummary());
@@ -360,10 +367,7 @@ class MetadataConverterTest {
     void shallReturnSummaryWithNullLabelAndNullValueIfNoSummary() {
       metadataDTO.summary(null);
 
-      final var expectedMetadata = builder()
-          .label(null)
-          .value(null)
-          .build();
+      final var expectedMetadata = builder().label(null).value(null).build();
 
       final var actualMetadata = metadataConverter.convert(metadataDTO.build());
       assertEquals(expectedMetadata, actualMetadata.getSummary());

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import java.util.regex.Pattern;
@@ -7,8 +25,8 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 
 /**
  * This is needed to make IdP functionality work. This will not satisfy all browsers, but it works
- * for IE, Chrome and Edge. Reference:
- * <a href="https://auth0.com/blog/browser-behavior-changes-what-developers-need-to-know/">...</a>
+ * for IE, Chrome and Edge. Reference: <a
+ * href="https://auth0.com/blog/browser-behavior-changes-what-developers-need-to-know/">...</a>
  */
 public class MinaIntygCookieSerializer extends DefaultCookieSerializer {
 
@@ -37,28 +55,33 @@ public class MinaIntygCookieSerializer extends DefaultCookieSerializer {
   /**
    * Som older browser/OS doesn't handle samesite=none. These must be excluded when this attribute
    * is set for session cookies.
+   *
    * <ul>
-   * <li>Based on <a href="https://catchjs.com/Blog/SameSiteCookies">...</a></li>
-   * <li>Information on incompatible browsers: https://www.chromium.org/updates/same-site/incompatible-clients</li>
+   *   <li>Based on <a href="https://catchjs.com/Blog/SameSiteCookies">...</a>
+   *   <li>Information on incompatible browsers:
+   *       https://www.chromium.org/updates/same-site/incompatible-clients
    * </ul>
    *
    * @param userAgent User Agent
    * @return true if samesite=none should not be set.
    */
   private boolean exludeSameSiteNone(String userAgent) {
-    //iOS 12
-    return userAgent.contains("iPhone OS 12_") || userAgent.contains("iPad; CPU OS 12_")
-        //UC Browser < 12.13.2
-        || (userAgent.contains("UCBrowser/") ? isOlderUcBrowser(userAgent)
-        //Chrome
-        : (userAgent.contains("Chrome/5") || userAgent.contains("Chrome/6")))
-        //Chromium
-        || userAgent.contains("Chromium/5") || userAgent.contains("Chromium/6")
-        //Safari on MacOS 10.14
+    // iOS 12
+    return userAgent.contains("iPhone OS 12_")
+        || userAgent.contains("iPad; CPU OS 12_")
+        // UC Browser < 12.13.2
+        || (userAgent.contains("UCBrowser/")
+            ? isOlderUcBrowser(userAgent)
+            // Chrome
+            : (userAgent.contains("Chrome/5") || userAgent.contains("Chrome/6")))
+        // Chromium
+        || userAgent.contains("Chromium/5")
+        || userAgent.contains("Chromium/6")
+        // Safari on MacOS 10.14
         || (userAgent.contains(" OS X 10_14_")
-        && ((userAgent.contains("Version/") && userAgent.contains("Safari"))
-        //Embedded browser on macOS 10.14
-        || userAgent.endsWith("(KHTML, like Gecko)")));
+            && ((userAgent.contains("Version/") && userAgent.contains("Safari"))
+                // Embedded browser on macOS 10.14
+                || userAgent.endsWith("(KHTML, like Gecko)")));
   }
 
   private boolean isOlderUcBrowser(String userAgent) {

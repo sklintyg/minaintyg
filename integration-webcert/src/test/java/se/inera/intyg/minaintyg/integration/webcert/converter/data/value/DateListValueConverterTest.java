@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,22 +45,13 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnOneListItemIfOneDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, VALUE_ONE.toString())
-    );
+    final var expectedValue = createValueItemList(createValueItem(LABEL_ONE, VALUE_ONE.toString()));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            createDateList(
-                createValueDate(ID_ONE, VALUE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createCheckboxMultipleDateConfig(createCheckboxMultipleDate(ID_ONE, LABEL_ONE)))
+            .value(createDateList(createValueDate(ID_ONE, VALUE_ONE)))
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -50,20 +59,13 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnOneListItemWithoutValueIfNoDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, NOT_PROVIDED)
-    );
+    final var expectedValue = createValueItemList(createValueItem(LABEL_ONE, NOT_PROVIDED));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            createDateList()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createCheckboxMultipleDateConfig(createCheckboxMultipleDate(ID_ONE, LABEL_ONE)))
+            .value(createDateList())
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -71,22 +73,13 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnOneListItemWithoutValueIfNullDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, NOT_PROVIDED)
-    );
+    final var expectedValue = createValueItemList(createValueItem(LABEL_ONE, NOT_PROVIDED));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            CertificateDataValueDateList.builder()
-                .list(null)
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createCheckboxMultipleDateConfig(createCheckboxMultipleDate(ID_ONE, LABEL_ONE)))
+            .value(CertificateDataValueDateList.builder().list(null).build())
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -94,22 +87,18 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnTwoListItemWithoutValueIfNoDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, NOT_PROVIDED),
-        createValueItem(LABEL_TWO, NOT_PROVIDED)
-    );
+    final var expectedValue =
+        createValueItemList(
+            createValueItem(LABEL_ONE, NOT_PROVIDED), createValueItem(LABEL_TWO, NOT_PROVIDED));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
-                createCheckboxMultipleDate(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateList()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createCheckboxMultipleDateConfig(
+                    createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
+                    createCheckboxMultipleDate(ID_TWO, LABEL_TWO)))
+            .value(createDateList())
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -117,25 +106,21 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnTwoListItemIfTwoDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, VALUE_ONE.toString()),
-        createValueItem(LABEL_TWO, VALUE_TWO.toString())
-    );
+    final var expectedValue =
+        createValueItemList(
+            createValueItem(LABEL_ONE, VALUE_ONE.toString()),
+            createValueItem(LABEL_TWO, VALUE_TWO.toString()));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
-                createCheckboxMultipleDate(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateList(
-                createValueDate(ID_ONE, VALUE_ONE),
-                createValueDate(ID_TWO, VALUE_TWO)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createCheckboxMultipleDateConfig(
+                    createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
+                    createCheckboxMultipleDate(ID_TWO, LABEL_TWO)))
+            .value(
+                createDateList(
+                    createValueDate(ID_ONE, VALUE_ONE), createValueDate(ID_TWO, VALUE_TWO)))
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -143,24 +128,19 @@ class DateListValueConverterTest {
 
   @Test
   void shallReturnTwoListItemOneWithoutValueIfOneDateValue() {
-    final var expectedValue = createValueItemList(
-        createValueItem(LABEL_ONE, VALUE_ONE.toString()),
-        createValueItem(LABEL_TWO, NOT_PROVIDED)
-    );
+    final var expectedValue =
+        createValueItemList(
+            createValueItem(LABEL_ONE, VALUE_ONE.toString()),
+            createValueItem(LABEL_TWO, NOT_PROVIDED));
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createCheckboxMultipleDateConfig(
-                createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
-                createCheckboxMultipleDate(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateList(
-                createValueDate(ID_ONE, VALUE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createCheckboxMultipleDateConfig(
+                    createCheckboxMultipleDate(ID_ONE, LABEL_ONE),
+                    createCheckboxMultipleDate(ID_TWO, LABEL_TWO)))
+            .value(createDateList(createValueDate(ID_ONE, VALUE_ONE)))
+            .build();
 
     final var actualValue = dateListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -168,54 +148,29 @@ class DateListValueConverterTest {
 
   private CertificateQuestionValueItemList createValueItemList(
       CertificationQuestionValueItem... valueItems) {
-    return CertificateQuestionValueItemList.builder()
-        .values(
-            List.of(
-                valueItems
-            )
-        )
-        .build();
+    return CertificateQuestionValueItemList.builder().values(List.of(valueItems)).build();
   }
 
   private static CertificationQuestionValueItem createValueItem(String label, String value) {
-    return CertificationQuestionValueItem.builder()
-        .label(label)
-        .value(value)
-        .build();
+    return CertificationQuestionValueItem.builder().label(label).value(value).build();
   }
 
   private CertificateDataConfigCheckboxMultipleDate createCheckboxMultipleDateConfig(
       CheckboxMultipleDate... checkboxMultipleDates) {
     return CertificateDataConfigCheckboxMultipleDate.builder()
-        .list(
-            List.of(
-                checkboxMultipleDates
-            )
-        )
+        .list(List.of(checkboxMultipleDates))
         .build();
   }
 
   private CheckboxMultipleDate createCheckboxMultipleDate(String id, String label) {
-    return CheckboxMultipleDate.builder()
-        .id(id)
-        .label(label)
-        .build();
+    return CheckboxMultipleDate.builder().id(id).label(label).build();
   }
 
   private CertificateDataValueDateList createDateList(CertificateDataValueDate... valueDate) {
-    return CertificateDataValueDateList.builder()
-        .list(
-            List.of(
-                valueDate
-            )
-        )
-        .build();
+    return CertificateDataValueDateList.builder().list(List.of(valueDate)).build();
   }
 
   private CertificateDataValueDate createValueDate(String id, LocalDate date) {
-    return CertificateDataValueDate.builder()
-        .id(id)
-        .date(date)
-        .build();
+    return CertificateDataValueDate.builder().id(id).date(date).build();
   }
 }

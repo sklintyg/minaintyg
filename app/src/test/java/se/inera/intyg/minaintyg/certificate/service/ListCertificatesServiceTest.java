@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,44 +54,39 @@ class ListCertificatesServiceTest {
   private static final List<String> UNITS = List.of("unit1");
   private static final List<String> TYPES = List.of("lisjp");
   private static final List<CertificateStatusType> STATUSES = List.of(CertificateStatusType.SENT);
-  private static final CertificateListItem CERTIFICATE_LIST_ITEM = CertificateListItem.builder()
-      .build();
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM =
+      CertificateListItem.builder().build();
 
-  @Mock
-  GetCertificateListIntegrationService getCertificateListIntegrationService;
+  @Mock GetCertificateListIntegrationService getCertificateListIntegrationService;
 
-  @Mock
-  MonitoringLogService monitoringLogService;
+  @Mock MonitoringLogService monitoringLogService;
 
-  @Mock
-  UserService userService;
+  @Mock UserService userService;
 
-  @InjectMocks
-  ListCertificatesService listCertificatesService;
+  @InjectMocks ListCertificatesService listCertificatesService;
 
   @BeforeEach
   void setup() {
-    when(userService.getLoggedInUser()).thenReturn(
-        Optional.of(new MinaIntygUser(PATIENT_ID, "name", LoginMethod.FAKE)));
+    when(userService.getLoggedInUser())
+        .thenReturn(Optional.of(new MinaIntygUser(PATIENT_ID, "name", LoginMethod.FAKE)));
 
-    when(getCertificateListIntegrationService.get(any())).thenReturn(
-        GetCertificateListIntegrationResponse
-            .builder()
-            .content(List.of(CERTIFICATE_LIST_ITEM))
-            .build()
-    );
+    when(getCertificateListIntegrationService.get(any()))
+        .thenReturn(
+            GetCertificateListIntegrationResponse.builder()
+                .content(List.of(CERTIFICATE_LIST_ITEM))
+                .build());
   }
 
   @Nested
   class Request {
 
-    ListCertificatesRequest request = ListCertificatesRequest
-        .builder()
-        .years(YEARS)
-        .units(UNITS)
-        .certificateTypes(TYPES)
-        .statuses(STATUSES)
-        .build();
+    ListCertificatesRequest request =
+        ListCertificatesRequest.builder()
+            .years(YEARS)
+            .units(UNITS)
+            .certificateTypes(TYPES)
+            .statuses(STATUSES)
+            .build();
 
     @Test
     void shouldSendPatientId() {

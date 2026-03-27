@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.certificateanalyticsservice.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,30 +50,25 @@ import se.inera.intyg.minaintyg.logging.MdcLogConstants;
 @ExtendWith(MockitoExtension.class)
 class PublishCertificateAnalyticsMessageTest {
 
-  @Mock
-  private CertificateAnalyticsServiceProfile certificateAnalyticsServiceProfile;
+  @Mock private CertificateAnalyticsServiceProfile certificateAnalyticsServiceProfile;
 
-  @Mock
-  private JmsTemplate jmsTemplateForCertificateAnalyticsMessages;
+  @Mock private JmsTemplate jmsTemplateForCertificateAnalyticsMessages;
 
-  @InjectMocks
-  private PublishCertificateAnalyticsMessage publishCertificateAnalyticsMessage;
+  @InjectMocks private PublishCertificateAnalyticsMessage publishCertificateAnalyticsMessage;
 
   @Test
   void shallPublishMessageToJmsQueue() {
-    final var expected = CertificateAnalyticsMessage.builder()
-        .certificate(
-            AnalyticsCertificate.builder()
-                .id("test")
-                .build()
-        )
-        .build();
+    final var expected =
+        CertificateAnalyticsMessage.builder()
+            .certificate(AnalyticsCertificate.builder().id("test").build())
+            .build();
 
     when(certificateAnalyticsServiceProfile.isEnabled()).thenReturn(true);
 
     final var captor = ArgumentCaptor.forClass(CertificateAnalyticsMessage.class);
 
-    doNothing().when(jmsTemplateForCertificateAnalyticsMessages)
+    doNothing()
+        .when(jmsTemplateForCertificateAnalyticsMessages)
         .convertAndSend(captor.capture(), any());
 
     publishCertificateAnalyticsMessage.publishEvent(expected);
@@ -67,13 +80,10 @@ class PublishCertificateAnalyticsMessageTest {
   void shallNotPublishMessagesIfCertificateAnalyticsNotActive() {
     when(certificateAnalyticsServiceProfile.isEnabled()).thenReturn(false);
 
-    final var message = CertificateAnalyticsMessage.builder()
-        .certificate(
-            AnalyticsCertificate.builder()
-                .id("test")
-                .build()
-        )
-        .build();
+    final var message =
+        CertificateAnalyticsMessage.builder()
+            .certificate(AnalyticsCertificate.builder().id("test").build())
+            .build();
 
     publishCertificateAnalyticsMessage.publishEvent(message);
 
@@ -83,24 +93,19 @@ class PublishCertificateAnalyticsMessageTest {
   @Nested
   class MessagePropertyTests {
 
-    @Captor
-    private ArgumentCaptor<MessagePostProcessor> mppCaptor;
+    @Captor private ArgumentCaptor<MessagePostProcessor> mppCaptor;
 
     private final String sessionId = "sess-456";
     private final String traceId = "trace-789";
-    private final CertificateAnalyticsMessage message = CertificateAnalyticsMessage.builder()
-        .certificate(
-            AnalyticsCertificate.builder()
-                .id("test")
-                .build()
-        )
-        .event(
-            AnalyticsEvent.builder()
-                .messageType(CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN)
-                .sessionId(sessionId)
-                .build()
-        )
-        .build();
+    private final CertificateAnalyticsMessage message =
+        CertificateAnalyticsMessage.builder()
+            .certificate(AnalyticsCertificate.builder().id("test").build())
+            .event(
+                AnalyticsEvent.builder()
+                    .messageType(CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN)
+                    .sessionId(sessionId)
+                    .build())
+            .build();
 
     @BeforeEach
     void setUp() {
@@ -118,8 +123,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetMessageIdPropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -132,8 +137,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetSessionIdPropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -146,8 +151,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetTraceIdPropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -160,8 +165,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetTypePropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -174,8 +179,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetSchemaVersionPropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -188,8 +193,8 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetContentTypePropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
@@ -202,15 +207,15 @@ class PublishCertificateAnalyticsMessageTest {
     void shallSetMessageTypePropertyWhenPublishing() throws Exception {
       publishCertificateAnalyticsMessage.publishEvent(message);
 
-      verify(jmsTemplateForCertificateAnalyticsMessages).convertAndSend(eq(message),
-          mppCaptor.capture());
+      verify(jmsTemplateForCertificateAnalyticsMessages)
+          .convertAndSend(eq(message), mppCaptor.capture());
 
       final var mpp = mppCaptor.getValue();
       final var jmsMsg = mock(Message.class);
       mpp.postProcessMessage(jmsMsg);
 
-      verify(jmsMsg).setStringProperty("messageType",
-          message.getEvent().getMessageType().toString());
+      verify(jmsMsg)
+          .setStringProperty("messageType", message.getEvent().getMessageType().toString());
     }
   }
 }

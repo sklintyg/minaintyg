@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,32 +58,23 @@ import se.inera.intyg.minaintyg.user.UserService;
 @ExtendWith(MockitoExtension.class)
 class PrintCertificateServiceTest {
 
-  public static final PrintCertificateRequest REQUEST = PrintCertificateRequest.builder()
-      .certificateId("ID")
-      .customizationId("C_ID")
-      .build();
-  public static final PrintCertificateIntegrationResponse EXPECTED_RESPONSE = PrintCertificateIntegrationResponse
-      .builder()
-      .filename("PRINTABLE")
-      .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
-      .build();
+  public static final PrintCertificateRequest REQUEST =
+      PrintCertificateRequest.builder().certificateId("ID").customizationId("C_ID").build();
+  public static final PrintCertificateIntegrationResponse EXPECTED_RESPONSE =
+      PrintCertificateIntegrationResponse.builder()
+          .filename("PRINTABLE")
+          .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
+          .build();
   public static final String TYPE = "TYPE";
   private static final String PERSON_ID = "personId";
 
-  @Mock
-  PrintCertificateIntegrationService printCertificateIntegrationService;
-  @Mock
-  MonitoringLogService monitorLogService;
-  @Mock
-  GetCertificateIntegrationService getCertificateIntegrationService;
-  @Mock
-  UserService userService;
-  @Mock
-  AnalyticsMessageFactory analyticsMessageFactory;
-  @Mock
-  PublishAnalyticsMessage publishAnalyticsMessage;
-  @InjectMocks
-  PrintCertificateService printCertificateService;
+  @Mock PrintCertificateIntegrationService printCertificateIntegrationService;
+  @Mock MonitoringLogService monitorLogService;
+  @Mock GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock UserService userService;
+  @Mock AnalyticsMessageFactory analyticsMessageFactory;
+  @Mock PublishAnalyticsMessage publishAnalyticsMessage;
+  @InjectMocks PrintCertificateService printCertificateService;
 
   private Certificate certificate;
 
@@ -74,29 +83,18 @@ class PrintCertificateServiceTest {
     when(printCertificateIntegrationService.print(any(PrintCertificateIntegrationRequest.class)))
         .thenReturn(EXPECTED_RESPONSE);
 
-    certificate = Certificate
-        .builder()
-        .metadata(
-            CertificateMetadata
-                .builder()
-                .type(
-                    CertificateType.builder().id(TYPE).build()
-                )
-                .build()
-        )
-        .build();
+    certificate =
+        Certificate.builder()
+            .metadata(
+                CertificateMetadata.builder()
+                    .type(CertificateType.builder().id(TYPE).build())
+                    .build())
+            .build();
 
     when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
-        .thenReturn(
-            GetCertificateIntegrationResponse
-                .builder()
-                .certificate(
-                    certificate
-                )
-                .build()
-        );
-    when(userService.getLoggedInUser()).thenReturn(
-        Optional.of(new MinaIntygUser(PERSON_ID, "personName", LoginMethod.ELVA77)));
+        .thenReturn(GetCertificateIntegrationResponse.builder().certificate(certificate).build());
+    when(userService.getLoggedInUser())
+        .thenReturn(Optional.of(new MinaIntygUser(PERSON_ID, "personName", LoginMethod.ELVA77)));
   }
 
   @Test
@@ -159,11 +157,8 @@ class PrintCertificateServiceTest {
 
     printCertificateService.print(REQUEST);
 
-    verify(monitorLogService, times(1)).logCertificatePrinted(
-        captor.capture(),
-        anyString(),
-        anyBoolean()
-    );
+    verify(monitorLogService, times(1))
+        .logCertificatePrinted(captor.capture(), anyString(), anyBoolean());
 
     assertEquals(REQUEST.getCertificateId(), captor.getValue());
   }
@@ -174,11 +169,8 @@ class PrintCertificateServiceTest {
 
     printCertificateService.print(REQUEST);
 
-    verify(monitorLogService, times(1)).logCertificatePrinted(
-        anyString(),
-        captor.capture(),
-        anyBoolean()
-    );
+    verify(monitorLogService, times(1))
+        .logCertificatePrinted(anyString(), captor.capture(), anyBoolean());
 
     assertEquals(TYPE, captor.getValue());
   }
@@ -188,18 +180,13 @@ class PrintCertificateServiceTest {
     final var captor = ArgumentCaptor.forClass(Boolean.class);
 
     printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
+        PrintCertificateRequest.builder()
             .customizationId("hideDiagnosis")
             .certificateId("ID")
-            .build()
-    );
+            .build());
 
-    verify(monitorLogService, times(1)).logCertificatePrinted(
-        anyString(),
-        anyString(),
-        captor.capture()
-    );
+    verify(monitorLogService, times(1))
+        .logCertificatePrinted(anyString(), anyString(), captor.capture());
 
     assertTrue(captor.getValue());
   }
@@ -208,18 +195,10 @@ class PrintCertificateServiceTest {
   void shouldPerformMonitorLoggingWithIsNotEmployerCopyIfCustomizationIdIsNull() {
     final var captor = ArgumentCaptor.forClass(Boolean.class);
 
-    printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId("ID")
-            .build()
-    );
+    printCertificateService.print(PrintCertificateRequest.builder().certificateId("ID").build());
 
-    verify(monitorLogService, times(1)).logCertificatePrinted(
-        anyString(),
-        anyString(),
-        captor.capture()
-    );
+    verify(monitorLogService, times(1))
+        .logCertificatePrinted(anyString(), anyString(), captor.capture());
 
     assertFalse(captor.getValue());
   }
@@ -229,18 +208,10 @@ class PrintCertificateServiceTest {
     final var captor = ArgumentCaptor.forClass(Boolean.class);
 
     printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId("ID")
-            .customizationId("")
-            .build()
-    );
+        PrintCertificateRequest.builder().certificateId("ID").customizationId("").build());
 
-    verify(monitorLogService, times(1)).logCertificatePrinted(
-        anyString(),
-        anyString(),
-        captor.capture()
-    );
+    verify(monitorLogService, times(1))
+        .logCertificatePrinted(anyString(), anyString(), captor.capture());
 
     assertFalse(captor.getValue());
   }
@@ -251,12 +222,7 @@ class PrintCertificateServiceTest {
     when(analyticsMessageFactory.certificatePrinted(certificate)).thenReturn(analyticsMessage);
 
     printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId("ID")
-            .customizationId("")
-            .build()
-    );
+        PrintCertificateRequest.builder().certificateId("ID").customizationId("").build());
 
     verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
   }
@@ -268,12 +234,7 @@ class PrintCertificateServiceTest {
         .thenReturn(analyticsMessage);
 
     printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId("ID")
-            .customizationId("ID")
-            .build()
-    );
+        PrintCertificateRequest.builder().certificateId("ID").customizationId("ID").build());
 
     verify(publishAnalyticsMessage, times(1)).publishEvent(analyticsMessage);
   }

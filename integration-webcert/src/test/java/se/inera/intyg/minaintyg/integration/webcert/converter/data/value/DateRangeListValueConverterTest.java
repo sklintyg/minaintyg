@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,12 +56,10 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueDateRangeList.builder()
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(CertificateDataValueDateRangeList.builder().build())
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -51,13 +67,11 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfRangeListIsEmpty() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueDateRangeList.builder()
-                .list(Collections.emptyList())
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(
+                CertificateDataValueDateRangeList.builder().list(Collections.emptyList()).build())
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -65,29 +79,17 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnDateRangeAsTableWithOneValue() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE)
-        )
-        .values(
-            createValues(
-                createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE))
+            .values(createValues(createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createSickLeaveConfig(
-                createCheckboxDateRange(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            createDateRangeList(
-                createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createSickLeaveConfig(createCheckboxDateRange(ID_ONE, LABEL_ONE)))
+            .value(createDateRangeList(createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)))
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -95,71 +97,59 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnDateRangeAsTableWithMultipleValues() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE)
-        )
-        .values(
-            createValues(
-                createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
-                createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE))
+            .values(
+                createValues(
+                    createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
+                    createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createSickLeaveConfig(
-                createCheckboxDateRange(ID_ONE, LABEL_ONE),
-                createCheckboxDateRange(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateRangeList(
-                createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
-                createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createSickLeaveConfig(
+                    createCheckboxDateRange(ID_ONE, LABEL_ONE),
+                    createCheckboxDateRange(ID_TWO, LABEL_TWO)))
+            .value(
+                createDateRangeList(
+                    createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
+                    createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
-    final var actualValue = (CertificateQuestionValueTable) dateRangeListValueConverter.convert(
-        element);
-    assertTrue(actualValue.getValues().contains(expectedValue.getValues().get(0)),
-        "Missing value: '%s'".formatted(expectedValue.getValues().get(0))
-    );
-    assertTrue(actualValue.getValues().contains(expectedValue.getValues().get(1)),
-        "Missing value: '%s'".formatted(expectedValue.getValues().get(1))
-    );
+    final var actualValue =
+        (CertificateQuestionValueTable) dateRangeListValueConverter.convert(element);
+    assertTrue(
+        actualValue.getValues().contains(expectedValue.getValues().get(0)),
+        "Missing value: '%s'".formatted(expectedValue.getValues().get(0)));
+    assertTrue(
+        actualValue.getValues().contains(expectedValue.getValues().get(1)),
+        "Missing value: '%s'".formatted(expectedValue.getValues().get(1)));
   }
 
   @Test
   void shallReturnDateRangeAsTableWithCorrectOrderWithMultipleValues() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE)
-        )
-        .values(
-            createValues(
-                createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO),
-                createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE))
+            .values(
+                createValues(
+                    createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO),
+                    createValue(LABEL_ONE, VALUE_FROM_ONE, VALUE_TO_ONE)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createSickLeaveConfig(
-                createCheckboxDateRange(ID_ONE, LABEL_ONE),
-                createCheckboxDateRange(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateRangeList(
-                createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
-                createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createSickLeaveConfig(
+                    createCheckboxDateRange(ID_ONE, LABEL_ONE),
+                    createCheckboxDateRange(ID_TWO, LABEL_TWO)))
+            .value(
+                createDateRangeList(
+                    createDateRange(ID_ONE, VALUE_FROM_ONE, VALUE_TO_ONE),
+                    createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -167,30 +157,20 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnDateRangeAsTableIfRangeListIsContainsPartlyValues() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE)
-        )
-        .values(
-            createValues(
-                createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE))
+            .values(createValues(createValue(LABEL_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createSickLeaveConfig(
-                createCheckboxDateRange(ID_ONE, LABEL_ONE),
-                createCheckboxDateRange(ID_TWO, LABEL_TWO)
-            )
-        )
-        .value(
-            createDateRangeList(
-                createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createSickLeaveConfig(
+                    createCheckboxDateRange(ID_ONE, LABEL_ONE),
+                    createCheckboxDateRange(ID_TWO, LABEL_TWO)))
+            .value(createDateRangeList(createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -198,24 +178,16 @@ class DateRangeListValueConverterTest {
 
   @Test
   void shallReturnDateRangeIDAsLabelIfMissingConfig() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE)
-        )
-        .values(
-            createValues(
-                createValue(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(createHeadings(HEADING_ONE, HEADING_TWO, HEADING_THREE))
+            .values(createValues(createValue(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .value(
-            createDateRangeList(
-                createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(createDateRangeList(createDateRange(ID_TWO, VALUE_FROM_TWO, VALUE_TO_TWO)))
+            .build();
 
     final var actualValue = dateRangeListValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -236,35 +208,20 @@ class DateRangeListValueConverterTest {
 
   private static CertificateDataConfigCheckboxDateRangeList createSickLeaveConfig(
       CheckboxDateRange... config) {
-    return CertificateDataConfigCheckboxDateRangeList.builder()
-        .list(
-            List.of(
-                config
-            )
-        )
-        .build();
+    return CertificateDataConfigCheckboxDateRangeList.builder().list(List.of(config)).build();
   }
 
   private static CheckboxDateRange createCheckboxDateRange(String id, String label) {
-    return CheckboxDateRange.builder()
-        .id(id)
-        .label(label)
-        .build();
+    return CheckboxDateRange.builder().id(id).label(label).build();
   }
 
   private static CertificateDataValueDateRangeList createDateRangeList(
       CertificateDataValueDateRange... dateRanges) {
-    return CertificateDataValueDateRangeList.builder()
-        .list(
-            List.of(
-                dateRanges
-            )
-        )
-        .build();
+    return CertificateDataValueDateRangeList.builder().list(List.of(dateRanges)).build();
   }
 
-  private static CertificateDataValueDateRange createDateRange(String idTwo, String valueFromTwo,
-      String valueToTwo) {
+  private static CertificateDataValueDateRange createDateRange(
+      String idTwo, String valueFromTwo, String valueToTwo) {
     return CertificateDataValueDateRange.builder()
         .id(idTwo)
         .from(LocalDate.parse(valueFromTwo))

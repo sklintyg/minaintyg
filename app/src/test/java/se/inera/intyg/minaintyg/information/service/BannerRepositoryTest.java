@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.information.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,20 +40,15 @@ import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
 @ExtendWith(MockitoExtension.class)
 class BannerRepositoryTest {
 
-  private static final GetBannerIntegrationResponse EXPECTED_RESPONSE = GetBannerIntegrationResponse.builder()
-      .build();
-  @Mock
-  private CacheManager cacheManager;
-  @Mock
-  private Cache cache;
-  @Mock
-  private GetBannerIntegrationService getBannerIntegrationService;
+  private static final GetBannerIntegrationResponse EXPECTED_RESPONSE =
+      GetBannerIntegrationResponse.builder().build();
+  @Mock private CacheManager cacheManager;
+  @Mock private Cache cache;
+  @Mock private GetBannerIntegrationService getBannerIntegrationService;
 
-  @Mock
-  private ObjectMapper objectMapper;
+  @Mock private ObjectMapper objectMapper;
 
-  @InjectMocks
-  private BannerRepository bannerRepository;
+  @InjectMocks private BannerRepository bannerRepository;
 
   @Nested
   class Get {
@@ -43,10 +56,10 @@ class BannerRepositoryTest {
     @Test
     void shouldGetBannerResponseFromCache() throws JsonProcessingException {
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
-      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class)).thenReturn(
-          EXPECTED_RESPONSE.toString());
-      when(objectMapper.readValue(EXPECTED_RESPONSE.toString(),
-          GetBannerIntegrationResponse.class)).thenReturn(EXPECTED_RESPONSE);
+      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class))
+          .thenReturn(EXPECTED_RESPONSE.toString());
+      when(objectMapper.readValue(EXPECTED_RESPONSE.toString(), GetBannerIntegrationResponse.class))
+          .thenReturn(EXPECTED_RESPONSE);
 
       final var response = bannerRepository.get();
 
@@ -56,8 +69,7 @@ class BannerRepositoryTest {
     @Test
     void shouldGetBannerResponseFromBannerIntegrationService() {
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
-      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class)).thenReturn(
-          null);
+      when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class)).thenReturn(null);
       when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
 
       final var response = bannerRepository.get();
@@ -73,8 +85,8 @@ class BannerRepositoryTest {
     void shouldUpdateCache() throws JsonProcessingException {
       when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
-      when(objectMapper.writeValueAsString(EXPECTED_RESPONSE)).thenReturn(
-          EXPECTED_RESPONSE.toString());
+      when(objectMapper.writeValueAsString(EXPECTED_RESPONSE))
+          .thenReturn(EXPECTED_RESPONSE.toString());
 
       bannerRepository.load();
 

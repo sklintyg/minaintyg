@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,15 +38,15 @@ class IntygstjanstSendCertificateIntegrationServiceTest {
   private static final String PERSON_ID = "191212121212";
   private static final String RECIPIENT = "recipient";
   private static final String CERTIFICATE_ID = "certificateId";
-  @Mock
-  private SendCertificateUsingIntygstjanstService sendCertificateUsingIntygstjanstService;
-  @InjectMocks
-  private IntygstjanstSendCertificateIntegrationService intygstjanstSendCertificateIntegrationService;
+  @Mock private SendCertificateUsingIntygstjanstService sendCertificateUsingIntygstjanstService;
 
-  private SendCertificateIntegrationRequest getRequest(String patientId, String certificateId,
-      String recipient) {
-    return SendCertificateIntegrationRequest
-        .builder()
+  @InjectMocks
+  private IntygstjanstSendCertificateIntegrationService
+      intygstjanstSendCertificateIntegrationService;
+
+  private SendCertificateIntegrationRequest getRequest(
+      String patientId, String certificateId, String recipient) {
+    return SendCertificateIntegrationRequest.builder()
         .patientId(patientId)
         .certificateId(certificateId)
         .recipient(recipient)
@@ -51,49 +69,56 @@ class IntygstjanstSendCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowExceptionIfRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(null));
     }
 
     @Test
     void shouldThrowExceptionIfNullPatientId() {
       final var request = getRequest(null, CERTIFICATE_ID, RECIPIENT);
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
 
     @Test
     void shouldThrowExceptionIfNullCertificateId() {
       final var request = getRequest(PERSON_ID, null, RECIPIENT);
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
 
     @Test
     void shouldThrowExceptionIfNullRecipient() {
       final var request = getRequest(PERSON_ID, CERTIFICATE_ID, null);
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
 
     @Test
     void shouldThrowExceptionIfEmptyRecipient() {
       final var request = getRequest(PERSON_ID, CERTIFICATE_ID, "");
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
 
     @Test
     void shouldThrowExceptionIfEmptyCertificateId() {
       final var request = getRequest(PERSON_ID, "", RECIPIENT);
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
 
     @Test
     void shouldThrowExceptionIfEmptyPatientId() {
       final var request = getRequest("", CERTIFICATE_ID, RECIPIENT);
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstSendCertificateIntegrationService.send(request));
     }
   }

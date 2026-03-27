@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integrationtest.information;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,8 +48,7 @@ import se.inera.intyg.minaintyg.integrationtest.util.ApiUtil;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class InformationIT {
 
-  @LocalServerPort
-  private int port;
+  @LocalServerPort private int port;
 
   private final TestRestTemplate restTemplate;
   private ApiUtil api;
@@ -52,10 +69,10 @@ class InformationIT {
   @BeforeEach
   void setUp() {
     this.api = new ApiUtil(restTemplate, port);
-    this.mockServerClient = new MockServerClient(
-        Containers.mockServerContainer.getHost(),
-        Containers.mockServerContainer.getServerPort()
-    );
+    this.mockServerClient =
+        new MockServerClient(
+            Containers.mockServerContainer.getHost(),
+            Containers.mockServerContainer.getServerPort());
     this.intygProxyServiceMock = new IntygProxyServiceMock(mockServerClient);
     this.intygsadminMock = new IntygsadminMock(mockServerClient);
   }
@@ -83,29 +100,29 @@ class InformationIT {
 
     final var response = api.information();
 
-    assertTrue(response.getBody().getBanners().isEmpty(),
-        "Should not contain any banners when none active: %s".formatted(response.getBody())
-    );
+    assertTrue(
+        response.getBody().getBanners().isEmpty(),
+        "Should not contain any banners when none active: %s".formatted(response.getBody()));
   }
 
   @Test
   void shallReturnActiveBanner() {
     intygProxyServiceMock.foundPerson(ATHENA_REACT_ANDERSSON);
     intygsadminMock.foundBanners(
-        activeBanner(BannerPriorityDTO.HOG, "This is a message with high priority")
-    );
+        activeBanner(BannerPriorityDTO.HOG, "This is a message with high priority"));
     api.testabilityFakeLogin(ATHENA_REACT_ANDERSSON.getPersonnummer());
 
-    final var expectedBanner = FormattedBanner.builder()
-        .type(FormattedBannerType.ERROR)
-        .content("This is a message with high priority")
-        .build();
+    final var expectedBanner =
+        FormattedBanner.builder()
+            .type(FormattedBannerType.ERROR)
+            .content("This is a message with high priority")
+            .build();
 
     final var response = api.information();
 
-    assertTrue(response.getBody().getBanners().contains(expectedBanner),
-        "Expected banner %s but received %s".formatted(expectedBanner, response.getBody())
-    );
+    assertTrue(
+        response.getBody().getBanners().contains(expectedBanner),
+        "Expected banner %s but received %s".formatted(expectedBanner, response.getBody()));
   }
 
   @Test

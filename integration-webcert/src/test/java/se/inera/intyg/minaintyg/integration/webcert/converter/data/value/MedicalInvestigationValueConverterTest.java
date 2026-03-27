@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,22 +58,22 @@ class MedicalInvestigationValueConverterTest {
   public static final String INVESTIGATION_TYPE_ID_THREE = "INVESTIGATION_TYPE_ID_THREE";
   public static final String INFORMATION_SOURCE_ID = "INFORMATION_SOURCE_ID";
   public static final String INVESTIGATION_TYPE_ID_FOUR = "INVESTIGATION_TYPE_ID_FOUR";
-  private final ValueConverter medicalInvestigationValueConverter = new MedicalInvestigationValueConverter();
+  private final ValueConverter medicalInvestigationValueConverter =
+      new MedicalInvestigationValueConverter();
 
   @Test
   void shallReturnYearValueType() {
-    assertEquals(CertificateDataValueType.MEDICAL_INVESTIGATION_LIST,
+    assertEquals(
+        CertificateDataValueType.MEDICAL_INVESTIGATION_LIST,
         medicalInvestigationValueConverter.getType());
   }
 
   @Test
   void shallReturnNotProvidedValueIfNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueMedicalInvestigationList.builder()
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(CertificateDataValueMedicalInvestigationList.builder().build())
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -63,17 +81,12 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfAllValuesAreNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(
-                    null,
-                    null,
-                    null)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(createMedicalInvestigationValue(null, null, null)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -81,28 +94,24 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfDateIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(
-                    INVESTIGATION_TYPE_ID_ONE,
-                    null,
-                    INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_ONE, null, INFORMATION_SOURCE_ONE)))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(
+                    createValue(
+                        INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -110,30 +119,21 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfInformationSourceTextIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(
-                    INVESTIGATION_TYPE_ID_ONE,
-                    DATE_ONE,
-                    null)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_ONE, DATE_ONE, null)))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -141,28 +141,20 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfInvestigationTypeCodeIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(
-                    null,
-                    DATE_ONE,
-                    INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(null, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(createValues(createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -170,39 +162,35 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfDateValueIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                CertificateDataValueMedicalInvestigation.builder()
-                    .investigationType(
-                        CertificateDataValueCode.builder()
-                            .id(INVESTIGATION_TYPE_ID)
-                            .code(INVESTIGATION_TYPE_ID_ONE)
-                            .build()
-                    )
-                    .date(null)
-                    .informationSource(
-                        CertificateDataValueText.builder()
-                            .id(INFORMATION_SOURCE_ID)
-                            .text(INFORMATION_SOURCE_ONE)
-                            .build()
-                    )
-                    .build()
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    CertificateDataValueMedicalInvestigation.builder()
+                        .investigationType(
+                            CertificateDataValueCode.builder()
+                                .id(INVESTIGATION_TYPE_ID)
+                                .code(INVESTIGATION_TYPE_ID_ONE)
+                                .build())
+                        .date(null)
+                        .informationSource(
+                            CertificateDataValueText.builder()
+                                .id(INFORMATION_SOURCE_ID)
+                                .text(INFORMATION_SOURCE_ONE)
+                                .build())
+                        .build()))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(
+                    createValue(
+                        INVESTIGATION_TYPE_LABEL_ONE, MISSING_LABEL, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -210,39 +198,32 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfInformationSourceIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                CertificateDataValueMedicalInvestigation.builder()
-                    .investigationType(
-                        CertificateDataValueCode.builder()
-                            .id(INVESTIGATION_TYPE_ID)
-                            .code(INVESTIGATION_TYPE_ID_ONE)
-                            .build()
-                    )
-                    .date(
-                        CertificateDataValueDate
-                            .builder()
-                            .date(LocalDate.parse(DATE_ONE))
-                            .build()
-                    )
-                    .informationSource(null)
-                    .build()
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    CertificateDataValueMedicalInvestigation.builder()
+                        .investigationType(
+                            CertificateDataValueCode.builder()
+                                .id(INVESTIGATION_TYPE_ID)
+                                .code(INVESTIGATION_TYPE_ID_ONE)
+                                .build())
+                        .date(
+                            CertificateDataValueDate.builder()
+                                .date(LocalDate.parse(DATE_ONE))
+                                .build())
+                        .informationSource(null)
+                        .build()))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, MISSING_LABEL)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -250,39 +231,31 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnMissingValueIfInvestigationTypeIsNull() {
-    final var element = CertificateDataElement.builder()
-        .config(createConfig())
-        .value(
-            createMedicalInvestigationValues(
-                CertificateDataValueMedicalInvestigation.builder()
-                    .investigationType(null)
-                    .date(
-                        CertificateDataValueDate
-                            .builder()
-                            .date(LocalDate.parse(DATE_ONE))
-                            .build()
-                    )
-                    .informationSource(
-                        CertificateDataValueText.builder()
-                            .id(INFORMATION_SOURCE_ID)
-                            .text(INFORMATION_SOURCE_ONE)
-                            .build()
-                    )
-                    .build()
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    CertificateDataValueMedicalInvestigation.builder()
+                        .investigationType(null)
+                        .date(
+                            CertificateDataValueDate.builder()
+                                .date(LocalDate.parse(DATE_ONE))
+                                .build())
+                        .informationSource(
+                            CertificateDataValueText.builder()
+                                .id(INFORMATION_SOURCE_ID)
+                                .text(INFORMATION_SOURCE_ONE)
+                                .build())
+                        .build()))
+            .build();
 
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(createValues(createValue(MISSING_LABEL, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -290,28 +263,23 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnOneInvestigation() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(
+                    createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_ONE, DATE_ONE,
-                    INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_ONE, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -319,28 +287,23 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnInvestigationWithCodeIdIfLabelMissing() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_ID_FOUR, DATE_ONE, INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(
+                    createValue(INVESTIGATION_TYPE_ID_FOUR, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_FOUR, DATE_ONE,
-                    INFORMATION_SOURCE_ONE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_FOUR, DATE_ONE, INFORMATION_SOURCE_ONE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -348,35 +311,30 @@ class MedicalInvestigationValueConverterTest {
 
   @Test
   void shallReturnManyInvestigations() {
-    final var expectedValue = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER)
-        )
-        .values(
-            createValues(
-                createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, INFORMATION_SOURCE_ONE),
-                createValue(INVESTIGATION_TYPE_LABEL_TWO, DATE_TWO, INFORMATION_SOURCE_TWO),
-                createValue(INVESTIGATION_TYPE_LABEL_THREE, DATE_THREE,
-                    INFORMATION_SOURCE_THREE)
-            )
-        )
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(INVESTIGATION_TYPE_HEADER, DATE_HEADER, INFORMATION_SOURCE_HEADER))
+            .values(
+                createValues(
+                    createValue(INVESTIGATION_TYPE_LABEL_ONE, DATE_ONE, INFORMATION_SOURCE_ONE),
+                    createValue(INVESTIGATION_TYPE_LABEL_TWO, DATE_TWO, INFORMATION_SOURCE_TWO),
+                    createValue(
+                        INVESTIGATION_TYPE_LABEL_THREE, DATE_THREE, INFORMATION_SOURCE_THREE)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createMedicalInvestigationValues(
-                createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_ONE, DATE_ONE,
-                    INFORMATION_SOURCE_ONE),
-                createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_TWO, DATE_TWO,
-                    INFORMATION_SOURCE_TWO),
-                createMedicalInvestigationValue(INVESTIGATION_TYPE_ID_THREE, DATE_THREE,
-                    INFORMATION_SOURCE_THREE)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createMedicalInvestigationValues(
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_ONE, DATE_ONE, INFORMATION_SOURCE_ONE),
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_TWO, DATE_TWO, INFORMATION_SOURCE_TWO),
+                    createMedicalInvestigationValue(
+                        INVESTIGATION_TYPE_ID_THREE, DATE_THREE, INFORMATION_SOURCE_THREE)))
+            .build();
 
     final var actualValue = medicalInvestigationValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -384,11 +342,7 @@ class MedicalInvestigationValueConverterTest {
 
   private static CertificateDataValueMedicalInvestigationList createMedicalInvestigationValues(
       CertificateDataValueMedicalInvestigation... values) {
-    return CertificateDataValueMedicalInvestigationList.builder()
-        .list(
-            List.of(values)
-        )
-        .build();
+    return CertificateDataValueMedicalInvestigationList.builder().list(List.of(values)).build();
   }
 
   private static CertificateDataValueMedicalInvestigation createMedicalInvestigationValue(
@@ -398,20 +352,17 @@ class MedicalInvestigationValueConverterTest {
             CertificateDataValueCode.builder()
                 .id(INVESTIGATION_TYPE_ID)
                 .code(INVESTIGATION_TYPE_ID_ONE)
-                .build()
-        )
+                .build())
         .date(
             CertificateDataValueDate.builder()
                 .id(DATE_ID)
                 .date(dateOne != null ? LocalDate.parse(dateOne) : null)
-                .build()
-        )
+                .build())
         .informationSource(
             CertificateDataValueText.builder()
                 .id(INFORMATION_SOURCE_ID)
                 .text(INFORMATION_SOURCE_ONE)
-                .build()
-        )
+                .build())
         .build();
   }
 
@@ -439,12 +390,8 @@ class MedicalInvestigationValueConverterTest {
                                 .id(INVESTIGATION_TYPE_ID)
                                 .code(INVESTIGATION_TYPE_ID_THREE)
                                 .label(INVESTIGATION_TYPE_LABEL_THREE)
-                                .build()
-                        )
-                    )
-                    .build()
-            )
-        )
+                                .build()))
+                    .build()))
         .build();
   }
 

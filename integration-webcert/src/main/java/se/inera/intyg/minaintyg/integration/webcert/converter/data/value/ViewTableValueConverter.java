@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.List;
@@ -30,8 +48,7 @@ public class ViewTableValueConverter extends AbstractValueConverter {
         .orElse(NOT_PROVIDED_VALUE);
   }
 
-  private Optional<CertificateDataValueViewTable> getValue(
-      CertificateDataValue value) {
+  private Optional<CertificateDataValueViewTable> getValue(CertificateDataValue value) {
     if (value instanceof CertificateDataValueViewTable viewTable) {
       return Optional.of(viewTable);
     }
@@ -46,8 +63,7 @@ public class ViewTableValueConverter extends AbstractValueConverter {
   }
 
   private CertificateQuestionValue mapTable(
-      CertificateDataValueViewTable value,
-      CertificateDataConfig config) {
+      CertificateDataValueViewTable value, CertificateDataConfig config) {
     if (value.getRows() == null || value.getRows().isEmpty()) {
       return NOT_PROVIDED_VALUE;
     }
@@ -55,23 +71,21 @@ public class ViewTableValueConverter extends AbstractValueConverter {
     return CertificateQuestionValueTable.builder()
         .headings(getHeadings(config))
         .values(
-            value.getRows()
-                .stream()
-                .map(row -> row.getColumns()
-                    .stream()
-                    .map(CertificateDataValueText::getText)
-                    .toList()
-                )
-                .toList()
-        )
+            value.getRows().stream()
+                .map(
+                    row ->
+                        row.getColumns().stream().map(CertificateDataValueText::getText).toList())
+                .toList())
         .build();
   }
 
   private List<String> getHeadings(CertificateDataConfig config) {
-    return getConfig(config).map(c -> c
-        .getColumns()
-        .stream()
-        .map(column -> column.getText() != null ? column.getText() : EMPTY)
-        .toList()).orElseGet(() -> List.of(MISSING_LABEL));
+    return getConfig(config)
+        .map(
+            c ->
+                c.getColumns().stream()
+                    .map(column -> column.getText() != null ? column.getText() : EMPTY)
+                    .toList())
+        .orElseGet(() -> List.of(MISSING_LABEL));
   }
 }

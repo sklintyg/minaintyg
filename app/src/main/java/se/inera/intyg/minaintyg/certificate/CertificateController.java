@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate;
 
 import static se.inera.intyg.minaintyg.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
@@ -44,16 +62,14 @@ public class CertificateController {
   public CertificateListResponseDTO listCertificates(
       @RequestBody CertificateListRequestDTO request) {
     final var listCertificatesRequest =
-        ListCertificatesRequest
-            .builder()
+        ListCertificatesRequest.builder()
             .years(request.getYears())
             .certificateTypes(request.getCertificateTypes())
             .units(request.getUnits())
             .statuses(request.getStatuses())
             .build();
 
-    return CertificateListResponseDTO
-        .builder()
+    return CertificateListResponseDTO.builder()
         .content(listCertificatesService.get(listCertificatesRequest).getContent())
         .build();
   }
@@ -61,15 +77,11 @@ public class CertificateController {
   @GetMapping("/{certificateId}")
   @PerformanceLogging(eventAction = "retrieve-certificate", eventType = EVENT_TYPE_ACCESSED)
   public CertificateResponseDTO getCertificate(@PathVariable String certificateId) {
-    final var response = getCertificateService.get(
-        GetCertificateRequest
-            .builder()
-            .certificateId(certificateId)
-            .build()
-    );
+    final var response =
+        getCertificateService.get(
+            GetCertificateRequest.builder().certificateId(certificateId).build());
 
-    return CertificateResponseDTO
-        .builder()
+    return CertificateResponseDTO.builder()
         .certificate(response.getCertificate())
         .availableFunctions(response.getAvailableFunctions())
         .texts(response.getTexts())
@@ -80,32 +92,24 @@ public class CertificateController {
   @PerformanceLogging(eventAction = "send-certificate", eventType = EVENT_TYPE_CHANGE)
   public void sendCertificateToRecipient(@PathVariable String certificateId) {
     sendCertificateService.send(
-        SendCertificateRequest
-            .builder()
-            .certificateId(certificateId)
-            .build()
-    );
+        SendCertificateRequest.builder().certificateId(certificateId).build());
   }
 
   @GetMapping(value = "/{certificateId}/pdf/{fileName}", produces = "application/pdf")
   @PerformanceLogging(eventAction = "print-certificate", eventType = EVENT_TYPE_ACCESSED)
   public ResponseEntity<byte[]> printCertificate(
-      @PathVariable String certificateId,
-      @RequestParam(required = false) String customizationId) {
+      @PathVariable String certificateId, @RequestParam(required = false) String customizationId) {
 
-    final var response = printCertificateService.print(
-        PrintCertificateRequest
-            .builder()
-            .certificateId(certificateId)
-            .customizationId(customizationId)
-            .build()
-    );
+    final var response =
+        printCertificateService.print(
+            PrintCertificateRequest.builder()
+                .certificateId(certificateId)
+                .customizationId(customizationId)
+                .build());
 
     final var responseHeaders = getHttpHeaders();
 
-    return ResponseEntity.ok()
-        .headers(responseHeaders)
-        .body(response.getPdfData());
+    return ResponseEntity.ok().headers(responseHeaders).body(response.getPdfData());
   }
 
   private static HttpHeaders getHttpHeaders() {

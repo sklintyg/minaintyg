@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,12 +55,10 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(CertificateDataValueVisualAcuities.builder().build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -50,57 +66,43 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithoutCorrectionAsTable() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("0,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("1,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("2,0"),
-                    getDataElement("-"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("0,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("1,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("2,0"),
+                        getDataElement("-"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue("0,1", null, null)
-                )
-                .leftEye(
-                    createVisualActuityValue("1,1", null, null)
-                )
-                .binocular(
-                    createVisualActuityValue("2,0", null, null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue("0,1", null, null))
+                    .leftEye(createVisualActuityValue("1,1", null, null))
+                    .binocular(createVisualActuityValue("2,0", null, null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -108,57 +110,43 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithCorrectionAsTable() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("-"),
-                    getDataElement("0,1"),
-                    getDataElement("Nej")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("-"),
-                    getDataElement("1,1"),
-                    getDataElement("Nej")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("-"),
-                    getDataElement("2,0"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("-"),
+                        getDataElement("0,1"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("-"),
+                        getDataElement("1,1"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("-"),
+                        getDataElement("2,0"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue(null, "0,1", null)
-                )
-                .leftEye(
-                    createVisualActuityValue(null, "1,1", null)
-                )
-                .binocular(
-                    createVisualActuityValue(null, "2,0", null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue(null, "0,1", null))
+                    .leftEye(createVisualActuityValue(null, "1,1", null))
+                    .binocular(createVisualActuityValue(null, "2,0", null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -166,57 +154,43 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnContactLensesAsTable() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("0,1"),
-                    getDataElement("2,0"),
-                    getDataElement("Nej")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("1,1"),
-                    getDataElement("0,1"),
-                    getDataElement("Ja")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("2,0"),
-                    getDataElement("1,1"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("0,1"),
+                        getDataElement("2,0"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("1,1"),
+                        getDataElement("0,1"),
+                        getDataElement("Ja")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("2,0"),
+                        getDataElement("1,1"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue("0,1", "2,0", "Nej")
-                )
-                .leftEye(
-                    createVisualActuityValue("1,1", "0,1", "Ja")
-                )
-                .binocular(
-                    createVisualActuityValue("2,0", "1,1", null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue("0,1", "2,0", "Nej"))
+                    .leftEye(createVisualActuityValue("1,1", "0,1", "Ja"))
+                    .binocular(createVisualActuityValue("2,0", "1,1", null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -224,57 +198,43 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnWithoutCorrectionWithCorrectionContactLensesAsTable() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("-"),
-                    getDataElement("-"),
-                    getDataElement("Ja")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("-"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("-"),
-                    getDataElement("-"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("-"),
+                        getDataElement("-"),
+                        getDataElement("Ja")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("-"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("-"),
+                        getDataElement("-"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue(null, null, "Ja")
-                )
-                .leftEye(
-                    createVisualActuityValue(null, null, "Nej")
-                )
-                .binocular(
-                    createVisualActuityValue(null, null, null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue(null, null, "Ja"))
+                    .leftEye(createVisualActuityValue(null, null, "Nej"))
+                    .binocular(createVisualActuityValue(null, null, null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -282,54 +242,42 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallReturnLeftAndRightWithoutBinocularsAsTable() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("0,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("1,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("-"),
-                    getDataElement("-"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("0,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("1,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("-"),
+                        getDataElement("-"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue("0,1", null, null)
-                )
-                .leftEye(
-                    createVisualActuityValue("1,1", null, null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue("0,1", null, null))
+                    .leftEye(createVisualActuityValue("1,1", null, null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -338,54 +286,42 @@ class VisualAcuitiesValueConverterTest {
   @Test
   void shallReturnConsiderNullContactLensesAsFalse() {
 
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL),
-                getHeadingElement(CONTACT_LENSES_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("0,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL),
+                    getHeadingElement(CONTACT_LENSES_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("1,1"),
-                    getDataElement("-"),
-                    getDataElement("Nej")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("-"),
-                    getDataElement("-"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("0,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("1,1"),
+                        getDataElement("-"),
+                        getDataElement("Nej")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("-"),
+                        getDataElement("-"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(true)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue("0,1", null, null)
-                )
-                .leftEye(
-                    createVisualActuityValue("1,1", null, null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(true))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue("0,1", null, null))
+                    .leftEye(createVisualActuityValue("1,1", null, null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -393,53 +329,39 @@ class VisualAcuitiesValueConverterTest {
 
   @Test
   void shallExcludeContactLensesColumnAndRows() {
-    final var expectedValue = CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            List.of(
-                getDataElement(""),
-                getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                getHeadingElement(WITH_CORRECTION_LABEL)
-            )
-        )
-        .values(
-            List.of(
+    final var expectedValue =
+        CertificateQuestionValueGeneralTable.builder()
+            .headings(
                 List.of(
-                    getHeadingElement(RIGHT_EYE_LABEL),
-                    getDataElement("0,1"),
-                    getDataElement("-")
-                ),
+                    getDataElement(""),
+                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
+                    getHeadingElement(WITH_CORRECTION_LABEL)))
+            .values(
                 List.of(
-                    getHeadingElement(LEFT_EYE_LABEL),
-                    getDataElement("1,1"),
-                    getDataElement("-")
-                ),
-                List.of(
-                    getHeadingElement(BINOCULAR_LABEL),
-                    getDataElement("2,0"),
-                    getDataElement("-")
-                )
-            )
-        )
-        .build();
+                    List.of(
+                        getHeadingElement(RIGHT_EYE_LABEL),
+                        getDataElement("0,1"),
+                        getDataElement("-")),
+                    List.of(
+                        getHeadingElement(LEFT_EYE_LABEL),
+                        getDataElement("1,1"),
+                        getDataElement("-")),
+                    List.of(
+                        getHeadingElement(BINOCULAR_LABEL),
+                        getDataElement("2,0"),
+                        getDataElement("-"))))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createVisualAcuityConfiguration(false)
-        )
-        .value(
-            CertificateDataValueVisualAcuities.builder()
-                .rightEye(
-                    createVisualActuityValue("0,1", null, null)
-                )
-                .leftEye(
-                    createVisualActuityValue("1,1", null, null)
-                )
-                .binocular(
-                    createVisualActuityValue("2,0", null, null)
-                )
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createVisualAcuityConfiguration(false))
+            .value(
+                CertificateDataValueVisualAcuities.builder()
+                    .rightEye(createVisualActuityValue("0,1", null, null))
+                    .leftEye(createVisualActuityValue("1,1", null, null))
+                    .binocular(createVisualActuityValue("2,0", null, null))
+                    .build())
+            .build();
 
     final var actualValue = visualAcuitiesValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -457,68 +379,56 @@ class VisualAcuitiesValueConverterTest {
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
                 .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
-                .build()
-        )
+                .build())
         .leftEye(
             VisualAcuity.builder()
                 .label(LEFT_EYE_LABEL)
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
                 .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
-                .build()
-        )
+                .build())
         .binocular(
             VisualAcuity.builder()
                 .label(BINOCULAR_LABEL)
                 .withoutCorrectionId(WITHOUT_CORRECTION_ID)
                 .withCorrectionId(WITH_CORRECTION_ID)
                 .contactLensesId(includeContactLenses ? CONTACT_LENSES_ID : null)
-                .build()
-        )
+                .build())
         .build();
   }
 
-  private static CertificateDataValueVisualAcuity createVisualActuityValue(String without,
-      String with, String contacts) {
+  private static CertificateDataValueVisualAcuity createVisualActuityValue(
+      String without, String with, String contacts) {
     final var builder = CertificateDataValueVisualAcuity.builder();
     if (without != null) {
       builder.withoutCorrection(
           CertificateDataValueDouble.builder()
               .id(WITHOUT_CORRECTION_ID)
               .value(Double.parseDouble(without.replace(",", ".")))
-              .build()
-      );
+              .build());
     }
     if (with != null) {
       builder.withCorrection(
           CertificateDataValueDouble.builder()
               .id(WITH_CORRECTION_ID)
               .value(Double.parseDouble(with.replace(",", ".")))
-              .build()
-      );
+              .build());
     }
     if (contacts != null) {
       builder.contactLenses(
           CertificateDataValueBoolean.builder()
               .id(CONTACT_LENSES_ID)
               .selected("Ja".equals(contacts))
-              .build()
-      );
+              .build());
     }
     return builder.build();
   }
 
   private static TableElement getDataElement(String value) {
-    return TableElement.builder()
-        .type(TableElementType.DATA)
-        .value(value)
-        .build();
+    return TableElement.builder().type(TableElementType.DATA).value(value).build();
   }
 
   private static TableElement getHeadingElement(String value) {
-    return TableElement.builder()
-        .type(TableElementType.HEADING)
-        .value(value)
-        .build();
+    return TableElement.builder().type(TableElementType.HEADING).value(value).build();
   }
 }

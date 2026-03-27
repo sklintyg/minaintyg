@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,16 +60,11 @@ class CodeValueConverterTest {
 
   @Test
   void shallReturnNotProvidedIfNoValueExists() {
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfigForOptionalDropdown(
-                createOptionalDropdownItem(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            CertificateDataValueCode.builder().build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfigForOptionalDropdown(createOptionalDropdownItem(ID_ONE, LABEL_ONE)))
+            .value(CertificateDataValueCode.builder().build())
+            .build();
 
     final var result = codeValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, result);
@@ -59,31 +72,26 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeDropdownQuestionAnswerIfExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value("%s %s".formatted(LABEL_TWO, SUBQUESTION_LABEL_ONE))
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueText.builder()
+            .value("%s %s".formatted(LABEL_TWO, SUBQUESTION_LABEL_ONE))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfigForOptionalDropdown(
-                createOptionalDropdownItem(ID_TWO, LABEL_TWO, SUBQUESTION_ID)
-            ))
-        .value(
-            createCodeValue(ID_TWO)
-        )
-        .build();
-
-    final var subQuestions = List.of(
+    final var element =
         CertificateDataElement.builder()
-            .id(SUBQUESTION_ID)
             .config(
-                createConfigDropdown(SUBQUESTION_ID_ONE, SUBQUESTION_LABEL_ONE)
-            )
-            .value(
-                createCodeValue(SUBQUESTION_ID_ONE)
-            )
-            .build()
-    );
+                createConfigForOptionalDropdown(
+                    createOptionalDropdownItem(ID_TWO, LABEL_TWO, SUBQUESTION_ID)))
+            .value(createCodeValue(ID_TWO))
+            .build();
+
+    final var subQuestions =
+        List.of(
+            CertificateDataElement.builder()
+                .id(SUBQUESTION_ID)
+                .config(createConfigDropdown(SUBQUESTION_ID_ONE, SUBQUESTION_LABEL_ONE))
+                .value(createCodeValue(SUBQUESTION_ID_ONE))
+                .build());
 
     final var actualValue = codeValueConverter.convert(element, subQuestions);
     assertEquals(expectedValue, actualValue);
@@ -91,20 +99,18 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeDropdownQuestionIdIfNoMatchingSubquestionExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value("%s %s".formatted(LABEL_TWO, SUBQUESTION_ID))
-        .build();
+    final var expectedValue =
+        CertificateQuestionValueText.builder()
+            .value("%s %s".formatted(LABEL_TWO, SUBQUESTION_ID))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfigForOptionalDropdown(
-                createOptionalDropdownItem(ID_TWO, LABEL_TWO, SUBQUESTION_ID)
-            )
-        )
-        .value(
-            createCodeValue(ID_TWO)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                createConfigForOptionalDropdown(
+                    createOptionalDropdownItem(ID_TWO, LABEL_TWO, SUBQUESTION_ID)))
+            .value(createCodeValue(ID_TWO))
+            .build();
 
     final var actualValue = codeValueConverter.convert(element, Collections.emptyList());
     assertEquals(expectedValue, actualValue);
@@ -112,20 +118,13 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeCodeLabelWhenLabelExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(LABEL_ONE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(LABEL_ONE).build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfigForOptionalDropdown(
-                createOptionalDropdownItem(ID_ONE, LABEL_ONE)
-            )
-        )
-        .value(
-            createCodeValue(ID_ONE)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfigForOptionalDropdown(createOptionalDropdownItem(ID_ONE, LABEL_ONE)))
+            .value(createCodeValue(ID_ONE))
+            .build();
 
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
@@ -133,18 +132,13 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeCodeIdWhenLabelExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(ID_ONE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(ID_ONE).build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfigForOptionalDropdown()
-        )
-        .value(
-            createCodeValue(ID_ONE)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfigForOptionalDropdown())
+            .value(createCodeValue(ID_ONE))
+            .build();
 
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
@@ -152,18 +146,13 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeCodeIdWhenConfigurationIsntSupported() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(ID_ONE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(ID_ONE).build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            CertificateDataConfigTextArea.builder().build()
-        )
-        .value(
-            createCodeValue(ID_ONE)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(CertificateDataConfigTextArea.builder().build())
+            .value(createCodeValue(ID_ONE))
+            .build();
 
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
@@ -171,60 +160,38 @@ class CodeValueConverterTest {
 
   @Test
   void shallIncludeCodeWithRadioMultipleCodeConfig() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(LABEL_ONE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(LABEL_ONE).build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            CertificateDataConfigRadioMultipleCode.builder()
-                .list(
-                    List.of(
-                        RadioMultipleCode.builder()
-                            .id(ID_ONE)
-                            .label(LABEL_ONE)
-                            .build()
-                    )
-                )
-                .build()
-        )
-        .value(
-            createCodeValue(ID_ONE)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                CertificateDataConfigRadioMultipleCode.builder()
+                    .list(List.of(RadioMultipleCode.builder().id(ID_ONE).label(LABEL_ONE).build()))
+                    .build())
+            .value(createCodeValue(ID_ONE))
+            .build();
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   @Test
   void shallIncludeCodeWhenIdIsNotFoundInRadioMultipleCodeConfig() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(ID_ONE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(ID_ONE).build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            CertificateDataConfigRadioMultipleCode.builder()
-                .list(
-                    List.of(
-                        RadioMultipleCode.builder()
-                            .id(ID_TWO)
-                            .label(LABEL_ONE)
-                            .build()
-                    )
-                )
-                .build()
-        )
-        .value(
-            createCodeValue(ID_ONE)
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(
+                CertificateDataConfigRadioMultipleCode.builder()
+                    .list(List.of(RadioMultipleCode.builder().id(ID_TWO).label(LABEL_ONE).build()))
+                    .build())
+            .value(createCodeValue(ID_ONE))
+            .build();
     final var result = codeValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
-  private static RadioMultipleCodeOptionalDropdown createOptionalDropdownItem(String id,
-      String label, String questionId) {
+  private static RadioMultipleCodeOptionalDropdown createOptionalDropdownItem(
+      String id, String label, String questionId) {
     return RadioMultipleCodeOptionalDropdown.builder()
         .id(id)
         .label(label)
@@ -232,39 +199,25 @@ class CodeValueConverterTest {
         .build();
   }
 
-  private static RadioMultipleCodeOptionalDropdown createOptionalDropdownItem(String id,
-      String label) {
+  private static RadioMultipleCodeOptionalDropdown createOptionalDropdownItem(
+      String id, String label) {
     return createOptionalDropdownItem(id, label, null);
   }
 
   private static CertificateDataValueCode createCodeValue(String code) {
-    return CertificateDataValueCode.builder()
-        .id(code)
-        .code(code)
-        .build();
+    return CertificateDataValueCode.builder().id(code).code(code).build();
   }
 
   private static CertificateDataConfigDropdown createConfigDropdown(String id, String label) {
     return CertificateDataConfigDropdown.builder()
-        .list(
-            List.of(
-                DropdownItem.builder()
-                    .id(id)
-                    .label(label)
-                    .build()
-            )
-        )
+        .list(List.of(DropdownItem.builder().id(id).label(label).build()))
         .build();
   }
 
-  private static CertificateDataConfigRadioMultipleCodeOptionalDropdown createConfigForOptionalDropdown(
-      RadioMultipleCodeOptionalDropdown... dropdownConfig) {
+  private static CertificateDataConfigRadioMultipleCodeOptionalDropdown
+      createConfigForOptionalDropdown(RadioMultipleCodeOptionalDropdown... dropdownConfig) {
     return CertificateDataConfigRadioMultipleCodeOptionalDropdown.builder()
-        .list(
-            List.of(
-                dropdownConfig
-            )
-        )
+        .list(List.of(dropdownConfig))
         .build();
   }
 }

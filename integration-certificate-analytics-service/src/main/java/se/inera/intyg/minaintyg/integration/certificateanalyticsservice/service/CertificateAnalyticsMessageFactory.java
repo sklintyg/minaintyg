@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.certificateanalyticsservice.service;
 
 import static se.inera.intyg.minaintyg.integration.api.analytics.model.CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN;
@@ -38,16 +56,12 @@ public class CertificateAnalyticsMessageFactory implements AnalyticsMessageFacto
   @Override
   public CertificateAnalyticsMessage certificateSent(Certificate certificate, String recipient) {
     return create(certificate, CERTIFICATE_SENT_BY_CITIZEN)
-        .recipient(
-            AnalyticsRecipient.builder()
-                .id(recipient)
-                .build()
-        )
+        .recipient(AnalyticsRecipient.builder().id(recipient).build())
         .build();
   }
 
-  private CertificateAnalyticsMessageBuilder create(Certificate certificate,
-      CertificateAnalyticsMessageType type) {
+  private CertificateAnalyticsMessageBuilder create(
+      Certificate certificate, CertificateAnalyticsMessageType type) {
     final var loggedInMinaIntygUser = loggedInMinaIntygUserService.loggedInMinaIntygUser();
     return CertificateAnalyticsMessage.builder()
         .event(
@@ -56,8 +70,7 @@ public class CertificateAnalyticsMessageFactory implements AnalyticsMessageFacto
                 .messageType(type)
                 .userId(loggedInMinaIntygUser.getPersonId())
                 .sessionId(MDC.get(MdcLogConstants.SESSION_ID_KEY))
-                .build()
-        )
+                .build())
         .certificate(
             AnalyticsCertificate.builder()
                 .id(certificate.getMetadata().getId())
@@ -66,7 +79,6 @@ public class CertificateAnalyticsMessageFactory implements AnalyticsMessageFacto
                 .patientId(loggedInMinaIntygUser.getPersonId())
                 .unitId(certificate.getMetadata().getUnit().getId())
                 .careProviderId(certificate.getMetadata().getCareProvider().getId())
-                .build()
-        );
+                .build());
   }
 }

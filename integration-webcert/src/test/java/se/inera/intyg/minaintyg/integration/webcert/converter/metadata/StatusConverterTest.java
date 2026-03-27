@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.metadata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,12 +36,12 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Certific
 
 class StatusConverterTest {
 
-  public static final LocalDateTime OLD_DATE = LocalDateTime.now()
-      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
-  public static final LocalDateTime NEW_DATE = LocalDateTime.now()
-      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
-  public static final LocalDateTime LAST_DAY_AS_NEW = LocalDateTime.now()
-      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW);
+  public static final LocalDateTime OLD_DATE =
+      LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
+  public static final LocalDateTime NEW_DATE =
+      LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
+  public static final LocalDateTime LAST_DAY_AS_NEW =
+      LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW);
   public static final String RECIPIENT_ID = "Id";
   private final StatusConverter statusConverter = new StatusConverter();
 
@@ -32,12 +50,11 @@ class StatusConverterTest {
 
     @Test
     void shallReturnEmptyListIfCertificateHasNoRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(null, LocalDateTime.now())
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(null, LocalDateTime.now()))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.emptyList(), actualStatuses);
@@ -45,12 +62,11 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToSentIfCertificateIsSentToRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, LocalDateTime.now())
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, LocalDateTime.now()))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.SENT), actualStatuses);
@@ -62,12 +78,11 @@ class StatusConverterTest {
 
     @Test
     void shallReturnEmptyListIfCertificateHasNoRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(null, null)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(null, null))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.emptyList(), actualStatuses);
@@ -75,12 +90,11 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToNotSentIfCertificateCanBeSentToRecipientButHasNot() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, null)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, null))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.NOT_SENT), actualStatuses);
@@ -92,9 +106,7 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToNewIfCertificateWasCreatedBeforeDateLimitForNewStatus() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(NEW_DATE)
-          .build();
+      final var metadataDTO = CertificateMetadataDTO.builder().created(NEW_DATE).build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.NEW), actualStatuses);
@@ -102,9 +114,7 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToNewIfCertificateWasCreatedOnTheLastDayForNewStatus() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(LAST_DAY_AS_NEW)
-          .build();
+      final var metadataDTO = CertificateMetadataDTO.builder().created(LAST_DAY_AS_NEW).build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.NEW), actualStatuses);
@@ -112,9 +122,7 @@ class StatusConverterTest {
 
     @Test
     void shallReturnEmptyListIfCertificateWasCreatedAfterDateLimitForNewStatus() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .build();
+      final var metadataDTO = CertificateMetadataDTO.builder().created(OLD_DATE).build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.emptyList(), actualStatuses);
@@ -126,12 +134,11 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsSigned() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.REPLACED, CertificateStatus.SIGNED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(createChild(CertificateRelationType.REPLACED, CertificateStatus.SIGNED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -139,12 +146,11 @@ class StatusConverterTest {
 
     @Test
     void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsUnsigned() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.REPLACED, CertificateStatus.UNSIGNED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(createChild(CertificateRelationType.REPLACED, CertificateStatus.UNSIGNED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.EMPTY_LIST, actualStatuses);
@@ -152,12 +158,11 @@ class StatusConverterTest {
 
     @Test
     void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsRevoked() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.REPLACED, CertificateStatus.REVOKED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(createChild(CertificateRelationType.REPLACED, CertificateStatus.REVOKED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.EMPTY_LIST, actualStatuses);
@@ -165,12 +170,11 @@ class StatusConverterTest {
 
     @Test
     void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsLocked() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.EMPTY_LIST, actualStatuses);
@@ -178,12 +182,12 @@ class StatusConverterTest {
 
     @Test
     void shallNotConvertToReplacedIfCertificateIsReplacedAndReplacingCertificateIsLockedRevoked() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED_REVOKED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(
+                  createChild(CertificateRelationType.REPLACED, CertificateStatus.LOCKED_REVOKED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.EMPTY_LIST, actualStatuses);
@@ -191,12 +195,11 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfCertificateIsComplemented() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .relations(
-              createChild(CertificateRelationType.COMPLEMENTED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .relations(createChild(CertificateRelationType.COMPLEMENTED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -204,23 +207,19 @@ class StatusConverterTest {
 
     @Test
     void shallReturnEmptyListIfCertificateIsNotReplaced() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .build();
+      final var metadataDTO = CertificateMetadataDTO.builder().created(OLD_DATE).build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(Collections.emptyList(), actualStatuses);
     }
 
-
     @Test
     void shallConvertToReplacedIfBothNewAndReplaced() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(LAST_DAY_AS_NEW)
-          .relations(
-              createChild(CertificateRelationType.REPLACED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(LAST_DAY_AS_NEW)
+              .relations(createChild(CertificateRelationType.REPLACED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -228,15 +227,12 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfBothReplacedAndSentToRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, LocalDateTime.now())
-          )
-          .relations(
-              createChild(CertificateRelationType.REPLACED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, LocalDateTime.now()))
+              .relations(createChild(CertificateRelationType.REPLACED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -244,15 +240,12 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfBothComplementedAndSentToRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, LocalDateTime.now())
-          )
-          .relations(
-              createChild(CertificateRelationType.COMPLEMENTED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, LocalDateTime.now()))
+              .relations(createChild(CertificateRelationType.COMPLEMENTED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -260,15 +253,12 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfBothReplacedAndNotSentToRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, null)
-          )
-          .relations(
-              createChild(CertificateRelationType.REPLACED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, null))
+              .relations(createChild(CertificateRelationType.REPLACED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -276,15 +266,12 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToReplacedIfBothComplementedAndNotSentToRecipient() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(OLD_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, null)
-          )
-          .relations(
-              createChild(CertificateRelationType.COMPLEMENTED)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(OLD_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, null))
+              .relations(createChild(CertificateRelationType.COMPLEMENTED))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.REPLACED), actualStatuses);
@@ -296,12 +283,11 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToNewAndSentIfBothNewAndSent() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(NEW_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, LocalDateTime.now())
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(NEW_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, LocalDateTime.now()))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.NEW, CertificateStatusType.SENT), actualStatuses);
@@ -309,33 +295,28 @@ class StatusConverterTest {
 
     @Test
     void shallConvertToNewAndNotSentIfBothNewAndNotSent() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .created(NEW_DATE)
-          .recipient(
-              createRecipient(RECIPIENT_ID, null)
-          )
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .created(NEW_DATE)
+              .recipient(createRecipient(RECIPIENT_ID, null))
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
-      assertEquals(List.of(CertificateStatusType.NEW, CertificateStatusType.NOT_SENT),
-          actualStatuses);
+      assertEquals(
+          List.of(CertificateStatusType.NEW, CertificateStatusType.NOT_SENT), actualStatuses);
     }
 
     @Test
     void shallConvertToNewAndSentIfBothNewNotSentAndSent() {
-      final var metadataDTO = CertificateMetadataDTO.builder()
-          .recipient(
-              createRecipient(RECIPIENT_ID, null)
-          )
-          .recipient(
-              createRecipient(RECIPIENT_ID, LocalDateTime.now())
-          )
-          .created(NEW_DATE)
-          .build();
+      final var metadataDTO =
+          CertificateMetadataDTO.builder()
+              .recipient(createRecipient(RECIPIENT_ID, null))
+              .recipient(createRecipient(RECIPIENT_ID, LocalDateTime.now()))
+              .created(NEW_DATE)
+              .build();
 
       final var actualStatuses = statusConverter.convert(metadataDTO);
       assertEquals(List.of(CertificateStatusType.NEW, CertificateStatusType.SENT), actualStatuses);
-
     }
   }
 
@@ -343,25 +324,22 @@ class StatusConverterTest {
     return createChild(type, CertificateStatus.SIGNED);
   }
 
-  private CertificateRelations createChild(CertificateRelationType type,
-      CertificateStatus certificateStatus) {
+  private CertificateRelations createChild(
+      CertificateRelationType type, CertificateStatus certificateStatus) {
     return CertificateRelations.builder()
         .children(
-            new CertificateRelation[]{
-                CertificateRelation.builder()
-                    .type(type)
-                    .certificateId("id")
-                    .created(LocalDateTime.now())
-                    .status(certificateStatus)
-                    .build()}
-        )
+            new CertificateRelation[] {
+              CertificateRelation.builder()
+                  .type(type)
+                  .certificateId("id")
+                  .created(LocalDateTime.now())
+                  .status(certificateStatus)
+                  .build()
+            })
         .build();
   }
 
   private CertificateRecipient createRecipient(String id, LocalDateTime sentDate) {
-    return CertificateRecipient.builder()
-        .id(id)
-        .sent(sentDate)
-        .build();
+    return CertificateRecipient.builder().id(id).sent(sentDate).build();
   }
 }

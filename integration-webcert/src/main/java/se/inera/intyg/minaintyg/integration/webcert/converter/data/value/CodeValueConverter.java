@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.Collections;
@@ -39,52 +57,43 @@ public class CodeValueConverter extends AbstractValueConverter {
   }
 
   @Override
-  public CertificateQuestionValue convert(CertificateDataElement element,
-      List<CertificateDataElement> subQuestions) {
+  public CertificateQuestionValue convert(
+      CertificateDataElement element, List<CertificateDataElement> subQuestions) {
     final var codeValue = getCodeValue(element.getValue());
     if (codeValue.isEmpty() || codeValue.get().getId() == null) {
       return NOT_PROVIDED_VALUE;
     }
 
-    return codeValue.map(value ->
-            switch (element.getConfig().getType()) {
-              case UE_DROPDOWN -> convertDropdown(
-                  value,
-                  (CertificateDataConfigDropdown) element.getConfig()
-              );
-              case UE_RADIO_MULTIPLE_CODE_OPTIONAL_DROPDOWN -> convertRadioMultipleCodeOptionalDropdown(
-                  value,
-                  (CertificateDataConfigRadioMultipleCodeOptionalDropdown) element.getConfig(),
-                  subQuestions
-              );
-              case UE_RADIO_MULTIPLE_CODE -> convertRadioMultipleCode(
-                  value,
-                  (CertificateDataConfigRadioMultipleCode) element.getConfig()
-              );
-              default -> createTextValue(value.getId());
-            }
-        )
+    return codeValue
+        .map(
+            value ->
+                switch (element.getConfig().getType()) {
+                  case UE_DROPDOWN ->
+                      convertDropdown(value, (CertificateDataConfigDropdown) element.getConfig());
+                  case UE_RADIO_MULTIPLE_CODE_OPTIONAL_DROPDOWN ->
+                      convertRadioMultipleCodeOptionalDropdown(
+                          value,
+                          (CertificateDataConfigRadioMultipleCodeOptionalDropdown)
+                              element.getConfig(),
+                          subQuestions);
+                  case UE_RADIO_MULTIPLE_CODE ->
+                      convertRadioMultipleCode(
+                          value, (CertificateDataConfigRadioMultipleCode) element.getConfig());
+                  default -> createTextValue(value.getId());
+                })
         .orElse(NOT_PROVIDED_VALUE);
   }
 
-  private CertificateQuestionValueText convertRadioMultipleCode(CertificateDataValueCode value,
-      CertificateDataConfigRadioMultipleCode config) {
+  private CertificateQuestionValueText convertRadioMultipleCode(
+      CertificateDataValueCode value, CertificateDataConfigRadioMultipleCode config) {
     return convertMultipleCode(
-        value,
-        config.getList(),
-        RadioMultipleCode::getId,
-        RadioMultipleCode::getLabel
-    );
+        value, config.getList(), RadioMultipleCode::getId, RadioMultipleCode::getLabel);
   }
 
   private static CertificateQuestionValueText convertDropdown(
       CertificateDataValueCode value, CertificateDataConfigDropdown config) {
     return convertMultipleCode(
-        value,
-        config.getList(),
-        DropdownItem::getId,
-        DropdownItem::getLabel
-    );
+        value, config.getList(), DropdownItem::getId, DropdownItem::getLabel);
   }
 
   private static <T> CertificateQuestionValueText convertMultipleCode(
@@ -93,21 +102,12 @@ public class CodeValueConverter extends AbstractValueConverter {
       Function<T, String> getId,
       Function<T, String> getLabel) {
     final var idToLabelMap = convertIdToLabelMap(list, getId, getLabel);
-    return createTextValue(
-        idToLabelMap.getOrDefault(value.getId(), value.getId())
-    );
+    return createTextValue(idToLabelMap.getOrDefault(value.getId(), value.getId()));
   }
 
-  private static <T> Map<String, String> convertIdToLabelMap(List<T> list,
-      Function<T, String> getId, Function<T, String> getLabel) {
-    return list
-        .stream()
-        .collect(
-            Collectors.toMap(
-                getId,
-                getLabel
-            )
-        );
+  private static <T> Map<String, String> convertIdToLabelMap(
+      List<T> list, Function<T, String> getId, Function<T, String> getLabel) {
+    return list.stream().collect(Collectors.toMap(getId, getLabel));
   }
 
   private CertificateQuestionValueText convertRadioMultipleCodeOptionalDropdown(
@@ -117,45 +117,38 @@ public class CodeValueConverter extends AbstractValueConverter {
 
     final var radioMultipleCodeOptionalDropdown = getIdToLabelMap(dataConfig).get(value.getId());
     if (radioMultipleCodeOptionalDropdown == null) {
-      return createTextValue(
-          value.getId()
-      );
+      return createTextValue(value.getId());
     }
 
     if (radioMultipleCodeOptionalDropdown.getDropdownQuestionId() == null) {
-      return createTextValue(
-          radioMultipleCodeOptionalDropdown.getLabel()
-      );
+      return createTextValue(radioMultipleCodeOptionalDropdown.getLabel());
     }
 
-    final var subQuestionLabel = subQuestions.stream()
-        .filter(subQuestion -> subQuestion.getId().equalsIgnoreCase(
-            radioMultipleCodeOptionalDropdown.getDropdownQuestionId()))
-        .findAny()
-        .map(this::convertToValue)
-        .map(textValue -> ((CertificateQuestionValueText) textValue).getValue())
-        .orElse(radioMultipleCodeOptionalDropdown.getDropdownQuestionId());
+    final var subQuestionLabel =
+        subQuestions.stream()
+            .filter(
+                subQuestion ->
+                    subQuestion
+                        .getId()
+                        .equalsIgnoreCase(
+                            radioMultipleCodeOptionalDropdown.getDropdownQuestionId()))
+            .findAny()
+            .map(this::convertToValue)
+            .map(textValue -> ((CertificateQuestionValueText) textValue).getValue())
+            .orElse(radioMultipleCodeOptionalDropdown.getDropdownQuestionId());
 
     return createTextValue(
-        "%s %s".formatted(radioMultipleCodeOptionalDropdown.getLabel(), subQuestionLabel)
-    );
+        "%s %s".formatted(radioMultipleCodeOptionalDropdown.getLabel(), subQuestionLabel));
   }
 
   private static Map<String, RadioMultipleCodeOptionalDropdown> getIdToLabelMap(
       CertificateDataConfigRadioMultipleCodeOptionalDropdown dataConfig) {
     return dataConfig.getList().stream()
-        .collect(
-            Collectors.toMap(
-                RadioMultipleCodeOptionalDropdown::getId,
-                Function.identity()
-            )
-        );
+        .collect(Collectors.toMap(RadioMultipleCodeOptionalDropdown::getId, Function.identity()));
   }
 
   private static CertificateQuestionValueText createTextValue(String value) {
-    return CertificateQuestionValueText.builder()
-        .value(value)
-        .build();
+    return CertificateQuestionValueText.builder().value(value).build();
   }
 
   private Optional<CertificateDataValueCode> getCodeValue(CertificateDataValue value) {

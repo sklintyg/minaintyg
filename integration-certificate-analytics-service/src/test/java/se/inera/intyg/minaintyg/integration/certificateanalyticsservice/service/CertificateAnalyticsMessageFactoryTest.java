@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.certificateanalyticsservice.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,11 +48,9 @@ import se.inera.intyg.minaintyg.logging.MdcLogConstants;
 @ExtendWith(MockitoExtension.class)
 class CertificateAnalyticsMessageFactoryTest {
 
-  @Mock
-  private LoggedInMinaIntygUserService loggedInMinaIntygUserService;
+  @Mock private LoggedInMinaIntygUserService loggedInMinaIntygUserService;
 
-  @InjectMocks
-  private static CertificateAnalyticsMessageFactory factory;
+  @InjectMocks private static CertificateAnalyticsMessageFactory factory;
 
   private static final String LOGGED_IN_PATIENT_ID = "19121212-1212";
   private static final String CERTIFICATE_ID = "certificate-id";
@@ -52,41 +68,28 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @BeforeEach
   void setUp() {
-    certificate = Certificate.builder()
-        .metadata(
-            CertificateMetadata.builder()
-                .id(CERTIFICATE_ID)
-                .type(
-                    CertificateType.builder()
-                        .id(CERTIFICATE_TYPE)
-                        .version(CERTIFICATE_TYPE_VERSION)
-                        .build()
-                )
-                .unit(
-                    CertificateUnit.builder()
-                        .id(CERTIFICATE_UNIT_ID)
-                        .build()
-                )
-                .careProvider(
-                    CertificateUnit.builder()
-                        .id(CERTIFICATE_CARE_PROVIDER_ID)
-                        .build()
-                )
-                .recipient(
-                    CertificateRecipient.builder()
-                        .id(RECIPIENT_ID)
-                        .build()
-                )
-                .build()
-        )
-        .build();
+    certificate =
+        Certificate.builder()
+            .metadata(
+                CertificateMetadata.builder()
+                    .id(CERTIFICATE_ID)
+                    .type(
+                        CertificateType.builder()
+                            .id(CERTIFICATE_TYPE)
+                            .version(CERTIFICATE_TYPE_VERSION)
+                            .build())
+                    .unit(CertificateUnit.builder().id(CERTIFICATE_UNIT_ID).build())
+                    .careProvider(
+                        CertificateUnit.builder().id(CERTIFICATE_CARE_PROVIDER_ID).build())
+                    .recipient(CertificateRecipient.builder().id(RECIPIENT_ID).build())
+                    .build())
+            .build();
 
-    loggedInMinaIntygUser = LoggedInMinaIntygUser.builder()
-        .personId(LOGGED_IN_PATIENT_ID)
-        .build();
+    loggedInMinaIntygUser = LoggedInMinaIntygUser.builder().personId(LOGGED_IN_PATIENT_ID).build();
 
     // Make this lenient to enable mocking to work in parameterized tests
-    lenient().when(loggedInMinaIntygUserService.loggedInMinaIntygUser())
+    lenient()
+        .when(loggedInMinaIntygUserService.loggedInMinaIntygUser())
         .thenReturn(loggedInMinaIntygUser);
 
     MDC.put(MdcLogConstants.SESSION_ID_KEY, EVENT_SESSION_ID);
@@ -94,7 +97,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectEventTimestamp(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectEventTimestamp(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertNotNull(actual.getEvent().getTimestamp());
@@ -102,7 +106,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectEventMessageType(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectEventMessageType(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertEquals(messageType, actual.getEvent().getMessageType());
@@ -110,7 +115,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectEventStaffId(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectEventStaffId(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertEquals(LOGGED_IN_PATIENT_ID, actual.getEvent().getUserId());
@@ -118,7 +124,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectEventSessionId(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectEventSessionId(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertEquals(EVENT_SESSION_ID, actual.getEvent().getSessionId());
@@ -126,7 +133,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectCertificateId(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectCertificateId(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertEquals(CERTIFICATE_ID, actual.getCertificate().getId());
@@ -134,7 +142,8 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @ParameterizedTest(name = "{index} => {1}")
   @MethodSource("analyticsMessagesBasedOnCertificate")
-  void shallReturnCorrectCertificateType(Function<Certificate, CertificateAnalyticsMessage> test,
+  void shallReturnCorrectCertificateType(
+      Function<Certificate, CertificateAnalyticsMessage> test,
       CertificateAnalyticsMessageType messageType) {
     final var actual = test.apply(certificate);
     assertEquals(CERTIFICATE_TYPE, actual.getCertificate().getType());
@@ -178,30 +187,24 @@ class CertificateAnalyticsMessageFactoryTest {
 
   @Test
   void shallReturnCorrectRecipientIdForCertificateSent() {
-    final var actual = factory.certificateSent(
-        certificate,
-        certificate.getMetadata().getRecipient().getId()
-    );
+    final var actual =
+        factory.certificateSent(certificate, certificate.getMetadata().getRecipient().getId());
     assertEquals(RECIPIENT_ID, actual.getRecipient().getId());
   }
 
   static Stream<Arguments> analyticsMessagesBasedOnCertificate() {
     return Stream.of(
         Arguments.of(
-            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
-                factory.certificatePrinted(certificate),
-            CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN
-        ),
+            (Function<Certificate, CertificateAnalyticsMessage>)
+                certificate -> factory.certificatePrinted(certificate),
+            CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_BY_CITIZEN),
         Arguments.of(
-            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
-                factory.certificatePrintedCustomized(certificate),
-            CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_CUSTOMIZED_BY_CITIZEN
-        ),
+            (Function<Certificate, CertificateAnalyticsMessage>)
+                certificate -> factory.certificatePrintedCustomized(certificate),
+            CertificateAnalyticsMessageType.CERTIFICATE_PRINTED_CUSTOMIZED_BY_CITIZEN),
         Arguments.of(
-            (Function<Certificate, CertificateAnalyticsMessage>) certificate ->
-                factory.certificateSent(certificate, RECIPIENT_ID),
-            CertificateAnalyticsMessageType.CERTIFICATE_SENT_BY_CITIZEN
-        )
-    );
+            (Function<Certificate, CertificateAnalyticsMessage>)
+                certificate -> factory.certificateSent(certificate, RECIPIENT_ID),
+            CertificateAnalyticsMessageType.CERTIFICATE_SENT_BY_CITIZEN));
   }
 }

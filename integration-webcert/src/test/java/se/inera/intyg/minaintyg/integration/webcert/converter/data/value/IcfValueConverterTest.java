@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,14 +42,10 @@ class IcfValueConverterTest {
 
   @Test
   void shouldConvertCertificateIcfValue() {
-    final var value = CertificateDataIcfValue.builder()
-        .text(TEXT_VALUE)
-        .build();
+    final var value = CertificateDataIcfValue.builder().text(TEXT_VALUE).build();
     final var config = createConfig();
     final var element = createElement(config, value);
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(TEXT_VALUE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(TEXT_VALUE).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
@@ -41,88 +55,69 @@ class IcfValueConverterTest {
     final var value = CertificateDataIcfValue.builder().build();
     final var config = createConfig();
     final var element = createElement(config, value);
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(NOT_PROVIDED)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(NOT_PROVIDED).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   @Test
   void shouldReturnCollectionsLabelIfOneIcfCodeIsProvided() {
-    final var value = CertificateDataIcfValue.builder()
-        .text(TEXT_VALUE)
-        .icfCodes(List.of(ICF_CODE_1))
-        .build();
+    final var value =
+        CertificateDataIcfValue.builder().text(TEXT_VALUE).icfCodes(List.of(ICF_CODE_1)).build();
     final var config = createConfig();
     final var element = createElement(config, value);
-    final var valueString =
-        COLLECTIONS_LABEL + "\n" + ICF_CODE_1 + "\n" + "\n" + TEXT_VALUE;
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(valueString)
-        .build();
+    final var valueString = COLLECTIONS_LABEL + "\n" + ICF_CODE_1 + "\n" + "\n" + TEXT_VALUE;
+    final var expectedValue = CertificateQuestionValueText.builder().value(valueString).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   @Test
   void shouldReturnCollectionsLabelIfMultipleIcfCodesAreProvided() {
-    final var value = CertificateDataIcfValue.builder()
-        .text(TEXT_VALUE)
-        .icfCodes(List.of(ICF_CODE_1, ICF_CODE_2))
-        .build();
+    final var value =
+        CertificateDataIcfValue.builder()
+            .text(TEXT_VALUE)
+            .icfCodes(List.of(ICF_CODE_1, ICF_CODE_2))
+            .build();
     final var config = createConfig();
     final var element = createElement(config, value);
     final var valueString =
         COLLECTIONS_LABEL + "\n" + ICF_CODE_1 + " - " + ICF_CODE_2 + "\n" + "\n" + TEXT_VALUE;
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(valueString)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(valueString).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   @Test
   void shouldNotReturnCollectionsLabelIfIcfCodeIsNull() {
-    final var value = CertificateDataIcfValue.builder()
-        .text(TEXT_VALUE)
-        .icfCodes(null)
-        .build();
+    final var value = CertificateDataIcfValue.builder().text(TEXT_VALUE).icfCodes(null).build();
     final var config = createConfig();
     final var element = createElement(config, value);
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(TEXT_VALUE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(TEXT_VALUE).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   @Test
   void shouldNotReturnCollectionsLabelIfIcfCodeIsEmpty() {
-    final var value = CertificateDataIcfValue.builder()
-        .text(TEXT_VALUE)
-        .icfCodes(Collections.emptyList())
-        .build();
+    final var value =
+        CertificateDataIcfValue.builder()
+            .text(TEXT_VALUE)
+            .icfCodes(Collections.emptyList())
+            .build();
     final var config = createConfig();
     final var element = createElement(config, value);
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value(TEXT_VALUE)
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value(TEXT_VALUE).build();
     final var result = icfValueConverter.convert(element);
     assertEquals(expectedValue, result);
   }
 
   private static CertificateDataConfigIcf createConfig() {
-    return CertificateDataConfigIcf.builder()
-        .collectionsLabel(COLLECTIONS_LABEL)
-        .build();
+    return CertificateDataConfigIcf.builder().collectionsLabel(COLLECTIONS_LABEL).build();
   }
 
-  private static CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
+  private static CertificateDataElement createElement(
+      CertificateDataConfig config, CertificateDataValue value) {
+    return CertificateDataElement.builder().config(config).value(value).build();
   }
 }

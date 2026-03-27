@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +40,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
   private final String errorLoginInactiveUrl;
   private final MonitoringLogService monitoringLogService;
 
-  public CustomAuthenticationFailureHandler(@Value("${error.login.url}") String errorLoginUrl,
+  public CustomAuthenticationFailureHandler(
+      @Value("${error.login.url}") String errorLoginUrl,
       @Value("${error.login.underage.url}") String errorLoginUnderageUrl,
       MonitoringLogService monitoringLogService,
       @Value("${error.login.inactive.url}") String errorLoginInactiveUrl) {
@@ -33,23 +52,20 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
   }
 
   @Override
-  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException exception) throws IOException {
+  public void onAuthenticationFailure(
+      HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+      throws IOException {
 
     if (exception.getCause() instanceof LoginAgeLimitException loginAgeLimitException) {
       monitoringLogService.logUserLoginFailed(
-          loginAgeLimitException.getMessage(),
-          loginAgeLimitException.loginMethod().value()
-      );
+          loginAgeLimitException.getMessage(), loginAgeLimitException.loginMethod().value());
       response.sendRedirect(request.getContextPath() + errorLoginUnderageUrl);
       return;
     }
 
     if (exception.getCause() instanceof CitizenInactiveException citizenInactiveException) {
       monitoringLogService.logUserLoginFailed(
-          citizenInactiveException.getMessage(),
-          citizenInactiveException.loginMethod().value()
-      );
+          citizenInactiveException.getMessage(), citizenInactiveException.loginMethod().value());
       response.sendRedirect(request.getContextPath() + errorLoginInactiveUrl);
       return;
     }
@@ -59,14 +75,13 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     response.sendRedirect(request.getContextPath() + addErrorIdToUrl(errorId));
   }
 
-  private void handleLogEvents(HttpServletResponse response, AuthenticationException exception,
-      String errorId) {
+  private void handleLogEvents(
+      HttpServletResponse response, AuthenticationException exception, String errorId) {
     log.error(
-        String.format("Failed login attempt with errorId '%s' - exception %s", errorId, exception)
-    );
+        String.format("Failed login attempt with errorId '%s' - exception %s", errorId, exception));
     monitoringLogService.logUserLoginFailed(exception.getMessage(), "-");
-    monitoringLogService.logClientError(errorId, String.valueOf(response.getStatus()),
-        exception.getMessage(), null);
+    monitoringLogService.logClientError(
+        errorId, String.valueOf(response.getStatus()), exception.getMessage(), null);
   }
 
   private String addErrorIdToUrl(String errorId) {

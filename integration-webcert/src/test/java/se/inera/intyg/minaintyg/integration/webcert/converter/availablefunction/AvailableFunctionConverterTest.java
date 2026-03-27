@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.availablefunction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +38,8 @@ class AvailableFunctionConverterTest {
   public static final String DESCRIPTION = "DESCRIPTION";
   public static final String INFORMATION_ID = "INFORMATION_ID";
   public static final String INFORMATION_TEXT = "INFORMATION_TEXT";
-  private final AvailableFunctionConverter availableFunctionConverter = new AvailableFunctionConverter();
+  private final AvailableFunctionConverter availableFunctionConverter =
+      new AvailableFunctionConverter();
 
   @Test
   void shallReturnEmptyListIfNull() {
@@ -29,338 +48,234 @@ class AvailableFunctionConverterTest {
 
   @Test
   void shallReturnEmptyListIfEmpty() {
-    assertEquals(Collections.emptyList(),
-        availableFunctionConverter.convert(Collections.emptyList())
-    );
+    assertEquals(
+        Collections.emptyList(), availableFunctionConverter.convert(Collections.emptyList()));
   }
 
   @Test
   void shallReturnBody() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .body(BODY)
-            .build()
-    );
+    final var expected = availableFunctions(AvailableFunction.builder().body(BODY).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .body(BODY)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().body(BODY).build()));
 
     assertEquals(value(expected).getBody(), value(actual).getBody());
   }
 
   @Test
   void shallReturnTitle() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .title(TITLE)
-            .build()
-    );
+    final var expected = availableFunctions(AvailableFunction.builder().title(TITLE).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .title(TITLE)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().title(TITLE).build()));
 
     assertEquals(value(expected).getTitle(), value(actual).getTitle());
   }
 
   @Test
   void shallReturnName() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .name(NAME)
-            .build()
-    );
+    final var expected = availableFunctions(AvailableFunction.builder().name(NAME).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .name(NAME)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().name(NAME).build()));
 
     assertEquals(value(expected).getName(), value(actual).getName());
   }
 
   @Test
   void shallReturnDescription() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .description(DESCRIPTION)
-            .build()
-    );
+    final var expected =
+        availableFunctions(AvailableFunction.builder().description(DESCRIPTION).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .description(DESCRIPTION)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().description(DESCRIPTION).build()));
 
     assertEquals(value(expected).getDescription(), value(actual).getDescription());
   }
 
   @Test
   void shallReturnType() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .type(AvailableFunctionType.PRINT_CERTIFICATE)
-            .build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder().type(AvailableFunctionType.PRINT_CERTIFICATE).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .type(AvailableFunctionType.PRINT_CERTIFICATE)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder()
+                    .type(AvailableFunctionType.PRINT_CERTIFICATE)
+                    .build()));
 
     assertEquals(value(expected).getType(), value(actual).getType());
   }
 
   @Test
   void shallReturnEnabled() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .enabled(true)
-            .build()
-    );
+    final var expected = availableFunctions(AvailableFunction.builder().enabled(true).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .enabled(true)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().enabled(true).build()));
 
     assertEquals(value(expected).isEnabled(), value(actual).isEnabled());
   }
 
   @Test
   void shallReturnDisbled() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .enabled(false)
-            .build()
-    );
+    final var expected = availableFunctions(AvailableFunction.builder().enabled(false).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .enabled(false)
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().enabled(false).build()));
 
     assertEquals(value(expected).isEnabled(), value(actual).isEnabled());
   }
 
   @Test
   void shallReturnInformationListEmptyWhenNull() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(Collections.emptyList())
-            .build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder().information(Collections.emptyList()).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(AvailableFunctionDTO.builder().build()));
 
     assertEquals(value(expected).getInformation(), value(actual).getInformation());
   }
 
   @Test
   void shallReturnInformationListEmptyWhenEmpty() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(Collections.emptyList())
-            .build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder().information(Collections.emptyList()).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .information(Collections.emptyList())
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder().information(Collections.emptyList()).build()));
 
     assertEquals(value(expected).getInformation(), value(actual).getInformation());
   }
 
   @Test
   void shallReturnInformationListWithId() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(
-                information(Information.builder()
-                    .id(INFORMATION_ID)
-                    .build()
-                )
-            )
-            .build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder()
+                .information(information(Information.builder().id(INFORMATION_ID).build()))
+                .build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .information(
-                    informationDTOS(
-                        InformationDTO.builder()
-                            .id(INFORMATION_ID)
-                            .build()
-                    )
-                )
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder()
+                    .information(
+                        informationDTOS(InformationDTO.builder().id(INFORMATION_ID).build()))
+                    .build()));
 
     assertEquals(informationValue(expected).getId(), informationValue(actual).getId());
   }
 
   @Test
   void shallReturnInformationListWithType() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(
-                information(Information.builder()
-                    .type(InformationType.OPTIONS)
-                    .build()
-                )
-            )
-            .build()
-    );
-
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder()
                 .information(
-                    informationDTOS(
-                        InformationDTO.builder()
-                            .type(InformationType.OPTIONS)
-                            .build()
-                    )
-                )
-                .build()
-        )
-    );
+                    information(Information.builder().type(InformationType.OPTIONS).build()))
+                .build());
+
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder()
+                    .information(
+                        informationDTOS(
+                            InformationDTO.builder().type(InformationType.OPTIONS).build()))
+                    .build()));
 
     assertEquals(informationValue(expected).getType(), informationValue(actual).getType());
   }
 
   @Test
   void shallReturnInformationListWithText() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(
-                information(Information.builder()
-                    .text(INFORMATION_TEXT)
-                    .build()
-                )
-            )
-            .build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder()
+                .information(information(Information.builder().text(INFORMATION_TEXT).build()))
+                .build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
-                .information(
-                    informationDTOS(
-                        InformationDTO.builder()
-                            .text(INFORMATION_TEXT)
-                            .build()
-                    )
-                )
-                .build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder()
+                    .information(
+                        informationDTOS(InformationDTO.builder().text(INFORMATION_TEXT).build()))
+                    .build()));
 
     assertEquals(informationValue(expected).getText(), informationValue(actual).getText());
   }
 
   @Test
   void shallReturnInformationListWithMultipleInformation() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder()
-            .information(
-                information(
-                    Information.builder().build(),
-                    Information.builder().build(),
-                    Information.builder().build()
-                )
-            )
-            .build()
-    );
-
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder()
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder()
                 .information(
-                    informationDTOS(
-                        InformationDTO.builder().build(),
-                        InformationDTO.builder().build(),
-                        InformationDTO.builder().build()
-                    )
-                )
-                .build()
-        )
-    );
+                    information(
+                        Information.builder().build(),
+                        Information.builder().build(),
+                        Information.builder().build()))
+                .build());
+
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder()
+                    .information(
+                        informationDTOS(
+                            InformationDTO.builder().build(),
+                            InformationDTO.builder().build(),
+                            InformationDTO.builder().build()))
+                    .build()));
 
     assertEquals(informationValue(expected), informationValue(actual));
   }
 
   @Test
   void shallReturnMultipleAvailableFunctions() {
-    final var expected = availableFunctions(
-        AvailableFunction.builder().information(Collections.emptyList()).build(),
-        AvailableFunction.builder().information(Collections.emptyList()).build(),
-        AvailableFunction.builder().information(Collections.emptyList()).build()
-    );
+    final var expected =
+        availableFunctions(
+            AvailableFunction.builder().information(Collections.emptyList()).build(),
+            AvailableFunction.builder().information(Collections.emptyList()).build(),
+            AvailableFunction.builder().information(Collections.emptyList()).build());
 
-    final var actual = availableFunctionConverter.convert(
-        availableFunctionDTOs(
-            AvailableFunctionDTO.builder().build(),
-            AvailableFunctionDTO.builder().build(),
-            AvailableFunctionDTO.builder().build()
-        )
-    );
+    final var actual =
+        availableFunctionConverter.convert(
+            availableFunctionDTOs(
+                AvailableFunctionDTO.builder().build(),
+                AvailableFunctionDTO.builder().build(),
+                AvailableFunctionDTO.builder().build()));
 
     assertEquals(value(expected), value(actual));
   }
 
   private static List<Information> information(Information... information) {
-    return List.of(
-        information
-    );
+    return List.of(information);
   }
 
   private static List<InformationDTO> informationDTOS(InformationDTO... informationDTO) {
-    return List.of(
-        informationDTO
-    );
+    return List.of(informationDTO);
   }
 
   private static List<AvailableFunction> availableFunctions(
       AvailableFunction... availableFunction) {
-    return List.of(
-        availableFunction
-    );
+    return List.of(availableFunction);
   }
 
   private static List<AvailableFunctionDTO> availableFunctionDTOs(

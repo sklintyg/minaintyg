@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,17 +44,12 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithValueTrue() {
-      final var elements = createElement(CertificateDataConfigRadioBoolean.builder()
-              .selectedText(TRUE_BOOLEAN)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .selected(true)
-              .build()
-      );
+      final var elements =
+          createElement(
+              CertificateDataConfigRadioBoolean.builder().selectedText(TRUE_BOOLEAN).build(),
+              CertificateDataValueBoolean.builder().selected(true).build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(TRUE_BOOLEAN)
-          .build();
+      final var expectedResult = CertificateQuestionValueText.builder().value(TRUE_BOOLEAN).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
@@ -44,16 +57,13 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithValueFalse() {
-      final var elements = createElement(CertificateDataConfigRadioBoolean.builder()
-              .unselectedText(FALSE_BOOLEAN)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .selected(false)
-              .build());
+      final var elements =
+          createElement(
+              CertificateDataConfigRadioBoolean.builder().unselectedText(FALSE_BOOLEAN).build(),
+              CertificateDataValueBoolean.builder().selected(false).build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(FALSE_BOOLEAN)
-          .build();
+      final var expectedResult =
+          CertificateQuestionValueText.builder().value(FALSE_BOOLEAN).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
@@ -61,20 +71,16 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithNoValue() {
-      final var elements = createElement(CertificateDataConfigRadioBoolean.builder()
-              .unselectedText(NOT_PROVIDED)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .build());
+      final var elements =
+          createElement(
+              CertificateDataConfigRadioBoolean.builder().unselectedText(NOT_PROVIDED).build(),
+              CertificateDataValueBoolean.builder().build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(NOT_PROVIDED)
-          .build();
+      final var expectedResult = CertificateQuestionValueText.builder().value(NOT_PROVIDED).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
     }
-
   }
 
   @Nested
@@ -82,17 +88,12 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithValueTrue() {
-      final var elements = createElement(CertificateDataConfigCheckboxBoolean.builder()
-              .selectedText(TRUE_BOOLEAN)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .selected(true)
-              .build()
-      );
+      final var elements =
+          createElement(
+              CertificateDataConfigCheckboxBoolean.builder().selectedText(TRUE_BOOLEAN).build(),
+              CertificateDataValueBoolean.builder().selected(true).build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(TRUE_BOOLEAN)
-          .build();
+      final var expectedResult = CertificateQuestionValueText.builder().value(TRUE_BOOLEAN).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
@@ -100,16 +101,13 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithValueFalse() {
-      final var elements = createElement(CertificateDataConfigCheckboxBoolean.builder()
-              .unselectedText(FALSE_BOOLEAN)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .selected(false)
-              .build());
+      final var elements =
+          createElement(
+              CertificateDataConfigCheckboxBoolean.builder().unselectedText(FALSE_BOOLEAN).build(),
+              CertificateDataValueBoolean.builder().selected(false).build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(FALSE_BOOLEAN)
-          .build();
+      final var expectedResult =
+          CertificateQuestionValueText.builder().value(FALSE_BOOLEAN).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
@@ -117,15 +115,12 @@ class BooleanValueConverterTest {
 
     @Test
     void shouldConvertCertificateDataValueRadioBooleanWithNoValue() {
-      final var elements = createElement(CertificateDataConfigCheckboxBoolean.builder()
-              .unselectedText(NOT_PROVIDED)
-              .build(),
-          CertificateDataValueBoolean.builder()
-              .build());
+      final var elements =
+          createElement(
+              CertificateDataConfigCheckboxBoolean.builder().unselectedText(NOT_PROVIDED).build(),
+              CertificateDataValueBoolean.builder().build());
 
-      final var expectedResult = CertificateQuestionValueText.builder()
-          .value(NOT_PROVIDED)
-          .build();
+      final var expectedResult = CertificateQuestionValueText.builder().value(NOT_PROVIDED).build();
 
       final var result = booleanValueConverter.convert(elements);
       assertEquals(expectedResult, result);
@@ -134,24 +129,19 @@ class BooleanValueConverterTest {
 
   @Test
   void shouldValueIfConfigTypeIsNotSupported() {
-    final var elements = createElement(CertificateDataConfigTextArea.builder().build(),
-        CertificateDataValueBoolean.builder()
-            .selected(true)
-            .build());
+    final var elements =
+        createElement(
+            CertificateDataConfigTextArea.builder().build(),
+            CertificateDataValueBoolean.builder().selected(true).build());
 
-    final var expectedResult = CertificateQuestionValueText.builder()
-        .value("true")
-        .build();
+    final var expectedResult = CertificateQuestionValueText.builder().value("true").build();
 
     final var result = booleanValueConverter.convert(elements);
     assertEquals(expectedResult, result);
   }
 
-  private static CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
+  private static CertificateDataElement createElement(
+      CertificateDataConfig config, CertificateDataValue value) {
+    return CertificateDataElement.builder().config(config).value(value).build();
   }
 }

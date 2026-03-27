@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,20 +71,15 @@ class CertificateDataConverterTest {
   void setUp() {
     doReturn(CertificateDataValueType.TEXT).when(textValueConverter).getType();
     doReturn(CertificateDataValueType.CODE).when(codeValueConverter).getType();
-    certificateDataConverter = new CertificateDataConverter(
-        List.of(textValueConverter, codeValueConverter)
-    );
+    certificateDataConverter =
+        new CertificateDataConverter(List.of(textValueConverter, codeValueConverter));
   }
 
   @Test
   void shallConvertCategory() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT)
-    );
+    final var expectedCategories = List.of(createCertificateCategory(CAT_ONE_TEXT));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0)
-    );
+    final var elements = List.of(createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -75,15 +88,13 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoriesInCorrectOrder() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT),
-        createCertificateCategory(CAT_TWO_TEXT)
-    );
+    final var expectedCategories =
+        List.of(createCertificateCategory(CAT_ONE_TEXT), createCertificateCategory(CAT_TWO_TEXT));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_TWO_TEXT, CAT_TWO_ID, 1),
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_TWO_TEXT, CAT_TWO_ID, 1),
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -92,16 +103,15 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithQuestion() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT, createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -110,16 +120,18 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithQuestionWithHeader() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE, QN_ONE_HEADER)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                createCertificateQuestion(
+                    QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE, QN_ONE_HEADER)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID, QN_ONE_HEADER)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(
+                QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID, QN_ONE_HEADER));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -128,28 +140,24 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithUeHeaderQuestion() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            CertificateQuestion.builder()
-                .title(QN_ONE_TEXT)
-                .value(CertificateQuestionValueText.builder().build())
-                .build()
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                CertificateQuestion.builder()
+                    .title(QN_ONE_TEXT)
+                    .value(CertificateQuestionValueText.builder().build())
+                    .build()));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigHeader.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .build()
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            CertificateDataElement.builder()
+                .id(QN_ONE_ID)
+                .index(1)
+                .parent(CAT_ONE_ID)
+                .config(CertificateDataConfigHeader.builder().text(QN_ONE_TEXT).build())
+                .build());
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -158,18 +166,18 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithQuestionsInCorrectOrder() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE),
-            createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE),
+                createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, CAT_ONE_ID),
-        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, CAT_ONE_ID),
+            createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -178,18 +186,21 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithQuestionWithSubQuestion() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE,
-                createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE))
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                createCertificateQuestion(
+                    QN_ONE_TEXT,
+                    QN_ONE_LABEL,
+                    DEFAULT_VALUE,
+                    createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE))));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID),
-        createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, QN_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID),
+            createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, QN_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -198,21 +209,23 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertCategoryWithQuestionWithSubQuestionInCorrectOrder() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, QN_ONE_LABEL, DEFAULT_VALUE,
-                createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE),
-                createCertificateQuestion(QN_THREE_TEXT, QN_THREE_LABEL, DEFAULT_VALUE)
-            )
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                createCertificateQuestion(
+                    QN_ONE_TEXT,
+                    QN_ONE_LABEL,
+                    DEFAULT_VALUE,
+                    createCertificateQuestion(QN_TWO_TEXT, QN_TWO_LABEL, DEFAULT_VALUE),
+                    createCertificateQuestion(QN_THREE_TEXT, QN_THREE_LABEL, DEFAULT_VALUE))));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID),
-        createQuestionElement(QN_THREE_TEXT, QN_THREE_LABEL, QN_THREE_ID, 3, QN_ONE_ID),
-        createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, QN_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, QN_ONE_LABEL, QN_ONE_ID, 1, CAT_ONE_ID),
+            createQuestionElement(QN_THREE_TEXT, QN_THREE_LABEL, QN_THREE_ID, 3, QN_ONE_ID),
+            createQuestionElement(QN_TWO_TEXT, QN_TWO_LABEL, QN_TWO_ID, 2, QN_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -221,13 +234,9 @@ class CertificateDataConverterTest {
 
   @Test
   void shallReturnTitleNullIfTextIsNull() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(null)
-    );
+    final var expectedCategories = List.of(createCertificateCategory(null));
 
-    final var elements = List.of(
-        createCategoryElement(null, CAT_ONE_ID, 0)
-    );
+    final var elements = List.of(createCategoryElement(null, CAT_ONE_ID, 0));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -236,13 +245,9 @@ class CertificateDataConverterTest {
 
   @Test
   void shallReturnTitleNullIfTextIsEmpty() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(null)
-    );
+    final var expectedCategories = List.of(createCertificateCategory(null));
 
-    final var elements = List.of(
-        createCategoryElement("", CAT_ONE_ID, 0)
-    );
+    final var elements = List.of(createCategoryElement("", CAT_ONE_ID, 0));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -251,16 +256,15 @@ class CertificateDataConverterTest {
 
   @Test
   void shallReturnLabelNullIfLabelIsNull() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT, createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, null, QN_ONE_ID, 1, CAT_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, null, QN_ONE_ID, 1, CAT_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -269,16 +273,15 @@ class CertificateDataConverterTest {
 
   @Test
   void shallReturnLabelNullIfLabelIsEmpty() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT, createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID)
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -287,40 +290,29 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertValueWhenValueConverterExists() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            CertificateQuestion.builder()
-                .title(QN_ONE_TEXT)
-                .value(
-                    CertificateQuestionValueText.builder()
-                        .value(QN_ONE_VALUE)
-                        .build()
-                )
-                .build()
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                CertificateQuestion.builder()
+                    .title(QN_ONE_TEXT)
+                    .value(CertificateQuestionValueText.builder().value(QN_ONE_VALUE).build())
+                    .build()));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigTextArea.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .value(
-                CertificateDataValueText.builder()
-                    .text(QN_ONE_VALUE)
-                    .build()
-            )
-            .build()
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            CertificateDataElement.builder()
+                .id(QN_ONE_ID)
+                .index(1)
+                .parent(CAT_ONE_ID)
+                .config(CertificateDataConfigTextArea.builder().text(QN_ONE_TEXT).build())
+                .value(CertificateDataValueText.builder().text(QN_ONE_VALUE).build())
+                .build());
 
     doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
-        .when(textValueConverter).convert(elements.get(1));
+        .when(textValueConverter)
+        .convert(elements.get(1));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -329,41 +321,36 @@ class CertificateDataConverterTest {
 
   @Test
   void shallConvertValueWhenValueConverterWithSubquestionsExists() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE,
-                createCertificateQuestion(QN_TWO_TEXT, null, DEFAULT_VALUE)
-            )
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                createCertificateQuestion(
+                    QN_ONE_TEXT,
+                    null,
+                    QN_TEXT_VALUE,
+                    createCertificateQuestion(QN_TWO_TEXT, null, DEFAULT_VALUE))));
 
     final var subQuestion = createQuestionElement(QN_TWO_TEXT, "", QN_TWO_ID, 2, QN_ONE_ID);
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigTextArea.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .value(
-                CertificateDataValueCode.builder()
-                    .id(QN_ONE_VALUE)
-                    .build()
-            )
-            .build(),
-        subQuestion
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            CertificateDataElement.builder()
+                .id(QN_ONE_ID)
+                .index(1)
+                .parent(CAT_ONE_ID)
+                .config(CertificateDataConfigTextArea.builder().text(QN_ONE_TEXT).build())
+                .value(CertificateDataValueCode.builder().id(QN_ONE_VALUE).build())
+                .build(),
+            subQuestion);
 
-    doReturn(Boolean.TRUE)
-        .when(codeValueConverter).includeSubquestions();
+    doReturn(Boolean.TRUE).when(codeValueConverter).includeSubquestions();
     doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
-        .when(codeValueConverter).convert(elements.get(1), List.of(subQuestion));
+        .when(codeValueConverter)
+        .convert(elements.get(1), List.of(subQuestion));
     doReturn(expectedCategories.get(0).getQuestions().get(0).getSubQuestions().get(0).getValue())
-        .when(textValueConverter).convert(elements.get(2));
+        .when(textValueConverter)
+        .convert(elements.get(2));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -372,42 +359,34 @@ class CertificateDataConverterTest {
 
   @Test
   void shallExcludeHiddenQuestionsFromConversion() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT, createCertificateQuestion(QN_ONE_TEXT, null, QN_TEXT_VALUE)));
 
-    final var subQuestion = CertificateDataElement.builder()
-        .parent(QN_ONE_ID)
-        .style(CertificateDataElementStyleEnum.HIDDEN)
-        .config(CertificateDataConfigTextArea.builder().build())
-        .build();
-
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+    final var subQuestion =
         CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigTextArea.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .value(
-                CertificateDataValueCode.builder()
-                    .id(QN_ONE_VALUE)
-                    .build()
-            )
-            .build(),
-        subQuestion
-    );
+            .parent(QN_ONE_ID)
+            .style(CertificateDataElementStyleEnum.HIDDEN)
+            .config(CertificateDataConfigTextArea.builder().build())
+            .build();
 
-    doReturn(Boolean.TRUE)
-        .when(codeValueConverter).includeSubquestions();
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            CertificateDataElement.builder()
+                .id(QN_ONE_ID)
+                .index(1)
+                .parent(CAT_ONE_ID)
+                .config(CertificateDataConfigTextArea.builder().text(QN_ONE_TEXT).build())
+                .value(CertificateDataValueCode.builder().id(QN_ONE_VALUE).build())
+                .build(),
+            subQuestion);
+
+    doReturn(Boolean.TRUE).when(codeValueConverter).includeSubquestions();
     doReturn(expectedCategories.get(0).getQuestions().get(0).getValue())
-        .when(codeValueConverter).convert(elements.get(1), List.of(subQuestion));
+        .when(codeValueConverter)
+        .convert(elements.get(1), List.of(subQuestion));
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -416,35 +395,25 @@ class CertificateDataConverterTest {
 
   @Test
   void shallReturnErrorValueWhenValueConverterDoesntExists() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            CertificateQuestion.builder()
-                .title(QN_ONE_TEXT)
-                .value(
-                    CertificateQuestionValueText.builder()
-                        .value(QN_ERROR_VALUE)
-                        .build()
-                )
-                .build()
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT,
+                CertificateQuestion.builder()
+                    .title(QN_ONE_TEXT)
+                    .value(CertificateQuestionValueText.builder().value(QN_ERROR_VALUE).build())
+                    .build()));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        CertificateDataElement.builder()
-            .id(QN_ONE_ID)
-            .index(1)
-            .parent(CAT_ONE_ID)
-            .config(
-                CertificateDataConfigRadioBoolean.builder()
-                    .text(QN_ONE_TEXT)
-                    .build()
-            )
-            .value(
-                CertificateDataValueBoolean.builder().build()
-            )
-            .build()
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            CertificateDataElement.builder()
+                .id(QN_ONE_ID)
+                .index(1)
+                .parent(CAT_ONE_ID)
+                .config(CertificateDataConfigRadioBoolean.builder().text(QN_ONE_TEXT).build())
+                .value(CertificateDataValueBoolean.builder().build())
+                .build());
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
@@ -453,95 +422,72 @@ class CertificateDataConverterTest {
 
   @Test
   void shallExcludeQuestionsOfTypeMessageFromConversion() {
-    final var expectedCategories = List.of(
-        createCertificateCategory(CAT_ONE_TEXT,
-            createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)
-        )
-    );
+    final var expectedCategories =
+        List.of(
+            createCertificateCategory(
+                CAT_ONE_TEXT, createCertificateQuestion(QN_ONE_TEXT, null, DEFAULT_VALUE)));
 
-    final var elements = List.of(
-        createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
-        createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID),
-        CertificateDataElement.builder()
-            .id(QN_TWO_ID)
-            .index(2)
-            .parent(QN_ONE_ID)
-            .config(
-                CertificateDataConfigMessage.builder()
-                    .message(
-                        Message.builder()
-                            .content(QN_ONE_TEXT)
-                            .build()
-                    )
-                    .build()
-            )
-            .build()
-    );
+    final var elements =
+        List.of(
+            createCategoryElement(CAT_ONE_TEXT, CAT_ONE_ID, 0),
+            createQuestionElement(QN_ONE_TEXT, "", QN_ONE_ID, 1, CAT_ONE_ID),
+            CertificateDataElement.builder()
+                .id(QN_TWO_ID)
+                .index(2)
+                .parent(QN_ONE_ID)
+                .config(
+                    CertificateDataConfigMessage.builder()
+                        .message(Message.builder().content(QN_ONE_TEXT).build())
+                        .build())
+                .build());
 
     final var actualCategories = certificateDataConverter.convert(elements);
 
     assertEquals(expectedCategories, actualCategories);
   }
 
-  private static CertificateCategory createCertificateCategory(String title,
-      CertificateQuestion... question) {
-    return CertificateCategory.builder()
-        .title(title)
-        .questions(List.of(question))
-        .build();
+  private static CertificateCategory createCertificateCategory(
+      String title, CertificateQuestion... question) {
+    return CertificateCategory.builder().title(title).questions(List.of(question)).build();
   }
 
-  private static CertificateQuestion createCertificateQuestion(String title,
-      String label, String value, String header, CertificateQuestion... subQuestion) {
+  private static CertificateQuestion createCertificateQuestion(
+      String title, String label, String value, String header, CertificateQuestion... subQuestion) {
     return CertificateQuestion.builder()
         .title(title)
         .label(label)
         .header(header)
-        .value(
-            CertificateQuestionValueText.builder()
-                .value(value)
-                .build()
-        )
+        .value(CertificateQuestionValueText.builder().value(value).build())
         .subQuestions(List.of(subQuestion))
         .build();
   }
 
-  private static CertificateQuestion createCertificateQuestion(String title,
-      String label, String value, CertificateQuestion... subQuestion) {
+  private static CertificateQuestion createCertificateQuestion(
+      String title, String label, String value, CertificateQuestion... subQuestion) {
     return createCertificateQuestion(title, label, value, null, subQuestion);
   }
 
-  private static CertificateDataElement createCategoryElement(
-      String title, String id, int index) {
+  private static CertificateDataElement createCategoryElement(String title, String id, int index) {
     return CertificateDataElement.builder()
         .id(id)
         .index(index)
-        .config(
-            CertificateDataConfigCategory.builder()
-                .text(title)
-                .build()
-        )
+        .config(CertificateDataConfigCategory.builder().text(title).build())
         .build();
   }
 
-  private static CertificateDataElement createQuestionElement(String text, String label, String id,
-      int index, String parent) {
+  private static CertificateDataElement createQuestionElement(
+      String text, String label, String id, int index, String parent) {
     return createQuestionElement(text, label, id, index, parent, null);
   }
 
-  private static CertificateDataElement createQuestionElement(String text, String label, String id,
-      int index, String parent, String header) {
+  private static CertificateDataElement createQuestionElement(
+      String text, String label, String id, int index, String parent, String header) {
     return CertificateDataElement.builder()
         .id(id)
         .index(index)
         .parent(parent)
         .config(
-            CertificateDataConfigTextArea.builder()
-                .text(text)
-                .label(label)
-                .header(header)
-                .build()
-        )
+            CertificateDataConfigTextArea.builder().text(text).label(label).header(header).build())
         .build();
   }
 }

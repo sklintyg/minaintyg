@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,50 +56,34 @@ class GetCertificateServiceTest {
 
   private static final String ID = "ID";
   private static final String TYPE = "Type";
-  private static final GetCertificateRequest REQUEST = GetCertificateRequest
-      .builder()
-      .certificateId(ID)
-      .build();
+  private static final GetCertificateRequest REQUEST =
+      GetCertificateRequest.builder().certificateId(ID).build();
 
-  private static final CertificateText TEXT = CertificateText.builder()
-      .type(CertificateTextType.PREAMBLE_TEXT)
-      .build();
+  private static final CertificateText TEXT =
+      CertificateText.builder().type(CertificateTextType.PREAMBLE_TEXT).build();
 
-  private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE = GetCertificateIntegrationResponse
-      .builder()
-      .certificate(
-          Certificate
-              .builder()
-              .metadata(CertificateMetadata
-                  .builder()
-                  .type(
-                      CertificateType
-                          .builder()
-                          .id(TYPE)
-                          .build()
-                  )
+  private static final GetCertificateIntegrationResponse EXPECTED_RESPONSE =
+      GetCertificateIntegrationResponse.builder()
+          .certificate(
+              Certificate.builder()
+                  .metadata(
+                      CertificateMetadata.builder()
+                          .type(CertificateType.builder().id(TYPE).build())
+                          .build())
+                  .categories(List.of(CertificateCategory.builder().build()))
                   .build())
-              .categories(List.of(CertificateCategory.builder().build()))
-              .build()
-      )
-      .texts(List.of(TEXT))
-      .availableFunctions(List.of(AvailableFunction.builder().build()))
-      .build();
+          .texts(List.of(TEXT))
+          .availableFunctions(List.of(AvailableFunction.builder().build()))
+          .build();
   private static final String EXPECTED_CONVERTED_TEXT = "Example text";
   public static final String PERSON_ID = "PERSON_ID";
 
-  @Mock
-  MonitoringLogService monitoringLogService;
-  @Mock
-  FormattedCertificateConverter formattedCertificateConverter;
-  @Mock
-  GetCertificateIntegrationService getCertificateIntegrationService;
-  @Mock
-  UserService userService;
-  @Mock
-  FormattedCertificateTextConverter formattedCertificateTextConverter;
-  @InjectMocks
-  GetCertificateService getCertificateService;
+  @Mock MonitoringLogService monitoringLogService;
+  @Mock FormattedCertificateConverter formattedCertificateConverter;
+  @Mock GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock UserService userService;
+  @Mock FormattedCertificateTextConverter formattedCertificateTextConverter;
+  @InjectMocks GetCertificateService getCertificateService;
 
   @BeforeEach
   void setup() {
@@ -183,10 +185,8 @@ class GetCertificateServiceTest {
     void shouldSetConvertedCertificateText() {
       final var response = getCertificateService.get(REQUEST);
 
-      assertEquals(EXPECTED_CONVERTED_TEXT,
-          response.getTexts().get(CertificateTextType.PREAMBLE_TEXT)
-      );
+      assertEquals(
+          EXPECTED_CONVERTED_TEXT, response.getTexts().get(CertificateTextType.PREAMBLE_TEXT));
     }
   }
-
 }
