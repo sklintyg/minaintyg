@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,54 +48,29 @@ class GetCertificateListFilterServiceTest {
   private static final String A_TYPE_NAME = "A_TYPE_NAME";
   private static final String B_TYPE_NAME = "B_TYPE_NAME";
   private static final String ID = "ID";
-  private static final CertificateListItem CERTIFICATE_LIST_ITEM_1 = CertificateListItem
-      .builder()
-      .issued(LocalDateTime.now())
-      .type(
-          CertificateType
-              .builder()
-              .name(A_TYPE_NAME)
-              .id(ID).build()
-      )
-      .unit(
-          CertificateUnit
-              .builder()
-              .id(UNIT_ID)
-              .name(A_UNIT_NAME)
-              .build()
-      )
-      .build();
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM_1 =
+      CertificateListItem.builder()
+          .issued(LocalDateTime.now())
+          .type(CertificateType.builder().name(A_TYPE_NAME).id(ID).build())
+          .unit(CertificateUnit.builder().id(UNIT_ID).name(A_UNIT_NAME).build())
+          .build();
 
-  private static final CertificateListItem CERTIFICATE_LIST_ITEM_2 = CertificateListItem
-      .builder()
-      .issued(LocalDateTime.now().minusYears(10))
-      .type(
-          CertificateType
-              .builder()
-              .name(B_TYPE_NAME)
-              .id(ID).build()
-      )
-      .unit(
-          CertificateUnit
-              .builder()
-              .id(UNIT_ID)
-              .name(B_UNIT_NAME)
-              .build()
-      )
-      .build();
-  @Mock
-  ListCertificatesService listCertificatesService;
-  @InjectMocks
-  GetCertificateListFilterService getCertificateListFilterService;
+  private static final CertificateListItem CERTIFICATE_LIST_ITEM_2 =
+      CertificateListItem.builder()
+          .issued(LocalDateTime.now().minusYears(10))
+          .type(CertificateType.builder().name(B_TYPE_NAME).id(ID).build())
+          .unit(CertificateUnit.builder().id(UNIT_ID).name(B_UNIT_NAME).build())
+          .build();
+  @Mock ListCertificatesService listCertificatesService;
+  @InjectMocks GetCertificateListFilterService getCertificateListFilterService;
 
   @BeforeEach
   void setup() {
-    when(listCertificatesService.get(any(ListCertificatesRequest.class))).thenReturn(
-        ListCertificatesResponse
-            .builder()
-            .content(List.of(CERTIFICATE_LIST_ITEM_2, CERTIFICATE_LIST_ITEM_1))
-            .build()
-    );
+    when(listCertificatesService.get(any(ListCertificatesRequest.class)))
+        .thenReturn(
+            ListCertificatesResponse.builder()
+                .content(List.of(CERTIFICATE_LIST_ITEM_2, CERTIFICATE_LIST_ITEM_1))
+                .build());
   }
 
   @Test
@@ -105,16 +98,16 @@ class GetCertificateListFilterServiceTest {
   void shouldSetCertificateTypeName() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CERTIFICATE_LIST_ITEM_1.getType().getName(),
-        result.getCertificateTypes().get(0).getName());
+    assertEquals(
+        CERTIFICATE_LIST_ITEM_1.getType().getName(), result.getCertificateTypes().get(0).getName());
   }
 
   @Test
   void shouldSetCertificateTypeId() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(CERTIFICATE_LIST_ITEM_1.getType().getId(),
-        result.getCertificateTypes().get(0).getId());
+    assertEquals(
+        CERTIFICATE_LIST_ITEM_1.getType().getId(), result.getCertificateTypes().get(0).getId());
   }
 
   @Test
@@ -135,15 +128,10 @@ class GetCertificateListFilterServiceTest {
   void shouldSortTypeNamesAlphabetically() {
     final var result = getCertificateListFilterService.get();
 
-    final var expectedResult = List.of(CertificateTypeFilter.builder()
-            .name(A_TYPE_NAME)
-            .id(ID)
-            .build(),
-        CertificateTypeFilter.builder()
-            .name(B_TYPE_NAME)
-            .id(ID)
-            .build()
-    );
+    final var expectedResult =
+        List.of(
+            CertificateTypeFilter.builder().name(A_TYPE_NAME).id(ID).build(),
+            CertificateTypeFilter.builder().name(B_TYPE_NAME).id(ID).build());
 
     assertEquals(expectedResult, result.getCertificateTypes());
   }
@@ -152,17 +140,10 @@ class GetCertificateListFilterServiceTest {
   void shouldSortUnitsAlphabetically() {
     final var result = getCertificateListFilterService.get();
 
-    final var expectedResult = List.of(CertificateUnit
-            .builder()
-            .id(UNIT_ID)
-            .name(A_UNIT_NAME)
-            .build(),
-        CertificateUnit
-            .builder()
-            .id(UNIT_ID)
-            .name(B_UNIT_NAME)
-            .build()
-    );
+    final var expectedResult =
+        List.of(
+            CertificateUnit.builder().id(UNIT_ID).name(A_UNIT_NAME).build(),
+            CertificateUnit.builder().id(UNIT_ID).name(B_UNIT_NAME).build());
 
     assertEquals(expectedResult, result.getUnits());
   }
@@ -171,16 +152,18 @@ class GetCertificateListFilterServiceTest {
   void shouldSortStatusesAlphabetically() {
     final var result = getCertificateListFilterService.get();
 
-    assertEquals(List.of(CertificateStatusType.NOT_SENT, CertificateStatusType.SENT),
-        result.getStatuses());
+    assertEquals(
+        List.of(CertificateStatusType.NOT_SENT, CertificateStatusType.SENT), result.getStatuses());
   }
 
   @Test
   void shouldSortYearsDescending() {
     final var result = getCertificateListFilterService.get();
 
-    final var expectedResult = List.of(String.valueOf(LocalDateTime.now().getYear()),
-        String.valueOf(LocalDateTime.now().minusYears(10).getYear()));
+    final var expectedResult =
+        List.of(
+            String.valueOf(LocalDateTime.now().getYear()),
+            String.valueOf(LocalDateTime.now().minusYears(10).getYear()));
 
     assertEquals(expectedResult, result.getYears());
   }

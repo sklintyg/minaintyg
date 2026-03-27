@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -59,24 +77,34 @@ public class WebSecurityConfig {
   private final Environment environment;
   private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
   private final CustomXFrameOptionsHeaderWriter customXFrameOptionsHeaderWriter;
+
   @Value("${spring.ssl.bundle.jks.app.key.alias}")
   private String alias;
+
   @Value("${spring.ssl.bundle.jks.app.keystore.password}")
   private String password;
+
   @Value("${saml.idp.metadata.location}")
   private String samlIdpMetadataLocation;
+
   @Value("${saml.sp.assertion.consumer.service.location}")
   private String assertionConsumerServiceLocation;
+
   @Value("${saml.sp.single.logout.service.location}")
   private String singleLogoutServiceLocation;
+
   @Value("${saml.sp.single.logout.service.response.location}")
   private String singleLogoutServiceResponseLocation;
+
   @Value("${saml.login.success.url}")
   private String samlLoginSuccessUrl;
+
   @Value("${saml.login.success.url.always.use}")
   private boolean samlLoginSuccessUrlAlwaysUse;
+
   @Value("${saml.logout.success.url}")
   private String samlLogoutSuccessUrl;
+
   @Value("${cookie.serializer.same.site.none.exclusion:true}")
   private boolean useSameSiteNoneExclusion;
 
@@ -87,68 +115,65 @@ public class WebSecurityConfig {
 
     final var app = sslBundles.getBundle(APP_BUNDLE_NAME);
 
-    final var appPrivateKey = (PrivateKey) app.getStores()
-        .getKeyStore()
-        .getKey(alias, password.toCharArray());
+    final var appPrivateKey =
+        (PrivateKey) app.getStores().getKeyStore().getKey(alias, password.toCharArray());
 
-    final var appCertificate = (X509Certificate) app.getStores()
-        .getKeyStore()
-        .getCertificate(alias);
+    final var appCertificate =
+        (X509Certificate) app.getStores().getKeyStore().getCertificate(alias);
 
-    final var registration = RelyingPartyRegistrations
-        .fromMetadataLocation(samlIdpMetadataLocation)
-        .registrationId(AuthenticationConstants.ELEG_PARTY_REGISTRATION_ID)
-        .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
-        .singleLogoutServiceLocation(singleLogoutServiceLocation)
-        .singleLogoutServiceResponseLocation(singleLogoutServiceResponseLocation)
-        .signingX509Credentials(signing ->
-            signing.add(
-                Saml2X509Credential.signing(appPrivateKey, appCertificate)
-            )
-        )
-        .build();
+    final var registration =
+        RelyingPartyRegistrations.fromMetadataLocation(samlIdpMetadataLocation)
+            .registrationId(AuthenticationConstants.ELEG_PARTY_REGISTRATION_ID)
+            .assertionConsumerServiceLocation(assertionConsumerServiceLocation)
+            .singleLogoutServiceLocation(singleLogoutServiceLocation)
+            .singleLogoutServiceResponseLocation(singleLogoutServiceResponseLocation)
+            .signingX509Credentials(
+                signing -> signing.add(Saml2X509Credential.signing(appPrivateKey, appCertificate)))
+            .build();
 
     return new InMemoryRelyingPartyRegistrationRepository(registration);
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http,
+  public SecurityFilterChain filterChain(
+      HttpSecurity http,
       RelyingPartyRegistrationRepository relyingPartyRegistrationRepository,
-      SessionTimeoutFilter sessionTimeoutFilter) throws Exception {
+      SessionTimeoutFilter sessionTimeoutFilter)
+      throws Exception {
 
     if (environment.acceptsProfiles(Profiles.of(TESTABILITY_PROFILE))) {
       configureTestability(http);
     }
 
-    http
-        .authorizeHttpRequests(request -> request.
-            requestMatchers(HEALTH_CHECK_ENDPOINT).permitAll().
-            anyRequest().fullyAuthenticated()
-        )
-        .saml2Login(saml2 -> saml2
-            .relyingPartyRegistrationRepository(relyingPartyRegistrationRepository)
-            .authenticationManager(
-                new ProviderManager(
-                    getOpenSaml4AuthenticationProvider()
-                )
-            )
-            .failureHandler(customAuthenticationFailureHandler)
-            .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse)
-        )
-        .requestCache(cacheConfigurer -> cacheConfigurer
-            .requestCache(
-                samlLoginSuccessUrlAlwaysUse
-                    ? new NullRequestCache()
-                    : new HttpSessionRequestCache()
-            )
-        )
-        .exceptionHandling(exceptionConfigurer -> exceptionConfigurer
-            .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
-        )
-        .csrf(csrfConfigurer -> csrfConfigurer
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
-        )
+    http.authorizeHttpRequests(
+            request ->
+                request
+                    .requestMatchers(HEALTH_CHECK_ENDPOINT)
+                    .permitAll()
+                    .anyRequest()
+                    .fullyAuthenticated())
+        .saml2Login(
+            saml2 ->
+                saml2
+                    .relyingPartyRegistrationRepository(relyingPartyRegistrationRepository)
+                    .authenticationManager(
+                        new ProviderManager(getOpenSaml4AuthenticationProvider()))
+                    .failureHandler(customAuthenticationFailureHandler)
+                    .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse))
+        .requestCache(
+            cacheConfigurer ->
+                cacheConfigurer.requestCache(
+                    samlLoginSuccessUrlAlwaysUse
+                        ? new NullRequestCache()
+                        : new HttpSessionRequestCache()))
+        .exceptionHandling(
+            exceptionConfigurer ->
+                exceptionConfigurer.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
+        .csrf(
+            csrfConfigurer ->
+                csrfConfigurer
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler()))
         .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(sessionTimeoutFilter, SwitchUserFilter.class)
         .saml2Logout(withDefaults())
@@ -160,13 +185,8 @@ public class WebSecurityConfig {
   }
 
   private void configureTestability(HttpSecurity http) throws Exception {
-    http
-        .authorizeHttpRequests(request -> request
-            .requestMatchers(TESTABILITY_API).permitAll()
-        )
-        .csrf(csrfConfigurer -> csrfConfigurer
-            .ignoringRequestMatchers(TESTABILITY_API)
-        );
+    http.authorizeHttpRequests(request -> request.requestMatchers(TESTABILITY_API).permitAll())
+        .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(TESTABILITY_API));
   }
 
   @Bean
@@ -176,20 +196,23 @@ public class WebSecurityConfig {
 
   private OpenSaml4AuthenticationProvider getOpenSaml4AuthenticationProvider() {
     final var authenticationProvider = new OpenSaml4AuthenticationProvider();
-    authenticationProvider.setResponseAuthenticationConverter(responseToken -> {
-      final var authentication = OpenSaml4AuthenticationProvider
-          .createDefaultResponseAuthenticationConverter()
-          .convert(responseToken);
-      if (!(authentication != null && authentication.isAuthenticated())) {
-        //TODO: Look into better error handling when working with Authentication-jira
-        return null;
-      }
-      final var personId = getAttribute(authentication);
-      final var principal = minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
-      final var saml2AuthenticationToken = new Saml2AuthenticationToken(principal, authentication);
-      saml2AuthenticationToken.setAuthenticated(true);
-      return saml2AuthenticationToken;
-    });
+    authenticationProvider.setResponseAuthenticationConverter(
+        responseToken -> {
+          final var authentication =
+              OpenSaml4AuthenticationProvider.createDefaultResponseAuthenticationConverter()
+                  .convert(responseToken);
+          if (!(authentication != null && authentication.isAuthenticated())) {
+            // TODO: Look into better error handling when working with Authentication-jira
+            return null;
+          }
+          final var personId = getAttribute(authentication);
+          final var principal =
+              minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
+          final var saml2AuthenticationToken =
+              new Saml2AuthenticationToken(principal, authentication);
+          saml2AuthenticationToken.setAuthenticated(true);
+          return saml2AuthenticationToken;
+        });
     return authenticationProvider;
   }
 

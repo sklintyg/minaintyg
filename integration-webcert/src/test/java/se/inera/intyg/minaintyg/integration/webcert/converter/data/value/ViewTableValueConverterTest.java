@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,47 +49,32 @@ class ViewTableValueConverterTest {
 
   @Test
   void shouldConvertValue() {
-    final var elements = createElement(
-        CertificateDataConfigViewTable.builder()
-            .columns(
-                List.of(
-                    ViewColumn.builder().text(HEADING_1).build(),
-                    ViewColumn.builder().text(HEADING_2).build(),
-                    ViewColumn.builder().text(HEADING_3).build()
-                )
-            )
-            .build(),
-        CertificateDataValueViewTable.builder()
-            .rows(List.of(
-                CertificateDataValueViewRow
-                    .builder()
-                    .columns(List.of(
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_1)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_2)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_3)
-                            .build()
-                    ))
-                    .build()
-            ))
-            .build()
-    );
+    final var elements =
+        createElement(
+            CertificateDataConfigViewTable.builder()
+                .columns(
+                    List.of(
+                        ViewColumn.builder().text(HEADING_1).build(),
+                        ViewColumn.builder().text(HEADING_2).build(),
+                        ViewColumn.builder().text(HEADING_3).build()))
+                .build(),
+            CertificateDataValueViewTable.builder()
+                .rows(
+                    List.of(
+                        CertificateDataValueViewRow.builder()
+                            .columns(
+                                List.of(
+                                    CertificateDataValueText.builder().text(VALUE_1).build(),
+                                    CertificateDataValueText.builder().text(VALUE_2).build(),
+                                    CertificateDataValueText.builder().text(VALUE_3).build()))
+                            .build()))
+                .build());
 
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(List.of(HEADING_1, HEADING_2, HEADING_3))
-        .values(
-            List.of(
-                List.of(VALUE_1, VALUE_2, VALUE_3)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(List.of(HEADING_1, HEADING_2, HEADING_3))
+            .values(List.of(List.of(VALUE_1, VALUE_2, VALUE_3)))
+            .build();
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
@@ -79,47 +82,32 @@ class ViewTableValueConverterTest {
 
   @Test
   void shouldConvertValueIncludingEmptyHeading() {
-    final var elements = createElement(
-        CertificateDataConfigViewTable.builder()
-            .columns(
-                List.of(
-                    ViewColumn.builder().build(),
-                    ViewColumn.builder().text(HEADING_2).build(),
-                    ViewColumn.builder().text(HEADING_3).build()
-                )
-            )
-            .build(),
-        CertificateDataValueViewTable.builder()
-            .rows(List.of(
-                CertificateDataValueViewRow
-                    .builder()
-                    .columns(List.of(
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_1)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_2)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_3)
-                            .build()
-                    ))
-                    .build()
-            ))
-            .build()
-    );
+    final var elements =
+        createElement(
+            CertificateDataConfigViewTable.builder()
+                .columns(
+                    List.of(
+                        ViewColumn.builder().build(),
+                        ViewColumn.builder().text(HEADING_2).build(),
+                        ViewColumn.builder().text(HEADING_3).build()))
+                .build(),
+            CertificateDataValueViewTable.builder()
+                .rows(
+                    List.of(
+                        CertificateDataValueViewRow.builder()
+                            .columns(
+                                List.of(
+                                    CertificateDataValueText.builder().text(VALUE_1).build(),
+                                    CertificateDataValueText.builder().text(VALUE_2).build(),
+                                    CertificateDataValueText.builder().text(VALUE_3).build()))
+                            .build()))
+                .build());
 
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(List.of("", HEADING_2, HEADING_3))
-        .values(
-            List.of(
-                List.of(VALUE_1, VALUE_2, VALUE_3)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(List.of("", HEADING_2, HEADING_3))
+            .values(List.of(List.of(VALUE_1, VALUE_2, VALUE_3)))
+            .build();
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
@@ -127,14 +115,12 @@ class ViewTableValueConverterTest {
 
   @Test
   void shouldConvertWhenNoValue() {
-    final var elements = createElement(
-        CertificateDataConfigViewTable.builder().build(),
-        CertificateDataValueViewTable.builder().build()
-    );
+    final var elements =
+        createElement(
+            CertificateDataConfigViewTable.builder().build(),
+            CertificateDataValueViewTable.builder().build());
 
-    final var expectedResult = CertificateQuestionValueText.builder()
-        .value(NOT_PROVIDED)
-        .build();
+    final var expectedResult = CertificateQuestionValueText.builder().value(NOT_PROVIDED).build();
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
@@ -142,49 +128,33 @@ class ViewTableValueConverterTest {
 
   @Test
   void shouldConvertWhenWrongConfig() {
-    final var elements = createElement(
-        CertificateDataConfigTextArea.builder().build(),
-        CertificateDataValueViewTable.builder()
-            .rows(List.of(
-                CertificateDataValueViewRow
-                    .builder()
-                    .columns(List.of(
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_1)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_2)
-                            .build(),
-                        CertificateDataValueText
-                            .builder()
-                            .text(VALUE_3)
-                            .build()
-                    ))
-                    .build()
-            ))
-            .build()
-    );
+    final var elements =
+        createElement(
+            CertificateDataConfigTextArea.builder().build(),
+            CertificateDataValueViewTable.builder()
+                .rows(
+                    List.of(
+                        CertificateDataValueViewRow.builder()
+                            .columns(
+                                List.of(
+                                    CertificateDataValueText.builder().text(VALUE_1).build(),
+                                    CertificateDataValueText.builder().text(VALUE_2).build(),
+                                    CertificateDataValueText.builder().text(VALUE_3).build()))
+                            .build()))
+                .build());
 
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(List.of(MISSING_LABEL))
-        .values(
-            List.of(
-                List.of(VALUE_1, VALUE_2, VALUE_3)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(List.of(MISSING_LABEL))
+            .values(List.of(List.of(VALUE_1, VALUE_2, VALUE_3)))
+            .build();
 
     final var result = valueConverter.convert(elements);
     assertEquals(expectedResult, result);
   }
 
-  private CertificateDataElement createElement(CertificateDataConfig config,
-      CertificateDataValue value) {
-    return CertificateDataElement.builder()
-        .config(config)
-        .value(value)
-        .build();
+  private CertificateDataElement createElement(
+      CertificateDataConfig config, CertificateDataValue value) {
+    return CertificateDataElement.builder().config(config).value(value).build();
   }
 }

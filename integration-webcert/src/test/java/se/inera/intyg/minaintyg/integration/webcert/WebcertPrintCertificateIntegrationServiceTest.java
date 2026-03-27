@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,32 +39,26 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateR
 class WebcertPrintCertificateIntegrationServiceTest {
 
   private static final String FILENAME = "NAME";
-  private static final byte[] PDF_DATA = HexFormat.of()
-      .parseHex("e04fd020ea3a6910a2d808002b30309d");
-  private static final PrintCertificateResponseDTO EXPECTED_RESPONSE = PrintCertificateResponseDTO
-      .builder()
-      .pdfData(PDF_DATA)
-      .filename(FILENAME)
-      .build();
-  private static final PrintCertificateIntegrationRequest REQUEST = PrintCertificateIntegrationRequest
-      .builder()
-      .certificateId("ID")
-      .customizationId("C_ID")
-      .personId("PERSON_ID")
-      .build();
+  private static final byte[] PDF_DATA =
+      HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d");
+  private static final PrintCertificateResponseDTO EXPECTED_RESPONSE =
+      PrintCertificateResponseDTO.builder().pdfData(PDF_DATA).filename(FILENAME).build();
+  private static final PrintCertificateIntegrationRequest REQUEST =
+      PrintCertificateIntegrationRequest.builder()
+          .certificateId("ID")
+          .customizationId("C_ID")
+          .personId("PERSON_ID")
+          .build();
 
-  @Mock
-  PrintCertificateFromWebcertService printCertificateFromWebcertService;
-  @InjectMocks
-  WebcertPrintCertificateIntegrationService webcertPrintCertificateIntegrationService;
+  @Mock PrintCertificateFromWebcertService printCertificateFromWebcertService;
+  @InjectMocks WebcertPrintCertificateIntegrationService webcertPrintCertificateIntegrationService;
 
   @Nested
   class ConvertedResponse {
 
     @BeforeEach
     void setup() {
-      when(printCertificateFromWebcertService.print(
-          any(PrintCertificateIntegrationRequest.class)))
+      when(printCertificateFromWebcertService.print(any(PrintCertificateIntegrationRequest.class)))
           .thenReturn(EXPECTED_RESPONSE);
     }
 
@@ -70,57 +82,59 @@ class WebcertPrintCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowErrorIfRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(null)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(null));
     }
 
     @Test
     void shouldThrowErrorIfCertificateIdIsNull() {
-      final var request = PrintCertificateIntegrationRequest.builder()
-          .customizationId("id")
-          .build();
+      final var request =
+          PrintCertificateIntegrationRequest.builder().customizationId("id").build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(request)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request));
     }
 
     @Test
     void shouldThrowErrorIfCertificateIdIsEmpty() {
-      final var request = PrintCertificateIntegrationRequest.builder()
-          .certificateId("")
-          .customizationId("id")
-          .build();
+      final var request =
+          PrintCertificateIntegrationRequest.builder()
+              .certificateId("")
+              .customizationId("id")
+              .build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(request)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request));
     }
 
     @Test
     void shouldThrowErrorIfPersonIdIsNull() {
-      final var request = PrintCertificateIntegrationRequest.builder()
-          .customizationId("id")
-          .certificateId("id")
-          .build();
+      final var request =
+          PrintCertificateIntegrationRequest.builder()
+              .customizationId("id")
+              .certificateId("id")
+              .build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(request)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request));
     }
 
     @Test
     void shouldThrowErrorIfPersonIdIsEmpty() {
-      final var request = PrintCertificateIntegrationRequest.builder()
-          .certificateId("id")
-          .customizationId("id")
-          .personId("")
-          .build();
+      final var request =
+          PrintCertificateIntegrationRequest.builder()
+              .certificateId("id")
+              .customizationId("id")
+              .personId("")
+              .build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(request)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(request));
     }
   }
 
@@ -129,54 +143,39 @@ class WebcertPrintCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowErrorIfResponseIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(REQUEST)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(REQUEST));
     }
 
     @Test
     void shouldThrowErrorIfFilenameIsNull() {
       when(printCertificateFromWebcertService.print(any(PrintCertificateIntegrationRequest.class)))
-          .thenReturn(
-              PrintCertificateResponseDTO
-                  .builder()
-                  .pdfData(PDF_DATA)
-                  .build()
-          );
+          .thenReturn(PrintCertificateResponseDTO.builder().pdfData(PDF_DATA).build());
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(REQUEST)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(REQUEST));
     }
 
     @Test
     void shouldThrowErrorIfFilenameIsEmpty() {
       when(printCertificateFromWebcertService.print(any(PrintCertificateIntegrationRequest.class)))
-          .thenReturn(PrintCertificateResponseDTO
-              .builder()
-              .filename("")
-              .pdfData(PDF_DATA)
-              .build()
-          );
+          .thenReturn(PrintCertificateResponseDTO.builder().filename("").pdfData(PDF_DATA).build());
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(REQUEST)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(REQUEST));
     }
 
     @Test
     void shouldThrowErrorIfPdfDataIsNull() {
       when(printCertificateFromWebcertService.print(any(PrintCertificateIntegrationRequest.class)))
-          .thenReturn(
-              PrintCertificateResponseDTO
-                  .builder()
-                  .filename(FILENAME)
-                  .build()
-          );
+          .thenReturn(PrintCertificateResponseDTO.builder().filename(FILENAME).build());
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(REQUEST)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(REQUEST));
     }
 
     @Test
@@ -184,15 +183,11 @@ class WebcertPrintCertificateIntegrationServiceTest {
       final var empty = HexFormat.of().parseHex("");
       when(printCertificateFromWebcertService.print(any(PrintCertificateIntegrationRequest.class)))
           .thenReturn(
-              PrintCertificateResponseDTO
-                  .builder()
-                  .filename(FILENAME)
-                  .pdfData(empty).build()
-          );
+              PrintCertificateResponseDTO.builder().filename(FILENAME).pdfData(empty).build());
 
-      assertThrows(IllegalArgumentException.class,
-          () -> webcertPrintCertificateIntegrationService.print(REQUEST)
-      );
+      assertThrows(
+          IllegalArgumentException.class,
+          () -> webcertPrintCertificateIntegrationService.print(REQUEST));
     }
   }
 }

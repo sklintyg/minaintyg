@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.Collections;
@@ -36,36 +54,31 @@ public class DiagnosisListValueConverter extends AbstractValueConverter {
     }
 
     return CertificateQuestionValueTable.builder()
-        .headings(
-            getHeadings(diagnoses.get(), terminologies.orElse(Collections.emptyList()))
-        )
-        .values(
-            getValues(diagnoses.get())
-        )
+        .headings(getHeadings(diagnoses.get(), terminologies.orElse(Collections.emptyList())))
+        .values(getValues(diagnoses.get()))
         .build();
   }
 
-  private static List<String> getHeadings(List<CertificateDataValueDiagnosis> diagnoses,
-      List<DiagnosesTerminology> terminologies) {
+  private static List<String> getHeadings(
+      List<CertificateDataValueDiagnosis> diagnoses, List<DiagnosesTerminology> terminologies) {
     return List.of(
         String.format(
-            DIAGNOSIS_CODE_WITH_TERMINLOGOY_LABEL, getTerminologyLabel(diagnoses, terminologies)
-        ),
-        DIAGNOSIS
-    );
+            DIAGNOSIS_CODE_WITH_TERMINLOGOY_LABEL, getTerminologyLabel(diagnoses, terminologies)),
+        DIAGNOSIS);
   }
 
-  private static String getTerminologyLabel(List<CertificateDataValueDiagnosis> diagnoses,
-      List<DiagnosesTerminology> terminologies) {
-    return diagnoses.stream().findFirst()
+  private static String getTerminologyLabel(
+      List<CertificateDataValueDiagnosis> diagnoses, List<DiagnosesTerminology> terminologies) {
+    return diagnoses.stream()
+        .findFirst()
         .map(CertificateDataValueDiagnosis::getTerminology)
-        .map(terminologyId ->
-            terminologies.stream()
-                .filter(terminology -> terminology.getId().equalsIgnoreCase(terminologyId))
-                .findAny()
-                .map(DiagnosesTerminology::getLabel)
-                .orElse(terminologyId)
-        )
+        .map(
+            terminologyId ->
+                terminologies.stream()
+                    .filter(terminology -> terminology.getId().equalsIgnoreCase(terminologyId))
+                    .findAny()
+                    .map(DiagnosesTerminology::getLabel)
+                    .orElse(terminologyId))
         .orElse(MISSING);
   }
 

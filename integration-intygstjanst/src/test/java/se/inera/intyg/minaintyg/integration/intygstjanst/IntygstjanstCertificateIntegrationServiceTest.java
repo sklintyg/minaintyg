@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,10 +43,9 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.Certificates
 class IntygstjanstCertificateIntegrationServiceTest {
 
   private static final String PERSON_ID = "191212121212";
-  @Mock
-  private GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
-  @Mock
-  private CertificateConverter certificateConverter;
+  @Mock private GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
+  @Mock private CertificateConverter certificateConverter;
+
   @InjectMocks
   private IntygstjanstCertificateIntegrationService intygstjanstCertificateIntegrationService;
 
@@ -44,16 +61,13 @@ class IntygstjanstCertificateIntegrationServiceTest {
     void setup() {
       request = GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID).build();
 
-      certificatesResponseDTO = CertificatesResponseDTO
-          .builder()
-          .content(List.of(originalCertificate))
-          .build();
+      certificatesResponseDTO =
+          CertificatesResponseDTO.builder().content(List.of(originalCertificate)).build();
 
-      when(getCertificatesFromIntygstjanstService.get(request)).thenReturn(
-          certificatesResponseDTO);
+      when(getCertificatesFromIntygstjanstService.get(request)).thenReturn(certificatesResponseDTO);
 
-      when(certificateConverter.convert(any(CertificateDTO.class))).thenReturn(
-          convertedCertificateListItem);
+      when(certificateConverter.convert(any(CertificateDTO.class)))
+          .thenReturn(convertedCertificateListItem);
     }
 
     @Test
@@ -80,32 +94,34 @@ class IntygstjanstCertificateIntegrationServiceTest {
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(null));
     }
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfRequestContainsNullPatientId() {
       final var request = GetCertificateListIntegrationRequest.builder().patientId(null).build();
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldThrowIllegalArgumentExceptionIfRequestContainsEmptyPatientId() {
       final var request = GetCertificateListIntegrationRequest.builder().patientId("").build();
-      assertThrows(IllegalArgumentException.class,
+      assertThrows(
+          IllegalArgumentException.class,
           () -> intygstjanstCertificateIntegrationService.get(request));
     }
 
     @Test
     void shouldReturnStatusErrorIfCommunicationErrorWithITOccurs() {
-      final var request = GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID)
-          .build();
-      when(getCertificatesFromIntygstjanstService.get(request)).thenThrow(
-          RuntimeException.class);
-      assertThrows(RuntimeException.class,
-          () -> intygstjanstCertificateIntegrationService.get(request));
+      final var request =
+          GetCertificateListIntegrationRequest.builder().patientId(PERSON_ID).build();
+      when(getCertificatesFromIntygstjanstService.get(request)).thenThrow(RuntimeException.class);
+      assertThrows(
+          RuntimeException.class, () -> intygstjanstCertificateIntegrationService.get(request));
     }
   }
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,31 +65,25 @@ class CertificateControllerTest {
   private static final List<String> TYPES = List.of("lisjp");
   private static final String CERTIFICATE_ID = "ID";
   private static final List<CertificateStatusType> STATUSES = List.of(CertificateStatusType.SENT);
-  private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS = List.of(
-      CertificateListItem.builder().build());
+  private static final List<CertificateListItem> CERTIFICATE_LIST_ITEMS =
+      List.of(CertificateListItem.builder().build());
 
   private static final String CUSTOMIZATION_ID = "C_ID";
-  private static final PrintCertificateRequestDTO PRINT_REQUEST = PrintCertificateRequestDTO.builder()
-      .customizationId(CUSTOMIZATION_ID)
-      .build();
+  private static final PrintCertificateRequestDTO PRINT_REQUEST =
+      PrintCertificateRequestDTO.builder().customizationId(CUSTOMIZATION_ID).build();
 
-  private static final PrintCertificateResponse PRINT_RESPONSE = PrintCertificateResponse
-      .builder()
-      .filename("PRINT")
-      .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
-      .build();
+  private static final PrintCertificateResponse PRINT_RESPONSE =
+      PrintCertificateResponse.builder()
+          .filename("PRINT")
+          .pdfData(HexFormat.of().parseHex("e04fd020ea3a6910a2d808002b30309d"))
+          .build();
 
-  @Mock
-  ListCertificatesService listCertificatesService;
-  @Mock
-  GetCertificateService getCertificateService;
-  @Mock
-  SendCertificateService sendCertificateService;
-  @Mock
-  PrintCertificateService printCertificateService;
+  @Mock ListCertificatesService listCertificatesService;
+  @Mock GetCertificateService getCertificateService;
+  @Mock SendCertificateService sendCertificateService;
+  @Mock PrintCertificateService printCertificateService;
 
-  @InjectMocks
-  CertificateController certificateController;
+  @InjectMocks CertificateController certificateController;
 
   @Nested
   class ListCertificates {
@@ -79,10 +91,7 @@ class CertificateControllerTest {
     @BeforeEach
     void setup() {
       final var response =
-          ListCertificatesResponse
-              .builder()
-              .content(CERTIFICATE_LIST_ITEMS)
-              .build();
+          ListCertificatesResponse.builder().content(CERTIFICATE_LIST_ITEMS).build();
 
       when(listCertificatesService.get(any())).thenReturn(response);
     }
@@ -90,13 +99,13 @@ class CertificateControllerTest {
     @Nested
     class Request {
 
-      CertificateListRequestDTO request = CertificateListRequestDTO
-          .builder()
-          .years(YEARS)
-          .units(UNITS)
-          .certificateTypes(TYPES)
-          .statuses(STATUSES)
-          .build();
+      CertificateListRequestDTO request =
+          CertificateListRequestDTO.builder()
+              .years(YEARS)
+              .units(UNITS)
+              .certificateTypes(TYPES)
+              .statuses(STATUSES)
+              .build();
 
       @Test
       void shouldSendYears() {
@@ -144,8 +153,8 @@ class CertificateControllerTest {
 
       @Test
       void shouldSetContent() {
-        final var response = certificateController.listCertificates(
-            CertificateListRequestDTO.builder().build());
+        final var response =
+            certificateController.listCertificates(CertificateListRequestDTO.builder().build());
 
         assertEquals(CERTIFICATE_LIST_ITEMS, response.getContent());
       }
@@ -155,18 +164,16 @@ class CertificateControllerTest {
   @Nested
   class GetCertificate {
 
-    final GetCertificateResponse expectedResponse = GetCertificateResponse
-        .builder()
-        .certificate(
-            FormattedCertificate
-                .builder()
-                .metadata(CertificateMetadata.builder().build())
-                .content(List.of(FormattedCertificateCategory.builder().build()))
-                .build()
-        )
-        .availableFunctions(List.of(AvailableFunction.builder().build()))
-        .texts(Map.of(CertificateTextType.PREAMBLE_TEXT, "TEXT"))
-        .build();
+    final GetCertificateResponse expectedResponse =
+        GetCertificateResponse.builder()
+            .certificate(
+                FormattedCertificate.builder()
+                    .metadata(CertificateMetadata.builder().build())
+                    .content(List.of(FormattedCertificateCategory.builder().build()))
+                    .build())
+            .availableFunctions(List.of(AvailableFunction.builder().build()))
+            .texts(Map.of(CertificateTextType.PREAMBLE_TEXT, "TEXT"))
+            .build();
 
     @BeforeEach
     void setup() {
@@ -231,7 +238,8 @@ class CertificateControllerTest {
     @BeforeEach
     void setup() {
       httpServletRequest = new MockHttpServletRequest();
-      httpServletRequest.addHeader("User-Agent",
+      httpServletRequest.addHeader(
+          "User-Agent",
           "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");
 
       when(printCertificateService.print(any(PrintCertificateRequest.class)))
@@ -261,14 +269,15 @@ class CertificateControllerTest {
 
       @BeforeEach
       void setup() {
-        httpServletRequest.addHeader("User-Agent",
+        httpServletRequest.addHeader(
+            "User-Agent",
             "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");
       }
 
       @Test
       void shouldReturnPdfDataReturnedFromServiceInBody() {
-        final var response = certificateController.printCertificate(
-            CERTIFICATE_ID, CUSTOMIZATION_ID);
+        final var response =
+            certificateController.printCertificate(CERTIFICATE_ID, CUSTOMIZATION_ID);
 
         assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
       }
@@ -283,7 +292,8 @@ class CertificateControllerTest {
     @BeforeEach
     void setup() {
       httpServletRequest = new MockHttpServletRequest();
-      httpServletRequest.addHeader("User-Agent",
+      httpServletRequest.addHeader(
+          "User-Agent",
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36");
 
       when(printCertificateService.print(any(PrintCertificateRequest.class)))
@@ -292,19 +302,14 @@ class CertificateControllerTest {
 
     @Test
     void shouldReturnConvertedFilenameReturnedFromServiceAsHeader() {
-      final var response = certificateController.printCertificate(
-          CERTIFICATE_ID, CUSTOMIZATION_ID);
+      final var response = certificateController.printCertificate(CERTIFICATE_ID, CUSTOMIZATION_ID);
 
-      assertEquals(
-          List.of("inline"),
-          response.getHeaders().get(CONTENT_DISPOSITION)
-      );
+      assertEquals(List.of("inline"), response.getHeaders().get(CONTENT_DISPOSITION));
     }
 
     @Test
     void shouldReturnPdfDataReturnedFromServiceInBody() {
-      final var response = certificateController.printCertificate(
-          CERTIFICATE_ID, CUSTOMIZATION_ID);
+      final var response = certificateController.printCertificate(CERTIFICATE_ID, CUSTOMIZATION_ID);
 
       assertEquals(PRINT_RESPONSE.getPdfData(), response.getBody());
     }

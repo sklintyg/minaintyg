@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data;
 
 import static se.inera.intyg.minaintyg.integration.webcert.converter.data.value.ValueConverter.NOT_PROVIDED;
@@ -28,23 +46,19 @@ public class CertificateDataConverter {
   private final Map<CertificateDataValueType, ValueConverter> valueConverterMap;
 
   public CertificateDataConverter(List<ValueConverter> valueConverters) {
-    valueConverterMap = valueConverters.stream().collect(
-        Collectors.toMap(ValueConverter::getType, Function.identity())
-    );
+    valueConverterMap =
+        valueConverters.stream()
+            .collect(Collectors.toMap(ValueConverter::getType, Function.identity()));
   }
 
   public List<CertificateCategory> convert(List<CertificateDataElement> certificateDataElements) {
-    final var parentQuestionMap = certificateDataElements.stream()
-        .filter(Predicate.not(this::elementIsCategory))
-        .collect(
-            Collectors.groupingBy(
-                CertificateDataElement::getParent,
-                Collectors.mapping(
-                    Function.identity(),
-                    Collectors.toList()
-                )
-            )
-        );
+    final var parentQuestionMap =
+        certificateDataElements.stream()
+            .filter(Predicate.not(this::elementIsCategory))
+            .collect(
+                Collectors.groupingBy(
+                    CertificateDataElement::getParent,
+                    Collectors.mapping(Function.identity(), Collectors.toList())));
 
     return certificateDataElements.stream()
         .filter(this::elementIsCategory)
@@ -53,38 +67,34 @@ public class CertificateDataConverter {
         .toList();
   }
 
-  private CertificateCategory toCertificateCategory(CertificateDataElement category,
+  private CertificateCategory toCertificateCategory(
+      CertificateDataElement category,
       Map<String, List<CertificateDataElement>> parentQuestionMap) {
     return CertificateCategory.builder()
         .title(toTitle(category))
-        .questions(
-            toCertificateQuestions(category, parentQuestionMap)
-        )
+        .questions(toCertificateQuestions(category, parentQuestionMap))
         .build();
   }
 
-  private List<CertificateQuestion> toCertificateQuestions(CertificateDataElement element,
-      Map<String, List<CertificateDataElement>> parentQuestionMap) {
+  private List<CertificateQuestion> toCertificateQuestions(
+      CertificateDataElement element, Map<String, List<CertificateDataElement>> parentQuestionMap) {
     return parentQuestionMap.getOrDefault(element.getId(), Collections.emptyList()).stream()
         .filter(notHidden())
         .filter(notMessage())
         .sorted(Comparator.comparingInt(CertificateDataElement::getIndex))
-        .map(question ->
-            CertificateQuestion.builder()
-                .title(toTitle(question))
-                .label(toLabel(question))
-                .header(toHeader(question))
-                .value(
-                    toValue(
-                        question,
-                        parentQuestionMap.getOrDefault(question.getId(), Collections.emptyList())
-                    )
-                )
-                .subQuestions(
-                    toCertificateQuestions(question, parentQuestionMap)
-                )
-                .build()
-        )
+        .map(
+            question ->
+                CertificateQuestion.builder()
+                    .title(toTitle(question))
+                    .label(toLabel(question))
+                    .header(toHeader(question))
+                    .value(
+                        toValue(
+                            question,
+                            parentQuestionMap.getOrDefault(
+                                question.getId(), Collections.emptyList())))
+                    .subQuestions(toCertificateQuestions(question, parentQuestionMap))
+                    .build())
         .toList();
   }
 
@@ -104,28 +114,24 @@ public class CertificateDataConverter {
     return text == null || text.isEmpty() ? null : text;
   }
 
-  public CertificateQuestionValue toValue(CertificateDataElement element,
-      List<CertificateDataElement> subQuestions) {
+  public CertificateQuestionValue toValue(
+      CertificateDataElement element, List<CertificateDataElement> subQuestions) {
     if (headerElement(element)) {
       return CertificateQuestionValueText.builder().build();
     }
 
     if (missingValue(element)) {
-      return CertificateQuestionValueText.builder()
-          .value(NOT_PROVIDED)
-          .build();
+      return CertificateQuestionValueText.builder().value(NOT_PROVIDED).build();
     }
 
     if (missingConverter(element)) {
-      return CertificateQuestionValueText.builder()
-          .value(TECHNICAL_ERROR)
-          .build();
+      return CertificateQuestionValueText.builder().value(TECHNICAL_ERROR).build();
     }
 
     final var valueConverter = valueConverterMap.get(valueType(element));
-    return valueConverter.includeSubquestions() ?
-        valueConverter.convert(element, subQuestions) :
-        valueConverter.convert(element);
+    return valueConverter.includeSubquestions()
+        ? valueConverter.convert(element, subQuestions)
+        : valueConverter.convert(element);
   }
 
   private static boolean headerElement(CertificateDataElement element) {

@@ -1,5 +1,22 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.logging.service;
-
 
 import com.google.common.base.Strings;
 import lombok.Getter;
@@ -29,8 +46,7 @@ public class MonitoringLogService {
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
             .put(MdcLogConstants.EVENT_LOGIN_METHOD, loginMethod)
             .put(MdcLogConstants.USER_ID, hashedPersonId)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CITIZEN_LOGIN, hashedPersonId, loginMethod);
     }
   }
@@ -41,8 +57,7 @@ public class MonitoringLogService {
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.CITIZEN_LOGIN_FAILURE))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
             .put(MdcLogConstants.EVENT_LOGIN_METHOD, loginMethod)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CITIZEN_LOGIN_FAILURE, exceptionMessage);
     }
   }
@@ -55,8 +70,7 @@ public class MonitoringLogService {
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
             .put(MdcLogConstants.EVENT_LOGIN_METHOD, loginMethod)
             .put(MdcLogConstants.USER_ID, hashedPersonId)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CITIZEN_LOGOUT, hashedPersonId, loginMethod);
     }
   }
@@ -66,8 +80,7 @@ public class MonitoringLogService {
         MdcCloseableMap.builder()
             .put(MdcLogConstants.EVENT_ACTION, toEventType(MonitoringEvent.LIST_CERTIFICATES))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.LIST_CERTIFICATES, hashUtility.hash(personId), nbrOfCertificates);
     }
   }
@@ -79,8 +92,7 @@ public class MonitoringLogService {
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
             .put(MdcLogConstants.EVENT_CERTIFICATE_ID, certificateId)
             .put(MdcLogConstants.EVENT_CERTIFICATE_TYPE, type)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CERTIFICATE_READ, certificateId, type);
     }
   }
@@ -93,16 +105,13 @@ public class MonitoringLogService {
             .put(MdcLogConstants.EVENT_CERTIFICATE_ID, certificateId)
             .put(MdcLogConstants.EVENT_CERTIFICATE_TYPE, type)
             .put(MdcLogConstants.EVENT_RECIPIENT, recipient)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CERTIFICATE_SEND, certificateId, type, recipient);
     }
   }
 
   public void logCertificatePrinted(
-      String certificateId,
-      String certificateType,
-      boolean printCompleteCertificate) {
+      String certificateId, String certificateType, boolean printCompleteCertificate) {
     if (printCompleteCertificate) {
       logCertificatePrintedFully(certificateId, certificateType);
       return;
@@ -113,36 +122,28 @@ public class MonitoringLogService {
   private void logCertificatePrintedFully(String certificateId, String certificateType) {
     try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
-            .put(MdcLogConstants.EVENT_ACTION,
+            .put(
+                MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.CERTIFICATE_PRINTED_FULLY))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
             .put(MdcLogConstants.EVENT_CERTIFICATE_ID, certificateId)
             .put(MdcLogConstants.EVENT_CERTIFICATE_TYPE, certificateType)
-            .build()
-    ) {
-      logEvent(
-          MonitoringEvent.CERTIFICATE_PRINTED_FULLY,
-          certificateId,
-          certificateType
-      );
+            .build()) {
+      logEvent(MonitoringEvent.CERTIFICATE_PRINTED_FULLY, certificateId, certificateType);
     }
   }
 
   private void logCertificatePrintedEmployeeCopy(String certificateId, String certificateType) {
     try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
-            .put(MdcLogConstants.EVENT_ACTION,
+            .put(
+                MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_ACCESSED)
             .put(MdcLogConstants.EVENT_CERTIFICATE_ID, certificateId)
             .put(MdcLogConstants.EVENT_CERTIFICATE_TYPE, certificateType)
-            .build()
-    ) {
-      logEvent(
-          MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY,
-          certificateId,
-          certificateType
-      );
+            .build()) {
+      logEvent(MonitoringEvent.CERTIFICATE_PRINTED_EMPLOYER_COPY, certificateId, certificateType);
     }
   }
 
@@ -156,8 +157,7 @@ public class MonitoringLogService {
             .put(MdcLogConstants.ERROR_CODE, code)
             .put(MdcLogConstants.ERROR_MESSAGE, message)
             .put(MdcLogConstants.ERROR_STACKTRACE, stackTraceText)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.CLIENT_ERROR, id, code, message, stackTraceText);
     }
   }
@@ -165,13 +165,13 @@ public class MonitoringLogService {
   public void logIllegalCertificateAccess(String message) {
     try (MdcCloseableMap ignored =
         MdcCloseableMap.builder()
-            .put(MdcLogConstants.EVENT_ACTION,
+            .put(
+                MdcLogConstants.EVENT_ACTION,
                 toEventType(MonitoringEvent.ILLEGAL_CERTIFICATE_ACCESS))
             .put(MdcLogConstants.EVENT_TYPE, MdcLogConstants.EVENT_TYPE_INFO)
             .put(MdcLogConstants.EVENT_CATEGORY, MdcLogConstants.EVENT_CATEGORY_INTRUSION_DETECTION)
             .put(MdcLogConstants.EVENT_OUTCOME, MdcLogConstants.EVENT_OUTCOME_DENIED)
-            .build()
-    ) {
+            .build()) {
       logEvent(MonitoringEvent.ILLEGAL_CERTIFICATE_ACCESS, message);
     }
   }
@@ -191,8 +191,7 @@ public class MonitoringLogService {
   @Getter
   private enum MonitoringEvent {
     CITIZEN_LOGIN("Citizen '{}' logged in using login method '{}'"),
-    CITIZEN_LOGIN_FAILURE(
-        "Citizen failed to login, exception message '{}'"),
+    CITIZEN_LOGIN_FAILURE("Citizen failed to login, exception message '{}'"),
     CITIZEN_LOGOUT("Citizen '{}' logged out using login method '{}'"),
     LIST_CERTIFICATES("Citizen '{}' listed '{}' certificates"),
     CERTIFICATE_READ("Certificate '{}' of type '{}' was read"),

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 
 import static se.inera.intyg.minaintyg.integration.common.constants.ApplicationConstants.APPLICATION_INTYGSADMIN;
@@ -43,25 +61,28 @@ public class GetBannersFromIntygsadminService {
 
   @PerformanceLogging(eventAction = "retrieve-banners-from-ia", eventType = EVENT_TYPE_INFO)
   public List<BannerDTO> get() {
-    final var banners = webClient.get().uri(uriBuilder -> uriBuilder
-            .scheme(scheme)
-            .host(baseUrl)
-            .port(port)
-            .path(endpoint)
-            .build(ApplicationDTO.MINA_INTYG))
-        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        .retrieve()
-        .bodyToMono(BannerDTO[].class)
-        .share()
-        .onErrorMap(
-            WebClientRequestException.class,
-            ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYGSADMIN)
-        )
-        .onErrorMap(
-            GatewayTimeout.class,
-            ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSADMIN)
-        )
-        .block();
+    final var banners =
+        webClient
+            .get()
+            .uri(
+                uriBuilder ->
+                    uriBuilder
+                        .scheme(scheme)
+                        .host(baseUrl)
+                        .port(port)
+                        .path(endpoint)
+                        .build(ApplicationDTO.MINA_INTYG))
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .retrieve()
+            .bodyToMono(BannerDTO[].class)
+            .share()
+            .onErrorMap(
+                WebClientRequestException.class,
+                ExceptionThrowableFunction.webClientRequest(APPLICATION_INTYGSADMIN))
+            .onErrorMap(
+                GatewayTimeout.class,
+                ExceptionThrowableFunction.gatewayTimeout(APPLICATION_INTYGSADMIN))
+            .block();
 
     return banners != null ? Arrays.stream(banners).toList() : Collections.emptyList();
   }

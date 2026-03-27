@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,19 +51,18 @@ class SessionTimeoutServiceTest {
   public static final int HUNDRED_SECONDS = 100;
   public static final long LAST_ACCESS_TIME = System.currentTimeMillis();
   public static final int TIMEOUT_LIMIT_IN_MINUTES = 25;
-  public static final long TIMEOUT_LIMIT_IN_SECONDS = TimeUnit.MINUTES.toSeconds(
-      TIMEOUT_LIMIT_IN_MINUTES);
+  public static final long TIMEOUT_LIMIT_IN_SECONDS =
+      TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES);
 
   HttpServletRequest request;
   MockHttpSession session = new MockHttpSession();
 
-  @InjectMocks
-  private SessionTimeoutService sessionTimeoutService;
+  @InjectMocks private SessionTimeoutService sessionTimeoutService;
 
   @BeforeEach
   void setUp() {
-    ReflectionTestUtils.setField(sessionTimeoutService, "timeoutLimitInMinutes",
-        TIMEOUT_LIMIT_IN_MINUTES);
+    ReflectionTestUtils.setField(
+        sessionTimeoutService, "timeoutLimitInMinutes", TIMEOUT_LIMIT_IN_MINUTES);
     ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_URLS);
   }
 
@@ -79,14 +96,14 @@ class SessionTimeoutServiceTest {
     void shouldSetLastAccessAttributeToNowWhenCheckingValidityForTheFirstTime() {
       sessionTimeoutService.checkSessionValidity(request);
       assertEquals(
-          System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE), 100
-      );
+          System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE), 100);
     }
 
     @Test
     void shouldSetTimeToExpireToInitialValue() {
       sessionTimeoutService.checkSessionValidity(request);
-      assertEquals(TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
+      assertEquals(
+          TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
           (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE));
     }
   }
@@ -99,9 +116,9 @@ class SessionTimeoutServiceTest {
       request = mock(HttpServletRequest.class);
 
       when(request.getSession(anyBoolean())).thenReturn(session);
-      session.setAttribute(LAST_ACCESS_ATTRIBUTE,
-          System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(TIMEOUT_LIMIT_IN_MINUTES) - 1000
-      );
+      session.setAttribute(
+          LAST_ACCESS_ATTRIBUTE,
+          System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(TIMEOUT_LIMIT_IN_MINUTES) - 1000);
       session.setAttribute(SECONDS_UNTIL_EXPIRE, 0L);
     }
 
@@ -147,8 +164,8 @@ class SessionTimeoutServiceTest {
     void shouldResetLastAccessedTimeIfIncludedUrl() {
       sessionTimeoutService.checkSessionValidity(request);
 
-      assertEquals(System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE),
-          100);
+      assertEquals(
+          System.currentTimeMillis(), (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE), 100);
       assertNotEquals(LAST_ACCESS_TIME, (Long) session.getAttribute(LAST_ACCESS_ATTRIBUTE));
     }
 
@@ -189,21 +206,21 @@ class SessionTimeoutServiceTest {
       final var expectedSecondsUntilExpire = TIMEOUT_LIMIT_IN_SECONDS - HUNDRED_SECONDS;
 
       session.setAttribute(
-          LAST_ACCESS_ATTRIBUTE, LAST_ACCESS_TIME - TimeUnit.SECONDS.toMillis(HUNDRED_SECONDS)
-      );
+          LAST_ACCESS_ATTRIBUTE, LAST_ACCESS_TIME - TimeUnit.SECONDS.toMillis(HUNDRED_SECONDS));
       ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_ACTUAL_URLS);
 
       sessionTimeoutService.checkSessionValidity(request);
 
-      assertEquals(expectedSecondsUntilExpire, (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE),
-          5);
+      assertEquals(
+          expectedSecondsUntilExpire, (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE), 5);
     }
 
     @Test
     void shouldSetSecondsUntilExpireForIncludedUrl() {
       sessionTimeoutService.checkSessionValidity(request);
 
-      assertEquals(TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
+      assertEquals(
+          TimeUnit.MINUTES.toSeconds(TIMEOUT_LIMIT_IN_MINUTES),
           (Long) session.getAttribute(SECONDS_UNTIL_EXPIRE));
     }
   }

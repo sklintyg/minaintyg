@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.util.html;
 
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
@@ -34,13 +52,17 @@ public class HTMLFactory {
     return tag(tagName, className, value, null, true);
   }
 
-  public static String tag(String tagName, String className, String value,
-      Map<String, String> attributes) {
+  public static String tag(
+      String tagName, String className, String value, Map<String, String> attributes) {
     return tag(tagName, className, value, attributes, true);
   }
 
-  public static String tag(String tagName, String className, String value,
-      Map<String, String> attributes, boolean shouldFormat) {
+  public static String tag(
+      String tagName,
+      String className,
+      String value,
+      Map<String, String> attributes,
+      boolean shouldFormat) {
     if (value == null || tagName == null || tagName.isEmpty()) {
       return "";
     }
@@ -58,16 +80,13 @@ public class HTMLFactory {
   private static String startTag(String tagName, String className, String attributes) {
     final var classNameTag = buildTag(CLASSNAME, className);
 
-    return START_FIRST_TAG + tagName
-        + classNameTag
-        + attributes
-        + START_SECOND_TAG;
-
+    return START_FIRST_TAG + tagName + classNameTag + attributes + START_SECOND_TAG;
   }
 
   private static String buildTag(String name, String value) {
-    return name == null || value == null ? "" :
-        SPACE + name + START_ATTRIBUTE_TAG + value + END_ATTRIBUTE_TAG;
+    return name == null || value == null
+        ? ""
+        : SPACE + name + START_ATTRIBUTE_TAG + value + END_ATTRIBUTE_TAG;
   }
 
   private static String endTag(String tagName) {

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +45,6 @@ class DiagnosisListValueConverterTest {
   public static final String DIAGNOSIS = "Diagnos";
   private static final String DIAGNOSIS_CODY_WITH_TERMINOLOGY = "Diagnoskod enligt %s";
 
-
   private final ValueConverter diagnosisListValueConverter = new DiagnosisListValueConverter();
 
   @Test
@@ -37,12 +54,10 @@ class DiagnosisListValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueDiagnosisList.builder()
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(CertificateDataValueDiagnosisList.builder().build())
+            .build();
 
     final var actualValue = diagnosisListValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -50,28 +65,22 @@ class DiagnosisListValueConverterTest {
 
   @Test
   void shallReturnOneDiagnosisWithTerminologyOneAndDiagnosis() {
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
-                DIAGNOSIS)
-        )
-        .values(
-            createValues(
-                createValue(CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(
+                    String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
+                    DIAGNOSIS))
+            .values(createValues(createValue(CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createDiagnosisList(
-                createDiagnosis(TERMINOLOGY_ID_ONE, CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createDiagnosisList(
+                    createDiagnosis(TERMINOLOGY_ID_ONE, CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
     final var result = diagnosisListValueConverter.convert(element);
     assertEquals(expectedResult, result);
@@ -79,28 +88,22 @@ class DiagnosisListValueConverterTest {
 
   @Test
   void shallReturnOneDiagnosisWithTerminologyTwoAndDiagnosis() {
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_TWO),
-                DIAGNOSIS)
-        )
-        .values(
-            createValues(
-                createValue(CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(
+                    String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_TWO),
+                    DIAGNOSIS))
+            .values(createValues(createValue(CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createDiagnosisList(
-                createDiagnosis(TERMINOLOGY_ID_TWO, CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createDiagnosisList(
+                    createDiagnosis(TERMINOLOGY_ID_TWO, CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
     final var result = diagnosisListValueConverter.convert(element);
     assertEquals(expectedResult, result);
@@ -108,28 +111,22 @@ class DiagnosisListValueConverterTest {
 
   @Test
   void shallReturnOneDiagnosisWithMissingTerminologyAndDiagnosis() {
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_ID_THREE),
-                DIAGNOSIS)
-        )
-        .values(
-            createValues(
-                createValue(CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(
+                    String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_ID_THREE),
+                    DIAGNOSIS))
+            .values(createValues(createValue(CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createDiagnosisList(
-                createDiagnosis(TERMINOLOGY_ID_THREE, CODE_TWO, CODE_TWO_DESCRIPTION)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createDiagnosisList(
+                    createDiagnosis(TERMINOLOGY_ID_THREE, CODE_TWO, CODE_TWO_DESCRIPTION)))
+            .build();
 
     final var result = diagnosisListValueConverter.convert(element);
     assertEquals(expectedResult, result);
@@ -137,30 +134,26 @@ class DiagnosisListValueConverterTest {
 
   @Test
   void shallReturnManyDiagnoses() {
-    final var expectedResult = CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings(String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
-                DIAGNOSIS)
-        )
-        .values(
-            createValues(
-                createValue(CODE_TWO, CODE_TWO_DESCRIPTION),
-                createValue(CODE_ONE, CODE_ONE_DESCRIPTION)
-            )
-        )
-        .build();
+    final var expectedResult =
+        CertificateQuestionValueTable.builder()
+            .headings(
+                createHeadings(
+                    String.format(DIAGNOSIS_CODY_WITH_TERMINOLOGY, TERMINOLOGY_LABEL_ONE),
+                    DIAGNOSIS))
+            .values(
+                createValues(
+                    createValue(CODE_TWO, CODE_TWO_DESCRIPTION),
+                    createValue(CODE_ONE, CODE_ONE_DESCRIPTION)))
+            .build();
 
-    final var element = CertificateDataElement.builder()
-        .config(
-            createConfig()
-        )
-        .value(
-            createDiagnosisList(
-                createDiagnosis(TERMINOLOGY_ID_ONE, CODE_TWO, CODE_TWO_DESCRIPTION),
-                createDiagnosis(TERMINOLOGY_ID_ONE, CODE_ONE, CODE_ONE_DESCRIPTION)
-            )
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .config(createConfig())
+            .value(
+                createDiagnosisList(
+                    createDiagnosis(TERMINOLOGY_ID_ONE, CODE_TWO, CODE_TWO_DESCRIPTION),
+                    createDiagnosis(TERMINOLOGY_ID_ONE, CODE_ONE, CODE_ONE_DESCRIPTION)))
+            .build();
 
     final var result = diagnosisListValueConverter.convert(element);
     assertEquals(expectedResult, result);
@@ -174,29 +167,20 @@ class DiagnosisListValueConverterTest {
                     .id(TERMINOLOGY_ID_ONE)
                     .label(TERMINOLOGY_LABEL_ONE)
                     .build(),
-
                 DiagnosesTerminology.builder()
                     .id(TERMINOLOGY_ID_TWO)
                     .label(TERMINOLOGY_LABEL_TWO)
-                    .build()
-            )
-        )
+                    .build()))
         .build();
   }
 
   private static CertificateDataValueDiagnosisList createDiagnosisList(
       CertificateDataValueDiagnosis... diagnosis) {
-    return CertificateDataValueDiagnosisList.builder()
-        .list(
-            List.of(
-                diagnosis
-            )
-        )
-        .build();
+    return CertificateDataValueDiagnosisList.builder().list(List.of(diagnosis)).build();
   }
 
-  private static CertificateDataValueDiagnosis createDiagnosis(String terminologyId,
-      String diagnosisCode, String diagnosisDescription) {
+  private static CertificateDataValueDiagnosis createDiagnosis(
+      String terminologyId, String diagnosisCode, String diagnosisDescription) {
     return CertificateDataValueDiagnosis.builder()
         .terminology(terminologyId)
         .code(diagnosisCode)

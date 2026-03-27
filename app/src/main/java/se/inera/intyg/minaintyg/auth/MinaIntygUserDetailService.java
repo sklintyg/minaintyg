@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import com.google.common.base.Strings;
@@ -10,17 +28,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.minaintyg.exception.CitizenInactiveException;
 import se.inera.intyg.minaintyg.exception.LoginAgeLimitException;
-import se.inera.intyg.minaintyg.integration.common.PersonIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationService;
 import se.inera.intyg.minaintyg.integration.api.person.model.Status;
+import se.inera.intyg.minaintyg.integration.common.PersonIntegrationResponse;
 import se.inera.intyg.minaintyg.logging.HashUtility;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MinaIntygUserDetailService {
-
 
   @Value("${login.age.limit}")
   private long loginAgeLimit;
@@ -30,11 +47,9 @@ public class MinaIntygUserDetailService {
 
   public MinaIntygUser buildPrincipal(String personId, LoginMethod loginMethod) {
     validatePersonId(personId);
-    final var personIntegrationResponse = getPersonIntegrationService.getPerson(
-        GetPersonIntegrationRequest.builder()
-            .personId(personId)
-            .build()
-    );
+    final var personIntegrationResponse =
+        getPersonIntegrationService.getPerson(
+            GetPersonIntegrationRequest.builder().personId(personId).build());
 
     if (!personIntegrationResponse.getStatus().equals(Status.FOUND)) {
       handleCommunicationFault(personIntegrationResponse.getStatus());
@@ -62,8 +77,8 @@ public class MinaIntygUserDetailService {
   }
 
   private void handleInactiveUser(String userId, LoginMethod loginMethod) {
-    final var errorMessage = "Access denied for inactive citizen with id '%s'."
-        .formatted(hashUtility.hash(userId));
+    final var errorMessage =
+        "Access denied for inactive citizen with id '%s'.".formatted(hashUtility.hash(userId));
     log.warn(errorMessage);
     throw new CitizenInactiveException(errorMessage, loginMethod);
   }
@@ -71,15 +86,13 @@ public class MinaIntygUserDetailService {
   private static void handleCommunicationFault(Status status) {
     log.error("Error communicating with IntygProxyService, status from response: '{}'", status);
     throw new IllegalStateException(
-        "Error communication with IntygProxyService. Status: '%s' ".formatted(status)
-    );
+        "Error communication with IntygProxyService. Status: '%s' ".formatted(status));
   }
 
   private void validatePersonId(String personId) {
     if (personId == null || personId.trim().isEmpty()) {
       throw new IllegalArgumentException(
-          "personId must have a valid value: '%s'".formatted(personId)
-      );
+          "personId must have a valid value: '%s'".formatted(personId));
     }
   }
 
@@ -105,8 +118,8 @@ public class MinaIntygUserDetailService {
   }
 
   private void handleUnderagePerson(String personId, LoginMethod loginMethod) {
-    final var errorMessage = "Access denied for underage person with id '%s'."
-        .formatted(hashUtility.hash(personId));
+    final var errorMessage =
+        "Access denied for underage person with id '%s'.".formatted(hashUtility.hash(personId));
     log.warn(errorMessage);
     throw new LoginAgeLimitException(errorMessage, loginMethod);
   }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +45,6 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateS
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateTypeDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateUnitDTO;
 
-
 @ExtendWith(MockitoExtension.class)
 class CertificateListItemConverterTest {
 
@@ -41,45 +58,30 @@ class CertificateListItemConverterTest {
   private static final String UNIT_NAME = "unitName";
   private static final String UNIT_ID = "unitId";
   private static final LocalDateTime ISSUED = LocalDateTime.now();
-  private static final CertificateRecipientDTO RECIPIENT = CertificateRecipientDTO.builder()
-      .build();
+  private static final CertificateRecipientDTO RECIPIENT =
+      CertificateRecipientDTO.builder().build();
   private static final List<CertificateRelationDTO> RELATIONS = Collections.emptyList();
-  private static final CertificateDTO ORIGINAL_CERTIFICATE = CertificateDTO
-      .builder()
-      .id(CERTIFICATE_ID)
-      .type(CertificateTypeDTO
-          .builder()
-          .id(TYPE_ID)
-          .name(TYPE_NAME)
-          .version(TYPE_VERSION)
-          .build())
-      .issued(ISSUED)
-      .issuer(CertificateIssuerDTO
-          .builder()
-          .name(ISSUER_NAME)
-          .build())
-      .recipient(RECIPIENT)
-      .summary(
-          CertificateSummaryDTO
-              .builder()
-              .label(SUMMARY_LABEL)
-              .value(SUMMARY_VALUE)
-              .build()
-      )
-      .unit(CertificateUnitDTO
-          .builder()
-          .name(UNIT_NAME)
-          .id(UNIT_ID)
-          .build())
-      .relations(RELATIONS)
-      .build();
+  private static final CertificateDTO ORIGINAL_CERTIFICATE =
+      CertificateDTO.builder()
+          .id(CERTIFICATE_ID)
+          .type(
+              CertificateTypeDTO.builder()
+                  .id(TYPE_ID)
+                  .name(TYPE_NAME)
+                  .version(TYPE_VERSION)
+                  .build())
+          .issued(ISSUED)
+          .issuer(CertificateIssuerDTO.builder().name(ISSUER_NAME).build())
+          .recipient(RECIPIENT)
+          .summary(
+              CertificateSummaryDTO.builder().label(SUMMARY_LABEL).value(SUMMARY_VALUE).build())
+          .unit(CertificateUnitDTO.builder().name(UNIT_NAME).id(UNIT_ID).build())
+          .relations(RELATIONS)
+          .build();
 
-  @Mock
-  CertificateEventService certificateEventService;
-  @Mock
-  CertificateStatusService certificateStatusService;
-  @InjectMocks
-  CertificateConverter certificateConverter;
+  @Mock CertificateEventService certificateEventService;
+  @Mock CertificateStatusService certificateStatusService;
+  @InjectMocks CertificateConverter certificateConverter;
 
   @Test
   void shouldConvertCertificateId() {
@@ -158,12 +160,10 @@ class CertificateListItemConverterTest {
 
     @BeforeEach
     void setup() {
-      Mockito.when(certificateStatusService.get(
-              anyList(),
-              any(CertificateRecipientDTO.class),
-              any(LocalDateTime.class)
-          )
-      ).thenReturn(statuses);
+      Mockito.when(
+              certificateStatusService.get(
+                  anyList(), any(CertificateRecipientDTO.class), any(LocalDateTime.class)))
+          .thenReturn(statuses);
     }
 
     @Test
@@ -184,8 +184,7 @@ class CertificateListItemConverterTest {
 
       final var captor = ArgumentCaptor.forClass(CertificateRecipientDTO.class);
 
-      verify(certificateStatusService)
-          .get(anyList(), captor.capture(), any(LocalDateTime.class));
+      verify(certificateStatusService).get(anyList(), captor.capture(), any(LocalDateTime.class));
 
       assertEquals(RECIPIENT, captor.getValue());
     }
@@ -217,11 +216,8 @@ class CertificateListItemConverterTest {
 
     @BeforeEach
     void setup() {
-      Mockito.when(certificateEventService.get(
-              anyList(),
-              any(CertificateRecipientDTO.class)
-          )
-      ).thenReturn(events);
+      Mockito.when(certificateEventService.get(anyList(), any(CertificateRecipientDTO.class)))
+          .thenReturn(events);
     }
 
     @Test
@@ -230,8 +226,7 @@ class CertificateListItemConverterTest {
 
       final var captor = ArgumentCaptor.forClass(List.class);
 
-      verify(certificateEventService)
-          .get(captor.capture(), any(CertificateRecipientDTO.class));
+      verify(certificateEventService).get(captor.capture(), any(CertificateRecipientDTO.class));
 
       assertEquals(RELATIONS, captor.getValue());
     }
@@ -242,8 +237,7 @@ class CertificateListItemConverterTest {
 
       final var captor = ArgumentCaptor.forClass(CertificateRecipientDTO.class);
 
-      verify(certificateEventService)
-          .get(anyList(), captor.capture());
+      verify(certificateEventService).get(anyList(), captor.capture());
 
       assertEquals(RECIPIENT, captor.getValue());
     }
@@ -255,5 +249,4 @@ class CertificateListItemConverterTest {
       assertEquals(events, response.getEvents());
     }
   }
-
 }

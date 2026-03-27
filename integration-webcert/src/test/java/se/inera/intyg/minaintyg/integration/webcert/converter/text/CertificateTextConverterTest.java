@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.text;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,46 +39,32 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateTextDT
 @ExtendWith(MockitoExtension.class)
 class CertificateTextConverterTest {
 
-  private static final CertificateLinkDTO linkDTO = CertificateLinkDTO
-      .builder()
-      .url("URL")
-      .id("ID")
-      .name("NAME")
-      .build();
+  private static final CertificateLinkDTO linkDTO =
+      CertificateLinkDTO.builder().url("URL").id("ID").name("NAME").build();
 
-  private static final CertificateLink link = CertificateLink
-      .builder()
-      .url("URL")
-      .id("ID")
-      .name("NAME")
-      .build();
+  private static final CertificateLink link =
+      CertificateLink.builder().url("URL").id("ID").name("NAME").build();
 
-  private static final CertificateTextDTO certificateText = CertificateTextDTO
-      .builder()
-      .text("TEXT")
-      .type(CertificateTextType.PREAMBLE_TEXT)
-      .links(List.of(linkDTO, linkDTO))
-      .build();
+  private static final CertificateTextDTO certificateText =
+      CertificateTextDTO.builder()
+          .text("TEXT")
+          .type(CertificateTextType.PREAMBLE_TEXT)
+          .links(List.of(linkDTO, linkDTO))
+          .build();
 
-  private static final CertificateTextDTO certificateTextNoLinks = CertificateTextDTO
-      .builder()
-      .text("TEXT")
-      .type(CertificateTextType.PREAMBLE_TEXT)
-      .build();
+  private static final CertificateTextDTO certificateTextNoLinks =
+      CertificateTextDTO.builder().text("TEXT").type(CertificateTextType.PREAMBLE_TEXT).build();
 
-  @Mock
-  CertificateLinkConverter certificateLinkConverter;
+  @Mock CertificateLinkConverter certificateLinkConverter;
 
-  @InjectMocks
-  CertificateTextConverter certificateTextConverter;
+  @InjectMocks CertificateTextConverter certificateTextConverter;
 
   @Nested
   class HasLinks {
 
     @BeforeEach
     void setup() {
-      when(certificateLinkConverter.convert(any(CertificateLinkDTO.class)))
-          .thenReturn(link);
+      when(certificateLinkConverter.convert(any(CertificateLinkDTO.class))).thenReturn(link);
     }
 
     @Test

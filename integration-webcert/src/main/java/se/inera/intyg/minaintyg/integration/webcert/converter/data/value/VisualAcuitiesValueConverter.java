@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.List;
@@ -42,23 +60,15 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
   }
 
   private static TableElement headingElement(String value) {
-    return TableElement.builder()
-        .type(TableElementType.HEADING)
-        .value(value)
-        .build();
+    return TableElement.builder().type(TableElementType.HEADING).value(value).build();
   }
 
   private static TableElement dataElement(String value) {
-    return TableElement.builder()
-        .type(TableElementType.DATA)
-        .value(value)
-        .build();
+    return TableElement.builder().type(TableElementType.DATA).value(value).build();
   }
 
   private static List<TableElement> dataElements(List<String> values) {
-    return values.stream()
-        .map(VisualAcuitiesValueConverter::dataElement)
-        .toList();
+    return values.stream().map(VisualAcuitiesValueConverter::dataElement).toList();
   }
 
   private static CertificateQuestionValue createTableValue(
@@ -68,34 +78,37 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
       return NOT_PROVIDED_VALUE;
     }
 
-    final var contactLensesIncluded = config
-        .map(configValue -> configValue.getContactLensesLabel() != null)
-        .orElse(false);
+    final var contactLensesIncluded =
+        config.map(configValue -> configValue.getContactLensesLabel() != null).orElse(false);
 
     return CertificateQuestionValueGeneralTable.builder()
-        .headings(
-            getHeadings(config, contactLensesIncluded)
-        )
+        .headings(getHeadings(config, contactLensesIncluded))
         .values(
             List.of(
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getRightEye)),
                     dataElements(
-                        value(values, CertificateDataValueVisualAcuities::getRightEye, true,
+                        value(
+                            values,
+                            CertificateDataValueVisualAcuities::getRightEye,
+                            true,
                             contactLensesIncluded))),
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getLeftEye)),
-                    dataElements(value(values, CertificateDataValueVisualAcuities::getLeftEye, true,
-                        contactLensesIncluded))
-                ),
+                    dataElements(
+                        value(
+                            values,
+                            CertificateDataValueVisualAcuities::getLeftEye,
+                            true,
+                            contactLensesIncluded))),
                 row(
                     headingElement(label(config, CertificateDataConfigVisualAcuity::getBinocular)),
                     dataElements(
-                        value(values, CertificateDataValueVisualAcuities::getBinocular, false,
-                            contactLensesIncluded))
-                )
-            )
-        )
+                        value(
+                            values,
+                            CertificateDataValueVisualAcuities::getBinocular,
+                            false,
+                            contactLensesIncluded)))))
         .build();
   }
 
@@ -103,94 +116,94 @@ public class VisualAcuitiesValueConverter extends AbstractValueConverter {
     return values.isEmpty() || values.get().getRightEye() == null;
   }
 
-  private static List<TableElement> getHeadings(Optional<CertificateDataConfigVisualAcuity> config,
-      boolean includeContactLenses) {
+  private static List<TableElement> getHeadings(
+      Optional<CertificateDataConfigVisualAcuity> config, boolean includeContactLenses) {
     if (Boolean.FALSE.equals(includeContactLenses)) {
       return List.of(
           dataElement(EMPTY),
-          headingElement(headerLabel(config,
-              CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
-          ),
           headingElement(
-              headerLabel(config,
-                  CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
-          )
-      );
+              headerLabel(config, CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)),
+          headingElement(
+              headerLabel(config, CertificateDataConfigVisualAcuity::getWithCorrectionLabel)));
     }
 
     return List.of(
         dataElement(EMPTY),
-        headingElement(headerLabel(config,
-            CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)
-        ),
         headingElement(
-            headerLabel(config,
-                CertificateDataConfigVisualAcuity::getWithCorrectionLabel)
-        ),
+            headerLabel(config, CertificateDataConfigVisualAcuity::getWithoutCorrectionLabel)),
         headingElement(
-            headerLabel(config, CertificateDataConfigVisualAcuity::getContactLensesLabel)
-        )
-    );
+            headerLabel(config, CertificateDataConfigVisualAcuity::getWithCorrectionLabel)),
+        headingElement(
+            headerLabel(config, CertificateDataConfigVisualAcuity::getContactLensesLabel)));
   }
 
-  private static String headerLabel(Optional<CertificateDataConfigVisualAcuity> config,
+  private static String headerLabel(
+      Optional<CertificateDataConfigVisualAcuity> config,
       Function<CertificateDataConfigVisualAcuity, String> getLabel) {
-    return config.map(getLabel)
-        .orElse(MISSING_LABEL);
+    return config.map(getLabel).orElse(MISSING_LABEL);
   }
 
   private static List<TableElement> row(TableElement label, List<TableElement> value) {
     return Stream.concat(Stream.of(label), value.stream()).toList();
   }
 
-  private static String label(Optional<CertificateDataConfigVisualAcuity> config,
+  private static String label(
+      Optional<CertificateDataConfigVisualAcuity> config,
       Function<CertificateDataConfigVisualAcuity, VisualAcuity> getVisualAcuity) {
-    return config.map(getVisualAcuity)
-        .map(VisualAcuity::getLabel)
-        .orElse(MISSING_LABEL);
+    return config.map(getVisualAcuity).map(VisualAcuity::getLabel).orElse(MISSING_LABEL);
   }
 
-  private static List<String> value(Optional<CertificateDataValueVisualAcuities> values,
-      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualActuity,
-      boolean displayContactLenses, Boolean contactLensesIncluded) {
+  private static List<String> value(
+      Optional<CertificateDataValueVisualAcuities> values,
+      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity>
+          getVisualActuity,
+      boolean displayContactLenses,
+      Boolean contactLensesIncluded) {
     return values(values, getVisualActuity, displayContactLenses, contactLensesIncluded);
   }
 
-  private static List<String> values(Optional<CertificateDataValueVisualAcuities> values,
-      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualActuity,
-      boolean includeContactLenses, boolean contactLensesIncluded) {
+  private static List<String> values(
+      Optional<CertificateDataValueVisualAcuities> values,
+      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity>
+          getVisualActuity,
+      boolean includeContactLenses,
+      boolean contactLensesIncluded) {
 
     if (Boolean.FALSE.equals(contactLensesIncluded)) {
       return List.of(
           value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithoutCorrection),
-          value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithCorrection)
-      );
+          value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithCorrection));
     }
 
     return List.of(
         value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithoutCorrection),
         value(values, getVisualActuity, CertificateDataValueVisualAcuity::getWithCorrection),
-        includeContactLenses ?
-            booleanValue(values, getVisualActuity,
-                CertificateDataValueVisualAcuity::getContactLenses) :
-            EMPTY_VALUE
-    );
+        includeContactLenses
+            ? booleanValue(
+                values, getVisualActuity, CertificateDataValueVisualAcuity::getContactLenses)
+            : EMPTY_VALUE);
   }
 
-  private static String value(Optional<CertificateDataValueVisualAcuities> visualAcuities,
-      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualAcuity,
+  private static String value(
+      Optional<CertificateDataValueVisualAcuities> visualAcuities,
+      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity>
+          getVisualAcuity,
       Function<CertificateDataValueVisualAcuity, CertificateDataValueDouble> getDouble) {
-    return visualAcuities.map(getVisualAcuity)
+    return visualAcuities
+        .map(getVisualAcuity)
         .map(getDouble)
         .map(CertificateDataValueDouble::getValue)
         .map(value -> value.toString().replace(".", ","))
         .orElse(EMPTY_VALUE);
   }
 
-  private static String booleanValue(Optional<CertificateDataValueVisualAcuities> visualAcuities,
-      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity> getVisualAcuity,
+  private static String booleanValue(
+      Optional<CertificateDataValueVisualAcuities> visualAcuities,
+      Function<CertificateDataValueVisualAcuities, CertificateDataValueVisualAcuity>
+          getVisualAcuity,
       Function<CertificateDataValueVisualAcuity, CertificateDataValueBoolean> getBoolean) {
-    return visualAcuities.map(getVisualAcuity)
+    return visualAcuities
+        .map(getVisualAcuity)
         .map(getBoolean)
         .map(CertificateDataValueBoolean::getSelected)
         .map(value -> Boolean.TRUE.equals(value) ? TRUE_LABEL : FALSE_LABEL)

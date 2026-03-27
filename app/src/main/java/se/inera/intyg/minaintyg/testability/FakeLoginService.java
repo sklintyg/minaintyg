@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.testability;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,12 +44,10 @@ public class FakeLoginService {
     final var oldSession = request.getSession(false);
     Optional.ofNullable(oldSession).ifPresent(HttpSession::invalidate);
 
-    final var fakeAuthenticationToken = new FakeAuthenticationToken(
-        minaIntygUserDetailService.buildPrincipal(
-            fakeCredentials.getPersonId(),
-            LoginMethod.FAKE
-        )
-    );
+    final var fakeAuthenticationToken =
+        new FakeAuthenticationToken(
+            minaIntygUserDetailService.buildPrincipal(
+                fakeCredentials.getPersonId(), LoginMethod.FAKE));
 
     final var context = SecurityContextHolder.createEmptyContext();
     context.setAuthentication(fakeAuthenticationToken);
@@ -39,14 +55,10 @@ public class FakeLoginService {
 
     final var newSession = request.getSession(true);
     newSession.setAttribute(
-        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context
-    );
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
     applicationEventPublisher.publishEvent(
-        new InteractiveAuthenticationSuccessEvent(
-            fakeAuthenticationToken, this.getClass()
-        )
-    );
+        new InteractiveAuthenticationSuccessEvent(fakeAuthenticationToken, this.getClass()));
   }
 
   public void logout(HttpSession session) {

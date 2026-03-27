@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.intygstjanst;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,32 +36,20 @@ import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateR
 @ExtendWith(MockitoExtension.class)
 class CertificateStatusServiceTest {
 
-  private static final LocalDateTime NEW_ISSUED = LocalDateTime.now()
-      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
-  private static final LocalDateTime OLD_ISSUED = LocalDateTime.now()
-      .minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
-  private static final CertificateRecipientDTO SENT_RECIPIENT = CertificateRecipientDTO
-      .builder()
-      .id("id")
-      .sent(LocalDateTime.now())
-      .build();
-  private static final CertificateRecipientDTO NOT_SENT_RECIPIENT = CertificateRecipientDTO
-      .builder()
-      .id("id")
-      .build();
-  private static final List<CertificateRelationDTO> REPLACED_RELATIONS = List.of(
-      CertificateRelationDTO
-          .builder()
-          .type(CertificateRelationType.REPLACED)
-          .build());
-  private static final List<CertificateRelationDTO> REPLACES_RELATIONS = List.of(
-      CertificateRelationDTO
-          .builder()
-          .type(CertificateRelationType.REPLACES)
-          .build());
+  private static final LocalDateTime NEW_ISSUED =
+      LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW).plusDays(1);
+  private static final LocalDateTime OLD_ISSUED =
+      LocalDateTime.now().minusDays(DAYS_LIMIT_FOR_STATUS_NEW).minusDays(1);
+  private static final CertificateRecipientDTO SENT_RECIPIENT =
+      CertificateRecipientDTO.builder().id("id").sent(LocalDateTime.now()).build();
+  private static final CertificateRecipientDTO NOT_SENT_RECIPIENT =
+      CertificateRecipientDTO.builder().id("id").build();
+  private static final List<CertificateRelationDTO> REPLACED_RELATIONS =
+      List.of(CertificateRelationDTO.builder().type(CertificateRelationType.REPLACED).build());
+  private static final List<CertificateRelationDTO> REPLACES_RELATIONS =
+      List.of(CertificateRelationDTO.builder().type(CertificateRelationType.REPLACES).build());
 
-  @InjectMocks
-  CertificateStatusService certificateStatusService;
+  @InjectMocks CertificateStatusService certificateStatusService;
 
   @Test
   void shouldIncludeNewIfNewerThanTheLimitForNewCertificates() {
@@ -69,8 +75,8 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldIncludeNotSentIfRecipientExistsButSentIsNull() {
-    final var response = certificateStatusService.get(Collections.emptyList(), NOT_SENT_RECIPIENT,
-        null);
+    final var response =
+        certificateStatusService.get(Collections.emptyList(), NOT_SENT_RECIPIENT, null);
 
     assertEquals(1, response.size());
     assertEquals(CertificateStatusType.NOT_SENT, response.get(0));
@@ -78,8 +84,8 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldIncludeSentIfRecipientAndSentExists() {
-    final var response = certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT,
-        null);
+    final var response =
+        certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT, null);
 
     assertEquals(1, response.size());
     assertEquals(CertificateStatusType.SENT, response.get(0));
@@ -125,8 +131,7 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldOnlyIncludeReplacedIfCertificateIsBothNewAndReplaced() {
-    final var response = certificateStatusService.get(REPLACED_RELATIONS, null,
-        NEW_ISSUED);
+    final var response = certificateStatusService.get(REPLACED_RELATIONS, null, NEW_ISSUED);
 
     assertEquals(1, response.size());
     assertEquals(CertificateStatusType.REPLACED, response.get(0));
@@ -134,8 +139,8 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldIncludeBothSentAndNewIfSentAndNewerThanTheLimitForNewCertificates() {
-    final var response = certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT,
-        NEW_ISSUED);
+    final var response =
+        certificateStatusService.get(Collections.emptyList(), SENT_RECIPIENT, NEW_ISSUED);
 
     assertEquals(2, response.size());
     assertEquals(CertificateStatusType.SENT, response.get(0));
@@ -144,12 +149,11 @@ class CertificateStatusServiceTest {
 
   @Test
   void shouldIncludeBothNotSentAndNewIfSentIsNullAndNewerThanTheLimitForNewCertificates() {
-    final var response = certificateStatusService.get(Collections.emptyList(), NOT_SENT_RECIPIENT,
-        NEW_ISSUED);
+    final var response =
+        certificateStatusService.get(Collections.emptyList(), NOT_SENT_RECIPIENT, NEW_ISSUED);
 
     assertEquals(2, response.size());
     assertEquals(CertificateStatusType.NOT_SENT, response.get(0));
     assertEquals(CertificateStatusType.NEW, response.get(1));
   }
-
 }

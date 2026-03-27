@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +34,6 @@ class IntegerValueConverterTest {
   private final ValueConverter integerValueConverter = new IntegerValueConverter();
   public static final String UNIT_OF_MEASUREMENT = "%";
 
-
   @Test
   void shallReturnIntegerValueType() {
     assertEquals(CertificateDataValueType.INTEGER, integerValueConverter.getType());
@@ -24,12 +41,10 @@ class IntegerValueConverterTest {
 
   @Test
   void shallReturnNotProvidedValueIfNull() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueInteger.builder()
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(CertificateDataValueInteger.builder().build())
+            .build();
 
     final var actualValue = integerValueConverter.convert(element);
     assertEquals(NOT_PROVIDED_VALUE, actualValue);
@@ -37,17 +52,15 @@ class IntegerValueConverterTest {
 
   @Test
   void shallReturnTextValueWithIntegerIfIntegerExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value("10")
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value("10").build();
 
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueInteger.builder()
-                .value(Integer.valueOf(expectedValue.getValue()))
-                .build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(
+                CertificateDataValueInteger.builder()
+                    .value(Integer.valueOf(expectedValue.getValue()))
+                    .build())
+            .build();
 
     final var actualValue = integerValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);
@@ -55,28 +68,24 @@ class IntegerValueConverterTest {
 
   @Test
   void shallThrowIllegalArgumentIfWrongType() {
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueText.builder().build()
-        )
-        .build();
+    final var element =
+        CertificateDataElement.builder().value(CertificateDataValueText.builder().build()).build();
 
     assertThrows(IllegalArgumentException.class, () -> integerValueConverter.convert(element));
   }
 
   @Test
   void shallReturnTextValueWithIntegerAndUnitOfMeasurementIfBothExists() {
-    final var expectedValue = CertificateQuestionValueText.builder()
-        .value("10%")
-        .build();
+    final var expectedValue = CertificateQuestionValueText.builder().value("10%").build();
 
-    final var element = CertificateDataElement.builder()
-        .value(
-            CertificateDataValueInteger.builder()
-                .value(10)
-                .unitOfMeasurement(UNIT_OF_MEASUREMENT)
-                .build()
-        ).build();
+    final var element =
+        CertificateDataElement.builder()
+            .value(
+                CertificateDataValueInteger.builder()
+                    .value(10)
+                    .unitOfMeasurement(UNIT_OF_MEASUREMENT)
+                    .build())
+            .build();
 
     final var actualValue = integerValueConverter.convert(element);
     assertEquals(expectedValue, actualValue);

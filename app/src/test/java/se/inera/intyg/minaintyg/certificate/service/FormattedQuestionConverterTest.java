@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,20 +36,19 @@ import se.inera.intyg.minaintyg.integration.api.certificate.model.value.TableEle
 @ExtendWith(MockitoExtension.class)
 class FormattedQuestionConverterTest {
 
-  @InjectMocks
-  FormattedQuestionConverter formattedQuestionConverter;
+  @InjectMocks FormattedQuestionConverter formattedQuestionConverter;
 
   @Test
   void shouldReturnHTMLForList() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueList
-                .builder()
-                .values(List.of("element 1", "element 2"))
-                .build())
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(List.of("element 1", "element 2"))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -42,14 +59,14 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithoutLabel() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .value(
-            CertificateQuestionValueList
-                .builder()
-                .values(List.of("element 1", "element 2"))
-                .build())
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(List.of("element 1", "element 2"))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -60,14 +77,14 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithLabelButWithoutTitle() {
-    final var question = CertificateQuestion.builder()
-        .label("Label")
-        .value(
-            CertificateQuestionValueList
-                .builder()
-                .values(List.of("element 1", "element 2"))
-                .build())
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .label("Label")
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(List.of("element 1", "element 2"))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -78,16 +95,16 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithHeader() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .header("Header")
-        .label("Label")
-        .value(
-            CertificateQuestionValueList
-                .builder()
-                .values(List.of("element 1", "element 2"))
-                .build())
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .header("Header")
+            .label("Label")
+            .value(
+                CertificateQuestionValueList.builder()
+                    .values(List.of("element 1", "element 2"))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -98,16 +115,12 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLForText() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueText
-                .builder()
-                .value("element 1")
-                .build()
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(CertificateQuestionValueText.builder().value("element 1").build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -118,25 +131,20 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithSubQuestion() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueText
-                .builder()
-                .value("element 1")
-                .build()
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(CertificateQuestionValueText.builder().value("element 1").build())
+            .build();
 
-    final var completeQuestion = CertificateQuestion.builder()
-        .subQuestions(List.of(question))
-        .title("Complete title")
-        .label("Complete label")
-        .value(
-            CertificateQuestionValueText.builder().value("Complete text").build()
-        )
-        .build();
+    final var completeQuestion =
+        CertificateQuestion.builder()
+            .subQuestions(List.of(question))
+            .title("Complete title")
+            .label("Complete label")
+            .value(CertificateQuestionValueText.builder().value("Complete text").build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(completeQuestion);
 
@@ -147,35 +155,27 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithSeveralLayersOfSubQuestions() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueText
-                .builder()
-                .value("element 1")
-                .build()
-        )
-        .subQuestions(List.of(
-                CertificateQuestion.builder()
-                    .title("Title sub question 2")
-                    .label("Label sub question 2")
-                    .value(
-                        CertificateQuestionValueText.builder().value("element 2").build()
-                    )
-                    .build()
-            )
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(CertificateQuestionValueText.builder().value("element 1").build())
+            .subQuestions(
+                List.of(
+                    CertificateQuestion.builder()
+                        .title("Title sub question 2")
+                        .label("Label sub question 2")
+                        .value(CertificateQuestionValueText.builder().value("element 2").build())
+                        .build()))
+            .build();
 
-    final var completeQuestion = CertificateQuestion.builder()
-        .subQuestions(List.of(question))
-        .title("Complete title")
-        .label("Complete label")
-        .value(
-            CertificateQuestionValueText.builder().value("Complete text").build()
-        )
-        .build();
+    final var completeQuestion =
+        CertificateQuestion.builder()
+            .subQuestions(List.of(question))
+            .title("Complete title")
+            .label("Complete label")
+            .value(CertificateQuestionValueText.builder().value("Complete text").build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(completeQuestion);
 
@@ -186,21 +186,18 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLWithLabelButWithoutTitleForSubQuestion() {
-    final var question = CertificateQuestion.builder()
-        .subQuestions(
-            List.of(
-                CertificateQuestion.builder()
-                    .label("Label")
-                    .value(
-                        CertificateQuestionValueList
-                            .builder()
-                            .values(List.of("element 1", "element 2"))
-                            .build()
-                    )
-                    .build()
-            )
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .subQuestions(
+                List.of(
+                    CertificateQuestion.builder()
+                        .label("Label")
+                        .value(
+                            CertificateQuestionValueList.builder()
+                                .values(List.of("element 1", "element 2"))
+                                .build())
+                        .build()))
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -211,17 +208,16 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLForTable() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueTable
-                .builder()
-                .headings(List.of("heading 1", "heading 2"))
-                .values(List.of(List.of("Value 1", "Value 2")))
-                .build()
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(
+                CertificateQuestionValueTable.builder()
+                    .headings(List.of("heading 1", "heading 2"))
+                    .values(List.of(List.of("Value 1", "Value 2")))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -232,29 +228,40 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnHTMLForGeneralTable() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .value(
-            CertificateQuestionValueGeneralTable
-                .builder()
-                .headings(
-                    List.of(
-                        TableElement.builder().type(TableElementType.DATA).value("").build(),
-                        TableElement.builder().type(TableElementType.HEADING).value("h 1").build(),
-                        TableElement.builder().type(TableElementType.HEADING).value("h 2").build()
-                    )
-                )
-                .values(List.of(
-                    List.of(
-                        TableElement.builder().type(TableElementType.HEADING).value("h 3").build(),
-                        TableElement.builder().type(TableElementType.DATA).value("d 1").build(),
-                        TableElement.builder().type(TableElementType.DATA).value("d 2").build()
-                    )
-                ))
-                .build()
-        )
-        .build();
+    final var question =
+        CertificateQuestion.builder()
+            .title("Title")
+            .label("Label")
+            .value(
+                CertificateQuestionValueGeneralTable.builder()
+                    .headings(
+                        List.of(
+                            TableElement.builder().type(TableElementType.DATA).value("").build(),
+                            TableElement.builder()
+                                .type(TableElementType.HEADING)
+                                .value("h 1")
+                                .build(),
+                            TableElement.builder()
+                                .type(TableElementType.HEADING)
+                                .value("h 2")
+                                .build()))
+                    .values(
+                        List.of(
+                            List.of(
+                                TableElement.builder()
+                                    .type(TableElementType.HEADING)
+                                    .value("h 3")
+                                    .build(),
+                                TableElement.builder()
+                                    .type(TableElementType.DATA)
+                                    .value("d 1")
+                                    .build(),
+                                TableElement.builder()
+                                    .type(TableElementType.DATA)
+                                    .value("d 2")
+                                    .build())))
+                    .build())
+            .build();
 
     final var result = formattedQuestionConverter.convert(question);
 
@@ -265,10 +272,7 @@ class FormattedQuestionConverterTest {
 
   @Test
   void shouldReturnTitleForQuestionWithNoValue() {
-    final var question = CertificateQuestion.builder()
-        .title("Title")
-        .label("Label")
-        .build();
+    final var question = CertificateQuestion.builder().title("Title").label("Label").build();
 
     final var result = formattedQuestionConverter.convert(question);
 

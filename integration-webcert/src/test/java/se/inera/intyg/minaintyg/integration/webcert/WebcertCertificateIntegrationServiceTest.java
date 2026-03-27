@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -44,142 +62,115 @@ class WebcertCertificateIntegrationServiceTest {
   private static final String CERTIFICATE_ID = "certificateId";
   private static final String PERSON_ID = "personId";
   private static final String PERSON_ID_DASH = "person-Id";
-  private static final Patient PATIENT = Patient.builder().personId(
-      PersonId.builder().id(PERSON_ID).build()).build();
-  public static final GetCertificateIntegrationRequest REQUEST = GetCertificateIntegrationRequest.builder()
-      .certificateId(CERTIFICATE_ID)
-      .personId(PERSON_ID)
-      .build();
+  private static final Patient PATIENT =
+      Patient.builder().personId(PersonId.builder().id(PERSON_ID).build()).build();
+  public static final GetCertificateIntegrationRequest REQUEST =
+      GetCertificateIntegrationRequest.builder()
+          .certificateId(CERTIFICATE_ID)
+          .personId(PERSON_ID)
+          .build();
 
-  @Mock
-  private GetCertificateFromWebcertService getCertificateFromWebcertService;
+  @Mock private GetCertificateFromWebcertService getCertificateFromWebcertService;
 
-  @Mock
-  private CertificateDataConverter certificateDataConverter;
+  @Mock private CertificateDataConverter certificateDataConverter;
 
-  @Mock
-  private MetadataConverter metadataConverter;
+  @Mock private MetadataConverter metadataConverter;
 
-  @Mock
-  private AvailableFunctionConverter availableFunctionConverter;
+  @Mock private AvailableFunctionConverter availableFunctionConverter;
 
-  @Mock
-  private CertificateTextConverter certificateTextConverter;
+  @Mock private CertificateTextConverter certificateTextConverter;
 
-  @InjectMocks
-  private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
+  @InjectMocks private WebcertCertificateIntegrationService webcertCertificateIntegrationService;
 
   @Test
   void shouldThrowIfRequestIsNull() {
-    assertThrows(IllegalArgumentException.class,
-        () -> webcertCertificateIntegrationService.get(null));
+    assertThrows(
+        IllegalArgumentException.class, () -> webcertCertificateIntegrationService.get(null));
   }
 
   @Test
   void shouldThrowIfCertificateIdFromRequestIsNull() {
     final var invalidRequest = GetCertificateIntegrationRequest.builder().build();
-    assertThrows(IllegalArgumentException.class,
+    assertThrows(
+        IllegalArgumentException.class,
         () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
-
   @Test
   void shouldThrowIfCertificateIdFromRequestIsEmpty() {
-    final var invalidRequest = GetCertificateIntegrationRequest.builder()
-        .certificateId("")
-        .build();
+    final var invalidRequest = GetCertificateIntegrationRequest.builder().certificateId("").build();
 
-    assertThrows(IllegalArgumentException.class,
+    assertThrows(
+        IllegalArgumentException.class,
         () -> webcertCertificateIntegrationService.get(invalidRequest));
   }
 
   @Test
   void shouldThrowIfNoCertificateWasFound() {
-    when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(
-        CertificateResponseDTO.builder()
-            .certificate(null)
-            .build()
-    );
+    when(getCertificateFromWebcertService.get(REQUEST))
+        .thenReturn(CertificateResponseDTO.builder().certificate(null).build());
     assertThrows(RuntimeException.class, () -> webcertCertificateIntegrationService.get(REQUEST));
   }
 
   @Test
   void shouldNotThrowErrorIfPatientIdIsNotMatchWithDash() {
-    final var request = GetCertificateIntegrationRequest.builder()
-        .certificateId(CERTIFICATE_ID)
-        .personId(PERSON_ID_DASH)
-        .build();
+    final var request =
+        GetCertificateIntegrationRequest.builder()
+            .certificateId(CERTIFICATE_ID)
+            .personId(PERSON_ID_DASH)
+            .build();
 
-    when(getCertificateFromWebcertService.get(request)).thenReturn(
-        CertificateResponseDTO.builder()
-            .certificate(CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build())
-            .build()
-    );
+    when(getCertificateFromWebcertService.get(request))
+        .thenReturn(
+            CertificateResponseDTO.builder()
+                .certificate(
+                    CertificateDTO.builder()
+                        .data(Map.of(ID, CertificateDataElement.builder().build()))
+                        .metadata(CertificateMetadataDTO.builder().patient(PATIENT).build())
+                        .build())
+                .build());
     assertDoesNotThrow(() -> webcertCertificateIntegrationService.get(request));
   }
 
   @Test
   void shouldThrowErrorIfPatientIdIsNotMatchForCertificatePatientId() {
-    final var request = GetCertificateIntegrationRequest.builder()
-        .certificateId(CERTIFICATE_ID)
-        .personId("NO_MATCH")
-        .build();
+    final var request =
+        GetCertificateIntegrationRequest.builder()
+            .certificateId(CERTIFICATE_ID)
+            .personId("NO_MATCH")
+            .build();
 
-    when(getCertificateFromWebcertService.get(request)).thenReturn(
-        CertificateResponseDTO.builder()
-            .certificate(CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build())
-            .build()
-    );
-    assertThrows(IllegalCertificateAccessException.class,
+    when(getCertificateFromWebcertService.get(request))
+        .thenReturn(
+            CertificateResponseDTO.builder()
+                .certificate(
+                    CertificateDTO.builder()
+                        .data(Map.of(ID, CertificateDataElement.builder().build()))
+                        .metadata(CertificateMetadataDTO.builder().patient(PATIENT).build())
+                        .build())
+                .build());
+    assertThrows(
+        IllegalCertificateAccessException.class,
         () -> webcertCertificateIntegrationService.get(request));
   }
 
   @Test
   void shouldReturnGetCertificateIntegrationResponseWithCategories() {
-    final var response = CertificateResponseDTO.builder()
-        .certificate(
-            CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .id(ID)
-                        .name(NAME)
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build()
-        )
-        .texts(Collections.emptyList())
-        .build();
-    final var expectedResult = List.of(
-        CertificateCategory.builder().build()
-    );
+    final var response =
+        CertificateResponseDTO.builder()
+            .certificate(
+                CertificateDTO.builder()
+                    .data(Map.of(ID, CertificateDataElement.builder().build()))
+                    .metadata(
+                        CertificateMetadataDTO.builder().id(ID).name(NAME).patient(PATIENT).build())
+                    .build())
+            .texts(Collections.emptyList())
+            .build();
+    final var expectedResult = List.of(CertificateCategory.builder().build());
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
-    when(certificateDataConverter.convert(anyList())).thenReturn(
-        expectedResult);
-    when(metadataConverter.convert(any(CertificateMetadataDTO.class))).thenReturn(
-        CertificateMetadata.builder()
-            .build());
+    when(certificateDataConverter.convert(anyList())).thenReturn(expectedResult);
+    when(metadataConverter.convert(any(CertificateMetadataDTO.class)))
+        .thenReturn(CertificateMetadata.builder().build());
 
     final var result = webcertCertificateIntegrationService.get(REQUEST);
     assertEquals(expectedResult, result.getCertificate().getCategories());
@@ -187,40 +178,26 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Test
   void shouldReturnGetCertificateIntegrationResponseWithMetaData() {
-    final var response = CertificateResponseDTO.builder()
-        .certificate(
-            CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .id(ID)
-                        .name(NAME)
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build()
-        )
-        .texts(Collections.emptyList())
-        .build();
+    final var response =
+        CertificateResponseDTO.builder()
+            .certificate(
+                CertificateDTO.builder()
+                    .data(Map.of(ID, CertificateDataElement.builder().build()))
+                    .metadata(
+                        CertificateMetadataDTO.builder().id(ID).name(NAME).patient(PATIENT).build())
+                    .build())
+            .texts(Collections.emptyList())
+            .build();
 
-    final var expectedMetadata = CertificateMetadata.builder()
-        .type(
-            CertificateType.builder()
-                .id(ID)
-                .name(NAME)
-                .build()
-        )
-        .build();
+    final var expectedMetadata =
+        CertificateMetadata.builder()
+            .type(CertificateType.builder().id(ID).name(NAME).build())
+            .build();
 
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
-    when(certificateDataConverter.convert(anyList())).thenReturn(
-        List.of(CertificateCategory.builder().build()
-        )
-    );
-    when(metadataConverter.convert(any(CertificateMetadataDTO.class))).thenReturn(
-        expectedMetadata);
+    when(certificateDataConverter.convert(anyList()))
+        .thenReturn(List.of(CertificateCategory.builder().build()));
+    when(metadataConverter.convert(any(CertificateMetadataDTO.class))).thenReturn(expectedMetadata);
 
     final var result = webcertCertificateIntegrationService.get(REQUEST);
     assertEquals(expectedMetadata, result.getCertificate().getMetadata());
@@ -228,34 +205,22 @@ class WebcertCertificateIntegrationServiceTest {
 
   @Test
   void shouldReturnResponseWithAvailableFunctions() {
-    final var expectedAvailableFunctions = List.of(
-        AvailableFunction.builder().build(),
-        AvailableFunction.builder().build()
-    );
+    final var expectedAvailableFunctions =
+        List.of(AvailableFunction.builder().build(), AvailableFunction.builder().build());
 
-    final var response = CertificateResponseDTO.builder()
-        .certificate(
-            CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .id(ID)
-                        .name(NAME)
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build()
-        )
-        .availableFunctions(
-            List.of(
-                AvailableFunctionDTO.builder().build(),
-                AvailableFunctionDTO.builder().build()
-            )
-        )
-        .texts(Collections.emptyList())
-        .build();
+    final var response =
+        CertificateResponseDTO.builder()
+            .certificate(
+                CertificateDTO.builder()
+                    .data(Map.of(ID, CertificateDataElement.builder().build()))
+                    .metadata(
+                        CertificateMetadataDTO.builder().id(ID).name(NAME).patient(PATIENT).build())
+                    .build())
+            .availableFunctions(
+                List.of(
+                    AvailableFunctionDTO.builder().build(), AvailableFunctionDTO.builder().build()))
+            .texts(Collections.emptyList())
+            .build();
 
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
     when(availableFunctionConverter.convert(response.getAvailableFunctions()))
@@ -270,28 +235,17 @@ class WebcertCertificateIntegrationServiceTest {
   void shouldReturnResponseWithTexts() {
     final var expectedCertificateText = CertificateText.builder().build();
 
-    final var response = CertificateResponseDTO.builder()
-        .certificate(
-            CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .id(ID)
-                        .name(NAME)
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build()
-        )
-        .texts(
-            List.of(
-                CertificateTextDTO.builder().build(),
-                CertificateTextDTO.builder().build()
-            )
-        )
-        .build();
+    final var response =
+        CertificateResponseDTO.builder()
+            .certificate(
+                CertificateDTO.builder()
+                    .data(Map.of(ID, CertificateDataElement.builder().build()))
+                    .metadata(
+                        CertificateMetadataDTO.builder().id(ID).name(NAME).patient(PATIENT).build())
+                    .build())
+            .texts(
+                List.of(CertificateTextDTO.builder().build(), CertificateTextDTO.builder().build()))
+            .build();
 
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
     when(certificateTextConverter.convert(any(CertificateTextDTO.class)))
@@ -308,22 +262,15 @@ class WebcertCertificateIntegrationServiceTest {
   void shouldReturnResponseWithNoTexts() {
     final var expectedCertificateText = Collections.emptyList();
 
-    final var response = CertificateResponseDTO.builder()
-        .certificate(
-            CertificateDTO.builder()
-                .data(
-                    Map.of(ID, CertificateDataElement.builder().build())
-                )
-                .metadata(
-                    CertificateMetadataDTO.builder()
-                        .id(ID)
-                        .name(NAME)
-                        .patient(PATIENT)
-                        .build()
-                )
-                .build()
-        )
-        .build();
+    final var response =
+        CertificateResponseDTO.builder()
+            .certificate(
+                CertificateDTO.builder()
+                    .data(Map.of(ID, CertificateDataElement.builder().build()))
+                    .metadata(
+                        CertificateMetadataDTO.builder().id(ID).name(NAME).patient(PATIENT).build())
+                    .build())
+            .build();
 
     when(getCertificateFromWebcertService.get(REQUEST)).thenReturn(response);
 

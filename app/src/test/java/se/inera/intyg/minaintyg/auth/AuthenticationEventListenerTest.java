@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,11 +44,9 @@ class AuthenticationEventListenerTest {
   private static final String PERSON_ID = "1912121212";
   private static final LoginMethod LOGIN_METHOD = LoginMethod.ELVA77;
 
-  @Mock
-  private MonitoringLogService monitoringLogService;
+  @Mock private MonitoringLogService monitoringLogService;
 
-  @InjectMocks
-  private AuthenticationEventListener authenticationEventListener;
+  @InjectMocks private AuthenticationEventListener authenticationEventListener;
 
   @Nested
   class LoginSuccess {
@@ -39,14 +55,12 @@ class AuthenticationEventListenerTest {
 
     @BeforeEach
     void setUp() {
-      interactiveAuthenticationSuccessEvent = new InteractiveAuthenticationSuccessEvent(
-          new Saml2AuthenticationToken(
-              MinaIntygUser.builder()
-                  .personId(PERSON_ID)
-                  .loginMethod(LOGIN_METHOD)
-                  .build(), mock(Saml2Authentication.class)
-          ), this.getClass()
-      );
+      interactiveAuthenticationSuccessEvent =
+          new InteractiveAuthenticationSuccessEvent(
+              new Saml2AuthenticationToken(
+                  MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build(),
+                  mock(Saml2Authentication.class)),
+              this.getClass());
     }
 
     @Test
@@ -73,11 +87,11 @@ class AuthenticationEventListenerTest {
 
     @Test
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
-      interactiveAuthenticationSuccessEvent = new InteractiveAuthenticationSuccessEvent(
-          new Saml2AuthenticationToken(
-              mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)
-          ), this.getClass()
-      );
+      interactiveAuthenticationSuccessEvent =
+          new InteractiveAuthenticationSuccessEvent(
+              new Saml2AuthenticationToken(
+                  mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)),
+              this.getClass());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
 
@@ -92,14 +106,11 @@ class AuthenticationEventListenerTest {
 
     @BeforeEach
     void setUp() {
-      logoutSuccessEvent = new LogoutSuccessEvent(
-          new Saml2AuthenticationToken(
-              MinaIntygUser.builder()
-                  .personId(PERSON_ID)
-                  .loginMethod(LOGIN_METHOD)
-                  .build(), mock(Saml2Authentication.class)
-          )
-      );
+      logoutSuccessEvent =
+          new LogoutSuccessEvent(
+              new Saml2AuthenticationToken(
+                  MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build(),
+                  mock(Saml2Authentication.class)));
     }
 
     @Test
@@ -126,11 +137,10 @@ class AuthenticationEventListenerTest {
 
     @Test
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
-      logoutSuccessEvent = new LogoutSuccessEvent(
-          new Saml2AuthenticationToken(
-              mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)
-          )
-      );
+      logoutSuccessEvent =
+          new LogoutSuccessEvent(
+              new Saml2AuthenticationToken(
+                  mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)));
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import lombok.RequiredArgsConstructor;
@@ -37,49 +55,39 @@ public class SendCertificateService {
     monitoringLogService.logCertificateSent(
         request.getCertificateId(),
         certificateResponse.getCertificate().getMetadata().getType().getId(),
-        recipient.getId()
-    );
+        recipient.getId());
 
     publishAnalyticsMessage.publishEvent(
         analyticsMessageFactory.certificateSent(
-            certificateResponse.getCertificate(),
-            recipient.getId()
-        )
-    );
+            certificateResponse.getCertificate(), recipient.getId()));
   }
 
   private void sendCertificate(
       SendCertificateRequest request,
       MinaIntygUser user,
-      GetCertificateIntegrationResponse certificateResponse
-  ) {
+      GetCertificateIntegrationResponse certificateResponse) {
 
     validateAction(certificateResponse);
 
     sendCertificateIntegrationService.send(
-        SendCertificateIntegrationRequest
-            .builder()
+        SendCertificateIntegrationRequest.builder()
             .certificateId(request.getCertificateId())
             .patientId(user.getPersonId())
             .recipient(certificateResponse.getCertificate().getMetadata().getRecipient().getId())
-            .build()
-    );
+            .build());
   }
 
   private GetCertificateIntegrationResponse getCertificate(String certificateId, String personId) {
     return getCertificateIntegrationService.get(
-        GetCertificateIntegrationRequest
-            .builder()
+        GetCertificateIntegrationRequest.builder()
             .certificateId(certificateId)
             .personId(personId)
-            .build()
-    );
+            .build());
   }
 
   private void validateAction(GetCertificateIntegrationResponse response) {
     if (!AvailableFunctionUtility.includesEnabledFunction(
-        response.getAvailableFunctions(),
-        AvailableFunctionType.SEND_CERTIFICATE)) {
+        response.getAvailableFunctions(), AvailableFunctionType.SEND_CERTIFICATE)) {
       throw new IllegalStateException("Certificate cannot be sent");
     }
   }

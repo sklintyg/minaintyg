@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert;
 
 import java.util.Collections;
@@ -36,28 +54,20 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     return GetCertificateIntegrationResponse.builder()
         .certificate(
             Certificate.builder()
-                .metadata(
-                    metadataConverter.convert(response.getCertificate().getMetadata())
-                )
+                .metadata(metadataConverter.convert(response.getCertificate().getMetadata()))
                 .categories(
                     certificateDataConverter.convert(
-                        response.getCertificate().getData().values().stream().toList()
-                    )
-                )
-                .build()
-        )
-        .availableFunctions(
-            availableFunctionConverter.convert(response.getAvailableFunctions())
-        )
+                        response.getCertificate().getData().values().stream().toList()))
+                .build())
+        .availableFunctions(availableFunctionConverter.convert(response.getAvailableFunctions()))
         .texts(getTexts(response))
         .build();
   }
 
   private List<CertificateText> getTexts(CertificateResponseDTO response) {
-    return response.getTexts() == null ? Collections.emptyList() :
-        response.getTexts().stream()
-            .map(certificateTextConverter::convert)
-            .toList();
+    return response.getTexts() == null
+        ? Collections.emptyList()
+        : response.getTexts().stream().map(certificateTextConverter::convert).toList();
   }
 
   private void validateRequest(GetCertificateIntegrationRequest request) {
@@ -74,8 +84,8 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
     }
   }
 
-  private static void validateResponse(GetCertificateIntegrationRequest request,
-      CertificateResponseDTO response) {
+  private static void validateResponse(
+      GetCertificateIntegrationRequest request, CertificateResponseDTO response) {
     final var certificate = response.getCertificate();
     if (certificate == null || certificate.getData() == null || certificate.getData().isEmpty()) {
       throw new IllegalArgumentException(
@@ -84,14 +94,13 @@ public class WebcertCertificateIntegrationService implements GetCertificateInteg
 
     if (isInvalidPersonId(request.getPersonId(), certificate.getMetadata().getPatient())) {
       throw new IllegalCertificateAccessException(
-          "PersonId does not match for certificate '%s'".formatted(request.getCertificateId())
-      );
+          "PersonId does not match for certificate '%s'".formatted(request.getCertificateId()));
     }
   }
 
   private static boolean isInvalidPersonId(String personId, Patient patient) {
-    return !personId.replace("-", "").equalsIgnoreCase(
-        patient.getPersonId().getId().replace("-", "")
-    );
+    return !personId
+        .replace("-", "")
+        .equalsIgnoreCase(patient.getPersonId().getId().replace("-", ""));
   }
 }

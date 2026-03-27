@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.monitoring.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,14 +49,10 @@ class MonitoringLogServiceTest {
 
   private static final String PERSON_ID = "personId";
   private static final String SOMETHING_WENT_WRONG = "something went wrong";
-  @InjectMocks
-  private MonitoringLogService monitoringLogService;
-  @Captor
-  private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
-  @Mock
-  private Appender<ILoggingEvent> mockAppender;
-  @Spy
-  private HashUtility hashUtility;
+  @InjectMocks private MonitoringLogService monitoringLogService;
+  @Captor private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
+  @Mock private Appender<ILoggingEvent> mockAppender;
+  @Spy private HashUtility hashUtility;
 
   @BeforeEach
   void setUp() {
@@ -57,8 +71,7 @@ class MonitoringLogServiceTest {
     verify(mockAppender).doAppend(captorLoggingEvent.capture());
     final LoggingEvent loggingEvent = captorLoggingEvent.getValue();
     assertThat(loggingEvent.getLevel(), equalTo(logLevel));
-    assertThat(loggingEvent.getFormattedMessage(),
-        equalTo(logMessage));
+    assertThat(loggingEvent.getFormattedMessage(), equalTo(logMessage));
   }
 
   @Nested
@@ -68,7 +81,8 @@ class MonitoringLogServiceTest {
     void shouldLogWhenUserLogin() {
       monitoringLogService.logUserLogin(PERSON_ID, LoginMethod.ELVA77.name());
       final var hashedPersonId = hashUtility.hash(PERSON_ID);
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CITIZEN_LOGIN Citizen '" + hashedPersonId + "' logged in using login method 'ELVA77'");
     }
   }
@@ -79,9 +93,11 @@ class MonitoringLogServiceTest {
     @Test
     void shouldLogWhenUserLoginFailed() {
       monitoringLogService.logUserLoginFailed(SOMETHING_WENT_WRONG, LoginMethod.ELVA77.name());
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CITIZEN_LOGIN_FAILURE Citizen failed to login, exception message '"
-              + SOMETHING_WENT_WRONG + "'");
+              + SOMETHING_WENT_WRONG
+              + "'");
     }
   }
 
@@ -92,7 +108,8 @@ class MonitoringLogServiceTest {
     void shouldLogWhenUserLogout() {
       monitoringLogService.logUserLogout(PERSON_ID, LoginMethod.ELVA77.name());
       final var hashedPersonId = hashUtility.hash(PERSON_ID);
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CITIZEN_LOGOUT Citizen '" + hashedPersonId + "' logged out using login method 'ELVA77'");
     }
   }
@@ -104,7 +121,8 @@ class MonitoringLogServiceTest {
     void shouldLogWhenUserListsCertificate() {
       monitoringLogService.logListCertificates(PERSON_ID, 10);
       final var hashedPersonId = hashUtility.hash(PERSON_ID);
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "LIST_CERTIFICATES Citizen '" + hashedPersonId + "' listed '10' certificates");
     }
 
@@ -119,15 +137,16 @@ class MonitoringLogServiceTest {
     void shouldLogWhenCertificateIsSent() {
       monitoringLogService.logCertificateSent("id", "lisjp", "recipient");
 
-      verifyLog(Level.INFO,
-          "CERTIFICATE_SEND Certificate 'id' of type 'lisjp' sent to 'recipient'");
+      verifyLog(
+          Level.INFO, "CERTIFICATE_SEND Certificate 'id' of type 'lisjp' sent to 'recipient'");
     }
 
     @Test
     void shouldLogWhenCertificateIsPrintedMinimal() {
       monitoringLogService.logCertificatePrinted("ID", "TYPE", false);
 
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CERTIFICATE_PRINTED_EMPLOYER_COPY Certificate 'ID' of type 'TYPE' was printed as employer copy");
     }
 
@@ -135,7 +154,8 @@ class MonitoringLogServiceTest {
     void shouldLogWhenCertificateIsPrintedFull() {
       monitoringLogService.logCertificatePrinted("ID", "TYPE", true);
 
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CERTIFICATE_PRINTED_FULLY Certificate 'ID' of type 'TYPE' was printed including all information");
     }
   }
@@ -147,7 +167,8 @@ class MonitoringLogServiceTest {
     void shouldLogClientErrorWithStackTrace() {
       monitoringLogService.logClientError("id", "code", "message", "stack trace");
 
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'stack trace'");
     }
 
@@ -155,7 +176,8 @@ class MonitoringLogServiceTest {
     void shouldLogClientErrorWithNoStackTrace() {
       monitoringLogService.logClientError("id", "code", "message", null);
 
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
     }
 
@@ -163,7 +185,8 @@ class MonitoringLogServiceTest {
     void shouldLogClientErrorWithEmptyStackTrace() {
       monitoringLogService.logClientError("id", "code", "message", "");
 
-      verifyLog(Level.INFO,
+      verifyLog(
+          Level.INFO,
           "CLIENT_ERROR Received error from client with errorId 'id' with error code 'code', message 'message' and stacktrace 'NO_STACK_TRACE'");
     }
   }

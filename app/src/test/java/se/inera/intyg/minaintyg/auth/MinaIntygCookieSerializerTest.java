@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,9 +55,10 @@ public class MinaIntygCookieSerializerTest {
     final var stringCaptor = ArgumentCaptor.forClass(String.class);
     verify(resp).addHeader(anyString(), stringCaptor.capture());
 
-    assertEquals(isSameSiteNone, stringCaptor.getValue().contains("SameSite=None"),
-        () -> "Erroneous samesite attribut for: %s".formatted(userAgent)
-    );
+    assertEquals(
+        isSameSiteNone,
+        stringCaptor.getValue().contains("SameSite=None"),
+        () -> "Erroneous samesite attribut for: %s".formatted(userAgent));
   }
 
   @ParameterizedTest
@@ -56,9 +75,9 @@ public class MinaIntygCookieSerializerTest {
     final var stringCaptor = ArgumentCaptor.forClass(String.class);
     verify(resp).addHeader(anyString(), stringCaptor.capture());
 
-    assertTrue(stringCaptor.getValue().contains("SameSite=None"),
-        () -> "Erroneous samesite attribut for: %s".formatted(userAgent)
-    );
+    assertTrue(
+        stringCaptor.getValue().contains("SameSite=None"),
+        () -> "Erroneous samesite attribut for: %s".formatted(userAgent));
   }
 
   public static Stream<Arguments> userAgents() {
@@ -75,15 +94,18 @@ public class MinaIntygCookieSerializerTest {
         Arguments.of("Mozilla/5.0 Chrome/54.0.2840.99 Safari/537.36", false),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) "
-                + "Chrome/55.0.2883.95 Safari/537.36", false),
+                + "Chrome/55.0.2883.95 Safari/537.36",
+            false),
         Arguments.of(
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36",
             false),
         Arguments.of(
             "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
             false),
-        Arguments.of("Mozilla/5.0 (Linux; Android 8.0.0) AppleWebKit/537.36 (KHTML, like Gecko) "
-            + "Version/4.0 Klar/1.0 Chrome/58.0.3029.121 Mobile Safari/537.36", false),
+        Arguments.of(
+            "Mozilla/5.0 (Linux; Android 8.0.0) AppleWebKit/537.36 (KHTML, like Gecko) "
+                + "Version/4.0 Klar/1.0 Chrome/58.0.3029.121 Mobile Safari/537.36",
+            false),
         Arguments.of(
             "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
             false),
@@ -121,22 +143,27 @@ public class MinaIntygCookieSerializerTest {
             false),
         Arguments.of(
             "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X; zh-CN) AppleWebKit/537.51.1 (KHTML, like Gecko) "
-                + "Mobile/15A5304i UCBrowser/11.5.7.986 Mobile AliApp(TUnionSDK/0.1.15)", false),
+                + "Mobile/15A5304i UCBrowser/11.5.7.986 Mobile AliApp(TUnionSDK/0.1.15)",
+            false),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/605.1.15 (KHTML, like Gecko) "
-                + "Version/12.0 Safari/605.1.15", false),
+                + "Version/12.0 Safari/605.1.15",
+            false),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko)",
             false),
         Arguments.of(
             "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/ 604.1.21 (KHTML, like Gecko) "
-                + "Version/ 12.0 Mobile/17A6278a Safari/602.1.26", false),
+                + "Version/ 12.0 Mobile/17A6278a Safari/602.1.26",
+            false),
         Arguments.of(
             "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) "
-                + "CriOS/70.0.3538.75 Mobile/15E148 Safari/605.1", false),
+                + "CriOS/70.0.3538.75 Mobile/15E148 Safari/605.1",
+            false),
         Arguments.of(
             "Mozilla/5.0 (iPad; CPU OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) "
-                + "FxiOS/13.2b11866 Mobile/16A366 Safari/605.1.15", false),
+                + "FxiOS/13.2b11866 Mobile/16A366 Safari/605.1.15",
+            false),
         Arguments.of(
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.2661.102 Safari/537.36",
             true),
@@ -145,25 +172,29 @@ public class MinaIntygCookieSerializerTest {
             true),
         Arguments.of(
             "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) "
-                + "CriOS/60.0.3112.72 Mobile/15A5327g Safari/602.1", true),
+                + "CriOS/60.0.3112.72 Mobile/15A5327g Safari/602.1",
+            true),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.29 Safari/537.36",
             true),
         Arguments.of(
             "Mozilla/5.0 (Linux; U; Android 8.0.0; en-US; Pixel XL Build/OPR3.170623.007) AppleWebKit/534.30 (KHTML, like Gecko) "
-                + "Version/4.0 UCBrowser/12.13.2.1005 U3/0.8.0 Mobile Safari/534.30", true),
+                + "Version/4.0 UCBrowser/12.13.2.1005 U3/0.8.0 Mobile Safari/534.30",
+            true),
         Arguments.of(
             "Mozilla/5.0 (Linux; U; Android 8.0.0; en-US; Pixel XL Build/OPR3.170623.007) AppleWebKit/534.30 (KHTML, like Gecko) "
-                + "Version/4.0 UCBrowser/12.13.4.1005 U3/0.8.0 Mobile Safari/534.30", true),
+                + "Version/4.0 UCBrowser/12.13.4.1005 U3/0.8.0 Mobile Safari/534.30",
+            true),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/605.1.15 (KHTML, like Gecko) "
-                + "Version/13.0.3 Safari/605.1.15", true),
+                + "Version/13.0.3 Safari/605.1.15",
+            true),
         Arguments.of(
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/601.1.39 (KHTML, like Gecko) Version/10.1.2 Safari/601.1.39",
             true),
         Arguments.of(
             "Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) "
-                + "Version/66.6 Mobile/14A5297c Safari/602.1", true)
-    );
+                + "Version/66.6 Mobile/14A5297c Safari/602.1",
+            true));
   }
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import java.nio.charset.StandardCharsets;
@@ -27,12 +45,9 @@ public class AuthenticationEventListener {
     updateMDCWithNewSessionId();
 
     final var minaIntygUser = getMinaIntygUser(success.getAuthentication().getPrincipal());
-    minaIntygUser.ifPresent(user ->
-        monitoringLogService.logUserLogin(
-            user.getPersonId(),
-            user.getLoginMethod().value()
-        )
-    );
+    minaIntygUser.ifPresent(
+        user ->
+            monitoringLogService.logUserLogin(user.getPersonId(), user.getLoginMethod().value()));
   }
 
   /**
@@ -48,8 +63,8 @@ public class AuthenticationEventListener {
 
       if (session != null && session.getId() != null) {
         final var sessionId = session.getId();
-        final var encodedSessionId = Base64.getEncoder().encodeToString(sessionId.getBytes(
-            StandardCharsets.UTF_8));
+        final var encodedSessionId =
+            Base64.getEncoder().encodeToString(sessionId.getBytes(StandardCharsets.UTF_8));
         MDC.put(MdcLogConstants.SESSION_ID_KEY, encodedSessionId);
       }
     }
@@ -58,12 +73,9 @@ public class AuthenticationEventListener {
   @EventListener
   public void onLogoutSuccess(LogoutSuccessEvent success) {
     final var minaIntygUser = getMinaIntygUser(success.getAuthentication().getPrincipal());
-    minaIntygUser.ifPresent(user ->
-        monitoringLogService.logUserLogout(
-            user.getPersonId(),
-            user.getLoginMethod().value()
-        )
-    );
+    minaIntygUser.ifPresent(
+        user ->
+            monitoringLogService.logUserLogout(user.getPersonId(), user.getLoginMethod().value()));
   }
 
   private static Optional<MinaIntygUser> getMinaIntygUser(Object principal) {
@@ -74,5 +86,3 @@ public class AuthenticationEventListener {
     return Optional.empty();
   }
 }
-
-

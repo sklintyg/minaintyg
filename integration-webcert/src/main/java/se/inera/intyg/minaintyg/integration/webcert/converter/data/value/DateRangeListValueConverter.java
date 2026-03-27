@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.Collections;
@@ -31,12 +49,7 @@ public class DateRangeListValueConverter extends AbstractValueConverter {
   @Override
   public CertificateQuestionValue convertToValue(CertificateDataElement element) {
     return getDateRangeListValue(element.getValue())
-        .map(dateRangeList ->
-            mapDateRangeList(
-                dateRangeList,
-                getIdLabelHash(element.getConfig())
-            )
-        )
+        .map(dateRangeList -> mapDateRangeList(dateRangeList, getIdLabelHash(element.getConfig())))
         .orElse(NOT_PROVIDED_VALUE);
   }
 
@@ -47,23 +60,19 @@ public class DateRangeListValueConverter extends AbstractValueConverter {
     }
 
     return CertificateQuestionValueTable.builder()
-        .headings(
-            createHeadings()
-        )
-        .values(
-            createValues(dateRangeList, idLabelHash)
-        )
+        .headings(createHeadings())
+        .values(createValues(dateRangeList, idLabelHash))
         .build();
   }
 
   private Map<String, String> getIdLabelHash(CertificateDataConfig config) {
     final var sickLeavePeriodConfig = getSickLeavePeriodConfig(config);
-    return sickLeavePeriodConfig.map(configSickLeavePeriod ->
-            configSickLeavePeriod.getList().stream()
-                .collect(
-                    Collectors.toMap(CheckboxDateRange::getId, CheckboxDateRange::getLabel)
-                )
-        )
+    return sickLeavePeriodConfig
+        .map(
+            configSickLeavePeriod ->
+                configSickLeavePeriod.getList().stream()
+                    .collect(
+                        Collectors.toMap(CheckboxDateRange::getId, CheckboxDateRange::getLabel)))
         .orElse(Collections.emptyMap());
   }
 
@@ -91,23 +100,18 @@ public class DateRangeListValueConverter extends AbstractValueConverter {
     return List.of(LABEL_HEADING, FROM_HEADING, TO_HEADING);
   }
 
-  private static List<List<String>> createValues(CertificateDataValueDateRangeList dateRangeList,
-      Map<String, String> idLabelHash) {
-    return dateRangeList.getList()
-        .stream()
-        .map(dateRange ->
-            List.of(
-                idLabelHash.getOrDefault(dateRange.getId(), dateRange.getId()),
-                dateRange.getFrom().toString(),
-                dateRange.getTo().toString()
-            )
-        )
+  private static List<List<String>> createValues(
+      CertificateDataValueDateRangeList dateRangeList, Map<String, String> idLabelHash) {
+    return dateRangeList.getList().stream()
+        .map(
+            dateRange ->
+                List.of(
+                    idLabelHash.getOrDefault(dateRange.getId(), dateRange.getId()),
+                    dateRange.getFrom().toString(),
+                    dateRange.getTo().toString()))
         .collect(
             Collectors.collectingAndThen(
-                Collectors.toList(),
-                DateRangeListValueConverter::reverseList
-            )
-        );
+                Collectors.toList(), DateRangeListValueConverter::reverseList));
   }
 
   private static List<List<String>> reverseList(List<List<String>> list) {

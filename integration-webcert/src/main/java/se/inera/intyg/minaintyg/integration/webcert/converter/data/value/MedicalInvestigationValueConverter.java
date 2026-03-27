@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.integration.webcert.converter.data.value;
 
 import java.util.Collections;
@@ -59,43 +77,42 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
             row(
                 header(config, CertificateDataConfigMedicalInvestigation::getTypeText),
                 header(config, CertificateDataConfigMedicalInvestigation::getDateText),
-                header(config, CertificateDataConfigMedicalInvestigation::getInformationSourceText)
-            )
-        )
-        .values(
-            rows(values, config)
-        )
+                header(
+                    config, CertificateDataConfigMedicalInvestigation::getInformationSourceText)))
+        .values(rows(values, config))
         .build();
   }
 
   private static List<List<String>> rows(
       Optional<List<CertificateDataValueMedicalInvestigation>> values,
       Optional<CertificateDataConfigMedicalInvestigation> config) {
-    return values.map(investigationList ->
-            investigationList.stream()
-                .filter(investigation -> !isValueEmpty(investigation))
-                .map(investigation ->
-                    List.of(
-                        convertInvestigationCode(investigation, config),
-                        getDate(investigation),
-                        getInformationSource(investigation)
-                    ))
-                .toList()
-        )
+    return values
+        .map(
+            investigationList ->
+                investigationList.stream()
+                    .filter(investigation -> !isValueEmpty(investigation))
+                    .map(
+                        investigation ->
+                            List.of(
+                                convertInvestigationCode(investigation, config),
+                                getDate(investigation),
+                                getInformationSource(investigation)))
+                    .toList())
         .orElse(Collections.emptyList());
   }
 
   private static String getInformationSource(
       CertificateDataValueMedicalInvestigation investigation) {
     return investigation.getInformationSource() != null
-        && investigation.getInformationSource().getText() != null
-        ? investigation.getInformationSource().getText() : MISSING_LABEL;
+            && investigation.getInformationSource().getText() != null
+        ? investigation.getInformationSource().getText()
+        : MISSING_LABEL;
   }
 
   private static String getDate(CertificateDataValueMedicalInvestigation investigation) {
-    return investigation.getDate() != null
-        && investigation.getDate().getDate() != null
-        ? investigation.getDate().getDate().toString() : MISSING_LABEL;
+    return investigation.getDate() != null && investigation.getDate().getDate() != null
+        ? investigation.getDate().getDate().toString()
+        : MISSING_LABEL;
   }
 
   private static String convertInvestigationCode(
@@ -106,17 +123,18 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
       return MISSING_LABEL;
     }
 
-    return config.flatMap(investigationConfig -> investigationConfig.getList().stream().findAny())
-        .map(medicalInvestigation ->
-            medicalInvestigation.getTypeOptions().stream()
-                .filter(
-                    item -> item.getCode().equals(investigation.getInvestigationType().getCode()))
-                .findAny()
-                .map(CodeItem::getLabel)
-                .orElse(investigation.getInvestigationType().getCode())
-        )
+    return config
+        .flatMap(investigationConfig -> investigationConfig.getList().stream().findAny())
+        .map(
+            medicalInvestigation ->
+                medicalInvestigation.getTypeOptions().stream()
+                    .filter(
+                        item ->
+                            item.getCode().equals(investigation.getInvestigationType().getCode()))
+                    .findAny()
+                    .map(CodeItem::getLabel)
+                    .orElse(investigation.getInvestigationType().getCode()))
         .orElse(investigation.getInvestigationType().getCode());
-
   }
 
   private static boolean isEmpty(Optional<List<CertificateDataValueMedicalInvestigation>> values) {
@@ -131,14 +149,15 @@ public class MedicalInvestigationValueConverter extends AbstractValueConverter {
   private static boolean isValueEmpty(
       CertificateDataValueMedicalInvestigation medicalInvestigation) {
     return (medicalInvestigation.getDate() == null
-        || medicalInvestigation.getDate().getDate() == null)
+            || medicalInvestigation.getDate().getDate() == null)
         && (medicalInvestigation.getInvestigationType() == null
-        || medicalInvestigation.getInvestigationType().getCode() == null)
+            || medicalInvestigation.getInvestigationType().getCode() == null)
         && (medicalInvestigation.getInformationSource() == null
-        || medicalInvestigation.getInformationSource().getText() == null);
+            || medicalInvestigation.getInformationSource().getText() == null);
   }
 
-  private static String header(Optional<CertificateDataConfigMedicalInvestigation> config,
+  private static String header(
+      Optional<CertificateDataConfigMedicalInvestigation> config,
       Function<CertificateDataConfigMedicalInvestigation, String> getLabel) {
     return config.map(getLabel).orElse(MISSING_LABEL);
   }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,17 +52,14 @@ public class SessionTimeoutService {
   }
 
   private void updateSession(
-      HttpSession session,
-      HttpServletRequest request,
-      List<String> excludedUrls) {
+      HttpSession session, HttpServletRequest request, List<String> excludedUrls) {
     if (isExcludedURL(request, excludedUrls)) {
       session.setAttribute(SessionConstants.SECONDS_UNTIL_EXPIRE, getExpirationTime(session));
       return;
     }
 
     session.setAttribute(
-        SessionConstants.SECONDS_UNTIL_EXPIRE,
-        getSeconds(sessionTimeoutLimitInMillis()));
+        SessionConstants.SECONDS_UNTIL_EXPIRE, getSeconds(sessionTimeoutLimitInMillis()));
     session.setAttribute(SessionConstants.LAST_ACCESS_ATTRIBUTE, System.currentTimeMillis());
   }
 
@@ -63,8 +78,7 @@ public class SessionTimeoutService {
   }
 
   private Long getExpirationTime(HttpSession session) {
-    final var inactiveTime =
-        System.currentTimeMillis() - getLastAccessedTime(session);
+    final var inactiveTime = System.currentTimeMillis() - getLastAccessedTime(session);
     return getSeconds(sessionTimeoutLimitInMillis() - inactiveTime);
   }
 

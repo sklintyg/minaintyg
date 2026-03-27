@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.certificate.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,42 +65,26 @@ class SendCertificateServiceTest {
   private static final String RECIPIENT_NAME = "R_NAME";
   private static final String TYPE_ID = "T_ID";
   private static final String TYPE_NAME = "T_NAME";
-  private static final SendCertificateRequest REQUEST = SendCertificateRequest
-      .builder()
-      .certificateId(CERTIFICATE_ID)
-      .build();
+  private static final SendCertificateRequest REQUEST =
+      SendCertificateRequest.builder().certificateId(CERTIFICATE_ID).build();
 
-  private static final Certificate CERTIFICATE_NOT_SENT = getCertificate(
-      CertificateRecipient
-          .builder()
-          .id(RECIPIENT_ID)
-          .name(RECIPIENT_NAME)
-          .build()
-  );
+  private static final Certificate CERTIFICATE_NOT_SENT =
+      getCertificate(CertificateRecipient.builder().id(RECIPIENT_ID).name(RECIPIENT_NAME).build());
 
   private static final Certificate CERTIFICATE_NO_RECIPIENT = getCertificate(null);
 
-  @Mock
-  SendCertificateIntegrationService sendCertificateIntegrationService;
-  @Mock
-  MonitoringLogService monitoringLogService;
-  @Mock
-  UserService userService;
-  @Mock
-  GetCertificateIntegrationService getCertificateIntegrationService;
-  @Mock
-  AnalyticsMessageFactory analyticsMessageFactory;
-  @Mock
-  PublishAnalyticsMessage publishAnalyticsMessage;
-  @InjectMocks
-  SendCertificateService sendCertificateService;
+  @Mock SendCertificateIntegrationService sendCertificateIntegrationService;
+  @Mock MonitoringLogService monitoringLogService;
+  @Mock UserService userService;
+  @Mock GetCertificateIntegrationService getCertificateIntegrationService;
+  @Mock AnalyticsMessageFactory analyticsMessageFactory;
+  @Mock PublishAnalyticsMessage publishAnalyticsMessage;
+  @InjectMocks SendCertificateService sendCertificateService;
 
   @BeforeEach
   void setup() {
-    when(userService.getLoggedInUser()).thenReturn(Optional.of(MinaIntygUser
-        .builder()
-        .personId(PATIENT_ID)
-        .build()));
+    when(userService.getLoggedInUser())
+        .thenReturn(Optional.of(MinaIntygUser.builder().personId(PATIENT_ID).build()));
   }
 
   @Nested
@@ -94,15 +96,13 @@ class SendCertificateServiceTest {
           .thenReturn(
               GetCertificateIntegrationResponse.builder()
                   .certificate(CERTIFICATE_NOT_SENT)
-                  .availableFunctions(List.of(
+                  .availableFunctions(
+                      List.of(
                           AvailableFunction.builder()
                               .type(AvailableFunctionType.SEND_CERTIFICATE)
                               .enabled(true)
-                              .build()
-                      )
-                  )
-                  .build()
-          );
+                              .build()))
+                  .build());
     }
 
     @Nested
@@ -196,10 +196,10 @@ class SendCertificateServiceTest {
     void shouldThrowExceptionIfNoAvailableFunction() {
       when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
           .thenReturn(
-              GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
+              GetCertificateIntegrationResponse.builder()
+                  .certificate(CERTIFICATE_NO_RECIPIENT)
                   .availableFunctions(Collections.emptyList())
-                  .build()
-          );
+                  .build());
 
       assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
     }
@@ -208,39 +208,27 @@ class SendCertificateServiceTest {
     void shouldThrowExceptionIfDisabledAvailableFunction() {
       when(getCertificateIntegrationService.get(any(GetCertificateIntegrationRequest.class)))
           .thenReturn(
-              GetCertificateIntegrationResponse.builder().certificate(CERTIFICATE_NO_RECIPIENT)
+              GetCertificateIntegrationResponse.builder()
+                  .certificate(CERTIFICATE_NO_RECIPIENT)
                   .availableFunctions(
                       List.of(
                           AvailableFunction.builder()
                               .enabled(false)
                               .type(AvailableFunctionType.SEND_CERTIFICATE)
-                              .build()
-                      )
-                  )
-                  .build()
-          );
+                              .build()))
+                  .build());
 
       assertThrows(IllegalStateException.class, () -> sendCertificateService.send(REQUEST));
     }
   }
 
   private static Certificate getCertificate(CertificateRecipient certificateRecipient) {
-    return Certificate
-        .builder()
+    return Certificate.builder()
         .metadata(
-            CertificateMetadata
-                .builder()
+            CertificateMetadata.builder()
                 .recipient(certificateRecipient)
-                .type(
-                    CertificateType
-                        .builder()
-                        .id(TYPE_ID)
-                        .name(TYPE_NAME)
-                        .build()
-                )
-                .build()
-        )
+                .type(CertificateType.builder().id(TYPE_ID).name(TYPE_NAME).build())
+                .build())
         .build();
   }
-
 }

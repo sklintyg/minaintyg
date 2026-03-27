@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.minaintyg.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,20 +46,17 @@ import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 @ExtendWith(MockitoExtension.class)
 class CustomAuthenticationFailureHandlerTest {
 
-  @Mock
-  private MonitoringLogService monitoringLogService;
+  @Mock private MonitoringLogService monitoringLogService;
 
-  @Captor
-  private ArgumentCaptor<String> stringArgumentCaptor;
+  @Captor private ArgumentCaptor<String> stringArgumentCaptor;
 
   private static final String AUTHENTICATION_FAILED = "Authentication failed";
   private static final String CONTEXT_PATH = "contextpath";
   private static final String ERROR_LOGIN_UNDERAGE_URL = "/errorLoginUnderageUrl";
   private static final String ERROR_LOGIN_INACTIVE_URL = "/errorInactiveUser";
   private static final String ERROR_LOGIN_URL = "/errorLoginUrl/{errorId}";
-  private static final AuthenticationException exception = new AuthenticationException(
-      AUTHENTICATION_FAILED) {
-  };
+  private static final AuthenticationException exception =
+      new AuthenticationException(AUTHENTICATION_FAILED) {};
 
   private CustomAuthenticationFailureHandler authenticationFailureHandler;
   private MockHttpServletRequest request;
@@ -49,12 +64,12 @@ class CustomAuthenticationFailureHandlerTest {
 
   @BeforeEach
   void setUp() {
-    authenticationFailureHandler = new CustomAuthenticationFailureHandler(
-        ERROR_LOGIN_URL,
-        ERROR_LOGIN_UNDERAGE_URL,
-        monitoringLogService,
-        ERROR_LOGIN_INACTIVE_URL
-    );
+    authenticationFailureHandler =
+        new CustomAuthenticationFailureHandler(
+            ERROR_LOGIN_URL,
+            ERROR_LOGIN_UNDERAGE_URL,
+            monitoringLogService,
+            ERROR_LOGIN_INACTIVE_URL);
 
     request = new MockHttpServletRequest();
     request.setContextPath(CONTEXT_PATH);
@@ -64,8 +79,9 @@ class CustomAuthenticationFailureHandlerTest {
   @Test
   void shouldRedirectToErrorUrl() throws IOException {
     authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-    assertTrue(Objects.requireNonNull(response.getHeader("Location"))
-        .contains(CONTEXT_PATH + "/errorLoginUrl/"));
+    assertTrue(
+        Objects.requireNonNull(response.getHeader("Location"))
+            .contains(CONTEXT_PATH + "/errorLoginUrl/"));
   }
 
   @Test
@@ -101,8 +117,8 @@ class CustomAuthenticationFailureHandlerTest {
     @Test
     void shouldMonitorLogLoginFailure() throws IOException {
       authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
-      verify(monitoringLogService).logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE,
-          LoginMethod.ELVA77.name());
+      verify(monitoringLogService)
+          .logUserLoginFailed(AGE_LIMIT_EXCEPTION_MESSAGE, LoginMethod.ELVA77.name());
     }
   }
 
@@ -126,8 +142,7 @@ class CustomAuthenticationFailureHandlerTest {
     @Test
     void shouldMonitorLogLoginFailure() throws IOException {
       authenticationFailureHandler.onAuthenticationFailure(request, response, saml2Exception);
-      verify(monitoringLogService).logUserLoginFailed(MESSAGE,
-          LoginMethod.ELVA77.name());
+      verify(monitoringLogService).logUserLoginFailed(MESSAGE, LoginMethod.ELVA77.name());
     }
   }
 }
