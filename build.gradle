@@ -102,8 +102,10 @@ subprojects {
         }
     }
 
-    tasks.matching { it.name == "cyclonedxDirectBom" }.configureEach { t ->
-        t.includeConfigs = ['^runtimeClasspath$']
+    pluginManager.withPlugin('org.cyclonedx.bom') {
+        tasks.named('cyclonedxDirectBom').configure { t ->
+            t.includeConfigs = ['^runtimeClasspath$']
+        }
     }
 }
 
