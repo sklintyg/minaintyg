@@ -20,8 +20,6 @@ package se.inera.intyg.minaintyg.integration.webcert.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
@@ -36,6 +34,8 @@ import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateDataElement;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateMetadataDTO;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.CertificateResponseDTO;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 class GetCertificateFromWebcertServiceTest {
 
@@ -44,7 +44,7 @@ class GetCertificateFromWebcertServiceTest {
 
   private static final String CERTIFICATE_ID = "certificateId";
   private static final String ID = "id";
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = JsonMapper.builder().build();
 
   @BeforeAll
   static void setUp() throws IOException {
@@ -68,7 +68,7 @@ class GetCertificateFromWebcertServiceTest {
   }
 
   @Test
-  void shouldReturnGetCertificateResponse() throws JsonProcessingException {
+  void shouldReturnGetCertificateResponse() {
     final var getCertificateRequest =
         GetCertificateIntegrationRequest.builder().certificateId(CERTIFICATE_ID).build();
     final var expectedResponse =

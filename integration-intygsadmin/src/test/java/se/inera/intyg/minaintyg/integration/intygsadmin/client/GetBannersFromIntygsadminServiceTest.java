@@ -21,8 +21,6 @@ package se.inera.intyg.minaintyg.integration.intygsadmin.client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.mockwebserver.MockResponse;
@@ -35,12 +33,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class GetBannersFromIntygsadminServiceTest {
 
   private static MockWebServer mockWebServer;
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = JsonMapper.builder().build();
   private GetBannersFromIntygsadminService getBannersFromIntygsadminService;
 
   @BeforeAll
@@ -65,7 +65,7 @@ class GetBannersFromIntygsadminServiceTest {
   }
 
   @Test
-  void shouldReturnBannersDTO() throws JsonProcessingException {
+  void shouldReturnBannersDTO() {
     final var expectedResponse = List.of(BannerDTO.builder().build());
     mockWebServer.enqueue(
         new MockResponse()
@@ -77,7 +77,7 @@ class GetBannersFromIntygsadminServiceTest {
   }
 
   @Test
-  void shouldReturnEmptyList() throws JsonProcessingException {
+  void shouldReturnEmptyList() {
     mockWebServer.enqueue(
         new MockResponse()
             .setBody(objectMapper.writeValueAsString(null))

@@ -18,7 +18,6 @@ dependencies {
     runtimeOnly project(":integration-intygstjanst")
     runtimeOnly project(":integration-webcert")
 
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "net.javacrumbs.shedlock:shedlock-spring"
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring"
     implementation "org.springframework.boot:spring-boot-starter-actuator"

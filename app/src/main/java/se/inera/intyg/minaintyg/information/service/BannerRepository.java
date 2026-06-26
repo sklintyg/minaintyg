@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.information.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +28,8 @@ import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 @Service
@@ -63,7 +63,7 @@ public class BannerRepository {
 
       return GetBannerIntegrationResponse.builder().build();
 
-    } catch (JsonProcessingException e) {
+    } catch (JacksonException e) {
       log.warn("Unable to serialize Banners from IA");
 
       throw new IllegalStateException(e);
@@ -81,7 +81,7 @@ public class BannerRepository {
       }
 
       return Optional.of(objectMapper.readValue(cacheValue, GetBannerIntegrationResponse.class));
-    } catch (JsonProcessingException e) {
+    } catch (JacksonException e) {
       log.warn("Unable to deserialize Banners from IA");
       throw new IllegalStateException(e);
     }

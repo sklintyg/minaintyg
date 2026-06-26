@@ -39,7 +39,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
-import org.springframework.security.saml2.provider.service.authentication.OpenSaml4AuthenticationProvider;
+import org.springframework.security.saml2.provider.service.authentication.OpenSaml5AuthenticationProvider;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
 import org.springframework.security.saml2.provider.service.registration.InMemoryRelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
@@ -157,7 +157,7 @@ public class WebSecurityConfig {
                 saml2
                     .relyingPartyRegistrationRepository(relyingPartyRegistrationRepository)
                     .authenticationManager(
-                        new ProviderManager(getOpenSaml4AuthenticationProvider()))
+                        new ProviderManager(getOpenSaml5AuthenticationProvider()))
                     .failureHandler(customAuthenticationFailureHandler)
                     .defaultSuccessUrl(samlLoginSuccessUrl, samlLoginSuccessUrlAlwaysUse))
         .requestCache(
@@ -194,12 +194,12 @@ public class WebSecurityConfig {
     return new MinaIntygCookieSerializer(useSameSiteNoneExclusion);
   }
 
-  private OpenSaml4AuthenticationProvider getOpenSaml4AuthenticationProvider() {
-    final var authenticationProvider = new OpenSaml4AuthenticationProvider();
+  private OpenSaml5AuthenticationProvider getOpenSaml5AuthenticationProvider() {
+    final var authenticationProvider = new OpenSaml5AuthenticationProvider();
     authenticationProvider.setResponseAuthenticationConverter(
         responseToken -> {
           final var authentication =
-              OpenSaml4AuthenticationProvider.createDefaultResponseAuthenticationConverter()
+              OpenSaml5AuthenticationProvider.createDefaultResponseAuthenticationConverter()
                   .convert(responseToken);
           if (!(authentication != null && authentication.isAuthenticated())) {
             // TODO: Look into better error handling when working with Authentication-jira

@@ -20,8 +20,6 @@ package se.inera.intyg.minaintyg.integration.webcert.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -34,6 +32,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.certificate.PrintCertificateIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.PrintCertificateResponseDTO;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class PrintCertificateFromWebcertServiceTest {
@@ -42,7 +42,7 @@ class PrintCertificateFromWebcertServiceTest {
   private PrintCertificateFromWebcertService printCertificateFromWebcertService;
 
   private static final String CERTIFICATE_ID = "certificateId";
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = JsonMapper.builder().build();
 
   @BeforeAll
   static void setUp() throws IOException {
@@ -66,7 +66,7 @@ class PrintCertificateFromWebcertServiceTest {
   }
 
   @Test
-  void shouldReturnResponse() throws JsonProcessingException {
+  void shouldReturnResponse() {
     final var request =
         PrintCertificateIntegrationRequest.builder().certificateId(CERTIFICATE_ID).build();
 

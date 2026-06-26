@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.information.service.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.information.service.model.Elva77Menu.Elva77MenuBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @Value
 @Builder

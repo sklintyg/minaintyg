@@ -8,12 +8,13 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     testImplementation "org.mock-server:mockserver-client-java"
     testImplementation 'org.springframework.boot:spring-boot-starter-activemq'
+    testImplementation 'org.springframework.boot:spring-boot-starter-restclient'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    testImplementation 'org.testcontainers:activemq'
-    testImplementation 'org.testcontainers:mockserver'
+    testImplementation 'org.springframework.boot:spring-boot-resttestclient'
+    testImplementation 'org.testcontainers:testcontainers-activemq'
+    testImplementation 'org.testcontainers:testcontainers-mockserver'
 }
 
 test {

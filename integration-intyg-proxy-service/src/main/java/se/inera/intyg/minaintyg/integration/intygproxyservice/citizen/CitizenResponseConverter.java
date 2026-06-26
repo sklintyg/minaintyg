@@ -38,7 +38,7 @@ public class CitizenResponseConverter {
     return Person.builder()
         .personId(citizenDTO.getPersonnummer())
         .name(buildCitizenName(citizenDTO))
-        .isActive(citizenDTO.isActive())
+        .isActive(citizenDTO.getIsActive())
         .build();
   }
 

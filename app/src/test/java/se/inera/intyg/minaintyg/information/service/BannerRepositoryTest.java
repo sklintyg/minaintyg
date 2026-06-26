@@ -22,8 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +34,7 @@ import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
+import tools.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
 class BannerRepositoryTest {
@@ -54,7 +53,7 @@ class BannerRepositoryTest {
   class Get {
 
     @Test
-    void shouldGetBannerResponseFromCache() throws JsonProcessingException {
+    void shouldGetBannerResponseFromCache() {
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
       when(cache.get(RedisConfig.BANNERS_CACHE_KEY, String.class))
           .thenReturn(EXPECTED_RESPONSE.toString());
@@ -82,7 +81,7 @@ class BannerRepositoryTest {
   class Load {
 
     @Test
-    void shouldUpdateCache() throws JsonProcessingException {
+    void shouldUpdateCache() {
       when(getBannerIntegrationService.get()).thenReturn(EXPECTED_RESPONSE);
       when(cacheManager.getCache(RedisConfig.BANNERS_CACHE)).thenReturn(cache);
       when(objectMapper.writeValueAsString(EXPECTED_RESPONSE))

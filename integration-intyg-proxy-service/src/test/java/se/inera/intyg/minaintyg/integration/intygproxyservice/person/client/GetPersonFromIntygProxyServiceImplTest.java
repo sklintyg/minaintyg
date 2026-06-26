@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.integration.intygproxyservice.person.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -32,6 +30,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.person.GetPersonIntegrationRequest;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class GetPersonFromIntygProxyServiceImplTest {
@@ -42,7 +42,7 @@ class GetPersonFromIntygProxyServiceImplTest {
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_FIRSTNAME = "Arnold";
   private static final String PERSON_LASTNAME = "Johansson";
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = JsonMapper.builder().build();
 
   @BeforeAll
   static void setUp() throws IOException {
@@ -66,7 +66,7 @@ class GetPersonFromIntygProxyServiceImplTest {
   }
 
   @Test
-  void shouldReturnPersonResponse() throws JsonProcessingException {
+  void shouldReturnPersonResponse() {
     final var personRequest = GetPersonIntegrationRequest.builder().personId(PERSON_ID).build();
     final var expectedResponse =
         PersonSvarDTO.builder()
