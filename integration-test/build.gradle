@@ -11,9 +11,7 @@ dependencies {
     testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     testImplementation "org.mock-server:mockserver-client-java"
     testImplementation 'org.springframework.boot:spring-boot-starter-activemq'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testImplementation 'org.testcontainers:activemq'
     testImplementation 'org.testcontainers:mockserver'
 }
