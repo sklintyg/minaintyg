@@ -20,7 +20,7 @@ package se.inera.intyg.minaintyg.integrationtest.environment;
 
 import org.testcontainers.activemq.ActiveMQContainer;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MockServerContainer;
+import org.testcontainers.mockserver.MockServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class Containers {
@@ -38,7 +38,7 @@ public class Containers {
   private static void mockServerContainer() {
     if (mockServerContainer == null) {
       mockServerContainer =
-          new MockServerContainer(DockerImageName.parse("mockserver/mockserver:5.15.0"));
+          new MockServerContainer(DockerImageName.parse("mockserver/mockserver:7.2.0"));
     }
 
     if (!mockServerContainer.isRunning()) {

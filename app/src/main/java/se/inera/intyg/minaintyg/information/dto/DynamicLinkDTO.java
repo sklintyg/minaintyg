@@ -20,12 +20,18 @@ package se.inera.intyg.minaintyg.information.dto;
 
 import lombok.Builder;
 import lombok.Value;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @Builder
 @Value
+@JsonDeserialize(builder = DynamicLinkDTO.DynamicLinkDTOBuilder.class)
 public class DynamicLinkDTO {
 
   String id;
   String name;
   String url;
+
+  @JsonPOJOBuilder(withPrefix = "")
+  public static class DynamicLinkDTOBuilder {}
 }
