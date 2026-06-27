@@ -27,6 +27,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-session-data-redis"
     implementation "org.springframework.boot:spring-boot-starter-webmvc"
+    implementation 'org.springframework.boot:spring-boot-starter-webclient'
     implementation 'org.springframework.security:spring-security-saml2-service-provider'
 
     compileOnly "org.projectlombok:lombok"

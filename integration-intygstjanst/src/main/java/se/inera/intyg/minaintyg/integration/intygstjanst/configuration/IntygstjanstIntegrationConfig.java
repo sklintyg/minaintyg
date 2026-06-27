@@ -27,8 +27,8 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 public class IntygstjanstIntegrationConfig {
 
   @Bean(name = "intygstjanstWebClient")
-  public WebClient webClientForIntygstjanst() {
-    return WebClient.builder()
+  public WebClient webClientForIntygstjanst(WebClient.Builder webClientBuilder) {
+    return webClientBuilder
         .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
   }

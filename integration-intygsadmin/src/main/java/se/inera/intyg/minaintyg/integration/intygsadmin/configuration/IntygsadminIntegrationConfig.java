@@ -27,8 +27,8 @@ import se.inera.intyg.minaintyg.integration.common.ExchangeFilterFunctionProvide
 public class IntygsadminIntegrationConfig {
 
   @Bean(name = "intygsadminWebClient")
-  public WebClient webClientForIntygsadmin() {
-    return WebClient.builder()
+  public WebClient webClientForIntygsadmin(WebClient.Builder webClientBuilder) {
+    return webClientBuilder
         .filter(ExchangeFilterFunctionProvider.addHeadersFromMDCToRequest())
         .build();
   }

@@ -33,5 +33,5 @@ public class CitizenDTO {
   private String namn;
   private String fornamn;
   private String efternamn;
-  private Boolean isActive;
+  private boolean isActive;
 }
