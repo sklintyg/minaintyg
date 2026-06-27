@@ -22,6 +22,7 @@ dependencies {
     implementation "net.javacrumbs.shedlock:shedlock-provider-redis-spring"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation 'org.springframework.boot:spring-boot-starter-activemq'
+    implementation "org.springframework.boot:spring-boot-starter-cache"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-webmvc"
@@ -34,6 +35,8 @@ dependencies {
 
     testImplementation "org.springframework.boot:spring-boot-starter-security-test"
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
+
+    runtimeOnly "org.springframework.boot:spring-boot-properties-migrator"
 }
 
 bootRun {
