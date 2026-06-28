@@ -29,14 +29,14 @@ import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationRespo
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
 import tools.jackson.core.JacksonException;
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BannerRepository {
 
-  private final ObjectMapper objectMapper;
+  private final JsonMapper objectMapper;
   private final CacheManager cacheManager;
   private final GetBannerIntegrationService getBannerIntegrationService;
 

@@ -23,13 +23,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.minaintyg.information.service.model.Elva77MenuConfig;
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Component
 @RequiredArgsConstructor
 public class Elva77LinkLoader {
 
-  private final ObjectMapper mapper;
+  private final JsonMapper mapper;
 
   public Elva77MenuConfig load(Resource resource) throws IllegalStateException {
     try (var is = resource.getInputStream()) {

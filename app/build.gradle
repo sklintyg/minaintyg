@@ -34,7 +34,6 @@ dependencies {
 
     annotationProcessor "org.projectlombok:lombok"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-security-test"
     testImplementation "org.springframework.boot:spring-boot-starter-webmvc-test"
 }
 

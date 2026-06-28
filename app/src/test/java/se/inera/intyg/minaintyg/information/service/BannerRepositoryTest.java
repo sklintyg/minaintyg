@@ -34,7 +34,7 @@ import se.inera.intyg.minaintyg.config.RedisConfig;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationService;
 import se.inera.intyg.minaintyg.integration.common.IntegrationServiceException;
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class BannerRepositoryTest {
@@ -45,7 +45,7 @@ class BannerRepositoryTest {
   @Mock private Cache cache;
   @Mock private GetBannerIntegrationService getBannerIntegrationService;
 
-  @Mock private ObjectMapper objectMapper;
+  @Mock private JsonMapper objectMapper;
 
   @InjectMocks private BannerRepository bannerRepository;
 
