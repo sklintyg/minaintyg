@@ -7,6 +7,11 @@ tasks.named('bootJar') {
     archiveFileName.set('app.jar')
 }
 
+tasks.named('cyclonedxBom') {
+    jsonOutput.set(file("build/reports/cyclonedx/bom.json"))
+    xmlOutput.set(file("build/reports/cyclonedx/bom.xml"))
+}
+
 def applicationDir = "${rootProject.projectDir}/devops/dev"
 
 dependencies {
