@@ -38,9 +38,9 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.saml2.core.Saml2X509Credential;
-import org.springframework.security.saml2.provider.service.authentication.DefaultSaml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml5AuthenticationProvider;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
+import org.springframework.security.saml2.provider.service.authentication.Saml2ResponseAssertionAccessor;
 import org.springframework.security.saml2.provider.service.registration.InMemoryRelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository;
 import org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrations;
@@ -196,11 +196,11 @@ public class WebSecurityConfig {
 
   private OpenSaml5AuthenticationProvider getOpenSaml5AuthenticationProvider() {
     final var authenticationProvider = new OpenSaml5AuthenticationProvider();
+    final var defaultConverter =
+        new OpenSaml5AuthenticationProvider.ResponseAuthenticationConverter();
     authenticationProvider.setResponseAuthenticationConverter(
         responseToken -> {
-          final var authentication =
-              OpenSaml5AuthenticationProvider.createDefaultResponseAuthenticationConverter()
-                  .convert(responseToken);
+          final var authentication = defaultConverter.convert(responseToken);
           if (!(authentication != null && authentication.isAuthenticated())) {
             // TODO: Look into better error handling when working with Authentication-jira
             return null;
@@ -217,10 +217,11 @@ public class WebSecurityConfig {
   }
 
   private String getAttribute(Saml2Authentication samlCredential) {
-    final var principal = (DefaultSaml2AuthenticatedPrincipal) samlCredential.getPrincipal();
-    final var attributes = principal.getAttributes();
-    if (attributes.containsKey(PERSON_ID_ATTRIBUTE)) {
-      return (String) attributes.get(PERSON_ID_ATTRIBUTE).get(0);
+    if (samlCredential.getCredentials() instanceof Saml2ResponseAssertionAccessor accessor) {
+      final var personId = accessor.getFirstAttribute(PERSON_ID_ATTRIBUTE);
+      if (personId != null) {
+        return (String) personId;
+      }
     }
     throw new IllegalArgumentException(
         "Could not extract attribute '" + PERSON_ID_ATTRIBUTE + "' from Saml2Authentication.");

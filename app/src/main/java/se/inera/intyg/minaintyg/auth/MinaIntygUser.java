@@ -27,25 +27,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticatedPrincipal;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MinaIntygUser implements Saml2AuthenticatedPrincipal, Serializable {
+public class MinaIntygUser implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
   private String personId;
   private String personName;
   private LoginMethod loginMethod;
 
-  @Override
   public String getName() {
     return getPersonName();
   }
 
-  @Override
   public String getRelyingPartyRegistrationId() {
     return LoginMethod.ELVA77.equals(loginMethod)
         ? ELEG_PARTY_REGISTRATION_ID

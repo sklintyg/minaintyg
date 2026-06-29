@@ -34,7 +34,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
-import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticatedPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
@@ -90,7 +89,7 @@ class AuthenticationEventListenerTest {
       interactiveAuthenticationSuccessEvent =
           new InteractiveAuthenticationSuccessEvent(
               new Saml2AuthenticationToken(
-                  mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)),
+                  new Object(), mock(Saml2Authentication.class)),
               this.getClass());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
@@ -140,7 +139,7 @@ class AuthenticationEventListenerTest {
       logoutSuccessEvent =
           new LogoutSuccessEvent(
               new Saml2AuthenticationToken(
-                  mock(Saml2AuthenticatedPrincipal.class), mock(Saml2Authentication.class)));
+                  new Object(), mock(Saml2Authentication.class)));
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 
