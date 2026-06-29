@@ -25,6 +25,7 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.MediaType;
 import se.inera.intyg.minaintyg.integration.intygsadmin.client.dto.BannerDTO;
+import tools.jackson.core.JacksonException;
 import tools.jackson.databind.json.JsonMapper;
 
 @RequiredArgsConstructor
@@ -41,7 +42,7 @@ public class IntygsadminMock {
               HttpResponse.response(jsonMapper.writeValueAsString(Collections.emptyList()))
                   .withStatusCode(200)
                   .withContentType(MediaType.APPLICATION_JSON));
-    } catch (Exception ex) {
+    } catch (JacksonException ex) {
       throw new IllegalStateException(ex);
     }
   }
@@ -54,7 +55,7 @@ public class IntygsadminMock {
               HttpResponse.response(jsonMapper.writeValueAsString(bannerDTOS))
                   .withStatusCode(200)
                   .withContentType(MediaType.APPLICATION_JSON));
-    } catch (Exception ex) {
+    } catch (JacksonException ex) {
       throw new IllegalStateException(ex);
     }
   }
