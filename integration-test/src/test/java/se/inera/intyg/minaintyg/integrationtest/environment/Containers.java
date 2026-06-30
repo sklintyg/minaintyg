@@ -61,7 +61,7 @@ public class Containers {
   private static void redisContainer() {
     if (redisContainer == null) {
       redisContainer =
-          new GenericContainer<>(DockerImageName.parse("redis:6.0.9-alpine"))
+          new GenericContainer<>(DockerImageName.parse("redis:8.8.0-alpine"))
               .withExposedPorts(6379);
     }
 
