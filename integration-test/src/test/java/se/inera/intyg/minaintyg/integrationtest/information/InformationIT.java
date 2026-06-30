@@ -64,7 +64,7 @@ class InformationIT {
   }
 
   @BeforeAll
-  public static void beforeAll() {
+  static void beforeAll() {
     Containers.ensureRunning();
   }
 
