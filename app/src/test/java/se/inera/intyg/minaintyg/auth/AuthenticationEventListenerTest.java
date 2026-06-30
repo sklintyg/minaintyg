@@ -88,8 +88,7 @@ class AuthenticationEventListenerTest {
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
       interactiveAuthenticationSuccessEvent =
           new InteractiveAuthenticationSuccessEvent(
-              new Saml2AuthenticationToken(
-                  new Object(), mock(Saml2Authentication.class)),
+              new Saml2AuthenticationToken(new Object(), mock(Saml2Authentication.class)),
               this.getClass());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
@@ -138,8 +137,7 @@ class AuthenticationEventListenerTest {
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
       logoutSuccessEvent =
           new LogoutSuccessEvent(
-              new Saml2AuthenticationToken(
-                  new Object(), mock(Saml2Authentication.class)));
+              new Saml2AuthenticationToken(new Object(), mock(Saml2Authentication.class)));
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 
