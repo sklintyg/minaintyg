@@ -18,9 +18,15 @@
  */
 package se.inera.intyg.minaintyg.config;
 
+import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
+import tools.jackson.databind.DeserializationFeature;
 
 @Configuration
-@EnableJms
-public class MessagingConfig {}
+public class JacksonConfig {
+  @Bean
+  public JsonMapperBuilderCustomizer jacksonCustomizer() {
+    return builder -> builder.disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES);
+  }
+}

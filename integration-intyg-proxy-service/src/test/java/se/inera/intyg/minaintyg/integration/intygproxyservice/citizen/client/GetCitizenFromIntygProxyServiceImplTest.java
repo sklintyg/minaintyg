@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.integration.intygproxyservice.citizen.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -30,9 +28,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.codec.json.JacksonJsonDecoder;
+import org.springframework.http.codec.json.JacksonJsonEncoder;
 import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.citizen.GetCitizenIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class GetCitizenFromIntygProxyServiceImplTest {
@@ -43,7 +45,8 @@ class GetCitizenFromIntygProxyServiceImplTest {
   private static final String PERSON_ID = "191212121212";
   private static final String PERSON_FIRSTNAME = "Arnold";
   private static final String PERSON_LASTNAME = "Johansson";
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final JsonMapper jsonMapper =
+      JsonMapper.builder().disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES).build();
 
   @BeforeAll
   static void setUp() throws IOException {
@@ -61,17 +64,23 @@ class GetCitizenFromIntygProxyServiceImplTest {
     final var scheme = "http";
     final var baseUrl = "localhost";
     final var getCitizenEndpoint = "/api/v1/citizen";
+
+    final var webClient =
+        WebClient.builder()
+            .codecs(
+                configurer -> {
+                  configurer.defaultCodecs().jacksonJsonDecoder(new JacksonJsonDecoder(jsonMapper));
+                  configurer.defaultCodecs().jacksonJsonEncoder(new JacksonJsonEncoder(jsonMapper));
+                })
+            .build();
+
     getCitizenFromIntygProxyService =
         new GetCitizenFromIntygProxyServiceImpl(
-            WebClient.create(baseUrl),
-            scheme,
-            baseUrl,
-            mockWebServer.getPort(),
-            getCitizenEndpoint);
+            webClient, scheme, baseUrl, mockWebServer.getPort(), getCitizenEndpoint);
   }
 
   @Test
-  void shouldReturnPersonResponse() throws JsonProcessingException {
+  void shouldReturnPersonResponse() {
     final var citizenRequest = GetCitizenIntegrationRequest.builder().personId(PERSON_ID).build();
     final var expectedResponse =
         CitizenResponseDTO.builder()
@@ -85,7 +94,7 @@ class GetCitizenFromIntygProxyServiceImplTest {
             .build();
     mockWebServer.enqueue(
         new MockResponse()
-            .setBody(objectMapper.writeValueAsString(expectedResponse))
+            .setBody(jsonMapper.writeValueAsString(expectedResponse))
             .addHeader("Content-Type", "application/json"));
     final var actualResponse =
         getCitizenFromIntygProxyService.getCitizenFromIntygProxy(citizenRequest);

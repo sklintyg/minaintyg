@@ -18,8 +18,6 @@
  */
 package se.inera.intyg.minaintyg.integration.intygstjanst.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.mockwebserver.MockResponse;
@@ -35,12 +33,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import se.inera.intyg.minaintyg.integration.api.certificate.GetCertificateListIntegrationRequest;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificateDTO;
 import se.inera.intyg.minaintyg.integration.intygstjanst.client.dto.CertificatesResponseDTO;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class GetCertificatesFromIntygstjanstServiceTest {
 
   private static MockWebServer mockWebServer;
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = JsonMapper.builder().build();
   private GetCertificatesFromIntygstjanstService getCertificatesFromIntygstjanstService;
 
   @BeforeAll
@@ -65,7 +65,7 @@ class GetCertificatesFromIntygstjanstServiceTest {
   }
 
   @Test
-  void shouldReturnCertificatesResponse() throws JsonProcessingException {
+  void shouldReturnCertificatesResponse() {
     final var request = GetCertificateListIntegrationRequest.builder().build();
     final var expectedResponse =
         CertificatesResponseDTO.builder()

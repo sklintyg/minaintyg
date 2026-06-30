@@ -2,16 +2,14 @@ dependencies {
     implementation project(':integration-api')
     implementation project(':logging')
 
-    implementation "ch.qos.logback:logback-classic"
-    implementation "com.fasterxml.jackson.core:jackson-core"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation 'jakarta.annotation:jakarta.annotation-api'
     implementation 'jakarta.jms:jakarta.jms-api'
-    implementation 'org.springframework:spring-context'
-    implementation "org.springframework:spring-jms"
+    implementation 'org.springframework.boot:spring-boot-starter-jackson'
+    implementation 'org.springframework.boot:spring-boot-starter-jms'
 
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.mockito:mockito-junit-jupiter"
 }

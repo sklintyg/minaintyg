@@ -6,10 +6,10 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework.boot:spring-boot-starter-webclient'
 
     testImplementation "com.squareup.okhttp3:okhttp"
     testImplementation "com.squareup.okhttp3:mockwebserver"
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.mockito:mockito-junit-jupiter"
 }

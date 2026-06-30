@@ -1,103 +1,79 @@
-<?xml version='1.0' encoding='utf-8'?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
-  ID="_041027e8cc12bd99cb2fd32adaf9e3df0d" cacheDuration="P0Y0M0DT0H59M59.000S"
-  entityID="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/metadata/0/30">
-  <md:IDPSSODescriptor WantAuthnRequestsSigned="false"
-    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-    <md:KeyDescriptor xmlns:ds="http://www.w3.org/2000/09/xmldsig#" use="signing">
+<md:EntityDescriptor xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:idpdisco="urn:oasis:names:tc:SAML:profiles:SSO:idp-discovery-protocol" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" ID="_411b0f643a35eccd418a68424abd3a8055925d6b" entityID="https://idp.qa.invanar-idp.inera.se:443/saml/citizen">
+  <md:Extensions>
+    <mdattr:EntityAttributes>
+      <saml2:Attribute Name="urn:oasis:names:tc:SAML:attribute:assurance-certification" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+        <saml2:AttributeValue>http://id.sambi.se/loa/loa0</saml2:AttributeValue>
+        <saml2:AttributeValue>http://id.sambi.se/loa/loa3</saml2:AttributeValue>
+        <saml2:AttributeValue>http://id.sambi.se/loa/loa2</saml2:AttributeValue>
+        <saml2:AttributeValue>http://id.sambi.se/loa/loa1</saml2:AttributeValue>
+      </saml2:Attribute>
+    </mdattr:EntityAttributes>
+  </md:Extensions>
+  <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
       <ds:KeyInfo>
         <ds:X509Data>
-          <ds:X509Certificate>
-            MIIGiTCCBXGgAwIBAgIQCS4zAlegYo3pyWJz/+HoRDANBgkqhkiG9w0BAQsFADCBujELMAkGA1UE
-            BhMCVVMxFjAUBgNVBAoTDUVudHJ1c3QsIEluYy4xKDAmBgNVBAsTH1NlZSB3d3cuZW50cnVzdC5u
-            ZXQvbGVnYWwtdGVybXMxOTA3BgNVBAsTMChjKSAyMDEyIEVudHJ1c3QsIEluYy4gLSBmb3IgYXV0
-            aG9yaXplZCB1c2Ugb25seTEuMCwGA1UEAxMlRW50cnVzdCBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0
-            eSAtIEwxSzAeFw0yMzEwMDQxMTQ0MzFaFw0yNDEwMDQxMTQ0MzBaMGExCzAJBgNVBAYTAlNFMRIw
-            EAYDVQQHEwlTdG9ja2hvbG0xFzAVBgNVBAoTDkNHSSBTdmVyaWdlIEFCMSUwIwYDVQQDExx0ZXN0
-            aWRwLmZ1bmt0aW9uc3RqYW5zdGVyLnNlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-            0KqfkaB9cDe+MD72Wf/lH2hBDi0RlkNAjrgswq3IHa/cKGzE16V+Ox9FGnHaormezfu0OU5ZSh7+
-            8oub1Zo+WG21qlCaOrekSO9agHIkfeL1m/3tMYGT/U2LsDgm79OxV9VCYQyAizbb6nTEeN9v3fyf
-            HlXU9XALB1LtQrpzTdEFL4gvg5nw9aSEmPoKva/rbWFpbI6KikFq0f95Hi+Wh5Ein0Z2CY0ahLu+
-            +iTBWc7AMHmokqr0Qy4AemdDAztX+A1WvmsEEnVQbnNvFmdq0wxgo9GBwtZUx956Woo6QFnC45nJ
-            5FMTsFpbafZ1YS2AgQJ0AGhsXiRoB2atSwwOuQIDAQABo4IC4TCCAt0wDAYDVR0TAQH/BAIwADAd
-            BgNVHQ4EFgQUcJT00HcgDQhQcPcQXATS0ByEUKowHwYDVR0jBBgwFoAUgqJwdN28Uz/Pe9T3zX+n
-            YMYKTL8waAYIKwYBBQUHAQEEXDBaMCMGCCsGAQUFBzABhhdodHRwOi8vb2NzcC5lbnRydXN0Lm5l
-            dDAzBggrBgEFBQcwAoYnaHR0cDovL2FpYS5lbnRydXN0Lm5ldC9sMWstY2hhaW4yNTYuY2VyMDMG
-            A1UdHwQsMCowKKAmoCSGImh0dHA6Ly9jcmwuZW50cnVzdC5uZXQvbGV2ZWwxay5jcmwwJwYDVR0R
-            BCAwHoIcdGVzdGlkcC5mdW5rdGlvbnN0amFuc3Rlci5zZTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0l
-            BBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBMGA1UdIAQMMAowCAYGZ4EMAQICMIIBfwYKKwYBBAHW
-            eQIEAgSCAW8EggFrAWkAdgA/F0tP1yJHWJQdZRyEvg0S7ZA3fx+FauvBvyiF7PhkbgAAAYr6gP2H
-            AAAEAwBHMEUCIDxr+FhE1BESfvWyY+zxJdNfTH0rD6Dfigea2KW0jGDGAiEAprnVpgAMm9pffU0h
-            GnGzUukqY30wi7ZJP9P9tHZGlEMAdwB2/4g/Crb7lVHCYcz1h7o0tKTNuyncaEIKn+ZnTFo6dAAA
-            AYr6gP1+AAAEAwBIMEYCIQC/2IpAMPXnTk7O+U1wYrnank1acN20S1WUG5LAs2e1ugIhAPfYX+wp
-            e4ZVRQmIKg4dryqh3Z5dkFXhE/wNvRAgKg8VAHYA2ra/az+1tiKfm8K7XGvocJFxbLtRhIU0vaQ9
-            MEjX+6sAAAGK+oD9lAAABAMARzBFAiAsZWJgheVrGan2HW8SF//p+IIXBvqvjlC2KFsZcVSbEAIh
-            ANdPKbqn+Osqtk+Dhp+c6oHlptpBQB9U5tfNXIouqn61MA0GCSqGSIb3DQEBCwUAA4IBAQDTA0QP
-            9gtI7CHf8OLGWE9eRz1GNp9W8EFhy6z1b3pdAN4RSBFzj3tmhwKhdvMON/44AJ7OHW6aG42cfgEP
-            PVRCTxbuOVtpOS9sso8wwgd08I6H1ZI2bNmyZxTDheUexYBNXVv4YhiA0q9TSa5Idc9wILka2gyP
-            wtNXZRov04l1QG82kJ3oU0Ki2+f+3gFvVAVDfxhSuVcYcb6zEnRQo3D591nxgTVPUYP5RHmi5ssK
-            GLDSow8tbQ5u7RAUi1vldsEaxfF6j9Ot23uNsm+0sXk0OxzEPw/iOp/I7mm35Tfx490JpGVK9Frg
-            mIdZ42cFY01U2CUrpoZlYkHpuZHwhp4q
-          </ds:X509Certificate>
+          <ds:X509Certificate>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</ds:X509Certificate>
         </ds:X509Data>
       </ds:KeyInfo>
     </md:KeyDescriptor>
-    <md:KeyDescriptor use="signing">
-      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo>
         <ds:X509Data>
-          <ds:X509Certificate>
-            MIIGwDCCBaigAwIBAgIQfiTIoAEvCFrKrJAKrGDBQDANBgkqhkiG9w0BAQsFADCBujELMAkGA1UE
-            BhMCVVMxFjAUBgNVBAoTDUVudHJ1c3QsIEluYy4xKDAmBgNVBAsTH1NlZSB3d3cuZW50cnVzdC5u
-            ZXQvbGVnYWwtdGVybXMxOTA3BgNVBAsTMChjKSAyMDEyIEVudHJ1c3QsIEluYy4gLSBmb3IgYXV0
-            aG9yaXplZCB1c2Ugb25seTEuMCwGA1UEAxMlRW50cnVzdCBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0
-            eSAtIEwxSzAeFw0yMjExMDkxNDM5MzhaFw0yMzExMDkxNDM5MzdaMGExCzAJBgNVBAYTAlNFMRIw
-            EAYDVQQHEwlTdG9ja2hvbG0xFzAVBgNVBAoTDkNHSSBTdmVyaWdlIEFCMSUwIwYDVQQDExx0ZXN0
-            aWRwLmZ1bmt0aW9uc3RqYW5zdGVyLnNlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-            y91nDOZZN2ywrB371cwZFHBY5CcZkmHcPDvAFzLEPgPwFxfgWseEympWpKOqFlTQxvJAuHyYo30F
-            7kHw5oRyX1OBz/lzFxAOtkbxmB3mNENAEwWh267JYoTGl/tjok2nG/qiu+i7modiAlMJvMvchj8P
-            3XuzyBFlv14Fc9SQI7XA/+QaKJG5FZhj4DbzYac3riGP9dXiRi7Ry4L0UWWYY171aOySxMXmgz+l
-            RfP+3Kl1yzRvB4GrLrBDZdFukFr+qsxDNz2g8u9K/VS804pN7rINBOCqL8x4t87kbEJe20dHvIeV
-            A8WkKNV0rkBDXF8RUzNUsulZGXRAGOYi/mlfaQIDAQABo4IDGDCCAxQwDAYDVR0TAQH/BAIwADAd
-            BgNVHQ4EFgQUvJYPa6dmXryMnoL+4Ts8OM8hztkwHwYDVR0jBBgwFoAUgqJwdN28Uz/Pe9T3zX+n
-            YMYKTL8waAYIKwYBBQUHAQEEXDBaMCMGCCsGAQUFBzABhhdodHRwOi8vb2NzcC5lbnRydXN0Lm5l
-            dDAzBggrBgEFBQcwAoYnaHR0cDovL2FpYS5lbnRydXN0Lm5ldC9sMWstY2hhaW4yNTYuY2VyMDMG
-            A1UdHwQsMCowKKAmoCSGImh0dHA6Ly9jcmwuZW50cnVzdC5uZXQvbGV2ZWwxay5jcmwwJwYDVR0R
-            BCAwHoIcdGVzdGlkcC5mdW5rdGlvbnN0amFuc3Rlci5zZTAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0l
-            BBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMEwGA1UdIARFMEMwNwYKYIZIAYb6bAoBBTApMCcGCCsG
-            AQUFBwIBFhtodHRwczovL3d3dy5lbnRydXN0Lm5ldC9ycGEwCAYGZ4EMAQICMIIBfQYKKwYBBAHW
-            eQIEAgSCAW0EggFpAWcAdQBVgdTCFpA2AUrqC5tXPFPwwOQ4eHAlCBcvo6odBxPTDAAAAYRc1RGA
-            AAAEAwBGMEQCIFwoq+ktiwyIXXpS+JL6cYqI5KtPoZHGCqiZD3RWLZ5WAiBmDZUPHlqaIANfq/PV
-            vZ3muDwXyvlpcEdK5pxJnTRthgB2ALNzdwfhhFD4Y4bWBancEQlKeS2xZwwLh9zwAw55NqWaAAAB
-            hFzVEYAAAAQDAEcwRQIgEABGzOIOr3wCm9cd83sx1Vk7fC0fj2QKQVIzSdfKOToCIQDcAV2GdxdQ
-            qVhd7Txyv0JyNHagxQrVcyHBXmVrHMEkaQB2AK33vvp8/xDIi509nB4+GGq0Zyldz7EMJMqFhjTr
-            3IKKAAABhFzVEWoAAAQDAEcwRQIgfCOQbRM1uKvyZI5vrMtgzv3b3Sz73yqTEDM0Ddtu4UgCIQDR
-            /vjZFjqRC1UvgtcvP1vJ7WrFqUhmd9uDMYNvw24otDANBgkqhkiG9w0BAQsFAAOCAQEAWiPSeWkO
-            Q2GvcheYDFQcLsha6I5fWqscFE0KA0CzXOf2O+xry40HzRaSBR3NFq257BXB1KKenoPmNgQnOaR3
-            EPhIn9Wyby3IaMJ2VVj0v7wcG4m8WgTEn956P+5zGbdQnn4xRFUKPM5NJsAOqwtac475VzbqRSCj
-            yVEn+Ek/qrpjJSKHNQYd38O54wVxvVyH1Xl++rce5yumJnXRK4aHqAllAI3Au69PV0N8o8Z36LpA
-            wTrDdO5GEzot/4yuVzD8fRjMgzyHpfVhLFF4GoCYYhrnSaE3MewQha5yvuDRiPBrAjDqnnLuE2cO
-            jTyo1aHW+jphUTcQOMaXLa33lP4+9Q==
-          </ds:X509Certificate>
+          <ds:X509Certificate>MIIGlDCCBHygAwIBAgIQVFjJre8aQJgmg5VUsvdEQjANBgkqhkiG9w0BAQ0FADBJMQswCQYDVQQGEwJTRTERMA8GA1UECgwISW5lcmEgQUIxJzAlBgNVBAMMHlRFU1QgU0lUSFMgZS1pZCBGdW5jdGlvbiBDQSB2MTAeFw0yNTEyMDIxMDMxMDdaFw0yNzEyMDIyMTUwMDBaMIGOMQswCQYDVQQGEwJTRTESMBAGA1UEBxMJU3RvY2tob2xtMREwDwYDVQQKEwhJbmVyYSBBQjEvMC0GA1UEAxMmY2xpZW50Y2VydC1pZHAucWEuaW52YW5hci1pZHAuaW5lcmEuc2UxJzAlBgNVBAUTHlQtU0VSVklDRVMtU0UxNjU1NjU1OTQyMzAtMTFKUTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ7BRmojQOO7/JfBnLp09j6G+dJUtozZgedA8nKQPg/aJW7JJu7xx7Hg8SDxY3zzGzTLm4GWAvxXGUZkXiyOcPD9f/QBFIdDPGlDlGG65hp9ZrftaAMxCRuO2PM2djxMxF1bx9oC3agdmsyxvJr/CGSwOTh/rmDJZ/LFaynLRYAEtskJjKyKebWJhx2eIb2jy+7nDVpsRJpt3b0EOEAId5xV7obPWIjhd3hrXrLXoKPKn6vl41Jk5rV3ig75wouvfePo7PcQQwf40pA+9zUE9ogQO/2KF28o+FBU9r2qPHvLB3fQcyDUKrfErAcZATOnC+tndnjnfgFl8JPY0LmomVzGAGOEHU+VEWZ2FJFkgPHyDHMjqWG6cUIt06YdY2kJ9hBFXY/cHOuHPWziXmJ2x+NhV8ULDEnoyMCZ+aTI/JNpaNWLiM3VZuJFIGk/mYqfLBxACzeamh3OnT5bfHufdvqqJJL0z21iafLgmD05GU6RZTseb/NJq3aYx4eu24KAqwIDAQABo4IBsDCCAawwEwYDVR0lBAwwCgYIKwYBBQUHAwIwHwYDVR0jBBgwFoAUKrqTwdFNZ8SWXM/B7ePDCTkYFB8wcwYIKwYBBQUHAQEEZzBlMCMGCCsGAQUFBzABhhdodHRwOi8vb2NzcDFwcC5zaXRocy5zZTA+BggrBgEFBQcwAoYyaHR0cDovL2FpYXBwLnNpdGhzLnNlL3Rlc3RzaXRoc2VpZGZ1bmN0aW9uY2F2MS5jZXIwgYkGA1UdIASBgTB/MD0GBmeBDAECAjAzMDEGCCsGAQUFBwIBFiVodHRwczovL3d3dy5pbmVyYS5zZS9zaXRocy9yZXBvc2l0b3J5MD4GByqFcEoIhQswMzAxBggrBgEFBQcCARYlaHR0cHM6Ly93d3cuaW5lcmEuc2Uvc2l0aHMvcmVwb3NpdG9yeTBEBgNVHR8EPTA7MDmgN6A1hjNodHRwOi8vY3JsMXBwLnNpdGhzLnNlL3Rlc3RzaXRoc2VpZGZ1bmN0aW9uY2F2MS5jcmwwHQYDVR0OBBYEFNdpXJyueVGveEdsVkO3D2zczsmVMA4GA1UdDwEB/wQEAwIFoDANBgkqhkiG9w0BAQ0FAAOCAgEAMB2qUuA5UKjdRHYhVWuu3GpcVKghNeJPRApOlAZJ2guh6mGha35AX3lReJ8MnhUfiOSUi0SF20PfU0u1jbygN7hAwFPmR7/O9ajyIoKE663hm0fXh3UwdPLYUa+9BPAOd+qoRqocZNWkcVmFTWd8FoC0npQmy/RMuFI31B0htHQSxnjlyXQ3+cbWbZBNCKPbRJPhaVD5cId8Fa65PKNBSjo0oylNvnNuIU90UwPlcbLY0Fb0Yb15u97ccGTeaPgu2WUh0Y7t7UXJ8SnqcTwXUbGXFIGexC8zAXlAd+0GlXmI5PIIoz/yQhe3o/7ykVctSstMJFwuJ2GWM6+i0fDYaMjxklDgIRAlZ7eH5C/EeioIZl05S7ndLH6RZ/lrJNtQf+srqNVrQJlX59Qe2flytSWLNFhlfK7rCl+HoJrtM4AqGatsaKlRJ2tZG7BtImfIx3s8mHGE56TB71DW985okoarZwbAA7MlzxFS2MiL+zUMck2UamMzOp+RuvCGKRaFeU3go+cVdJ0I/kBTV9HEPGTRCNjP0Ccc1x02l7IurwV3vJvFVXVHMHy3XSrm91zhkVTnGCC8QiwBVnGXyMmblK46BrTHfYBIvXK0PEcdU3iDhP0ewt4YeGIo35jD1thxbYoVta7x9cOA5w34gfa0K8REYrZzXtawxBDYOqS25Ug=</ds:X509Certificate>
         </ds:X509Data>
       </ds:KeyInfo>
     </md:KeyDescriptor>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-      Location="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/sloreq/0/30?mgvhostparam=0"
-      ResponseLocation="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/sloresp/0/30?mgvhostparam=0"/>
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-      Location="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/sloreq/0/30?mgvhostparam=0"
-      ResponseLocation="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/sloresp/0/30?mgvhostparam=0"/>
-    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idp.qa.invanar-idp.inera.se:443/saml/citizen/slo/HTTP-Redirect"/>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idp.qa.invanar-idp.inera.se:443/saml/citizen/slo/HTTP-POST"/>
     <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
-    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-      Location="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/req/0/30?mgvhostparam=0"/>
-    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-      Location="https://m00-mg-local.testidp.funktionstjanster.se/samlv2/idp/req/0/30?mgvhostparam=0"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idp.qa.invanar-idp.inera.se:443/saml/citizen/sso/HTTP-Redirect"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idp.qa.invanar-idp.inera.se:443/saml/citizen/sso/HTTP-POST"/>
+    <saml2:Attribute FriendlyName="originalAssuranceLevel" Name="https://idp.inera.se/attributes/originalAssuranceLevel" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="authnMethod" Name="https://idp.inera.se/attributes/authnMethod" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="authenticationMethod" Name="https://idp.inera.se/attributes/authenticationMethod" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="unverifiedIdentifier" Name="https://idp.inera.se/attributes/unverifiedIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="Subject_SerialNumber" Name="Subject_SerialNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="SecurityLevelDescription" Name="SecurityLevelDescription" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="sn" Name="urn:oid:2.5.4.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="givenName" Name="urn:oid:2.5.4.42" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="displayName" Name="urn:oid:2.16.840.1.113730.3.1.241" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="personalIdentityNumber" Name="urn:oid:1.2.752.29.4.13" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="dateOfBirth" Name="urn:oid:1.3.6.1.5.5.7.9.1" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="birthName" Name="urn:oid:1.2.752.201.3.8" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="placeOfBirth" Name="urn:oid:1.3.6.1.5.5.7.9.2" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="gender" Name="urn:oid:1.3.6.1.5.5.7.9.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="c" Name="urn:oid:2.5.4.6" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="countryOfCitizenship" Name="urn:oid:1.3.6.1.5.5.7.9.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="countryOfResidence" Name="urn:oid:1.3.6.1.5.5.7.9.5" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="telephoneNumber" Name="urn:oid:2.5.4.20" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="mail" Name="urn:oid:0.9.2342.19200300.100.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="transactionIdentifier" Name="urn:oid:1.2.752.201.3.2" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="eidasPersonIdentifier" Name="urn:oid:1.2.752.201.3.7" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="eidasNaturalPersonAddress" Name="urn:oid:1.2.752.201.3.9" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="prid" Name="urn:oid:1.2.752.201.3.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="pridPersistence" Name="urn:oid:1.2.752.201.3.5" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="mappedPersonalIdentityNumber" Name="urn:oid:1.2.752.201.3.16" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+    <saml2:Attribute FriendlyName="personalIdentityNumberBinding" Name="urn:oid:1.2.752.201.3.6" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
   </md:IDPSSODescriptor>
   <md:Organization>
-    <md:OrganizationName xml:lang="sv">CGI Sverige</md:OrganizationName>
-    <md:OrganizationDisplayName xml:lang="sv">CGI Funktionstjänster Test - Autentiseringstjänst
-    </md:OrganizationDisplayName>
-    <md:OrganizationURL xml:lang="sv">https://www.cgi.com</md:OrganizationURL>
+    <md:OrganizationName xml:lang="sv">Inera AB</md:OrganizationName>
+    <md:OrganizationDisplayName xml:lang="sv">Inera AB</md:OrganizationDisplayName>
+    <md:OrganizationURL xml:lang="sv">https://www.inera.se/</md:OrganizationURL>
   </md:Organization>
+  <md:ContactPerson contactType="support">
+    <md:Company>Inera AB</md:Company>
+    <md:GivenName>Förvaltning</md:GivenName>
+    <md:SurName>Säkerhetstjänster</md:SurName>
+    <md:EmailAddress>kundservice@inera.se</md:EmailAddress>
+    <md:TelephoneNumber>0771-25 10 10</md:TelephoneNumber>
+  </md:ContactPerson>
+  <md:ContactPerson contactType="technical">
+    <md:Company>Inera AB</md:Company>
+    <md:GivenName>Förvaltning</md:GivenName>
+    <md:SurName>Säkerhetstjänster</md:SurName>
+    <md:EmailAddress>kundservice@inera.se</md:EmailAddress>
+    <md:TelephoneNumber>0771-25 10 10</md:TelephoneNumber>
+  </md:ContactPerson>
 </md:EntityDescriptor>

@@ -18,14 +18,14 @@
  */
 package se.inera.intyg.minaintyg.integration.api.banner;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.integration.api.banner.GetBannerIntegrationResponse.GetBannerIntegrationResponseBuilder;
 import se.inera.intyg.minaintyg.integration.api.banner.model.Banner;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = GetBannerIntegrationResponseBuilder.class)
 @Value

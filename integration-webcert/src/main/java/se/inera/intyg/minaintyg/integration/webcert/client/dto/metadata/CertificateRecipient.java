@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.CertificateRecipient.CertificateRecipientBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = CertificateRecipientBuilder.class)
 @Value

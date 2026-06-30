@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.minaintyg.integrationtest.environment;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.model.HttpRequest;
@@ -27,6 +26,7 @@ import org.mockserver.model.MediaType;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.PersonSvarDTO;
 import se.inera.intyg.minaintyg.integration.intygproxyservice.person.client.StatusDTO;
+import tools.jackson.databind.json.JsonMapper;
 
 @RequiredArgsConstructor
 public class IntygProxyServiceMock {
@@ -48,7 +48,8 @@ public class IntygProxyServiceMock {
           .when(HttpRequest.request("/api/v1/person"))
           .respond(
               HttpResponse.response(
-                      new ObjectMapper()
+                      JsonMapper.builder()
+                          .build()
                           .writeValueAsString(
                               PersonSvarDTO.builder()
                                   .status(StatusDTO.FOUND)

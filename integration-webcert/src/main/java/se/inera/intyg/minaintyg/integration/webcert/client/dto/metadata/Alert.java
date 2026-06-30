@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.config.MessageLevel;
 import se.inera.intyg.minaintyg.integration.webcert.client.dto.metadata.Alert.AlertBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = AlertBuilder.class)
 @Value
