@@ -24,11 +24,11 @@ import org.springframework.security.saml2.provider.service.authentication.Saml2A
 
 public class Saml2AuthenticationToken extends AbstractAuthenticationToken {
 
-  private final Object principal;
+  private final MinaIntygUser principal;
   private final Saml2Authentication saml2Authentication;
   private final String name;
 
-  public Saml2AuthenticationToken(Object principal, Saml2Authentication authentication) {
+  public Saml2AuthenticationToken(MinaIntygUser principal, Saml2Authentication authentication) {
     super(authentication.getAuthorities());
     this.principal = principal;
     this.saml2Authentication = authentication;

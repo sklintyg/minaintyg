@@ -184,7 +184,7 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  private void configureTestability(HttpSecurity http) throws Exception {
+  private void configureTestability(HttpSecurity http) {
     http.authorizeHttpRequests(request -> request.requestMatchers(TESTABILITY_API).permitAll())
         .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(TESTABILITY_API));
   }

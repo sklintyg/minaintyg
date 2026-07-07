@@ -346,12 +346,12 @@ class MedicalInvestigationValueConverterTest {
   }
 
   private static CertificateDataValueMedicalInvestigation createMedicalInvestigationValue(
-      String INVESTIGATION_TYPE_ID_ONE, String dateOne, String INFORMATION_SOURCE_ONE) {
+      String investigationTypeCode, String dateOne, String informationSource) {
     return CertificateDataValueMedicalInvestigation.builder()
         .investigationType(
             CertificateDataValueCode.builder()
                 .id(INVESTIGATION_TYPE_ID)
-                .code(INVESTIGATION_TYPE_ID_ONE)
+                .code(investigationTypeCode)
                 .build())
         .date(
             CertificateDataValueDate.builder()
@@ -361,7 +361,7 @@ class MedicalInvestigationValueConverterTest {
         .informationSource(
             CertificateDataValueText.builder()
                 .id(INFORMATION_SOURCE_ID)
-                .text(INFORMATION_SOURCE_ONE)
+                .text(informationSource)
                 .build())
         .build();
   }

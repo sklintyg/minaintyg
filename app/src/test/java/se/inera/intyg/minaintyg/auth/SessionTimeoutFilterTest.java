@@ -27,7 +27,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -44,9 +43,6 @@ class SessionTimeoutFilterTest {
 
   @Mock SessionTimeoutService sessionTimeoutService;
   @InjectMocks SessionTimeoutFilter filter;
-
-  @BeforeEach
-  void setup() {}
 
   @Test
   void shouldCallServiceWithRequest() throws ServletException, IOException {

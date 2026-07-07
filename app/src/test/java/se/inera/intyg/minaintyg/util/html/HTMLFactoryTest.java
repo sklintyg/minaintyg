@@ -86,13 +86,6 @@ class HTMLFactoryTest {
   }
 
   @Test
-  void shouldConvertSpecialCharactersIfNotParent() {
-    final var result = HTMLFactory.tag("p", "Value<Value");
-
-    assertEquals("<p>Value&lt;Value</p>", result);
-  }
-
-  @Test
   void shouldNotConvertSpecialCharactersIfParent() {
     final var result = HTMLFactory.tagWithChildren("p", "Value<p>Value</p> test");
 
@@ -144,13 +137,6 @@ class HTMLFactoryTest {
 
     @Test
     void shouldConvertSpecialCharactersAsDefault() {
-      final var result = HTMLFactory.tag("p", "class", "Value<Value");
-
-      assertEquals("<p className=\"class\">Value&lt;Value</p>", result);
-    }
-
-    @Test
-    void shouldConvertSpecialCharactersIfNotParent() {
       final var result = HTMLFactory.tag("p", "class", "Value<Value");
 
       assertEquals("<p className=\"class\">Value&lt;Value</p>", result);

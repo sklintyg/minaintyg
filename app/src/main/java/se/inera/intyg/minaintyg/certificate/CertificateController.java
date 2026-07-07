@@ -98,7 +98,9 @@ public class CertificateController {
   @GetMapping(value = "/{certificateId}/pdf/{fileName}", produces = "application/pdf")
   @PerformanceLogging(eventAction = "print-certificate", eventType = EVENT_TYPE_ACCESSED)
   public ResponseEntity<byte[]> printCertificate(
-      @PathVariable String certificateId, @RequestParam(required = false) String customizationId) {
+      @PathVariable String certificateId,
+      @PathVariable String fileName,
+      @RequestParam(required = false) String customizationId) {
 
     final var response =
         printCertificateService.print(
@@ -107,14 +109,14 @@ public class CertificateController {
                 .customizationId(customizationId)
                 .build());
 
-    final var responseHeaders = getHttpHeaders();
+    final var responseHeaders = getHttpHeaders(fileName);
 
     return ResponseEntity.ok().headers(responseHeaders).body(response.getPdfData());
   }
 
-  private static HttpHeaders getHttpHeaders() {
+  private static HttpHeaders getHttpHeaders(String fileName) {
     final var responseHeaders = new HttpHeaders();
-    responseHeaders.set(CONTENT_DISPOSITION, INLINE);
+    responseHeaders.set(CONTENT_DISPOSITION, INLINE + "; filename=\"" + fileName + "\"");
     return responseHeaders;
   }
 }
