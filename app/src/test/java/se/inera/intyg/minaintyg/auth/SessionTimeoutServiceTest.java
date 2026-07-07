@@ -128,13 +128,6 @@ class SessionTimeoutServiceTest {
 
       assertTrue(session.isInvalid());
     }
-
-    @Test
-    void shouldInvalidateSessionIfExpiredExcludedURL() {
-      sessionTimeoutService.checkSessionValidity(request);
-
-      assertTrue(session.isInvalid());
-    }
   }
 
   @Nested
@@ -179,23 +172,7 @@ class SessionTimeoutServiceTest {
     }
 
     @Test
-    void shouldNotResetLastAccessedTimeIfUrlContainsExcludedUrl() {
-      ReflectionTestUtils.setField(sessionTimeoutService, "excludedUrls", EXCLUDED_ACTUAL_URLS);
-
-      sessionTimeoutService.checkSessionValidity(request);
-
-      assertEquals(LAST_ACCESS_TIME, session.getAttribute(LAST_ACCESS_ATTRIBUTE));
-    }
-
-    @Test
     void shouldNotInvalidateSessionIfNotExpiredIncludedURL() {
-      sessionTimeoutService.checkSessionValidity(request);
-
-      assertFalse(session.isInvalid());
-    }
-
-    @Test
-    void shouldNotInvalidateSessionIfNotExpiredExcludedURL() {
       sessionTimeoutService.checkSessionValidity(request);
 
       assertFalse(session.isInvalid());

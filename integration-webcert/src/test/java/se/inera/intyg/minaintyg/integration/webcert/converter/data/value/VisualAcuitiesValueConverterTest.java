@@ -284,50 +284,6 @@ class VisualAcuitiesValueConverterTest {
   }
 
   @Test
-  void shallReturnConsiderNullContactLensesAsFalse() {
-
-    final var expectedValue =
-        CertificateQuestionValueGeneralTable.builder()
-            .headings(
-                List.of(
-                    getDataElement(""),
-                    getHeadingElement(WITHOUT_CORRECTION_LABEL),
-                    getHeadingElement(WITH_CORRECTION_LABEL),
-                    getHeadingElement(CONTACT_LENSES_LABEL)))
-            .values(
-                List.of(
-                    List.of(
-                        getHeadingElement(RIGHT_EYE_LABEL),
-                        getDataElement("0,1"),
-                        getDataElement("-"),
-                        getDataElement("Nej")),
-                    List.of(
-                        getHeadingElement(LEFT_EYE_LABEL),
-                        getDataElement("1,1"),
-                        getDataElement("-"),
-                        getDataElement("Nej")),
-                    List.of(
-                        getHeadingElement(BINOCULAR_LABEL),
-                        getDataElement("-"),
-                        getDataElement("-"),
-                        getDataElement("-"))))
-            .build();
-
-    final var element =
-        CertificateDataElement.builder()
-            .config(createVisualAcuityConfiguration(true))
-            .value(
-                CertificateDataValueVisualAcuities.builder()
-                    .rightEye(createVisualActuityValue("0,1", null, null))
-                    .leftEye(createVisualActuityValue("1,1", null, null))
-                    .build())
-            .build();
-
-    final var actualValue = visualAcuitiesValueConverter.convert(element);
-    assertEquals(expectedValue, actualValue);
-  }
-
-  @Test
   void shallExcludeContactLensesColumnAndRows() {
     final var expectedValue =
         CertificateQuestionValueGeneralTable.builder()

@@ -23,6 +23,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -34,6 +35,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
@@ -86,10 +88,10 @@ class AuthenticationEventListenerTest {
 
     @Test
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
+      final var authentication = mock(Authentication.class);
+      when(authentication.getPrincipal()).thenReturn("wrong-principal");
       interactiveAuthenticationSuccessEvent =
-          new InteractiveAuthenticationSuccessEvent(
-              new Saml2AuthenticationToken(new Object(), mock(Saml2Authentication.class)),
-              this.getClass());
+          new InteractiveAuthenticationSuccessEvent(authentication, this.getClass());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
 
@@ -135,9 +137,9 @@ class AuthenticationEventListenerTest {
 
     @Test
     void shallNotLogAnythingIfPrincipalIsNotOfCorrectType() {
-      logoutSuccessEvent =
-          new LogoutSuccessEvent(
-              new Saml2AuthenticationToken(new Object(), mock(Saml2Authentication.class)));
+      final var authentication = mock(Authentication.class);
+      when(authentication.getPrincipal()).thenReturn("wrong-principal");
+      logoutSuccessEvent = new LogoutSuccessEvent(authentication);
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 

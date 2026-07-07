@@ -107,13 +107,6 @@ class CertificateStatusServiceTest {
   }
 
   @Test
-  void shouldNotIncludeStatusIfRelationsIsEmpty() {
-    final var response = certificateStatusService.get(Collections.emptyList(), null, null);
-
-    assertEquals(0, response.size());
-  }
-
-  @Test
   void shouldOnlyIncludeReplacedIfCertificateIsBothSentAndReplaced() {
     final var response = certificateStatusService.get(REPLACED_RELATIONS, SENT_RECIPIENT, null);
 

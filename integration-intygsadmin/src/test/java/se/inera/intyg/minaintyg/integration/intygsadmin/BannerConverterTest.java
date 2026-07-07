@@ -44,12 +44,6 @@ class BannerConverterTest {
   private static final ApplicationDTO MINA_INTYG = ApplicationDTO.MINA_INTYG;
   private static final LocalDateTime NOW = LocalDateTime.now();
   private static final String MESSAGE = "message";
-  private static final BannerPriorityDTO BANNER_DTO_PRIORITY_LAG = BannerPriorityDTO.LAG;
-  private static final BannerPriorityDTO BANNER_DTO_PRIORITY_MEDEL = BannerPriorityDTO.MEDEL;
-  private static final BannerPriorityDTO BANNER_DTO_PRIORITY_HÖG = BannerPriorityDTO.HOG;
-  private static final BannerPriority BANNER_PRIORITY_LOW = BannerPriority.LOW;
-  private static final BannerPriority BANNER_PRIORITY_MEDIUM = BannerPriority.MEDIUM;
-  private static final BannerPriority BANNER_PRIORITY_HIGH = BannerPriority.HIGH;
   private static final LocalDateTime DISPLAY_TO = LocalDateTime.now().plusDays(5);
 
   private List<BannerDTO> getBannerDTOS(BannerPriorityDTO priority) {

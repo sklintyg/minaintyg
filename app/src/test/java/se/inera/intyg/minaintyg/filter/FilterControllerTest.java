@@ -41,7 +41,7 @@ class FilterControllerTest {
   @Mock GetCertificateListFilterService getCertificateListFilterService;
 
   @InjectMocks FilterController filterController;
-  private final GetCertificateFilterResponse EXPECTED_RESPONSE =
+  private final GetCertificateFilterResponse expectedResponse =
       GetCertificateFilterResponse.builder()
           .statuses(List.of(CertificateStatusType.SENT))
           .years(List.of("2020"))
@@ -52,7 +52,7 @@ class FilterControllerTest {
 
   @BeforeEach
   void setup() {
-    when(getCertificateListFilterService.get()).thenReturn(EXPECTED_RESPONSE);
+    when(getCertificateListFilterService.get()).thenReturn(expectedResponse);
   }
 
   @Nested
@@ -62,35 +62,35 @@ class FilterControllerTest {
     void shouldSetCertificateTypes() {
       final var response = filterController.getCertificateListFilter();
 
-      assertEquals(EXPECTED_RESPONSE.getCertificateTypes(), response.getCertificateTypes());
+      assertEquals(expectedResponse.getCertificateTypes(), response.getCertificateTypes());
     }
 
     @Test
     void shouldSetYears() {
       final var response = filterController.getCertificateListFilter();
 
-      assertEquals(EXPECTED_RESPONSE.getYears(), response.getYears());
+      assertEquals(expectedResponse.getYears(), response.getYears());
     }
 
     @Test
     void shouldSetUnits() {
       final var response = filterController.getCertificateListFilter();
 
-      assertEquals(EXPECTED_RESPONSE.getUnits(), response.getUnits());
+      assertEquals(expectedResponse.getUnits(), response.getUnits());
     }
 
     @Test
     void shouldSetStatuses() {
       final var response = filterController.getCertificateListFilter();
 
-      assertEquals(EXPECTED_RESPONSE.getStatuses(), response.getStatuses());
+      assertEquals(expectedResponse.getStatuses(), response.getStatuses());
     }
 
     @Test
     void shouldSetTotal() {
       final var response = filterController.getCertificateListFilter();
 
-      assertEquals(EXPECTED_RESPONSE.getTotal(), response.getTotal());
+      assertEquals(expectedResponse.getTotal(), response.getTotal());
     }
   }
 }
