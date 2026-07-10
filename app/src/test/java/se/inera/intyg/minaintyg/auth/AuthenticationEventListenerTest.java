@@ -36,7 +36,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
 import se.inera.intyg.minaintyg.logging.service.MonitoringLogService;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,22 +50,22 @@ class AuthenticationEventListenerTest {
 
   @Nested
   class LoginSuccess {
+    @Mock private Authentication authentication;
 
     private InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent;
 
     @BeforeEach
     void setUp() {
       interactiveAuthenticationSuccessEvent =
-          new InteractiveAuthenticationSuccessEvent(
-              new Saml2AuthenticationToken(
-                  MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build(),
-                  mock(Saml2Authentication.class)),
-              this.getClass());
+          new InteractiveAuthenticationSuccessEvent(authentication, this.getClass());
     }
 
     @Test
     void shallLogPatientIdWhenSuccessfullyLogin() {
       final var stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+      when(authentication.getPrincipal())
+          .thenReturn(
+              MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
 
@@ -78,6 +77,9 @@ class AuthenticationEventListenerTest {
     @Test
     void shallLogLoginMethodWhenSuccessfullyLogin() {
       final var stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+      when(authentication.getPrincipal())
+          .thenReturn(
+              MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build());
 
       authenticationEventListener.onLoginSuccess(interactiveAuthenticationSuccessEvent);
 
@@ -102,20 +104,15 @@ class AuthenticationEventListenerTest {
   @Nested
   class LogoutSuccess {
 
-    private LogoutSuccessEvent logoutSuccessEvent;
-
-    @BeforeEach
-    void setUp() {
-      logoutSuccessEvent =
-          new LogoutSuccessEvent(
-              new Saml2AuthenticationToken(
-                  MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build(),
-                  mock(Saml2Authentication.class)));
-    }
+    @Mock private Authentication authentication;
+    @InjectMocks private LogoutSuccessEvent logoutSuccessEvent;
 
     @Test
     void shallLogPatientIdWhenSuccessfullyLogout() {
       final var stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+      when(authentication.getPrincipal())
+          .thenReturn(
+              MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build());
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 
@@ -127,6 +124,9 @@ class AuthenticationEventListenerTest {
     @Test
     void shallLogLoginMethodWhenSuccessfullyLogout() {
       final var stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+      when(authentication.getPrincipal())
+          .thenReturn(
+              MinaIntygUser.builder().personId(PERSON_ID).loginMethod(LOGIN_METHOD).build());
 
       authenticationEventListener.onLogoutSuccess(logoutSuccessEvent);
 

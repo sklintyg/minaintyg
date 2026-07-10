@@ -39,6 +39,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.saml2.core.Saml2X509Credential;
 import org.springframework.security.saml2.provider.service.authentication.OpenSaml5AuthenticationProvider;
+import org.springframework.security.saml2.provider.service.authentication.Saml2AssertionAuthentication;
 import org.springframework.security.saml2.provider.service.authentication.Saml2Authentication;
 import org.springframework.security.saml2.provider.service.authentication.Saml2ResponseAssertionAccessor;
 import org.springframework.security.saml2.provider.service.registration.InMemoryRelyingPartyRegistrationRepository;
@@ -59,7 +60,6 @@ import se.inera.intyg.minaintyg.auth.CustomXFrameOptionsHeaderWriter;
 import se.inera.intyg.minaintyg.auth.LoginMethod;
 import se.inera.intyg.minaintyg.auth.MinaIntygCookieSerializer;
 import se.inera.intyg.minaintyg.auth.MinaIntygUserDetailService;
-import se.inera.intyg.minaintyg.auth.Saml2AuthenticationToken;
 import se.inera.intyg.minaintyg.auth.SessionTimeoutFilter;
 import se.inera.intyg.minaintyg.auth.SpaCsrfTokenRequestHandler;
 
@@ -205,13 +205,16 @@ public class WebSecurityConfig {
             // TODO: Look into better error handling when working with Authentication-jira
             return null;
           }
+          if (!(authentication instanceof Saml2AssertionAuthentication samlAssertion)) {
+            throw new IllegalStateException(
+                "Expected Saml2AssertionAuthentication from default SAML converter");
+          }
+
           final var personId = getAttribute(authentication);
           final var principal =
               minaIntygUserDetailService.buildPrincipal(personId, LoginMethod.ELVA77);
-          final var saml2AuthenticationToken =
-              new Saml2AuthenticationToken(principal, authentication);
-          saml2AuthenticationToken.setAuthenticated(true);
-          return saml2AuthenticationToken;
+
+          return samlAssertion.toBuilder().principal(principal).build();
         });
     return authenticationProvider;
   }
