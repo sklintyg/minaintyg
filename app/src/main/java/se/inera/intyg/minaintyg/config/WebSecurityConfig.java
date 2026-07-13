@@ -201,8 +201,7 @@ public class WebSecurityConfig {
     authenticationProvider.setResponseAuthenticationConverter(
         responseToken -> {
           final var authentication = defaultConverter.convert(responseToken);
-          if (!(authentication != null && authentication.isAuthenticated())) {
-            // TODO: Look into better error handling when working with Authentication-jira
+          if (!authentication.isAuthenticated()) {
             return null;
           }
           if (!(authentication instanceof Saml2AssertionAuthentication samlAssertion)) {
