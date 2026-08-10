@@ -8,6 +8,14 @@ plugins {
 
 apply from: 'gradle/configureIntygBom.gradle'
 
+// Temporary security pins. Remove both once intygBomVersion provides a Spring Boot that manages
+// netty >= 4.1.135.Final and reactor-netty >= 1.2.18.
+// nettyBom: fixes the netty DNS resolver CVEs (CVE-2026-45674, CVE-2026-47691, CVE-2026-45673).
+// reactorBom: brings reactor-netty >= 1.2.18, the first version defaulting the DNS resolver to
+// ChannelPerResolution, which restores UDP source port entropy (second factor of CVE-2026-45673).
+def nettyBomVersion = '4.1.137.Final'
+def reactorBomVersion = '2024.0.18'
+
 springBoot {
     mainClass = 'se.inera.intyg.minaintyg.MinaintygApplication'
 }
@@ -62,10 +70,20 @@ subprojects {
 
     dependencies {
         implementation platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        implementation platform("io.netty:netty-bom:${nettyBomVersion}") // Temporary CVE hotfix (CVE-2026-45674, CVE-2026-47691).
+        implementation platform("io.projectreactor:reactor-bom:${reactorBomVersion}")
         annotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        annotationProcessor platform("io.netty:netty-bom:${nettyBomVersion}")
+        annotationProcessor platform("io.projectreactor:reactor-bom:${reactorBomVersion}")
         testImplementation platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        testImplementation platform("io.netty:netty-bom:${nettyBomVersion}")
+        testImplementation platform("io.projectreactor:reactor-bom:${reactorBomVersion}")
         testAnnotationProcessor platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        testAnnotationProcessor platform("io.netty:netty-bom:${nettyBomVersion}")
+        testAnnotationProcessor platform("io.projectreactor:reactor-bom:${reactorBomVersion}")
         mockitoAgent platform("se.inera.intyg.bom:platform:${intygBomVersion}")
+        mockitoAgent platform("io.netty:netty-bom:${nettyBomVersion}")
+        mockitoAgent platform("io.projectreactor:reactor-bom:${reactorBomVersion}")
         mockitoAgent("org.mockito:mockito-core") { transitive = false }
     }
 
