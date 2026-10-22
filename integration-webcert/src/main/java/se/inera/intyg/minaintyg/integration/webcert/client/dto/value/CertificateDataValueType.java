@@ -44,5 +44,7 @@ public enum CertificateDataValueType {
   VIEW_ROW,
   YEAR,
   INTEGER,
-  CAUSE_OF_DEATH
+  CAUSE_OF_DEATH,
+  DIAGNOSIS_WITH_TEXT_LIST,
+  DIAGNOSIS_WITH_TEXT
 }

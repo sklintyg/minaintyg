@@ -50,7 +50,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
   @Type(value = CertificateDataValueViewTable.class, name = "VIEW_TABLE"),
   @Type(value = CertificateDataValueViewRow.class, name = "VIEW_ROW"),
   @Type(value = CertificateDataValueYear.class, name = "YEAR"),
-  @Type(value = CertificateDataValueInteger.class, name = "INTEGER")
+  @Type(value = CertificateDataValueInteger.class, name = "INTEGER"),
+  @Type(value = CertificateDataValueDiagnosisWithTextList.class, name = "DIAGNOSIS_WITH_TEXT_LIST"),
+  @Type(value = CertificateDataValueDiagnosisWithText.class, name = "DIAGNOSIS_WITH_TEXT")
 })
 public interface CertificateDataValue {
 

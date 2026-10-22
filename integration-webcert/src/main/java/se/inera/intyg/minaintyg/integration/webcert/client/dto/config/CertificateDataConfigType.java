@@ -46,5 +46,6 @@ public enum CertificateDataConfigType {
   UE_YEAR,
   UE_INTEGER,
   UE_DATE_RANGE,
-  UE_CAUSE_OF_DEATH_LIST
+  UE_CAUSE_OF_DEATH_LIST,
+  UE_DIAGNOSES_WITH_TEXT
 }
